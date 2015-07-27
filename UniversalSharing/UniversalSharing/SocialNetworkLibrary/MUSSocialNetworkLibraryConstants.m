@@ -16,4 +16,5 @@ NSString *const kTwitterUserName = @"twitterUserName";
 NSString *const kTwitterUserCount = @"twitterUserCount";
 NSString *const kVkAppID = @"5004830";
 NSString *const kRequestParametrsFacebook = @"name,id,picture,gender,birthday,email,first_name,last_name,location,friends";
-
+NSString *const kConsumerKey = @"YyvoW8VelrqrlO8f91xEvxdNe";
+NSString *const kConsumerSecret = @"gLZI37ssGqUcwr2RZlFoVcu5PO3rM0vodZ0teo3UuMLSdVoY1d";

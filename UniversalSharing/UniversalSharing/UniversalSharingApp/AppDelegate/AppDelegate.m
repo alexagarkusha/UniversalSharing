@@ -8,8 +8,6 @@
 
 #import "AppDelegate.h"
 #import "MUSSocialNetworkLibraryHeader.h"
-#import <TwitterKit/TwitterKit.h>
-#import <Fabric/Fabric.h>
 
 @interface AppDelegate ()
 
@@ -19,10 +17,6 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
-    [[Twitter sharedInstance] startWithConsumerKey:@"YyvoW8VelrqrlO8f91xEvxdNe" consumerSecret:@"gLZI37ssGqUcwr2RZlFoVcu5PO3rM0vodZ0teo3UuMLSdVoY1d"];
-    //[Fabric with:@[[Twitter sharedInstance]]];
-    [Fabric with:@[TwitterKit]];
     return [[FBSDKApplicationDelegate sharedInstance] application:application
                                     didFinishLaunchingWithOptions:launchOptions];
 }

@@ -10,6 +10,7 @@
 #import <Accounts/Accounts.h>
 #import <Social/Social.h>
 #import <TwitterKit/TwitterKit.h>
+#import <Fabric/Fabric.h>
 
 @interface TwitterNetwork ()<UIActionSheetDelegate,UIAlertViewDelegate>
 @property (copy, nonatomic) Complition copyComplition;
@@ -28,6 +29,9 @@ static TwitterNetwork *model = nil;
 
 - (instancetype) init {
     self = [super init];
+    [[Twitter sharedInstance] startWithConsumerKey:kConsumerKey consumerSecret:kConsumerSecret];
+    //[Fabric with:@[[Twitter sharedInstance]]];
+    [Fabric with:@[TwitterKit]];
     if (self) {
         self.networkType = Twitters;
         if (![[Twitter sharedInstance ]session]) {

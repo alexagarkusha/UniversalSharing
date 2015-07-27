@@ -32,7 +32,8 @@ FOUNDATION_EXPORT NSString *const ALL_USER_FIELDS;
 
 
 #pragma mark Twitter Contants
-
+FOUNDATION_EXPORT NSString *const kConsumerSecret;
+FOUNDATION_EXPORT NSString *const kConsumerKey;
 FOUNDATION_EXPORT NSString *const kTwitterUserName;
 FOUNDATION_EXPORT NSString *const kTwitterUserCount;
 FOUNDATION_EXPORT NSString *const kRequestUrlTwitter;
