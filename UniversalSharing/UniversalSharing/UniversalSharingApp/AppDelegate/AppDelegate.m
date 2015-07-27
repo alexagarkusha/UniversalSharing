@@ -19,7 +19,8 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
+    #warning "Keys move in contants"
+    #warning "If possible move Twitter init to Share Manager"
     [[Twitter sharedInstance] startWithConsumerKey:@"YyvoW8VelrqrlO8f91xEvxdNe" consumerSecret:@"gLZI37ssGqUcwr2RZlFoVcu5PO3rM0vodZ0teo3UuMLSdVoY1d"];
     //[Fabric with:@[[Twitter sharedInstance]]];
     [Fabric with:@[TwitterKit]];
