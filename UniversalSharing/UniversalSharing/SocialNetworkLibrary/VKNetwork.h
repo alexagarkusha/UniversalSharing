@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Roman. All rights reserved.
 //
 
+#warning "Create folder for this class"
+
 #import "SocialNetwork.h"
 
 @interface VKNetwork : SocialNetwork

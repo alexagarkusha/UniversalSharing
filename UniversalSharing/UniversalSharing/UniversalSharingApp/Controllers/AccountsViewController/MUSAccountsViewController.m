@@ -67,12 +67,18 @@
     else{
         __weak MUSAccountsViewController *weakSelf = self;
         
-        [[SocialManager sharedManager]loginForTypeNetwork:socialNetwork.networkType :^(id result, NSError *error) {
-            
+        [socialNetwork loginWithComplition:^(id result, NSError *error) {
             if (result) {
                 [weakSelf performSegueWithIdentifier: goToUserDetailViewControllerSegueIdentifier sender:nil];
             }
         }];
+        
+//        [[SocialManager sharedManager]loginForTypeNetwork:socialNetwork.networkType :^(id result, NSError *error) {
+//            
+//            if (result) {
+//                [weakSelf performSegueWithIdentifier: goToUserDetailViewControllerSegueIdentifier sender:nil];
+//            }
+//        }];
     }
 }
 
