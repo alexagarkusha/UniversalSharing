@@ -37,23 +37,19 @@ static VKNetwork *model = nil;
         }
         else {
             self.isLogin = YES;
-            [self obtainDataFromVK];
+            //[self obtainDataFromVK];
         }
     }
     return self;
 }
 
 - (void) loginWithComplition :(Complition) block {
+    self.isLogin = YES;
     self.copyComplition = block;
     if (![VKSdk wakeUpSession])
     {
         [VKSdk authorize:@[VK_PER_NOHTTPS, VK_PER_OFFLINE, VK_PER_PHOTOS, VK_PER_WALL, VK_PER_EMAIL]];
     }
-    else
-    {
-        [self obtainDataFromVK];
-    }
-    
 }
 
 - (void) loginOut {
@@ -68,8 +64,8 @@ static VKNetwork *model = nil;
     self.isLogin = NO;
 }
 
-- (void) obtainDataFromVK
-{
+- (void) obtainDataWithComplition :(Complition) block {
+
     __weak VKNetwork *weakSell = self;
     
     VKRequest * request = [[VKApi users] get:@{ VK_API_FIELDS : ALL_USER_FIELDS }];
@@ -78,9 +74,7 @@ static VKNetwork *model = nil;
          weakSell.currentUser = [User createFromDictionary:(NSDictionary*)[response.json firstObject] andNetworkType:weakSell.networkType];
          weakSell.title = [NSString stringWithFormat:@"%@  %@", weakSell.currentUser.firstName, weakSell.currentUser.lastName];
          weakSell.icon = weakSell.currentUser.photoURL;
-         if(self.copyComplition)
-             self.copyComplition(weakSell, nil);
-        // [[NSNotificationCenter defaultCenter] postNotificationName:notificationReloadTableView object:nil];
+             block(weakSell, nil);
          
      } errorBlock:^(NSError * error) {
          if (error.code != VK_API_ERROR) {
@@ -110,7 +104,7 @@ static VKNetwork *model = nil;
 
 - (void)vkSdkReceivedNewToken:(VKAccessToken *)newToken
 {
-    [self obtainDataFromVK];
+    [self obtainDataWithComplition:self.copyComplition];
 }
 
 - (void)vkSdkShouldPresentViewController:(UIViewController *)controller

@@ -27,7 +27,7 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
+    
     // Configure the view for the selected state
 }
 
@@ -49,11 +49,18 @@
 #warning "fix image loading logic"
     
     if (socialNetwork.isLogin) {
-        [self.networkIconImageView loadImageFromUrl: [NSURL URLWithString:socialNetwork.icon]];
-    } else {
-        self.networkIconImageView.image = [UIImage imageNamed: socialNetwork.icon];
+        __weak MUSAccountTableViewCell *weakSelf = self;
+        [socialNetwork obtainDataWithComplition:^(id result, NSError *error) {
+            [weakSelf.networkIconImageView loadImageFromUrl:[NSURL URLWithString:socialNetwork.icon]];
+            weakSelf.loginLabel.text = socialNetwork.title;
+            
+        }];
     }
-    self.loginLabel.text = socialNetwork.title;
+    
+    else {
+        self.networkIconImageView.image = [UIImage imageNamed:socialNetwork.icon];
+        self.loginLabel.text = socialNetwork.title;
+    }
 }
 
 

@@ -19,4 +19,10 @@
 - (void)setNetworkType:(NetworkType)networkType {
     _networkType = networkType;
 }
+
+- (void) obtainDataWithComplition :(Complition) block {
+    
+    
+}
+
 @end

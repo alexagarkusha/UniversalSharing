@@ -7,12 +7,13 @@
 //
 
 #import "User.h"
+#import <TwitterKit/TwitterKit.h>
 
 @implementation User
 
 #warning "Merge me better"
 
-+ (User*) createFromDictionary:(NSDictionary*) dict andNetworkType :(NetworkType) networkType
++ (User*) createFromDictionary:(id) dict andNetworkType :(NetworkType) networkType
 {
     User *user = [[User alloc] init];
     
@@ -23,7 +24,7 @@
         case VKontakt:
             user = [user createUserFromVK: dict];
             break;
-        case Twitter:
+        case Twitters:
             user = [user createUserFromTwitter: dict];
             break;
         default:
@@ -106,47 +107,43 @@
 
 - (User*) createUserFromVK : (id) userDictionary {
     User *currentUser = [[User alloc] init];
-    if ([userDictionary isKindOfClass:[NSArray class]]) {
-        NSArray *currentUserArray = userDictionary;
-        if ([[currentUserArray firstObject] isKindOfClass:[NSDictionary class]]){
-            NSDictionary *currentUserDictionary = [currentUserArray firstObject];
-            currentUser.dateOfBirth = [currentUserDictionary objectForKey:@"bdate"];
-            
-            NSDictionary *cityDictionary = [currentUserDictionary objectForKey: @"city"];
+        if ([userDictionary isKindOfClass:[NSDictionary class]]){
+            currentUser.dateOfBirth = [userDictionary objectForKey:@"bdate"];
+            NSDictionary *cityDictionary = [userDictionary objectForKey: @"city"];
             currentUser.city = [cityDictionary objectForKey: @"title"];
             
-            currentUser.firstName = [currentUserDictionary objectForKey:@"first_name"];
-            currentUser.lastName = [currentUserDictionary objectForKey:@"last_name"];
+            currentUser.firstName = [userDictionary objectForKey:@"first_name"];
+            currentUser.lastName = [userDictionary objectForKey:@"last_name"];
             currentUser.networkType = VKontakt;
-            currentUser.clientID = [NSString stringWithFormat: @"%@", [currentUserDictionary objectForKey:@"id"]];
-            currentUser.photoURL = [currentUserDictionary objectForKey: @"photo_max"];
+            currentUser.clientID = [NSString stringWithFormat: @"%@", [userDictionary objectForKey:@"id"]];
+            currentUser.photoURL = [userDictionary objectForKey: @"photo_200_orig"];
         }
-    }
+   
     return currentUser;
 }
 
 
-- (User*) createUserFromTwitter:(id)userDictionary {
+- (User*) createUserFromTwitter:(TWTRUser*)userDictionary {
     User *currentUser = [[User alloc] init];
-    if ([userDictionary isKindOfClass:[NSDictionary class]]) {
-        currentUser.clientID = [NSString stringWithFormat: @"%@", [userDictionary objectForKey:@"id"]];
-        currentUser.username = [userDictionary objectForKey:@"screen_name"];
-        currentUser.firstName = [userDictionary objectForKey:@"name"];
+    //if ([userDictionary isKindOfClass:[TWTRUser class]]) {
+    currentUser.clientID = userDictionary.userID;
+    currentUser.lastName = userDictionary.screenName;
+        currentUser.firstName = userDictionary.name;
         //currentUser.lastName = [userDictionary objectForKey:@"last_name"];
-        currentUser.networkType = Twitter;
+        currentUser.networkType = Twitters;
         
-        NSString *photoURL_max = [userDictionary objectForKey: @"profile_image_url"];
+        NSString *photoURL_max = userDictionary.profileImageLargeURL;
         photoURL_max = [photoURL_max stringByReplacingOccurrencesOfString:@"_normal"
-                                                               withString:@""];
+                                                              withString:@""];
         currentUser.photoURL = photoURL_max;
-        
+    
         
         //currentUser.photoURL_max = @"http://pbs.twimg.com/profile_images/624165685976039425/2ea7-TL8.jpg";
         
         //currentUser.photoURL_max = [userDictionary objectForKey: @"profile_image_url" ];
-        currentUser.city = [userDictionary objectForKey: @"location"];
+        //currentUser.city = [userDictionary objectForKey: @"location"];
         //currentUser.dateOfBirth
-    }
+    //}
     
     
     

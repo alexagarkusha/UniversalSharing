@@ -30,13 +30,12 @@ static FacebookNetwork *model = nil;
         }
         else {
             self.isLogin = YES;
-            [self obtainDataFromFacebook];
         }
     }
     return self;
 }
 
-- (void) obtainDataFromFacebook {
+- (void) obtainDataWithComplition :(Complition) block {
     __weak FacebookNetwork *weakSell = self;
     FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]initWithGraphPath:@"/me"
                                                                   parameters:@{@"fields": kRequestParametrsFacebook}
@@ -49,13 +48,17 @@ static FacebookNetwork *model = nil;
         weakSell.icon = weakSell.currentUser.photoURL;
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            //[[NSNotificationCenter defaultCenter] postNotificationName:notificationReloadTableView object:nil];
+            block(weakSell,nil);
         });
     }];
+
+    
 }
 
 - (void) loginWithComplition :(Complition) block {    
     FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
+    self.isLogin = YES;
+
     __weak FacebookNetwork *weakSell = self;
     
     [login logInWithReadPermissions:@[@"email"] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
@@ -68,23 +71,27 @@ static FacebookNetwork *model = nil;
             // should check if specific permissions missing
             if ([result.grantedPermissions containsObject:@"email"]) {
                 
-                if ([FBSDKAccessToken currentAccessToken]) {
-                    [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:@{@"fields":kRequestParametrsFacebook }]
-                     startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, NSDictionary *result, NSError *error) {
-                         if (error) {
-                             block(nil, error);
-                             return ;
-                         }
-                         weakSell.currentUser = [User createFromDictionary:result andNetworkType : weakSell.networkType];
-                         weakSell.title = [NSString stringWithFormat:@"%@  %@", weakSell.currentUser.firstName, weakSell.currentUser.lastName];
-                         weakSell.icon = weakSell.currentUser.photoURL;
-                         
-                         dispatch_async(dispatch_get_main_queue(), ^{
-                             block(weakSell, error);
-                             //[[NSNotificationCenter defaultCenter] postNotificationName:notificationReloadTableView object:nil];
-                         });
-                     }];
-                }
+                
+                [weakSell obtainDataWithComplition:block];
+                
+                
+//                if ([FBSDKAccessToken currentAccessToken]) {
+//                    [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:@{@"fields":kRequestParametrsFacebook }]
+//                     startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, NSDictionary *result, NSError *error) {
+//                         if (error) {
+//                             block(nil, error);
+//                             return ;
+//                         }
+//                         weakSell.currentUser = [User createFromDictionary:result andNetworkType : weakSell.networkType];
+//                         weakSell.title = [NSString stringWithFormat:@"%@  %@", weakSell.currentUser.firstName, weakSell.currentUser.lastName];
+//                         weakSell.icon = weakSell.currentUser.photoURL;
+//                         
+//                         dispatch_async(dispatch_get_main_queue(), ^{
+//                             block(weakSell, error);
+//                             
+//                         });
+//                     }];
+//                }
             }
         }
     }];

@@ -9,6 +9,7 @@
 #import "TwitterNetwork.h"
 #import <Accounts/Accounts.h>
 #import <Social/Social.h>
+#import <TwitterKit/TwitterKit.h>
 
 @interface TwitterNetwork ()<UIActionSheetDelegate,UIAlertViewDelegate>
 @property (copy, nonatomic) Complition copyComplition;
@@ -28,116 +29,47 @@ static TwitterNetwork *model = nil;
 - (instancetype) init {
     self = [super init];
     if (self) {
-        self.networkType = Twitter;
-        if (![self obtainUserName]) {
+        self.networkType = Twitters;
+        if (![[Twitter sharedInstance ]session]) {
             [self initiationPropertiesWithoutSession];
         }
         else {
             self.isLogin = YES;
-            [self obtainArrayUsersTwitter];
         }
     }
     return self;
 }
 
-- (ACAccountType*) accountType{
-    ACAccountStore *accountStore = [ACAccountStore new];
-    return [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
+- (void) obtainDataWithComplition :(Complition) block {
+    __weak TwitterNetwork *weakSell = self;
+
+    [[[Twitter sharedInstance] APIClient] loadUserWithID:[[[Twitter sharedInstance ]session] userID]
+                                              completion:^(TWTRUser *user,
+                                                           NSError *error)
+     {
+         weakSell.currentUser = [User createFromDictionary:user andNetworkType : weakSell.networkType];
+         weakSell.title = [NSString stringWithFormat:@"%@  %@", weakSell.currentUser.firstName, weakSell.currentUser.lastName];
+         weakSell.icon = weakSell.currentUser.photoURL;
+         dispatch_async(dispatch_get_main_queue(), ^{
+             block(weakSell, error);
+             
+         });
+         
+     }];
+    
 }
 
 - (void) loginWithComplition :(Complition) block {
-    self.copyComplition = block;
-    ACAccountStore *accountStore = [ACAccountStore new];
-    ACAccountType *accountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
-    
+    self.isLogin = YES;
     __weak TwitterNetwork *weakSell = self;
-    [accountStore requestAccessToAccountsWithType:accountType options:nil completion:^(BOOL granted, NSError *error) {
-        if(error)
-            NSLog(@"error%@",error);
-        
-        if(granted) {
-            [weakSell obtainArrayUsersTwitter];
+
+    TWTRLogInButton* logInButton = [TWTRLogInButton buttonWithLogInCompletion:^(TWTRSession* session, NSError* error) {
+        if (session) {
+            [weakSell obtainDataWithComplition:block];
         }
     }];
-}
+    [logInButton sendActionsForControlEvents:UIControlEventTouchUpInside];
 
-- (void) obtainArrayUsersTwitter {
-    ACAccountStore *accountStore = [ACAccountStore new];
-    ACAccountType *accountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
-    
-    self.accountsArray = [accountStore accountsWithAccountType:accountType];
-    [[NSUserDefaults standardUserDefaults] setInteger:[self.accountsArray count] forKey:kTwitterUserCount];
-    if ([self.accountsArray count] == 1)
-    {
-        self.twitterAccount = [self.accountsArray firstObject];
-        if (![self obtainUserName])
-            [self createUserName];
-        [self obtainDataFromTwitter];
-        
-    } else
-    {
-        if (![self obtainUserName]) {
-            [self actionSheet];
-        }else {
-            [self returnAccount];
-            [self obtainDataFromTwitter];
-        }
-    }
-}
-
-- (void) actionSheet {
-    
-    UIActionSheet* sheet = [UIActionSheet new];
-    sheet.title = @"Select TwitterAccount";
-    sheet.delegate = self;
-    sheet.cancelButtonIndex = [sheet addButtonWithTitle:@"Cancel"];
-    for (int i = 0; i < [self.accountsArray count]; i++) {
-        self.twitterAccount = self.accountsArray[i];
-        [sheet addButtonWithTitle:self.twitterAccount.username];
-    }
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [sheet showInView:[UIApplication sharedApplication].keyWindow];
-    });
-}
-
-- (void)actionSheet:(UIActionSheet *)popup clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if ( buttonIndex != 0) {
-        self.twitterAccount = self.accountsArray[buttonIndex - 1];
-        [self createUserName];
-        [self obtainDataFromTwitter];
-    }
-}
-
-- (void) returnAccount {
-    
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"username == %@", [self obtainUserName]];
-    NSArray *arrayPredicate = [self.accountsArray filteredArrayUsingPredicate:predicate];
-    if (arrayPredicate.count > 0) {
-        self.twitterAccount = [arrayPredicate firstObject];
-    }
-}
-
-- (void) obtainDataFromTwitter {
-    __weak TwitterNetwork *weakSell = self;
-    NSMutableDictionary *parametrs = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[self obtainUserName], @"screen_name", nil];
-    SLRequest *followRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodGET URL:[NSURL URLWithString:kRequestUrlTwitter] parameters:parametrs];
-    
-    [followRequest setAccount:self.twitterAccount];
-    [followRequest performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
-        
-        NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:responseData
-                                                             options:kNilOptions
-                                                               error:&error];
-        
-        weakSell.currentUser = [User createFromDictionary:dict andNetworkType : weakSell.networkType];
-        weakSell.title = [NSString stringWithFormat:@"%@  %@", weakSell.currentUser.firstName, weakSell.currentUser.lastName];
-        weakSell.icon = weakSell.currentUser.photoURL;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if(weakSell.copyComplition)
-                weakSell.copyComplition(weakSell, error);
-            //[[NSNotificationCenter defaultCenter] postNotificationName:notificationReloadTableView object:nil];
-        });
-    }];
 }
 
 - (void) initiationPropertiesWithoutSession {
@@ -146,21 +78,8 @@ static TwitterNetwork *model = nil;
     self.isLogin = NO;
 }
 
-- (NSString*) obtainUserName {
-    return [[NSUserDefaults standardUserDefaults]valueForKey:kTwitterUserName];
-}
-
-- (void) createUserName {
-    [[NSUserDefaults standardUserDefaults] setObject:self.twitterAccount.username forKey:kTwitterUserName];
-}
-
-- (void) removeObjectFromUserDefault {
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kTwitterUserName];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kTwitterUserCount];
-}
-
 - (void) loginOut {
-    [self removeObjectFromUserDefault];
+    [[Twitter sharedInstance] logOut];
     self.currentUser = nil;
     [self initiationPropertiesWithoutSession];
 }

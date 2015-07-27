@@ -31,6 +31,11 @@
     self.arrayWithNetworksObj = [[SocialManager sharedManager] networks];
 }
 
+- (void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.tableView reloadData];
+}
+
 #pragma mark UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {    
@@ -65,7 +70,6 @@
         [[SocialManager sharedManager]loginForTypeNetwork:socialNetwork.networkType :^(id result, NSError *error) {
             
             if (result) {
-                //weakSelf.socialNetwork = result;
                 [weakSelf performSegueWithIdentifier: goToUserDetailViewControllerSegueIdentifier sender:nil];
             }
         }];
@@ -74,6 +78,13 @@
 
 - (void) reloadTableView {
     [self.tableView reloadData];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat sizeCell = 50;
+    
+    return sizeCell;
 }
 #pragma mark prepareForSegue
 

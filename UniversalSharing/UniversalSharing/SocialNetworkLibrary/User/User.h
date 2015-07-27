@@ -21,6 +21,6 @@
 
 @property (assign, nonatomic) NetworkType networkType;
 
-+ (User*) createFromDictionary:(NSDictionary*) dict andNetworkType :(NetworkType) networkType;
++ (User*) createFromDictionary:(id) dict andNetworkType :(NetworkType) networkType;
 
 @end

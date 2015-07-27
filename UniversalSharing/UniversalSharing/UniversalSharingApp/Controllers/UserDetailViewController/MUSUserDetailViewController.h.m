@@ -34,13 +34,6 @@
     logoutButton = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:2 target:self action: @selector(logoutFromSocialNetwork)];
     self.navigationItem.rightBarButtonItem = logoutButton;
     self.userPropertyArray = [[NSArray alloc] initWithObjects:@"profile", @"dateOfBirth", @"city", @"clientID", nil];
-    
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadTableView) name:reloadTableViewAfterLoadUserInfo object:nil];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)setNetwork:(id)socialNetwork {
@@ -61,28 +54,40 @@
 //    }
 //}
 
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    
-}
+//- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+//    if (buttonIndex) {
+//        [self.socialNetwork loginWithComplition:^(id result, NSError *error) {
+//            [self.socialNetwork  loginOut];
+//            [self.userTableView reloadData];
+//            
+//        }];
+//    }
+//    else {
+//        [self logout];
+//    }
+//}
 
 
 #pragma mark - UINavigationItems
 
-- (void) logoutFromSocialNetwork {
-    
-    if (self.socialNetwork.currentUser.networkType == Twitter) {
-        UIAlertView *logoutAlert = [[UIAlertView alloc] initWithTitle: @"Выход"  message: @"Вы хотите изменить учетную запись пользователя" delegate: self cancelButtonTitle: @"Нет" otherButtonTitles: @"Да", nil];
-        [logoutAlert show];
-    } else {
-        [self logout];
-    }
-}
+//- (void) logoutFromSocialNetwork {
+//    
+//    if (self.socialNetwork.currentUser.networkType == Twitters) {
+//        
+//        UIAlertView *logoutAlert = [[UIAlertView alloc] initWithTitle:@"Logout"
+//                                                        message:@"Do you want to change account"
+//                                                       delegate:self
+//                                              cancelButtonTitle:@"NO"
+//                                              otherButtonTitles:@"YES",nil];
+//       
+//        [logoutAlert show];
+//    } else {
+//        [self logout];
+//    }
+//}
 
-- (void) logout {
-    
+- (void) logoutFromSocialNetwork {
     [self.socialNetwork loginOut];
-    //[[SocialManager sharedManager] logoutFromSocialNetworkForTypeNetwork: self.socialNetwork.currentUser.networkType];
-    
     [self.navigationController popViewControllerAnimated:YES];
     self.navigationController.navigationBar.translucent = YES;
 }
@@ -122,10 +127,6 @@
         return 80;
     }
     return 50;
-}
-
-- (void) reloadTableView {
-    [self.userTableView reloadData];
 }
 
 

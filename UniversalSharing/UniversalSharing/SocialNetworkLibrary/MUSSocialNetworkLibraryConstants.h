@@ -18,7 +18,7 @@ typedef void (^Complition)(id result, NSError *error);
 typedef NS_ENUM (NSInteger, NetworkType) {
     Facebook,
     VKontakt,
-    Twitter
+    Twitters
 };
 
 #pragma mark Facebook Constants
