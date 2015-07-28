@@ -32,20 +32,11 @@
 		30DBFD801B663366002F83D0 /* VKimage.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBFD7F1B663366002F83D0 /* VKimage.png */; };
 		30DBFD821B663370002F83D0 /* FBimage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 30DBFD811B663370002F83D0 /* FBimage.jpg */; };
 		30DBFD841B66337C002F83D0 /* TWimage.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 30DBFD831B66337C002F83D0 /* TWimage.jpeg */; };
-<<<<<<< HEAD
-		97A342601B6776B500AB98F7 /* MUSShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97A3425F1B6776B500AB98F7 /* MUSShareViewController.m */; };
-		97A342641B67775100AB98F7 /* UIButton+CornerRadiusButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 97A342631B67775100AB98F7 /* UIButton+CornerRadiusButton.m */; };
-		97A342681B67915B00AB98F7 /* UIButton+LoadBackgroundImageFromNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 97A342671B67915B00AB98F7 /* UIButton+LoadBackgroundImageFromNetwork.m */; };
-		97A3426A1B67B93000AB98F7 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97A342691B67B93000AB98F7 /* CoreImage.framework */; };
-		97A3426C1B67B93900AB98F7 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97A3426B1B67B93900AB98F7 /* MobileCoreServices.framework */; };
-		97A342701B67C89900AB98F7 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97A3426F1B67C89900AB98F7 /* CoreLocation.framework */; };
-		97A342731B67C8E100AB98F7 /* MUSLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 97A342721B67C8E100AB98F7 /* MUSLocationManager.m */; };
-=======
 		30DBFD8B1B677A9A002F83D0 /* TwitterNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD8A1B677A9A002F83D0 /* TwitterNetwork.m */; };
 		30DBFD8F1B677AD7002F83D0 /* VKNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD8E1B677AD7002F83D0 /* VKNetwork.m */; };
 		30DBFD931B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD921B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.m */; };
 		30DBFD9B1B678AA9002F83D0 /* CacheImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD9A1B678AA9002F83D0 /* CacheImage.m */; };
->>>>>>> d90c15458bb57dab32f6e77313e978aa05c4b709
+		9721C4791B67DD5D0034FEE1 /* MUSShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9721C4781B67DD5D0034FEE1 /* MUSShareViewController.m */; };
 		FC79868BAD5DBAA5D3BB123C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 294811F54E6400CFBFD3EBDD /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -113,17 +104,8 @@
 		30DBFD9A1B678AA9002F83D0 /* CacheImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CacheImage.m; sourceTree = "<group>"; };
 		61D95135D2C19CD52D3B0709 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		7930E9BF698DEF5E51379530 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		97A3425E1B6776B500AB98F7 /* MUSShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSShareViewController.h; sourceTree = "<group>"; };
-		97A3425F1B6776B500AB98F7 /* MUSShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSShareViewController.m; sourceTree = "<group>"; };
-		97A342621B67775100AB98F7 /* UIButton+CornerRadiusButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIButton+CornerRadiusButton.h"; path = "UniversalSharing/UniversalSharingApp/Categories/UIButton+CornerRadiusButton/UIButton+CornerRadiusButton.h"; sourceTree = SOURCE_ROOT; };
-		97A342631B67775100AB98F7 /* UIButton+CornerRadiusButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIButton+CornerRadiusButton.m"; path = "UniversalSharing/UniversalSharingApp/Categories/UIButton+CornerRadiusButton/UIButton+CornerRadiusButton.m"; sourceTree = SOURCE_ROOT; };
-		97A342661B67915B00AB98F7 /* UIButton+LoadBackgroundImageFromNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIButton+LoadBackgroundImageFromNetwork.h"; path = "UniversalSharing/UniversalSharingApp/Categories/UIButton+LoadImageBackroundFromNetwork/UIButton+LoadBackgroundImageFromNetwork.h"; sourceTree = SOURCE_ROOT; };
-		97A342671B67915B00AB98F7 /* UIButton+LoadBackgroundImageFromNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIButton+LoadBackgroundImageFromNetwork.m"; path = "UniversalSharing/UniversalSharingApp/Categories/UIButton+LoadImageBackroundFromNetwork/UIButton+LoadBackgroundImageFromNetwork.m"; sourceTree = SOURCE_ROOT; };
-		97A342691B67B93000AB98F7 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
-		97A3426B1B67B93900AB98F7 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
-		97A3426F1B67C89900AB98F7 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		97A342711B67C8E100AB98F7 /* MUSLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUSLocationManager.h; path = UniversalSharing/UniversalSharingApp/Managers/LocationManager/MUSLocationManager.h; sourceTree = SOURCE_ROOT; };
-		97A342721B67C8E100AB98F7 /* MUSLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUSLocationManager.m; path = UniversalSharing/UniversalSharingApp/Managers/LocationManager/MUSLocationManager.m; sourceTree = SOURCE_ROOT; };
+		9721C4771B67DD5D0034FEE1 /* MUSShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSShareViewController.h; sourceTree = "<group>"; };
+		9721C4781B67DD5D0034FEE1 /* MUSShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSShareViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,9 +113,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				97A342701B67C89900AB98F7 /* CoreLocation.framework in Frameworks */,
-				97A3426C1B67B93900AB98F7 /* MobileCoreServices.framework in Frameworks */,
-				97A3426A1B67B93000AB98F7 /* CoreImage.framework in Frameworks */,
 				FC79868BAD5DBAA5D3BB123C /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -254,7 +233,6 @@
 				187FC5301B6528AA00A3916C /* LaunchScreen.xib */,
 				187FC5321B6528AA00A3916C /* Main.storyboard */,
 				187FC5341B6528AA00A3916C /* Controllers */,
-				97A3426E1B67C78900AB98F7 /* Managers */,
 				187FC53A1B6528AA00A3916C /* CustomViews */,
 				187FC54B1B652A5600A3916C /* Categories */,
 				187FC5551B652E8500A3916C /* Constants */,
@@ -307,8 +285,8 @@
 		187FC5391B6528AA00A3916C /* ShareViewController */ = {
 			isa = PBXGroup;
 			children = (
-				97A3425E1B6776B500AB98F7 /* MUSShareViewController.h */,
-				97A3425F1B6776B500AB98F7 /* MUSShareViewController.m */,
+				9721C4771B67DD5D0034FEE1 /* MUSShareViewController.h */,
+				9721C4781B67DD5D0034FEE1 /* MUSShareViewController.m */,
 			);
 			path = ShareViewController;
 			sourceTree = "<group>";
@@ -336,8 +314,6 @@
 		187FC54B1B652A5600A3916C /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				97A342651B6790BC00AB98F7 /* UIButton+LoadBackgroundImageFromNetwork */,
-				97A342611B6776F600AB98F7 /* UIButton+CornerRadiusButton */,
 				187FC54C1B652A5600A3916C /* UIImageView+LoadImageFromNetwork */,
 				187FC54F1B652A5600A3916C /* UIImageView+RoundImage */,
 			);
@@ -439,50 +415,9 @@
 		913EF4D692E7786FD2E96B42 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				97A3426F1B67C89900AB98F7 /* CoreLocation.framework */,
-				97A3426B1B67B93900AB98F7 /* MobileCoreServices.framework */,
-				97A342691B67B93000AB98F7 /* CoreImage.framework */,
 				294811F54E6400CFBFD3EBDD /* libPods.a */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		97A342611B6776F600AB98F7 /* UIButton+CornerRadiusButton */ = {
-			isa = PBXGroup;
-			children = (
-				97A342621B67775100AB98F7 /* UIButton+CornerRadiusButton.h */,
-				97A342631B67775100AB98F7 /* UIButton+CornerRadiusButton.m */,
-			);
-			name = "UIButton+CornerRadiusButton";
-			path = "UIImageView+LoadImageFromNetwork";
-			sourceTree = "<group>";
-		};
-		97A342651B6790BC00AB98F7 /* UIButton+LoadBackgroundImageFromNetwork */ = {
-			isa = PBXGroup;
-			children = (
-				97A342661B67915B00AB98F7 /* UIButton+LoadBackgroundImageFromNetwork.h */,
-				97A342671B67915B00AB98F7 /* UIButton+LoadBackgroundImageFromNetwork.m */,
-			);
-			name = "UIButton+LoadBackgroundImageFromNetwork";
-			path = "UIImageView+LoadImageFromNetwork";
-			sourceTree = "<group>";
-		};
-		97A3426D1B67C77200AB98F7 /* LocationManager */ = {
-			isa = PBXGroup;
-			children = (
-				97A342711B67C8E100AB98F7 /* MUSLocationManager.h */,
-				97A342721B67C8E100AB98F7 /* MUSLocationManager.m */,
-			);
-			name = LocationManager;
-			sourceTree = "<group>";
-		};
-		97A3426E1B67C78900AB98F7 /* Managers */ = {
-			isa = PBXGroup;
-			children = (
-				97A3426D1B67C77200AB98F7 /* LocationManager */,
-			);
-			name = Managers;
-			path = CustomViews;
 			sourceTree = "<group>";
 		};
 		CE1EC0FB4280849E2B54FF1A /* Pods */ = {
@@ -655,21 +590,10 @@
 				187FC5521B652A5600A3916C /* UIImageView+LoadImageFromNetwork.m in Sources */,
 				30DBFD9B1B678AA9002F83D0 /* CacheImage.m in Sources */,
 				187FC55B1B652F4200A3916C /* MUSUserDetailViewController.h.m in Sources */,
-<<<<<<< HEAD
-				187FC5291B65222D00A3916C /* TwitterNetwork.m in Sources */,
-				97A342601B6776B500AB98F7 /* MUSShareViewController.m in Sources */,
-=======
->>>>>>> d90c15458bb57dab32f6e77313e978aa05c4b709
 				187FC5581B652E8500A3916C /* ConstantsApp.m in Sources */,
 				187FC5281B65222D00A3916C /* SocialNetwork.m in Sources */,
-				97A342641B67775100AB98F7 /* UIButton+CornerRadiusButton.m in Sources */,
 				187FC5491B6528BC00A3916C /* MUSAccountTableViewCell.m in Sources */,
-<<<<<<< HEAD
-				97A342681B67915B00AB98F7 /* UIButton+LoadBackgroundImageFromNetwork.m in Sources */,
-				97A342731B67C8E100AB98F7 /* MUSLocationManager.m in Sources */,
-=======
 				30DBFD8F1B677AD7002F83D0 /* VKNetwork.m in Sources */,
->>>>>>> d90c15458bb57dab32f6e77313e978aa05c4b709
 				187FC5701B65316C00A3916C /* MUSTopUserProfileCell.m in Sources */,
 				187FC52A1B65222D00A3916C /* User.m in Sources */,
 				30DBFD8B1B677A9A002F83D0 /* TwitterNetwork.m in Sources */,
@@ -678,6 +602,7 @@
 				187FC5531B652A5600A3916C /* UIImageView+RoundImage.m in Sources */,
 				187FC5721B65316C00A3916C /* MUSUserProfileCell.m in Sources */,
 				187FC5271B65222D00A3916C /* SocialManager.m in Sources */,
+				9721C4791B67DD5D0034FEE1 /* MUSShareViewController.m in Sources */,
 				187FC5261B65222D00A3916C /* FacebookNetwork.m in Sources */,
 				187FC5421B6528AA00A3916C /* MUSAccountsViewController.m in Sources */,
 			);
@@ -807,7 +732,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = UniversalSharing/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -820,7 +745,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = UniversalSharing/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
