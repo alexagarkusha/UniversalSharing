@@ -10,13 +10,14 @@
 
 @interface ConstantsApp : NSObject
 
-#warning "Separate like in another contants file"
-
-//FOUNDATION_EXPORT NSString *const kSegueIdentifier;
-FOUNDATION_EXPORT NSString *const notificationReloadTableView;
-
+#pragma mark AccountsViewController Constants
 
 FOUNDATION_EXPORT NSString *const goToUserDetailViewControllerSegueIdentifier;
+FOUNDATION_EXPORT NSString *const notificationReloadTableView;
+
+#pragma mark ShareViewController Constants
+
+FOUNDATION_EXPORT NSString *const kPlaceholderText;
 
 
 @end
