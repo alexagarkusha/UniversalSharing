@@ -45,6 +45,7 @@
     self.locationManager.distanceFilter = kCLDistanceFilterNone; //type - double;
     if ([versionDeviceString floatValue] >= 8.0) {
         if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined) {
+#warning "Just when use"
             [self.locationManager requestAlwaysAuthorization];
             [self.locationManager requestWhenInUseAuthorization];
         }

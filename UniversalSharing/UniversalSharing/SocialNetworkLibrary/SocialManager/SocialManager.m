@@ -32,6 +32,16 @@ static SocialManager *model = nil;
 - (NSArray*) networks :(NSArray*) arrayWithNetwork {
     NSMutableArray *arrayWithNetworks = [NSMutableArray new];
     
+    
+#warning "Update for on block"
+    
+//    [arrayWithNetwork enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+//        <#code#>
+//    }];
+    
+#warning "Check if networks types repeads in array"
+#warning "Replace switch in SocialNetwork class"
+    
     for (int i = 0; i < arrayWithNetwork.count; i++) {
         
         self.networkType = [arrayWithNetwork[i] integerValue];

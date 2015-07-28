@@ -24,6 +24,8 @@
 
 @implementation MUSAccountsViewController
 
+#warning "Remove notification"
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadTableView) name:notificationReloadTableView object:nil];

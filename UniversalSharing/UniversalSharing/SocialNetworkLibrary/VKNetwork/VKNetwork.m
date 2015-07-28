@@ -16,6 +16,10 @@
 @end
 
 static VKNetwork *model = nil;
+
+
+#warning "Use isLoggedIn method to check is login"
+
 @implementation VKNetwork
 
 + (VKNetwork*) sharedManager {
@@ -71,7 +75,7 @@ static VKNetwork *model = nil;
     [request executeWithResultBlock:^(VKResponse * response)
      {
          weakSell.currentUser = [User createFromDictionary:(NSDictionary*)[response.json firstObject] andNetworkType:weakSell.networkType];
-         weakSell.title = [NSString stringWithFormat:@"%@  %@", weakSell.currentUser.firstName, weakSell.currentUser.lastName];
+         weakSell.title = [NSString stringWithFormat:@"%@ %@", weakSell.currentUser.firstName, weakSell.currentUser.lastName];
          weakSell.icon = weakSell.currentUser.photoURL;
              block(weakSell, nil);
          
