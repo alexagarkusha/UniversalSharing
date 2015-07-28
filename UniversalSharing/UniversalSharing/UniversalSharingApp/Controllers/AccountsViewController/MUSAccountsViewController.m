@@ -28,7 +28,8 @@
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadTableView) name:notificationReloadTableView object:nil];
     //self.tableView.contentInset = UIEdgeInsetsMake(-70,0,0,0);
-    self.arrayWithNetworksObj = [[SocialManager sharedManager] networks];
+    NSArray *arrayWithNetworks = [NSArray arrayWithObjects:@(Twitters), @(VKontakt), @(Facebook), nil];
+    self.arrayWithNetworksObj = [[SocialManager sharedManager] networks:arrayWithNetworks];
 }
 
 - (void) viewWillAppear:(BOOL)animated {

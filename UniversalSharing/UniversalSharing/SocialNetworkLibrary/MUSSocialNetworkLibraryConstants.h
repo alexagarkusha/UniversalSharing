@@ -10,30 +10,30 @@
 
 #pragma mark Blocks
 
-typedef void (^Complition)(id result, NSError *error);
-
-
-#pragma mark Types
-
-typedef NS_ENUM (NSInteger, NetworkType) {
-    Facebook,
-    VKontakt,
-    Twitters
-};
-
-#pragma mark Facebook Constants
-
-FOUNDATION_EXPORT NSString *const kRequestParametrsFacebook;
-
-#pragma mark Vkontakte Constants
-
-FOUNDATION_EXPORT NSString *const kVkAppID;
-FOUNDATION_EXPORT NSString *const ALL_USER_FIELDS;
-
-
-#pragma mark Twitter Constants
-FOUNDATION_EXPORT NSString *const kTwitterUserName;
-FOUNDATION_EXPORT NSString *const kTwitterUserCount;
-FOUNDATION_EXPORT NSString *const kRequestUrlTwitter;
-FOUNDATION_EXPORT NSString *const kConsumerKey;
-FOUNDATION_EXPORT NSString *const kConsumerSecret;
+//typedef void (^Complition)(id result, NSError *error);
+//
+//
+//#pragma mark Types
+//
+//typedef NS_ENUM (NSInteger, SocilalNetworkType) {
+//    FacebookNetworkType,
+//    VKontaktNetworkType,
+//    TwittersNetworkType
+//};
+//
+//#pragma mark Facebook Constants
+//
+//FOUNDATION_EXPORT NSString *const kRequestParametrsFacebook;
+//
+//#pragma mark Vkontakte Constants
+//
+//FOUNDATION_EXPORT NSString *const kVkAppID;
+//FOUNDATION_EXPORT NSString *const ALL_USER_FIELDS;
+//
+//
+//#pragma mark Twitter Constants
+//FOUNDATION_EXPORT NSString *const kTwitterUserName;
+//FOUNDATION_EXPORT NSString *const kTwitterUserCount;
+//FOUNDATION_EXPORT NSString *const kRequestUrlTwitter;
+//FOUNDATION_EXPORT NSString *const kConsumerKey;
+//FOUNDATION_EXPORT NSString *const kConsumerSecret;
