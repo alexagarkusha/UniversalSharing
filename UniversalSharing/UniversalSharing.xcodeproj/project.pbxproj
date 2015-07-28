@@ -496,14 +496,14 @@
 /* Begin PBXShellScriptBuildPhase section */
 		30DBFD871B6671AE002F83D0 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/Fabric.framework/run\" 3a9da71f7d56202803b50a3a80978b9bbcfb7dc0 83b8b739fc7b9da0679ec9e1a68c3e4be431d0fc7510aaaef69a94c79575b20f";
 		};
