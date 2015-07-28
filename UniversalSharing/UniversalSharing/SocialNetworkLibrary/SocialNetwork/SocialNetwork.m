@@ -20,7 +20,7 @@
     _networkType = networkType;
 }
 
-- (void) obtainDataFromNetworkWithComplition :(Complition) block {
+- (void) obtainInfoFromNetworkWithComplition :(Complition) block {
     
     
 }

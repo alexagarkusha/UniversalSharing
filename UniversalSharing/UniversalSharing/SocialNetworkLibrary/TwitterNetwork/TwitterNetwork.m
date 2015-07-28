@@ -45,7 +45,7 @@ static TwitterNetwork *model = nil;
     return self;
 }
 
-- (void) obtainDataFromNetworkWithComplition :(Complition) block {
+- (void) obtainInfoFromNetworkWithComplition :(Complition) block {
     __weak TwitterNetwork *weakSell = self;
 
     [[[Twitter sharedInstance] APIClient] loadUserWithID:[[[Twitter sharedInstance ]session] userID]
@@ -72,7 +72,7 @@ static TwitterNetwork *model = nil;
 
    [[Twitter sharedInstance] logInWithCompletion:^(TWTRSession* session, NSError* error) {
         if (session) {
-            [weakSell obtainDataFromNetworkWithComplition:block];
+            [weakSell obtainInfoFromNetworkWithComplition:block];
         }
     }];
 }

@@ -63,7 +63,7 @@ static VKNetwork *model = nil;
     self.isLogin = NO;
 }
 
-- (void) obtainDataFromNetworkWithComplition :(Complition) block {
+- (void) obtainInfoFromNetworkWithComplition :(Complition) block {
 
     __weak VKNetwork *weakSell = self;
     
@@ -103,7 +103,7 @@ static VKNetwork *model = nil;
 
 - (void)vkSdkReceivedNewToken:(VKAccessToken *)newToken
 {
-    [self obtainDataFromNetworkWithComplition:self.copyComplition];
+    [self obtainInfoFromNetworkWithComplition:self.copyComplition];
 }
 
 - (void)vkSdkShouldPresentViewController:(UIViewController *)controller

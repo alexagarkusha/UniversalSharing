@@ -35,7 +35,7 @@ static FacebookNetwork *model = nil;
     return self;
 }
 
-- (void) obtainDataFromNetworkWithComplition :(Complition) block {
+- (void) obtainInfoFromNetworkWithComplition :(Complition) block {
     __weak FacebookNetwork *weakSell = self;
     FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]initWithGraphPath:@"/me"
                                                                   parameters:@{@"fields": kRequestParametrsFacebook}
@@ -72,7 +72,7 @@ static FacebookNetwork *model = nil;
             if ([result.grantedPermissions containsObject:@"email"]) {
                 
                 
-                [weakSell obtainDataFromNetworkWithComplition:block];
+                [weakSell obtainInfoFromNetworkWithComplition:block];
                 
                 
 //                if ([FBSDKAccessToken currentAccessToken]) {

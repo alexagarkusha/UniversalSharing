@@ -47,7 +47,7 @@
 - (void) configurateCellForNetwork:(SocialNetwork *)socialNetwork {    
     if (socialNetwork.isLogin) {
         __weak MUSAccountTableViewCell *weakSelf = self;
-        [socialNetwork obtainDataFromNetworkWithComplition:^(id result, NSError *error) {
+        [socialNetwork obtainInfoFromNetworkWithComplition:^(id result, NSError *error) {
             [weakSelf.networkIconImageView loadImageFromUrl:[NSURL URLWithString:socialNetwork.icon]];
             weakSelf.loginLabel.text = socialNetwork.title;
             

@@ -21,7 +21,7 @@
 @property (assign, nonatomic) NetworkType networkType;
 
 - (void) loginWithComplition :(Complition) block;
-- (void) obtainDataFromNetworkWithComplition :(Complition) block;
+- (void) obtainInfoFromNetworkWithComplition :(Complition) block;
 - (void) loginOut;
 - (void)setNetworkType:(NetworkType)networkType;
 
