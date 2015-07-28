@@ -13,6 +13,6 @@
 @property (strong, nonatomic) NSArray *arrayWithNetworks;
 
 + (SocialManager*) sharedManager;
-- (void) loginForTypeNetwork :(NetworkType)networkIdentifier :(Complition) block;
-- (NSArray*) networks;
+
+- (NSArray*) networks :(NSArray*) arrrayWithNetworks;
 @end

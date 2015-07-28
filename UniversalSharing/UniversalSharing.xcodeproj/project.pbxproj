@@ -8,13 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		187FC4FD1B651D9500A3916C /* UniversalSharingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 187FC4FC1B651D9500A3916C /* UniversalSharingTests.m */; };
-		187FC5251B65222D00A3916C /* MUSSocialNetworkLibraryConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 187FC5131B65222D00A3916C /* MUSSocialNetworkLibraryConstants.m */; };
 		187FC5261B65222D00A3916C /* FacebookNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 187FC5161B65222D00A3916C /* FacebookNetwork.m */; };
 		187FC5271B65222D00A3916C /* SocialManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 187FC5191B65222D00A3916C /* SocialManager.m */; };
 		187FC5281B65222D00A3916C /* SocialNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 187FC51C1B65222D00A3916C /* SocialNetwork.m */; };
-		187FC5291B65222D00A3916C /* TwitterNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 187FC51F1B65222D00A3916C /* TwitterNetwork.m */; };
 		187FC52A1B65222D00A3916C /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 187FC5221B65222D00A3916C /* User.m */; };
-		187FC52B1B65222D00A3916C /* VKNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 187FC5241B65222D00A3916C /* VKNetwork.m */; };
 		187FC53F1B6528AA00A3916C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 187FC52F1B6528AA00A3916C /* AppDelegate.m */; };
 		187FC5401B6528AA00A3916C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187FC5301B6528AA00A3916C /* LaunchScreen.xib */; };
 		187FC5411B6528AA00A3916C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 187FC5321B6528AA00A3916C /* Main.storyboard */; };
@@ -35,6 +32,9 @@
 		30DBFD801B663366002F83D0 /* VKimage.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBFD7F1B663366002F83D0 /* VKimage.png */; };
 		30DBFD821B663370002F83D0 /* FBimage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 30DBFD811B663370002F83D0 /* FBimage.jpg */; };
 		30DBFD841B66337C002F83D0 /* TWimage.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 30DBFD831B66337C002F83D0 /* TWimage.jpeg */; };
+		30DBFD8B1B677A9A002F83D0 /* TwitterNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD8A1B677A9A002F83D0 /* TwitterNetwork.m */; };
+		30DBFD8F1B677AD7002F83D0 /* VKNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD8E1B677AD7002F83D0 /* VKNetwork.m */; };
+		30DBFD931B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD921B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.m */; };
 		FC79868BAD5DBAA5D3BB123C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 294811F54E6400CFBFD3EBDD /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -53,8 +53,6 @@
 		187FC4F61B651D9500A3916C /* UniversalSharingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UniversalSharingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		187FC4FB1B651D9500A3916C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		187FC4FC1B651D9500A3916C /* UniversalSharingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UniversalSharingTests.m; sourceTree = "<group>"; };
-		187FC5121B65222D00A3916C /* MUSSocialNetworkLibraryConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSSocialNetworkLibraryConstants.h; sourceTree = "<group>"; };
-		187FC5131B65222D00A3916C /* MUSSocialNetworkLibraryConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSSocialNetworkLibraryConstants.m; sourceTree = "<group>"; };
 		187FC5151B65222D00A3916C /* FacebookNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookNetwork.h; sourceTree = "<group>"; };
 		187FC5161B65222D00A3916C /* FacebookNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookNetwork.m; sourceTree = "<group>"; };
 		187FC5181B65222D00A3916C /* SocialManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialManager.h; sourceTree = "<group>"; };
@@ -62,12 +60,8 @@
 		187FC51B1B65222D00A3916C /* SocialNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialNetwork.h; sourceTree = "<group>"; };
 		187FC51C1B65222D00A3916C /* SocialNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocialNetwork.m; sourceTree = "<group>"; };
 		187FC51D1B65222D00A3916C /* MUSSocialNetworkLibraryHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSSocialNetworkLibraryHeader.h; sourceTree = "<group>"; };
-		187FC51E1B65222D00A3916C /* TwitterNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterNetwork.h; sourceTree = "<group>"; };
-		187FC51F1B65222D00A3916C /* TwitterNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterNetwork.m; sourceTree = "<group>"; };
 		187FC5211B65222D00A3916C /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		187FC5221B65222D00A3916C /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
-		187FC5231B65222D00A3916C /* VKNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VKNetwork.h; sourceTree = "<group>"; };
-		187FC5241B65222D00A3916C /* VKNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VKNetwork.m; sourceTree = "<group>"; };
 		187FC52E1B6528AA00A3916C /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		187FC52F1B6528AA00A3916C /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		187FC5311B6528AA00A3916C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -98,6 +92,12 @@
 		30DBFD7F1B663366002F83D0 /* VKimage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = VKimage.png; sourceTree = "<group>"; };
 		30DBFD811B663370002F83D0 /* FBimage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = FBimage.jpg; sourceTree = "<group>"; };
 		30DBFD831B66337C002F83D0 /* TWimage.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = TWimage.jpeg; sourceTree = "<group>"; };
+		30DBFD891B677A9A002F83D0 /* TwitterNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterNetwork.h; sourceTree = "<group>"; };
+		30DBFD8A1B677A9A002F83D0 /* TwitterNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterNetwork.m; sourceTree = "<group>"; };
+		30DBFD8D1B677AD7002F83D0 /* VKNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VKNetwork.h; sourceTree = "<group>"; };
+		30DBFD8E1B677AD7002F83D0 /* VKNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VKNetwork.m; sourceTree = "<group>"; };
+		30DBFD911B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSSocialNetworkLibraryConstants.h; sourceTree = "<group>"; };
+		30DBFD921B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSSocialNetworkLibraryConstants.m; sourceTree = "<group>"; };
 		61D95135D2C19CD52D3B0709 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		7930E9BF698DEF5E51379530 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -170,17 +170,14 @@
 		187FC5111B65222D00A3916C /* SocialNetworkLibrary */ = {
 			isa = PBXGroup;
 			children = (
-				187FC5121B65222D00A3916C /* MUSSocialNetworkLibraryConstants.h */,
-				187FC5131B65222D00A3916C /* MUSSocialNetworkLibraryConstants.m */,
+				30DBFD901B677B27002F83D0 /* SocialNetworkLibraryConstants */,
+				30DBFD8C1B677AD7002F83D0 /* VKNetwork */,
+				30DBFD881B677A9A002F83D0 /* TwitterNetwork */,
 				187FC5141B65222D00A3916C /* FacebookNetwork */,
 				187FC5171B65222D00A3916C /* SocialManager */,
 				187FC51A1B65222D00A3916C /* SocialNetwork */,
 				187FC51D1B65222D00A3916C /* MUSSocialNetworkLibraryHeader.h */,
-				187FC51E1B65222D00A3916C /* TwitterNetwork.h */,
-				187FC51F1B65222D00A3916C /* TwitterNetwork.m */,
 				187FC5201B65222D00A3916C /* User */,
-				187FC5231B65222D00A3916C /* VKNetwork.h */,
-				187FC5241B65222D00A3916C /* VKNetwork.m */,
 			);
 			path = SocialNetworkLibrary;
 			sourceTree = "<group>";
@@ -370,6 +367,33 @@
 			path = UserProfileCell;
 			sourceTree = "<group>";
 		};
+		30DBFD881B677A9A002F83D0 /* TwitterNetwork */ = {
+			isa = PBXGroup;
+			children = (
+				30DBFD891B677A9A002F83D0 /* TwitterNetwork.h */,
+				30DBFD8A1B677A9A002F83D0 /* TwitterNetwork.m */,
+			);
+			path = TwitterNetwork;
+			sourceTree = "<group>";
+		};
+		30DBFD8C1B677AD7002F83D0 /* VKNetwork */ = {
+			isa = PBXGroup;
+			children = (
+				30DBFD8D1B677AD7002F83D0 /* VKNetwork.h */,
+				30DBFD8E1B677AD7002F83D0 /* VKNetwork.m */,
+			);
+			path = VKNetwork;
+			sourceTree = "<group>";
+		};
+		30DBFD901B677B27002F83D0 /* SocialNetworkLibraryConstants */ = {
+			isa = PBXGroup;
+			children = (
+				30DBFD911B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.h */,
+				30DBFD921B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.m */,
+			);
+			path = SocialNetworkLibraryConstants;
+			sourceTree = "<group>";
+		};
 		913EF4D692E7786FD2E96B42 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -496,14 +520,14 @@
 /* Begin PBXShellScriptBuildPhase section */
 		30DBFD871B6671AE002F83D0 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/Fabric.framework/run\" 3a9da71f7d56202803b50a3a80978b9bbcfb7dc0 83b8b739fc7b9da0679ec9e1a68c3e4be431d0fc7510aaaef69a94c79575b20f";
 		};
@@ -547,17 +571,17 @@
 				187FC5451B6528AA00A3916C /* main.m in Sources */,
 				187FC5521B652A5600A3916C /* UIImageView+LoadImageFromNetwork.m in Sources */,
 				187FC55B1B652F4200A3916C /* MUSUserDetailViewController.h.m in Sources */,
-				187FC5291B65222D00A3916C /* TwitterNetwork.m in Sources */,
 				187FC5581B652E8500A3916C /* ConstantsApp.m in Sources */,
-				187FC52B1B65222D00A3916C /* VKNetwork.m in Sources */,
 				187FC5281B65222D00A3916C /* SocialNetwork.m in Sources */,
 				187FC5491B6528BC00A3916C /* MUSAccountTableViewCell.m in Sources */,
+				30DBFD8F1B677AD7002F83D0 /* VKNetwork.m in Sources */,
 				187FC5701B65316C00A3916C /* MUSTopUserProfileCell.m in Sources */,
 				187FC52A1B65222D00A3916C /* User.m in Sources */,
+				30DBFD8B1B677A9A002F83D0 /* TwitterNetwork.m in Sources */,
 				187FC53F1B6528AA00A3916C /* AppDelegate.m in Sources */,
+				30DBFD931B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.m in Sources */,
 				187FC5531B652A5600A3916C /* UIImageView+RoundImage.m in Sources */,
 				187FC5721B65316C00A3916C /* MUSUserProfileCell.m in Sources */,
-				187FC5251B65222D00A3916C /* MUSSocialNetworkLibraryConstants.m in Sources */,
 				187FC5271B65222D00A3916C /* SocialManager.m in Sources */,
 				187FC5261B65222D00A3916C /* FacebookNetwork.m in Sources */,
 				187FC5421B6528AA00A3916C /* MUSAccountsViewController.m in Sources */,

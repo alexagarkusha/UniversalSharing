@@ -9,22 +9,18 @@
 #ifndef UniversalSharing_SocialNetworkLibraryHeader_h
 #define UniversalSharing_SocialNetworkLibraryHeader_h
 
-#warning "Use pragma mark to separate"
+//#warning "Use pragma mark to separate"
 
 #pragma mark Facebook
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 
-// Vkontakte
+#pragma mark VKontakt
 #import <VKSdk.h>
 
-
-// SocialNetworkLibrary
+#pragma mark SocialNetworkLibrary
 #import "SocialManager.h"
 #import "SocialNetwork.h"
 #import "User.h"
-
 #import "MUSSocialNetworkLibraryConstants.h"
-
-
 
 #endif
