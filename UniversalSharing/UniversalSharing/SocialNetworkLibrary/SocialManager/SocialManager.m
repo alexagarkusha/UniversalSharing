@@ -23,6 +23,9 @@ static SocialManager *model = nil;
     return  model;
 }
 
+
+#warning "Add availability to choose networks and they position, means just Twitter or VK and FB"
+
 - (NSArray*) networks {
     FacebookNetwork *facebookNetwork = [FacebookNetwork sharedManager];//[[FacebookNetwork alloc]init] is THE fucking mistake!!!
     VKNetwork *vkNetwork = [VKNetwork sharedManager];
@@ -31,6 +34,8 @@ static SocialManager *model = nil;
     return self.arrayWithNetworks;
 }
 
+
+#warning "Remove this method"
 - (void) loginForTypeNetwork:(NetworkType)networkIdentifier :(Complition)block{
     
     SocialNetwork *socialNetwork = [self p_determinationOfTheTypeOfSocialNetwork:networkIdentifier];

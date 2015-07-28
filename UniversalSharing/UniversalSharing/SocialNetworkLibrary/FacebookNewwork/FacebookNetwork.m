@@ -101,12 +101,12 @@ static FacebookNetwork *model = nil;
     self.title = @"Login Facebook";
     self.icon = @"FBimage.jpg";
     self.isLogin = NO;
+    self.currentUser = nil;
 }
 
 - (void) loginOut {
     [FBSDKAccessToken setCurrentAccessToken:nil];
     [FBSDKProfile setCurrentProfile:nil];
-    self.currentUser = nil;
     [self initiationPropertiesWithoutSession];
 }
 

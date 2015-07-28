@@ -12,12 +12,15 @@
 #import <TwitterKit/TwitterKit.h>
 #import <Fabric/Fabric.h>
 
-@interface TwitterNetwork ()<UIActionSheetDelegate,UIAlertViewDelegate>
+@interface TwitterNetwork () <UIActionSheetDelegate, UIAlertViewDelegate>
+
 @property (copy, nonatomic) Complition copyComplition;
 @property (strong, nonatomic) NSArray *accountsArray;
 @property (strong, nonatomic) ACAccount *twitterAccount;
 @end
+
 static TwitterNetwork *model = nil;
+
 @implementation TwitterNetwork
 + (TwitterNetwork*) sharedManager {
     static dispatch_once_t onceToken;
@@ -63,6 +66,8 @@ static TwitterNetwork *model = nil;
     
 }
 
+#warning "Check is it possible call login without using button"
+
 - (void) loginWithComplition :(Complition) block {
     self.isLogin = YES;
     __weak TwitterNetwork *weakSell = self;
@@ -80,11 +85,11 @@ static TwitterNetwork *model = nil;
     self.title = @"Login Twitter";
     self.icon = @"TWimage.jpeg";
     self.isLogin = NO;
+    self.currentUser = nil;
 }
 
 - (void) loginOut {
     [[Twitter sharedInstance] logOut];
-    self.currentUser = nil;
     [self initiationPropertiesWithoutSession];
 }
 
