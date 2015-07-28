@@ -35,6 +35,7 @@
 		30DBFD8B1B677A9A002F83D0 /* TwitterNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD8A1B677A9A002F83D0 /* TwitterNetwork.m */; };
 		30DBFD8F1B677AD7002F83D0 /* VKNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD8E1B677AD7002F83D0 /* VKNetwork.m */; };
 		30DBFD931B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD921B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.m */; };
+		30DBFD9B1B678AA9002F83D0 /* CacheImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD9A1B678AA9002F83D0 /* CacheImage.m */; };
 		FC79868BAD5DBAA5D3BB123C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 294811F54E6400CFBFD3EBDD /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -98,6 +99,8 @@
 		30DBFD8E1B677AD7002F83D0 /* VKNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VKNetwork.m; sourceTree = "<group>"; };
 		30DBFD911B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSSocialNetworkLibraryConstants.h; sourceTree = "<group>"; };
 		30DBFD921B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSSocialNetworkLibraryConstants.m; sourceTree = "<group>"; };
+		30DBFD991B678AA9002F83D0 /* CacheImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CacheImage.h; sourceTree = "<group>"; };
+		30DBFD9A1B678AA9002F83D0 /* CacheImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CacheImage.m; sourceTree = "<group>"; };
 		61D95135D2C19CD52D3B0709 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		7930E9BF698DEF5E51379530 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -222,6 +225,7 @@
 		187FC52C1B6528AA00A3916C /* UniversalSharingApp */ = {
 			isa = PBXGroup;
 			children = (
+				30DBFD981B678A4A002F83D0 /* CacheImage */,
 				187FC52D1B6528AA00A3916C /* AppDelegate */,
 				187FC5301B6528AA00A3916C /* LaunchScreen.xib */,
 				187FC5321B6528AA00A3916C /* Main.storyboard */,
@@ -392,6 +396,15 @@
 				30DBFD921B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.m */,
 			);
 			path = SocialNetworkLibraryConstants;
+			sourceTree = "<group>";
+		};
+		30DBFD981B678A4A002F83D0 /* CacheImage */ = {
+			isa = PBXGroup;
+			children = (
+				30DBFD991B678AA9002F83D0 /* CacheImage.h */,
+				30DBFD9A1B678AA9002F83D0 /* CacheImage.m */,
+			);
+			name = CacheImage;
 			sourceTree = "<group>";
 		};
 		913EF4D692E7786FD2E96B42 /* Frameworks */ = {
@@ -570,6 +583,7 @@
 			files = (
 				187FC5451B6528AA00A3916C /* main.m in Sources */,
 				187FC5521B652A5600A3916C /* UIImageView+LoadImageFromNetwork.m in Sources */,
+				30DBFD9B1B678AA9002F83D0 /* CacheImage.m in Sources */,
 				187FC55B1B652F4200A3916C /* MUSUserDetailViewController.h.m in Sources */,
 				187FC5581B652E8500A3916C /* ConstantsApp.m in Sources */,
 				187FC5281B65222D00A3916C /* SocialNetwork.m in Sources */,
@@ -715,6 +729,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -727,6 +742,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
