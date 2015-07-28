@@ -7,11 +7,14 @@
 //
 
 #import "SocialManager.h"
+#import "MUSSocialNetworkLibraryConstants.h"
 
 #import "FacebookNetwork.h"
 #import "VKNetwork.h"
 #import "TwitterNetwork.h"
-
+@interface SocialManager()
+@property (assign, nonatomic) NetworkType networkType;
+@end
 static SocialManager *model = nil;
 
 @implementation SocialManager
@@ -24,22 +27,43 @@ static SocialManager *model = nil;
 }
 
 
-#warning "Add availability to choose networks and they position, means just Twitter or VK and FB"
+//#warning "Add availability to choose networks and they position, means just Twitter or VK and FB"
 
-- (NSArray*) networks :(NSArray*) arrrayWithNetworks {
-    FacebookNetwork *facebookNetwork = [FacebookNetwork sharedManager];//[[FacebookNetwork alloc]init] is THE fucking mistake!!!
-    VKNetwork *vkNetwork = [VKNetwork sharedManager];
-    TwitterNetwork *twitterNetwork = [TwitterNetwork sharedManager];
-    self.arrayWithNetworks = [[NSArray alloc ]initWithObjects:facebookNetwork, vkNetwork, twitterNetwork, nil];
-    return self.arrayWithNetworks;
+- (NSArray*) networks :(NSArray*) arrayWithNetwork {
+    NSMutableArray *arrayWithNetworks = [NSMutableArray new];
+    
+    for (int i = 0; i < arrayWithNetwork.count; i++) {
+        
+        self.networkType = [arrayWithNetwork[i] integerValue];
+        switch (self.networkType) {
+            case Facebook:{
+                FacebookNetwork *facebookNetwork = [FacebookNetwork sharedManager];
+                [arrayWithNetworks addObject:facebookNetwork];
+                break;
+            }
+            case Twitters:{
+                TwitterNetwork *twitterNetwork = [TwitterNetwork sharedManager];
+                [arrayWithNetworks addObject:twitterNetwork];
+                break;
+            }
+            case VKontakt:{
+                VKNetwork *vkNetwork = [VKNetwork sharedManager];
+                [arrayWithNetworks addObject:vkNetwork];
+                break;
+            }
+            default:
+                break;
+        }
+    }
+        return arrayWithNetworks;
 }
 
 //- (SocialNetwork*) p_determinationOfTheTypeOfSocialNetwork : (NetworkType) networkType {
 //    SocialNetwork *socialNetwork = nil;//[[SocialNetwork alloc] init];
-//    
+//
 //    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"networkType == %d", networkType];
 //    NSArray *filteredArray = [self.arrayWithNetworks filteredArrayUsingPredicate:predicate];
-//    
+//
 //    if (filteredArray.count > 0) {
 //        socialNetwork = (SocialNetwork*) [filteredArray firstObject];
 //    }

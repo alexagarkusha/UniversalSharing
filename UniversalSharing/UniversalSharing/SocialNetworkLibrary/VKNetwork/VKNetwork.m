@@ -37,7 +37,6 @@ static VKNetwork *model = nil;
         }
         else {
             self.isLogin = YES;
-            //[self obtainDataFromVK];
         }
     }
     return self;

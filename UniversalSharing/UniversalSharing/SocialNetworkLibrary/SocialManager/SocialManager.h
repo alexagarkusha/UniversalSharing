@@ -7,12 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MUSSocialNetworkLibraryConstants.h"
+//#import "MUSSocialNetworkLibraryConstants.h"
 
 @interface SocialManager : NSObject
-@property (strong, nonatomic) NSArray *arrayWithNetworks;
 
 + (SocialManager*) sharedManager;
-
-- (NSArray*) networks :(NSArray*) arrrayWithNetworks;
+- (NSArray*) networks :(NSArray*) arrayWithNetwork;
 @end
