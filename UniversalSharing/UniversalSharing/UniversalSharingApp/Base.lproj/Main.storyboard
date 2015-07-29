@@ -201,9 +201,17 @@
                             <constraint firstItem="CGG-yG-DL2" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" constant="16" id="npn-Lx-hyk"/>
                             <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="Omp-fe-BSg" secondAttribute="bottom" constant="49" id="oN1-aG-ILI"/>
                             <constraint firstItem="BBP-bx-7SB" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" constant="16" id="rny-hd-C7k"/>
+                            <constraint firstAttribute="bottom" secondItem="csE-rZ-YPJ" secondAttribute="bottom" constant="49" id="t2p-Yn-0lZ"/>
                             <constraint firstAttribute="centerX" secondItem="JIa-4q-Hps" secondAttribute="centerX" id="vgr-p6-WLg"/>
                             <constraint firstItem="csE-rZ-YPJ" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="x0W-t8-8ND"/>
+                            <constraint firstAttribute="bottom" secondItem="Omp-fe-BSg" secondAttribute="bottom" constant="98" id="zex-zW-ftB"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="h1V-Ne-RjB"/>
+                                <exclude reference="oN1-aG-ILI"/>
+                            </mask>
+                        </variation>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="Q3Z-Zc-VoA" appends="YES" id="McJ-97-Hx9"/>
                         </connections>
@@ -213,11 +221,11 @@
                         <outlet property="changeSocialNetworkButtonOutlet" destination="BBP-bx-7SB" id="MXd-pj-zx1"/>
                         <outlet property="mainGestureRecognizer" destination="Q3Z-Zc-VoA" id="hSm-6a-V0c"/>
                         <outlet property="messageTextView" destination="Omp-fe-BSg" id="dOe-oP-nvs"/>
-                        <outlet property="messageTextViewLayoutConstraint" destination="oN1-aG-ILI" id="ddD-x6-aej"/>
+                        <outlet property="messageTextViewLayoutConstraint" destination="zex-zW-ftB" id="Qax-tN-uAD"/>
                         <outlet property="photoImageView" destination="JIa-4q-Hps" id="7aq-Ey-b4B"/>
                         <outlet property="shareButtonOutlet" destination="CGG-yG-DL2" id="1qb-iW-6yB"/>
                         <outlet property="shareTabBar" destination="csE-rZ-YPJ" id="ITw-EI-GP8"/>
-                        <outlet property="tabBarLayoutConstraint" destination="h1V-Ne-RjB" id="P9C-kj-Lbi"/>
+                        <outlet property="tabBarLayoutConstraint" destination="t2p-Yn-0lZ" id="cOx-io-v0z"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>

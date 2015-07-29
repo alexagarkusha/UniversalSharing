@@ -22,5 +22,6 @@
 #import "SocialNetwork.h"
 #import "User.h"
 #import "MUSSocialNetworkLibraryConstants.h"
+#import "Post.h"
 
 #endif

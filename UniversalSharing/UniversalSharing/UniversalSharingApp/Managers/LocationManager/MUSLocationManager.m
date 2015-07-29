@@ -13,6 +13,7 @@
 @interface MUSLocationManager () <CLLocationManagerDelegate>
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
+@property (nonatomic, copy)   ComplitionLocation copyLocationBLock;
 
 @end
 
@@ -38,15 +39,13 @@
     return sharedManager;
 }
 
-- (void) startTrackLocation {
+- (void) startTrackLocationWithComplition : (ComplitionLocation) block {
+    self.copyLocationBLock = block;
     NSString *versionDeviceString = [[UIDevice currentDevice] systemVersion];
-    
     self.locationManager.delegate = self;
     self.locationManager.distanceFilter = kCLDistanceFilterNone; //type - double;
     if ([versionDeviceString floatValue] >= 8.0) {
         if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined) {
-#warning "Just when use"
-            [self.locationManager requestAlwaysAuthorization];
             [self.locationManager requestWhenInUseAuthorization];
         }
     }
@@ -58,11 +57,17 @@
     [self stopAndGetCurrentLocation];
 }
 
+- (void) stopAndGetCurrentLocation {
+    [self.locationManager stopUpdatingLocation];
+    self.copyLocationBLock (self.locationManager.location, nil);
+}
+/*
 - (CLLocation*) stopAndGetCurrentLocation {
     [self.locationManager stopUpdatingLocation];
     return self.locationManager.location;
 }
-
+*/
+ 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     NSLog(@"%@", [locations lastObject]);
     if (locations) {

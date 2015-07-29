@@ -8,12 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
+#import "ConstantsApp.h"
 
 @interface MUSLocationManager : NSObject
 
 + (MUSLocationManager*) sharedManager;
-- (void) startTrackLocation;
-- (CLLocation*) stopAndGetCurrentLocation;
+- (void) startTrackLocationWithComplition : (ComplitionLocation) block;
 
 
 @end

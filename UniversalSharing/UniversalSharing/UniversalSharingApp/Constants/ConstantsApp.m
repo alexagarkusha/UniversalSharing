@@ -7,6 +7,7 @@
 //
 
 #import "ConstantsApp.h"
+#import "MUSSocialNetworkLibraryHeader.h"
 
 @implementation ConstantsApp
 
