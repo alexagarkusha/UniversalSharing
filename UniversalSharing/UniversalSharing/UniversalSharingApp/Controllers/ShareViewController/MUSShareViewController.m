@@ -7,6 +7,8 @@
 //
 
 
+#warning "Check nessesary headers"
+
 #import "MUSShareViewController.h"
 #import "UIButton+CornerRadiusButton.h"
 #import "UIImageView+LoadImageFromNetwork.h"
@@ -20,7 +22,7 @@
 #import <CoreLocation/CLAvailability.h>
 
 
-
+#warning "Remove in constants"
 
 typedef NS_ENUM(NSInteger, TabBarItemIndex) {
     Share_photo,
@@ -39,28 +41,32 @@ typedef NS_ENUM(NSInteger, AlertButtonIndex) {
 - (IBAction)shareToSocialNetwork:(id)sender;
 - (IBAction)endEditingMessage:(id)sender;
 
-@property (weak, nonatomic) IBOutlet UITabBar *shareTabBar;
-@property (weak, nonatomic) IBOutlet UITextView *messageTextView;
 
-@property (weak, nonatomic) IBOutlet UIButton *changeSocialNetworkButtonOutlet;
-@property (weak, nonatomic) IBOutlet UIButton *shareButtonOutlet;
-@property (strong, nonatomic) IBOutlet UITapGestureRecognizer *mainGestureRecognizer;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint* tabBarLayoutConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint* messageTextViewLayoutConstraint;
-@property (weak, nonatomic) IBOutlet UIImageView *photoImageView;
-@property (assign, nonatomic) CGFloat tabBarLayoutConstaineOrigin;
-@property (assign, nonatomic) CGFloat messageTextViewLayoutConstraintOrigin;
-@property (strong, nonatomic) User *currentUser;
-@property (strong, nonatomic) SocialNetwork *currentSocialNetwork;
-@property (strong, nonatomic) NSMutableArray *socialNetworkAccountsArray;
-@property (assign, nonatomic) TabBarItemIndex tabBarItemIndex;
-@property (assign, nonatomic) AlertButtonIndex alertButtonIndex;
+@property (weak, nonatomic)     IBOutlet    UITabBar *shareTabBar;
+@property (weak, nonatomic)     IBOutlet    UITextView *messageTextView;
+
+@property (weak, nonatomic)     IBOutlet    UIButton *changeSocialNetworkButtonOutlet;
+@property (weak, nonatomic)     IBOutlet    UIButton *shareButtonOutlet;
+@property (strong, nonatomic)   IBOutlet    UITapGestureRecognizer *mainGestureRecognizer;
+@property (weak, nonatomic)     IBOutlet    NSLayoutConstraint* tabBarLayoutConstraint;
+@property (weak, nonatomic)     IBOutlet    NSLayoutConstraint* messageTextViewLayoutConstraint;
+@property (weak, nonatomic)     IBOutlet    UIImageView *photoImageView;
+
+@property (assign, nonatomic)               CGFloat tabBarLayoutConstaineOrigin;
+@property (assign, nonatomic)               CGFloat messageTextViewLayoutConstraintOrigin;
+@property (strong, nonatomic)               User *currentUser;
+@property (strong, nonatomic)               SocialNetwork *currentSocialNetwork;
+@property (strong, nonatomic)               NSMutableArray *socialNetworkAccountsArray;
+@property (assign, nonatomic)               TabBarItemIndex tabBarItemIndex;
+@property (assign, nonatomic)               AlertButtonIndex alertButtonIndex;
 @end
 
 @implementation MUSShareViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+#warning "Remove setup in another method"
     // Do any additional setup after loading the view from its nib.
     self.tabBarLayoutConstaineOrigin = self.tabBarLayoutConstraint.constant;
     self.messageTextViewLayoutConstraintOrigin = self.messageTextViewLayoutConstraint.constant;
@@ -88,8 +94,9 @@ typedef NS_ENUM(NSInteger, AlertButtonIndex) {
 
 - (void) viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:YES];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     [self initiationMessageTextView];
 }
 
@@ -106,7 +113,7 @@ typedef NS_ENUM(NSInteger, AlertButtonIndex) {
     }
     
     __weak UIButton *socialNetworkButton = self.changeSocialNetworkButtonOutlet;
-    [_currentSocialNetwork obtainDataWithComplition:^(id result, NSError *error) {
+    [_currentSocialNetwork obtainInfoFromNetworkWithComplition:^(id result, NSError *error) {
         SocialNetwork *currentSocialNetwork = (SocialNetwork*) result;
         self.currentUser = currentSocialNetwork.currentUser;
         [socialNetworkButton loadBackroundImageFromNetworkWithURL:[NSURL URLWithString: self.currentUser.photoURL]];
@@ -115,7 +122,7 @@ typedef NS_ENUM(NSInteger, AlertButtonIndex) {
 
 - (SocialNetwork*) currentSocialNetwork {
     SocialNetwork *currentSocialNetwork = nil;
-    NSArray *accountsArray = [[SocialManager sharedManager] networks];
+    NSArray *accountsArray = [[SocialManager sharedManager] networks:@[@(Twitters), @(VKontakt)]];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isLogin == %d", YES];
     NSArray *filteredArray = [accountsArray filteredArrayUsingPredicate:predicate];
     if (filteredArray.count > 0) {
@@ -233,6 +240,9 @@ typedef NS_ENUM(NSInteger, AlertButtonIndex) {
 #pragma mark ShareLocationTabBarItem 
 
 - (void) userCurrentLocation {
+    
+#warning "Returns location in block"
+    
     [[MUSLocationManager sharedManager] startTrackLocation];
     CLLocation* location = [[MUSLocationManager sharedManager] stopAndGetCurrentLocation];
     CLLocationCoordinate2D locationCoordinate = location.coordinate;
@@ -265,6 +275,8 @@ typedef NS_ENUM(NSInteger, AlertButtonIndex) {
             break;
     }
 }
+
+#warning "Remove in another file"
 
 #pragma mark SelectPhotoFromAlbum
 
