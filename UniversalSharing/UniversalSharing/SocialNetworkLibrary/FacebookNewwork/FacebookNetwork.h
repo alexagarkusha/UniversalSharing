@@ -10,4 +10,5 @@
 
 @interface FacebookNetwork : SocialNetwork
 + (FacebookNetwork*) sharedManager;
+
 @end

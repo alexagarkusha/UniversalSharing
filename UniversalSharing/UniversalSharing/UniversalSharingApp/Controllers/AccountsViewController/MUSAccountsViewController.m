@@ -14,6 +14,7 @@
 
 #import "ConstantsApp.h"
 
+
 @interface MUSAccountsViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -62,8 +63,10 @@
     self.selectedIndexPath = indexPath;
     
     SocialNetwork *socialNetwork = self.arrayWithNetworksObj[indexPath.row];
+    
     if (socialNetwork.isLogin && socialNetwork.currentUser) {
         [self performSegueWithIdentifier: goToUserDetailViewControllerSegueIdentifier sender:nil];
+        [socialNetwork sharePostToNetwork:nil];// call methos for testing share post TODO:
     }
     else{
         __weak MUSAccountsViewController *weakSelf = self;
@@ -71,15 +74,9 @@
         [socialNetwork loginWithComplition:^(id result, NSError *error) {
             if (result) {
                 [weakSelf performSegueWithIdentifier: goToUserDetailViewControllerSegueIdentifier sender:nil];
+                [socialNetwork sharePostToNetwork:nil];// call methos for testing share post TODO:
             }
         }];
-        
-//        [[SocialManager sharedManager]loginForTypeNetwork:socialNetwork.networkType :^(id result, NSError *error) {
-//            
-//            if (result) {
-//                [weakSelf performSegueWithIdentifier: goToUserDetailViewControllerSegueIdentifier sender:nil];
-//            }
-//        }];
     }
 }
 

@@ -25,4 +25,9 @@
     
 }
 
+- (void) sharePostToNetwork : (id) sharePost {
+    
+
+}
+
 @end

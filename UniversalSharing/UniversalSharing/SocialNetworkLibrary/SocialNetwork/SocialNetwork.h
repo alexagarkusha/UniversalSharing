@@ -23,6 +23,7 @@
 - (void) loginWithComplition :(Complition) block;
 - (void) obtainInfoFromNetworkWithComplition :(Complition) block;
 - (void) loginOut;
-- (void)setNetworkType:(NetworkType)networkType;
+- (void) setNetworkType:(NetworkType)networkType;
+- (void) sharePostToNetwork : (id) sharePost;
 
 @end

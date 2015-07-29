@@ -10,7 +10,7 @@
 #import <TwitterKit/TwitterKit.h>
 #import <Fabric/Fabric.h>
 
-@interface TwitterNetwork () 
+@interface TwitterNetwork () //<TWTRCoreOAuthSigning>
 
 @property (copy, nonatomic) Complition copyComplition;
 @property (strong, nonatomic) NSArray *accountsArray;
@@ -30,7 +30,7 @@ static TwitterNetwork *model = nil;
 
 - (instancetype) init {
     self = [super init];
-    [[Twitter sharedInstance] startWithConsumerKey:kConsumerKey consumerSecret:kConsumerSecret];
+    [TwitterKit startWithConsumerKey:kConsumerKey consumerSecret:kConsumerSecret];
     //[Fabric with:@[[Twitter sharedInstance]]];
     [Fabric with:@[TwitterKit]];
     if (self) {
@@ -48,7 +48,7 @@ static TwitterNetwork *model = nil;
 - (void) obtainInfoFromNetworkWithComplition :(Complition) block {
     __weak TwitterNetwork *weakSell = self;
 
-    [[[Twitter sharedInstance] APIClient] loadUserWithID:[[[Twitter sharedInstance ]session] userID]
+    [[TwitterKit APIClient] loadUserWithID:[[[Twitter sharedInstance ]session] userID]
                                               completion:^(TWTRUser *user,
                                                            NSError *error)
      {
@@ -64,19 +64,43 @@ static TwitterNetwork *model = nil;
     
 }
 
-//#warning "Check is it possible call login without using button"
-
 - (void) loginWithComplition :(Complition) block {
     self.isLogin = YES;
     __weak TwitterNetwork *weakSell = self;
 
-   [[Twitter sharedInstance] logInWithCompletion:^(TWTRSession* session, NSError* error) {
+   [TwitterKit logInWithCompletion:^(TWTRSession* session, NSError* error) {
         if (session) {
             [weakSell obtainInfoFromNetworkWithComplition:block];
         }
     }];
 }
 
+- (void) sharePostToNetwork : (id) sharePost {
+    
+    TWTRComposer *composer = [[TWTRComposer alloc] init];
+    
+    [composer setText:@"I tweeted from my App, LALALLALALA)"];
+    [composer setImage:[UIImage imageNamed:@"TWimage.jpeg"]];
+    
+    // Called from a UIViewController
+    [composer showFromViewController:[self vcForComposeTweet] completion:^(TWTRComposerResult result) {
+        if (result == TWTRComposerResultCancelled) {
+            NSLog(@"Tweet composition cancelled");
+        }
+        else {
+            NSLog(@"Sending Tweet!");
+        }
+    }];
+}
+
+- (UIViewController*) vcForComposeTweet {
+    UIWindow *window=[UIApplication sharedApplication].keyWindow;
+    UIViewController *vc=[window rootViewController];
+    if(vc.presentedViewController)
+        return vc.presentedViewController;
+    else
+        return vc;
+}
 - (void) initiationPropertiesWithoutSession {
     self.title = @"Login Twitter";
     self.icon = @"TWimage.jpeg";

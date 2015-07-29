@@ -9,6 +9,9 @@
 #import "FacebookNetwork.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <FBSDKShareKit/FBSDKShareKit.h>
+@interface FacebookNetwork()<FBSDKGraphRequestConnectionDelegate>
+@end
 
 static FacebookNetwork *model = nil;
 
@@ -60,7 +63,9 @@ static FacebookNetwork *model = nil;
     self.isLogin = YES;
 
     __weak FacebookNetwork *weakSell = self;
-    
+//     if ([[FBSDKAccessToken currentAccessToken] hasGranted:@"email"]) {
+//         [self obtainInfoFromNetworkWithComplition:block];
+//     }else{
     [login logInWithReadPermissions:@[@"email"] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
         if (error) {
             block(nil, error);
@@ -95,6 +100,86 @@ static FacebookNetwork *model = nil;
             }
         }
     }];
+     //}
+}
+- (void)sharer:(id<FBSDKSharing>)sharer didCompleteWithResults:(NSDictionary *)results{
+    
+    
+}
+- (void)sharer:(id<FBSDKSharing>)sharer didFailWithError:(NSError *)error{
+    
+    
+}
+- (void)sharerDidCancel:(id<FBSDKSharing>)sharer{
+    
+    
+}
+- (void) sharePostToNetwork : (id) sharePost {
+    
+    if ([[FBSDKAccessToken currentAccessToken] hasGranted:@"publish_actions"]) {
+       UIImage *image = [UIImage imageNamed:@"FBimage.jpg"];
+        NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+        params[@"message"] = @"WWWWW";
+        //params[@"picture"] = UIImageJPEGRepresentation(image, 0.8f);
+        /* make the API call */
+        FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]
+                                      initWithGraphPath:@"/me/feed"///me/photos
+                                      parameters:params
+                                      HTTPMethod:@"POST"];
+        
+        FBSDKGraphRequestConnection *requestConnection  = [[FBSDKGraphRequestConnection alloc]init];
+        [requestConnection addRequest:request completionHandler:^(FBSDKGraphRequestConnection *connection,
+                                                                  id result,
+                                                                  NSError *error)
+         {
+             if (!error)
+             {
+                 
+             }
+             else
+             {
+                 
+             }
+         }];
+        requestConnection.delegate = self;
+        [requestConnection start];
+
+        
+
+    } else {
+
+        FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
+        [loginManager logInWithPublishPermissions:@[@"publish_actions"] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+            UIImage *image = [UIImage imageNamed:@"FBimage.jpg"];
+            NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+            params[@"message"] = @"WWWWW";
+            params[@"picture"] = UIImageJPEGRepresentation(image, 0.8f);
+            /* make the API call */
+            FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]
+                                          initWithGraphPath:@"/me/photos"
+                                          parameters:params
+                                          HTTPMethod:@"POST"];
+            
+            FBSDKGraphRequestConnection *requestConnection  = [[FBSDKGraphRequestConnection alloc]init];
+            [requestConnection addRequest:request completionHandler:^(FBSDKGraphRequestConnection *connection,
+                                                                      id result,
+                                                                      NSError *error)
+             {
+                 if (!error)
+                 {
+                     
+                 }
+                 else
+                 {
+                     
+                 }
+             }];
+            requestConnection.delegate = self;
+            [requestConnection start];
+
+            
+                    }];
+    }
 }
 
 - (void) initiationPropertiesWithoutSession {
