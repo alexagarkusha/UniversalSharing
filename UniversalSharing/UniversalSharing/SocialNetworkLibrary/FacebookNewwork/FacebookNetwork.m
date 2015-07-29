@@ -114,6 +114,10 @@ static FacebookNetwork *model = nil;
     
     
 }
+
+#warning "Needs to add complition"
+#warning "Fix dublicates"
+
 - (void) sharePostToNetwork : (id) sharePost {
     
     if ([[FBSDKAccessToken currentAccessToken] hasGranted:@"publish_actions"]) {
