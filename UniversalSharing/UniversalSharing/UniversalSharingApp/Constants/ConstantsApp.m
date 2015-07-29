@@ -7,12 +7,20 @@
 //
 
 #import "ConstantsApp.h"
+#import "MUSSocialNetworkLibraryHeader.h"
 
 @implementation ConstantsApp
 
-//NSString *const kSegueIdentifier = @"goToInfo";
-NSString *const notificationReloadTableView = @"notificationReloadTableView";
+
+#pragma mark AccountsViewController Constants
 
 NSString *const goToUserDetailViewControllerSegueIdentifier = @"goToInfo";
+NSString *const notificationReloadTableView = @"notificationReloadTableView";
+
+#pragma mark ShareViewController Constants
+
+NSString *const kPlaceholderText = @"Write something...";
+
+
 
 @end
