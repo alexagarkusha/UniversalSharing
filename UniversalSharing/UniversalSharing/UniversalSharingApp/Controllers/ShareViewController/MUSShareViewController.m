@@ -181,7 +181,8 @@
     post.latitude = self.currentLocation.latitude;
     post.longitude = self.currentLocation.longitude;
     
-    [_currentSocialNetwork sharePost: post];
+
+    
 }
 
 #pragma mark - UITextViewDelegate

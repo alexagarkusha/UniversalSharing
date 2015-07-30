@@ -30,10 +30,4 @@
 
 }
 
-- (void) sharePost: (Post*) post {
-    
-    
-}
-
-
 @end
