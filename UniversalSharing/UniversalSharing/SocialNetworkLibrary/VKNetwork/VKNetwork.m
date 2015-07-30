@@ -89,6 +89,40 @@ static VKNetwork *model = nil;
      }];
 }
 
+
+- (void) sharePost : (Post*) post {
+    __weak VKNetwork *weakSell = self;
+    
+    NSInteger userId = [self.currentUser.clientID integerValue];
+    UIImage *postImage = [UIImage imageWithData:post.photoData];
+    
+    VKRequest * request = [VKApi uploadWallPhotoRequest: postImage parameters:[VKImageParameters pngImage] userId: userId groupId:0 ];
+    
+    [request executeWithResultBlock: ^(VKResponse *response) {
+        
+        VKPhoto *photoInfo = [(VKPhotoArray*)response.parsedModel objectAtIndex:0];
+        NSString *photoAttachment = [NSString stringWithFormat:@"photo%@_%@", photoInfo.owner_id, photoInfo.id];
+        NSString *lalitude = [NSString stringWithFormat:@"%f", post.latitude];
+        NSString *longitude = [NSString stringWithFormat:@"%f", post.longitude];
+    
+        VKRequest *post = [[VKApi wall] post:@{ VK_API_ATTACHMENTS : photoAttachment, VK_API_OWNER_ID : weakSell.currentUser.clientID, VK_API_MESSAGE : post.description ,VK_API_LAT : lalitude ,VK_API_LONG : longitude }];
+        
+        [post executeWithResultBlock: ^(VKResponse *response) {
+            NSLog(@"Result: %@", @"Posted");
+            
+        } errorBlock: ^(NSError *error) {
+            NSLog(@"Error: %@", error);
+        }];
+    } errorBlock: ^(NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+
+}
+
+
+
+
+/*
 - (void) sharePostToNetwork : (id) sharePost {
     
     __weak VKNetwork *weakSell = self;
@@ -112,7 +146,8 @@ static VKNetwork *model = nil;
         NSLog(@"Error: %@", error);
     }];
 }
-
+*/
+ 
 - (UIViewController*) vcForLoginVK {    
     UIWindow *window=[UIApplication sharedApplication].keyWindow;
     UIViewController *vc=[window rootViewController];

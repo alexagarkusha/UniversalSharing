@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #import "User.h"
+#import "Post.h"
 #import "MUSSocialNetworkLibraryConstants.h"
 
 @interface SocialNetwork : NSObject
@@ -26,9 +27,12 @@
 - (void) obtainInfoFromNetworkWithComplition :(Complition) block;
 - (void) loginOut;
 - (void) setNetworkType:(NetworkType)networkType;
-<<<<<<< HEAD
+//<<<<<<< HEAD
 - (void) sharePostToNetwork : (id) sharePost;
-=======
->>>>>>> c989e9b3f7230529f59a09989fc3940983ed8121
+//=======
+//>>>>>>> c989e9b3f7230529f59a09989fc3940983ed8121
+- (void) sharePost: (Post*) post;
+
+//vbiflehfr1987
 
 @end

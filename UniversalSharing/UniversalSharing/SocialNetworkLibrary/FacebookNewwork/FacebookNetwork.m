@@ -79,24 +79,6 @@ static FacebookNetwork *model = nil;
                 
                 [weakSell obtainInfoFromNetworkWithComplition:block];
                 
-                
-//                if ([FBSDKAccessToken currentAccessToken]) {
-//                    [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:@{@"fields":kRequestParametrsFacebook }]
-//                     startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, NSDictionary *result, NSError *error) {
-//                         if (error) {
-//                             block(nil, error);
-//                             return ;
-//                         }
-//                         weakSell.currentUser = [User createFromDictionary:result andNetworkType : weakSell.networkType];
-//                         weakSell.title = [NSString stringWithFormat:@"%@  %@", weakSell.currentUser.firstName, weakSell.currentUser.lastName];
-//                         weakSell.icon = weakSell.currentUser.photoURL;
-//                         
-//                         dispatch_async(dispatch_get_main_queue(), ^{
-//                             block(weakSell, error);
-//                             
-//                         });
-//                     }];
-//                }
             }
         }
     }];
