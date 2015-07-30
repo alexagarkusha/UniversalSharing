@@ -13,6 +13,8 @@
 @interface VKNetwork () <VKSdkDelegate>
 @property (strong, nonatomic) UINavigationController *navigationController;
 @property (copy, nonatomic) Complition copyComplition;
+@property (copy, nonatomic) Complition copyPostComplition;
+
 @end
 
 static VKNetwork *model = nil;
@@ -89,31 +91,78 @@ static VKNetwork *model = nil;
      }];
 }
 
-#warning "Needs to add complition"
 
-- (void) sharePostToNetwork : (id) sharePost {
-    
+- (void) sharePost : (Post*) post withComplition : (Complition) block {
+    self.copyPostComplition = block;
+    if (!post.imageToPost.image) {
+        [self postMessageToVK:post];
+    } else {
+        [self postImageToVK:post];
+    }
+}
+
+
+- (void) postImageToVK : (Post*) post {
     __weak VKNetwork *weakSell = self;
-
     NSInteger userId = [self.currentUser.clientID integerValue];
-    VKRequest * request = [VKApi uploadWallPhotoRequest:[UIImage imageNamed:@"VKimage.png"] parameters:[VKImageParameters pngImage] userId:userId groupId:0 ];
+    VKRequest * request = [VKApi uploadWallPhotoRequest: post.imageToPost.image parameters: [self imageForVKNetwork: post] userId:userId groupId:0 ];
+    
     [request executeWithResultBlock: ^(VKResponse *response) {
         
         VKPhoto *photoInfo = [(VKPhotoArray*)response.parsedModel objectAtIndex:0];
         NSString *photoAttachment = [NSString stringWithFormat:@"photo%@_%@", photoInfo.owner_id, photoInfo.id];
+        NSString *postDescription = post.postDescription;
+        NSString *latitude = [NSString stringWithFormat:@"%f", post.latitude];
+        NSString *longitude = [NSString stringWithFormat:@"%f", post.longitude];
         
-        VKRequest *post = [[VKApi wall] post:@{ VK_API_ATTACHMENTS : photoAttachment, VK_API_OWNER_ID : weakSell.currentUser.clientID, VK_API_MESSAGE : @"TestLALALLAA",VK_API_LAT : @"34.9229100",VK_API_LONG : @"33.6233000" }];
+        VKRequest *post = [[VKApi wall] post:@{ VK_API_ATTACHMENTS : photoAttachment, VK_API_OWNER_ID : weakSell.currentUser.clientID, VK_API_MESSAGE : postDescription, VK_API_LAT :latitude,VK_API_LONG : longitude }];
         
-        [post executeWithResultBlock: ^(VKResponse *response) {
-            NSLog(@"Result: %@", @"Posted");
-           
-        } errorBlock: ^(NSError *error) {
-            NSLog(@"Error: %@", error);
-        }];
+            [post executeWithResultBlock: ^(VKResponse *response) {
+                NSLog(@"Result: %@", @"Posted");
+                self.copyPostComplition (@"Post is success", nil);
+            } errorBlock: ^(NSError *error) {
+                NSLog(@"Error: %@", error);
+                self.copyPostComplition (nil, error);
+            }];
+        
     } errorBlock: ^(NSError *error) {
+        self.copyPostComplition (nil, error);
         NSLog(@"Error: %@", error);
     }];
 }
+
+
+
+- (void) postMessageToVK : (Post*) post {
+    NSString *latitude = [NSString stringWithFormat:@"%f", post.latitude];
+    NSString *longitude = [NSString stringWithFormat:@"%f", post.longitude];
+    
+    VKRequest *request = [[VKApi wall] post: @{VK_API_MESSAGE: post.postDescription, VK_API_OWNER_ID : [VKSdk getAccessToken].userId, VK_API_LAT :latitude,VK_API_LONG : longitude}];
+    [request executeWithResultBlock: ^(VKResponse *response) {
+        self.copyPostComplition (@"Post is success", nil);
+    } errorBlock: ^(NSError *error) {
+        self.copyPostComplition (nil, error);
+    }];
+    
+}
+
+- (VKImageParameters*) imageForVKNetwork : (Post*) post {
+    switch (post.imageToPost.imageType) {
+        case PNG:
+            return [VKImageParameters pngImage];
+            break;
+        case JPEG:
+            if (post.imageToPost.quality > 0) {
+                return [VKImageParameters jpegImageWithQuality:post.imageToPost.quality];
+                break;
+            }
+            return [VKImageParameters jpegImageWithQuality: 1.f];
+            break;
+        default:
+            break;
+    }
+}
+
 
 - (UIViewController*) vcForLoginVK {    
     UIWindow *window=[UIApplication sharedApplication].keyWindow;
@@ -150,6 +199,8 @@ static VKNetwork *model = nil;
 {
     NSLog(@"Access denied");
 }
+
+//vbiflehfr1987
 
 -(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {

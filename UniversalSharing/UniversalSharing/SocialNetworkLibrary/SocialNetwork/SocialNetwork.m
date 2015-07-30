@@ -30,4 +30,10 @@
 
 }
 
+- (void) sharePost : (Post*) post withComplition : (Complition) block {
+    
+}
+
+
+
 @end

@@ -11,6 +11,9 @@
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <FBSDKShareKit/FBSDKShareKit.h>
 @interface FacebookNetwork()<FBSDKGraphRequestConnectionDelegate>
+
+@property (copy, nonatomic) Complition copyPostComplition;
+
 @end
 
 static FacebookNetwork *model = nil;
@@ -78,112 +81,84 @@ static FacebookNetwork *model = nil;
                 
                 
                 [weakSell obtainInfoFromNetworkWithComplition:block];
-                
-                
-//                if ([FBSDKAccessToken currentAccessToken]) {
-//                    [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:@{@"fields":kRequestParametrsFacebook }]
-//                     startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, NSDictionary *result, NSError *error) {
-//                         if (error) {
-//                             block(nil, error);
-//                             return ;
-//                         }
-//                         weakSell.currentUser = [User createFromDictionary:result andNetworkType : weakSell.networkType];
-//                         weakSell.title = [NSString stringWithFormat:@"%@  %@", weakSell.currentUser.firstName, weakSell.currentUser.lastName];
-//                         weakSell.icon = weakSell.currentUser.photoURL;
-//                         
-//                         dispatch_async(dispatch_get_main_queue(), ^{
-//                             block(weakSell, error);
-//                             
-//                         });
-//                     }];
-//                }
             }
         }
     }];
-     //}
-}
-- (void)sharer:(id<FBSDKSharing>)sharer didCompleteWithResults:(NSDictionary *)results{
-    
-    
-}
-- (void)sharer:(id<FBSDKSharing>)sharer didFailWithError:(NSError *)error{
-    
-    
-}
-- (void)sharerDidCancel:(id<FBSDKSharing>)sharer{
-    
-    
 }
 
-#warning "Needs to add complition"
-#warning "Fix dublicates"
+//#warning "Needs to add complition"
+//#warning "Fix dublicates"
 
-- (void) sharePostToNetwork : (id) sharePost {
-    
+#warning "LOCATION NOT SHARE TO FB"
+
+- (void) sharePost:(Post *)post withComplition:(Complition)block {
+    self.copyPostComplition = block;
     if ([[FBSDKAccessToken currentAccessToken] hasGranted:@"publish_actions"]) {
-       UIImage *image = [UIImage imageNamed:@"FBimage.jpg"];
-        NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
-        params[@"message"] = @"WWWWW";
-        //params[@"picture"] = UIImageJPEGRepresentation(image, 0.8f);
-        /* make the API call */
-        FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]
-                                      initWithGraphPath:@"/me/feed"///me/photos
-                                      parameters:params
-                                      HTTPMethod:@"POST"];
-        
-        FBSDKGraphRequestConnection *requestConnection  = [[FBSDKGraphRequestConnection alloc]init];
-        [requestConnection addRequest:request completionHandler:^(FBSDKGraphRequestConnection *connection,
-                                                                  id result,
-                                                                  NSError *error)
-         {
-             if (!error)
-             {
-                 
-             }
-             else
-             {
-                 
-             }
-         }];
-        requestConnection.delegate = self;
-        [requestConnection start];
-
-        
-
+        [self sharePostToFacebook: post];
     } else {
-
         FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
         [loginManager logInWithPublishPermissions:@[@"publish_actions"] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
-            UIImage *image = [UIImage imageNamed:@"FBimage.jpg"];
-            NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
-            params[@"message"] = @"WWWWW";
-            params[@"picture"] = UIImageJPEGRepresentation(image, 0.8f);
-            /* make the API call */
-            FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]
-                                          initWithGraphPath:@"/me/photos"
-                                          parameters:params
-                                          HTTPMethod:@"POST"];
-            
-            FBSDKGraphRequestConnection *requestConnection  = [[FBSDKGraphRequestConnection alloc]init];
-            [requestConnection addRequest:request completionHandler:^(FBSDKGraphRequestConnection *connection,
-                                                                      id result,
-                                                                      NSError *error)
-             {
-                 if (!error)
-                 {
-                     
-                 }
-                 else
-                 {
-                     
-                 }
-             }];
-            requestConnection.delegate = self;
-            [requestConnection start];
-
-            
-                    }];
+            if (!error) {
+                [self sharePostToFacebook: post];
+            } else {
+                self.copyPostComplition (nil, error);
+            }
+        }];
     }
+}
+
+- (void) sharePostToFacebook : (Post*) post {
+    if (!post.imageToPost.image) {
+        [self postMessageToFB:post];
+    } else {
+        [self postImageToFB:post];
+    }
+}
+
+
+
+- (void) postMessageToFB : (Post*) post {
+        [[[FBSDKGraphRequest alloc]
+          initWithGraphPath:@"me/feed"
+          parameters: @{ @"message" : post.postDescription }
+          HTTPMethod:@"POST"]
+         startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+             if (!error) {
+                 NSString *postMessageResult = @"Your message has been successfully sent";
+                 self.copyPostComplition (postMessageResult, nil);
+                 //NSLog(@"Post id:%@", result[@"id"]);
+             } else {
+                 self.copyPostComplition (nil, error);
+             }
+         }];
+}
+
+
+- (void) postImageToFB : (Post*) post {
+    //NSString *latitude = [NSString stringWithFormat:@"%f", post.latitude];
+    //NSString *longitude = [NSString stringWithFormat:@"%f", post.longitude];
+    
+    //NSDictionary *location = [[NSDictionary alloc] initWithObjectsAndKeys: latitude, @"latitude", longitude, @"longitude", nil];
+    
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    params[@"message"] = post.postDescription;
+    params[@"picture"] = post.imageToPost.image;
+    
+    //params[@"location"] = location;
+
+    
+    [[[FBSDKGraphRequest alloc]
+      initWithGraphPath:@"me/photos"
+      parameters: params
+      HTTPMethod:@"POST"]
+     startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+         if (!error) {
+             NSString *postMessageResult = @"Your message has been successfully sent";
+             self.copyPostComplition (postMessageResult, nil);
+         } else {
+             self.copyPostComplition (nil, error);
+         }
+     }];
 }
 
 - (void) initiationPropertiesWithoutSession {

@@ -8,13 +8,25 @@
 
 #import "MUSSocialNetworkLibraryConstants.h"
 
-#warning "Separate them as in .h file"
+#pragma mark Facebook Constants
 
+NSString *const kRequestParametrsFacebook = @"name,id,picture,gender,birthday,email,first_name,last_name,location,friends";
+
+#pragma mark Vkontakte Constants
+
+NSString *const kVkAppID = @"5004830";
 NSString *const ALL_USER_FIELDS = @"first_name,last_name,photo_200_orig,id,birthday";
-NSString *const kRequestUrlTwitter = @"https://api.twitter.com/1.1/users/show.json";
+
+
+#pragma mark Twitter Contants
+
+NSString *const kConsumerSecret = @"gLZI37ssGqUcwr2RZlFoVcu5PO3rM0vodZ0teo3UuMLSdVoY1d";
+NSString *const kConsumerKey = @"YyvoW8VelrqrlO8f91xEvxdNe";
 NSString *const kTwitterUserName = @"twitterUserName";
 NSString *const kTwitterUserCount = @"twitterUserCount";
-NSString *const kVkAppID = @"5004830";
-NSString *const kRequestParametrsFacebook = @"name,id,picture,gender,birthday,email,first_name,last_name,location,friends";
-NSString *const kConsumerKey = @"YyvoW8VelrqrlO8f91xEvxdNe";
-NSString *const kConsumerSecret = @"gLZI37ssGqUcwr2RZlFoVcu5PO3rM0vodZ0teo3UuMLSdVoY1d";
+NSString *const kRequestUrlTwitter = @"https://api.twitter.com/1.1/users/show.json";
+NSString *const kTwitterRequestStatusUpdate = @"https://api.twitter.com/1.1/statuses/update.json";
+
+
+
+

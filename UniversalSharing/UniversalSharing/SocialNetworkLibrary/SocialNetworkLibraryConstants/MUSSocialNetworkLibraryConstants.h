@@ -21,6 +21,12 @@ typedef NS_ENUM (NSInteger, NetworkType) {
     Twitters
 };
 
+typedef NS_ENUM (NSInteger, ImageType) {
+    PNG,
+    JPEG
+};
+
+
 #pragma mark Facebook Constants
 
 FOUNDATION_EXPORT NSString *const kRequestParametrsFacebook;
@@ -37,3 +43,4 @@ FOUNDATION_EXPORT NSString *const kConsumerKey;
 FOUNDATION_EXPORT NSString *const kTwitterUserName;
 FOUNDATION_EXPORT NSString *const kTwitterUserCount;
 FOUNDATION_EXPORT NSString *const kRequestUrlTwitter;
+FOUNDATION_EXPORT NSString *const kTwitterRequestStatusUpdate;
