@@ -21,6 +21,8 @@
 
 @implementation MUSPhotoManager
 
+#warning "init UIImagePickerController just ones in shareManager"
+
 + (MUSPhotoManager*) sharedManager {
     static MUSPhotoManager* sharedManager = nil;
     static dispatch_once_t onceTaken;
@@ -64,6 +66,7 @@
     }
 }
 
+#warning "Replace strings and code to Constants"
 - (NSError*) cameraError {
     NSError *error = [[NSError alloc] initWithDomain:@"Universal Sharing" code: 1000 userInfo:@{ NSLocalizedFailureReasonErrorKey: @"Device has no camera"}];
     return error;

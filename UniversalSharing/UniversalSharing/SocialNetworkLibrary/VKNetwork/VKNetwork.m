@@ -89,6 +89,8 @@ static VKNetwork *model = nil;
      }];
 }
 
+#warning "Needs to add complition"
+
 - (void) sharePostToNetwork : (id) sharePost {
     
     __weak VKNetwork *weakSell = self;

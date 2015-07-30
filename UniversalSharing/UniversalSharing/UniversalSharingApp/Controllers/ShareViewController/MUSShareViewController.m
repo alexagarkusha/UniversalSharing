@@ -119,6 +119,8 @@
     }];
 }
 
+#warning "REmove logic in Social Network"
+
 - (SocialNetwork*) currentSocialNetwork {
     SocialNetwork *currentSocialNetwork = nil;
     NSArray *accountsArray = [[SocialManager sharedManager] networks:@[@(Twitters), @(VKontakt)]];
