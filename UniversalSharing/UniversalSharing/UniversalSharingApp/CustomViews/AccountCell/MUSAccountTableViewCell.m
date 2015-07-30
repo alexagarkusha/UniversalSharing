@@ -14,6 +14,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *loginLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *networkIconImageView;
+@property (weak, nonatomic) IBOutlet UIView *viewAccountTableCell;
 
 @end
 
@@ -57,7 +58,19 @@
         self.networkIconImageView.image = [UIImage imageNamed:socialNetwork.icon];
         self.loginLabel.text = socialNetwork.title;
     }
+    
+    if (socialNetwork.isVisible) {
+        self.viewAccountTableCell.backgroundColor = [UIColor grayColor];
+    } else {
+        self.viewAccountTableCell.backgroundColor = [UIColor whiteColor];
+    }
 }
 
-
+- (void) changeColorOfCell :(SocialNetwork *)socialNetwork {
+    if (!socialNetwork.isVisible) {
+        socialNetwork.isVisible = YES;
+    } else {
+        socialNetwork.isVisible = NO;
+    }
+}
 @end

@@ -17,15 +17,12 @@
 
 @interface MUSShareViewController () <UITextViewDelegate, UIActionSheetDelegate, UITabBarDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
-- (IBAction)changeSocialNetworkAccount:(id)sender;
 - (IBAction)shareToSocialNetwork:(id)sender;
 - (IBAction)endEditingMessage:(id)sender;
 
 
 @property (weak, nonatomic)     IBOutlet    UITabBar *shareTabBar;
 @property (weak, nonatomic)     IBOutlet    UITextView *messageTextView;
-@property (weak, nonatomic)     IBOutlet    UIButton *changeSocialNetworkButtonOutlet;
-@property (weak, nonatomic)     IBOutlet    UIButton *shareButtonOutlet;
 @property (strong, nonatomic)   IBOutlet    UITapGestureRecognizer *mainGestureRecognizer;
 @property (weak, nonatomic)     IBOutlet    NSLayoutConstraint* tabBarLayoutConstraint;
 @property (weak, nonatomic)     IBOutlet    NSLayoutConstraint* messageTextViewLayoutConstraint;
@@ -41,16 +38,36 @@
 @property (strong, nonatomic)               NSArray *arrayWithNetworks;
 @property (assign, nonatomic)               CLLocationCoordinate2D currentLocation;
 
-
+@property (strong, nonatomic) UIButton *changeSocialNetworkButton;
 @end
 
 @implementation MUSShareViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self initiationMUSShareViewController];
+    [self addButtonOnTextView];
+}
+- (void)changeSocialNetworkAccount:(id)sender{
+    [self showUserAccountsInActionSheet];
+}
+
+- (void) addButtonOnTextView {
     
-        [self initiationMUSShareViewController];
-    // Do any additional setup after loading the view from its nib.
+    self.changeSocialNetworkButton  =   [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    self.changeSocialNetworkButton.frame  =   CGRectMake(6.0, 15.0, 75.0, 70.0);
+    
+    [self.changeSocialNetworkButton addTarget:self action:@selector(changeSocialNetworkAccount:)forControlEvents:UIControlEventTouchUpInside];
+    self.changeSocialNetworkButton.backgroundColor=[UIColor blueColor];
+    // CGRect buttonFrame = self.changeSocialNetworkButton.frame;
+    [self forceTextViewWorkAsFacebookSharing];
+    [self.messageTextView addSubview:self.changeSocialNetworkButton];
+}
+
+- (void) forceTextViewWorkAsFacebookSharing {
+    CGRect myFrame = CGRectMake(6, 15, 100, 50);
+    UIBezierPath *exclusivePath = [UIBezierPath bezierPathWithRect:myFrame];
+    self.messageTextView.textContainer.exclusionPaths = @[exclusivePath];
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -66,20 +83,21 @@
                                                object:nil];
     self.mainGestureRecognizer.enabled = NO;
     [self initiationSocialNetworkButtonForSocialNetwork];
-   }
+}
+
+-(void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
+}
 
 - (void) viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:YES];
     [[NSNotificationCenter defaultCenter]removeObserver:self];
-    
-    
-    [self initiationMessageTextView];
+    //[self initiationMessageTextView];
 }
 
 - (void) viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:YES];
-    
-    
 }
 
 
@@ -97,12 +115,13 @@
     //self.messageTextViewLayoutConstraint.constant = self.tabBarController.tabBar.frame.size.height + self.shareTabBar.frame.size.height;
     
     self.messageTextView.delegate = self;
-    [self.changeSocialNetworkButtonOutlet cornerRadius:10];
-    [self.shareButtonOutlet cornerRadius:10];
+    [self.changeSocialNetworkButton cornerRadius:10];
+    //[self.shareButtonOutlet cornerRadius:10];
     self.socialNetworkAccountsArray = [[NSMutableArray alloc] init];
     self.shareTabBar.delegate = self;
     self.arrayWithNetworks = [NSArray arrayWithObjects:@(Twitters), @(VKontakt), @(Facebook), nil];
 }
+
 
 #pragma mark - UIButton
 
@@ -111,7 +130,7 @@
         _currentSocialNetwork = [self currentSocialNetwork];
     }
     
-    __weak UIButton *socialNetworkButton = self.changeSocialNetworkButtonOutlet;
+    __weak UIButton *socialNetworkButton = self.changeSocialNetworkButton;
     [_currentSocialNetwork obtainInfoFromNetworkWithComplition:^(id result, NSError *error) {
         SocialNetwork *currentSocialNetwork = (SocialNetwork*) result;
         self.currentUser = currentSocialNetwork.currentUser;
@@ -161,7 +180,7 @@
                          [self.view layoutIfNeeded];
                          [self.view setNeedsLayout];
                      }];
-
+    
     
     [UIView commitAnimations];
 }
@@ -169,10 +188,6 @@
 
 
 #pragma mark - UIChangeSocialNetwork
-
-- (IBAction)changeSocialNetworkAccount:(id)sender {
-    [self showUserAccountsInActionSheet];
-}
 
 - (IBAction)shareToSocialNetwork:(id)sender {
     Post *post = [[Post alloc] init];
@@ -182,8 +197,6 @@
     post.photoData = imageData;
     post.latitude = self.currentLocation.latitude;
     post.longitude = self.currentLocation.longitude;
-    
-
     
 }
 
@@ -198,6 +211,12 @@
     }
     self.mainGestureRecognizer.enabled = YES;
     return YES;
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    
+    
+    return textView.text.length + (text.length - range.length) <= 80;
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView
@@ -233,7 +252,7 @@
     
     for (int i = 0; i < [[[SocialManager sharedManager] networks: self.arrayWithNetworks] count]; i++) {
         SocialNetwork *socialNetwork = [[[SocialManager sharedManager] networks: self.arrayWithNetworks] objectAtIndex:i];
-        if (socialNetwork.isLogin) {
+        if (socialNetwork.isLogin && !socialNetwork.isVisible) {
             NSString *buttonTitle = [NSString stringWithFormat:@"%@", NSStringFromClass([socialNetwork class])];
             [sheet addButtonWithTitle: buttonTitle];
             [self.socialNetworkAccountsArray addObject:socialNetwork];
@@ -295,7 +314,7 @@
         case Album:
             [self selectPhotoFromAlbum];
             break;
-         case Camera:
+        case Camera:
             [self takePhotoFromCamera];
             break;
         default:
