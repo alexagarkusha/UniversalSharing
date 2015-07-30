@@ -20,7 +20,6 @@
 
 @property (strong, nonatomic) NSArray *arrayWithNetworksObj;
 @property (strong, nonatomic) NSIndexPath * selectedIndexPath;
-
 @end
 
 @implementation MUSAccountsViewController
@@ -80,6 +79,18 @@
             }
         }];
     }
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    SocialNetwork *socialNetwork = self.arrayWithNetworksObj[indexPath.row];
+    MUSAccountTableViewCell *cell = (MUSAccountTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+    [cell changeColorOfCell:socialNetwork];
+    [self reloadTableView];
+}
+
+-(NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
+    SocialNetwork *socialNetwork = self.arrayWithNetworksObj[indexPath.row];
+    return socialNetwork.isVisible ?  @"Show" : @"Hide";
 }
 
 - (void) reloadTableView {

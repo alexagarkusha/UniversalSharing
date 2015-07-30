@@ -52,6 +52,7 @@
     [self.locationManager startUpdatingLocation];
 }
 
+#warning "Check documantation This method is deprecated. If locationManager:didUpdateLocations: is implemented, this method will not be called."
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
     [self stopAndGetCurrentLocation];

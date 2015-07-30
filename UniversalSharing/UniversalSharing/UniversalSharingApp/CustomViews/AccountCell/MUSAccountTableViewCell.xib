@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="13F1077" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
     </dependencies>
     <objects>
@@ -41,6 +42,7 @@
             <connections>
                 <outlet property="loginLabel" destination="urR-Or-s7K" id="4zx-3c-vXw"/>
                 <outlet property="networkIconImageView" destination="DuU-I4-qvM" id="Yyj-J2-avA"/>
+                <outlet property="viewAccountTableCell" destination="H2p-sc-9uM" id="PdJ-Qr-7Nu"/>
             </connections>
             <point key="canvasLocation" x="245" y="329"/>
         </tableViewCell>

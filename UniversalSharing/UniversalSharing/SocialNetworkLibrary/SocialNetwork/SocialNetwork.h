@@ -17,7 +17,7 @@
 @property (strong, nonatomic) NSString *icon;
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) User *currentUser;
-
+@property (assign, nonatomic) BOOL isVisible;
 @property (assign, nonatomic) NetworkType networkType;
 
 #warning "Add method +sharedManagerWithType: and replase switch there"
@@ -26,9 +26,8 @@
 - (void) obtainInfoFromNetworkWithComplition :(Complition) block;
 - (void) loginOut;
 - (void) setNetworkType:(NetworkType)networkType;
-//<<<<<<< HEAD
+
 - (void) sharePostToNetwork : (id) sharePost;
-//=======
-//>>>>>>> c989e9b3f7230529f59a09989fc3940983ed8121
+
 
 @end
