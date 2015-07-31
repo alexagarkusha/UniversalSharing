@@ -12,5 +12,5 @@
 @interface SocialManager : NSObject
 
 + (SocialManager*) sharedManager;
-- (NSArray*) networks :(NSArray*) arrayWithNetwork;
+- (NSMutableArray*) networks :(NSArray*) arrayWithNetwork;
 @end

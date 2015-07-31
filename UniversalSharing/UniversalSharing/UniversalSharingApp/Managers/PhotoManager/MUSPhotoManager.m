@@ -16,40 +16,48 @@
 @interface MUSPhotoManager () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (copy, nonatomic)    ComplitionPhoto     copyComplition;
-
+@property (strong, nonatomic) UIImagePickerController *imagePickerController;
 @end
 
+static MUSPhotoManager* sharedManager = nil;
 @implementation MUSPhotoManager
 
-#warning "init UIImagePickerController just ones in shareManager"
+//#warning "init UIImagePickerController just ones in shareManager"
 
 + (MUSPhotoManager*) sharedManager {
-    static MUSPhotoManager* sharedManager = nil;
     static dispatch_once_t onceTaken;
     dispatch_once (& onceTaken, ^
                    {
                        sharedManager = [MUSPhotoManager new];
+                       
                    });
     return sharedManager;
 }
 
-- (UIViewController*) viewConterollerForImagePickerController {
-    UIWindow *window=[UIApplication sharedApplication].keyWindow;
-    UIViewController *viewController=[window rootViewController];
-    if(viewController.presentedViewController)
-        return viewController.presentedViewController;
-    else
-        return viewController;
+- (instancetype) init {
+    self = [super init];
+    if (self) {
+       self.imagePickerController = [[UIImagePickerController alloc] init];
+    }
+    return self;
 }
+// this method is not used!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//- (UIViewController*) viewConterollerForImagePickerController {
+//    UIWindow *window=[UIApplication sharedApplication].keyWindow;
+//    UIViewController *viewController=[window rootViewController];
+//    if(viewController.presentedViewController)
+//        return viewController.presentedViewController;
+//    else
+//        return viewController;
+//}
 
 
 - (void) selectPhotoFromAlbumFromViewController : (UIViewController*) viewController withComplition: (ComplitionPhoto) block{
     self.copyComplition = block;
-    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
-    imagePickerController.delegate = self;
-    imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    imagePickerController.mediaTypes = @[(NSString*) kUTTypeImage];
-    [viewController presentViewController:imagePickerController animated:YES completion:nil];
+        _imagePickerController.delegate = self;
+    _imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    _imagePickerController.mediaTypes = @[(NSString*) kUTTypeImage];
+    [viewController presentViewController:_imagePickerController animated:YES completion:nil];
 }
 
 - (void) takePhotoFromCameraFromViewController : (UIViewController*) viewController withComplition: (ComplitionPhoto) block {

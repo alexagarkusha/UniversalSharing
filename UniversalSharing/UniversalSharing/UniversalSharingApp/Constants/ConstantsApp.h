@@ -29,6 +29,7 @@ typedef NS_ENUM(NSInteger, AlertButtonIndex) {
     Cancel,
     Album,
     Camera,
+    Remove,
 };
 
 

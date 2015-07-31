@@ -26,26 +26,20 @@ static SocialManager *model = nil;
     return  model;
 }
 
-
 //#warning "Add availability to choose networks and they position, means just Twitter or VK and FB"
-
-- (NSArray*) networks :(NSArray*) arrayWithNetwork {
-    NSMutableArray *arrayWithNetworks = [NSMutableArray new];
-
-#warning "Update for on block"
-//    [arrayWithNetwork enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-//        <#code#>
-//    }];
-    
 //#warning "Check if networks types repeads in array"
 //#warning "Replace switch in SocialNetwork class"
+//#warning "Update for on block"
+
+- (NSMutableArray*) networks :(NSArray*) arrayWithNetwork {
+    //Check if networks types repeads in array
+    NSOrderedSet *orderedSet = [NSOrderedSet orderedSetWithArray:arrayWithNetwork];
+    NSArray *arrayWithNetworkWithoutDuplicates = [orderedSet array];
     
-    for (int i = 0; i < arrayWithNetwork.count; i++) {
-        self.networkType = [arrayWithNetwork[i] integerValue];
-        SocialNetwork * socialNetwork = [SocialNetwork sharedManagerWithType: self.networkType];
-        [arrayWithNetworks addObject: socialNetwork];
-    }
-    
+    NSMutableArray *arrayWithNetworks = [NSMutableArray new];
+    [arrayWithNetworkWithoutDuplicates enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [arrayWithNetworks addObject:[SocialNetwork sharedManagerWithType: [arrayWithNetwork[idx] integerValue]]];
+    }];    
     return arrayWithNetworks;
 }
 

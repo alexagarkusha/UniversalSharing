@@ -18,13 +18,13 @@
 @interface MUSAccountsViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property (strong, nonatomic) NSArray *arrayWithNetworksObj;
+@property (strong, nonatomic) NSMutableArray *arrayWithNetworksObj;
 @property (strong, nonatomic) NSIndexPath * selectedIndexPath;
 @end
 
 @implementation MUSAccountsViewController
 
-#warning "Remove notification"
+//#warning "Remove notification"
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -37,6 +37,23 @@
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.tableView reloadData];
+}
+
+- (IBAction)btnEditTapped:(id)sender {
+    if(self.editing)
+    {
+        [super setEditing:NO animated:NO];
+        [self.tableView setEditing:NO animated:NO];
+        [self.tableView reloadData];
+        [self.navigationItem.leftBarButtonItem setTitle:@"Edit"];
+    }
+    else
+    {
+        [super setEditing:YES animated:YES];
+        [self.tableView setEditing:YES animated:YES];
+        [self.tableView reloadData];
+        [self.navigationItem.leftBarButtonItem setTitle:@"Done"];
+    }
 }
 
 #pragma mark UITableViewDataSource
@@ -88,11 +105,22 @@
     [self reloadTableView];
 }
 
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+    [self.arrayWithNetworksObj exchangeObjectAtIndex:fromIndexPath.row withObjectAtIndex:toIndexPath.row];    
+}
+
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
 -(NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
     SocialNetwork *socialNetwork = self.arrayWithNetworksObj[indexPath.row];
     return socialNetwork.isVisible ?  @"Show" : @"Hide";
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
 - (void) reloadTableView {
     [self.tableView reloadData];
 }

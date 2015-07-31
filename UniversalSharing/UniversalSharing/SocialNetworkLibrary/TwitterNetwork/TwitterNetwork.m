@@ -77,11 +77,6 @@ static TwitterNetwork *model = nil;
     }];
 }
 
-#warning "Need to add complition"
-#warning "Check to share in background https://twittercommunity.com/t/post-a-tweet-programatically-custom-twtrcomposer-ios/34332"
-
-
-
 - (void) sharePost:(Post *)post withComplition:(Complition)block {
     self.copyPostComplition = block;
     if (!post.imageToPost.image) {

@@ -22,16 +22,16 @@
 @property (assign, nonatomic) NetworkType networkType;
 
 //#warning "Add method +sharedManagerWithType: and replase switch there"
-
-+ (SocialNetwork*) sharedManagerWithType : (NetworkType) networkType;
++ (SocialNetwork*) sharedManagerWithType :(NetworkType) networkType;
++ (SocialNetwork*) currentSocialNetwork;
 
 - (void) loginWithComplition :(Complition) block;
 - (void) obtainInfoFromNetworkWithComplition :(Complition) block;
 - (void) loginOut;
 - (void) setNetworkType:(NetworkType)networkType;
 
-
 //#warning "Needs to add complition"
+
 - (void) sharePost : (Post*) post withComplition : (Complition) block;
 
 

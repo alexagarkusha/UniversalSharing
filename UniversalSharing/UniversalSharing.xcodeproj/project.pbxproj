@@ -15,7 +15,6 @@
 		18BB29AD1B67E3F000B498AC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB29741B67E3F000B498AC /* AppDelegate.m */; };
 		18BB29AE1B67E3F000B498AC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18BB29751B67E3F000B498AC /* LaunchScreen.xib */; };
 		18BB29AF1B67E3F000B498AC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18BB29771B67E3F000B498AC /* Main.storyboard */; };
-		18BB29B01B67E3F000B498AC /* CacheImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB297A1B67E3F000B498AC /* CacheImage.m */; };
 		18BB29B11B67E3F000B498AC /* UIButton+CornerRadiusButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB297E1B67E3F000B498AC /* UIButton+CornerRadiusButton.m */; };
 		18BB29B21B67E3F000B498AC /* UIButton+LoadBackgroundImageFromNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB29811B67E3F000B498AC /* UIButton+LoadBackgroundImageFromNetwork.m */; };
 		18BB29B31B67E3F000B498AC /* UIImageView+LoadImageFromNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB29841B67E3F000B498AC /* UIImageView+LoadImageFromNetwork.m */; };
@@ -30,16 +29,14 @@
 		18BB29BC1B67E3F000B498AC /* MUSTopUserProfileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18BB299E1B67E3F000B498AC /* MUSTopUserProfileCell.xib */; };
 		18BB29BD1B67E3F000B498AC /* MUSUserProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB29A11B67E3F000B498AC /* MUSUserProfileCell.m */; };
 		18BB29BE1B67E3F000B498AC /* MUSUserProfileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18BB29A21B67E3F000B498AC /* MUSUserProfileCell.xib */; };
-		18BB29BF1B67E3F000B498AC /* FBimage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18BB29A31B67E3F000B498AC /* FBimage.jpg */; };
 		18BB29C01B67E3F000B498AC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18BB29A41B67E3F000B498AC /* Images.xcassets */; };
 		18BB29C11B67E3F000B498AC /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18BB29A51B67E3F000B498AC /* Info.plist */; };
 		18BB29C21B67E3F000B498AC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB29A61B67E3F000B498AC /* main.m */; };
 		18BB29C31B67E3F000B498AC /* MUSLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB29AA1B67E3F000B498AC /* MUSLocationManager.m */; };
-		18BB29C41B67E3F000B498AC /* TWimage.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 18BB29AB1B67E3F000B498AC /* TWimage.jpeg */; };
-		18BB29C51B67E3F000B498AC /* VKimage.png in Resources */ = {isa = PBXBuildFile; fileRef = 18BB29AC1B67E3F000B498AC /* VKimage.png */; };
 		30DBFD8B1B677A9A002F83D0 /* TwitterNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD8A1B677A9A002F83D0 /* TwitterNetwork.m */; };
 		30DBFD8F1B677AD7002F83D0 /* VKNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD8E1B677AD7002F83D0 /* VKNetwork.m */; };
 		30DBFD931B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD921B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.m */; };
+		30DBFD9F1B6B7A1A002F83D0 /* CacheImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD9E1B6B7A1A002F83D0 /* CacheImage.m */; };
 		973D67AE1B69114C00A20D00 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 973D67AD1B69114C00A20D00 /* Post.m */; };
 		97C460CF1B68B6AD00C010DE /* MUSPhotoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C460CE1B68B6AD00C010DE /* MUSPhotoManager.m */; };
 		97C460D11B68B74B00C010DE /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C460D01B68B74B00C010DE /* CoreLocation.framework */; };
@@ -77,8 +74,6 @@
 		18BB29741B67E3F000B498AC /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		18BB29761B67E3F000B498AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		18BB29781B67E3F000B498AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		18BB29791B67E3F000B498AC /* CacheImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CacheImage.h; sourceTree = "<group>"; };
-		18BB297A1B67E3F000B498AC /* CacheImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CacheImage.m; sourceTree = "<group>"; };
 		18BB297D1B67E3F000B498AC /* UIButton+CornerRadiusButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+CornerRadiusButton.h"; sourceTree = "<group>"; };
 		18BB297E1B67E3F000B498AC /* UIButton+CornerRadiusButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+CornerRadiusButton.m"; sourceTree = "<group>"; };
 		18BB29801B67E3F000B498AC /* UIButton+LoadBackgroundImageFromNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+LoadBackgroundImageFromNetwork.h"; sourceTree = "<group>"; };
@@ -104,14 +99,11 @@
 		18BB29A01B67E3F000B498AC /* MUSUserProfileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSUserProfileCell.h; sourceTree = "<group>"; };
 		18BB29A11B67E3F000B498AC /* MUSUserProfileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSUserProfileCell.m; sourceTree = "<group>"; };
 		18BB29A21B67E3F000B498AC /* MUSUserProfileCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MUSUserProfileCell.xib; sourceTree = "<group>"; };
-		18BB29A31B67E3F000B498AC /* FBimage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = FBimage.jpg; sourceTree = "<group>"; };
 		18BB29A41B67E3F000B498AC /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		18BB29A51B67E3F000B498AC /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		18BB29A61B67E3F000B498AC /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		18BB29A91B67E3F000B498AC /* MUSLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSLocationManager.h; sourceTree = "<group>"; };
 		18BB29AA1B67E3F000B498AC /* MUSLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSLocationManager.m; sourceTree = "<group>"; };
-		18BB29AB1B67E3F000B498AC /* TWimage.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = TWimage.jpeg; sourceTree = "<group>"; };
-		18BB29AC1B67E3F000B498AC /* VKimage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = VKimage.png; sourceTree = "<group>"; };
 		294811F54E6400CFBFD3EBDD /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		30DBFD891B677A9A002F83D0 /* TwitterNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterNetwork.h; sourceTree = "<group>"; };
 		30DBFD8A1B677A9A002F83D0 /* TwitterNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterNetwork.m; sourceTree = "<group>"; };
@@ -119,6 +111,8 @@
 		30DBFD8E1B677AD7002F83D0 /* VKNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VKNetwork.m; sourceTree = "<group>"; };
 		30DBFD911B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSSocialNetworkLibraryConstants.h; sourceTree = "<group>"; };
 		30DBFD921B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSSocialNetworkLibraryConstants.m; sourceTree = "<group>"; };
+		30DBFD9D1B6B7A1A002F83D0 /* CacheImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CacheImage.h; sourceTree = "<group>"; };
+		30DBFD9E1B6B7A1A002F83D0 /* CacheImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CacheImage.m; sourceTree = "<group>"; };
 		61D95135D2C19CD52D3B0709 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		7930E9BF698DEF5E51379530 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		973D67AC1B69114C00A20D00 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Post.h; path = UniversalSharing/SocialNetworkLibrary/Post/Post.h; sourceTree = SOURCE_ROOT; };
@@ -257,22 +251,18 @@
 		18BB29711B67E3F000B498AC /* UniversalSharingApp */ = {
 			isa = PBXGroup;
 			children = (
+				30DBFD9C1B6B7A1A002F83D0 /* CacheImage */,
 				18BB29721B67E3F000B498AC /* AppDelegate */,
 				18BB29751B67E3F000B498AC /* LaunchScreen.xib */,
 				18BB29771B67E3F000B498AC /* Main.storyboard */,
-				18BB29791B67E3F000B498AC /* CacheImage.h */,
-				18BB297A1B67E3F000B498AC /* CacheImage.m */,
 				18BB297B1B67E3F000B498AC /* Categories */,
 				18BB29881B67E3F000B498AC /* Constants */,
 				18BB298B1B67E3F000B498AC /* Controllers */,
 				18BB29961B67E3F000B498AC /* CustomViews */,
-				18BB29A31B67E3F000B498AC /* FBimage.jpg */,
+				18BB29A71B67E3F000B498AC /* Managers */,
 				18BB29A41B67E3F000B498AC /* Images.xcassets */,
 				18BB29A51B67E3F000B498AC /* Info.plist */,
 				18BB29A61B67E3F000B498AC /* main.m */,
-				18BB29A71B67E3F000B498AC /* Managers */,
-				18BB29AB1B67E3F000B498AC /* TWimage.jpeg */,
-				18BB29AC1B67E3F000B498AC /* VKimage.png */,
 			);
 			path = UniversalSharingApp;
 			sourceTree = "<group>";
@@ -472,6 +462,15 @@
 			path = SocialNetworkLibraryConstants;
 			sourceTree = "<group>";
 		};
+		30DBFD9C1B6B7A1A002F83D0 /* CacheImage */ = {
+			isa = PBXGroup;
+			children = (
+				30DBFD9D1B6B7A1A002F83D0 /* CacheImage.h */,
+				30DBFD9E1B6B7A1A002F83D0 /* CacheImage.m */,
+			);
+			path = CacheImage;
+			sourceTree = "<group>";
+		};
 		913EF4D692E7786FD2E96B42 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -608,14 +607,11 @@
 			files = (
 				18BB29C11B67E3F000B498AC /* Info.plist in Resources */,
 				18BB29BE1B67E3F000B498AC /* MUSUserProfileCell.xib in Resources */,
-				18BB29C51B67E3F000B498AC /* VKimage.png in Resources */,
 				18BB29AE1B67E3F000B498AC /* LaunchScreen.xib in Resources */,
 				18BB29C01B67E3F000B498AC /* Images.xcassets in Resources */,
 				18BB29BA1B67E3F000B498AC /* MUSAccountTableViewCell.xib in Resources */,
 				18BB29BC1B67E3F000B498AC /* MUSTopUserProfileCell.xib in Resources */,
-				18BB29C41B67E3F000B498AC /* TWimage.jpeg in Resources */,
 				18BB29AF1B67E3F000B498AC /* Main.storyboard in Resources */,
-				18BB29BF1B67E3F000B498AC /* FBimage.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -685,8 +681,8 @@
 				18BB29B61B67E3F000B498AC /* MUSAccountsViewController.m in Sources */,
 				30DBFD8F1B677AD7002F83D0 /* VKNetwork.m in Sources */,
 				18BB29B51B67E3F000B498AC /* ConstantsApp.m in Sources */,
-				18BB29B01B67E3F000B498AC /* CacheImage.m in Sources */,
 				973D67AE1B69114C00A20D00 /* Post.m in Sources */,
+				30DBFD9F1B6B7A1A002F83D0 /* CacheImage.m in Sources */,
 				97C460CF1B68B6AD00C010DE /* MUSPhotoManager.m in Sources */,
 				187FC52A1B65222D00A3916C /* User.m in Sources */,
 				18BB29BB1B67E3F000B498AC /* MUSTopUserProfileCell.m in Sources */,
@@ -830,6 +826,7 @@
 			baseConfigurationReference = 61D95135D2C19CD52D3B0709 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = UniversalSharing/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -843,6 +840,7 @@
 			baseConfigurationReference = 7930E9BF698DEF5E51379530 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = UniversalSharing/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

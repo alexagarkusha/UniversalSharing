@@ -127,7 +127,7 @@
 
 - (void) initiationSocialNetworkButtonForSocialNetwork {
     if (!_currentSocialNetwork) {
-        _currentSocialNetwork = [self currentSocialNetwork];
+        _currentSocialNetwork = [SocialNetwork currentSocialNetwork];//[self currentSocialNetwork];
     }
     
     __weak UIButton *socialNetworkButton = self.changeSocialNetworkButton;
@@ -138,18 +138,18 @@
     }];
 }
 
-#warning "REmove logic in Social Network"
+//#warning "REmove logic in Social Network"
 
-- (SocialNetwork*) currentSocialNetwork {
-    SocialNetwork *currentSocialNetwork = nil;
-    NSArray *accountsArray = [[SocialManager sharedManager] networks:@[@(Twitters), @(VKontakt)]];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isLogin == %d", YES];
-    NSArray *filteredArray = [accountsArray filteredArrayUsingPredicate:predicate];
-    if (filteredArray.count > 0) {
-        currentSocialNetwork = (SocialNetwork*) [filteredArray firstObject];
-    }
-    return currentSocialNetwork;
-}
+//- (SocialNetwork*) currentSocialNetwork {
+//    SocialNetwork *currentSocialNetwork = nil;
+//    NSArray *accountsArray = [[SocialManager sharedManager] networks:@[@(Twitters), @(VKontakt), @(Facebook)]];
+//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isLogin == %d", YES];
+//    NSArray *filteredArray = [accountsArray filteredArrayUsingPredicate:predicate];
+//    if (filteredArray.count > 0) {
+//        currentSocialNetwork = (SocialNetwork*) [filteredArray firstObject];
+//    }
+//    return currentSocialNetwork;
+//}
 
 
 #pragma mark - Keyboard Show/Hide
@@ -193,11 +193,14 @@
     Post *post = [[Post alloc] init];
     post.postDescription = self.messageTextView.text;
     post.networkType = _currentSocialNetwork.networkType;
-    NSData *imageData = UIImagePNGRepresentation(self.photoImageView.image);
-    post.photoData = imageData;
+    //NSData *imageData = UIImagePNGRepresentation(self.photoImageView.image);
+    post.imageToPost.image = self.photoImageView.image;
     post.latitude = self.currentLocation.latitude;
     post.longitude = self.currentLocation.longitude;
     
+    [_currentSocialNetwork sharePost:post withComplition:^(id result, NSError *error) {
+        NSLog(@"POSTED");
+    }];
 }
 
 #pragma mark - UITextViewDelegate
@@ -302,7 +305,7 @@
 #pragma mark - SharePhotoTabBarItemClick
 
 - (void) photoAlertShow {
-    UIAlertView *photoAlert = [[UIAlertView alloc] initWithTitle:@"Share photo" message: nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Album", @"Camera", nil];
+    UIAlertView *photoAlert = [[UIAlertView alloc] initWithTitle:@"Share photo" message: nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Album", @"Camera", @"Remove a pic", nil];
     [photoAlert show];
 }
 
@@ -316,6 +319,9 @@
             break;
         case Camera:
             [self takePhotoFromCamera];
+            break;
+        case Remove:
+            self.photoImageView.image = nil;
             break;
         default:
             break;
