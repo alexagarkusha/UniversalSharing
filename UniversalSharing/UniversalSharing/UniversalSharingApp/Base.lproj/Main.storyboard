@@ -78,7 +78,7 @@
             </objects>
             <point key="canvasLocation" x="0.0" y="1028"/>
         </scene>
-        <!--Accounts View Controller-->
+        <!--Networks-->
         <scene sceneID="UOh-QH-Yk3">
             <objects>
                 <viewController storyboardIdentifier="MUSAccountsViewController" id="sDs-sX-TUf" customClass="MUSAccountsViewController" sceneMemberID="viewController">
@@ -107,7 +107,13 @@
                             <constraint firstAttribute="trailing" secondItem="ICe-7s-J4T" secondAttribute="trailing" id="dWZ-Dh-NSR"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="CXT-1l-WE6"/>
+                    <navigationItem key="navigationItem" title="Networks" id="CXT-1l-WE6">
+                        <barButtonItem key="leftBarButtonItem" title="Edit" id="yGE-qs-s5D">
+                            <connections>
+                                <action selector="btnEditTapped:" destination="sDs-sX-TUf" id="epq-iw-tRH"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="ICe-7s-J4T" id="Dua-2r-x8s"/>
                         <segue destination="xqB-o5-zWK" kind="show" identifier="goToInfo" id="JM6-Xs-4G9"/>

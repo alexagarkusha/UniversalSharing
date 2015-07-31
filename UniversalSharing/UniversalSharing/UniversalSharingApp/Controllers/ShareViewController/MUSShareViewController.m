@@ -302,7 +302,7 @@
 #pragma mark - SharePhotoTabBarItemClick
 
 - (void) photoAlertShow {
-    UIAlertView *photoAlert = [[UIAlertView alloc] initWithTitle:@"Share photo" message: nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Album", @"Camera", nil];
+    UIAlertView *photoAlert = [[UIAlertView alloc] initWithTitle:@"Share photo" message: nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Album", @"Camera", @"Remove a pic", nil];
     [photoAlert show];
 }
 
@@ -316,6 +316,9 @@
             break;
         case Camera:
             [self takePhotoFromCamera];
+            break;
+        case Remove:
+            self.photoImageView.image = nil;
             break;
         default:
             break;

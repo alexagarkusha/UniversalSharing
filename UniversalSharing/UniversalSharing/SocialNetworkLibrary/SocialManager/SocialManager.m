@@ -29,7 +29,7 @@ static SocialManager *model = nil;
 
 //#warning "Add availability to choose networks and they position, means just Twitter or VK and FB"
 
-- (NSArray*) networks :(NSArray*) arrayWithNetwork {
+- (NSMutableArray*) networks :(NSArray*) arrayWithNetwork {
     NSMutableArray *arrayWithNetworks = [NSMutableArray new];
     
     
