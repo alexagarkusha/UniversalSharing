@@ -43,16 +43,4 @@ static SocialManager *model = nil;
     return arrayWithNetworks;
 }
 
-//- (SocialNetwork*) p_determinationOfTheTypeOfSocialNetwork : (NetworkType) networkType {
-//    SocialNetwork *socialNetwork = nil;//[[SocialNetwork alloc] init];
-//
-//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"networkType == %d", networkType];
-//    NSArray *filteredArray = [self.arrayWithNetworks filteredArrayUsingPredicate:predicate];
-//
-//    if (filteredArray.count > 0) {
-//        socialNetwork = (SocialNetwork*) [filteredArray firstObject];
-//    }
-//    return socialNetwork;
-//}
-
 @end

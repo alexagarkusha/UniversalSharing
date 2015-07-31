@@ -194,7 +194,11 @@
     post.postDescription = self.messageTextView.text;
     post.networkType = _currentSocialNetwork.networkType;
     //NSData *imageData = UIImagePNGRepresentation(self.photoImageView.image);
-    post.imageToPost.image = self.photoImageView.image;
+    if (self.photoImageView.image) {
+        post.imageToPost.image = self.photoImageView.image;
+        post.imageToPost.imageType = JPEG;
+        post.imageToPost.quality = 0.8;
+    }
     post.latitude = self.currentLocation.latitude;
     post.longitude = self.currentLocation.longitude;
     

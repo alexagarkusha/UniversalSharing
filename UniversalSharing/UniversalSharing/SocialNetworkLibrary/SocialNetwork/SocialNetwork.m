@@ -60,11 +60,6 @@
     
 }
 
-- (void) sharePostToNetwork : (id) sharePost {
-    
-
-}
-
 - (void) sharePost : (Post*) post withComplition : (Complition) block {
     
 }
