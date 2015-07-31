@@ -21,8 +21,8 @@
 @property (assign, nonatomic) BOOL isVisible;
 @property (assign, nonatomic) NetworkType networkType;
 
-#warning "Add method +sharedManagerWithType: and replase switch there"
-
+//#warning "Add method +sharedManagerWithType: and replase switch there"
++ (SocialNetwork*) sharedManagerWithType :(NetworkType) networkType;
 - (void) loginWithComplition :(Complition) block;
 - (void) obtainInfoFromNetworkWithComplition :(Complition) block;
 - (void) loginOut;

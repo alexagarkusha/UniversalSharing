@@ -26,46 +26,21 @@ static SocialManager *model = nil;
     return  model;
 }
 
-
 //#warning "Add availability to choose networks and they position, means just Twitter or VK and FB"
+//#warning "Check if networks types repeads in array"
+//#warning "Replace switch in SocialNetwork class"
+//#warning "Update for on block"
 
 - (NSMutableArray*) networks :(NSArray*) arrayWithNetwork {
+    //Check if networks types repeads in array
+    NSOrderedSet *orderedSet = [NSOrderedSet orderedSetWithArray:arrayWithNetwork];
+    NSArray *arrayWithNetworkWithoutDuplicates = [orderedSet array];
+    
     NSMutableArray *arrayWithNetworks = [NSMutableArray new];
-    
-    
-#warning "Update for on block"
-    
-//    [arrayWithNetwork enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-//        <#code#>
-//    }];
-    
-#warning "Check if networks types repeads in array"
-#warning "Replace switch in SocialNetwork class"
-    
-    for (int i = 0; i < arrayWithNetwork.count; i++) {
-        
-        self.networkType = [arrayWithNetwork[i] integerValue];
-        switch (self.networkType) {
-            case Facebook:{
-                FacebookNetwork *facebookNetwork = [FacebookNetwork sharedManager];
-                [arrayWithNetworks addObject:facebookNetwork];
-                break;
-            }
-            case Twitters:{
-                TwitterNetwork *twitterNetwork = [TwitterNetwork sharedManager];
-                [arrayWithNetworks addObject:twitterNetwork];
-                break;
-            }
-            case VKontakt:{
-                VKNetwork *vkNetwork = [VKNetwork sharedManager];
-                [arrayWithNetworks addObject:vkNetwork];
-                break;
-            }
-            default:
-                break;
-        }
-    }
-        return arrayWithNetworks;
+    [arrayWithNetworkWithoutDuplicates enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [arrayWithNetworks addObject:[SocialNetwork sharedManagerWithType: [arrayWithNetwork[idx] integerValue]]];
+    }];    
+    return arrayWithNetworks;
 }
 
 //- (SocialNetwork*) p_determinationOfTheTypeOfSocialNetwork : (NetworkType) networkType {

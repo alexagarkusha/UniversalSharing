@@ -89,8 +89,6 @@ static FacebookNetwork *model = nil;
 //#warning "Needs to add complition"
 //#warning "Fix dublicates"
 
-#warning "LOCATION NOT SHARE TO FB"
-
 - (void) sharePost:(Post *)post withComplition:(Complition)block {
     self.copyPostComplition = block;
     if ([[FBSDKAccessToken currentAccessToken] hasGranted:@"publish_actions"]) {
