@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #import "User.h"
+#import "Post.h"
 #import "MUSSocialNetworkLibraryConstants.h"
 
 @interface SocialNetwork : NSObject
@@ -27,7 +28,12 @@
 - (void) loginOut;
 - (void) setNetworkType:(NetworkType)networkType;
 
-- (void) sharePostToNetwork : (id) sharePost;
+
+#warning "Needs to add complition"
+- (void) sharePostToNetwork : (id) sharePost; ///// DELETE THIS AFTER CHANGING METHOD ////
+
+- (void) sharePost : (Post*) post withComplition : (Complition) block;
+
 
 
 @end

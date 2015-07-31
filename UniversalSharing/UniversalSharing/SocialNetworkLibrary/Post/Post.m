@@ -10,4 +10,15 @@
 
 @implementation Post
 
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.imageToPost = [[ImageToPost alloc] init];
+    }
+    return self;
+}
+
+
 @end
