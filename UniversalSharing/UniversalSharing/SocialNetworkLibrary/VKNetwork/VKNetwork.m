@@ -20,7 +20,7 @@
 static VKNetwork *model = nil;
 
 
-#warning "Use isLoggedIn method to check is login"
+//#warning "Use isLoggedIn method to check is login"
 
 @implementation VKNetwork
 
@@ -38,7 +38,7 @@ static VKNetwork *model = nil;
     
     if (self) {
         self.networkType = VKontakt;
-        if (![VKSdk wakeUpSession]) {
+        if (![self isLoggedIn]) {
             [self initiationPropertiesWithoutSession];
         }
         else {
@@ -48,10 +48,14 @@ static VKNetwork *model = nil;
     return self;
 }
 
+- (BOOL) isLoggedIn {
+    return [VKSdk wakeUpSession];
+}
+
 - (void) loginWithComplition :(Complition) block {
     self.isLogin = YES;
     self.copyComplition = block;
-    if (![VKSdk wakeUpSession])
+    if (![self isLoggedIn])
     {
         [VKSdk authorize:@[VK_PER_NOHTTPS, VK_PER_OFFLINE, VK_PER_PHOTOS, VK_PER_WALL, VK_PER_EMAIL]];
     }
