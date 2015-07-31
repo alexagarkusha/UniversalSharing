@@ -13,6 +13,7 @@
 @interface FacebookNetwork()<FBSDKGraphRequestConnectionDelegate>
 
 @property (copy, nonatomic) Complition copyPostComplition;
+@property (strong, nonatomic) NSString *firstPlaceId;
 
 @end
 
@@ -89,8 +90,6 @@ static FacebookNetwork *model = nil;
 //#warning "Needs to add complition"
 //#warning "Fix dublicates"
 
-#warning "LOCATION NOT SHARE TO FB"
-
 - (void) sharePost:(Post *)post withComplition:(Complition)block {
     self.copyPostComplition = block;
     if ([[FBSDKAccessToken currentAccessToken] hasGranted:@"publish_actions"]) {
@@ -108,45 +107,88 @@ static FacebookNetwork *model = nil;
 }
 
 - (void) sharePostToFacebook : (Post*) post {
-    if (!post.imageToPost.image) {
-        [self postMessageToFB:post];
-    } else {
-        [self postImageToFB:post];
+    //post.latitude = 48.450063;
+    //post.longitude = 34.982602;
+    
+    if (post.latitude && post.longitude) {
+        [self determinationOfCurrentLocationAndPostToFB : post];
+    }  else {
+        if (!post.imageToPost.image) {
+            [self postMessageToFB: post withLocationID: nil];
+        } else {
+            [self postImageToFB: post withLocationID: nil];
+        }
     }
 }
 
 
 
-- (void) postMessageToFB : (Post*) post {
-        [[[FBSDKGraphRequest alloc]
-          initWithGraphPath:@"me/feed"
-          parameters: @{ @"message" : post.postDescription }
-          HTTPMethod:@"POST"]
-         startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
-             if (!error) {
-                 NSString *postMessageResult = @"Your message has been successfully sent";
-                 self.copyPostComplition (postMessageResult, nil);
-                 //NSLog(@"Post id:%@", result[@"id"]);
-             } else {
-                 self.copyPostComplition (nil, error);
-             }
-         }];
+- (void) determinationOfCurrentLocationAndPostToFB : (Post*) post {
+    NSString *location = [NSString stringWithFormat:@"%f,%f", post.latitude, post.longitude];
+    
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    params[@"q"] = @"";
+    params[@"type"] = @"place";
+    params[@"center"] = location;
+    params[@"distance"] = @"100";
+
+    FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]
+                                  initWithGraphPath:@"/search?"
+                                  parameters: params
+                                  HTTPMethod:@"GET"];
+    
+    [request startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection,
+                                          id result,
+                                          NSError *error) {
+        if (result) {
+            NSDictionary *resultDic = result;
+            NSArray *placeArray = [resultDic objectForKey: @"data"];
+                NSDictionary *firstPlace = [placeArray firstObject];
+                self.firstPlaceId = [firstPlace objectForKey:@"id"];
+            
+                if (!post.imageToPost.image) {
+                    [self postMessageToFB: post withLocationID: self.firstPlaceId];
+                } else {
+                    [self postImageToFB: post withLocationID: self.firstPlaceId];
+                }
+        }
+        NSLog(@"result = %@", result);
+        NSLog(@"error = %@", error);
+        NSLog(@"connection = %@", connection);
+    }];
 }
 
 
-- (void) postImageToFB : (Post*) post {
-    //NSString *latitude = [NSString stringWithFormat:@"%f", post.latitude];
-    //NSString *longitude = [NSString stringWithFormat:@"%f", post.longitude];
+- (void) postMessageToFB : (Post*) post withLocationID : (NSString*) locationID {
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    params[@"message"] = post.postDescription;
     
-    //NSDictionary *location = [[NSDictionary alloc] initWithObjectsAndKeys: latitude, @"latitude", longitude, @"longitude", nil];
+    if (locationID) params[@"place"] = locationID;
+
+    [[[FBSDKGraphRequest alloc]
+      initWithGraphPath:@"me/feed"
+      parameters: params
+      HTTPMethod:@"POST"]
+     startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+         if (!error) {
+             NSString *postMessageResult = @"Your message has been successfully sent";
+             self.copyPostComplition (postMessageResult, nil);
+             //NSLog(@"Post id:%@", result[@"id"]);
+         } else {
+             self.copyPostComplition (nil, error);
+         }
+     }];
+}
+
+
+- (void) postImageToFB : (Post*) post withLocationID : (NSString*) locationID {
     
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
     params[@"message"] = post.postDescription;
     params[@"picture"] = post.imageToPost.image;
-    
-    //params[@"location"] = location;
 
-    
+    if (locationID) params[@"place"] = locationID;
+
     [[[FBSDKGraphRequest alloc]
       initWithGraphPath:@"me/photos"
       parameters: params

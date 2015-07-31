@@ -31,53 +31,22 @@ static SocialManager *model = nil;
 
 - (NSArray*) networks :(NSArray*) arrayWithNetwork {
     NSMutableArray *arrayWithNetworks = [NSMutableArray new];
-    
-    
+
 #warning "Update for on block"
-    
 //    [arrayWithNetwork enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 //        <#code#>
 //    }];
     
-#warning "Check if networks types repeads in array"
-#warning "Replace switch in SocialNetwork class"
+//#warning "Check if networks types repeads in array"
+//#warning "Replace switch in SocialNetwork class"
     
     for (int i = 0; i < arrayWithNetwork.count; i++) {
-        
         self.networkType = [arrayWithNetwork[i] integerValue];
-        switch (self.networkType) {
-            case Facebook:{
-                FacebookNetwork *facebookNetwork = [FacebookNetwork sharedManager];
-                [arrayWithNetworks addObject:facebookNetwork];
-                break;
-            }
-            case Twitters:{
-                TwitterNetwork *twitterNetwork = [TwitterNetwork sharedManager];
-                [arrayWithNetworks addObject:twitterNetwork];
-                break;
-            }
-            case VKontakt:{
-                VKNetwork *vkNetwork = [VKNetwork sharedManager];
-                [arrayWithNetworks addObject:vkNetwork];
-                break;
-            }
-            default:
-                break;
-        }
+        SocialNetwork * socialNetwork = [SocialNetwork sharedManagerWithType: self.networkType];
+        [arrayWithNetworks addObject: socialNetwork];
     }
-        return arrayWithNetworks;
+    
+    return arrayWithNetworks;
 }
-
-//- (SocialNetwork*) p_determinationOfTheTypeOfSocialNetwork : (NetworkType) networkType {
-//    SocialNetwork *socialNetwork = nil;//[[SocialNetwork alloc] init];
-//
-//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"networkType == %d", networkType];
-//    NSArray *filteredArray = [self.arrayWithNetworks filteredArrayUsingPredicate:predicate];
-//
-//    if (filteredArray.count > 0) {
-//        socialNetwork = (SocialNetwork*) [filteredArray firstObject];
-//    }
-//    return socialNetwork;
-//}
 
 @end

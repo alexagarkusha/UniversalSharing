@@ -7,8 +7,33 @@
 //
 
 #import "SocialNetwork.h"
+#import "FacebookNetwork.h"
+#import "VKNetwork.h"
+#import "TwitterNetwork.h"
 
 @implementation SocialNetwork
+
++ (SocialNetwork*) sharedManagerWithType : (NetworkType) networkType {
+    switch (networkType) {
+        case Facebook:{
+            FacebookNetwork *facebookNetwork = [FacebookNetwork sharedManager];
+            return facebookNetwork;
+            break;
+        }
+        case Twitters:{
+            TwitterNetwork *twitterNetwork = [TwitterNetwork sharedManager];
+            return twitterNetwork;
+            break;
+        }
+        case VKontakt:{
+            VKNetwork *vkNetwork = [VKNetwork sharedManager];
+            return vkNetwork;
+            break;
+        }
+        default:
+            break;
+    }
+}
 
 - (void) loginWithComplition :(Complition) block {
 }
@@ -23,11 +48,6 @@
 - (void) obtainInfoFromNetworkWithComplition :(Complition) block {
     
     
-}
-
-- (void) sharePostToNetwork : (id) sharePost {
-    
-
 }
 
 - (void) sharePost : (Post*) post withComplition : (Complition) block {

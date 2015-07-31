@@ -200,7 +200,6 @@ static VKNetwork *model = nil;
     NSLog(@"Access denied");
 }
 
-//vbiflehfr1987
 
 -(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {

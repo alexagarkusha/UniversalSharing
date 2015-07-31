@@ -21,7 +21,9 @@
 @property (assign, nonatomic) BOOL isVisible;
 @property (assign, nonatomic) NetworkType networkType;
 
-#warning "Add method +sharedManagerWithType: and replase switch there"
+//#warning "Add method +sharedManagerWithType: and replase switch there"
+
++ (SocialNetwork*) sharedManagerWithType : (NetworkType) networkType;
 
 - (void) loginWithComplition :(Complition) block;
 - (void) obtainInfoFromNetworkWithComplition :(Complition) block;
@@ -29,9 +31,7 @@
 - (void) setNetworkType:(NetworkType)networkType;
 
 
-#warning "Needs to add complition"
-- (void) sharePostToNetwork : (id) sharePost; ///// DELETE THIS AFTER CHANGING METHOD ////
-
+//#warning "Needs to add complition"
 - (void) sharePost : (Post*) post withComplition : (Complition) block;
 
 
