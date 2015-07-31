@@ -29,7 +29,7 @@
 - (void) setNetworkType:(NetworkType)networkType;
 
 
-#warning "Needs to add complition"
+//#warning "Needs to add complition"
 - (void) sharePostToNetwork : (id) sharePost; ///// DELETE THIS AFTER CHANGING METHOD ////
 
 - (void) sharePost : (Post*) post withComplition : (Complition) block;

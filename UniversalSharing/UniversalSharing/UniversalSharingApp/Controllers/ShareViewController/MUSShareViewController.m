@@ -193,11 +193,14 @@
     Post *post = [[Post alloc] init];
     post.postDescription = self.messageTextView.text;
     post.networkType = _currentSocialNetwork.networkType;
-    NSData *imageData = UIImagePNGRepresentation(self.photoImageView.image);
-    post.photoData = imageData;
+    //NSData *imageData = UIImagePNGRepresentation(self.photoImageView.image);
+    post.imageToPost.image = self.photoImageView.image;
     post.latitude = self.currentLocation.latitude;
     post.longitude = self.currentLocation.longitude;
     
+    [_currentSocialNetwork sharePost:post withComplition:^(id result, NSError *error) {
+        NSLog(@"POSTED");
+    }];
 }
 
 #pragma mark - UITextViewDelegate
