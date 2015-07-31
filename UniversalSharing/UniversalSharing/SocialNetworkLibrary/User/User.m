@@ -11,7 +11,7 @@
 
 @implementation User
 
-#warning "Merge me better"
+//#warning "Merge me better"
 
 + (User*) createFromDictionary:(id) dict andNetworkType :(NetworkType) networkType
 {

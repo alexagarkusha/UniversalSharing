@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "UniversalSharing/UniversalSharingApp/Controllers/ShareViewController/MUSShareViewController.m"
-            timestampString = "460027769.322193"
+            filePath = "UniversalSharing/UniversalSharingApp/Managers/PhotoManager/MUSPhotoManager.m"
+            timestampString = "460034698.977524"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "193"
-            endingLineNumber = "193"
-            landmarkName = "-shareToSocialNetwork:"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
+            landmarkName = "-init"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

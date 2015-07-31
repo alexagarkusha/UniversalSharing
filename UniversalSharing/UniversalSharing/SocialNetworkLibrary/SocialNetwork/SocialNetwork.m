@@ -7,6 +7,7 @@
 //
 
 #import "SocialNetwork.h"
+#import "SocialManager.h"
 #import "FacebookNetwork.h"
 #import "VKNetwork.h"
 #import "TwitterNetwork.h"
@@ -31,6 +32,17 @@
             break;
     }
     return socialNetwork;
+}
+
++ (SocialNetwork*) currentSocialNetwork {
+    SocialNetwork *currentSocialNetwork = nil;
+    NSArray *accountsArray = [[SocialManager sharedManager] networks:@[@(Twitters), @(VKontakt), @(Facebook)]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isLogin == %d", YES];
+    NSArray *filteredArray = [accountsArray filteredArrayUsingPredicate:predicate];
+    if (filteredArray.count > 0) {
+        currentSocialNetwork = (SocialNetwork*) [filteredArray firstObject];
+    }
+    return currentSocialNetwork;
 }
 
 - (void) loginWithComplition :(Complition) block {

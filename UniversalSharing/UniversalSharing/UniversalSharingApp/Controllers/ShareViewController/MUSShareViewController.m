@@ -127,7 +127,7 @@
 
 - (void) initiationSocialNetworkButtonForSocialNetwork {
     if (!_currentSocialNetwork) {
-        _currentSocialNetwork = [self currentSocialNetwork];
+        _currentSocialNetwork = [SocialNetwork currentSocialNetwork];//[self currentSocialNetwork];
     }
     
     __weak UIButton *socialNetworkButton = self.changeSocialNetworkButton;
@@ -138,18 +138,18 @@
     }];
 }
 
-#warning "REmove logic in Social Network"
+//#warning "REmove logic in Social Network"
 
-- (SocialNetwork*) currentSocialNetwork {
-    SocialNetwork *currentSocialNetwork = nil;
-    NSArray *accountsArray = [[SocialManager sharedManager] networks:@[@(Twitters), @(VKontakt)]];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isLogin == %d", YES];
-    NSArray *filteredArray = [accountsArray filteredArrayUsingPredicate:predicate];
-    if (filteredArray.count > 0) {
-        currentSocialNetwork = (SocialNetwork*) [filteredArray firstObject];
-    }
-    return currentSocialNetwork;
-}
+//- (SocialNetwork*) currentSocialNetwork {
+//    SocialNetwork *currentSocialNetwork = nil;
+//    NSArray *accountsArray = [[SocialManager sharedManager] networks:@[@(Twitters), @(VKontakt), @(Facebook)]];
+//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isLogin == %d", YES];
+//    NSArray *filteredArray = [accountsArray filteredArrayUsingPredicate:predicate];
+//    if (filteredArray.count > 0) {
+//        currentSocialNetwork = (SocialNetwork*) [filteredArray firstObject];
+//    }
+//    return currentSocialNetwork;
+//}
 
 
 #pragma mark - Keyboard Show/Hide

@@ -19,18 +19,27 @@
 
 @end
 
+static MUSPhotoManager* sharedManager = nil;
 @implementation MUSPhotoManager
 
 #warning "init UIImagePickerController just ones in shareManager"
 
 + (MUSPhotoManager*) sharedManager {
-    static MUSPhotoManager* sharedManager = nil;
     static dispatch_once_t onceTaken;
     dispatch_once (& onceTaken, ^
                    {
                        sharedManager = [MUSPhotoManager new];
+                       
                    });
     return sharedManager;
+}
+
+- (instancetype) init {
+    self = [super init];
+    if (self) {
+        
+    }
+    return self;
 }
 
 - (UIViewController*) viewConterollerForImagePickerController {

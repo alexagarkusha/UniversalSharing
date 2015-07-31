@@ -27,7 +27,7 @@
 - (void) obtainInfoFromNetworkWithComplition :(Complition) block;
 - (void) loginOut;
 - (void) setNetworkType:(NetworkType)networkType;
-
++ (SocialNetwork*) currentSocialNetwork;
 
 //#warning "Needs to add complition"
 - (void) sharePostToNetwork : (id) sharePost; ///// DELETE THIS AFTER CHANGING METHOD ////
