@@ -174,16 +174,6 @@ static TwitterNetwork *model = nil;
 
 
 
-
-
-
-
-
-
-
-
-
-
 - (void) sharePostToNetwork : (id) sharePost {
     
     TWTRComposer *composer = [[TWTRComposer alloc] init];

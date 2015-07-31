@@ -84,7 +84,7 @@
     
     if (socialNetwork.isLogin && socialNetwork.currentUser) {
         [self performSegueWithIdentifier: goToUserDetailViewControllerSegueIdentifier sender:nil];
-        [socialNetwork sharePostToNetwork:nil];// call methos for testing share post TODO:
+        //[socialNetwork sharePostToNetwork:nil];// call methos for testing share post TODO:
     }
     else{
         __weak MUSAccountsViewController *weakSelf = self;
@@ -92,7 +92,7 @@
         [socialNetwork loginWithComplition:^(id result, NSError *error) {
             if (result) {
                 [weakSelf performSegueWithIdentifier: goToUserDetailViewControllerSegueIdentifier sender:nil];
-                [socialNetwork sharePostToNetwork:nil];// call methos for testing share post TODO:
+                //[socialNetwork sharePostToNetwork:nil];// call methos for testing share post TODO:
             }
         }];
     }
