@@ -64,6 +64,10 @@
     
 }
 
+- (void) obtaineArrayOfPlaces : (Location*) location withComplition : (ComplitionPlaces) block {
+    
+}
+
 
 
 @end

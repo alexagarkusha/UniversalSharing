@@ -64,7 +64,7 @@ static TwitterNetwork *model = nil;
 
 #pragma mark - obtainUserFromNetwork
 
-- (void) obtainInfoFromNetworkWithComplition :(Complition) block {
+- (void) obtaineInfoFromNetworkWithComplition :(Complition) block {
     __weak TwitterNetwork *weakSell = self;
 
     [[TwitterKit APIClient] loadUserWithID:[[[Twitter sharedInstance ]session] userID]

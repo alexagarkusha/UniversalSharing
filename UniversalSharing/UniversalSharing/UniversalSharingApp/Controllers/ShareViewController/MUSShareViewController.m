@@ -209,8 +209,8 @@
     //NSData *imageData = UIImagePNGRepresentation(self.photoImageView.image);
     //if (self.photoImageView.image) {
         //post.imageToPost.image = self.photoImageView.image;
-        post.imageToPost.imageType = JPEG;
-        post.imageToPost.quality = 0.8;
+        //post.imageToPost.imageType = JPEG;
+        //post.imageToPost.quality = 0.8;
     //}
     post.latitude = self.currentLocation.latitude;
     post.longitude = self.currentLocation.longitude;
@@ -313,6 +313,16 @@
         if ([result isKindOfClass:[CLLocation class]]) {
             CLLocation* location = result;
             self.currentLocation = location.coordinate;
+            Location *currentLocation = [[Location alloc] init];
+            currentLocation.longitude = [NSString stringWithFormat: @"%f", location.coordinate.longitude];
+            currentLocation.latitude = [NSString stringWithFormat: @"%f", location.coordinate.latitude];
+            currentLocation.type = @"place";
+            currentLocation.q = @"";
+            
+            [_currentSocialNetwork obtaineArrayOfPlaces:currentLocation withComplition:^(NSMutableArray *places, NSError *error) {
+                NSLog(@"%@", places);
+            }];
+            
             //NSLog(@"Current location lat = %f, long =%f", self.currentLocation.latitude, locationCoordinate.longitude);
         }
     }];

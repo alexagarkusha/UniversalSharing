@@ -10,6 +10,7 @@
 
 #import "User.h"
 #import "Post.h"
+#import "Location.h"
 #import "MUSSocialNetworkLibraryConstants.h"
 
 @interface SocialNetwork : NSObject
@@ -29,6 +30,8 @@
 - (void) obtainInfoFromNetworkWithComplition :(Complition) block;
 - (void) loginOut;
 - (void) setNetworkType:(NetworkType)networkType;
+- (void) obtaineArrayOfPlaces : (Location*) location withComplition : (ComplitionPlaces) block;
+
 
 //#warning "Needs to add complition"
 

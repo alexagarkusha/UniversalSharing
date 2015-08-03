@@ -16,6 +16,7 @@
 @property (nonatomic, assign) NSInteger postID;
 @property (nonatomic, strong) NSString *postDescription;
 @property (nonatomic, assign) NetworkType networkType;
+@property (nonatomic, strong) NSArray *arrayImages;
 @property (nonatomic, strong) ImageToPost *imageToPost;
 @property (nonatomic, strong) NSString *likesCount;
 @property (nonatomic, assign) CGFloat longitude;
