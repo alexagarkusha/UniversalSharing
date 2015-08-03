@@ -177,39 +177,70 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JIa-4q-Hps">
-                                <rect key="frame" x="500" y="400" width="100" height="102"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Uq2-de-hll">
+                                <rect key="frame" x="0.0" y="402" width="600" height="100"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="102" id="CQa-MN-bkp"/>
-                                    <constraint firstAttribute="width" constant="100" id="QsI-t8-sqv"/>
+                                    <constraint firstAttribute="height" constant="100" id="OUf-At-Ttm"/>
                                 </constraints>
-                            </imageView>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="QaM-i5-9ge">
+                                    <size key="itemSize" width="110" height="88"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CollectionViewCell" id="j3T-Y6-6mp" customClass="MUSCollectionViewCell">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="110" height="88"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="krX-P3-v7h">
+                                                    <rect key="frame" x="0.0" y="0.0" width="171" height="143"/>
+                                                    <color key="backgroundColor" red="0.1863958248" green="1" blue="0.16513155060000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <size key="customSize" width="110" height="88"/>
+                                        <connections>
+                                            <outlet property="photoImageView" destination="krX-P3-v7h" id="tgg-EH-cRe"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="8rJ-Kc-sve" id="bRu-KF-KcW"/>
+                                    <outlet property="delegate" destination="8rJ-Kc-sve" id="NIg-rH-K9t"/>
+                                </connections>
+                            </collectionView>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="csE-rZ-YPJ" firstAttribute="top" secondItem="JIa-4q-Hps" secondAttribute="bottom" id="4CJ-Hd-GBi"/>
                             <constraint firstAttribute="trailing" secondItem="lIF-ME-erc" secondAttribute="trailing" id="5qO-wa-hDX"/>
                             <constraint firstItem="Omp-fe-BSg" firstAttribute="top" secondItem="lIF-ME-erc" secondAttribute="bottom" id="CmL-ST-bn3"/>
+                            <constraint firstItem="Uq2-de-hll" firstAttribute="top" secondItem="Omp-fe-BSg" secondAttribute="bottom" constant="8" id="DvG-Mn-ovg"/>
+                            <constraint firstItem="csE-rZ-YPJ" firstAttribute="top" secondItem="Uq2-de-hll" secondAttribute="bottom" id="FNQ-NS-cOK"/>
                             <constraint firstItem="lIF-ME-erc" firstAttribute="top" secondItem="QS5-Rx-YEW" secondAttribute="top" constant="25" id="GPh-vi-jG1"/>
                             <constraint firstAttribute="bottom" secondItem="Omp-fe-BSg" secondAttribute="bottom" constant="250" id="Ide-ic-TNq"/>
                             <constraint firstItem="lIF-ME-erc" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="MEl-Ex-bpZ"/>
                             <constraint firstItem="Omp-fe-BSg" firstAttribute="leading" secondItem="csE-rZ-YPJ" secondAttribute="leading" id="QXj-cy-2Or"/>
+                            <constraint firstAttribute="trailing" secondItem="Uq2-de-hll" secondAttribute="trailing" id="Uoh-CF-Npv"/>
                             <constraint firstAttribute="trailing" secondItem="csE-rZ-YPJ" secondAttribute="trailing" id="WFG-dS-bKy"/>
-                            <constraint firstItem="JIa-4q-Hps" firstAttribute="top" secondItem="Omp-fe-BSg" secondAttribute="bottom" constant="50" id="X6l-8j-Rbf"/>
                             <constraint firstItem="Omp-fe-BSg" firstAttribute="trailing" secondItem="lIF-ME-erc" secondAttribute="trailing" id="cjN-Ya-fH2"/>
                             <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="csE-rZ-YPJ" secondAttribute="bottom" id="h1V-Ne-RjB"/>
                             <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="Omp-fe-BSg" secondAttribute="bottom" constant="49" id="oN1-aG-ILI"/>
+                            <constraint firstItem="Uq2-de-hll" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="scC-bZ-AC1"/>
                             <constraint firstAttribute="bottom" secondItem="csE-rZ-YPJ" secondAttribute="bottom" constant="49" id="t2p-Yn-0lZ"/>
-                            <constraint firstAttribute="trailing" secondItem="JIa-4q-Hps" secondAttribute="trailing" id="uSA-iX-Ykt"/>
                             <constraint firstItem="csE-rZ-YPJ" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="x0W-t8-8ND"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="DvG-Mn-ovg"/>
                                 <exclude reference="h1V-Ne-RjB"/>
                                 <exclude reference="oN1-aG-ILI"/>
-                                <exclude reference="X6l-8j-Rbf"/>
                             </mask>
                         </variation>
                         <connections>
@@ -218,10 +249,10 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Share" image="second" id="cPa-gy-q4n"/>
                     <connections>
+                        <outlet property="collectionView" destination="Uq2-de-hll" id="Ixu-Mo-oqb"/>
                         <outlet property="mainGestureRecognizer" destination="Q3Z-Zc-VoA" id="hSm-6a-V0c"/>
                         <outlet property="messageTextView" destination="Omp-fe-BSg" id="dOe-oP-nvs"/>
                         <outlet property="messageTextViewLayoutConstraint" destination="Ide-ic-TNq" id="qTc-KJ-tXg"/>
-                        <outlet property="photoImageView" destination="JIa-4q-Hps" id="e5c-rt-x2i"/>
                         <outlet property="shareTabBar" destination="csE-rZ-YPJ" id="ITw-EI-GP8"/>
                         <outlet property="tabBarLayoutConstraint" destination="t2p-Yn-0lZ" id="cOx-io-v0z"/>
                     </connections>

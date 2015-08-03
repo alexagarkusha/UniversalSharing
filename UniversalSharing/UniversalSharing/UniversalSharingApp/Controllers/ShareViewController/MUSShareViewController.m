@@ -13,9 +13,9 @@
 #import "MUSSocialNetworkLibraryHeader.h"
 #import "MUSPhotoManager.h"
 #import "MUSLocationManager.h"
+#import "MUSCollectionViewCell.h"
 
-
-@interface MUSShareViewController () <UITextViewDelegate, UIActionSheetDelegate, UITabBarDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface MUSShareViewController () <UITextViewDelegate, UIActionSheetDelegate, UITabBarDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
 - (IBAction)shareToSocialNetwork:(id)sender;
 - (IBAction)endEditingMessage:(id)sender;
@@ -26,7 +26,8 @@
 @property (strong, nonatomic)   IBOutlet    UITapGestureRecognizer *mainGestureRecognizer;
 @property (weak, nonatomic)     IBOutlet    NSLayoutConstraint* tabBarLayoutConstraint;
 @property (weak, nonatomic)     IBOutlet    NSLayoutConstraint* messageTextViewLayoutConstraint;
-@property (weak, nonatomic)     IBOutlet    UIImageView *photoImageView;
+//@property (weak, nonatomic)     IBOutlet    UIImageView *photoImageView;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @property (assign, nonatomic)               CGFloat tabBarLayoutConstaineOrigin;
 @property (assign, nonatomic)               CGFloat messageTextViewLayoutConstraintOrigin;
@@ -37,6 +38,8 @@
 @property (assign, nonatomic)               AlertButtonIndex alertButtonIndex;
 @property (strong, nonatomic)               NSArray *arrayWithNetworks;
 @property (assign, nonatomic)               CLLocationCoordinate2D currentLocation;
+@property (strong, nonatomic)               NSMutableArray *arrayWithChosenImages;
+//@property         (nonatomic)               UICollectionViewScrollDirection scrollDirection;
 
 @property (strong, nonatomic) UIButton *changeSocialNetworkButton;
 @end
@@ -47,7 +50,17 @@
     [super viewDidLoad];
     [self initiationMUSShareViewController];
     [self addButtonOnTextView];
+    [self setFlowLayout];
+
+    self.arrayWithChosenImages = [NSMutableArray new];
 }
+
+- (void) setFlowLayout {
+    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    [flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
+    [_collectionView setCollectionViewLayout:flowLayout];
+}
+
 - (void)changeSocialNetworkAccount:(id)sender{
     [self showUserAccountsInActionSheet];
 }
@@ -159,7 +172,7 @@
     CGRect initialFrame = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     CGRect convertedFrame = [self.view convertRect:initialFrame fromView:nil];
     self.tabBarLayoutConstraint.constant = convertedFrame.size.height;
-    self.messageTextViewLayoutConstraint.constant = convertedFrame.size.height + self.shareTabBar.frame.size.height;
+    self.messageTextViewLayoutConstraint.constant = convertedFrame.size.height + self.shareTabBar.frame.size.height + self.collectionView.frame.size.height;
     
     [UIView animateWithDuration: 0.3
                      animations:^{
@@ -194,11 +207,11 @@
     post.postDescription = self.messageTextView.text;
     post.networkType = _currentSocialNetwork.networkType;
     //NSData *imageData = UIImagePNGRepresentation(self.photoImageView.image);
-    if (self.photoImageView.image) {
-        post.imageToPost.image = self.photoImageView.image;
+    //if (self.photoImageView.image) {
+        //post.imageToPost.image = self.photoImageView.image;
         post.imageToPost.imageType = JPEG;
         post.imageToPost.quality = 0.8;
-    }
+    //}
     post.latitude = self.currentLocation.latitude;
     post.longitude = self.currentLocation.longitude;
     
@@ -325,29 +338,57 @@
             [self takePhotoFromCamera];
             break;
         case Remove:
-            self.photoImageView.image = nil;
+            //self.photoImageView.image = nil;
             break;
         default:
             break;
     }
 }
 
+#pragma mark - CollectionView
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    
+    return self.arrayWithChosenImages.count;
+}
+
+// The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    MUSCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CollectionViewCell" forIndexPath:indexPath];
+    if (self.arrayWithChosenImages[indexPath.row] != nil) {
+        cell.photoImageView.image = self.arrayWithChosenImages[indexPath.row];
+    } else {
+        cell.photoImageView.image = nil;
+    }
+    
+    return  cell;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return CGSizeMake(200, self.collectionView.frame.size.height);
+}
 #pragma mark - MUSPhotoManager
 
 - (void) selectPhotoFromAlbum {
-    __weak UIImageView *photoImage = self.photoImageView;
+    __weak MUSShareViewController *weakSelf = self;
     [[MUSPhotoManager sharedManager] selectPhotoFromAlbumFromViewController: self withComplition:^(id result, NSError *error) {
         if (!error) {
-            photoImage.image = (UIImage*) result;
+            //weakSelf.chosenPicture.image = (UIImage*) result;
+            [weakSelf.arrayWithChosenImages addObject:(UIImage*) result];
+            weakSelf.collectionView.backgroundColor = [UIColor grayColor];//just trying
+            [weakSelf.collectionView reloadData];
         }
     }];
 }
 
 - (void) takePhotoFromCamera {
-    __weak UIImageView *photoImage = self.photoImageView;
+    __weak MUSShareViewController *weakSelf = self;
     [[MUSPhotoManager sharedManager] takePhotoFromCameraFromViewController: self withComplition:^(id result, NSError *error) {
         if (!error) {
-            photoImage.image = (UIImage*) result;
+            [weakSelf.arrayWithChosenImages addObject:(UIImage*) result];
+            [weakSelf.collectionView reloadData];
         } else {
             [self showErrorAlertWithError : error];
         }
