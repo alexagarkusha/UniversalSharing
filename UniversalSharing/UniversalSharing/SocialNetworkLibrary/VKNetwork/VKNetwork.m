@@ -104,6 +104,9 @@ static VKNetwork *model = nil;
 
 #pragma mark - obtainArrayOfPlacesFromNetwork
 
+#warning "Move method in constants"
+#warning "Check messages"
+
 - (void) obtainArrayOfPlaces: (Location *) location withComplition: (ComplitionPlaces) block {
     
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
@@ -141,6 +144,8 @@ static VKNetwork *model = nil;
          }
      }];
 }
+
+#warning "?"
 
 - (NSString*) radiusForVKLocation : (NSString*) distanceString {
     NSInteger distance = [distanceString floatValue];
@@ -300,6 +305,8 @@ static VKNetwork *model = nil;
 
 #pragma mark - VK Delegate
 
+#warning "Check error"
+
 - (void)vkSdkTokenHasExpired:(VKAccessToken *)expiredToken
 {
     // [self authorize:nil];
@@ -319,6 +326,8 @@ static VKNetwork *model = nil;
 {
     //[self obtainDataFromVK];
 }
+
+#warning "Check error"
 
 - (void)vkSdkUserDeniedAccess:(VKError *)authorizationError
 {

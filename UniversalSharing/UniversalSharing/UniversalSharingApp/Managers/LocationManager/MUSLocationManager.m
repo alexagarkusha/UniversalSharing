@@ -52,24 +52,11 @@
     }
     [self.locationManager startUpdatingLocation];
 }
-
-#warning "Check documantation This method is deprecated. If locationManager:didUpdateLocations: is implemented, this method will not be called."
-
-//- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-//    [self stopAndGetCurrentLocation];
-//}
-
 - (void) stopAndGetCurrentLocation {
     [self.locationManager stopUpdatingLocation];
     self.copyLocationBLock (self.locationManager.location, nil);
 }
-/*
-- (CLLocation*) stopAndGetCurrentLocation {
-    [self.locationManager stopUpdatingLocation];
-    return self.locationManager.location;
-}
-*/
- 
+
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     NSLog(@"%@", [locations lastObject]);
     if (locations) {

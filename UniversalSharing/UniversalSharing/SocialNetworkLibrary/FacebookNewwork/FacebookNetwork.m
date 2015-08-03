@@ -197,7 +197,9 @@ static FacebookNetwork *model = nil;
         NSLog(@"connection = %@", connection);
     }];
 }
-*/ //DELETE THIS PART
+*/ //DELETE THIS PARTs
+
+#warning "Move methods to constants"
 
 - (void) postMessageToFB : (Post*) post {
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
