@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "UniversalSharing/UniversalSharingApp/Controllers/ShareViewController/MUSShareViewController.m"
-            timestampString = "460041582.851372"
+            timestampString = "460291612.396184"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "193"
-            endingLineNumber = "193"
+            startingLineNumber = "206"
+            endingLineNumber = "206"
             landmarkName = "-shareToSocialNetwork:"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,28 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "UniversalSharing/UniversalSharingApp/Controllers/ShareViewController/MUSShareViewController.m"
-            timestampString = "460041894.995351"
+            timestampString = "460291612.396184"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "202"
-            endingLineNumber = "202"
+            startingLineNumber = "215"
+            endingLineNumber = "215"
             landmarkName = "-shareToSocialNetwork:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "UniversalSharing/UniversalSharingApp/Controllers/ShareViewController/MUSShareViewController.m"
-            timestampString = "460281588.96087"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "261"
-            endingLineNumber = "261"
-            landmarkName = "-showUserAccountsInActionSheet"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
