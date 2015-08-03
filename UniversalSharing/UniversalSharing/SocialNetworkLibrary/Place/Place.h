@@ -16,6 +16,8 @@
 @property (nonatomic, strong) NSString *placeID;
 @property (nonatomic, strong) NSString *country;
 @property (nonatomic, strong) NSString *placeType;
+@property (nonatomic, strong) NSString *city;
+
 
 + (Place*) createFromDictionary: (NSDictionary*) dictionary andNetworkType :(NetworkType) networkType;
 

@@ -10,6 +10,8 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <FBSDKShareKit/FBSDKShareKit.h>
+#import "Place.h"
+
 @interface FacebookNetwork()<FBSDKGraphRequestConnectionDelegate>
 
 @property (copy, nonatomic) Complition copyPostComplition;
@@ -42,11 +44,39 @@ static FacebookNetwork *model = nil;
     return self;
 }
 
+#pragma mark - loginInNetwork
+
+- (void) loginWithComplition :(Complition) block {
+    FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
+    self.isLogin = YES;
+    
+    __weak FacebookNetwork *weakSell = self;
+    //     if ([[FBSDKAccessToken currentAccessToken] hasGranted:@"email"]) {
+    //         [self obtainInfoFromNetworkWithComplition:block];
+    //     }else{
+    [login logInWithReadPermissions:@[@"email"] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+        if (error) {
+            block(nil, error);
+        } else if (result.isCancelled) {
+            block(nil, error);
+        } else {
+            // If you ask for multiple permissions at once, you
+            // should check if specific permissions missing
+            if ([result.grantedPermissions containsObject:@"email"]) {
+                [weakSell obtainInfoFromNetworkWithComplition:block];
+            }
+        }
+    }];
+}
+
+#pragma mark - obtainUserFromNetwork
+
 - (void) obtainInfoFromNetworkWithComplition :(Complition) block {
     __weak FacebookNetwork *weakSell = self;
     FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]initWithGraphPath:@"/me"
                                                                   parameters:@{@"fields": kRequestParametrsFacebook}
                                                                   HTTPMethod:@"GET"];
+    
     [request startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection,
                                           id result,
                                           NSError *error) {
@@ -58,37 +88,9 @@ static FacebookNetwork *model = nil;
             block(weakSell,nil);
         });
     }];
-
-    
 }
 
-- (void) loginWithComplition :(Complition) block {    
-    FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
-    self.isLogin = YES;
-
-    __weak FacebookNetwork *weakSell = self;
-//     if ([[FBSDKAccessToken currentAccessToken] hasGranted:@"email"]) {
-//         [self obtainInfoFromNetworkWithComplition:block];
-//     }else{
-    [login logInWithReadPermissions:@[@"email"] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
-        if (error) {
-            block(nil, error);
-        } else if (result.isCancelled) {
-            block(nil, error);
-        } else {
-            // If you ask for multiple permissions at once, you
-            // should check if specific permissions missing
-            if ([result.grantedPermissions containsObject:@"email"]) {
-                
-                
-                [weakSell obtainInfoFromNetworkWithComplition:block];
-            }
-        }
-    }];
-}
-
-//#warning "Needs to add complition"
-//#warning "Fix dublicates"
+#pragma mark - sharePost
 
 - (void) sharePost:(Post *)post withComplition:(Complition)block {
     self.copyPostComplition = block;
@@ -107,22 +109,58 @@ static FacebookNetwork *model = nil;
 }
 
 - (void) sharePostToFacebook : (Post*) post {
-    //post.latitude = 48.450063;
-    //post.longitude = 34.982602;
-    
-    if (post.latitude && post.longitude) {
-        [self determinationOfCurrentLocationAndPostToFB : post];
-    }  else {
         if (!post.imageToPost.image) {
-            [self postMessageToFB: post withLocationID: nil];
+            [self postMessageToFB: post];
         } else {
-            [self postImageToFB: post withLocationID: nil];
+            [self postImageToFB: post];
         }
-    }
 }
 
 
+- (void) obtainArrayOfPlaces: (Location *)location withComplition: (ComplitionPlaces) block {
+    NSString *currentLocation = [NSString stringWithFormat:@"%@,%@", location.latitude, location.longitude];
+    
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    params[@"q"] = location.q;
+    params[@"type"] = location.type;
+    params[@"center"] = currentLocation;
+    params[@"distance"] = location.distance;
+    
+    FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc] initWithGraphPath:  @"/search?"
+                                                                   parameters:  params
+                                                                   HTTPMethod:  @"GET"];
+    
+    [request startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection,
+                                          id result,
+                                          NSError *error) {
+        if (result) {
+            NSDictionary *resultDictionary = result;
+            NSArray *places = [resultDictionary objectForKey: @"data"];
+            //NSDictionary *firstPlace = [placeArray firstObject];
+            NSMutableArray *placesArray = [[NSMutableArray alloc] init];
+            
+            for (int i = 0; i < places.count; i++) {
+                Place *place = [Place createFromDictionary: [places objectAtIndex: i] andNetworkType:self.networkType];
+                [placesArray addObject:place];
+            }
+            
+            if (placesArray.count != 0) {
+                block (placesArray, nil);
+            }   else {
+                //// ADD ERROR /////
+            }
+            
+            //self.firstPlaceId = [firstPlace objectForKey:@"id"];
+            
+        }
+        //NSLog(@"result = %@", result);
+        //NSLog(@"error = %@", error);
+        //NSLog(@"connection = %@", connection);
+    }];
+}
 
+
+/*
 - (void) determinationOfCurrentLocationAndPostToFB : (Post*) post {
     NSString *location = [NSString stringWithFormat:@"%f,%f", post.latitude, post.longitude];
     
@@ -133,9 +171,9 @@ static FacebookNetwork *model = nil;
     params[@"distance"] = @"100";
 
     FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]
-                                  initWithGraphPath:@"/search?"
-                                  parameters: params
-                                  HTTPMethod:@"GET"];
+                                  initWithGraphPath:  @"/search?"
+                                         parameters:  params
+                                         HTTPMethod:  @"GET"];
     
     [request startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection,
                                           id result,
@@ -157,19 +195,19 @@ static FacebookNetwork *model = nil;
         NSLog(@"connection = %@", connection);
     }];
 }
+*/ //DELETE THIS PART
 
-
-- (void) postMessageToFB : (Post*) post withLocationID : (NSString*) locationID {
+- (void) postMessageToFB : (Post*) post {
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
     params[@"message"] = post.postDescription;
     
-    if (locationID) params[@"place"] = locationID;
+    if (post.placeID) params[@"place"] = post.placeID;
 
-    [[[FBSDKGraphRequest alloc]
-      initWithGraphPath:@"me/feed"
-      parameters: params
-      HTTPMethod:@"POST"]
-     startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+    [[[FBSDKGraphRequest alloc] initWithGraphPath: @"me/feed"
+                                       parameters: params
+                                       HTTPMethod: @"POST"]
+                       startWithCompletionHandler:
+     ^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
          if (!error) {
              NSString *postMessageResult = @"Your message has been successfully sent";
              self.copyPostComplition (postMessageResult, nil);
@@ -181,19 +219,20 @@ static FacebookNetwork *model = nil;
 }
 
 
-- (void) postImageToFB : (Post*) post withLocationID : (NSString*) locationID {
+- (void) postImageToFB : (Post*) post {
     
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
     params[@"message"] = post.postDescription;
     params[@"picture"] = post.imageToPost.image;
 
-    if (locationID) params[@"place"] = locationID;
+    if (post.placeID) params[@"place"] = post.placeID;
 
-    [[[FBSDKGraphRequest alloc]
-      initWithGraphPath:@"me/photos"
-      parameters: params
-      HTTPMethod:@"POST"]
-     startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+    [[[FBSDKGraphRequest alloc] initWithGraphPath: @"me/photos"
+                                       parameters: params
+                                       HTTPMethod: @"POST"]
+                       startWithCompletionHandler:
+     ^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+     
          if (!error) {
              NSString *postMessageResult = @"Your message has been successfully sent";
              self.copyPostComplition (postMessageResult, nil);

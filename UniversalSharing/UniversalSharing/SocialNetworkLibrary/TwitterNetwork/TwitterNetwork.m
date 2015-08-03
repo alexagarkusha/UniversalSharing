@@ -120,8 +120,6 @@ static TwitterNetwork *model = nil;
             }   else {
                 //// ADD ERROR /////
             }
-            
-            NSLog(@"placeArray = %@", placesArray);
         }else{
             NSLog(@"Error: %@", error);
         }
