@@ -20,8 +20,14 @@ NSString *const ALL_USER_FIELDS = @"first_name,last_name,photo_200_orig,id,birth
 
 #pragma mark Twitter Contants
 
-NSString *const kConsumerSecret = @"gLZI37ssGqUcwr2RZlFoVcu5PO3rM0vodZ0teo3UuMLSdVoY1d";
-NSString *const kConsumerKey = @"YyvoW8VelrqrlO8f91xEvxdNe";
+//NSString *const kConsumerSecret = @"gLZI37ssGqUcwr2RZlFoVcu5PO3rM0vodZ0teo3UuMLSdVoY1d";
+//NSString *const kConsumerKey = @"YyvoW8VelrqrlO8f91xEvxdNe";
+
+NSString *const kConsumerSecret = @"saz4WSOgOL6wFPFXuIq94zbkumbuZnkldHIKIaAsyhJpHAYdke";
+NSString *const kConsumerKey = @"lGBCsHPLRVXB2kxQgzaZCdf1q";
+
+
+
 NSString *const kTwitterUserName = @"twitterUserName";
 NSString *const kTwitterUserCount = @"twitterUserCount";
 NSString *const kRequestUrlTwitter = @"https://api.twitter.com/1.1/users/show.json";
