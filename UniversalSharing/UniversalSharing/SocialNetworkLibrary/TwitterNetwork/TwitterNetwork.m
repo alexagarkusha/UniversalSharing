@@ -80,38 +80,30 @@ static TwitterNetwork *model = nil;
 - (void) sharePost:(Post *)post withComplition:(Complition)block {
     self.copyPostComplition = block;
     if (!post.imageToPost.image) {
-        [self postMessageToTwitter:post];
-        //[self postLocation: post];
+        //[self postMessageToTwitter:post];
+        [self postLocation: post];
     } else {
         [self postImageToTwitter:post];
     }
 }
 
 
-- (void) postLocation : (Post*) post {
-    //NSString *latitude = [NSString stringWithFormat:@"%f", post.latitude];
-    //NSString *longitude = [NSString stringWithFormat:@"%f", post.longitude];
-    
-    
-    NSString *latitude = @"52.52944";
-    NSString *longitude = @"13.40332";
 
-    
-   // NSString *latitude = @"48.450063";
-   // NSString *longitude = @"34.982602";
-   // NSString *accuracy = @"40000";
-    
+- (void) obtaineArrayOfPlaces : (Post*) post withComplition : (Complition) block {
+    NSString *latitude = @"37.768641";
+    NSString *longitude = @"-122.40828";
+/*
     TWTRAPIClient *client = [[Twitter sharedInstance] APIClient];
     NSError *error;
     
     //NSString *url = @"https://api.twitter.com/1.1/geo/similar_places.json";
     
-    NSString *url = @"https://api.twitter.com/1.1/geo/reverse_geocode.json";
-    NSMutableDictionary *message = [[NSMutableDictionary alloc] initWithObjectsAndKeys: latitude, @"lat", longitude, @"long", /* accuracy, @"accuracy", */nil];
+    NSString *url = @"https://api.twitter.com/1.1/geo/search.json";
+    NSMutableDictionary *message = [[NSMutableDictionary alloc] initWithObjectsAndKeys: latitude, @"lat", longitude, @"long", nil];
     
     NSURLRequest *preparedRequest = [client URLRequestWithMethod:@"GET" URL:url parameters:message error:&error];
     
-    __weak TWTRAPIClient *currentClient = client;
+    //__weak TWTRAPIClient *currentClient = client;
     
     [client sendTwitterRequest:preparedRequest completion:^(NSURLResponse *urlResponse, NSData *responseData, NSError *error){
         
@@ -119,6 +111,76 @@ static TwitterNetwork *model = nil;
             NSError *jsonError;
             
             NSDictionary *locationJSON = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
+            
+            
+            
+            NSDictionary *resultSearcLocation = [locationJSON objectForKey: @"result"];
+            NSArray *placesArray = [resultSearcLocation objectForKey: @"places"];
+            NSDictionary *firstPlace = [placesArray firstObject];
+            NSString *place_id = [firstPlace objectForKey:@"id"];
+            NSString *name = [firstPlace objectForKey:@"name"];
+        
+            [self postMessageToTwitter:post withPlaceID:place_id];
+            NSLog(@"PLACE ID = %@", place_id);
+            NSLog(@"name = %@", name);
+            
+            NSLog(@"Location = %@", locationJSON);
+        }else{
+            NSLog(@"Error: %@", error);
+        }
+        
+    }];
+ 
+ */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+- (void) postLocation : (Post*) post {
+    //NSString *latitude = [NSString stringWithFormat:@"%f", post.latitude];
+    //NSString *longitude = [NSString stringWithFormat:@"%f", post.longitude];
+    
+    
+    //NSString *latitude = @"52.52944";
+    //NSString *longitude = @"13.40332";
+
+    
+    NSString *latitude = @"37.768641";
+    NSString *longitude = @"-122.40828";
+    //NSString *accuracy = @"400ft";
+
+    
+    
+    TWTRAPIClient *client = [[Twitter sharedInstance] APIClient];
+    NSError *error;
+    
+    //NSString *url = @"https://api.twitter.com/1.1/geo/similar_places.json";
+    
+    NSString *url = @"https://api.twitter.com/1.1/geo/search.json";
+    NSMutableDictionary *message = [[NSMutableDictionary alloc] initWithObjectsAndKeys: latitude, @"lat", longitude, @"long", nil];
+    
+    NSURLRequest *preparedRequest = [client URLRequestWithMethod:@"GET" URL:url parameters:message error:&error];
+    
+    //__weak TWTRAPIClient *currentClient = client;
+    
+    [client sendTwitterRequest:preparedRequest completion:^(NSURLResponse *urlResponse, NSData *responseData, NSError *error){
+        
+        if(!error){
+            NSError *jsonError;
+            
+            NSDictionary *locationJSON = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
+            
+            
+            
             NSDictionary *resultSearcLocation = [locationJSON objectForKey: @"result"];
                 NSArray *placesArray = [resultSearcLocation objectForKey: @"places"];
                     NSDictionary *firstPlace = [placesArray firstObject];
@@ -150,7 +212,14 @@ static TwitterNetwork *model = nil;
     NSError *error;
     
     NSString *url = @"https://api.twitter.com/1.1/statuses/update.json";
-    NSMutableDictionary *message = [[NSMutableDictionary alloc] initWithObjectsAndKeys: post.postDescription , @"status", placeID, @"place_id", nil];
+    NSMutableDictionary *message = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+                                    post.postDescription , @"status",
+                                    placeID, @"place_id",
+                                    //@"true", @"display_coordinates",
+                                    //@"52.52944", @"lat",
+                                    //@"13.40332", @"long",
+                                    
+                                    nil];
     
     NSURLRequest *preparedRequest = [client URLRequestWithMethod:@"POST" URL:url parameters:message error:&error];
     
@@ -188,7 +257,11 @@ static TwitterNetwork *model = nil;
     NSError *error;
     
     NSString *url = @"https://api.twitter.com/1.1/statuses/update.json";
-    NSMutableDictionary *message = [[NSMutableDictionary alloc] initWithObjectsAndKeys: post.postDescription , @"status", nil];
+    NSMutableDictionary *message = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+                                    post.postDescription , @"status",
+                                    @"48.450063", @"lat",
+                                    @"34.982602", @"long",
+                                    nil];
     
     NSURLRequest *preparedRequest = [client URLRequestWithMethod:@"POST" URL:url parameters:message error:&error];
     
@@ -274,26 +347,6 @@ static TwitterNetwork *model = nil;
                     }];
 }
 
-/*
-- (void) sharePostToNetwork : (id) sharePost {
-    
-    TWTRComposer *composer = [[TWTRComposer alloc] init];
-    
-    [composer setText:@"I tweeted from my App, LALALLALALA)"];
-    [composer setImage:[UIImage imageNamed:@"TWimage.jpeg"]];
-    
-    // Called from a UIViewController
-    [composer showFromViewController:[self vcForComposeTweet] completion:^(TWTRComposerResult result) {
-        if (result == TWTRComposerResultCancelled) {
-            NSLog(@"Tweet composition cancelled");
-        }
-        else {
-            NSLog(@"Sending Tweet!");
-        }
-    }];
-}
-*/
- 
 - (UIViewController*) vcForComposeTweet {
     UIWindow *window=[UIApplication sharedApplication].keyWindow;
     UIViewController *vc=[window rootViewController];
