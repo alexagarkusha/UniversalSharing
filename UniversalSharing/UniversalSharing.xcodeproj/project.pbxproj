@@ -33,6 +33,7 @@
 		18BB29C11B67E3F000B498AC /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18BB29A51B67E3F000B498AC /* Info.plist */; };
 		18BB29C21B67E3F000B498AC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB29A61B67E3F000B498AC /* main.m */; };
 		18BB29C31B67E3F000B498AC /* MUSLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB29AA1B67E3F000B498AC /* MUSLocationManager.m */; };
+		306ED75C1B6FA3170014D975 /* MUSLocationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 306ED75B1B6FA3170014D975 /* MUSLocationTableViewController.m */; };
 		30DBFD8B1B677A9A002F83D0 /* TwitterNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD8A1B677A9A002F83D0 /* TwitterNetwork.m */; };
 		30DBFD8F1B677AD7002F83D0 /* VKNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD8E1B677AD7002F83D0 /* VKNetwork.m */; };
 		30DBFD931B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD921B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.m */; };
@@ -111,6 +112,8 @@
 		18BB29A91B67E3F000B498AC /* MUSLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSLocationManager.h; sourceTree = "<group>"; };
 		18BB29AA1B67E3F000B498AC /* MUSLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSLocationManager.m; sourceTree = "<group>"; };
 		294811F54E6400CFBFD3EBDD /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		306ED75A1B6FA3170014D975 /* MUSLocationTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSLocationTableViewController.h; sourceTree = "<group>"; };
+		306ED75B1B6FA3170014D975 /* MUSLocationTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSLocationTableViewController.m; sourceTree = "<group>"; };
 		30DBFD891B677A9A002F83D0 /* TwitterNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterNetwork.h; sourceTree = "<group>"; };
 		30DBFD8A1B677A9A002F83D0 /* TwitterNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterNetwork.m; sourceTree = "<group>"; };
 		30DBFD8D1B677AD7002F83D0 /* VKNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VKNetwork.h; sourceTree = "<group>"; };
@@ -355,6 +358,7 @@
 		18BB298B1B67E3F000B498AC /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				306ED7591B6FA2DB0014D975 /* LocationTableViewController */,
 				18BB298C1B67E3F000B498AC /* AccountsViewController */,
 				18BB298F1B67E3F000B498AC /* PostsViewController */,
 				18BB29901B67E3F000B498AC /* ShareViewController */,
@@ -454,6 +458,15 @@
 				18BB29AA1B67E3F000B498AC /* MUSLocationManager.m */,
 			);
 			path = LocationManager;
+			sourceTree = "<group>";
+		};
+		306ED7591B6FA2DB0014D975 /* LocationTableViewController */ = {
+			isa = PBXGroup;
+			children = (
+				306ED75A1B6FA3170014D975 /* MUSLocationTableViewController.h */,
+				306ED75B1B6FA3170014D975 /* MUSLocationTableViewController.m */,
+			);
+			name = LocationTableViewController;
 			sourceTree = "<group>";
 		};
 		30DBFD881B677A9A002F83D0 /* TwitterNetwork */ = {
@@ -740,6 +753,7 @@
 				97C460CF1B68B6AD00C010DE /* MUSPhotoManager.m in Sources */,
 				187FC52A1B65222D00A3916C /* User.m in Sources */,
 				18BB29BB1B67E3F000B498AC /* MUSTopUserProfileCell.m in Sources */,
+				306ED75C1B6FA3170014D975 /* MUSLocationTableViewController.m in Sources */,
 				30DBFD8B1B677A9A002F83D0 /* TwitterNetwork.m in Sources */,
 				30F3340D1B6F68A4007C15D7 /* MUSCollectionViewCell.m in Sources */,
 				18BB29AD1B67E3F000B498AC /* AppDelegate.m in Sources */,
