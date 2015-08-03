@@ -64,7 +64,7 @@
     
 }
 
-- (void) obtaineArrayOfPlaces : (Location*) location withComplition : (ComplitionPlaces) block {
+- (void) obtainArrayOfPlaces : (Location*) location withComplition : (ComplitionPlaces) block {
     
 }
 

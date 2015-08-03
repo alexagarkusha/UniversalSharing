@@ -64,7 +64,7 @@ static TwitterNetwork *model = nil;
 
 #pragma mark - obtainUserFromNetwork
 
-- (void) obtaineInfoFromNetworkWithComplition :(Complition) block {
+- (void) obtainInfoFromNetworkWithComplition :(Complition) block {
     __weak TwitterNetwork *weakSell = self;
 
     [[TwitterKit APIClient] loadUserWithID:[[[Twitter sharedInstance ]session] userID]
@@ -82,7 +82,7 @@ static TwitterNetwork *model = nil;
 
 #pragma mark - obtainArrayOfPlacesFromNetwork
 
-- (void) obtaineArrayOfPlaces : (Location*) location withComplition : (ComplitionPlaces) block {
+- (void) obtainArrayOfPlaces : (Location*) location withComplition : (ComplitionPlaces) block {
     TWTRAPIClient *client = [[Twitter sharedInstance] APIClient];
     NSError *error;
     
@@ -228,6 +228,8 @@ static TwitterNetwork *model = nil;
 } // DELETE THIS PART
 */  //Delete this part
 
+#pragma mark - postMessageAndLocationWithoutImage
+
 - (void) postMessageToTwitter : (Post*) post {
     TWTRAPIClient *client = [[Twitter sharedInstance] APIClient];
     NSError *error;
@@ -257,6 +259,8 @@ static TwitterNetwork *model = nil;
         
     }];
 }
+
+#pragma mark - postMessageWithImageAndLocation
 
 - (void) postImageToTwitter : (Post*) post {
     NSString *endpoint = @"https://upload.twitter.com/1.1/media/upload.json";
@@ -329,6 +333,8 @@ static TwitterNetwork *model = nil;
                     }];
 }
 
+
+
 - (UIViewController*) vcForComposeTweet {
     UIWindow *window=[UIApplication sharedApplication].keyWindow;
     UIViewController *vc=[window rootViewController];
@@ -337,12 +343,16 @@ static TwitterNetwork *model = nil;
     else
         return vc;
 }
+
+
 - (void) initiationPropertiesWithoutSession {
     self.title = @"Login Twitter";
     self.icon = @"TWimage.jpeg";
     self.isLogin = NO;
     self.currentUser = nil;
 }
+
+
 
 - (void) loginOut {
     [[Twitter sharedInstance] logOut];

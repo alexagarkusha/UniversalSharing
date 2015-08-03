@@ -30,7 +30,7 @@
 - (void) obtainInfoFromNetworkWithComplition :(Complition) block;
 - (void) loginOut;
 - (void) setNetworkType:(NetworkType)networkType;
-- (void) obtaineArrayOfPlaces : (Location*) location withComplition : (ComplitionPlaces) block;
+- (void) obtainArrayOfPlaces : (Location*) location withComplition : (ComplitionPlaces) block;
 
 
 //#warning "Needs to add complition"

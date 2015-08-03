@@ -314,12 +314,14 @@
             CLLocation* location = result;
             self.currentLocation = location.coordinate;
             Location *currentLocation = [[Location alloc] init];
-            currentLocation.longitude = [NSString stringWithFormat: @"%f", location.coordinate.longitude];
-            currentLocation.latitude = [NSString stringWithFormat: @"%f", location.coordinate.latitude];
+            currentLocation.longitude = @"-122.40828";
+            currentLocation.longitude = @"37.768641";
+            //currentLocation.longitude = [NSString stringWithFormat: @"%f", location.coordinate.longitude];
+            //currentLocation.latitude = [NSString stringWithFormat: @"%f", location.coordinate.latitude];
             currentLocation.type = @"place";
             currentLocation.q = @"";
             
-            [_currentSocialNetwork obtaineArrayOfPlaces:currentLocation withComplition:^(NSMutableArray *places, NSError *error) {
+            [_currentSocialNetwork obtainArrayOfPlaces:currentLocation withComplition:^(NSMutableArray *places, NSError *error) {
                 NSLog(@"%@", places);
             }];
             
