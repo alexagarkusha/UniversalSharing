@@ -81,24 +81,127 @@ static TwitterNetwork *model = nil;
     self.copyPostComplition = block;
     if (!post.imageToPost.image) {
         [self postMessageToTwitter:post];
+        //[self postLocation: post];
     } else {
         [self postImageToTwitter:post];
     }
 }
 
-- (void) postMessageToTwitter : (Post*) post {
+
+- (void) postLocation : (Post*) post {
+    //NSString *latitude = [NSString stringWithFormat:@"%f", post.latitude];
+    //NSString *longitude = [NSString stringWithFormat:@"%f", post.longitude];
+    
+    
+    NSString *latitude = @"52.52944";
+    NSString *longitude = @"13.40332";
+
+    
+   // NSString *latitude = @"48.450063";
+   // NSString *longitude = @"34.982602";
+   // NSString *accuracy = @"40000";
     
     TWTRAPIClient *client = [[Twitter sharedInstance] APIClient];
     NSError *error;
     
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-    [parameters setObject: post.postDescription forKey:@"status"];
-    //[parameters setObject: post.imageToPost.image forKey:@"image"];
-    NSURLRequest *preparedRequest = [client URLRequestWithMethod: @"POST" URL: @"https://api.twitter.com/1.1/statuses/update.json" parameters: parameters error: &error];
-    [client sendTwitterRequest:preparedRequest completion:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        NSLog(@"response = %@", response);
-        NSLog(@"data = %@", data);
-        NSLog(@"ERROR = %@", connectionError);
+    //NSString *url = @"https://api.twitter.com/1.1/geo/similar_places.json";
+    
+    NSString *url = @"https://api.twitter.com/1.1/geo/reverse_geocode.json";
+    NSMutableDictionary *message = [[NSMutableDictionary alloc] initWithObjectsAndKeys: latitude, @"lat", longitude, @"long", /* accuracy, @"accuracy", */nil];
+    
+    NSURLRequest *preparedRequest = [client URLRequestWithMethod:@"GET" URL:url parameters:message error:&error];
+    
+    __weak TWTRAPIClient *currentClient = client;
+    
+    [client sendTwitterRequest:preparedRequest completion:^(NSURLResponse *urlResponse, NSData *responseData, NSError *error){
+        
+        if(!error){
+            NSError *jsonError;
+            
+            NSDictionary *locationJSON = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
+            NSDictionary *resultSearcLocation = [locationJSON objectForKey: @"result"];
+                NSArray *placesArray = [resultSearcLocation objectForKey: @"places"];
+                    NSDictionary *firstPlace = [placesArray firstObject];
+                        NSString *place_id = [firstPlace objectForKey:@"id"];
+                        NSString *name = [firstPlace objectForKey:@"name"];
+            
+            
+            
+            
+            [self postMessageToTwitter:post withPlaceID:place_id];
+            
+            
+            NSLog(@"PLACE ID = %@", place_id);
+            NSLog(@"name = %@", name);
+
+            NSLog(@"Location = %@", locationJSON);
+        }else{
+            NSLog(@"Error: %@", error);
+        }
+        
+    }];
+}
+
+/////////////////// УЗНАТЬ КАК ПРАВИЛЬНО /////////////////////////
+
+
+- (void) postMessageToTwitter : (Post*) post withPlaceID : (NSString*) placeID {
+    TWTRAPIClient *client = [[Twitter sharedInstance] APIClient];
+    NSError *error;
+    
+    NSString *url = @"https://api.twitter.com/1.1/statuses/update.json";
+    NSMutableDictionary *message = [[NSMutableDictionary alloc] initWithObjectsAndKeys: post.postDescription , @"status", placeID, @"place_id", nil];
+    
+    NSURLRequest *preparedRequest = [client URLRequestWithMethod:@"POST" URL:url parameters:message error:&error];
+    
+    [client sendTwitterRequest:preparedRequest completion:^(NSURLResponse *urlResponse, NSData *responseData, NSError *error){
+        
+        if(!error){
+            NSError *jsonError;
+            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
+            NSLog(@"%@", json);
+        }else{
+            NSLog(@"Error: %@", error);
+        }
+        
+    }];
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- (void) postMessageToTwitter : (Post*) post {
+    TWTRAPIClient *client = [[Twitter sharedInstance] APIClient];
+    NSError *error;
+    
+    NSString *url = @"https://api.twitter.com/1.1/statuses/update.json";
+    NSMutableDictionary *message = [[NSMutableDictionary alloc] initWithObjectsAndKeys: post.postDescription , @"status", nil];
+    
+    NSURLRequest *preparedRequest = [client URLRequestWithMethod:@"POST" URL:url parameters:message error:&error];
+    
+    [client sendTwitterRequest:preparedRequest completion:^(NSURLResponse *urlResponse, NSData *responseData, NSError *error){
+        
+        if(!error){
+            NSError *jsonError;
+            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
+            NSLog(@"%@", json);
+        }else{
+            NSLog(@"Error: %@", error);
+        }
+        
     }];
 }
 
@@ -133,22 +236,22 @@ static TwitterNetwork *model = nil;
             }
             NSLog(@"Result : %@", jsonData);
             NSString *mediaId = jsonData[@"media_id_string"];
-            [self composeTweetREST:mediaId];
+            [self composeTweetREST: mediaId andPost: post];
     }];
 }
 
 
-- (void)composeTweetREST:(NSString *)mediaId
+- (void)composeTweetREST: (NSString *) mediaId andPost : (Post*) post
 {
     NSString *endpoint = @"https://api.twitter.com/1.1/statuses/update.json";
-    NSDictionary *parameters = @{@"status":@"OK",
-                                 @"media_ids":mediaId};
+    NSDictionary *parameters = @{@"status": post.postDescription,
+                                 @"media_ids": mediaId};
     NSError *error = nil;
     TWTRAPIClient *client = [[Twitter sharedInstance] APIClient];
-    NSURLRequest *request = [client URLRequestWithMethod:@"POST"
-                                                     URL:endpoint
-                                              parameters:parameters
-                                                   error:&error];
+    NSURLRequest *request = [client URLRequestWithMethod: @"POST"
+                                                     URL: endpoint
+                                              parameters: parameters
+                                                   error: &error];
     if (error) {
         NSLog(@"Error: %@", error);
         return;
