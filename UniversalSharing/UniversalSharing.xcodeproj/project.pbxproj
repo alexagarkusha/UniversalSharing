@@ -45,6 +45,8 @@
 		97C460D11B68B74B00C010DE /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C460D01B68B74B00C010DE /* CoreLocation.framework */; };
 		97C460D31B68B77100C010DE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C460D21B68B77100C010DE /* CoreGraphics.framework */; };
 		97C460D51B68B78B00C010DE /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C460D41B68B78B00C010DE /* MobileCoreServices.framework */; };
+		97CA63CA1B6F66D300F9F0C1 /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CA63C91B6F66D300F9F0C1 /* Place.m */; };
+		97CA63CF1B6F737A00F9F0C1 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CA63CE1B6F737A00F9F0C1 /* Location.m */; };
 		97D967CD1B6A14FF0060B2BC /* ImageToPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D967CC1B6A14FF0060B2BC /* ImageToPost.m */; };
 		FC79868BAD5DBAA5D3BB123C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 294811F54E6400CFBFD3EBDD /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -128,6 +130,10 @@
 		97C460D01B68B74B00C010DE /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		97C460D21B68B77100C010DE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		97C460D41B68B78B00C010DE /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		97CA63C81B6F66D300F9F0C1 /* Place.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Place.h; path = UniversalSharing/SocialNetworkLibrary/Place/Place.h; sourceTree = SOURCE_ROOT; };
+		97CA63C91B6F66D300F9F0C1 /* Place.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Place.m; path = UniversalSharing/SocialNetworkLibrary/Place/Place.m; sourceTree = SOURCE_ROOT; };
+		97CA63CD1B6F737A00F9F0C1 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Location.h; path = UniversalSharing/SocialNetworkLibrary/Location/Location.h; sourceTree = SOURCE_ROOT; };
+		97CA63CE1B6F737A00F9F0C1 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Location.m; path = UniversalSharing/SocialNetworkLibrary/Location/Location.m; sourceTree = SOURCE_ROOT; };
 		97D967CB1B6A14FF0060B2BC /* ImageToPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageToPost.h; path = UniversalSharing/SocialNetworkLibrary/ImageToPost/ImageToPost.h; sourceTree = SOURCE_ROOT; };
 		97D967CC1B6A14FF0060B2BC /* ImageToPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageToPost.m; path = UniversalSharing/SocialNetworkLibrary/ImageToPost/ImageToPost.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -210,6 +216,8 @@
 				187FC5171B65222D00A3916C /* SocialManager */,
 				187FC51A1B65222D00A3916C /* SocialNetwork */,
 				187FC51D1B65222D00A3916C /* MUSSocialNetworkLibraryHeader.h */,
+				97CA63CB1B6F734500F9F0C1 /* Location */,
+				97CA63C71B6F668C00F9F0C1 /* Place */,
 				97D967CA1B6A146E0060B2BC /* ImageToPost */,
 				973D67AB1B69110400A20D00 /* Post */,
 				187FC5201B65222D00A3916C /* User */,
@@ -511,6 +519,26 @@
 			path = LocationManager;
 			sourceTree = "<group>";
 		};
+		97CA63C71B6F668C00F9F0C1 /* Place */ = {
+			isa = PBXGroup;
+			children = (
+				97CA63C81B6F66D300F9F0C1 /* Place.h */,
+				97CA63C91B6F66D300F9F0C1 /* Place.m */,
+			);
+			name = Place;
+			path = User;
+			sourceTree = "<group>";
+		};
+		97CA63CB1B6F734500F9F0C1 /* Location */ = {
+			isa = PBXGroup;
+			children = (
+				97CA63CD1B6F737A00F9F0C1 /* Location.h */,
+				97CA63CE1B6F737A00F9F0C1 /* Location.m */,
+			);
+			name = Location;
+			path = User;
+			sourceTree = "<group>";
+		};
 		97D967CA1B6A146E0060B2BC /* ImageToPost */ = {
 			isa = PBXGroup;
 			children = (
@@ -701,6 +729,7 @@
 				18BB29BB1B67E3F000B498AC /* MUSTopUserProfileCell.m in Sources */,
 				30DBFD8B1B677A9A002F83D0 /* TwitterNetwork.m in Sources */,
 				18BB29AD1B67E3F000B498AC /* AppDelegate.m in Sources */,
+				97CA63CF1B6F737A00F9F0C1 /* Location.m in Sources */,
 				18BB29B81B67E3F000B498AC /* MUSUserDetailViewController.h.m in Sources */,
 				18BB29B11B67E3F000B498AC /* UIButton+CornerRadiusButton.m in Sources */,
 				97D967CD1B6A14FF0060B2BC /* ImageToPost.m in Sources */,
@@ -713,6 +742,7 @@
 				187FC5271B65222D00A3916C /* SocialManager.m in Sources */,
 				18BB29C21B67E3F000B498AC /* main.m in Sources */,
 				187FC5261B65222D00A3916C /* FacebookNetwork.m in Sources */,
+				97CA63CA1B6F66D300F9F0C1 /* Place.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -843,7 +873,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = UniversalSharing/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -860,7 +890,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = UniversalSharing/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
