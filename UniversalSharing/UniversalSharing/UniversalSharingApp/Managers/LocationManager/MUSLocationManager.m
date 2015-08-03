@@ -47,6 +47,7 @@
     if ([versionDeviceString floatValue] >= 8.0) {
         if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined) {
             [self.locationManager requestWhenInUseAuthorization];
+            [self.locationManager requestAlwaysAuthorization];
         }
     }
     [self.locationManager startUpdatingLocation];
@@ -54,9 +55,9 @@
 
 #warning "Check documantation This method is deprecated. If locationManager:didUpdateLocations: is implemented, this method will not be called."
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-    [self stopAndGetCurrentLocation];
-}
+//- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
+//    [self stopAndGetCurrentLocation];
+//}
 
 - (void) stopAndGetCurrentLocation {
     [self.locationManager stopUpdatingLocation];

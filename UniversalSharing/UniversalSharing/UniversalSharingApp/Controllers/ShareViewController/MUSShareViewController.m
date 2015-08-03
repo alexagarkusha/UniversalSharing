@@ -14,7 +14,8 @@
 #import "MUSPhotoManager.h"
 #import "MUSLocationManager.h"
 #import "MUSCollectionViewCell.h"
-
+#import "MUSLocationTableViewController.h"
+#import "Place.h"
 @interface MUSShareViewController () <UITextViewDelegate, UIActionSheetDelegate, UITabBarDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
 - (IBAction)shareToSocialNetwork:(id)sender;
@@ -37,9 +38,10 @@
 @property (assign, nonatomic)               TabBarItemIndex tabBarItemIndex;
 @property (assign, nonatomic)               AlertButtonIndex alertButtonIndex;
 @property (strong, nonatomic)               NSArray *arrayWithNetworks;
+@property (strong, nonatomic)               NSArray *arrayPlaces;
 @property (assign, nonatomic)               CLLocationCoordinate2D currentLocation;
 @property (strong, nonatomic)               NSMutableArray *arrayWithChosenImages;
-//@property         (nonatomic)               UICollectionViewScrollDirection scrollDirection;
+@property (strong, nonatomic)               Post *post;
 
 @property (strong, nonatomic) UIButton *changeSocialNetworkButton;
 @end
@@ -203,20 +205,21 @@
 #pragma mark - UIChangeSocialNetwork
 
 - (IBAction)shareToSocialNetwork:(id)sender {
-    Post *post = [[Post alloc] init];
-    post.postDescription = self.messageTextView.text;
-    post.networkType = _currentSocialNetwork.networkType;
-    post.arrayImages = self.arrayWithChosenImages;
+    if(!self.post)
+    self.post = [[Post alloc] init];
+    self.post.postDescription = self.messageTextView.text;
+    self.post.networkType = _currentSocialNetwork.networkType;
+    self.post.arrayImages = self.arrayWithChosenImages;
     //NSData *imageData = UIImagePNGRepresentation(self.photoImageView.image);
     //if (self.photoImageView.image) {
         //post.imageToPost.image = self.photoImageView.image;
         //post.imageToPost.imageType = JPEG;
         //post.imageToPost.quality = 0.8;
     //}
-    post.latitude = self.currentLocation.latitude;
-    post.longitude = self.currentLocation.longitude;
+    self.post.latitude = self.currentLocation.latitude;
+    self.post.longitude = self.currentLocation.longitude;
     
-    [_currentSocialNetwork sharePost:post withComplition:^(id result, NSError *error) {
+    [_currentSocialNetwork sharePost:self.post withComplition:^(id result, NSError *error) {
         NSLog(@"POSTED");
     }];
 }
@@ -310,6 +313,12 @@
 #pragma mark - ShareLocationTabBarItemClick
 
 - (void) userCurrentLocation {
+//<<<<<<< HEAD
+//    [[MUSLocationManager sharedManager] startTrackLocationWithComplition:^(id result, NSError *error) {
+//        if ([result isKindOfClass:[CLLocation class]]) {
+//            CLLocation* location = result;
+//            self.currentLocation = location.coordinate;
+//=======
     
     Location *currentLocation = [[Location alloc] init];
     currentLocation.longitude = @"-122.40828";
@@ -317,9 +326,20 @@
     currentLocation.type = @"place";
     currentLocation.q = @"";
     currentLocation.distance = @"1000";
-    
+    __weak MUSShareViewController *weakSelf = self;
+
     [_currentSocialNetwork obtainArrayOfPlaces:currentLocation withComplition:^(NSMutableArray *places, NSError *error) {
         NSLog(@"%@", places);
+        if (places.count > 1) {
+            self.arrayPlaces = places;
+            [weakSelf performSegueWithIdentifier: @"Location" sender:nil];
+        } else {
+            if(!self.post)
+                self.post = [[Post alloc] init];
+            Place *place = [places firstObject];
+            self.post.placeID = place.placeID;
+        }
+        
     }];
 
     
@@ -330,6 +350,7 @@
         if ([result isKindOfClass:[CLLocation class]]) {
             CLLocation* location = result;
             self.currentLocation = location.coordinate;
+>>>>>>> 43859dc699e5a361212ca2cae3f67f6bd8dc661c
             Location *currentLocation = [[Location alloc] init];
             currentLocation.longitude = [NSString stringWithFormat: @"%f", location.coordinate.longitude];
             currentLocation.latitude = [NSString stringWithFormat: @"%f", location.coordinate.latitude];
@@ -341,9 +362,14 @@
             }];
             
             //NSLog(@"Current location lat = %f, long =%f", self.currentLocation.latitude, locationCoordinate.longitude);
+<<<<<<< HEAD
+        //}
+   // }];
+=======
         }
     }];
      */
+//>>>>>>> 43859dc699e5a361212ca2cae3f67f6bd8dc661c
 }
 
 
@@ -381,7 +407,6 @@
     return self.arrayWithChosenImages.count;
 }
 
-// The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     MUSCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CollectionViewCell" forIndexPath:indexPath];
@@ -418,7 +443,7 @@
             [weakSelf.arrayWithChosenImages addObject:(UIImage*) result];
             [weakSelf.collectionView reloadData];
         } else {
-            [self showErrorAlertWithError : error];
+            [weakSelf showErrorAlertWithError : error];
         }
     }];
 }
@@ -428,6 +453,21 @@
     [errorAlert show];
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    MUSLocationTableViewController *vc = [MUSLocationTableViewController new];
+    if ([[segue identifier] isEqualToString:@"Location"]) {
+        vc = [segue destinationViewController];
+        [vc setArrayPlaces:self.arrayPlaces];
+        
+        __weak MUSShareViewController *weakSelf = self;
+        vc.placeComplition = ^(Place* result, NSError *error){
+            if(!weakSelf.post)
+                weakSelf.post = [[Post alloc] init];
+            weakSelf.post.placeID = result.placeID;
+        };
+    }
+}
 @end
 
 
