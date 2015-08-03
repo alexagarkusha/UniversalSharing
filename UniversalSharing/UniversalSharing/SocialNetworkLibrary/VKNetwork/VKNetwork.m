@@ -96,6 +96,24 @@ static VKNetwork *model = nil;
 }
 
 
+- (void) obtainArrayOfPlaces: (Location *) location withComplition: (ComplitionPlaces) block {
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 - (void) sharePost : (Post*) post withComplition : (Complition) block {
     self.copyPostComplition = block;
     if (!post.imageToPost.image) {

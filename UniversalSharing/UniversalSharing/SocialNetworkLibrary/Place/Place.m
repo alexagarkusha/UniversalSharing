@@ -32,7 +32,13 @@
 
 - (Place*) createPlaceFromFB : (NSDictionary *) dictionary {
     Place *currentPlace = [[Place alloc] init];
+    currentPlace.placeID = [dictionary objectForKey: @"id"];
+    currentPlace.fullName = [dictionary objectForKey: @"name"];
+    currentPlace.placeType = [dictionary objectForKey: @"category"];
     
+    NSDictionary *locationFBDictionary = [dictionary objectForKey: @"location"];
+    currentPlace.country = [locationFBDictionary objectForKey: @"country"];
+    currentPlace.city = [locationFBDictionary objectForKey: @"city"];
     
     return currentPlace;
 }
@@ -52,6 +58,10 @@
     currentPlace.placeType = [dictionary objectForKey: @"place_type" ];
     currentPlace.country   = [dictionary objectForKey: @"country" ];
     currentPlace.fullName  = [dictionary objectForKey: @"full_name" ];
+    
+    NSArray *containedWithinArray = [dictionary objectForKey: @"contained_within"];
+    NSDictionary *locationTwitterDictionary = [containedWithinArray firstObject];
+    currentPlace.city = [locationTwitterDictionary objectForKey: @"name"];
     
     return currentPlace;
 }

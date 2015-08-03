@@ -310,15 +310,36 @@
 #pragma mark - ShareLocationTabBarItemClick
 
 - (void) userCurrentLocation {
+<<<<<<< HEAD
 //    [[MUSLocationManager sharedManager] startTrackLocationWithComplition:^(id result, NSError *error) {
 //        if ([result isKindOfClass:[CLLocation class]]) {
 //            CLLocation* location = result;
 //            self.currentLocation = location.coordinate;
+=======
+    
+    Location *currentLocation = [[Location alloc] init];
+    currentLocation.longitude = @"-122.40828";
+    currentLocation.latitude = @"37.768641";
+    currentLocation.type = @"place";
+    currentLocation.q = @"";
+    currentLocation.distance = @"1000";
+    
+    [_currentSocialNetwork obtainArrayOfPlaces:currentLocation withComplition:^(NSMutableArray *places, NSError *error) {
+        NSLog(@"%@", places);
+    }];
+
+    
+    
+    
+    /*
+    [[MUSLocationManager sharedManager] startTrackLocationWithComplition:^(id result, NSError *error) {
+        if ([result isKindOfClass:[CLLocation class]]) {
+            CLLocation* location = result;
+            self.currentLocation = location.coordinate;
+>>>>>>> 43859dc699e5a361212ca2cae3f67f6bd8dc661c
             Location *currentLocation = [[Location alloc] init];
-            currentLocation.longitude = @"-122.40828";
-            currentLocation.longitude = @"37.768641";
-            //currentLocation.longitude = [NSString stringWithFormat: @"%f", location.coordinate.longitude];
-            //currentLocation.latitude = [NSString stringWithFormat: @"%f", location.coordinate.latitude];
+            currentLocation.longitude = [NSString stringWithFormat: @"%f", location.coordinate.longitude];
+            currentLocation.latitude = [NSString stringWithFormat: @"%f", location.coordinate.latitude];
             currentLocation.type = @"place";
             currentLocation.q = @"";
             
@@ -327,8 +348,14 @@
             }];
             
             //NSLog(@"Current location lat = %f, long =%f", self.currentLocation.latitude, locationCoordinate.longitude);
+<<<<<<< HEAD
         //}
    // }];
+=======
+        }
+    }];
+     */
+>>>>>>> 43859dc699e5a361212ca2cae3f67f6bd8dc661c
 }
 
 
