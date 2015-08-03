@@ -210,6 +210,7 @@
     self.post.postDescription = self.messageTextView.text;
     self.post.networkType = _currentSocialNetwork.networkType;
     self.post.arrayImages = self.arrayWithChosenImages;
+    
     //NSData *imageData = UIImagePNGRepresentation(self.photoImageView.image);
     //if (self.photoImageView.image) {
         //post.imageToPost.image = self.photoImageView.image;
@@ -403,7 +404,6 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    
     return self.arrayWithChosenImages.count;
 }
 
@@ -411,7 +411,8 @@
 {
     MUSCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CollectionViewCell" forIndexPath:indexPath];
     if (self.arrayWithChosenImages[indexPath.row] != nil) {
-        cell.photoImageView.image = self.arrayWithChosenImages[indexPath.row];
+        ImageToPost *image = self.arrayWithChosenImages[indexPath.row];
+        cell.photoImageView.image = image.image;
     } else {
         cell.photoImageView.image = nil;
     }
@@ -433,7 +434,14 @@
     [[MUSPhotoManager sharedManager] selectPhotoFromAlbumFromViewController: self withComplition:^(id result, NSError *error) {
         if (!error) {
             //weakSelf.chosenPicture.image = (UIImage*) result;
-            [weakSelf.arrayWithChosenImages addObject:(UIImage*) result];
+            ImageToPost *imageToPost = [[ImageToPost alloc] init];
+            imageToPost.image = (UIImage*) result;
+            imageToPost.imageType = JPEG;
+            imageToPost.quality = 0.8f;
+            [weakSelf.arrayWithChosenImages addObject: imageToPost];
+
+            
+            //[weakSelf.arrayWithChosenImages addObject:(UIImage*) result];
             weakSelf.collectionView.backgroundColor = [UIColor grayColor];//just trying
             [weakSelf.collectionView reloadData];
         }

@@ -132,10 +132,12 @@ static TwitterNetwork *model = nil;
 
 - (void) sharePost:(Post *)post withComplition:(Complition)block {
     self.copyPostComplition = block;
-    if (!post.imageToPost.image) {
-        [self postMessageToTwitter:post];
+    if (post.arrayImages.count == 1) {
+        [self postImageToTwitter: post];
+    } else if (post.arrayImages.count > 1) {
+        NSLog(@"New");
     } else {
-        [self postImageToTwitter:post];
+        [self postMessageToTwitter: post];
     }
 }
 
