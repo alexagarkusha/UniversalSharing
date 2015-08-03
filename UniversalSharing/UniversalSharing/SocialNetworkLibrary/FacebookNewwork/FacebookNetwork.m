@@ -109,11 +109,13 @@ static FacebookNetwork *model = nil;
 }
 
 - (void) sharePostToFacebook : (Post*) post {
-        if (!post.imageToPost.image) {
-            [self postMessageToFB: post];
-        } else {
-            [self postImageToFB: post];
-        }
+    if (post.arrayImages.count == 1) {
+        [self postImageToFB: post];
+    } else if (post.arrayImages.count > 1) {
+        NSLog(@"New");
+    } else {
+        [self postMessageToFB: post];
+    }
 }
 
 

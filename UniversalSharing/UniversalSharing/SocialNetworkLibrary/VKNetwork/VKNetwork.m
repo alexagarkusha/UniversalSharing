@@ -159,12 +159,12 @@ static VKNetwork *model = nil;
 
 - (void) sharePost : (Post*) post withComplition : (Complition) block {
     self.copyPostComplition = block;
-    if (!post.imageToPost.image) {
-        [self postMessageToVK : post];
+    if (post.arrayImages.count == 1) {
+        [self postImageToVK: post];
     } else if (post.arrayImages.count > 1) {
-        [self postImagesToVK : post];
+        [self postImagesToVK: post];
     } else {
-        [self postImageToVK : post];
+        [self postMessageToVK: post];
     }
 }
 
