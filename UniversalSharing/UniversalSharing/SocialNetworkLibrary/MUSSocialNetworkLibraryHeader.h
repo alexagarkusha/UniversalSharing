@@ -23,5 +23,7 @@
 #import "User.h"
 #import "MUSSocialNetworkLibraryConstants.h"
 #import "Post.h"
+#import "Location.h"
+#import "Place.h"
 
 #endif

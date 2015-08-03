@@ -12,6 +12,8 @@
 
 typedef void (^Complition)(id result, NSError *error);
 
+typedef void (^ComplitionPlaces)(NSMutableArray *places, NSError *error);
+
 
 #pragma mark Types
 
