@@ -206,6 +206,7 @@
     Post *post = [[Post alloc] init];
     post.postDescription = self.messageTextView.text;
     post.networkType = _currentSocialNetwork.networkType;
+    post.arrayImages = self.arrayWithChosenImages;
     //NSData *imageData = UIImagePNGRepresentation(self.photoImageView.image);
     //if (self.photoImageView.image) {
         //post.imageToPost.image = self.photoImageView.image;
