@@ -52,7 +52,7 @@
     
     if (self.placeComplition){
         Place *place = self.arrayLocations[indexPath.row];
-        self.placeComplition(place,nil);
+        self.placeComplition(place, nil);
         [self dismissViewControllerAnimated:YES completion:nil];
     }
     
