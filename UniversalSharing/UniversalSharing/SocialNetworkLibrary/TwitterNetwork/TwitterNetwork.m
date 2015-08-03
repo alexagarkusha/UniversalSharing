@@ -87,16 +87,15 @@ static TwitterNetwork *model = nil;
     NSError *error;
     
     NSString *url = @"https://api.twitter.com/1.1/geo/search.json";
-    NSMutableDictionary *message = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
                                     location.latitude, @"lat",
                                     location.longitude, @"long",
                                     nil];
     
-    NSURLRequest *preparedRequest = [client URLRequestWithMethod:@"GET"
-                                                             URL:url
-                                                      parameters:message
-                                                           error:&error];
-    
+    NSURLRequest *preparedRequest = [client URLRequestWithMethod : @"GET"
+                                                             URL : url
+                                                      parameters : parameters
+                                                           error : &error];
     
     [client sendTwitterRequest:preparedRequest completion:^(NSURLResponse *urlResponse, NSData *responseData, NSError *error){
         
@@ -233,15 +232,15 @@ static TwitterNetwork *model = nil;
     NSError *error;
     
     NSString *url = @"https://api.twitter.com/1.1/statuses/update.json";
-    NSMutableDictionary *message = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
                                     post.postDescription , @"status",
                                     post.placeID         , @"place_id",
                                     nil];
     
-    NSURLRequest *preparedRequest = [client URLRequestWithMethod:@"POST"
-                                                             URL:url
-                                                      parameters:message
-                                                           error:&error];
+    NSURLRequest *preparedRequest = [client URLRequestWithMethod : @"POST"
+                                                             URL : url
+                                                      parameters : parameters
+                                                           error : &error];
     
     [client sendTwitterRequest:preparedRequest
                     completion:^(NSURLResponse *urlResponse, NSData *responseData, NSError *error){
@@ -261,8 +260,10 @@ static TwitterNetwork *model = nil;
 #pragma mark - postMessageWithImageAndLocation
 
 - (void) postImageToTwitter : (Post*) post {
+    ImageToPost *imageToPost = [post.arrayImages firstObject];
+    
     NSString *endpoint = @"https://upload.twitter.com/1.1/media/upload.json";
-    NSData* imageData = UIImagePNGRepresentation(post.imageToPost.image);
+    NSData* imageData = UIImagePNGRepresentation(imageToPost.image);
     
     NSDictionary *parameters = @{ @"media":[imageData base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed ]};
     NSError *error = nil;
