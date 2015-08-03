@@ -220,10 +220,11 @@ static FacebookNetwork *model = nil;
 
 
 - (void) postImageToFB : (Post*) post {
+    ImageToPost *imageToPost = [post.arrayImages firstObject];
     
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
     params[@"message"] = post.postDescription;
-    params[@"picture"] = post.imageToPost.image;
+    params[@"picture"] = imageToPost.image;
 
     if (post.placeID) params[@"place"] = post.placeID;
 

@@ -46,6 +46,11 @@
 - (Place*) createPlaceFromVK : (NSDictionary *) dictionary {
     Place *currentPlace = [[Place alloc] init];
     
+    currentPlace.placeID = [dictionary objectForKey: @"id"];
+    currentPlace.fullName = [dictionary objectForKey: @"title"];
+    currentPlace.placeType = [dictionary objectForKey: @"type"];
+    currentPlace.country = [dictionary objectForKey: @"country"];
+    currentPlace.city = [dictionary objectForKey: @"city"];
     
     return currentPlace;
 }
