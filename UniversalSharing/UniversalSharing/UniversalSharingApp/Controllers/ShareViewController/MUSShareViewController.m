@@ -310,10 +310,10 @@
 #pragma mark - ShareLocationTabBarItemClick
 
 - (void) userCurrentLocation {
-    [[MUSLocationManager sharedManager] startTrackLocationWithComplition:^(id result, NSError *error) {
-        if ([result isKindOfClass:[CLLocation class]]) {
-            CLLocation* location = result;
-            self.currentLocation = location.coordinate;
+//    [[MUSLocationManager sharedManager] startTrackLocationWithComplition:^(id result, NSError *error) {
+//        if ([result isKindOfClass:[CLLocation class]]) {
+//            CLLocation* location = result;
+//            self.currentLocation = location.coordinate;
             Location *currentLocation = [[Location alloc] init];
             currentLocation.longitude = @"-122.40828";
             currentLocation.longitude = @"37.768641";
@@ -327,8 +327,8 @@
             }];
             
             //NSLog(@"Current location lat = %f, long =%f", self.currentLocation.latitude, locationCoordinate.longitude);
-        }
-    }];
+        //}
+   // }];
 }
 
 
@@ -366,7 +366,6 @@
     return self.arrayWithChosenImages.count;
 }
 
-// The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     MUSCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CollectionViewCell" forIndexPath:indexPath];
