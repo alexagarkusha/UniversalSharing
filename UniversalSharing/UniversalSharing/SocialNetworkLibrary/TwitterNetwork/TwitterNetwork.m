@@ -87,19 +87,18 @@ static TwitterNetwork *model = nil;
 }
 
 - (void) postMessageToTwitter : (Post*) post {
+    
     TWTRAPIClient *client = [[Twitter sharedInstance] APIClient];
+    NSError *error;
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     [parameters setObject: post.postDescription forKey:@"status"];
     //[parameters setObject: post.imageToPost.image forKey:@"image"];
-    
-    
-    NSURLRequest *preparedRequest = [client URLRequestWithMethod: @"POST" URL: @"https://api.twitter.com/1.1/statuses/update.json" parameters: parameters error: nil];
+    NSURLRequest *preparedRequest = [client URLRequestWithMethod: @"POST" URL: @"https://api.twitter.com/1.1/statuses/update.json" parameters: parameters error: &error];
     [client sendTwitterRequest:preparedRequest completion:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         NSLog(@"response = %@", response);
         NSLog(@"data = %@", data);
         NSLog(@"ERROR = %@", connectionError);
-        
     }];
 }
 
@@ -118,24 +117,24 @@ static TwitterNetwork *model = nil;
         NSLog(@"Error: %@", error);
         return;
     }
-[   client sendTwitterRequest:request
-                completion:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-                    if (connectionError) {
-                        NSLog(@"Error: %@", error);
-                        return;
-                    }
-                    NSError *jsonError = nil;
-                    id jsonData = [NSJSONSerialization JSONObjectWithData:data
-                                                                  options:NSJSONReadingMutableContainers
-                                                                    error:&jsonError];
-                    if (jsonError) {
-                        NSLog(@"Error: %@", jsonError);
-                        return;
-                    }
-                    NSLog(@"Result : %@", jsonData);
-                    NSString *mediaId = jsonData[@"media_id_string"];
-                    [self composeTweetREST:mediaId];
-            }];
+    [client sendTwitterRequest:request
+                    completion:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+            if (connectionError) {
+                NSLog(@"Error: %@", error);
+                return;
+            }
+            NSError *jsonError = nil;
+            id jsonData = [NSJSONSerialization JSONObjectWithData:data
+                                                          options:NSJSONReadingMutableContainers
+                                                            error:&jsonError];
+            if (jsonError) {
+                NSLog(@"Error: %@", jsonError);
+                return;
+            }
+            NSLog(@"Result : %@", jsonData);
+            NSString *mediaId = jsonData[@"media_id_string"];
+            [self composeTweetREST:mediaId];
+    }];
 }
 
 
@@ -174,6 +173,10 @@ static TwitterNetwork *model = nil;
 
 
 
+
+
+/*
+>>>>>>> decc3400bc7a1d9fdd139a754c11b4cbb8ced4c5
 - (void) sharePostToNetwork : (id) sharePost {
     
     TWTRComposer *composer = [[TWTRComposer alloc] init];
@@ -191,7 +194,8 @@ static TwitterNetwork *model = nil;
         }
     }];
 }
-
+*/
+ 
 - (UIViewController*) vcForComposeTweet {
     UIWindow *window=[UIApplication sharedApplication].keyWindow;
     UIViewController *vc=[window rootViewController];
