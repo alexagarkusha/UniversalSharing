@@ -332,13 +332,13 @@
     [_currentSocialNetwork obtainArrayOfPlaces:currentLocation withComplition:^(NSMutableArray *places, NSError *error) {
         NSLog(@"%@", places);
         if (places.count > 1) {
-            self.arrayPlaces = places;
+            weakSelf.arrayPlaces = places;
             [weakSelf performSegueWithIdentifier: @"Location" sender:nil];
         } else {
-            if(!self.post)
-                self.post = [[Post alloc] init];
+            if(!weakSelf.post)
+                weakSelf.post = [[Post alloc] init];
             Place *place = [places firstObject];
-            self.post.placeID = place.placeID;
+            weakSelf.post.placeID = place.placeID;
         }
         
     }];
