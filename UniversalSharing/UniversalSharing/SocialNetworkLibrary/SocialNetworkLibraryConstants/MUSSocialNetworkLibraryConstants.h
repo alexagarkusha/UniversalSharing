@@ -37,12 +37,39 @@ FOUNDATION_EXPORT NSString *const kRequestParametrsFacebook;
 
 FOUNDATION_EXPORT NSString *const kVkAppID;
 FOUNDATION_EXPORT NSString *const ALL_USER_FIELDS;
+FOUNDATION_EXPORT NSString *const kTitleVkontakte;
+FOUNDATION_EXPORT NSString *const kIconNameVkontakte;
+FOUNDATION_EXPORT NSString *const kVKKeyOfPlaceDictionary;
 
 
-#pragma mark Twitter Contants
+
+FOUNDATION_EXPORT NSString *const kVkMethodPlacesSearch;
+
+
+
+
+
+
+#pragma mark Twitter Constants
 FOUNDATION_EXPORT NSString *const kConsumerSecret;
 FOUNDATION_EXPORT NSString *const kConsumerKey;
 FOUNDATION_EXPORT NSString *const kTwitterUserName;
 FOUNDATION_EXPORT NSString *const kTwitterUserCount;
 FOUNDATION_EXPORT NSString *const kRequestUrlTwitter;
 FOUNDATION_EXPORT NSString *const kTwitterRequestStatusUpdate;
+
+
+#pragma mark General Constants
+FOUNDATION_EXPORT NSString *const kHttpMethodGET;
+
+
+
+
+#pragma mark Location Constants
+FOUNDATION_EXPORT NSString *const kLoactionQ;
+FOUNDATION_EXPORT NSString *const kLoactionLatitude;
+FOUNDATION_EXPORT NSString *const kLoactionLongitude;
+FOUNDATION_EXPORT NSString *const kLoactionRadius;
+
+
+
