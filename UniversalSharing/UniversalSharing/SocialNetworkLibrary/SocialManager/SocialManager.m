@@ -36,6 +36,8 @@ static SocialManager *model = nil;
     NSOrderedSet *orderedSet = [NSOrderedSet orderedSetWithArray:arrayWithNetwork];
     NSArray *arrayWithNetworkWithoutDuplicates = [orderedSet array];
     
+#warning "change parameter name to avoid problems"
+#warning "why arrayWithNetwork[idx]?"
     NSMutableArray *arrayWithNetworks = [NSMutableArray new];
     [arrayWithNetworkWithoutDuplicates enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         [arrayWithNetworks addObject:[SocialNetwork sharedManagerWithType: [arrayWithNetwork[idx] integerValue]]];

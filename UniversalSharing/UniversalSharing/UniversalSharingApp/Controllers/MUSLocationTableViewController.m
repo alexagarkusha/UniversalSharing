@@ -48,6 +48,8 @@
     return cell;
 }
 
+#warning "Check logic if no block"
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (self.placeComplition){

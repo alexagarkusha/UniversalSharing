@@ -81,6 +81,7 @@ static TwitterNetwork *model = nil;
 }
 
 #pragma mark - obtainArrayOfPlacesFromNetwork
+#warning "Move method to constants"
 
 - (void) obtainArrayOfPlaces : (Location*) location withComplition : (ComplitionPlaces) block {
     TWTRAPIClient *client = [[Twitter sharedInstance] APIClient];
@@ -228,6 +229,7 @@ static TwitterNetwork *model = nil;
 */  //Delete this part
 
 #pragma mark - postMessageAndLocationWithoutImage
+#warning "Move method to constants"
 
 - (void) postMessageToTwitter : (Post*) post {
     TWTRAPIClient *client = [[Twitter sharedInstance] APIClient];
@@ -260,6 +262,7 @@ static TwitterNetwork *model = nil;
 }
 
 #pragma mark - postMessageWithImageAndLocation
+#warning "Move method to constants"
 
 - (void) postImageToTwitter : (Post*) post {
     ImageToPost *imageToPost = [post.arrayImages firstObject];
@@ -299,6 +302,7 @@ static TwitterNetwork *model = nil;
     }];
 }
 
+#warning "Move method to constants"
 
 - (void)composeTweetREST: (NSString *) mediaId andPost : (Post*) post
 {

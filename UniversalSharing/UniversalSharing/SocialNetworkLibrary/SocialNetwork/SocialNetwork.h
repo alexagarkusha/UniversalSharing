@@ -16,14 +16,17 @@
 @interface SocialNetwork : NSObject
 
 @property (assign, nonatomic) BOOL isLogin;
+@property (assign, nonatomic) BOOL isVisible;
+
 @property (strong, nonatomic) NSString *icon;
 @property (strong, nonatomic) NSString *title;
+
 @property (strong, nonatomic) User *currentUser;
-@property (assign, nonatomic) BOOL isVisible;
 @property (assign, nonatomic) NetworkType networkType;
 
-//#warning "Add method +sharedManagerWithType: and replase switch there"
 + (SocialNetwork*) sharedManagerWithType :(NetworkType) networkType;
+
+#warning "What this method do?"
 + (SocialNetwork*) currentSocialNetwork;
 
 - (void) loginWithComplition :(Complition) block;
@@ -31,9 +34,6 @@
 - (void) loginOut;
 - (void) setNetworkType:(NetworkType)networkType;
 - (void) obtainArrayOfPlaces : (Location*) location withComplition : (ComplitionPlaces) block;
-
-
-//#warning "Needs to add complition"
 
 - (void) sharePost : (Post*) post withComplition : (Complition) block;
 

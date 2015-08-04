@@ -34,6 +34,8 @@
     return socialNetwork;
 }
 
+#warning "???"
+
 + (SocialNetwork*) currentSocialNetwork {
     SocialNetwork *currentSocialNetwork = nil;
     NSArray *accountsArray = [[SocialManager sharedManager] networks:@[@(Twitters), @(VKontakt), @(Facebook)]];

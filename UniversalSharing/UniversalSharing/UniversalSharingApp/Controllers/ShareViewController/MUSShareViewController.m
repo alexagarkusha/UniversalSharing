@@ -313,6 +313,8 @@
 }
 #pragma mark - ShareLocationTabBarItemClick
 
+#warning "REplace in location controller"
+
 - (void) userCurrentLocation {
 //<<<<<<< HEAD
 //    [[MUSLocationManager sharedManager] startTrackLocationWithComplition:^(id result, NSError *error) {
@@ -407,6 +409,8 @@
     return self.arrayWithChosenImages.count;
 }
 
+#warning "check reusable name"
+
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     MUSCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CollectionViewCell" forIndexPath:indexPath];
@@ -464,6 +468,8 @@
     UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:[error localizedFailureReason] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
     [errorAlert show];
 }
+
+#warning "custom strings in constants"
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
