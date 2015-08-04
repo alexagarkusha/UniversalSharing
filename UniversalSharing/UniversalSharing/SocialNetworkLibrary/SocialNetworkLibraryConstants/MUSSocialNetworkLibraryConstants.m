@@ -16,6 +16,15 @@ NSString *const kRequestParametrsFacebook = @"name,id,picture,gender,birthday,em
 
 NSString *const kVkAppID = @"5004830";
 NSString *const ALL_USER_FIELDS = @"first_name,last_name,photo_200_orig,id,birthday";
+NSString *const kTitleVkontakte = @"Login VKontakt";
+NSString *const kIconNameVkontakte = @"VKimage.png";
+NSString *const kVKKeyOfPlaceDictionary = @"items";
+
+
+
+NSString *const kVkMethodPlacesSearch = @"places.search";
+
+
 
 
 #pragma mark Twitter Contants
@@ -25,14 +34,22 @@ NSString *const ALL_USER_FIELDS = @"first_name,last_name,photo_200_orig,id,birth
 
 NSString *const kConsumerSecret = @"saz4WSOgOL6wFPFXuIq94zbkumbuZnkldHIKIaAsyhJpHAYdke";
 NSString *const kConsumerKey = @"lGBCsHPLRVXB2kxQgzaZCdf1q";
-
-
-
 NSString *const kTwitterUserName = @"twitterUserName";
 NSString *const kTwitterUserCount = @"twitterUserCount";
 NSString *const kRequestUrlTwitter = @"https://api.twitter.com/1.1/users/show.json";
 NSString *const kTwitterRequestStatusUpdate = @"https://api.twitter.com/1.1/statuses/update.json";
 
+
+
+#pragma mark General Constants
+NSString *const kHttpMethodGET = @"GET";
+
+
+#pragma mark Location Constants
+NSString *const kLoactionQ = @"q";
+NSString *const kLoactionLatitude = @"latitude";
+NSString *const kLoactionLongitude = @"longitude";
+NSString *const kLoactionRadius = @"radius";
 
 
 

@@ -33,6 +33,8 @@ static VKNetwork *model = nil;
     return  model;
 }
 
+#pragma mark - initiation VKNetwork
+
 - (instancetype) init {
     self = [super init];
     [VKSdk initializeWithDelegate:self andAppId:kVkAppID];
@@ -49,17 +51,29 @@ static VKNetwork *model = nil;
     return self;
 }
 
+/*
+ * Checks if somebody logged in with SDK or not
+ */
 - (BOOL) isLoggedIn {
     return [VKSdk wakeUpSession];
 }
 
+/*
+ * Initiation properties of VKNetwork without session
+ */
 - (void) initiationPropertiesWithoutSession {
-    self.title = @"Login VKontakt";
-    self.icon = @"VKimage.png";
+    self.title = kTitleVkontakte;
+    self.icon = kIconNameVkontakte;
     self.isLogin = NO;
 }
 
 #pragma mark - loginInNetwork
+
+/*
+ Starts authorization process. If VKapp is available in system, it will opens and requests access from user.
+ Otherwise Mobile Safari will be opened for access request.
+ If authorization process is SUCCESS block returned authorized user, but if no, block returned with ERROR.
+ */
 
 - (void) loginWithComplition :(Complition) block {
     self.isLogin = YES;
@@ -71,6 +85,13 @@ static VKNetwork *model = nil;
 }
 
 #pragma mark - logoutInNetwork
+
+/**
+ Forces logout using OAuth (with VKAuthorizeController). Removes all cookies for *.vk.com.
+ Has no effect for logout in VK app
+ Current user for social network become nil
+ And initiation properties of VKNetwork without session
+ */
 
 - (void) loginOut {
     [VKSdk forceLogout];
@@ -110,21 +131,21 @@ static VKNetwork *model = nil;
 - (void) obtainArrayOfPlaces: (Location *) location withComplition: (ComplitionPlaces) block {
     
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
-    params[@"q"] = location.q;
-    params[@"latitude"] = location.latitude;
-    params[@"longitude"] = location.longitude;
-    params[@"radius"] = [self radiusForVKLocation: location.distance];
+    params[kLoactionQ] = location.q;
+    params[kLoactionLatitude] = location.latitude;
+    params[kLoactionLongitude] = location.longitude;
+    params[kLoactionRadius] = [self radiusForVKLocation: location.distance];
     
-    VKRequest * locationRequest = [VKApi requestWithMethod: @"places.search"
-                                     andParameters: params
-                                     andHttpMethod:@"GET"];
+    VKRequest * locationRequest = [VKApi requestWithMethod : kVkMethodPlacesSearch
+                                             andParameters : params
+                                             andHttpMethod : kHttpMethodGET];
                            
     [locationRequest executeWithResultBlock:^(VKResponse * response)
      {
          NSDictionary *resultDictionary = (NSDictionary*) response.json;
-         NSArray *places = [resultDictionary objectForKey: @"items"];
-         
+         NSArray *places = [resultDictionary objectForKey: kVKKeyOfPlaceDictionary];
          NSMutableArray *placesArray = [[NSMutableArray alloc] init];
+         
          for (int i = 0; i < places.count; i++) {
              Place *place = [Place createFromDictionary: [places objectAtIndex: i] andNetworkType:self.networkType];
              [placesArray addObject:place];

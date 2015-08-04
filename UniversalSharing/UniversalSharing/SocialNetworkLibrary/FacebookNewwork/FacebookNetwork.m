@@ -110,10 +110,8 @@ static FacebookNetwork *model = nil;
 }
 
 - (void) sharePostToFacebook : (Post*) post {
-    if (post.arrayImages.count == 1) {
-        [self postImageToFB: post];
-    } else if (post.arrayImages.count > 1) {
-        NSLog(@"New");
+    if (post.arrayImages.count > 0) {
+        [self postPhotosToAlbum: post];
     } else {
         [self postMessageToFB: post];
     }
@@ -152,53 +150,9 @@ static FacebookNetwork *model = nil;
             }   else {
                 //// ADD ERROR /////
             }
-            
-            //self.firstPlaceId = [firstPlace objectForKey:@"id"];
-            
         }
-        //NSLog(@"result = %@", result);
-        //NSLog(@"error = %@", error);
-        //NSLog(@"connection = %@", connection);
     }];
 }
-
-
-/*
-- (void) determinationOfCurrentLocationAndPostToFB : (Post*) post {
-    NSString *location = [NSString stringWithFormat:@"%f,%f", post.latitude, post.longitude];
-    
-    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
-    params[@"q"] = @"";
-    params[@"type"] = @"place";
-    params[@"center"] = location;
-    params[@"distance"] = @"100";
-
-    FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]
-                                  initWithGraphPath:  @"/search?"
-                                         parameters:  params
-                                         HTTPMethod:  @"GET"];
-    
-    [request startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection,
-                                          id result,
-                                          NSError *error) {
-        if (result) {
-            NSDictionary *resultDic = result;
-            NSArray *placeArray = [resultDic objectForKey: @"data"];
-                NSDictionary *firstPlace = [placeArray firstObject];
-                self.firstPlaceId = [firstPlace objectForKey:@"id"];
-            
-                if (!post.imageToPost.image) {
-                    [self postMessageToFB: post withLocationID: self.firstPlaceId];
-                } else {
-                    [self postImageToFB: post withLocationID: self.firstPlaceId];
-                }
-        }
-        NSLog(@"result = %@", result);
-        NSLog(@"error = %@", error);
-        NSLog(@"connection = %@", connection);
-    }];
-}
-*/ //DELETE THIS PARTs
 
 #warning "Move methods to constants"
 
@@ -224,6 +178,33 @@ static FacebookNetwork *model = nil;
 }
 
 
+
+
+-(void) postPhotosToAlbum:(Post *) post {
+    FBSDKGraphRequestConnection *connection = [[FBSDKGraphRequestConnection alloc] init];
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    params[@"message"] = post.postDescription;
+    if (post.placeID) params[@"place"] = post.placeID;
+    
+    for (int i = 0; i < post.arrayImages.count; i++) {
+        ImageToPost *imageToPost = [post.arrayImages objectAtIndex: i];
+        params[@"picture"] = imageToPost.image;
+        FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc] initWithGraphPath: @"me/photos" parameters:params HTTPMethod:@"POST"];
+        [connection addRequest: request
+             completionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+                 if (!error) {
+                     NSLog(@"result %@", result);
+                 } else {
+                     NSLog(@"error %@", error);
+                 }
+                 
+             }];
+    }
+    [connection start];
+}
+
+
+/*
 - (void) postImageToFB : (Post*) post {
     ImageToPost *imageToPost = [post.arrayImages firstObject];
     
@@ -247,6 +228,7 @@ static FacebookNetwork *model = nil;
          }
      }];
 }
+*/ //post single image
 
 - (void) initiationPropertiesWithoutSession {
     self.title = @"Login Facebook";
