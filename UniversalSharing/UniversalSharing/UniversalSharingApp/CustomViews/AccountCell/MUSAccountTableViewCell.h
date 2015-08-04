@@ -10,12 +10,11 @@
 #import "User.h"
 #import "MUSSocialNetworkLibraryHeader.h"
 
-
 @interface MUSAccountTableViewCell : UITableViewCell
 
 + (NSString*) cellID;
 + (instancetype) accountTableViewCell;
-
+//===
 - (void) configurateCellForNetwork : (SocialNetwork*) socialNetwork;
 - (void) changeColorOfCell :(SocialNetwork *)socialNetwork;
 

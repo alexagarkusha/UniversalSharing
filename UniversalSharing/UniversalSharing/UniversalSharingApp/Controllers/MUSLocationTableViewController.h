@@ -9,9 +9,21 @@
 #import <UIKit/UIKit.h>
 #import "MUSSocialNetworkLibraryConstants.h"
 #import "SocialNetwork.h"
+/*
+@class MUSLocationTableViewController
+ 
+ */
 @interface MUSLocationTableViewController : UITableViewController
-//- (void)setArrayPlaces:(NSArray*)arrayPlaces;
-- (void)setCurrentUser:(SocialNetwork*)socialNetwork;
+
+/*
+ @abstract return object Place from arrayLocations
+ */
 @property (copy, nonatomic) Complition placeComplition;
+
+/*!
+ @abstract set current user in order to get array places
+ @params current user(facebook or twitter or VK)
+ */
+- (void)setCurrentUser:(SocialNetwork*)socialNetwork;
 
 @end

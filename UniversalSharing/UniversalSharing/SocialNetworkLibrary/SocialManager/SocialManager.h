@@ -7,10 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-//#import "MUSSocialNetworkLibraryConstants.h"
+#import "SocialNetwork.h"
 
 @interface SocialManager : NSObject
 
 + (SocialManager*) sharedManager;
++ (SocialNetwork*) currentSocialNetwork;
 - (NSMutableArray*) networks :(NSArray*) arrayWithNetwork;
 @end

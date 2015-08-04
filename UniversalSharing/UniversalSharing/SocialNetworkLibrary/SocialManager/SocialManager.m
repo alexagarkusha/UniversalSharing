@@ -9,9 +9,6 @@
 #import "SocialManager.h"
 #import "MUSSocialNetworkLibraryConstants.h"
 
-#import "FacebookNetwork.h"
-#import "VKNetwork.h"
-#import "TwitterNetwork.h"
 @interface SocialManager()
 @property (assign, nonatomic) NetworkType networkType;
 @end
@@ -26,6 +23,17 @@ static SocialManager *model = nil;
     return  model;
 }
 
++ (SocialNetwork*) currentSocialNetwork {
+    SocialNetwork *currentSocialNetwork = nil;
+    NSArray *accountsArray = [[SocialManager sharedManager] networks:@[@(Twitters), @(VKontakt), @(Facebook)]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isLogin == %d", YES];
+    NSArray *filteredArray = [accountsArray filteredArrayUsingPredicate:predicate];
+    if (filteredArray.count > 0) {
+        currentSocialNetwork = (SocialNetwork*) [filteredArray firstObject];
+    }
+    return currentSocialNetwork;
+}
+
 //#warning "Add availability to choose networks and they position, means just Twitter or VK and FB"
 //#warning "Check if networks types repeads in array"
 //#warning "Replace switch in SocialNetwork class"
@@ -36,11 +44,11 @@ static SocialManager *model = nil;
     NSOrderedSet *orderedSet = [NSOrderedSet orderedSetWithArray:arrayWithNetwork];
     NSArray *arrayWithNetworkWithoutDuplicates = [orderedSet array];
     
-#warning "change parameter name to avoid problems"
-#warning "why arrayWithNetwork[idx]?"
+//#warning "change parameter name to avoid problems"
+//#warning "why arrayWithNetwork[idx]?"
     NSMutableArray *arrayWithNetworks = [NSMutableArray new];
-    [arrayWithNetworkWithoutDuplicates enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        [arrayWithNetworks addObject:[SocialNetwork sharedManagerWithType: [arrayWithNetwork[idx] integerValue]]];
+    [arrayWithNetworkWithoutDuplicates enumerateObjectsUsingBlock:^(id obj, NSUInteger currentIndex, BOOL *stop) {
+        [arrayWithNetworks addObject:[SocialNetwork sharedManagerWithType: [arrayWithNetwork[currentIndex] integerValue]]];
     }];    
     return arrayWithNetworks;
 }

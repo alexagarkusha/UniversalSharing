@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-
 @interface ConstantsApp : NSObject
 
 #pragma mark AccountsViewController Constants
@@ -21,6 +20,11 @@ FOUNDATION_EXPORT NSString *const notificationReloadTableView;
 FOUNDATION_EXPORT NSString *const kPlaceholderText;
 FOUNDATION_EXPORT NSString *const goToLocationViewControllerSegueIdentifier;
 FOUNDATION_EXPORT NSString *const collectionViewCellIdentifier;
+FOUNDATION_EXPORT NSString *const distanceEqual100;
+FOUNDATION_EXPORT NSString *const distanceEqual1000;
+FOUNDATION_EXPORT NSString *const distanceEqual25000;
+//===
+FOUNDATION_EXPORT NSInteger const countOfAllowedPics;
 
 
 typedef NS_ENUM(NSInteger, TabBarItemIndex) {
@@ -34,7 +38,6 @@ typedef NS_ENUM(NSInteger, AlertButtonIndex) {
     Camera,
     Remove,
 };
-
 
 #pragma mark MUSPhotoManager Constants
 

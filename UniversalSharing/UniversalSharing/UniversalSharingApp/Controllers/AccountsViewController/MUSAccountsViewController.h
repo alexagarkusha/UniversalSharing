@@ -10,6 +10,5 @@
 
 @interface MUSAccountsViewController : UIViewController
 
-
 @end
 

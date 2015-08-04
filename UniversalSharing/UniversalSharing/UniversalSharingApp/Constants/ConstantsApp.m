@@ -11,7 +11,6 @@
 
 @implementation ConstantsApp
 
-
 #pragma mark AccountsViewController Constants
 
 NSString *const goToUserDetailViewControllerSegueIdentifier = @"goToInfo";
@@ -22,6 +21,10 @@ NSString *const notificationReloadTableView = @"notificationReloadTableView";
 NSString *const kPlaceholderText = @"Write something...";
 NSString *const goToLocationViewControllerSegueIdentifier = @"Location";
 NSString *const collectionViewCellIdentifier = @"CollectionViewCellIdentifier";
-
+NSString *const distanceEqual100 = @"100";
+NSString *const distanceEqual1000 = @"1000";
+NSString *const distanceEqual25000 = @"25000";
+//===
+NSInteger const countOfAllowedPics = 4;
 
 @end

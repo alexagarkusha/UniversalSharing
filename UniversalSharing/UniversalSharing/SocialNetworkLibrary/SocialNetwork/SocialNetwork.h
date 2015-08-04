@@ -26,9 +26,6 @@
 
 + (SocialNetwork*) sharedManagerWithType :(NetworkType) networkType;
 
-#warning "What this method do?"
-+ (SocialNetwork*) currentSocialNetwork;
-
 - (void) loginWithComplition :(Complition) block;
 - (void) obtainInfoFromNetworkWithComplition :(Complition) block;
 - (void) loginOut;

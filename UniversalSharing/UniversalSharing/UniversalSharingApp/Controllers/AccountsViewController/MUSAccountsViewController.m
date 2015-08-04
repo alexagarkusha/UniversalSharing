@@ -8,29 +8,27 @@
 
 #import "MUSAccountsViewController.h"
 #import "MUSUserDetailViewController.h"
-
 #import "MUSSocialNetworkLibraryHeader.h"
 #import "MUSAccountTableViewCell.h"
-
 #import "ConstantsApp.h"
 
+@interface MUSAccountsViewController () <UITableViewDelegate, UITableViewDataSource>
 
-@interface MUSAccountsViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
 @property (strong, nonatomic) NSMutableArray *arrayWithNetworksObj;
 @property (strong, nonatomic) NSIndexPath * selectedIndexPath;
+
 @end
 
 @implementation MUSAccountsViewController
 
-//#warning "Remove notification"
+//#warning "Remove notification"// we have to decide between viewWillAppear and notification
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadTableView) name:notificationReloadTableView object:nil];
     //self.tableView.contentInset = UIEdgeInsetsMake(-70,0,0,0);
-    NSArray *arrayWithNetworks = [NSArray arrayWithObjects:@(Twitters), @(VKontakt), @(Facebook), nil];
+    NSArray *arrayWithNetworks = @[@(Twitters), @(VKontakt), @(Facebook)];
     self.arrayWithNetworksObj = [[SocialManager sharedManager] networks:arrayWithNetworks];
 }
 
@@ -40,15 +38,12 @@
 }
 
 - (IBAction)btnEditTapped:(id)sender {
-    if(self.editing)
-    {
+    if(self.editing) {
         [super setEditing:NO animated:NO];
         [self.tableView setEditing:NO animated:NO];
         [self.tableView reloadData];
         [self.navigationItem.leftBarButtonItem setTitle:@"Edit"];
-    }
-    else
-    {
+    } else {
         [super setEditing:YES animated:YES];
         [self.tableView setEditing:YES animated:YES];
         [self.tableView reloadData];
@@ -59,42 +54,31 @@
 #pragma mark UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {    
-    return self.arrayWithNetworksObj.count;
+    return [self.arrayWithNetworksObj count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     MUSAccountTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[MUSAccountTableViewCell cellID]];
     SocialNetwork *socialNetwork = self.arrayWithNetworksObj[indexPath.row];
-    
-    if(!cell){        
+    if(!cell) {
         cell = [MUSAccountTableViewCell accountTableViewCell];
     }
-    
     [cell configurateCellForNetwork:socialNetwork];
-    
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     self.selectedIndexPath = indexPath;
-    
     SocialNetwork *socialNetwork = self.arrayWithNetworksObj[indexPath.row];
     
     if (socialNetwork.isLogin && socialNetwork.currentUser) {
         [self performSegueWithIdentifier: goToUserDetailViewControllerSegueIdentifier sender:nil];
-
-        //[socialNetwork sharePostToNetwork:nil];// call methos for testing share post TODO:
-
-    }
-    else{
-        __weak MUSAccountsViewController *weakSelf = self;
         
+    } else {
+        __weak MUSAccountsViewController *weakSelf = self;
         [socialNetwork loginWithComplition:^(id result, NSError *error) {
             if (result) {
                 [weakSelf performSegueWithIdentifier: goToUserDetailViewControllerSegueIdentifier sender:nil];
-
             }
         }];
     }
@@ -107,7 +91,7 @@
     [self reloadTableView];
 }
 
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath{
     [self.arrayWithNetworksObj exchangeObjectAtIndex:fromIndexPath.row withObjectAtIndex:toIndexPath.row];    
 }
 
@@ -123,20 +107,19 @@
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     return YES;
 }
+
 - (void) reloadTableView {
     [self.tableView reloadData];
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat sizeCell = 50;
-    
     return sizeCell;
 }
+
 #pragma mark prepareForSegue
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {    
     MUSUserDetailViewController *vc = [MUSUserDetailViewController new];
     if ([[segue identifier] isEqualToString:goToUserDetailViewControllerSegueIdentifier]) {
         vc = [segue destinationViewController];
