@@ -97,6 +97,7 @@ static FacebookNetwork *model = nil;
     if ([[FBSDKAccessToken currentAccessToken] hasGranted:@"publish_actions"]) {
         [self sharePostToFacebook: post];
     } else {
+        
         FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
         [loginManager logInWithPublishPermissions:@[@"publish_actions"] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
             if (!error) {

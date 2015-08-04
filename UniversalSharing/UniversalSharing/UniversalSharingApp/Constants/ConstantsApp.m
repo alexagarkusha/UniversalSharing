@@ -20,7 +20,8 @@ NSString *const notificationReloadTableView = @"notificationReloadTableView";
 #pragma mark ShareViewController Constants
 
 NSString *const kPlaceholderText = @"Write something...";
-
+NSString *const goToLocationViewControllerSegueIdentifier = @"Location";
+NSString *const collectionViewCellIdentifier = @"CollectionViewCellIdentifier";
 
 
 @end
