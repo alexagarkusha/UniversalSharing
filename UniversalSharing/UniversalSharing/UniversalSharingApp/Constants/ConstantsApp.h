@@ -19,6 +19,9 @@ FOUNDATION_EXPORT NSString *const notificationReloadTableView;
 #pragma mark MUSShareViewController Constants
 
 FOUNDATION_EXPORT NSString *const kPlaceholderText;
+FOUNDATION_EXPORT NSString *const goToLocationViewControllerSegueIdentifier;
+FOUNDATION_EXPORT NSString *const collectionViewCellIdentifier;
+
 
 typedef NS_ENUM(NSInteger, TabBarItemIndex) {
     Share_photo,

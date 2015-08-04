@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "MUSSocialNetworkLibraryConstants.h"
-
+#import "SocialNetwork.h"
 @interface MUSLocationTableViewController : UITableViewController
-- (void)setArrayPlaces:(NSArray*)arrayPlaces;
+//- (void)setArrayPlaces:(NSArray*)arrayPlaces;
+- (void)setCurrentUser:(SocialNetwork*)socialNetwork;
 @property (copy, nonatomic) Complition placeComplition;
 
 @end

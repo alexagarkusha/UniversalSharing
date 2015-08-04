@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--First-->
@@ -122,7 +123,24 @@
             </objects>
             <point key="canvasLocation" x="750" y="1028"/>
         </scene>
-        <!--Share-->
+        <!--Item-->
+        <scene sceneID="pSi-e4-hGf">
+            <objects>
+                <navigationController id="C4b-ze-bW1" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="Tnx-5b-Dr3"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="YJx-MI-yAG">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="8rJ-Kc-sve" kind="relationship" relationship="rootViewController" id="Qni-Zl-CQb"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zw2-sr-XdP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="657" y="354"/>
+        </scene>
+        <!--Share Post-->
         <scene sceneID="wg7-f3-ORb">
             <objects>
                 <viewController id="8rJ-Kc-sve" customClass="MUSShareViewController" sceneMemberID="viewController">
@@ -135,7 +153,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Write something ..." translatesAutoresizingMaskIntoConstraints="NO" id="Omp-fe-BSg">
-                                <rect key="frame" x="0.0" y="69" width="600" height="281"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="350"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="250" id="bMK-ia-Ec8"/>
                                 </constraints>
@@ -161,22 +179,6 @@
                                     <outlet property="delegate" destination="8rJ-Kc-sve" id="LFk-Yd-a3Q"/>
                                 </connections>
                             </tabBar>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lIF-ME-erc">
-                                <rect key="frame" x="0.0" y="25" width="600" height="44"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="6fY-Py-BaL"/>
-                                </constraints>
-                                <items>
-                                    <navigationItem title="Share" id="zlK-gp-0q9">
-                                        <barButtonItem key="rightBarButtonItem" title="Share" id="zax-qU-FYq">
-                                            <connections>
-                                                <action selector="shareToSocialNetwork:" destination="8rJ-Kc-sve" id="fhI-3K-KUl"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Uq2-de-hll">
                                 <rect key="frame" x="0.0" y="402" width="600" height="100"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -190,20 +192,26 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CollectionViewCell" id="j3T-Y6-6mp" customClass="MUSCollectionViewCell">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CollectionViewCellIdentifier" id="j3T-Y6-6mp" customClass="MUSCollectionViewCell">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="110" height="88"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="krX-P3-v7h">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="krX-P3-v7h">
                                                     <rect key="frame" x="0.0" y="0.0" width="171" height="143"/>
                                                     <color key="backgroundColor" red="0.1863958248" green="1" blue="0.16513155060000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
+                                        <constraints>
+                                            <constraint firstItem="krX-P3-v7h" firstAttribute="top" secondItem="j3T-Y6-6mp" secondAttribute="top" id="4ni-Qx-HvI"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="krX-P3-v7h" secondAttribute="trailing" constant="-69" id="MGv-OJ-2yz"/>
+                                            <constraint firstItem="krX-P3-v7h" firstAttribute="leading" secondItem="j3T-Y6-6mp" secondAttribute="leading" id="MLn-Pk-q2S"/>
+                                            <constraint firstAttribute="bottomMargin" secondItem="krX-P3-v7h" secondAttribute="bottom" constant="-63" id="emb-ZU-PAf"/>
+                                        </constraints>
                                         <size key="customSize" width="110" height="88"/>
                                         <connections>
                                             <outlet property="photoImageView" destination="krX-P3-v7h" id="tgg-EH-cRe"/>
@@ -219,17 +227,14 @@
                         <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="lIF-ME-erc" secondAttribute="trailing" id="5qO-wa-hDX"/>
-                            <constraint firstItem="Omp-fe-BSg" firstAttribute="top" secondItem="lIF-ME-erc" secondAttribute="bottom" id="CmL-ST-bn3"/>
+                            <constraint firstItem="Omp-fe-BSg" firstAttribute="trailing" secondItem="Uq2-de-hll" secondAttribute="trailing" id="D2K-9D-oTF"/>
                             <constraint firstItem="Uq2-de-hll" firstAttribute="top" secondItem="Omp-fe-BSg" secondAttribute="bottom" constant="8" id="DvG-Mn-ovg"/>
                             <constraint firstItem="csE-rZ-YPJ" firstAttribute="top" secondItem="Uq2-de-hll" secondAttribute="bottom" id="FNQ-NS-cOK"/>
-                            <constraint firstItem="lIF-ME-erc" firstAttribute="top" secondItem="QS5-Rx-YEW" secondAttribute="top" constant="25" id="GPh-vi-jG1"/>
                             <constraint firstAttribute="bottom" secondItem="Omp-fe-BSg" secondAttribute="bottom" constant="250" id="Ide-ic-TNq"/>
-                            <constraint firstItem="lIF-ME-erc" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="MEl-Ex-bpZ"/>
                             <constraint firstItem="Omp-fe-BSg" firstAttribute="leading" secondItem="csE-rZ-YPJ" secondAttribute="leading" id="QXj-cy-2Or"/>
+                            <constraint firstItem="Omp-fe-BSg" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" constant="-64" id="Tja-zK-ebr"/>
                             <constraint firstAttribute="trailing" secondItem="Uq2-de-hll" secondAttribute="trailing" id="Uoh-CF-Npv"/>
                             <constraint firstAttribute="trailing" secondItem="csE-rZ-YPJ" secondAttribute="trailing" id="WFG-dS-bKy"/>
-                            <constraint firstItem="Omp-fe-BSg" firstAttribute="trailing" secondItem="lIF-ME-erc" secondAttribute="trailing" id="cjN-Ya-fH2"/>
                             <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="csE-rZ-YPJ" secondAttribute="bottom" id="h1V-Ne-RjB"/>
                             <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="Omp-fe-BSg" secondAttribute="bottom" constant="49" id="oN1-aG-ILI"/>
                             <constraint firstItem="Uq2-de-hll" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="scC-bZ-AC1"/>
@@ -248,6 +253,13 @@
                         </connections>
                     </view>
                     <tabBarItem key="tabBarItem" title="Share" image="second" id="cPa-gy-q4n"/>
+                    <navigationItem key="navigationItem" title="Share Post" id="d0e-Wr-Fqr">
+                        <barButtonItem key="rightBarButtonItem" title="Share" id="GGo-rI-nF9">
+                            <connections>
+                                <action selector="shareToSocialNetwork:" destination="8rJ-Kc-sve" id="VH1-Ms-d7R"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="Uq2-de-hll" id="Ixu-Mo-oqb"/>
                         <outlet property="mainGestureRecognizer" destination="Q3Z-Zc-VoA" id="hSm-6a-V0c"/>
@@ -265,9 +277,9 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="773" y="371"/>
+            <point key="canvasLocation" x="1353" y="342"/>
         </scene>
-        <!--Location Table View Controller-->
+        <!--User Location -->
         <scene sceneID="kb6-lF-UVy">
             <objects>
                 <tableViewController id="Wg0-6x-xhW" customClass="MUSLocationTableViewController" sceneMemberID="viewController">
@@ -277,13 +289,6 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="sectionIndexColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="sectionIndexBackgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                        <navigationBar key="tableHeaderView" contentMode="scaleToFill" id="Ti4-2O-rtb">
-                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            <items>
-                                <navigationItem id="vYz-46-11E"/>
-                            </items>
-                        </navigationBar>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LocationCell" rowHeight="55" id="hfj-wW-fAW">
                                 <autoresizingMask key="autoresizingMask"/>
@@ -297,10 +302,17 @@
                             <outlet property="delegate" destination="Wg0-6x-xhW" id="bhm-YV-b7g"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="User Location " id="gLT-57-1SP">
+                        <barButtonItem key="rightBarButtonItem" title="Distance" id="lye-5d-qF0">
+                            <connections>
+                                <action selector="chooseDistance:" destination="Wg0-6x-xhW" id="ChZ-KM-q8m"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s8n-hd-1ig" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1485" y="396"/>
+            <point key="canvasLocation" x="2011" y="342"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
@@ -314,8 +326,8 @@
                     </tabBar>
                     <connections>
                         <segue destination="9pv-A4-QxB" kind="relationship" relationship="viewControllers" id="u7Y-xg-7CH"/>
-                        <segue destination="8rJ-Kc-sve" kind="relationship" relationship="viewControllers" id="lzU-1b-eKA"/>
                         <segue destination="5g8-Gy-Hka" kind="relationship" relationship="viewControllers" id="wIZ-dN-gyb"/>
+                        <segue destination="C4b-ze-bW1" kind="relationship" relationship="viewControllers" id="Iwk-j6-eFx"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
