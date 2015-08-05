@@ -25,6 +25,7 @@
     if (self)
     {
         self.locationManager = [[CLLocationManager alloc]init];
+        [self setupLocationManager];
     }
     return self;
 }
@@ -32,24 +33,30 @@
 + (MUSLocationManager*) sharedManager {
     static MUSLocationManager* sharedManager = nil;
     static dispatch_once_t onceTaken;
-    dispatch_once (& onceTaken, ^
+    dispatch_once (&onceTaken, ^
                    {
                        sharedManager = [MUSLocationManager new];
                    });
     return sharedManager;
 }
 
-- (void) startTrackLocationWithComplition : (ComplitionLocation) block {
-    self.copyLocationBLock = block;
-    NSString *versionDeviceString = [[UIDevice currentDevice] systemVersion];
+- (void) setupLocationManager
+{
     self.locationManager.delegate = self;
-    self.locationManager.distanceFilter = kCLDistanceFilterNone; //type - double;
-    if ([versionDeviceString floatValue] >= 8.0) {
-        if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined) {
+    self.locationManager.distanceFilter = kCLDistanceFilterNone;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    
+    NSString *versionDeviceString = [[UIDevice currentDevice] systemVersion];
+    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined)
+    {
+        if ([versionDeviceString floatValue] >= 8.0) {
             [self.locationManager requestWhenInUseAuthorization];
-            [self.locationManager requestAlwaysAuthorization];
         }
     }
+}
+
+- (void) startTrackLocationWithComplition : (ComplitionLocation) block {
+    self.copyLocationBLock = block;
     [self.locationManager startUpdatingLocation];
 }
 - (void) stopAndGetCurrentLocation {

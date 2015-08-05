@@ -12,6 +12,7 @@
 		187FC5271B65222D00A3916C /* SocialManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 187FC5191B65222D00A3916C /* SocialManager.m */; };
 		187FC5281B65222D00A3916C /* SocialNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 187FC51C1B65222D00A3916C /* SocialNetwork.m */; };
 		187FC52A1B65222D00A3916C /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 187FC5221B65222D00A3916C /* User.m */; };
+		18B505481B726FAF00679F9D /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18B505471B726FAF00679F9D /* Info.plist */; };
 		18BB29AD1B67E3F000B498AC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB29741B67E3F000B498AC /* AppDelegate.m */; };
 		18BB29AE1B67E3F000B498AC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18BB29751B67E3F000B498AC /* LaunchScreen.xib */; };
 		18BB29AF1B67E3F000B498AC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18BB29771B67E3F000B498AC /* Main.storyboard */; };
@@ -30,7 +31,6 @@
 		18BB29BD1B67E3F000B498AC /* MUSUserProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB29A11B67E3F000B498AC /* MUSUserProfileCell.m */; };
 		18BB29BE1B67E3F000B498AC /* MUSUserProfileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18BB29A21B67E3F000B498AC /* MUSUserProfileCell.xib */; };
 		18BB29C01B67E3F000B498AC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18BB29A41B67E3F000B498AC /* Images.xcassets */; };
-		18BB29C11B67E3F000B498AC /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18BB29A51B67E3F000B498AC /* Info.plist */; };
 		18BB29C21B67E3F000B498AC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB29A61B67E3F000B498AC /* main.m */; };
 		18BB29C31B67E3F000B498AC /* MUSLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB29AA1B67E3F000B498AC /* MUSLocationManager.m */; };
 		306ED75C1B6FA3170014D975 /* MUSLocationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 306ED75B1B6FA3170014D975 /* MUSLocationTableViewController.m */; };
@@ -77,6 +77,7 @@
 		187FC51D1B65222D00A3916C /* MUSSocialNetworkLibraryHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSSocialNetworkLibraryHeader.h; sourceTree = "<group>"; };
 		187FC5211B65222D00A3916C /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		187FC5221B65222D00A3916C /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		18B505471B726FAF00679F9D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		18BB29731B67E3F000B498AC /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		18BB29741B67E3F000B498AC /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		18BB29761B67E3F000B498AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -107,7 +108,6 @@
 		18BB29A11B67E3F000B498AC /* MUSUserProfileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSUserProfileCell.m; sourceTree = "<group>"; };
 		18BB29A21B67E3F000B498AC /* MUSUserProfileCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MUSUserProfileCell.xib; sourceTree = "<group>"; };
 		18BB29A41B67E3F000B498AC /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		18BB29A51B67E3F000B498AC /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		18BB29A61B67E3F000B498AC /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		18BB29A91B67E3F000B498AC /* MUSLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSLocationManager.h; sourceTree = "<group>"; };
 		18BB29AA1B67E3F000B498AC /* MUSLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSLocationManager.m; sourceTree = "<group>"; };
@@ -284,7 +284,7 @@
 				30DBFDA41B6BAA52002F83D0 /* VKimage.png */,
 				30DBFDA21B6BAA48002F83D0 /* TWimage.jpeg */,
 				30DBFDA01B6BAA3F002F83D0 /* FBimage.jpg */,
-				18BB29A51B67E3F000B498AC /* Info.plist */,
+				18B505471B726FAF00679F9D /* Info.plist */,
 				18BB29A61B67E3F000B498AC /* main.m */,
 			);
 			path = UniversalSharingApp;
@@ -669,7 +669,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18BB29C11B67E3F000B498AC /* Info.plist in Resources */,
 				18BB29BE1B67E3F000B498AC /* MUSUserProfileCell.xib in Resources */,
 				30DBFDA51B6BAA52002F83D0 /* VKimage.png in Resources */,
 				18BB29AE1B67E3F000B498AC /* LaunchScreen.xib in Resources */,
@@ -678,6 +677,7 @@
 				30DBFDA11B6BAA3F002F83D0 /* FBimage.jpg in Resources */,
 				30DBFDA31B6BAA48002F83D0 /* TWimage.jpeg in Resources */,
 				18BB29BC1B67E3F000B498AC /* MUSTopUserProfileCell.xib in Resources */,
+				18B505481B726FAF00679F9D /* Info.plist in Resources */,
 				18BB29AF1B67E3F000B498AC /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -900,7 +900,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Vadim Rozov (3RNNQR4V7R)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Vadim Rozov (3RNNQR4V7R)";
-				INFOPLIST_FILE = UniversalSharing/Info.plist;
+				INFOPLIST_FILE = UniversalSharing/UniversalSharingApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -917,7 +917,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Vadim Rozov (3RNNQR4V7R)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Vadim Rozov (3RNNQR4V7R)";
-				INFOPLIST_FILE = UniversalSharing/Info.plist;
+				INFOPLIST_FILE = UniversalSharing/UniversalSharingApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
