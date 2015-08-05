@@ -15,21 +15,25 @@
 @interface MUSAccountsViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+/*!
+ @property
+ @abstract initialization by socialnetwork objects from socialmanager(facebook or twitter or VK)
+ */
 @property (strong, nonatomic) NSMutableArray *arrayWithNetworksObj;
+/*!
+ @property
+ @abstract initialization by NSIndexPath in method didSelectRowAtIndexPath in order to get current socialnetwork in method prepareForSegue from arrayWithNetworksObj
+ */
 @property (strong, nonatomic) NSIndexPath * selectedIndexPath;
 
 @end
 
 @implementation MUSAccountsViewController
 
-//#warning "Remove notification"// we have to decide between viewWillAppear and notification
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadTableView) name:notificationReloadTableView object:nil];
     //self.tableView.contentInset = UIEdgeInsetsMake(-70,0,0,0);
-    NSArray *arrayWithNetworks = @[@(Twitters), @(VKontakt), @(Facebook)];
-    self.arrayWithNetworksObj = [[SocialManager sharedManager] networks:arrayWithNetworks];
+    [self obtanObjectsOfSocialNetworks];
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -41,23 +45,36 @@
     if(self.editing) {
         [super setEditing:NO animated:NO];
         [self.tableView setEditing:NO animated:NO];
-        [self.tableView reloadData];
         [self.navigationItem.leftBarButtonItem setTitle:@"Edit"];
     } else {
         [super setEditing:YES animated:YES];
         [self.tableView setEditing:YES animated:YES];
-        [self.tableView reloadData];
         [self.navigationItem.leftBarButtonItem setTitle:@"Done"];
     }
+    [self.tableView reloadData];
+    
+}
+
+/*!
+ @method
+ @abstract get objects of social network from socialManager, we pass array with NetworkType
+ @param without
+ */
+- (void) obtanObjectsOfSocialNetworks {
+    NSArray *arrayWithNetworks = @[@(Twitters), @(VKontakt), @(Facebook)];
+    self.arrayWithNetworksObj = [[SocialManager sharedManager] networks:arrayWithNetworks];
 }
 
 #pragma mark UITableViewDataSource
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {    
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.arrayWithNetworksObj count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    /*!
+     XIB
+     */
     MUSAccountTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[MUSAccountTableViewCell cellID]];
     SocialNetwork *socialNetwork = self.arrayWithNetworksObj[indexPath.row];
     if(!cell) {
@@ -70,7 +87,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     self.selectedIndexPath = indexPath;
     SocialNetwork *socialNetwork = self.arrayWithNetworksObj[indexPath.row];
-    
+    /*!
+     when cell is tapped we check this social network is login and existed a currentuser object  if YES we go to ditailviewcontroller, else to do login than go to ditailviewcontroller
+     */
     if (socialNetwork.isLogin && socialNetwork.currentUser) {
         [self performSegueWithIdentifier: goToUserDetailViewControllerSegueIdentifier sender:nil];
         
@@ -87,12 +106,18 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     SocialNetwork *socialNetwork = self.arrayWithNetworksObj[indexPath.row];
     MUSAccountTableViewCell *cell = (MUSAccountTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+    /*!
+     in order to set bool property isVisible for configurating color of cell
+     */
     [cell changeColorOfCell:socialNetwork];
-    [self reloadTableView];
+    [self.tableView reloadData];
 }
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath{
-    [self.arrayWithNetworksObj exchangeObjectAtIndex:fromIndexPath.row withObjectAtIndex:toIndexPath.row];    
+    /*
+     change socialnetwork objects when cells are changed 
+     */
+    [self.arrayWithNetworksObj exchangeObjectAtIndex:fromIndexPath.row withObjectAtIndex:toIndexPath.row];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -108,10 +133,6 @@
     return YES;
 }
 
-- (void) reloadTableView {
-    [self.tableView reloadData];
-}
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat sizeCell = 50;
     return sizeCell;
@@ -119,7 +140,7 @@
 
 #pragma mark prepareForSegue
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {    
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     MUSUserDetailViewController *vc = [MUSUserDetailViewController new];
     if ([[segue identifier] isEqualToString:goToUserDetailViewControllerSegueIdentifier]) {
         vc = [segue destinationViewController];
