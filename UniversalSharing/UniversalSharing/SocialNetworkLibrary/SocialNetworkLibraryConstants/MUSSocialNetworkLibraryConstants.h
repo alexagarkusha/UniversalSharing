@@ -28,6 +28,14 @@ typedef NS_ENUM (NSInteger, ImageType) {
     JPEG
 };
 
+typedef NS_ENUM (NSInteger, DistanceType) {
+    DistanceType1,
+    DistanceType2,
+    DistanceType3,
+    DistanceType4
+};
+
+
 
 #pragma mark Facebook Constants
 
@@ -45,12 +53,14 @@ FOUNDATION_EXPORT NSString *const kVKKeyOfPlaceDictionary;
 
 FOUNDATION_EXPORT NSString *const kVkMethodPlacesSearch;
 
-
-
+FOUNDATION_EXPORT NSInteger const kVKDistanceEqual300;
+FOUNDATION_EXPORT NSInteger const kVKDistanceEqual2400;
+FOUNDATION_EXPORT NSInteger const kVKDistanceEqual18000;
 
 
 
 #pragma mark Twitter Constants
+
 FOUNDATION_EXPORT NSString *const kConsumerSecret;
 FOUNDATION_EXPORT NSString *const kConsumerKey;
 FOUNDATION_EXPORT NSString *const kTwitterUserName;

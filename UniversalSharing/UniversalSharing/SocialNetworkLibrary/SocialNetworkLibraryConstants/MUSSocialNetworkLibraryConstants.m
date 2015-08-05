@@ -24,6 +24,10 @@ NSString *const kVKKeyOfPlaceDictionary = @"items";
 
 NSString *const kVkMethodPlacesSearch = @"places.search";
 
+NSInteger const kVKDistanceEqual300 = 300;
+NSInteger const kVKDistanceEqual2400 = 2400;
+NSInteger const kVKDistanceEqual18000 = 18000;
+
 
 
 
