@@ -11,6 +11,7 @@
 #import "Place.h"
 #import <VKSdk.h>
 
+
 @interface VKNetwork () <VKSdkDelegate>
 @property (strong, nonatomic) UINavigationController *navigationController;
 @property (copy, nonatomic) Complition copyComplition;
@@ -19,7 +20,6 @@
 @end
 
 static VKNetwork *model = nil;
-
 
 //#warning "Use isLoggedIn method to check is login"
 
@@ -86,7 +86,7 @@ static VKNetwork *model = nil;
 
 #pragma mark - logoutInNetwork
 
-/**
+/*
  Forces logout using OAuth (with VKAuthorizeController). Removes all cookies for *.vk.com.
  Has no effect for logout in VK app
  Current user for social network become nil
@@ -100,6 +100,10 @@ static VKNetwork *model = nil;
 }
 
 #pragma mark - obtainUserFromNetwork
+
+/*
+ @abstract return VKNetwork object with filling properties for logged user.
+*/
 
 - (void) obtainInfoFromNetworkWithComplition :(Complition) block {
 
@@ -123,10 +127,17 @@ static VKNetwork *model = nil;
      }];
 }
 
+
+//#warning "Move method in constants"
+#warning "Check messages"
+
 #pragma mark - obtainArrayOfPlacesFromNetwork
 
-#warning "Move method in constants"
-#warning "Check messages"
+/*!
+@abstract return a list of objects like @class Place found by the search params.
+@params object of @class Location (current location of user)
+*/
+
 
 - (void) obtainArrayOfPlaces: (Location *) location withComplition: (ComplitionPlaces) block {
     
@@ -134,7 +145,7 @@ static VKNetwork *model = nil;
     params[kLoactionQ] = location.q;
     params[kLoactionLatitude] = location.latitude;
     params[kLoactionLongitude] = location.longitude;
-    params[kLoactionRadius] = [self radiusForVKLocation: location.distance];
+    params[kLoactionRadius] = [NSString stringWithFormat:@"%d", [self radiusForVKLocation: location.distance]];
     
     VKRequest * locationRequest = [VKApi requestWithMethod : kVkMethodPlacesSearch
                                              andParameters : params
@@ -166,28 +177,31 @@ static VKNetwork *model = nil;
      }];
 }
 
-#warning "?"
+/*!
+@abstract return type radius search area (1 to 4 )
+@params current distance of @class Location
+*/
 
-- (NSString*) radiusForVKLocation : (NSString*) distanceString {
+- (DistanceType) radiusForVKLocation : (NSString*) distanceString {
     NSInteger distance = [distanceString floatValue];
-    if (distance <= 300) {
-        return @"1";
-    } else if (distance > 300 && distance <= 2400) {
-        return @"2";
-    } else if (distance > 2400 && distance <= 18000) {
-        return @"3";
+    if (distance <= kVKDistanceEqual300) {
+        return DistanceType1;
+    } else if (distance > kVKDistanceEqual300 && distance <= kVKDistanceEqual2400) {
+        return DistanceType2;
+    } else if (distance > kVKDistanceEqual2400 && distance <= kVKDistanceEqual18000) {
+        return DistanceType3;
     } else {
-        return @"4";
+        return DistanceType4;
     }
 }
 
 #pragma mark - sharePostToNetwork
 
+
+
 - (void) sharePost : (Post*) post withComplition : (Complition) block {
     self.copyPostComplition = block;
-    if (post.arrayImages.count == 1) {
-        [self postImageToVK: post];
-    } else if (post.arrayImages.count > 1) {
+    if (post.arrayImages.count > 0) {
         [self postImagesToVK: post];
     } else {
         [self postMessageToVK: post];
@@ -197,10 +211,14 @@ static VKNetwork *model = nil;
 #pragma mark - postMessageToNetwork
 
 - (void) postMessageToVK : (Post*) post {
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+                              [VKSdk getAccessToken].userId , VK_API_OWNER_ID,
+                              post.postDescription          , VK_API_MESSAGE,
+                                       nil];
+    if (post.placeID)  parameters [VK_API_PLACE_ID] = post.placeID;
     
-    VKRequest *request = [[VKApi wall] post: @{VK_API_MESSAGE : post.postDescription,
-                                               VK_API_OWNER_ID : [VKSdk getAccessToken].userId,
-                                               VK_API_PLACE_ID : post.placeID }];
+    VKRequest *request = [[VKApi wall] post: parameters];
+    
     [request executeWithResultBlock: ^(VKResponse *response) {
         self.copyPostComplition (@"Post is success", nil);
     } errorBlock: ^(NSError *error) {
@@ -266,7 +284,7 @@ static VKNetwork *model = nil;
 
 
 - (void) postImagesToVK : (Post*) post {
-    __weak VKNetwork *weakSell = self;
+   // __weak VKNetwork *weakSell = self;
 
     NSInteger userId = [self.currentUser.clientID integerValue];
     NSMutableArray *requestArray = [[NSMutableArray alloc] init];
@@ -295,12 +313,15 @@ static VKNetwork *model = nil;
             }
         
         
-        VKRequest *postRequest = [[VKApi wall] post:@{ VK_API_ATTACHMENTS : [photosAttachments componentsJoinedByString: @","],
-                                                       VK_API_OWNER_ID : weakSell.currentUser.clientID,
-                                                       VK_API_MESSAGE  : post.postDescription,
-                                                       VK_API_PLACE_ID : post.placeID}];
         
-        
+        NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+                                           [VKSdk getAccessToken].userId , VK_API_OWNER_ID,
+                      [photosAttachments componentsJoinedByString: @","] , VK_API_ATTACHMENTS,
+                                           nil];
+        if (post.placeID)  parameters [VK_API_PLACE_ID] = post.placeID;
+        if (post.placeID)  parameters [VK_API_MESSAGE] = post.postDescription;
+
+        VKRequest *postRequest = [[VKApi wall] post: parameters];
             [postRequest executeWithResultBlock: ^(VKResponse *response) {
                     NSLog(@"Result: %@", response);
                 } errorBlock: ^(NSError *error) {
@@ -310,9 +331,6 @@ static VKNetwork *model = nil;
             NSLog(@"Error: %@", error);
     }];
 }
-
-
-
 
 
 - (UIViewController*) vcForLoginVK {
