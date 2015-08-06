@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 @interface CacheImage : NSObject
+
 + (CacheImage*) sharedManager;
 - (void)cacheImage:(UIImage*)image forKey:(NSURL*)key;
 - (UIImage*)obtainCachedImageForKey:(NSURL*)key;

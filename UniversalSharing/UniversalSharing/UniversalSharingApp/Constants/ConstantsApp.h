@@ -13,7 +13,6 @@
 #pragma mark AccountsViewController Constants
 
 FOUNDATION_EXPORT NSString *const goToUserDetailViewControllerSegueIdentifier;
-FOUNDATION_EXPORT NSString *const notificationReloadTableView;
 
 #pragma mark MUSShareViewController Constants
 

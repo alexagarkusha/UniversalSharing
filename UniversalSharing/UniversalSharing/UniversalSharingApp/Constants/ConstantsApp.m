@@ -14,7 +14,6 @@
 #pragma mark AccountsViewController Constants
 
 NSString *const goToUserDetailViewControllerSegueIdentifier = @"goToInfo";
-NSString *const notificationReloadTableView = @"notificationReloadTableView";
 
 #pragma mark ShareViewController Constants
 

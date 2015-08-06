@@ -42,6 +42,7 @@
 @property (strong, nonatomic)               NSMutableArray *arrayWithChosenImages;
 @property (strong, nonatomic)               Post *post;
 @property (strong, nonatomic)               UIButton *changeSocialNetworkButton;
+@property (strong, nonatomic)               NSString *placeID;
 
 @end
 
@@ -64,11 +65,11 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
-                                                 name:@"UIKeyboardWillShowNotification"
+                                                 name:UIKeyboardWillShowNotification
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillHide:)
-                                                 name:@"UIKeyboardDidHideNotification"
+                                                 name:UIKeyboardDidHideNotification
                                                object:nil];
     self.mainGestureRecognizer.enabled = NO;
     [self initiationSocialNetworkButtonForSocialNetwork];
@@ -186,6 +187,7 @@
     if(!self.post) {
         self.post = [[Post alloc] init];
     }
+    self.post.placeID = self.placeID;
     self.post.postDescription = self.messageTextView.text;
     self.post.networkType = _currentSocialNetwork.networkType;
     self.post.arrayImages = self.arrayWithChosenImages;
@@ -282,12 +284,11 @@
 
 - (void) userCurrentLocation {
     [self performSegueWithIdentifier: goToLocationViewControllerSegueIdentifier sender:nil];
-    //<<<<<<< HEAD
-    //    [[MUSLocationManager sharedManager] startTrackLocationWithComplition:^(id result, NSError *error) {
-    //        if ([result isKindOfClass:[CLLocation class]]) {
-    //            CLLocation* location = result;
-    //            self.currentLocation = location.coordinate;
-    //=======
+//        [[MUSLocationManager sharedManager] startTrackLocationWithComplition:^(id result, NSError *error) {
+//            if ([result isKindOfClass:[CLLocation class]]) {
+//                CLLocation* location = result;
+//                self.currentLocation = location.coordinate;
+    
     
     //    Location *currentLocation = [[Location alloc] init];
     //    currentLocation.longitude = @"-122.40828";
@@ -308,9 +309,9 @@
     //            }
     //            Place *place = [places firstObject];
     //            weakSelf.post.placeID = place.placeID;
-    //        }
+           // }
     //
-    //    }];
+        //}];
     
     
     
@@ -493,10 +494,10 @@
         
         __weak MUSShareViewController *weakSelf = self;
         vc.placeComplition = ^(Place* result, NSError *error) {
-            if(!weakSelf.post) {
-                weakSelf.post = [[Post alloc] init];
-            }
-            weakSelf.post.placeID = result.placeID;
+//            if(!weakSelf.post) {
+//                weakSelf.post = [[Post alloc] init];
+//            }
+            weakSelf.placeID = result.placeID;
         };
     }
 }
