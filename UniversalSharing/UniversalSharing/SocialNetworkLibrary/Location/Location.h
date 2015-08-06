@@ -10,10 +10,31 @@
 
 @interface Location : NSObject
 
+/*!
+ @abstract latitude point within a radius of where you want to search for, given in degrees (-90 to 90) .
+*/
+
 @property (nonatomic, strong) NSString *latitude;
+
+/*!
+ @abstract longitude points within a radius of where you want to search for , given in degrees (from -180 to 180) .
+*/
 @property (nonatomic, strong) NSString *longitude;
+
+/*!
+ @abstract distance search area
+*/
 @property (nonatomic, strong) NSString *distance;
+
+/*!
+ @abstract type of location place. Can be PLACE, CITY, STATE_PROVINCE, COUNTRY, EVENT, RESIDENCE, TEXT
+*/
+
 @property (nonatomic, strong) NSString *type;
-@property (nonatomic, strong) NSString *q; //Only for Facebook Network
+
+/*!
+ @abstract string search. May itself contain nothing, but CAN NOT be NIL
+*/
+@property (nonatomic, strong) NSString *q; 
 
 @end
