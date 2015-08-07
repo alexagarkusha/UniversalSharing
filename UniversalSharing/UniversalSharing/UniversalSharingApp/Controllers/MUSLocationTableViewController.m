@@ -9,6 +9,7 @@
 #import "MUSLocationTableViewController.h"
 #import "Place.h"
 #import "ConstantsApp.h"
+#import "MUSLocationManager.h"
 
 @interface MUSLocationTableViewController () <UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate>
 /*!
@@ -54,24 +55,24 @@
  */
 - (void) userCurrentLocation {
     
-    //    [[MUSLocationManager sharedManager] startTrackLocationWithComplition:^(id result, NSError *error) {
-    //        if ([result isKindOfClass:[CLLocation class]]) {
-    //            CLLocation* location = result;
-    //            self.currentLocation = location.coordinate;
-    //=======
+        [[MUSLocationManager sharedManager] startTrackLocationWithComplition:^(id result, NSError *error) {
+            if ([result isKindOfClass:[CLLocation class]]) {
+                CLLocation* location = result;
+                Location *currentLocation = [[Location alloc] init];
+                currentLocation.longitude = [NSString stringWithFormat: @"%f",location.coordinate.longitude];
+                currentLocation.latitude = [NSString stringWithFormat: @"%f",location.coordinate.latitude];
+                currentLocation.type = @"place";
+                currentLocation.q = @"";
+                currentLocation.distance = self.stringDistance;
+                __weak MUSLocationTableViewController *weakSelf = self;
+                
+                [_currentSocialNetwork obtainArrayOfPlaces:currentLocation withComplition:^(NSMutableArray *places, NSError *error) {
+                    weakSelf.arrayLocations = places;
+                    [weakSelf.tableView reloadData];
+                }];            }
+            }];
     
-    Location *currentLocation = [[Location alloc] init];
-    currentLocation.longitude = @"-122.40828";
-    currentLocation.latitude = @"37.768641";
-    currentLocation.type = @"place";
-    currentLocation.q = @"";
-    currentLocation.distance = self.stringDistance;
-    __weak MUSLocationTableViewController *weakSelf = self;
     
-    [_currentSocialNetwork obtainArrayOfPlaces:currentLocation withComplition:^(NSMutableArray *places, NSError *error) {
-        weakSelf.arrayLocations = places;
-        [weakSelf.tableView reloadData];
-    }];
 }
 
 #pragma mark - Table view data source

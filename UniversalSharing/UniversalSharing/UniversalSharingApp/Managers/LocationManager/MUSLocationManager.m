@@ -44,27 +44,6 @@
 - (void) setupLocationManager
 {
     self.locationManager.delegate = self;
-
-//    self.locationManager.desiredAccuracy=kCLLocationAccuracyBest;
-//
-//    self.locationManager.distanceFilter = kCLDistanceFilterNone; //type - double;
-//    if ([versionDeviceString floatValue] >= 8.0) {
-//        
-////        NSUInteger code = [CLLocationManager authorizationStatus];
-////        if (code == kCLAuthorizationStatusNotDetermined && ([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)] || [self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)])) {
-////            // choose one request according to your business.
-////            if([[NSBundle mainBundle] objectForInfoDictionaryKey:@"NSLocationAlwaysUsageDescription"]){
-////                [self.locationManager requestAlwaysAuthorization];
-////            } else if([[NSBundle mainBundle] objectForInfoDictionaryKey:@"NSLocationWhenInUseUsageDescription"]) {
-////                [self.locationManager  requestWhenInUseAuthorization];
-////            } else {
-////                NSLog(@"Info.plist does not contain NSLocationAlwaysUsageDescription or NSLocationWhenInUseUsageDescription");
-////            }
-//        if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined) {
-//            [self.locationManager requestWhenInUseAuthorization];
-//            //[self.locationManager requestAlwaysAuthorization];
-//        }
-//    }
     [self.locationManager startMonitoringSignificantLocationChanges];
 
     self.locationManager.distanceFilter = kCLDistanceFilterNone;
