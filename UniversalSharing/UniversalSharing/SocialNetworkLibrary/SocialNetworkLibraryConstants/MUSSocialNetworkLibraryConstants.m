@@ -94,7 +94,7 @@ NSString* const musTwitterJSONParameterForMediaID = @"media_id_string";
 NSString *const musGET = @"GET";
 NSString *const musPOST = @"POST";
 NSString *const musPostSuccess = @"Your post has been sent";
-NSString *const musErrorWithDomainUniversalSharing = @"Universal Sharing";
+NSString *const musErrorWithDomainUniversalSharing = @"Universal Sharing library";
 
 #pragma mark Error Constants
 

@@ -134,7 +134,7 @@ static VKNetwork *model = nil;
 - (void) obtainArrayOfPlaces: (Location *) location withComplition: (Complition) block {
     self.copyComplition = block;
     
-    if (!location.q || !location.latitude || !location.longitude || !location.distance || [location.longitude floatValue] < -90.0f || [location.longitude floatValue] > 90.0f || [location.latitude floatValue] < -180.0f  || [location.latitude floatValue] > 180.0f) {
+    if (!location.q || !location.latitude || !location.longitude || !location.distance || [location.latitude floatValue] < -90.0f || [location.latitude floatValue] > 90.0f || [location.longitude floatValue] < -180.0f  || [location.longitude floatValue] > 180.0f) {
         
         NSError *error = [NSError errorWithMessage: musErrorLocationProperties andCodeError: musErrorLocationPropertiesCode];
         return block (nil, error);

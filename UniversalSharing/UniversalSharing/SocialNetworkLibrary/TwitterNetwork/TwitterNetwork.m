@@ -133,7 +133,7 @@ static TwitterNetwork *model = nil;
     
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     
-    if (!location.latitude || !location.longitude || [location.longitude floatValue] < -90.0f || [location.longitude floatValue] > 90.0f || [location.latitude floatValue] < -180.0f  || [location.latitude floatValue] > 180.0f) {
+    if (!location.latitude || !location.longitude || [location.latitude floatValue] < -90.0f || [location.latitude floatValue] > 90.0f || [location.longitude floatValue] < -180.0f  || [location.longitude floatValue] > 180.0f) {
         
         NSError *error = [NSError errorWithMessage: musErrorLocationProperties
                                       andCodeError: musErrorLocationPropertiesCode];

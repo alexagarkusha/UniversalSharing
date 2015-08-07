@@ -54,7 +54,8 @@
     if (self) {
         // Initialize Reachability
         self.reachability = [Reachability reachabilityWithHostname:@"www.google.com"];
-        self.reachability.reachableOnWWAN = NO;
+        //self.reachability.isReachable
+        //self.reachability.reachableOnWWAN = NO;
         // Start Monitoring
         [self.reachability startNotifier];
     }

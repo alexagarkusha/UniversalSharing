@@ -10,7 +10,9 @@
 #import <CoreImage/CoreImage.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <MobileCoreServices/UTCoreTypes.h>
+#import "ConstantsApp.h"
 #import "ImageToPost.h"
+#import "UIImage+ChangeScaleImage.h"
 
 
 @interface MUSPhotoManager () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate>
@@ -50,13 +52,23 @@ static MUSPhotoManager* sharedManager = nil;
 }
 
 - (void) photoAlertShow {
-    UIAlertView *photoAlert = [[UIAlertView alloc] initWithTitle:@"Share photo" message: nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Album", @"Camera", nil];
+    UIAlertView *photoAlert = [[UIAlertView alloc]
+                               initWithTitle : musAppAlertTitle_Share_Photo
+                                     message : nil
+                                    delegate : self
+                           cancelButtonTitle : musAppButtonTitle_Cancel
+                           otherButtonTitles : musAppButtonTitle_Album, musAppButtonTitle_Camera, nil];
     photoAlert.tag = 0;
     [photoAlert show];
 }
 
 - (void) warningNotAddMorePicsAlertShow {
-    UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle:@"You can not add pics anymore :[" message: nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    UIAlertView *warningAlert = [[UIAlertView alloc]
+                                 initWithTitle : musAppAlertTitle_NO_Pics_Anymore
+                                       message : nil
+                                      delegate : nil
+                             cancelButtonTitle : musAppButtonTitle_OK
+                             otherButtonTitles : nil];
     warningAlert.tag = 2;
     [warningAlert show];
 }
@@ -97,9 +109,9 @@ static MUSPhotoManager* sharedManager = nil;
 
 }
 
-#warning "Replace strings and code to Constants"
+//#warning "Replace strings and code to Constants"
 - (NSError*) cameraError {
-    NSError *error = [[NSError alloc] initWithDomain:@"Universal Sharing" code: 1000 userInfo:@{ NSLocalizedFailureReasonErrorKey: @"Device has no camera"}];
+    NSError *error = [[NSError alloc] initWithDomain: musAppError_With_Domain_Universal_Sharing code: musAppError_NO_Camera_Code userInfo:@{ NSLocalizedFailureReasonErrorKey: musAppError_NO_Camera}];
     return error;
 }
 
@@ -116,9 +128,10 @@ static MUSPhotoManager* sharedManager = nil;
     
     if (image != nil) {
         ImageToPost *imageToPost = [[ImageToPost alloc] init];
-        imageToPost.image = image;
+        UIImage *compressedImage = [UIImage scaleImage: image toSize: CGSizeMake(musAppCompressionSizePicture_By_Width, musAppCompressionSizePicture_By_Height)];
+        imageToPost.image = compressedImage;
         imageToPost.imageType = JPEG;
-        imageToPost.quality = 0.8f;
+        imageToPost.quality = 1.0f;
         self.copyComplition (imageToPost, nil);
     }
     

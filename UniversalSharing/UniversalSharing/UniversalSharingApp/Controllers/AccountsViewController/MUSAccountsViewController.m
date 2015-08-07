@@ -11,8 +11,10 @@
 #import "MUSSocialNetworkLibraryHeader.h"
 #import "MUSAccountTableViewCell.h"
 #import "ConstantsApp.h"
+#import "ReachabilityManager.h"
 
-@interface MUSAccountsViewController () <UITableViewDelegate, UITableViewDataSource>
+
+@interface MUSAccountsViewController () <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 /*!
@@ -33,12 +35,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     //self.tableView.contentInset = UIEdgeInsetsMake(-70,0,0,0);
-    [self obtanObjectsOfSocialNetworks];
+    //[self obtanObjectsOfSocialNetworks];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityDidChange:) name:kReachabilityChangedNotification object:nil];
 }
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self checkInternetConnection];
     [self.tableView reloadData];
+}
+
+- (void) checkInternetConnection {
+    BOOL isReachable = [ReachabilityManager isReachable];
+    BOOL isReachableViaWiFi = [ReachabilityManager isReachableViaWiFi];
+    
+    if (!isReachableViaWiFi && !isReachable) {
+        [self showAlertWithError: musAppError_Internet_Connection];
+    } else {
+        [self obtanObjectsOfSocialNetworks];
+    }
 }
 
 - (IBAction)btnEditTapped:(id)sender {
@@ -62,7 +77,7 @@
  */
 - (void) obtanObjectsOfSocialNetworks {
     NSArray *arrayWithNetworks = @[@(Twitters), @(VKontakt), @(Facebook)];
-    self.arrayWithNetworksObj = [[SocialManager sharedManager] networks:arrayWithNetworks];
+    self.arrayWithNetworksObj = [[SocialManager sharedManager] networks : arrayWithNetworks];
 }
 
 #pragma mark UITableViewDataSource
@@ -146,6 +161,13 @@
         vc = [segue destinationViewController];
         [vc setNetwork:self.arrayWithNetworksObj[self.selectedIndexPath.row]];
     }
+}
+
+#pragma mark - UIAlertView
+
+- (void) showAlertWithError : (NSString*) errorMessage {
+    UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:musAppError_With_Domain_Universal_Sharing message: errorMessage delegate: self cancelButtonTitle: musAppButtonTitle_Cancel otherButtonTitles: nil];
+    [errorAlert show];
 }
 
 @end

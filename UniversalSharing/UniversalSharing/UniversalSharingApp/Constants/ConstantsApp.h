@@ -10,6 +10,19 @@
 
 @interface ConstantsApp : NSObject
 
+typedef NS_ENUM(NSInteger, TabBarItemIndex) {
+    Share_photo,
+    Share_location,
+};
+
+typedef NS_ENUM(NSInteger, AlertButtonIndex) {
+    Cancel,
+    Album,
+    Camera,
+    Remove,
+};
+
+
 #pragma mark AccountsViewController Constants
 
 FOUNDATION_EXPORT NSString *const goToUserDetailViewControllerSegueIdentifier;
@@ -27,18 +40,22 @@ FOUNDATION_EXPORT NSString *const distanceEqual25000;
 //===
 FOUNDATION_EXPORT NSInteger const countOfAllowedPics;
 
+#pragma mark - Errors
 
-typedef NS_ENUM(NSInteger, TabBarItemIndex) {
-    Share_photo,
-    Share_location,
-};
+FOUNDATION_EXPORT NSString *const musAppError_With_Domain_Universal_Sharing;
+FOUNDATION_EXPORT NSString *const musAppError_Internet_Connection;
 
-typedef NS_ENUM(NSInteger, AlertButtonIndex) {
-    Cancel,
-    Album,
-    Camera,
-    Remove,
-};
+
+#pragma mark - MUSPhotoManager
+
+FOUNDATION_EXPORT NSInteger const musAppCompressionSizePicture_By_Height;
+FOUNDATION_EXPORT NSInteger const musAppCompressionSizePicture_By_Width;
+
+FOUNDATION_EXPORT NSString *const musAppError_NO_Camera;
+FOUNDATION_EXPORT NSInteger const musAppError_NO_Camera_Code;
+
+FOUNDATION_EXPORT NSString *const musAppAlertTitle_Share_Photo;
+FOUNDATION_EXPORT NSString *const musAppAlertTitle_NO_Pics_Anymore;
 
 #pragma mark MUSPhotoManager Constants
 
@@ -51,4 +68,13 @@ FOUNDATION_EXPORT NSString *const editButtonTitle;
 FOUNDATION_EXPORT NSString *const doneButtonTitle;
 FOUNDATION_EXPORT NSString *const showButtonTitle;
 FOUNDATION_EXPORT NSString *const hideButtonTitle;
+
+#pragma mark - General constants
+
+FOUNDATION_EXPORT NSString *const musAppButtonTitle_Cancel;
+FOUNDATION_EXPORT NSString *const musAppButtonTitle_OK;
+FOUNDATION_EXPORT NSString *const musAppButtonTitle_Album;
+FOUNDATION_EXPORT NSString *const musAppButtonTitle_Camera;
+
+
 @end
