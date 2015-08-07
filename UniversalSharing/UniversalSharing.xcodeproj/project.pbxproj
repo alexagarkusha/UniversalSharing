@@ -51,8 +51,12 @@
 		97C460D11B68B74B00C010DE /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C460D01B68B74B00C010DE /* CoreLocation.framework */; };
 		97C460D31B68B77100C010DE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C460D21B68B77100C010DE /* CoreGraphics.framework */; };
 		97C460D51B68B78B00C010DE /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C460D41B68B78B00C010DE /* MobileCoreServices.framework */; };
+		97C63BD91B7246B6006E99C6 /* NSError+MUSError.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C63BD81B7246B6006E99C6 /* NSError+MUSError.m */; };
+		97C7D79F1B73889B004DC83D /* MUSSocialNetworkLibraryConstantsForParseObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C7D79E1B73889B004DC83D /* MUSSocialNetworkLibraryConstantsForParseObjects.m */; };
 		97CA63CA1B6F66D300F9F0C1 /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CA63C91B6F66D300F9F0C1 /* Place.m */; };
 		97CA63CF1B6F737A00F9F0C1 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CA63CE1B6F737A00F9F0C1 /* Location.m */; };
+		97CCC9D81B749C2C00E0FAC6 /* ReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CCC9D71B749C2C00E0FAC6 /* ReachabilityManager.m */; };
+		97CCC9DC1B74ABAE00E0FAC6 /* UIImage+ChangeScaleImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CCC9DB1B74ABAE00E0FAC6 /* UIImage+ChangeScaleImage.m */; };
 		97D967CD1B6A14FF0060B2BC /* ImageToPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D967CC1B6A14FF0060B2BC /* ImageToPost.m */; };
 		FC79868BAD5DBAA5D3BB123C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 294811F54E6400CFBFD3EBDD /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -146,10 +150,18 @@
 		97C460D01B68B74B00C010DE /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		97C460D21B68B77100C010DE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		97C460D41B68B78B00C010DE /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		97C63BD71B7246B6006E99C6 /* NSError+MUSError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSError+MUSError.h"; path = "UniversalSharing/SocialNetworkLibrary/Categories/NSError+MUSError.h"; sourceTree = SOURCE_ROOT; };
+		97C63BD81B7246B6006E99C6 /* NSError+MUSError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSError+MUSError.m"; path = "UniversalSharing/SocialNetworkLibrary/Categories/NSError+MUSError.m"; sourceTree = SOURCE_ROOT; };
+		97C7D79D1B73889B004DC83D /* MUSSocialNetworkLibraryConstantsForParseObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSSocialNetworkLibraryConstantsForParseObjects.h; sourceTree = "<group>"; };
+		97C7D79E1B73889B004DC83D /* MUSSocialNetworkLibraryConstantsForParseObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSSocialNetworkLibraryConstantsForParseObjects.m; sourceTree = "<group>"; };
 		97CA63C81B6F66D300F9F0C1 /* Place.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Place.h; path = UniversalSharing/SocialNetworkLibrary/Place/Place.h; sourceTree = SOURCE_ROOT; };
 		97CA63C91B6F66D300F9F0C1 /* Place.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Place.m; path = UniversalSharing/SocialNetworkLibrary/Place/Place.m; sourceTree = SOURCE_ROOT; };
 		97CA63CD1B6F737A00F9F0C1 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Location.h; path = UniversalSharing/SocialNetworkLibrary/Location/Location.h; sourceTree = SOURCE_ROOT; };
 		97CA63CE1B6F737A00F9F0C1 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Location.m; path = UniversalSharing/SocialNetworkLibrary/Location/Location.m; sourceTree = SOURCE_ROOT; };
+		97CCC9D61B749C2C00E0FAC6 /* ReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReachabilityManager.h; path = UniversalSharing/UniversalSharingApp/Managers/ReachabilityManager/ReachabilityManager.h; sourceTree = SOURCE_ROOT; };
+		97CCC9D71B749C2C00E0FAC6 /* ReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReachabilityManager.m; path = UniversalSharing/UniversalSharingApp/Managers/ReachabilityManager/ReachabilityManager.m; sourceTree = SOURCE_ROOT; };
+		97CCC9DA1B74ABAE00E0FAC6 /* UIImage+ChangeScaleImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+ChangeScaleImage.h"; path = "UniversalSharing/UniversalSharingApp/Categories/UIImage+ChangeScaleImage/UIImage+ChangeScaleImage.h"; sourceTree = SOURCE_ROOT; };
+		97CCC9DB1B74ABAE00E0FAC6 /* UIImage+ChangeScaleImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+ChangeScaleImage.m"; path = "UniversalSharing/UniversalSharingApp/Categories/UIImage+ChangeScaleImage/UIImage+ChangeScaleImage.m"; sourceTree = SOURCE_ROOT; };
 		97D967CB1B6A14FF0060B2BC /* ImageToPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageToPost.h; path = UniversalSharing/SocialNetworkLibrary/ImageToPost/ImageToPost.h; sourceTree = SOURCE_ROOT; };
 		97D967CC1B6A14FF0060B2BC /* ImageToPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageToPost.m; path = UniversalSharing/SocialNetworkLibrary/ImageToPost/ImageToPost.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -232,11 +244,8 @@
 				187FC5171B65222D00A3916C /* SocialManager */,
 				187FC51A1B65222D00A3916C /* SocialNetwork */,
 				187FC51D1B65222D00A3916C /* MUSSocialNetworkLibraryHeader.h */,
-				97CA63CB1B6F734500F9F0C1 /* Location */,
-				97CA63C71B6F668C00F9F0C1 /* Place */,
-				97D967CA1B6A146E0060B2BC /* ImageToPost */,
-				973D67AB1B69110400A20D00 /* Post */,
-				187FC5201B65222D00A3916C /* User */,
+				97CCC9DD1B74B4F900E0FAC6 /* Model */,
+				97C63BD61B724617006E99C6 /* Categories */,
 			);
 			path = SocialNetworkLibrary;
 			sourceTree = "<group>";
@@ -275,7 +284,7 @@
 				187FC5211B65222D00A3916C /* User.h */,
 				187FC5221B65222D00A3916C /* User.m */,
 			);
-			path = User;
+			name = User;
 			sourceTree = "<group>";
 		};
 		18BB29711B67E3F000B498AC /* UniversalSharingApp */ = {
@@ -312,7 +321,11 @@
 		18BB297B1B67E3F000B498AC /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
 				30416A131B735328000CB2C2 /* UiButton+MUSSocialNetwork */,
+=======
+				97CCC9D91B74AB4100E0FAC6 /* UIImage+ChangeScaleImage */,
+>>>>>>> 21ac6e973e915dc776bd18937361896cbf3cd18c
 				18BB297C1B67E3F000B498AC /* UIButton+CornerRadiusButton */,
 				18BB297F1B67E3F000B498AC /* UIButton+LoadImageBackroundFromNetwork */,
 				18BB29821B67E3F000B498AC /* UIImageView+LoadImageFromNetwork */,
@@ -457,6 +470,7 @@
 		18BB29A71B67E3F000B498AC /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				97CCC9D51B749AF000E0FAC6 /* ReachabilityManager */,
 				97C460CC1B68B68000C010DE /* PhotoManager */,
 				18BB29A81B67E3F000B498AC /* LocationManager */,
 			);
@@ -523,6 +537,8 @@
 			children = (
 				30DBFD911B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.h */,
 				30DBFD921B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.m */,
+				97C7D79D1B73889B004DC83D /* MUSSocialNetworkLibraryConstantsForParseObjects.h */,
+				97C7D79E1B73889B004DC83D /* MUSSocialNetworkLibraryConstantsForParseObjects.m */,
 			);
 			path = SocialNetworkLibraryConstants;
 			sourceTree = "<group>";
@@ -564,7 +580,6 @@
 				973D67AD1B69114C00A20D00 /* Post.m */,
 			);
 			name = Post;
-			path = User;
 			sourceTree = "<group>";
 		};
 		97C460CC1B68B68000C010DE /* PhotoManager */ = {
@@ -577,6 +592,16 @@
 			path = LocationManager;
 			sourceTree = "<group>";
 		};
+		97C63BD61B724617006E99C6 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				97C63BD71B7246B6006E99C6 /* NSError+MUSError.h */,
+				97C63BD81B7246B6006E99C6 /* NSError+MUSError.m */,
+			);
+			name = Categories;
+			path = User;
+			sourceTree = "<group>";
+		};
 		97CA63C71B6F668C00F9F0C1 /* Place */ = {
 			isa = PBXGroup;
 			children = (
@@ -584,7 +609,6 @@
 				97CA63C91B6F66D300F9F0C1 /* Place.m */,
 			);
 			name = Place;
-			path = User;
 			sourceTree = "<group>";
 		};
 		97CA63CB1B6F734500F9F0C1 /* Location */ = {
@@ -594,6 +618,38 @@
 				97CA63CE1B6F737A00F9F0C1 /* Location.m */,
 			);
 			name = Location;
+			sourceTree = "<group>";
+		};
+		97CCC9D51B749AF000E0FAC6 /* ReachabilityManager */ = {
+			isa = PBXGroup;
+			children = (
+				97CCC9D61B749C2C00E0FAC6 /* ReachabilityManager.h */,
+				97CCC9D71B749C2C00E0FAC6 /* ReachabilityManager.m */,
+			);
+			name = ReachabilityManager;
+			path = LocationManager;
+			sourceTree = "<group>";
+		};
+		97CCC9D91B74AB4100E0FAC6 /* UIImage+ChangeScaleImage */ = {
+			isa = PBXGroup;
+			children = (
+				97CCC9DA1B74ABAE00E0FAC6 /* UIImage+ChangeScaleImage.h */,
+				97CCC9DB1B74ABAE00E0FAC6 /* UIImage+ChangeScaleImage.m */,
+			);
+			name = "UIImage+ChangeScaleImage";
+			path = "UIButton+CornerRadiusButton";
+			sourceTree = "<group>";
+		};
+		97CCC9DD1B74B4F900E0FAC6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				97D967CA1B6A146E0060B2BC /* ImageToPost */,
+				97CA63CB1B6F734500F9F0C1 /* Location */,
+				97CA63C71B6F668C00F9F0C1 /* Place */,
+				973D67AB1B69110400A20D00 /* Post */,
+				187FC5201B65222D00A3916C /* User */,
+			);
+			name = Model;
 			path = User;
 			sourceTree = "<group>";
 		};
@@ -604,7 +660,6 @@
 				97D967CC1B6A14FF0060B2BC /* ImageToPost.m */,
 			);
 			name = ImageToPost;
-			path = User;
 			sourceTree = "<group>";
 		};
 		CE1EC0FB4280849E2B54FF1A /* Pods */ = {
@@ -782,8 +837,10 @@
 				18BB29B61B67E3F000B498AC /* MUSAccountsViewController.m in Sources */,
 				30DBFD8F1B677AD7002F83D0 /* VKNetwork.m in Sources */,
 				18BB29B51B67E3F000B498AC /* ConstantsApp.m in Sources */,
+				97C7D79F1B73889B004DC83D /* MUSSocialNetworkLibraryConstantsForParseObjects.m in Sources */,
 				973D67AE1B69114C00A20D00 /* Post.m in Sources */,
 				30DBFD9F1B6B7A1A002F83D0 /* CacheImage.m in Sources */,
+				97C63BD91B7246B6006E99C6 /* NSError+MUSError.m in Sources */,
 				97C460CF1B68B6AD00C010DE /* MUSPhotoManager.m in Sources */,
 				187FC52A1B65222D00A3916C /* User.m in Sources */,
 				18BB29BB1B67E3F000B498AC /* MUSTopUserProfileCell.m in Sources */,
@@ -802,7 +859,9 @@
 				18BB29B91B67E3F000B498AC /* MUSAccountTableViewCell.m in Sources */,
 				18BB29B21B67E3F000B498AC /* UIButton+LoadBackgroundImageFromNetwork.m in Sources */,
 				30DBFD931B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.m in Sources */,
+				97CCC9DC1B74ABAE00E0FAC6 /* UIImage+ChangeScaleImage.m in Sources */,
 				187FC5271B65222D00A3916C /* SocialManager.m in Sources */,
+				97CCC9D81B749C2C00E0FAC6 /* ReachabilityManager.m in Sources */,
 				18BB29C21B67E3F000B498AC /* main.m in Sources */,
 				187FC5261B65222D00A3916C /* FacebookNetwork.m in Sources */,
 				30416A241B73A49B000CB2C2 /* MUSGaleryView.m in Sources */,
@@ -936,8 +995,13 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Vadim Rozov (3RNNQR4V7R)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Vadim Rozov (3RNNQR4V7R)";
+<<<<<<< HEAD
 				INFOPLIST_FILE = UniversalSharing/UniversalSharingApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+=======
+				INFOPLIST_FILE = UniversalSharing/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+>>>>>>> 21ac6e973e915dc776bd18937361896cbf3cd18c
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -953,8 +1017,13 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Vadim Rozov (3RNNQR4V7R)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Vadim Rozov (3RNNQR4V7R)";
+<<<<<<< HEAD
 				INFOPLIST_FILE = UniversalSharing/UniversalSharingApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+=======
+				INFOPLIST_FILE = UniversalSharing/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+>>>>>>> 21ac6e973e915dc776bd18937361896cbf3cd18c
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

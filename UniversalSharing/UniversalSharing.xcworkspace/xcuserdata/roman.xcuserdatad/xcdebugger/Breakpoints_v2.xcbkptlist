@@ -175,7 +175,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "262"
             endingLineNumber = "262"
-            landmarkName = "-actionSheet:clickedButtonAtIndex:"
+            landmarkName = "-showUserAccountsInActionSheet"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

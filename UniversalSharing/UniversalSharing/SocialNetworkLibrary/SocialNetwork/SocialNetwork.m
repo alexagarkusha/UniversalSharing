@@ -34,28 +34,26 @@
     return socialNetwork;
 }
 
+
+- (void)setNetworkType:(NetworkType)networkType {
+    _networkType = networkType;
+}
+
 - (void) loginWithComplition :(Complition) block {
 }
 
 - (void) loginOut {
 }
 
-- (void)setNetworkType:(NetworkType)networkType {
-    _networkType = networkType;
+- (void) obtainInfoFromNetworkWithComplition :(Complition) block {
 }
 
-- (void) obtainInfoFromNetworkWithComplition :(Complition) block {
-    
-    
+- (void) obtainArrayOfPlaces : (Location*) location withComplition : (Complition) block {
 }
 
 - (void) sharePost : (Post*) post withComplition : (Complition) block {
-    
 }
 
-- (void) obtainArrayOfPlaces : (Location*) location withComplition : (ComplitionPlaces) block {
-    
-}
 
 
 

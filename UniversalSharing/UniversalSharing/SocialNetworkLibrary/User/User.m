@@ -8,10 +8,10 @@
 
 #import "User.h"
 #import <TwitterKit/TwitterKit.h>
+#import "MUSSocialNetworkLibraryConstantsForParseObjects.h"
 
 @implementation User
 
-//#warning "Merge me better"
 
 + (User*) createFromDictionary:(id) dict andNetworkType :(NetworkType) networkType
 {
@@ -31,122 +31,68 @@
             break;
     }
     return user;
-    
-    
-//    User *user = [User new];
-//    switch (networkType) {
-//            
-//        case Facebook:
-//            
-//            user.userName = [dict objectForKey:@"username"];
-//            user.firstName = [dict objectForKey:@"first_name"];
-//            user.lastName = [dict objectForKey:@"last_name"];
-//            user.dateOfBirth = [dict objectForKey:@"birthday"];
-//            user.city = [dict objectForKey:@"location"];
-//            user.clientId = [dict objectForKey:@"id"];
-//            user.photoURL = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large", user.clientId];
-//            user.friends = [dict objectForKey:@"friends"];
-//            user.networkType = Facebook;
-//            break;
-//            
-//        case VKontakt:
-//            
-//            user.firstName = [dict objectForKey:@"first_name"];
-//            user.lastName = [dict objectForKey:@"last_name"];
-//            //user.dateOfBirth = [dict objectForKey:@"birthday"];
-//            //user.city = [dict objectForKey:@"location"];
-//            user.clientId = [[dict objectForKey:@"id"] stringValue];
-//            user.photoURL = [dict objectForKey:@"photo_200_orig"];
-//            break;
-//            
-//        case Twitter:
-//            
-//            user.firstName = [dict objectForKey:@"name"];
-//            user.lastName = [dict objectForKey:@"screen_name"];
-//            //user.dateOfBirth = [dict objectForKey:@"birthday"];
-//            //user.city = [dict objectForKey:@"location"];
-//            user.clientId = [[dict objectForKey:@"id"]stringValue];
-//            user.photoURL = [dict objectForKey:@"profile_image_url_https"];
-//            break;
-//            
-//        default:
-//            break;
-//    }
-//    
-    return user;
-    
 }
+
+/*!
+ @abstract return an instance of the User for facebook network.
+ @param dictionary takes dictionary from facebook network.
+*/
 
 - (User*) createUserFromFB:(id)userDictionary {
     User* currentUser = [[User alloc] init];
     
-    
     if ([userDictionary isKindOfClass: [NSDictionary class]]) {
-        currentUser.clientID = [userDictionary objectForKey:@"id"];
-        currentUser.username = [userDictionary objectForKey:@"name"];
-        currentUser.firstName = [userDictionary objectForKey:@"first_name"];
-        currentUser.lastName = [userDictionary objectForKey:@"last_name"];
+        currentUser.clientID = [userDictionary objectForKey : musFacebookParseUser_ID];
+        currentUser.username = [userDictionary objectForKey : musFacebookParseUser_Name];
+        currentUser.firstName = [userDictionary objectForKey :musFacebookParseUser_First_Name];
+        currentUser.lastName = [userDictionary objectForKey : musFacebookParseUser_Last_Name];
         currentUser.networkType = Facebook;
         
-        NSDictionary *pictureDictionary = [userDictionary objectForKey: @"picture"];
-        NSDictionary *pictureDataDictionary = [pictureDictionary objectForKey:@"data"];
-        
-        currentUser.photoURL = [pictureDataDictionary objectForKey:@"url"];
-        
-        /*
-         BOOL isSilhouette = (BOOL)[pictureDataDictionary objectForKey:@"is_silhouette"];
-         
-         if (isSilhouette) {
-         currentUser.photoURL_max = [pictureDataDictionary objectForKey:@"url"];
-         };
-         */
+        NSDictionary *pictureDictionary = [userDictionary objectForKey : musFacebookParseUser_Picture];
+        NSDictionary *pictureDataDictionary = [pictureDictionary objectForKey : musFacebookParseUser_Data];
+        currentUser.photoURL = [pictureDataDictionary objectForKey : musFacebookParseUser_Photo_Url];
     }
     return currentUser;
 }
 
+/*!
+ @abstract return an instance of the User for vkontakte network.
+ @param dictionary takes dictionary from vkontakte network.
+ */
 
 - (User*) createUserFromVK : (id) userDictionary {
     User *currentUser = [[User alloc] init];
         if ([userDictionary isKindOfClass:[NSDictionary class]]){
-            currentUser.dateOfBirth = [userDictionary objectForKey:@"bdate"];
-            NSDictionary *cityDictionary = [userDictionary objectForKey: @"city"];
-            currentUser.city = [cityDictionary objectForKey: @"title"];
+            currentUser.dateOfBirth = [userDictionary objectForKey : musVKParseUser_BirthDate];
+            NSDictionary *cityDictionary = [userDictionary objectForKey : musVKParseUser_City];
+            currentUser.city = [cityDictionary objectForKey : musVKParseUser_Title];
             
-            currentUser.firstName = [userDictionary objectForKey:@"first_name"];
-            currentUser.lastName = [userDictionary objectForKey:@"last_name"];
+            currentUser.firstName = [userDictionary objectForKey : musVKParseUser_First_Name];
+            currentUser.lastName = [userDictionary objectForKey : musVKParseUser_Last_Name];
             currentUser.networkType = VKontakt;
-            currentUser.clientID = [NSString stringWithFormat: @"%@", [userDictionary objectForKey:@"id"]];
-            currentUser.photoURL = [userDictionary objectForKey: @"photo_200_orig"];
+            currentUser.clientID = [NSString stringWithFormat: @"%@", [userDictionary objectForKey : musVKParseUser_ID]];
+            currentUser.photoURL = [userDictionary objectForKey : musVKParseUser_Photo_Url];
         }
-   
     return currentUser;
 }
 
+/*!
+ @abstract return an instance of the User for twitter network.
+ @param dictionary takes dictionary from twitter network.
+ */
 
 - (User*) createUserFromTwitter:(TWTRUser*)userDictionary {
+    
     User *currentUser = [[User alloc] init];
-    //if ([userDictionary isKindOfClass:[TWTRUser class]]) {
     currentUser.clientID = userDictionary.userID;
     currentUser.lastName = userDictionary.screenName;
         currentUser.firstName = userDictionary.name;
-        //currentUser.lastName = [userDictionary objectForKey:@"last_name"];
         currentUser.networkType = Twitters;
         
-        NSString *photoURL_max = userDictionary.profileImageLargeURL;
+        NSString *photoURL_max = userDictionary.profileImageURL;
         photoURL_max = [photoURL_max stringByReplacingOccurrencesOfString:@"_normal"
                                                               withString:@""];
         currentUser.photoURL = photoURL_max;
-    
-        
-        //currentUser.photoURL_max = @"http://pbs.twimg.com/profile_images/624165685976039425/2ea7-TL8.jpg";
-        
-        //currentUser.photoURL_max = [userDictionary objectForKey: @"profile_image_url" ];
-        //currentUser.city = [userDictionary objectForKey: @"location"];
-        //currentUser.dateOfBirth
-    //}
-    
-    
-    
     return currentUser;
     
     

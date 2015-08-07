@@ -194,9 +194,10 @@
     self.post.placeID = self.placeID;
     self.post.postDescription = self.messageTextView.text;
     self.post.networkType = _currentSocialNetwork.networkType;
+
     self.post.arrayImages = [self.galeryView obtainArrayWithChosedPics];
-    self.post.latitude = self.currentLocation.latitude;
-    self.post.longitude = self.currentLocation.longitude;
+    
+
     
     [_currentSocialNetwork sharePost:self.post withComplition:^(id result, NSError *error) {
         NSLog(@"POSTED");

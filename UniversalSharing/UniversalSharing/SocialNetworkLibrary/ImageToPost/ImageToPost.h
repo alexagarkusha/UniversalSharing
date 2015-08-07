@@ -12,8 +12,17 @@
 
 @interface ImageToPost : NSObject
 
+/*!
+ @abstract type image for posting in social network,  Like 'PNG' or 'JPEG'
+*/
 @property (nonatomic, assign) ImageType imageType;
+/*!
+ @abstract quality of image for posting in social network. Quality range between 0.0 and 1.0
+ */
 @property (nonatomic, assign) CGFloat quality;
+/*!
+ @abstract image for posting in social network
+ */
 @property (nonatomic, strong) UIImage *image;
 
 @end
