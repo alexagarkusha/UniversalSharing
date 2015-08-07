@@ -321,11 +321,8 @@
 		18BB297B1B67E3F000B498AC /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-
 				30416A131B735328000CB2C2 /* UiButton+MUSSocialNetwork */,
-
 				97CCC9D91B74AB4100E0FAC6 /* UIImage+ChangeScaleImage */,
-
 				18BB297C1B67E3F000B498AC /* UIButton+CornerRadiusButton */,
 				18BB297F1B67E3F000B498AC /* UIButton+LoadImageBackroundFromNetwork */,
 				18BB29821B67E3F000B498AC /* UIImageView+LoadImageFromNetwork */,
@@ -995,10 +992,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Vadim Rozov (3RNNQR4V7R)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Vadim Rozov (3RNNQR4V7R)";
-
 				INFOPLIST_FILE = UniversalSharing/UniversalSharingApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1014,10 +1009,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Vadim Rozov (3RNNQR4V7R)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Vadim Rozov (3RNNQR4V7R)";
-
 				INFOPLIST_FILE = UniversalSharing/UniversalSharingApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

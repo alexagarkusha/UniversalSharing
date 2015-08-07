@@ -12,11 +12,20 @@
 #import "MUSAccountTableViewCell.h"
 #import "ConstantsApp.h"
 #import "ReachabilityManager.h"
+#import "UIButton+CornerRadiusButton.h"
 
 
 @interface MUSAccountsViewController () <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *btnEditOutlet;
+/*!
+ @property error view - shows error Internet connection
+ */
+@property (weak, nonatomic) IBOutlet UIView *errorView;
+
+@property (weak, nonatomic) IBOutlet UIButton *updateNetworkConnectionOutlet;
 /*!
  @property
  @abstract initialization by socialnetwork objects from socialmanager(facebook or twitter or VK)
@@ -27,6 +36,10 @@
  @abstract initialization by NSIndexPath in method didSelectRowAtIndexPath in order to get current socialnetwork in method prepareForSegue from arrayWithNetworksObj
  */
 @property (strong, nonatomic) NSIndexPath * selectedIndexPath;
+/*!
+ @method check access to the Internet connection
+*/
+- (IBAction)updateNetworkConnection:(id)sender;
 
 @end
 
@@ -34,25 +47,29 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //self.tableView.contentInset = UIEdgeInsetsMake(-70,0,0,0);
-    //[self obtanObjectsOfSocialNetworks];
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityDidChange:) name:kReachabilityChangedNotification object:nil];
 }
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self checkInternetConnection];
-    [self.tableView reloadData];
 }
 
+/*!
+ @abstract checking internet connection
+*/
 - (void) checkInternetConnection {
     BOOL isReachable = [ReachabilityManager isReachable];
     BOOL isReachableViaWiFi = [ReachabilityManager isReachableViaWiFi];
     
     if (!isReachableViaWiFi && !isReachable) {
-        [self showAlertWithError: musAppError_Internet_Connection];
+        self.errorView.hidden = NO;
+        self.btnEditOutlet.enabled = NO;
+        [self.updateNetworkConnectionOutlet cornerRadius:CGRectGetHeight(self.updateNetworkConnectionOutlet.frame) / 2];
     } else {
+        self.errorView.hidden = YES;
+        self.btnEditOutlet.enabled = YES;
         [self obtanObjectsOfSocialNetworks];
+        [self.tableView reloadData];
     }
 }
 
@@ -163,11 +180,7 @@
     }
 }
 
-#pragma mark - UIAlertView
-
-- (void) showAlertWithError : (NSString*) errorMessage {
-    UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:musAppError_With_Domain_Universal_Sharing message: errorMessage delegate: self cancelButtonTitle: musAppButtonTitle_Cancel otherButtonTitles: nil];
-    [errorAlert show];
+- (IBAction)updateNetworkConnection:(id)sender {
+    [self checkInternetConnection];
 }
-
 @end
