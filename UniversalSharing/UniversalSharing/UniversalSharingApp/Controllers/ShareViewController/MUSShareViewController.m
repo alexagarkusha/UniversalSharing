@@ -29,17 +29,14 @@
 @property (strong, nonatomic)   IBOutlet    UITapGestureRecognizer *mainGestureRecognizer;
 @property (weak, nonatomic)     IBOutlet    NSLayoutConstraint* tabBarLayoutConstraint;
 @property (weak, nonatomic)     IBOutlet    NSLayoutConstraint* messageTextViewLayoutConstraint;
-//@property (weak, nonatomic)     IBOutlet    UICollectionView *collectionView;
 @property (weak, nonatomic)      IBOutlet   MUSGaleryView *galeryView;
 //===
 @property (assign, nonatomic)               CGFloat tabBarLayoutConstaineOrigin;
 @property (assign, nonatomic)               CGFloat messageTextViewLayoutConstraintOrigin;
-//@property (strong, nonatomic)               User *currentUser;
 @property (strong, nonatomic)               SocialNetwork *currentSocialNetwork;
 @property (strong, nonatomic)               NSMutableArray *socialNetworkAccountsArray;
 @property (assign, nonatomic)               TabBarItemIndex tabBarItemIndex;
-@property (assign, nonatomic)               AlertButtonIndex alertButtonIndex;
-//@property (assign, nonatomic)               NSUInteger indexForDeletePicture;
+//@property (assign, nonatomic)               AlertButtonIndex alertButtonIndex;
 @property (strong, nonatomic)               NSArray *arrayWithNetworks;
 @property (assign, nonatomic)               CLLocationCoordinate2D currentLocation;
 @property (strong, nonatomic)               NSMutableArray *arrayWithChosenImages;
@@ -92,25 +89,9 @@
     [self showUserAccountsInActionSheet];
 }
 
-//- (void) setGestureRecognizer {
-//    UILongPressGestureRecognizer *pressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGesture:)];
-//    pressGesture.minimumPressDuration = .5;
-//    pressGesture.delegate = self;
-//    [self.collectionView addGestureRecognizer:pressGesture];
-//}
-
 - (void) addButtonOnTextView {
     
-//    self.changeSocialNetworkButton  =   [UIButton buttonWithType:UIButtonTypeRoundedRect];
-//    self.changeSocialNetworkButton.frame  =   CGRectMake(6.0, 15.0, 75.0, 70.0);
-//    
-//    [self.changeSocialNetworkButton addTarget:self action:@selector(changeSocialNetworkAccount:)forControlEvents:UIControlEventTouchUpInside];
-//    self.changeSocialNetworkButton.backgroundColor=[UIColor blueColor];
-    
-    
     self.changeSocialNetworkButton = [UIButton new];
-    //self.changeSocialNetworkButton.actionDelegate = self;
-    //[self.changeSocialNetworkButton cornerRadius:10];
     [self.changeSocialNetworkButton addTarget:self action:@selector(changeSocialNetworkAccount:)forControlEvents:UIControlEventTouchUpInside];
     [self forceTextViewWorkAsFacebookSharing];
     [self.messageTextView addSubview:self.changeSocialNetworkButton];
@@ -130,6 +111,9 @@
 #pragma mark - initiation MUSShareViewController
 
 - (void) initiationMUSShareViewController {
+    if (!_currentSocialNetwork) {
+        _currentSocialNetwork = [SocialManager currentSocialNetwork];
+    }
     self.tabBarLayoutConstaineOrigin = self.tabBarLayoutConstraint.constant;
     self.messageTextViewLayoutConstraintOrigin = self.messageTextViewLayoutConstraint.constant;
     
@@ -150,7 +134,7 @@
 //    if (!_currentSocialNetwork) {
 //        _currentSocialNetwork = [SocialManager currentSocialNetwork];
 //    }
-//    
+//
 //    __weak UIButton *socialNetworkButton = self.changeSocialNetworkButton;
 //    [_currentSocialNetwork obtainInfoFromNetworkWithComplition:^(id result, NSError *error) {
 //        SocialNetwork *currentSocialNetwork = (SocialNetwork*) result;
@@ -194,10 +178,10 @@
     self.post.placeID = self.placeID;
     self.post.postDescription = self.messageTextView.text;
     self.post.networkType = _currentSocialNetwork.networkType;
-
+    
     self.post.arrayImages = [self.galeryView obtainArrayWithChosedPics];
     
-
+    
     
     [_currentSocialNetwork sharePost:self.post withComplition:^(id result, NSError *error) {
         NSLog(@"POSTED");
@@ -247,7 +231,7 @@
     sheet.title = @"Select account";
     sheet.delegate = self;
     sheet.cancelButtonIndex = [sheet addButtonWithTitle:@"Cancel"];
-     self.arrayWithNetworks = @[@(Twitters), @(VKontakt), @(Facebook)];
+    self.arrayWithNetworks = @[@(Twitters), @(VKontakt), @(Facebook)];
     for (int i = 0; i < [[[SocialManager sharedManager] networks: self.arrayWithNetworks] count]; i++) {
         SocialNetwork *socialNetwork = [[[SocialManager sharedManager] networks: self.arrayWithNetworks] objectAtIndex:i];
         if (socialNetwork.isLogin && !socialNetwork.isVisible) {
@@ -308,10 +292,10 @@
 
 - (void) userCurrentLocation {
     [self performSegueWithIdentifier: goToLocationViewControllerSegueIdentifier sender:nil];
-//        [[MUSLocationManager sharedManager] startTrackLocationWithComplition:^(id result, NSError *error) {
-//            if ([result isKindOfClass:[CLLocation class]]) {
-//                CLLocation* location = result;
-//                self.currentLocation = location.coordinate;
+    //        [[MUSLocationManager sharedManager] startTrackLocationWithComplition:^(id result, NSError *error) {
+    //            if ([result isKindOfClass:[CLLocation class]]) {
+    //                CLLocation* location = result;
+    //                self.currentLocation = location.coordinate;
     
     
     //    Location *currentLocation = [[Location alloc] init];
@@ -333,9 +317,9 @@
     //            }
     //            Place *place = [places firstObject];
     //            weakSelf.post.placeID = place.placeID;
-           // }
+    // }
     //
-        //}];
+    //}];
     
     
     
@@ -379,25 +363,6 @@
     UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:[error localizedFailureReason] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles: nil];
     [errorAlert show];
 }
-
-//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-//    _alertButtonIndex = buttonIndex;
-//
-//        switch (_alertButtonIndex) {
-//            case YES:
-//                [self.arrayWithChosenImages removeObjectAtIndex:self.indexForDeletePicture];
-//                if ([self.arrayWithChosenImages count] == 0) {
-//                    //self.collectionView.backgroundColor = [UIColor whiteColor];
-//                }
-//                //[self.collectionView reloadData];
-//                break;
-//            case NO:
-//                break;
-//            default:
-//                break;
-//        }
-//}
-
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     MUSLocationTableViewController *vc = [MUSLocationTableViewController new];
