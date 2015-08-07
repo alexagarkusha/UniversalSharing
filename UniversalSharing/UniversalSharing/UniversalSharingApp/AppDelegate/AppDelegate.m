@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import "MUSSocialNetworkLibraryHeader.h"
-#import "Reachability.h"
+#import "ReachabilityManager.h"
 
 
 @interface AppDelegate ()
@@ -19,22 +19,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
-    
-    
-    Reachability *reachability = [Reachability reachabilityWithHostname:@"www.google.com"];
-    
-    reachability.reachableBlock = ^(Reachability *reachability) {
-        NSLog(@"Network is reachable.");
-    };
-    
-    reachability.unreachableBlock = ^(Reachability *reachability) {
-        NSLog(@"Network is unreachable.");
-    };
-    
-    // Start Monitoring
-    [reachability startNotifier];
-    
+    [ReachabilityManager sharedManager];
     return [[FBSDKApplicationDelegate sharedInstance] application:application
                                     didFinishLaunchingWithOptions:launchOptions];;
 }

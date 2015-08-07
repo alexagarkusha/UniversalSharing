@@ -51,6 +51,8 @@
 		97C7D79F1B73889B004DC83D /* MUSSocialNetworkLibraryConstantsForParseObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C7D79E1B73889B004DC83D /* MUSSocialNetworkLibraryConstantsForParseObjects.m */; };
 		97CA63CA1B6F66D300F9F0C1 /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CA63C91B6F66D300F9F0C1 /* Place.m */; };
 		97CA63CF1B6F737A00F9F0C1 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CA63CE1B6F737A00F9F0C1 /* Location.m */; };
+		97CCC9D81B749C2C00E0FAC6 /* ReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CCC9D71B749C2C00E0FAC6 /* ReachabilityManager.m */; };
+		97CCC9DC1B74ABAE00E0FAC6 /* UIImage+ChangeScaleImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CCC9DB1B74ABAE00E0FAC6 /* UIImage+ChangeScaleImage.m */; };
 		97D967CD1B6A14FF0060B2BC /* ImageToPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D967CC1B6A14FF0060B2BC /* ImageToPost.m */; };
 		FC79868BAD5DBAA5D3BB123C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 294811F54E6400CFBFD3EBDD /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -146,6 +148,10 @@
 		97CA63C91B6F66D300F9F0C1 /* Place.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Place.m; path = UniversalSharing/SocialNetworkLibrary/Place/Place.m; sourceTree = SOURCE_ROOT; };
 		97CA63CD1B6F737A00F9F0C1 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Location.h; path = UniversalSharing/SocialNetworkLibrary/Location/Location.h; sourceTree = SOURCE_ROOT; };
 		97CA63CE1B6F737A00F9F0C1 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Location.m; path = UniversalSharing/SocialNetworkLibrary/Location/Location.m; sourceTree = SOURCE_ROOT; };
+		97CCC9D61B749C2C00E0FAC6 /* ReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReachabilityManager.h; path = UniversalSharing/UniversalSharingApp/Managers/ReachabilityManager/ReachabilityManager.h; sourceTree = SOURCE_ROOT; };
+		97CCC9D71B749C2C00E0FAC6 /* ReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReachabilityManager.m; path = UniversalSharing/UniversalSharingApp/Managers/ReachabilityManager/ReachabilityManager.m; sourceTree = SOURCE_ROOT; };
+		97CCC9DA1B74ABAE00E0FAC6 /* UIImage+ChangeScaleImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+ChangeScaleImage.h"; path = "UniversalSharing/UniversalSharingApp/Categories/UIImage+ChangeScaleImage/UIImage+ChangeScaleImage.h"; sourceTree = SOURCE_ROOT; };
+		97CCC9DB1B74ABAE00E0FAC6 /* UIImage+ChangeScaleImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+ChangeScaleImage.m"; path = "UniversalSharing/UniversalSharingApp/Categories/UIImage+ChangeScaleImage/UIImage+ChangeScaleImage.m"; sourceTree = SOURCE_ROOT; };
 		97D967CB1B6A14FF0060B2BC /* ImageToPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageToPost.h; path = UniversalSharing/SocialNetworkLibrary/ImageToPost/ImageToPost.h; sourceTree = SOURCE_ROOT; };
 		97D967CC1B6A14FF0060B2BC /* ImageToPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageToPost.m; path = UniversalSharing/SocialNetworkLibrary/ImageToPost/ImageToPost.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -228,12 +234,8 @@
 				187FC5171B65222D00A3916C /* SocialManager */,
 				187FC51A1B65222D00A3916C /* SocialNetwork */,
 				187FC51D1B65222D00A3916C /* MUSSocialNetworkLibraryHeader.h */,
-				97CA63CB1B6F734500F9F0C1 /* Location */,
-				97CA63C71B6F668C00F9F0C1 /* Place */,
-				97D967CA1B6A146E0060B2BC /* ImageToPost */,
-				973D67AB1B69110400A20D00 /* Post */,
+				97CCC9DD1B74B4F900E0FAC6 /* Model */,
 				97C63BD61B724617006E99C6 /* Categories */,
-				187FC5201B65222D00A3916C /* User */,
 			);
 			path = SocialNetworkLibrary;
 			sourceTree = "<group>";
@@ -272,7 +274,7 @@
 				187FC5211B65222D00A3916C /* User.h */,
 				187FC5221B65222D00A3916C /* User.m */,
 			);
-			path = User;
+			name = User;
 			sourceTree = "<group>";
 		};
 		18BB29711B67E3F000B498AC /* UniversalSharingApp */ = {
@@ -309,6 +311,7 @@
 		18BB297B1B67E3F000B498AC /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				97CCC9D91B74AB4100E0FAC6 /* UIImage+ChangeScaleImage */,
 				18BB297C1B67E3F000B498AC /* UIButton+CornerRadiusButton */,
 				18BB297F1B67E3F000B498AC /* UIButton+LoadImageBackroundFromNetwork */,
 				18BB29821B67E3F000B498AC /* UIImageView+LoadImageFromNetwork */,
@@ -452,6 +455,7 @@
 		18BB29A71B67E3F000B498AC /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				97CCC9D51B749AF000E0FAC6 /* ReachabilityManager */,
 				97C460CC1B68B68000C010DE /* PhotoManager */,
 				18BB29A81B67E3F000B498AC /* LocationManager */,
 			);
@@ -541,7 +545,6 @@
 				973D67AD1B69114C00A20D00 /* Post.m */,
 			);
 			name = Post;
-			path = User;
 			sourceTree = "<group>";
 		};
 		97C460CC1B68B68000C010DE /* PhotoManager */ = {
@@ -571,7 +574,6 @@
 				97CA63C91B6F66D300F9F0C1 /* Place.m */,
 			);
 			name = Place;
-			path = User;
 			sourceTree = "<group>";
 		};
 		97CA63CB1B6F734500F9F0C1 /* Location */ = {
@@ -581,6 +583,38 @@
 				97CA63CE1B6F737A00F9F0C1 /* Location.m */,
 			);
 			name = Location;
+			sourceTree = "<group>";
+		};
+		97CCC9D51B749AF000E0FAC6 /* ReachabilityManager */ = {
+			isa = PBXGroup;
+			children = (
+				97CCC9D61B749C2C00E0FAC6 /* ReachabilityManager.h */,
+				97CCC9D71B749C2C00E0FAC6 /* ReachabilityManager.m */,
+			);
+			name = ReachabilityManager;
+			path = LocationManager;
+			sourceTree = "<group>";
+		};
+		97CCC9D91B74AB4100E0FAC6 /* UIImage+ChangeScaleImage */ = {
+			isa = PBXGroup;
+			children = (
+				97CCC9DA1B74ABAE00E0FAC6 /* UIImage+ChangeScaleImage.h */,
+				97CCC9DB1B74ABAE00E0FAC6 /* UIImage+ChangeScaleImage.m */,
+			);
+			name = "UIImage+ChangeScaleImage";
+			path = "UIButton+CornerRadiusButton";
+			sourceTree = "<group>";
+		};
+		97CCC9DD1B74B4F900E0FAC6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				97D967CA1B6A146E0060B2BC /* ImageToPost */,
+				97CA63CB1B6F734500F9F0C1 /* Location */,
+				97CA63C71B6F668C00F9F0C1 /* Place */,
+				973D67AB1B69110400A20D00 /* Post */,
+				187FC5201B65222D00A3916C /* User */,
+			);
+			name = Model;
 			path = User;
 			sourceTree = "<group>";
 		};
@@ -591,7 +625,6 @@
 				97D967CC1B6A14FF0060B2BC /* ImageToPost.m */,
 			);
 			name = ImageToPost;
-			path = User;
 			sourceTree = "<group>";
 		};
 		CE1EC0FB4280849E2B54FF1A /* Pods */ = {
@@ -788,7 +821,9 @@
 				18BB29B91B67E3F000B498AC /* MUSAccountTableViewCell.m in Sources */,
 				18BB29B21B67E3F000B498AC /* UIButton+LoadBackgroundImageFromNetwork.m in Sources */,
 				30DBFD931B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.m in Sources */,
+				97CCC9DC1B74ABAE00E0FAC6 /* UIImage+ChangeScaleImage.m in Sources */,
 				187FC5271B65222D00A3916C /* SocialManager.m in Sources */,
+				97CCC9D81B749C2C00E0FAC6 /* ReachabilityManager.m in Sources */,
 				18BB29C21B67E3F000B498AC /* main.m in Sources */,
 				187FC5261B65222D00A3916C /* FacebookNetwork.m in Sources */,
 				97CA63CA1B6F66D300F9F0C1 /* Place.m in Sources */,
