@@ -42,7 +42,7 @@
 //@property (assign, nonatomic)               AlertButtonIndex alertButtonIndex;
 @property (strong, nonatomic)               NSArray *arrayWithNetworks;
 @property (assign, nonatomic)               CLLocationCoordinate2D currentLocation;
-@property (strong, nonatomic)               NSMutableArray *arrayWithChosenImages;
+//@property (strong, nonatomic)               NSMutableArray *arrayWithChosenImages;
 @property (strong, nonatomic)               Post *post;
 @property (strong, nonatomic)               UIButton *changeSocialNetworkButton;
 @property (strong, nonatomic)               NSString *placeID;
@@ -57,9 +57,8 @@
     [super viewDidLoad];
     
     [self initiationMUSShareViewController];
-    [self addButtonOnTextView];
-    //[self setGestureRecognizer];
-    self.arrayWithChosenImages = [NSMutableArray new];
+    
+    //self.arrayWithChosenImages = [NSMutableArray new];
     
 }
 
@@ -75,7 +74,6 @@
                                                  name:UIKeyboardDidHideNotification
                                                object:nil];
     self.mainGestureRecognizer.enabled = NO;
-    //[self initiationSocialNetworkButtonForSocialNetwork];
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
@@ -92,11 +90,13 @@
     [self showUserAccountsInActionSheet];
 }
 
+#pragma mark - UIButton
+
 - (void) addButtonOnTextView {
     
     self.changeSocialNetworkButton = [UIButton new];
     [self.changeSocialNetworkButton addTarget:self action:@selector(changeSocialNetworkAccount:)forControlEvents:UIControlEventTouchUpInside];
-    [self forceTextViewWorkAsFacebookSharing];
+    //[self forceTextViewWorkAsFacebookSharing];
     [self.messageTextView addSubview:self.changeSocialNetworkButton];
 }
 - (IBAction)btnShareLocationTapped:(id)sender {
@@ -115,6 +115,13 @@
     self.messageTextView.textContainer.exclusionPaths = @[exclusivePath];
 }
 
+//- (void) cancelForceTextViewWorkAsFacebookSharing {
+//    // CGRect buttonFrame = self.changeSocialNetworkButton.frame;
+//    CGRect myFrame = CGRectMake(0, 0, 0, 0);
+//    UIBezierPath *exclusivePath = [UIBezierPath bezierPathWithRect:myFrame];
+//    self.messageTextView.textContainer.exclusionPaths = @[exclusivePath];
+//}
+
 -(void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [self.view endEditing:YES];
 }
@@ -125,6 +132,8 @@
     if (!_currentSocialNetwork) {
         _currentSocialNetwork = [SocialManager currentSocialNetwork];
     }
+    [self addButtonOnTextView];
+     [self forceTextViewWorkAsFacebookSharing];
     self.tabBarLayoutConstaineOrigin = self.tabBarLayoutConstraint.constant;
     self.messageTextViewLayoutConstraintOrigin = self.messageTextViewLayoutConstraint.constant;
     
@@ -138,21 +147,6 @@
     //self.shareTabBar.delegate = self;
     self.arrayWithNetworks = @[@(Twitters), @(VKontakt), @(Facebook)];
 }
-
-#pragma mark - UIButton
-
-//- (void) initiationSocialNetworkButtonForSocialNetwork {
-//    if (!_currentSocialNetwork) {
-//        _currentSocialNetwork = [SocialManager currentSocialNetwork];
-//    }
-//
-//    __weak UIButton *socialNetworkButton = self.changeSocialNetworkButton;
-//    [_currentSocialNetwork obtainInfoFromNetworkWithComplition:^(id result, NSError *error) {
-//        SocialNetwork *currentSocialNetwork = (SocialNetwork*) result;
-//        self.currentUser = currentSocialNetwork.currentUser;
-//        [socialNetworkButton loadBackroundImageFromNetworkWithURL:[NSURL URLWithString: self.currentUser.photoURL]];
-//    }];
-//}
 
 #pragma mark - Keyboard Show/Hide
 
@@ -212,6 +206,11 @@
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+//    NSString *string=self.messageTextView.text;
+//    NSArray *array=[string componentsSeparatedByString:@"\n"];
+//    if ([array count] == 4) {
+//        [self cancelForceTextViewWorkAsFacebookSharing];
+//    }
     return textView.text.length + (text.length - range.length) <= 80;
 }
 
@@ -303,63 +302,6 @@
 
 - (void) userCurrentLocation {
     [self performSegueWithIdentifier: goToLocationViewControllerSegueIdentifier sender:nil];
-    //        [[MUSLocationManager sharedManager] startTrackLocationWithComplition:^(id result, NSError *error) {
-    //            if ([result isKindOfClass:[CLLocation class]]) {
-    //                CLLocation* location = result;
-    //                self.currentLocation = location.coordinate;
-    
-    
-    //    Location *currentLocation = [[Location alloc] init];
-    //    currentLocation.longitude = @"-122.40828";
-    //    currentLocation.latitude = @"37.768641";
-    //    currentLocation.type = @"place";
-    //    currentLocation.q = @"";
-    //    currentLocation.distance = @"1000";
-    //    __weak MUSShareViewController *weakSelf = self;
-    //
-    //    [_currentSocialNetwork obtainArrayOfPlaces:currentLocation withComplition:^(NSMutableArray *places, NSError *error) {
-    //        NSLog(@"%@", places);
-    //        if (places.count > 1) {
-    //            weakSelf.arrayPlaces = places;
-    //            [weakSelf performSegueWithIdentifier: goToLocationViewControllerSegueIdentifier sender:nil];
-    //        } else {
-    //            if(!weakSelf.post){
-    //                weakSelf.post = [[Post alloc] init];
-    //            }
-    //            Place *place = [places firstObject];
-    //            weakSelf.post.placeID = place.placeID;
-    // }
-    //
-    //}];
-    
-    
-    
-    
-    /*
-     [[MUSLocationManager sharedManager] startTrackLocationWithComplition:^(id result, NSError *error) {
-     if ([result isKindOfClass:[CLLocation class]]) {
-     CLLocation* location = result;
-     self.currentLocation = location.coordinate;
-     >>>>>>> 43859dc699e5a361212ca2cae3f67f6bd8dc661c
-     Location *currentLocation = [[Location alloc] init];
-     currentLocation.longitude = [NSString stringWithFormat: @"%f", location.coordinate.longitude];
-     currentLocation.latitude = [NSString stringWithFormat: @"%f", location.coordinate.latitude];
-     currentLocation.type = @"place";
-     currentLocation.q = @"";
-     
-     [_currentSocialNetwork obtainArrayOfPlaces:currentLocation withComplition:^(NSMutableArray *places, NSError *error) {
-     NSLog(@"%@", places);
-     }];
-     
-     //NSLog(@"Current location lat = %f, long =%f", self.currentLocation.latitude, locationCoordinate.longitude);
-     <<<<<<< HEAD
-     //}
-     // }];
-     =======
-     }
-     }];
-     */
-    //>>>>>>> 43859dc699e5a361212ca2cae3f67f6bd8dc661c
 }
 
 

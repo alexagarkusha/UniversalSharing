@@ -73,12 +73,12 @@
      [self.collectionView registerNib:[UINib nibWithNibName:@"MUSCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:collectionViewCellIdentifier];
     [self setGestureRecognizer];
     
-    self.arrayWithChosenImages = [NSMutableArray new];//it will be changed by me at refactoring
+    self.arrayWithChosenImages = [NSMutableArray new];// perhaps it will be changed by me at refactoring
     return [nibObjects firstObject];
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(self.collectionView.frame.size.height, self.collectionView.frame.size.height);
+    return CGSizeMake(self.collectionView.contentSize.height, self.collectionView.contentSize.height);
 }
 
 - (void) setGestureRecognizer {
