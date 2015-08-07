@@ -60,8 +60,7 @@
     [self addButtonOnTextView];
     //[self setGestureRecognizer];
     self.arrayWithChosenImages = [NSMutableArray new];
-    [self showUserAccountsInActionSheet ];
-
+    
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -89,9 +88,9 @@
 }
 
 
-//- (void)changeSocialNetworkAccount:(id)sender{
-//    [self showUserAccountsInActionSheet];
-//}
+- (void)changeSocialNetworkAccount:(id)sender{
+    [self showUserAccountsInActionSheet];
+}
 
 //- (void) setGestureRecognizer {
 //    UILongPressGestureRecognizer *pressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGesture:)];
@@ -112,6 +111,7 @@
     self.changeSocialNetworkButton = [UIButton new];
     //self.changeSocialNetworkButton.actionDelegate = self;
     //[self.changeSocialNetworkButton cornerRadius:10];
+    [self.changeSocialNetworkButton addTarget:self action:@selector(changeSocialNetworkAccount:)forControlEvents:UIControlEventTouchUpInside];
     [self forceTextViewWorkAsFacebookSharing];
     [self.messageTextView addSubview:self.changeSocialNetworkButton];
 }

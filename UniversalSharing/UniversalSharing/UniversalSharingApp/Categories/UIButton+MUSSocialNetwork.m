@@ -30,7 +30,6 @@ static void * delegatePropertyKey = &delegatePropertyKey;
     if (self) {
         //self.buttonType = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         self.frame = CGRectMake(6.0, 15.0, 75.0, 70.0);
-        [self addTarget:self action:@selector(changeSocialNetworkAccount:)forControlEvents:UIControlEventTouchUpInside];
         self.backgroundColor=[UIColor blueColor];
         [self cornerRadius:10];
         [self initiationSocialNetworkButtonForSocialNetwork:nil];
@@ -51,10 +50,10 @@ static void * delegatePropertyKey = &delegatePropertyKey;
 
 
 
-- (void)changeSocialNetworkAccount:(id)sender{
-    MUSShareViewController *vc = [MUSShareViewController new];
-    [vc showUserAccountsInActionSheet];
-}
+//- (void)changeSocialNetworkAccount:(id)sender{
+//    MUSShareViewController *vc = [MUSShareViewController new];
+//    [vc showUserAccountsInActionSheet];
+//}
 
 //- (void) showUserAccountsInActionSheet {
 //   //[self.socialNetworkAccountsArray removeAllObjects];
