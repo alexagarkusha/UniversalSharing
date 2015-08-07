@@ -24,12 +24,15 @@
 - (IBAction)shareToSocialNetwork:(id)sender;
 - (IBAction)endEditingMessage:(id)sender;
 //===
-@property (weak, nonatomic)     IBOutlet    UITabBar *shareTabBar;
+@property (weak, nonatomic)     IBOutlet    UIToolbar *shareToolBar;
 @property (weak, nonatomic)     IBOutlet    UITextView *messageTextView;
 @property (strong, nonatomic)   IBOutlet    UITapGestureRecognizer *mainGestureRecognizer;
 @property (weak, nonatomic)     IBOutlet    NSLayoutConstraint* tabBarLayoutConstraint;
 @property (weak, nonatomic)     IBOutlet    NSLayoutConstraint* messageTextViewLayoutConstraint;
-@property (weak, nonatomic)      IBOutlet   MUSGaleryView *galeryView;
+@property (weak, nonatomic)     IBOutlet    MUSGaleryView *galeryView;
+@property (weak, nonatomic)     IBOutlet    UIBarButtonItem *sharePhotoButton;
+@property (weak, nonatomic)     IBOutlet    UIBarButtonItem *sharaLocationButton;
+
 //===
 @property (assign, nonatomic)               CGFloat tabBarLayoutConstaineOrigin;
 @property (assign, nonatomic)               CGFloat messageTextViewLayoutConstraintOrigin;
@@ -96,6 +99,14 @@
     [self forceTextViewWorkAsFacebookSharing];
     [self.messageTextView addSubview:self.changeSocialNetworkButton];
 }
+- (IBAction)btnShareLocationTapped:(id)sender {
+     [self.sharaLocationButton setTintColor:[UIColor redColor]] ;
+        [self userCurrentLocation];
+}
+- (IBAction)btnSharePhotoTapped:(id)sender {
+   [self.sharePhotoButton setTintColor:[UIColor redColor]] ;
+    [self obtainChosenImage];
+}
 
 - (void) forceTextViewWorkAsFacebookSharing {
     // CGRect buttonFrame = self.changeSocialNetworkButton.frame;
@@ -124,7 +135,7 @@
     
     //[self.shareButtonOutlet cornerRadius:10];
     self.socialNetworkAccountsArray = [[NSMutableArray alloc] init];
-    self.shareTabBar.delegate = self;
+    //self.shareTabBar.delegate = self;
     self.arrayWithNetworks = @[@(Twitters), @(VKontakt), @(Facebook)];
 }
 
@@ -149,7 +160,7 @@
     CGRect initialFrame = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     CGRect convertedFrame = [self.view convertRect:initialFrame fromView:nil];
     self.tabBarLayoutConstraint.constant = convertedFrame.size.height;
-    self.messageTextViewLayoutConstraint.constant = convertedFrame.size.height + self.shareTabBar.frame.size.height + 50.0f;
+    self.messageTextViewLayoutConstraint.constant = convertedFrame.size.height + self.shareToolBar.frame.size.height + 70.0f;
     
     [UIView animateWithDuration: 0.3  animations:^{
         [self.view layoutIfNeeded];
@@ -253,23 +264,23 @@
 
 #pragma mark - UITabBar
 
-- (void) tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
-    _tabBarItemIndex = item.tag;
-    
-    switch (_tabBarItemIndex) {
-        case Share_photo:{
-            NSLog(@"Share photo");
-            [self obtainChosenImage];
-            break;
-        }
-        case Share_location:
-            NSLog(@"Share location");
-            [self userCurrentLocation];
-            break;
-        default:
-            break;
-    }
-}
+//- (void) tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
+//    _tabBarItemIndex = item.tag;
+//    
+//    switch (_tabBarItemIndex) {
+//        case Share_photo:{
+//            NSLog(@"Share photo");
+//            [self obtainChosenImage];
+//            break;
+//        }
+//        case Share_location:
+//            NSLog(@"Share location");
+//            [self userCurrentLocation];
+//            break;
+//        default:
+//            break;
+//    }
+//}
 
 - (void) obtainChosenImage {
     if ([[self.galeryView obtainArrayWithChosedPics] count] == countOfAllowedPics) {
