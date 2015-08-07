@@ -186,7 +186,9 @@
                                             <action selector="btnSharePhotoTapped:" destination="8rJ-Kc-sve" id="82E-BD-5Gm"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem width="100" style="plain" systemItem="flexibleSpace" id="eNG-tv-c0s"/>
+                                    <barButtonItem systemItem="flexibleSpace" id="eNG-tv-c0s">
+                                        <inset key="imageInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
+                                    </barButtonItem>
                                     <barButtonItem title="Share Location" id="kvU-Tv-8tp">
                                         <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>

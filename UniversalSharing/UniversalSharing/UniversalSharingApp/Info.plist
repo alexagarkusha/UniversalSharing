@@ -60,11 +60,10 @@
 	<key>FacebookAppID</key>
 	<string>1610603205888274</string>
 	<key>FacebookDisplayName</key>
-	<string>$(PRODUCT_NAME)</string>
+	<string>Univ­e­r­s­a­l­S­h­a­ring</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
-
 	<string>Hello</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
