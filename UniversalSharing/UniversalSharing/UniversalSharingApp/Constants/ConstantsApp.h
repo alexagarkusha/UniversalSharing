@@ -22,6 +22,8 @@ FOUNDATION_EXPORT NSString *const collectionViewCellIdentifier;
 FOUNDATION_EXPORT NSString *const distanceEqual100;
 FOUNDATION_EXPORT NSString *const distanceEqual1000;
 FOUNDATION_EXPORT NSString *const distanceEqual25000;
+
+
 //===
 FOUNDATION_EXPORT NSInteger const countOfAllowedPics;
 
@@ -40,8 +42,13 @@ typedef NS_ENUM(NSInteger, AlertButtonIndex) {
 
 #pragma mark MUSPhotoManager Constants
 
-typedef void (^ComplitionPhoto)(id result, NSError *error);
+typedef void (^Complition)(id result, NSError *error);
 typedef void (^ComplitionLocation)(id result, NSError *error);
 
+#pragma mark MUSAccountViewController Constants
 
+FOUNDATION_EXPORT NSString *const editButtonTitle;
+FOUNDATION_EXPORT NSString *const doneButtonTitle;
+FOUNDATION_EXPORT NSString *const showButtonTitle;
+FOUNDATION_EXPORT NSString *const hideButtonTitle;
 @end

@@ -26,4 +26,10 @@ NSString *const distanceEqual25000 = @"25000";
 //===
 NSInteger const countOfAllowedPics = 4;
 
+#pragma mark MUSAccountViewController Constants
+
+NSString *const editButtonTitle = @"Edit";
+NSString *const doneButtonTitle = @"Done";
+NSString *const showButtonTitle = @"Show";
+NSString *const hideButtonTitle = @"Hide";
 @end

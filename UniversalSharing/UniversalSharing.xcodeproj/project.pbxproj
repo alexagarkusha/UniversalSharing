@@ -12,6 +12,7 @@
 		187FC5271B65222D00A3916C /* SocialManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 187FC5191B65222D00A3916C /* SocialManager.m */; };
 		187FC5281B65222D00A3916C /* SocialNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 187FC51C1B65222D00A3916C /* SocialNetwork.m */; };
 		187FC52A1B65222D00A3916C /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 187FC5221B65222D00A3916C /* User.m */; };
+		18B505481B726FAF00679F9D /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18B505471B726FAF00679F9D /* Info.plist */; };
 		18BB29AD1B67E3F000B498AC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB29741B67E3F000B498AC /* AppDelegate.m */; };
 		18BB29AE1B67E3F000B498AC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18BB29751B67E3F000B498AC /* LaunchScreen.xib */; };
 		18BB29AF1B67E3F000B498AC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18BB29771B67E3F000B498AC /* Main.storyboard */; };
@@ -30,9 +31,13 @@
 		18BB29BD1B67E3F000B498AC /* MUSUserProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB29A11B67E3F000B498AC /* MUSUserProfileCell.m */; };
 		18BB29BE1B67E3F000B498AC /* MUSUserProfileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18BB29A21B67E3F000B498AC /* MUSUserProfileCell.xib */; };
 		18BB29C01B67E3F000B498AC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18BB29A41B67E3F000B498AC /* Images.xcassets */; };
-		18BB29C11B67E3F000B498AC /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18BB29A51B67E3F000B498AC /* Info.plist */; };
 		18BB29C21B67E3F000B498AC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB29A61B67E3F000B498AC /* main.m */; };
 		18BB29C31B67E3F000B498AC /* MUSLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB29AA1B67E3F000B498AC /* MUSLocationManager.m */; };
+		30416A191B7355BC000CB2C2 /* UIButton+MUSSocialNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 30416A181B7355BC000CB2C2 /* UIButton+MUSSocialNetwork.m */; };
+		30416A241B73A49B000CB2C2 /* MUSGaleryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30416A231B73A49B000CB2C2 /* MUSGaleryView.m */; };
+		30416A261B73A4AC000CB2C2 /* MUSGaleryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30416A251B73A4AC000CB2C2 /* MUSGaleryView.xib */; };
+		30416A2A1B73AF49000CB2C2 /* MUSCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 30416A281B73AF49000CB2C2 /* MUSCollectionViewCell.m */; };
+		30416A2B1B73AF49000CB2C2 /* MUSCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30416A291B73AF49000CB2C2 /* MUSCollectionViewCell.xib */; };
 		306ED75C1B6FA3170014D975 /* MUSLocationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 306ED75B1B6FA3170014D975 /* MUSLocationTableViewController.m */; };
 		30DBFD8B1B677A9A002F83D0 /* TwitterNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD8A1B677A9A002F83D0 /* TwitterNetwork.m */; };
 		30DBFD8F1B677AD7002F83D0 /* VKNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD8E1B677AD7002F83D0 /* VKNetwork.m */; };
@@ -41,7 +46,6 @@
 		30DBFDA11B6BAA3F002F83D0 /* FBimage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 30DBFDA01B6BAA3F002F83D0 /* FBimage.jpg */; };
 		30DBFDA31B6BAA48002F83D0 /* TWimage.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 30DBFDA21B6BAA48002F83D0 /* TWimage.jpeg */; };
 		30DBFDA51B6BAA52002F83D0 /* VKimage.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBFDA41B6BAA52002F83D0 /* VKimage.png */; };
-		30F3340D1B6F68A4007C15D7 /* MUSCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 30F3340C1B6F68A4007C15D7 /* MUSCollectionViewCell.m */; };
 		973D67AE1B69114C00A20D00 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 973D67AD1B69114C00A20D00 /* Post.m */; };
 		97C460CF1B68B6AD00C010DE /* MUSPhotoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C460CE1B68B6AD00C010DE /* MUSPhotoManager.m */; };
 		97C460D11B68B74B00C010DE /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C460D01B68B74B00C010DE /* CoreLocation.framework */; };
@@ -77,6 +81,7 @@
 		187FC51D1B65222D00A3916C /* MUSSocialNetworkLibraryHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSSocialNetworkLibraryHeader.h; sourceTree = "<group>"; };
 		187FC5211B65222D00A3916C /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		187FC5221B65222D00A3916C /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		18B505471B726FAF00679F9D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		18BB29731B67E3F000B498AC /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		18BB29741B67E3F000B498AC /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		18BB29761B67E3F000B498AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -107,11 +112,18 @@
 		18BB29A11B67E3F000B498AC /* MUSUserProfileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSUserProfileCell.m; sourceTree = "<group>"; };
 		18BB29A21B67E3F000B498AC /* MUSUserProfileCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MUSUserProfileCell.xib; sourceTree = "<group>"; };
 		18BB29A41B67E3F000B498AC /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		18BB29A51B67E3F000B498AC /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		18BB29A61B67E3F000B498AC /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		18BB29A91B67E3F000B498AC /* MUSLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSLocationManager.h; sourceTree = "<group>"; };
 		18BB29AA1B67E3F000B498AC /* MUSLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSLocationManager.m; sourceTree = "<group>"; };
 		294811F54E6400CFBFD3EBDD /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		30416A171B7355BC000CB2C2 /* UIButton+MUSSocialNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+MUSSocialNetwork.h"; sourceTree = "<group>"; };
+		30416A181B7355BC000CB2C2 /* UIButton+MUSSocialNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+MUSSocialNetwork.m"; sourceTree = "<group>"; };
+		30416A221B73A49B000CB2C2 /* MUSGaleryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSGaleryView.h; sourceTree = "<group>"; };
+		30416A231B73A49B000CB2C2 /* MUSGaleryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSGaleryView.m; sourceTree = "<group>"; };
+		30416A251B73A4AC000CB2C2 /* MUSGaleryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MUSGaleryView.xib; sourceTree = "<group>"; };
+		30416A271B73AF49000CB2C2 /* MUSCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSCollectionViewCell.h; sourceTree = "<group>"; };
+		30416A281B73AF49000CB2C2 /* MUSCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSCollectionViewCell.m; sourceTree = "<group>"; };
+		30416A291B73AF49000CB2C2 /* MUSCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MUSCollectionViewCell.xib; sourceTree = "<group>"; };
 		306ED75A1B6FA3170014D975 /* MUSLocationTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSLocationTableViewController.h; sourceTree = "<group>"; };
 		306ED75B1B6FA3170014D975 /* MUSLocationTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSLocationTableViewController.m; sourceTree = "<group>"; };
 		30DBFD891B677A9A002F83D0 /* TwitterNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterNetwork.h; sourceTree = "<group>"; };
@@ -125,8 +137,6 @@
 		30DBFDA01B6BAA3F002F83D0 /* FBimage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = FBimage.jpg; sourceTree = "<group>"; };
 		30DBFDA21B6BAA48002F83D0 /* TWimage.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = TWimage.jpeg; sourceTree = "<group>"; };
 		30DBFDA41B6BAA52002F83D0 /* VKimage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = VKimage.png; sourceTree = "<group>"; };
-		30F3340B1B6F68A4007C15D7 /* MUSCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSCollectionViewCell.h; sourceTree = "<group>"; };
-		30F3340C1B6F68A4007C15D7 /* MUSCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSCollectionViewCell.m; sourceTree = "<group>"; };
 		61D95135D2C19CD52D3B0709 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		7930E9BF698DEF5E51379530 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		973D67AC1B69114C00A20D00 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Post.h; path = UniversalSharing/SocialNetworkLibrary/Post/Post.h; sourceTree = SOURCE_ROOT; };
@@ -284,7 +294,7 @@
 				30DBFDA41B6BAA52002F83D0 /* VKimage.png */,
 				30DBFDA21B6BAA48002F83D0 /* TWimage.jpeg */,
 				30DBFDA01B6BAA3F002F83D0 /* FBimage.jpg */,
-				18BB29A51B67E3F000B498AC /* Info.plist */,
+				18B505471B726FAF00679F9D /* Info.plist */,
 				18BB29A61B67E3F000B498AC /* main.m */,
 			);
 			path = UniversalSharingApp;
@@ -302,6 +312,7 @@
 		18BB297B1B67E3F000B498AC /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				30416A131B735328000CB2C2 /* UiButton+MUSSocialNetwork */,
 				18BB297C1B67E3F000B498AC /* UIButton+CornerRadiusButton */,
 				18BB297F1B67E3F000B498AC /* UIButton+LoadImageBackroundFromNetwork */,
 				18BB29821B67E3F000B498AC /* UIImageView+LoadImageFromNetwork */,
@@ -404,6 +415,7 @@
 		18BB29961B67E3F000B498AC /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				30416A1F1B73A28D000CB2C2 /* GalleryView */,
 				30F334071B6F6855007C15D7 /* CollectionViewCell */,
 				18BB29971B67E3F000B498AC /* AccountCell */,
 				18BB299B1B67E3F000B498AC /* TopUserProfileCell */,
@@ -460,6 +472,25 @@
 			path = LocationManager;
 			sourceTree = "<group>";
 		};
+		30416A131B735328000CB2C2 /* UiButton+MUSSocialNetwork */ = {
+			isa = PBXGroup;
+			children = (
+				30416A171B7355BC000CB2C2 /* UIButton+MUSSocialNetwork.h */,
+				30416A181B7355BC000CB2C2 /* UIButton+MUSSocialNetwork.m */,
+			);
+			name = "UiButton+MUSSocialNetwork";
+			sourceTree = "<group>";
+		};
+		30416A1F1B73A28D000CB2C2 /* GalleryView */ = {
+			isa = PBXGroup;
+			children = (
+				30416A221B73A49B000CB2C2 /* MUSGaleryView.h */,
+				30416A231B73A49B000CB2C2 /* MUSGaleryView.m */,
+				30416A251B73A4AC000CB2C2 /* MUSGaleryView.xib */,
+			);
+			name = GalleryView;
+			sourceTree = "<group>";
+		};
 		306ED7591B6FA2DB0014D975 /* LocationTableViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -508,8 +539,9 @@
 		30F334071B6F6855007C15D7 /* CollectionViewCell */ = {
 			isa = PBXGroup;
 			children = (
-				30F3340B1B6F68A4007C15D7 /* MUSCollectionViewCell.h */,
-				30F3340C1B6F68A4007C15D7 /* MUSCollectionViewCell.m */,
+				30416A271B73AF49000CB2C2 /* MUSCollectionViewCell.h */,
+				30416A281B73AF49000CB2C2 /* MUSCollectionViewCell.m */,
+				30416A291B73AF49000CB2C2 /* MUSCollectionViewCell.xib */,
 			);
 			name = CollectionViewCell;
 			sourceTree = "<group>";
@@ -669,7 +701,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18BB29C11B67E3F000B498AC /* Info.plist in Resources */,
+				30416A261B73A4AC000CB2C2 /* MUSGaleryView.xib in Resources */,
 				18BB29BE1B67E3F000B498AC /* MUSUserProfileCell.xib in Resources */,
 				30DBFDA51B6BAA52002F83D0 /* VKimage.png in Resources */,
 				18BB29AE1B67E3F000B498AC /* LaunchScreen.xib in Resources */,
@@ -678,6 +710,8 @@
 				30DBFDA11B6BAA3F002F83D0 /* FBimage.jpg in Resources */,
 				30DBFDA31B6BAA48002F83D0 /* TWimage.jpeg in Resources */,
 				18BB29BC1B67E3F000B498AC /* MUSTopUserProfileCell.xib in Resources */,
+				18B505481B726FAF00679F9D /* Info.plist in Resources */,
+				30416A2B1B73AF49000CB2C2 /* MUSCollectionViewCell.xib in Resources */,
 				18BB29AF1B67E3F000B498AC /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -755,8 +789,8 @@
 				18BB29BB1B67E3F000B498AC /* MUSTopUserProfileCell.m in Sources */,
 				306ED75C1B6FA3170014D975 /* MUSLocationTableViewController.m in Sources */,
 				30DBFD8B1B677A9A002F83D0 /* TwitterNetwork.m in Sources */,
-				30F3340D1B6F68A4007C15D7 /* MUSCollectionViewCell.m in Sources */,
 				18BB29AD1B67E3F000B498AC /* AppDelegate.m in Sources */,
+				30416A191B7355BC000CB2C2 /* UIButton+MUSSocialNetwork.m in Sources */,
 				97CA63CF1B6F737A00F9F0C1 /* Location.m in Sources */,
 				18BB29B81B67E3F000B498AC /* MUSUserDetailViewController.h.m in Sources */,
 				18BB29B11B67E3F000B498AC /* UIButton+CornerRadiusButton.m in Sources */,
@@ -764,12 +798,14 @@
 				18BB29BD1B67E3F000B498AC /* MUSUserProfileCell.m in Sources */,
 				18BB29B71B67E3F000B498AC /* MUSShareViewController.m in Sources */,
 				18BB29B41B67E3F000B498AC /* UIImageView+RoundImage.m in Sources */,
+				30416A2A1B73AF49000CB2C2 /* MUSCollectionViewCell.m in Sources */,
 				18BB29B91B67E3F000B498AC /* MUSAccountTableViewCell.m in Sources */,
 				18BB29B21B67E3F000B498AC /* UIButton+LoadBackgroundImageFromNetwork.m in Sources */,
 				30DBFD931B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.m in Sources */,
 				187FC5271B65222D00A3916C /* SocialManager.m in Sources */,
 				18BB29C21B67E3F000B498AC /* main.m in Sources */,
 				187FC5261B65222D00A3916C /* FacebookNetwork.m in Sources */,
+				30416A241B73A49B000CB2C2 /* MUSGaleryView.m in Sources */,
 				97CA63CA1B6F66D300F9F0C1 /* Place.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -900,8 +936,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Vadim Rozov (3RNNQR4V7R)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Vadim Rozov (3RNNQR4V7R)";
-				INFOPLIST_FILE = UniversalSharing/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				INFOPLIST_FILE = UniversalSharing/UniversalSharingApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -917,8 +953,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Vadim Rozov (3RNNQR4V7R)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Vadim Rozov (3RNNQR4V7R)";
-				INFOPLIST_FILE = UniversalSharing/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				INFOPLIST_FILE = UniversalSharing/UniversalSharingApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

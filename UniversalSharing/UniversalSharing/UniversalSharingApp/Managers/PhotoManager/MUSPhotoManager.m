@@ -10,13 +10,14 @@
 #import <CoreImage/CoreImage.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <MobileCoreServices/UTCoreTypes.h>
+#import "ImageToPost.h"
 
 
+@interface MUSPhotoManager () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate>
 
-@interface MUSPhotoManager () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
-
-@property (copy, nonatomic)    ComplitionPhoto     copyComplition;
+@property (copy, nonatomic) Complition copyComplition;
 @property (strong, nonatomic) UIImagePickerController *imagePickerController;
+@property (strong, nonatomic) UIViewController *viewController;
 @end
 
 static MUSPhotoManager* sharedManager = nil;
@@ -41,37 +42,59 @@ static MUSPhotoManager* sharedManager = nil;
     }
     return self;
 }
-// this method is not used!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//- (UIViewController*) viewConterollerForImagePickerController {
-//    UIWindow *window=[UIApplication sharedApplication].keyWindow;
-//    UIViewController *viewController=[window rootViewController];
-//    if(viewController.presentedViewController)
-//        return viewController.presentedViewController;
-//    else
-//        return viewController;
-//}
 
-
-- (void) selectPhotoFromAlbumFromViewController : (UIViewController*) viewController withComplition: (ComplitionPhoto) block{
+- (void) photoShowFromViewController :(UIViewController*) viewController withComplition: (Complition) block {
     self.copyComplition = block;
-        _imagePickerController.delegate = self;
-    _imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    _imagePickerController.mediaTypes = @[(NSString*) kUTTypeImage];
-    [viewController presentViewController:_imagePickerController animated:YES completion:nil];
+    self.viewController = viewController;
+    [self photoAlertShow];
 }
 
-- (void) takePhotoFromCameraFromViewController : (UIViewController*) viewController withComplition: (ComplitionPhoto) block {
-    self.copyComplition = block;
+- (void) photoAlertShow {
+    UIAlertView *photoAlert = [[UIAlertView alloc] initWithTitle:@"Share photo" message: nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Album", @"Camera", nil];
+    photoAlert.tag = 0;
+    [photoAlert show];
+}
+
+- (void) warningNotAddMorePicsAlertShow {
+    UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle:@"You can not add pics anymore :[" message: nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    warningAlert.tag = 2;
+    [warningAlert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    switch (buttonIndex) {
+        case Cancel:
+            break;
+        case Album:
+            [self selectPhotoFromAlbum];
+            break;
+        case Camera:
+            [self takePhotoFromCamera];
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (void) selectPhotoFromAlbum {
+    _imagePickerController.delegate = self ;
+    _imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    _imagePickerController.mediaTypes = @[(NSString*) kUTTypeImage];
+    [self.viewController presentViewController:_imagePickerController animated:YES completion:nil];
+}
+
+- (void) takePhotoFromCamera {
     
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        block (nil, [self cameraError]);
+        self.copyComplition (nil, [self cameraError]);
     } else {
-        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-        picker.delegate = self;
-        picker.allowsEditing = YES;
-        picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-        [viewController presentViewController:picker animated:YES completion:nil];
+        _imagePickerController.delegate = self;
+        _imagePickerController.allowsEditing = YES;
+        _imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+        [self.viewController presentViewController:_imagePickerController animated:YES completion:nil];
     }
+
 }
 
 #warning "Replace strings and code to Constants"
@@ -92,7 +115,11 @@ static MUSPhotoManager* sharedManager = nil;
     UIImage *image = [info objectForKey: UIImagePickerControllerOriginalImage];
     
     if (image != nil) {
-        self.copyComplition (image, nil);
+        ImageToPost *imageToPost = [[ImageToPost alloc] init];
+        imageToPost.image = image;
+        imageToPost.imageType = JPEG;
+        imageToPost.quality = 0.8f;
+        self.copyComplition (imageToPost, nil);
     }
     
     [picker dismissViewControllerAnimated:YES completion:nil];

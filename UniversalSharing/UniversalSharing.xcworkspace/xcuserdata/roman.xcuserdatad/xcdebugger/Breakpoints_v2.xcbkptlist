@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "UniversalSharing/UniversalSharingApp/Managers/LocationManager/MUSLocationManager.m"
-            timestampString = "460462187.144509"
+            timestampString = "460540607.922242"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "80"
-            endingLineNumber = "80"
-            landmarkName = "-locationManager:didFailWithError:"
+            startingLineNumber = "74"
+            endingLineNumber = "74"
+            landmarkName = "-setupLocationManager"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -26,11 +26,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "UniversalSharing/UniversalSharingApp/Managers/LocationManager/MUSLocationManager.m"
-            timestampString = "460462187.144509"
+            timestampString = "460540607.922242"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "94"
-            endingLineNumber = "94">
+            startingLineNumber = "87"
+            endingLineNumber = "87"
+            landmarkName = "-startTrackLocationWithComplition:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -136,60 +138,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "UniversalSharing/UniversalSharingApp/Managers/LocationManager/MUSLocationManager.m"
-            timestampString = "460462187.144509"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "76"
-            endingLineNumber = "76"
-            landmarkName = "-stopAndGetCurrentLocation"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "UniversalSharing/UniversalSharingApp/Managers/LocationManager/MUSLocationManager.m"
-            timestampString = "460462233.854035"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "44"
-            endingLineNumber = "44"
-            landmarkName = "-startTrackLocationWithComplition:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "UniversalSharing/UniversalSharingApp/Managers/LocationManager/MUSLocationManager.m"
-            timestampString = "460462250.213215"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "61"
-            endingLineNumber = "61"
-            landmarkName = "-startTrackLocationWithComplition:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "UniversalSharing/UniversalSharingApp/Managers/LocationManager/MUSLocationManager.m"
-            timestampString = "460462945.549808"
+            timestampString = "460540607.922242"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "70"
             endingLineNumber = "70"
-            landmarkName = "-startTrackLocationWithComplition:"
+            landmarkName = "-setupLocationManager"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -199,13 +153,45 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "UniversalSharing/UniversalSharingApp/Controllers/AccountsViewController/MUSAccountsViewController.m"
-            timestampString = "460477165.192123"
+            filePath = "UniversalSharing/UniversalSharingApp/Controllers/ShareViewController/MUSShareViewController.m"
+            timestampString = "460633742.165302"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "107"
-            endingLineNumber = "107"
-            landmarkName = "-tableView:commitEditingStyle:forRowAtIndexPath:"
+            startingLineNumber = "265"
+            endingLineNumber = "265"
+            landmarkName = "-actionSheet:clickedButtonAtIndex:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "UniversalSharing/UniversalSharingApp/Controllers/ShareViewController/MUSShareViewController.m"
+            timestampString = "460633742.165302"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "262"
+            endingLineNumber = "262"
+            landmarkName = "-actionSheet:clickedButtonAtIndex:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "UniversalSharing/UniversalSharingApp/Categories/UIButton+MUSSocialNetwork.m"
+            timestampString = "460633528.138209"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "87"
+            endingLineNumber = "87"
+            landmarkName = "-initiationSocialNetworkButtonForSocialNetwork:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

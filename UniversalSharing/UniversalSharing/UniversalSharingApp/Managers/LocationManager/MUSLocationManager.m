@@ -25,6 +25,7 @@
     if (self)
     {
         self.locationManager = [[CLLocationManager alloc]init];
+        [self setupLocationManager];
     }
     return self;
 }
@@ -40,32 +41,46 @@
     return sharedManager;
 }
 
-- (void) startTrackLocationWithComplition : (ComplitionLocation) block {
-    self.copyLocationBLock = block;
-    NSString *versionDeviceString = [[UIDevice currentDevice] systemVersion];
+- (void) setupLocationManager
+{
     self.locationManager.delegate = self;
-    self.locationManager.desiredAccuracy=kCLLocationAccuracyBest;
 
-    self.locationManager.distanceFilter = kCLDistanceFilterNone; //type - double;
-    if ([versionDeviceString floatValue] >= 8.0) {
-        
-//        NSUInteger code = [CLLocationManager authorizationStatus];
-//        if (code == kCLAuthorizationStatusNotDetermined && ([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)] || [self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)])) {
-//            // choose one request according to your business.
-//            if([[NSBundle mainBundle] objectForInfoDictionaryKey:@"NSLocationAlwaysUsageDescription"]){
-//                [self.locationManager requestAlwaysAuthorization];
-//            } else if([[NSBundle mainBundle] objectForInfoDictionaryKey:@"NSLocationWhenInUseUsageDescription"]) {
-//                [self.locationManager  requestWhenInUseAuthorization];
-//            } else {
-//                NSLog(@"Info.plist does not contain NSLocationAlwaysUsageDescription or NSLocationWhenInUseUsageDescription");
-//            }
-        if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined) {
-            [self.locationManager requestWhenInUseAuthorization];
-            //[self.locationManager requestAlwaysAuthorization];
-        }
-    }
+//    self.locationManager.desiredAccuracy=kCLLocationAccuracyBest;
+//
+//    self.locationManager.distanceFilter = kCLDistanceFilterNone; //type - double;
+//    if ([versionDeviceString floatValue] >= 8.0) {
+//        
+////        NSUInteger code = [CLLocationManager authorizationStatus];
+////        if (code == kCLAuthorizationStatusNotDetermined && ([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)] || [self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)])) {
+////            // choose one request according to your business.
+////            if([[NSBundle mainBundle] objectForInfoDictionaryKey:@"NSLocationAlwaysUsageDescription"]){
+////                [self.locationManager requestAlwaysAuthorization];
+////            } else if([[NSBundle mainBundle] objectForInfoDictionaryKey:@"NSLocationWhenInUseUsageDescription"]) {
+////                [self.locationManager  requestWhenInUseAuthorization];
+////            } else {
+////                NSLog(@"Info.plist does not contain NSLocationAlwaysUsageDescription or NSLocationWhenInUseUsageDescription");
+////            }
+//        if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined) {
+//            [self.locationManager requestWhenInUseAuthorization];
+//            //[self.locationManager requestAlwaysAuthorization];
+//        }
+//    }
     [self.locationManager startMonitoringSignificantLocationChanges];
 
+    self.locationManager.distanceFilter = kCLDistanceFilterNone;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    
+    NSString *versionDeviceString = [[UIDevice currentDevice] systemVersion];
+    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined)
+    {
+        if ([versionDeviceString floatValue] >= 8.0) {
+            [self.locationManager requestWhenInUseAuthorization];
+        }
+    }
+}
+
+- (void) startTrackLocationWithComplition : (ComplitionLocation) block {
+    self.copyLocationBLock = block;
     [self.locationManager startUpdatingLocation];
         //block(self.locationManager,nil);
 

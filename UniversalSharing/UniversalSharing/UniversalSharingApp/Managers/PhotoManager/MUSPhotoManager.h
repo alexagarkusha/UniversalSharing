@@ -13,8 +13,6 @@
 @interface MUSPhotoManager : NSObject
 
 + (MUSPhotoManager*) sharedManager;
-
-- (void) selectPhotoFromAlbumFromViewController : (UIViewController*) viewController withComplition: (ComplitionPhoto) block;
-- (void) takePhotoFromCameraFromViewController : (UIViewController*) viewController withComplition: (ComplitionPhoto) block;
+- (void) photoShowFromViewController : (UIViewController*) viewController withComplition: (Complition) block;
 
 @end

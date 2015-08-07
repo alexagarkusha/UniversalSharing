@@ -45,11 +45,11 @@
     if(self.editing) {
         [super setEditing:NO animated:NO];
         [self.tableView setEditing:NO animated:NO];
-        [self.navigationItem.leftBarButtonItem setTitle:@"Edit"];
+        [self.navigationItem.leftBarButtonItem setTitle:editButtonTitle];
     } else {
         [super setEditing:YES animated:YES];
         [self.tableView setEditing:YES animated:YES];
-        [self.navigationItem.leftBarButtonItem setTitle:@"Done"];
+        [self.navigationItem.leftBarButtonItem setTitle:doneButtonTitle];
     }
     [self.tableView reloadData];
     
@@ -126,7 +126,7 @@
 
 -(NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
     SocialNetwork *socialNetwork = self.arrayWithNetworksObj[indexPath.row];
-    return socialNetwork.isVisible ?  @"Show" : @"Hide";
+    return socialNetwork.isVisible ?  showButtonTitle : hideButtonTitle;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -134,7 +134,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat sizeCell = 50;
+    CGFloat sizeCell = 50.0f;
     return sizeCell;
 }
 
@@ -148,7 +148,4 @@
     }
 }
 
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
 @end

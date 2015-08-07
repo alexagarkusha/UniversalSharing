@@ -12,9 +12,20 @@
 #import "MUSSocialNetworkLibraryHeader.h"
 
 @interface MUSUserDetailViewController () <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
-
+/*!
+ @property
+ @abstract button in navigation bar
+ */
 @property (strong, nonatomic) UIBarButtonItem *logoutButton;
+/*!
+ @property
+ @abstract initialization by socialnetwork(facebook or twitter or VK) getting from AccountViewController
+ */
 @property (nonatomic, strong) SocialNetwork *socialNetwork;
+/*!
+ @property
+ @abstract initialization by current info of current user 
+ */
 @property (strong, nonatomic) NSArray *userPropertyArray;
 //===
 @property (weak, nonatomic) IBOutlet UITableView *userTableView;
@@ -33,7 +44,11 @@
 - (void)setNetwork:(id)socialNetwork {
     self.socialNetwork = socialNetwork;
 }
-
+/*!
+ @method
+ @abstract logout from current network and leave this viewcontroller
+ @param without
+ */
 - (void) logoutFromSocialNetwork {
     [self.socialNetwork loginOut];
     [self.navigationController popViewControllerAnimated:YES];
@@ -47,6 +62,9 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    /*
+     XIB
+     */
     if (indexPath.row == 0) {
         MUSTopUserProfileCell* cell = [tableView dequeueReusableCellWithIdentifier: [MUSTopUserProfileCell cellID]];
         if (!cell) {

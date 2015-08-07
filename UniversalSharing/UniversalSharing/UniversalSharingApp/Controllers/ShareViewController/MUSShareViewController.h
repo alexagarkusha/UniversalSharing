@@ -10,4 +10,6 @@
 
 @interface MUSShareViewController : UIViewController
 
+- (void) showUserAccountsInActionSheet;
+
 @end

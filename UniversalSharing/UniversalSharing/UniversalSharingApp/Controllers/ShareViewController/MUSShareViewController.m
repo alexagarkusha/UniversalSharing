@@ -16,8 +16,10 @@
 #import "MUSCollectionViewCell.h"
 #import "MUSLocationTableViewController.h"
 #import "Place.h"
+#import "UIButton+MUSSocialNetwork.h"
+#import "MUSGaleryView.h"
 
-@interface MUSShareViewController () <UITextViewDelegate, UIActionSheetDelegate, UITabBarDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate>
+@interface MUSShareViewController () <UITextViewDelegate, UIActionSheetDelegate, UITabBarDelegate, UIAlertViewDelegate, UINavigationControllerDelegate, UIToolbarDelegate>
 
 - (IBAction)shareToSocialNetwork:(id)sender;
 - (IBAction)endEditingMessage:(id)sender;
@@ -27,16 +29,17 @@
 @property (strong, nonatomic)   IBOutlet    UITapGestureRecognizer *mainGestureRecognizer;
 @property (weak, nonatomic)     IBOutlet    NSLayoutConstraint* tabBarLayoutConstraint;
 @property (weak, nonatomic)     IBOutlet    NSLayoutConstraint* messageTextViewLayoutConstraint;
-@property (weak, nonatomic)     IBOutlet    UICollectionView *collectionView;
+//@property (weak, nonatomic)     IBOutlet    UICollectionView *collectionView;
+@property (weak, nonatomic)      IBOutlet   MUSGaleryView *galeryView;
 //===
 @property (assign, nonatomic)               CGFloat tabBarLayoutConstaineOrigin;
 @property (assign, nonatomic)               CGFloat messageTextViewLayoutConstraintOrigin;
-@property (strong, nonatomic)               User *currentUser;
+//@property (strong, nonatomic)               User *currentUser;
 @property (strong, nonatomic)               SocialNetwork *currentSocialNetwork;
 @property (strong, nonatomic)               NSMutableArray *socialNetworkAccountsArray;
 @property (assign, nonatomic)               TabBarItemIndex tabBarItemIndex;
 @property (assign, nonatomic)               AlertButtonIndex alertButtonIndex;
-@property (assign, nonatomic)               NSUInteger indexForDeletePicture;
+//@property (assign, nonatomic)               NSUInteger indexForDeletePicture;
 @property (strong, nonatomic)               NSArray *arrayWithNetworks;
 @property (assign, nonatomic)               CLLocationCoordinate2D currentLocation;
 @property (strong, nonatomic)               NSMutableArray *arrayWithChosenImages;
@@ -55,9 +58,10 @@
     
     [self initiationMUSShareViewController];
     [self addButtonOnTextView];
-    [self setFlowLayout];
-    [self setGestureRecognizer];
+    //[self setGestureRecognizer];
     self.arrayWithChosenImages = [NSMutableArray new];
+    [self showUserAccountsInActionSheet ];
+
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -72,7 +76,7 @@
                                                  name:UIKeyboardDidHideNotification
                                                object:nil];
     self.mainGestureRecognizer.enabled = NO;
-    [self initiationSocialNetworkButtonForSocialNetwork];
+    //[self initiationSocialNetworkButtonForSocialNetwork];
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
@@ -84,36 +88,36 @@
     [super viewDidDisappear:YES];
 }
 
-- (void) setFlowLayout {
-    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    [flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
-    [_collectionView setCollectionViewLayout:flowLayout];
-}
 
-- (void)changeSocialNetworkAccount:(id)sender{
-    [self showUserAccountsInActionSheet];
-}
+//- (void)changeSocialNetworkAccount:(id)sender{
+//    [self showUserAccountsInActionSheet];
+//}
 
-- (void) setGestureRecognizer {
-    UILongPressGestureRecognizer *pressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGesture:)];
-    pressGesture.minimumPressDuration = .5;
-    pressGesture.delegate = self;
-    [self.collectionView addGestureRecognizer:pressGesture];
-}
+//- (void) setGestureRecognizer {
+//    UILongPressGestureRecognizer *pressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGesture:)];
+//    pressGesture.minimumPressDuration = .5;
+//    pressGesture.delegate = self;
+//    [self.collectionView addGestureRecognizer:pressGesture];
+//}
 
 - (void) addButtonOnTextView {
     
-    self.changeSocialNetworkButton  =   [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    self.changeSocialNetworkButton.frame  =   CGRectMake(6.0, 15.0, 75.0, 70.0);
+//    self.changeSocialNetworkButton  =   [UIButton buttonWithType:UIButtonTypeRoundedRect];
+//    self.changeSocialNetworkButton.frame  =   CGRectMake(6.0, 15.0, 75.0, 70.0);
+//    
+//    [self.changeSocialNetworkButton addTarget:self action:@selector(changeSocialNetworkAccount:)forControlEvents:UIControlEventTouchUpInside];
+//    self.changeSocialNetworkButton.backgroundColor=[UIColor blueColor];
     
-    [self.changeSocialNetworkButton addTarget:self action:@selector(changeSocialNetworkAccount:)forControlEvents:UIControlEventTouchUpInside];
-    self.changeSocialNetworkButton.backgroundColor=[UIColor blueColor];
-    // CGRect buttonFrame = self.changeSocialNetworkButton.frame;
+    
+    self.changeSocialNetworkButton = [UIButton new];
+    //self.changeSocialNetworkButton.actionDelegate = self;
+    //[self.changeSocialNetworkButton cornerRadius:10];
     [self forceTextViewWorkAsFacebookSharing];
     [self.messageTextView addSubview:self.changeSocialNetworkButton];
 }
 
 - (void) forceTextViewWorkAsFacebookSharing {
+    // CGRect buttonFrame = self.changeSocialNetworkButton.frame;
     CGRect myFrame = CGRectMake(6, 15, 100, 50);
     UIBezierPath *exclusivePath = [UIBezierPath bezierPathWithRect:myFrame];
     self.messageTextView.textContainer.exclusionPaths = @[exclusivePath];
@@ -133,7 +137,7 @@
     //self.messageTextViewLayoutConstraint.constant = self.tabBarController.tabBar.frame.size.height + self.shareTabBar.frame.size.height;
     
     self.messageTextView.delegate = self;
-    [self.changeSocialNetworkButton cornerRadius:10];
+    
     //[self.shareButtonOutlet cornerRadius:10];
     self.socialNetworkAccountsArray = [[NSMutableArray alloc] init];
     self.shareTabBar.delegate = self;
@@ -142,18 +146,18 @@
 
 #pragma mark - UIButton
 
-- (void) initiationSocialNetworkButtonForSocialNetwork {
-    if (!_currentSocialNetwork) {
-        _currentSocialNetwork = [SocialManager currentSocialNetwork];
-    }
-    
-    __weak UIButton *socialNetworkButton = self.changeSocialNetworkButton;
-    [_currentSocialNetwork obtainInfoFromNetworkWithComplition:^(id result, NSError *error) {
-        SocialNetwork *currentSocialNetwork = (SocialNetwork*) result;
-        self.currentUser = currentSocialNetwork.currentUser;
-        [socialNetworkButton loadBackroundImageFromNetworkWithURL:[NSURL URLWithString: self.currentUser.photoURL]];
-    }];
-}
+//- (void) initiationSocialNetworkButtonForSocialNetwork {
+//    if (!_currentSocialNetwork) {
+//        _currentSocialNetwork = [SocialManager currentSocialNetwork];
+//    }
+//    
+//    __weak UIButton *socialNetworkButton = self.changeSocialNetworkButton;
+//    [_currentSocialNetwork obtainInfoFromNetworkWithComplition:^(id result, NSError *error) {
+//        SocialNetwork *currentSocialNetwork = (SocialNetwork*) result;
+//        self.currentUser = currentSocialNetwork.currentUser;
+//        [socialNetworkButton loadBackroundImageFromNetworkWithURL:[NSURL URLWithString: self.currentUser.photoURL]];
+//    }];
+//}
 
 #pragma mark - Keyboard Show/Hide
 
@@ -161,7 +165,7 @@
     CGRect initialFrame = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     CGRect convertedFrame = [self.view convertRect:initialFrame fromView:nil];
     self.tabBarLayoutConstraint.constant = convertedFrame.size.height;
-    self.messageTextViewLayoutConstraint.constant = convertedFrame.size.height + self.shareTabBar.frame.size.height + self.collectionView.frame.size.height;
+    self.messageTextViewLayoutConstraint.constant = convertedFrame.size.height + self.shareTabBar.frame.size.height + 50.0f;
     
     [UIView animateWithDuration: 0.3  animations:^{
         [self.view layoutIfNeeded];
@@ -190,7 +194,7 @@
     self.post.placeID = self.placeID;
     self.post.postDescription = self.messageTextView.text;
     self.post.networkType = _currentSocialNetwork.networkType;
-    self.post.arrayImages = self.arrayWithChosenImages;
+    self.post.arrayImages = [self.galeryView obtainArrayWithChosedPics];
     self.post.latitude = self.currentLocation.latitude;
     self.post.longitude = self.currentLocation.longitude;
     
@@ -242,7 +246,7 @@
     sheet.title = @"Select account";
     sheet.delegate = self;
     sheet.cancelButtonIndex = [sheet addButtonWithTitle:@"Cancel"];
-    
+     self.arrayWithNetworks = @[@(Twitters), @(VKontakt), @(Facebook)];
     for (int i = 0; i < [[[SocialManager sharedManager] networks: self.arrayWithNetworks] count]; i++) {
         SocialNetwork *socialNetwork = [[[SocialManager sharedManager] networks: self.arrayWithNetworks] objectAtIndex:i];
         if (socialNetwork.isLogin && !socialNetwork.isVisible) {
@@ -251,13 +255,14 @@
             [self.socialNetworkAccountsArray addObject:socialNetwork];
         }
     }
-    [sheet showInView:[UIApplication sharedApplication].keyWindow];
+    [sheet showInView:self.view];
+    //[sheet showInView:[UIApplication sharedApplication].keyWindow];
 }
 
 - (void) actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if ( buttonIndex != 0 ) {
         _currentSocialNetwork = [self.socialNetworkAccountsArray objectAtIndex: buttonIndex - 1];
-        [self initiationSocialNetworkButtonForSocialNetwork];
+        [self.changeSocialNetworkButton initiationSocialNetworkButtonForSocialNetwork:_currentSocialNetwork];
     }
 }
 
@@ -267,10 +272,11 @@
     _tabBarItemIndex = item.tag;
     
     switch (_tabBarItemIndex) {
-        case Share_photo:
+        case Share_photo:{
             NSLog(@"Share photo");
-            [self photoAlertShow];
+            [self obtainChosenImage];
             break;
+        }
         case Share_location:
             NSLog(@"Share location");
             [self userCurrentLocation];
@@ -278,6 +284,21 @@
         default:
             break;
     }
+}
+
+- (void) obtainChosenImage {
+    if ([[self.galeryView obtainArrayWithChosedPics] count] == countOfAllowedPics) {
+        [self warningNotAddMorePicsAlertShow];
+        return;
+    }
+    __weak MUSShareViewController *weakSelf = self;
+    [[MUSPhotoManager sharedManager] photoShowFromViewController:self withComplition:^(id result, NSError *error) {
+        if(error) {
+            [weakSelf showErrorAlertWithError : error];
+            return;
+        }
+        [weakSelf.galeryView passChosenImageForCollection:result];
+    }];
 }
 
 #pragma mark - ShareLocationTabBarItemClick
@@ -346,146 +367,36 @@
 }
 
 
-#pragma mark - SharePhotoTabBarItemClick
-
-- (void) photoAlertShow {
-    UIAlertView *photoAlert = [[UIAlertView alloc] initWithTitle:@"Share photo" message: nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Album", @"Camera", nil];
-    photoAlert.tag = 0;
-    [photoAlert show];
-}
-
-- (void) photoAlertDeletePicShow {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Photo"
-                                                    message:@"You want to delete a pic"
-                                                   delegate:self
-                                          cancelButtonTitle:@"NO"
-                                          otherButtonTitles:@"YES", nil];
-    alert.tag = 1;
-    [alert show];
-}
+#pragma mark - warning and error alerts
 
 - (void) warningNotAddMorePicsAlertShow {
     UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle:@"You can not add pics anymore :[" message: nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-    warningAlert.tag = 2;
     [warningAlert show];
 }
 
 - (void) showErrorAlertWithError : (NSError*) error {
-    UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:[error localizedFailureReason] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
+    UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:[error localizedFailureReason] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles: nil];
     [errorAlert show];
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    _alertButtonIndex = buttonIndex;
-    if (alertView.tag == 0) {
-        
-        switch (_alertButtonIndex) {
-            case Cancel:
-                break;
-            case Album:
-                [self selectPhotoFromAlbum];
-                break;
-            case Camera:
-                [self takePhotoFromCamera];
-                break;
-                
-            default:
-                break;
-        }
-    } else {
-        switch (_alertButtonIndex) {
-            case YES:
-                [self.arrayWithChosenImages removeObjectAtIndex:self.indexForDeletePicture];
-                if ([self.arrayWithChosenImages count] == 0) {
-                    self.collectionView.backgroundColor = [UIColor whiteColor];
-                }
-                [self.collectionView reloadData];
-                break;
-            case NO:
-                break;
-            default:
-                break;
-        }
-    }
-}
+//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+//    _alertButtonIndex = buttonIndex;
+//
+//        switch (_alertButtonIndex) {
+//            case YES:
+//                [self.arrayWithChosenImages removeObjectAtIndex:self.indexForDeletePicture];
+//                if ([self.arrayWithChosenImages count] == 0) {
+//                    //self.collectionView.backgroundColor = [UIColor whiteColor];
+//                }
+//                //[self.collectionView reloadData];
+//                break;
+//            case NO:
+//                break;
+//            default:
+//                break;
+//        }
+//}
 
-#pragma mark - CollectionView
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.arrayWithChosenImages.count;
-}
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    MUSCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:collectionViewCellIdentifier forIndexPath:indexPath];
-    
-    if (self.arrayWithChosenImages[indexPath.row] != nil) {
-        ImageToPost *image = self.arrayWithChosenImages[indexPath.row];
-        cell.photoImageView.image = image.image;
-    } else {
-        cell.photoImageView.image = nil;
-    }
-    return  cell;
-}
-
--(void)handleLongPressGesture:(UILongPressGestureRecognizer *) gestureRecognizer {
-    if (gestureRecognizer.state != UIGestureRecognizerStateEnded) {
-        return;
-    }
-    CGPoint point = [gestureRecognizer locationInView:self.collectionView];
-    NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:point];
-    
-    if (indexPath == nil){
-        NSLog(@"couldn't find index path");
-    } else {
-        [self photoAlertDeletePicShow];
-        self.indexForDeletePicture = indexPath.row;
-    }
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(self.collectionView.frame.size.height, self.collectionView.frame.size.height);
-}
-
-#pragma mark - MUSPhotoManager
-
-- (void) selectPhotoFromAlbum {
-    if ([self.arrayWithChosenImages count] == countOfAllowedPics) {
-        [self warningNotAddMorePicsAlertShow];
-        return;
-    }
-    __weak MUSShareViewController *weakSelf = self;
-    [[MUSPhotoManager sharedManager] selectPhotoFromAlbumFromViewController: self withComplition:^(id result, NSError *error) {
-        if (!error) {
-            ImageToPost *imageToPost = [[ImageToPost alloc] init];
-            imageToPost.image = (UIImage*) result;
-            imageToPost.imageType = JPEG;
-            imageToPost.quality = 0.8f;
-            [weakSelf.arrayWithChosenImages addObject: imageToPost];
-            weakSelf.collectionView.backgroundColor = [UIColor grayColor];//just trying
-            [weakSelf.collectionView reloadData];
-        }
-    }];
-}
-
-- (void) takePhotoFromCamera {
-    if ([self.arrayWithChosenImages count] == countOfAllowedPics) {
-        [self warningNotAddMorePicsAlertShow];
-        return;
-    }
-    __weak MUSShareViewController *weakSelf = self;
-    [[MUSPhotoManager sharedManager] takePhotoFromCameraFromViewController: self withComplition:^(id result, NSError *error) {
-        if (!error) {
-            ImageToPost *imageToPost = [[ImageToPost alloc] init];
-            imageToPost.image = (UIImage*) result;
-            imageToPost.imageType = JPEG;
-            imageToPost.quality = 0.8f;
-            [weakSelf.arrayWithChosenImages addObject: imageToPost];
-            [weakSelf.collectionView reloadData];
-        } else {
-            [weakSelf showErrorAlertWithError : error];
-        }
-    }];
-}
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     MUSLocationTableViewController *vc = [MUSLocationTableViewController new];
@@ -496,9 +407,6 @@
         
         __weak MUSShareViewController *weakSelf = self;
         vc.placeComplition = ^(Place* result, NSError *error) {
-//            if(!weakSelf.post) {
-//                weakSelf.post = [[Post alloc] init];
-//            }
             weakSelf.placeID = result.placeID;
         };
     }
