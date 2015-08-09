@@ -12,7 +12,6 @@
 		187FC5271B65222D00A3916C /* SocialManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 187FC5191B65222D00A3916C /* SocialManager.m */; };
 		187FC5281B65222D00A3916C /* SocialNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 187FC51C1B65222D00A3916C /* SocialNetwork.m */; };
 		187FC52A1B65222D00A3916C /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 187FC5221B65222D00A3916C /* User.m */; };
-		18B505481B726FAF00679F9D /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18B505471B726FAF00679F9D /* Info.plist */; };
 		18BB29AD1B67E3F000B498AC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB29741B67E3F000B498AC /* AppDelegate.m */; };
 		18BB29AE1B67E3F000B498AC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18BB29751B67E3F000B498AC /* LaunchScreen.xib */; };
 		18BB29AF1B67E3F000B498AC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18BB29771B67E3F000B498AC /* Main.storyboard */; };
@@ -762,7 +761,6 @@
 				30DBFDA11B6BAA3F002F83D0 /* FBimage.jpg in Resources */,
 				30DBFDA31B6BAA48002F83D0 /* TWimage.jpeg in Resources */,
 				18BB29BC1B67E3F000B498AC /* MUSTopUserProfileCell.xib in Resources */,
-				18B505481B726FAF00679F9D /* Info.plist in Resources */,
 				30416A2B1B73AF49000CB2C2 /* MUSCollectionViewCell.xib in Resources */,
 				18BB29AF1B67E3F000B498AC /* Main.storyboard in Resources */,
 			);

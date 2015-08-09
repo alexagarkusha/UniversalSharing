@@ -24,7 +24,7 @@
 @property (nonatomic, strong) SocialNetwork *socialNetwork;
 /*!
  @property
- @abstract initialization by current info of current user 
+ @abstract initialization by current info of current user
  */
 @property (strong, nonatomic) NSArray *userPropertyArray;
 //===
@@ -80,7 +80,7 @@
             cell = [MUSUserProfileCell generalUserInfoTableViewCell];
         }
         [cell configurationGeneralUserInfoTableViewCellWithUser: self.socialNetwork.currentUser andCurrentProperty: [self.userPropertyArray objectAtIndex: indexPath.row]];
-         
+        
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }

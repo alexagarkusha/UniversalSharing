@@ -11,26 +11,22 @@
 #import "UIButton+LoadBackgroundImageFromNetwork.h"
 #import "UIButton+CornerRadiusButton.h"
 
-@interface UIButton() 
-
-@end
-
 @implementation UIButton (MUSSocialNetwork)
+
 - (id) init {
     self = [super init];
     if (self) {
         //self.buttonType = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        self.frame = CGRectMake(6.0, 15.0, 75.0, 70.0);
-        self.backgroundColor=[UIColor blueColor];
+        self.frame = CGRectMake(6.0, 15.0, 75.0, 70.0);//while so
+        self.backgroundColor = [UIColor lightGrayColor];
         [self cornerRadius:10];
         [self initiationSocialNetworkButtonForSocialNetwork:nil];
     }
-        return self;
+    return self;
 }
 
-
 - (void) initiationSocialNetworkButtonForSocialNetwork :(SocialNetwork*) socialNetwork {
-     SocialNetwork *currentSocialNetwork = socialNetwork;
+    SocialNetwork *currentSocialNetwork = socialNetwork;
     if (!currentSocialNetwork) {
         currentSocialNetwork = [SocialManager currentSocialNetwork];
     }

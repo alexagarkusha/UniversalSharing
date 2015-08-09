@@ -26,7 +26,7 @@ static SocialManager *model = nil;
 + (SocialNetwork*) currentSocialNetwork {
     SocialNetwork *currentSocialNetwork = nil;
     NSArray *accountsArray = [[SocialManager sharedManager] networks:@[@(Twitters), @(VKontakt), @(Facebook)]];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isLogin == %d", YES];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isLogin == %d AND isVisible == %d", YES, NO];
     NSArray *filteredArray = [accountsArray filteredArrayUsingPredicate:predicate];
     if (filteredArray.count > 0) {
         currentSocialNetwork = (SocialNetwork*) [filteredArray firstObject];

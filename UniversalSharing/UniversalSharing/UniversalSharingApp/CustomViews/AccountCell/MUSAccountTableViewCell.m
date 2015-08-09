@@ -21,21 +21,6 @@
 
 @implementation MUSAccountTableViewCell
 
-- (void)awakeFromNib {
-    // Initialization code
-    [self.networkIconImageView roundImageView];
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-    
-    // Configure the view for the selected state
-}
-
-- (NSString *)reuseIdentifier{
-    return [MUSAccountTableViewCell cellID];
-}
-
 + (NSString*) cellID {
     return NSStringFromClass([self class]);
 }
@@ -45,13 +30,24 @@
     return nibArray[0];
 }
 
-- (void) configurateCellForNetwork:(SocialNetwork *)socialNetwork {    
+- (void)awakeFromNib {
+    [self.networkIconImageView roundImageView];
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+}
+
+- (NSString *)reuseIdentifier{
+    return [MUSAccountTableViewCell cellID];
+}
+
+- (void) configurateCellForNetwork:(SocialNetwork *)socialNetwork {
     if (socialNetwork.isLogin) {
         __weak MUSAccountTableViewCell *weakSelf = self;
         [socialNetwork obtainInfoFromNetworkWithComplition:^(id result, NSError *error) {
             [weakSelf.networkIconImageView loadImageFromUrl:[NSURL URLWithString:socialNetwork.icon]];
             weakSelf.loginLabel.text = socialNetwork.title;
-            
         }];
     }
     else {

@@ -23,9 +23,14 @@ NSString *const collectionViewCellIdentifier = @"CollectionViewCellIdentifier";
 NSString *const distanceEqual100 = @"100";
 NSString *const distanceEqual1000 = @"1000";
 NSString *const distanceEqual25000 = @"25000";
+NSString *const titleActionSheet = @"Select account";
+NSString *const musAppAlertTitle_NO_Pics_Anymore = @"You can not add pics anymore :[";
+NSString *const titleCongratulatoryAlert = @"UniversalSharing congratulates You shared your POST";
+NSString *const changePlaceholderWhenStartEditing = @"";
+
 //===
 NSInteger const countOfAllowedPics = 4;
-
+NSInteger const countOfAllowedLettersInTextView = 80;
 
 #pragma mark - Errors
 
@@ -39,9 +44,7 @@ NSInteger const musAppCompressionSizePicture_By_Width = 800;
 
 NSString *const musAppError_NO_Camera = @"Device has no camera";
 NSInteger const musAppError_NO_Camera_Code = 1500;
-
 NSString *const musAppAlertTitle_Share_Photo = @"Share photo";
-NSString *const musAppAlertTitle_NO_Pics_Anymore = @"You can not add pics anymore :[";
 
 
 
@@ -58,7 +61,13 @@ NSString *const musAppButtonTitle_Cancel = @"Cancel";
 NSString *const musAppButtonTitle_OK = @"Ok";
 NSString *const musAppButtonTitle_Album = @"Album";
 NSString *const musAppButtonTitle_Camera = @"Camera";
+NSString *const Error = @"Error";
 
-
-
+#pragma mark - MUSGaleryView
+NSString *const loadNibNamed = @"MUSGaleryView";
+NSString *const nibWithNibName = @"MUSCollectionViewCell";
+NSString *const titleAlertDeletePicShow = @"Photo";
+NSString *const messageAlertDeletePicShow = @"You want to delete a pic";
+NSString *const cancelButtonTitleAlertDeletePicShow = @"NO";
+NSString *const otherButtonTitlesAlertDeletePicShow = @"YES";
 @end

@@ -10,7 +10,7 @@
 #import "MUSSocialNetworkLibraryConstants.h"
 #import "SocialNetwork.h"
 /*
-@class MUSLocationTableViewController
+ @class MUSLocationTableViewController
  
  */
 @interface MUSLocationTableViewController : UITableViewController

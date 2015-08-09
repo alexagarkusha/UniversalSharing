@@ -12,8 +12,10 @@
 @implementation ReachabilityManager
 
 #pragma mark Default Manager
+
 + (ReachabilityManager *)sharedManager {
     static ReachabilityManager *_sharedManager = nil;
+    
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _sharedManager = [[self alloc] init];
@@ -23,6 +25,7 @@
 }
 
 #pragma mark Memory Management
+
 - (void)dealloc {
     // Stop Notifier
     if (_reachability) {
@@ -31,6 +34,7 @@
 }
 
 #pragma mark Class Methods
+
 + (BOOL) isReachable {
     return [[[ReachabilityManager sharedManager] reachability] isReachable];
 }
@@ -48,6 +52,7 @@
 }
 
 #pragma mark Private Initialization
+
 - (id)init {
     self = [super init];
     

@@ -23,24 +23,23 @@
 @end
 
 static MUSPhotoManager* sharedManager = nil;
+
 @implementation MUSPhotoManager
 
 //#warning "init UIImagePickerController just ones in shareManager"
 
 + (MUSPhotoManager*) sharedManager {
     static dispatch_once_t onceTaken;
-    dispatch_once (& onceTaken, ^
-                   {
-                       sharedManager = [MUSPhotoManager new];
-                       
-                   });
+    dispatch_once (& onceTaken, ^ {
+        sharedManager = [MUSPhotoManager new];
+    });
     return sharedManager;
 }
 
 - (instancetype) init {
     self = [super init];
     if (self) {
-       self.imagePickerController = [[UIImagePickerController alloc] init];
+        self.imagePickerController = [[UIImagePickerController alloc] init];
     }
     return self;
 }
@@ -54,23 +53,12 @@ static MUSPhotoManager* sharedManager = nil;
 - (void) photoAlertShow {
     UIAlertView *photoAlert = [[UIAlertView alloc]
                                initWithTitle : musAppAlertTitle_Share_Photo
-                                     message : nil
-                                    delegate : self
-                           cancelButtonTitle : musAppButtonTitle_Cancel
-                           otherButtonTitles : musAppButtonTitle_Album, musAppButtonTitle_Camera, nil];
+                               message : nil
+                               delegate : self
+                               cancelButtonTitle : musAppButtonTitle_Cancel
+                               otherButtonTitles : musAppButtonTitle_Album, musAppButtonTitle_Camera, nil];
     photoAlert.tag = 0;
     [photoAlert show];
-}
-
-- (void) warningNotAddMorePicsAlertShow {
-    UIAlertView *warningAlert = [[UIAlertView alloc]
-                                 initWithTitle : musAppAlertTitle_NO_Pics_Anymore
-                                       message : nil
-                                      delegate : nil
-                             cancelButtonTitle : musAppButtonTitle_OK
-                             otherButtonTitles : nil];
-    warningAlert.tag = 2;
-    [warningAlert show];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -106,10 +94,9 @@ static MUSPhotoManager* sharedManager = nil;
         _imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
         [self.viewController presentViewController:_imagePickerController animated:YES completion:nil];
     }
-
+    
 }
 
-//#warning "Replace strings and code to Constants"
 - (NSError*) cameraError {
     NSError *error = [[NSError alloc] initWithDomain: musAppError_With_Domain_Universal_Sharing code: musAppError_NO_Camera_Code userInfo:@{ NSLocalizedFailureReasonErrorKey: musAppError_NO_Camera}];
     return error;

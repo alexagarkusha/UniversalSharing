@@ -42,10 +42,7 @@
     UIImage *smallImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
-    
-    
     return smallImage;
-    
 }
 
 

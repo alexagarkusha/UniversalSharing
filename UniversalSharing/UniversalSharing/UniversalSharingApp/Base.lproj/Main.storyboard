@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -251,6 +251,9 @@
                                         <exclude reference="bMK-ia-Ec8"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <outlet property="delegate" destination="8rJ-Kc-sve" id="Klg-5M-De3"/>
+                                </connections>
                             </textView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O2b-Bf-7wZ" customClass="MUSGaleryView">
                                 <rect key="frame" x="0.0" y="401" width="595" height="100"/>
@@ -286,10 +289,11 @@
                         <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
                         <gestureRecognizers/>
                         <constraints>
+                            <constraint firstAttribute="bottomMargin" secondItem="xwB-dx-Bb3" secondAttribute="bottom" constant="49" id="1gg-bh-vNs"/>
                             <constraint firstItem="Omp-fe-BSg" firstAttribute="leading" secondItem="O2b-Bf-7wZ" secondAttribute="leading" id="AtU-CM-UO6"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="xwB-dx-Bb3" secondAttribute="bottom" constant="49" id="Cfo-BV-ukw"/>
                             <constraint firstAttribute="bottom" secondItem="Omp-fe-BSg" secondAttribute="bottom" constant="250" id="Ide-ic-TNq"/>
                             <constraint firstItem="Omp-fe-BSg" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" constant="-64" id="Tja-zK-ebr"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="xwB-dx-Bb3" secondAttribute="bottom" constant="49" id="Uc1-HQ-DZg"/>
                             <constraint firstAttribute="trailing" secondItem="xwB-dx-Bb3" secondAttribute="trailing" id="ZNb-yk-wzl"/>
                             <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="Omp-fe-BSg" secondAttribute="bottom" constant="49" id="oN1-aG-ILI"/>
                             <constraint firstItem="xwB-dx-Bb3" firstAttribute="top" secondItem="O2b-Bf-7wZ" secondAttribute="bottom" constant="6" id="sRp-Od-pKE"/>
@@ -300,6 +304,7 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="Uc1-HQ-DZg"/>
                                 <exclude reference="oN1-aG-ILI"/>
                             </mask>
                         </variation>
@@ -323,7 +328,7 @@
                         <outlet property="sharaLocationButton" destination="kvU-Tv-8tp" id="TxV-eL-v3G"/>
                         <outlet property="sharePhotoButton" destination="5Z1-vA-aVX" id="JrQ-sz-gSe"/>
                         <outlet property="shareToolBar" destination="xwB-dx-Bb3" id="sw4-sM-akm"/>
-                        <outlet property="tabBarLayoutConstraint" destination="Cfo-BV-ukw" id="9a7-NG-9DI"/>
+                        <outlet property="toolBarLayoutConstraint" destination="1gg-bh-vNs" id="evi-3s-a0S"/>
                         <segue destination="Wg0-6x-xhW" kind="show" identifier="Location" id="kha-pS-nBS"/>
                     </connections>
                 </viewController>

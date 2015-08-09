@@ -7,15 +7,17 @@
 //
 
 #import "CacheImage.h"
+
 @interface CacheImage()
+
 @property (nonatomic, strong) NSCache *cacheImage;
 
 @end
-static CacheImage *model = nil;
 
 @implementation CacheImage
-+ (CacheImage*) sharedManager
-{
++ (CacheImage*) sharedManager{
+    static CacheImage *model = nil;
+    
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         model = [[CacheImage alloc] init];

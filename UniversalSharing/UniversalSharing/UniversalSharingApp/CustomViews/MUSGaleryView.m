@@ -11,11 +11,17 @@
 #import "ConstantsApp.h"
 
 @interface MUSGaleryView()<UICollectionViewDelegate, UICollectionViewDataSource, UIGestureRecognizerDelegate, UIAlertViewDelegate>
+
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 //===
 @property (strong, nonatomic)  UIView *view;
 @property (strong, nonatomic)  NSMutableArray *arrayWithChosenImages;
+/*!
+ @property
+ @abstract index for erasing a chosen picture
+ */
 @property (assign, nonatomic)  NSUInteger indexForDeletePicture;
+
 @end
 
 @implementation MUSGaleryView
@@ -34,7 +40,7 @@
 {
     self = [super initWithCoder:coder];
     if (self) {
-       self.view = [self loadViewFromNib];
+        self.view = [self loadViewFromNib];
         [self addSubview:self.view];
     }
     return self;
@@ -48,7 +54,7 @@
     [self.collectionView reloadData];
 }
 
-- (NSArray*) obtainArrayWithChosedPics {
+- (NSArray*) obtainArrayWithChosenPics {
     return self.arrayWithChosenImages;
 }
 
@@ -58,22 +64,22 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     MUSCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:collectionViewCellIdentifier forIndexPath:indexPath];
-        if (self.arrayWithChosenImages[indexPath.row] != nil) {
-            ImageToPost *image = self.arrayWithChosenImages[indexPath.row];
-            cell.photoImageViewCell.image = image.image;
-        } else {
-            cell.photoImageViewCell.image = nil;
-        }
+    if (self.arrayWithChosenImages[indexPath.row] != nil) {
+        ImageToPost *image = self.arrayWithChosenImages[indexPath.row];
+        cell.photoImageViewCell.image = image.image;
+    } else {
+        cell.photoImageViewCell.image = nil;
+    }
     return  cell;
 }
 
 -(UIView*)loadViewFromNib {
-   
-    NSArray *nibObjects = [[NSBundle mainBundle]loadNibNamed:@"MUSGaleryView" owner:self options:nil];
-     [self.collectionView registerNib:[UINib nibWithNibName:@"MUSCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:collectionViewCellIdentifier];
+    
+    NSArray *nibObjects = [[NSBundle mainBundle]loadNibNamed:loadNibNamed owner:self options:nil];
+    [self.collectionView registerNib:[UINib nibWithNibName:nibWithNibName bundle:nil] forCellWithReuseIdentifier:collectionViewCellIdentifier];
     [self setGestureRecognizer];
     
-    self.arrayWithChosenImages = [NSMutableArray new];// perhaps it will be changed by me at refactoring
+    self.arrayWithChosenImages = [NSMutableArray new];
     return [nibObjects firstObject];
 }
 
@@ -104,7 +110,6 @@
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    
     switch (buttonIndex) {
         case YES:
             [self.arrayWithChosenImages removeObjectAtIndex:self.indexForDeletePicture];
@@ -121,11 +126,11 @@
 }
 
 - (void) photoAlertDeletePicShow {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Photo"
-                                                    message:@"You want to delete a pic"
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:titleAlertDeletePicShow
+                                                    message:messageAlertDeletePicShow
                                                    delegate:self
-                                          cancelButtonTitle:@"NO"
-                                          otherButtonTitles:@"YES", nil];
+                                          cancelButtonTitle:cancelButtonTitleAlertDeletePicShow
+                                          otherButtonTitles:otherButtonTitlesAlertDeletePicShow, nil];
     [alert show];
 }
 @end

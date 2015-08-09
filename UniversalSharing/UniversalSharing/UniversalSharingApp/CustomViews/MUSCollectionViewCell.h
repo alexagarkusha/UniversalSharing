@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface MUSCollectionViewCell : UICollectionViewCell
+
 @property (weak, nonatomic) IBOutlet UIImageView *photoImageViewCell;
 
 @end

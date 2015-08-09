@@ -13,9 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *userPropertyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *userPropertyInfoLabel;
 
-
 @end
-
 
 
 @implementation MUSUserProfileCell
@@ -26,7 +24,7 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
+    
     // Configure the view for the selected state
 }
 
@@ -44,7 +42,7 @@
 }
 
 - (void) configurationGeneralUserInfoTableViewCellWithUser: (User*) currentUser andCurrentProperty : (NSString*) userProperty {
- 
+    
     self.userPropertyLabel.text = userProperty;
     NSString *userPropertyInfoString = [currentUser valueForKey:userProperty];
     

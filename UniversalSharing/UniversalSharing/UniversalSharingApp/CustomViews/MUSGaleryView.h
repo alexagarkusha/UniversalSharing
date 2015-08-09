@@ -10,7 +10,16 @@
 #import "ImageToPost.h"
 
 @interface MUSGaleryView : UIView
-
+/*!
+ @method
+ @abstract call from shareviewcontroller
+ @param object ImageToPost with current image in order to add to arrayWithChosenImages
+ */
 - (void) passChosenImageForCollection :(ImageToPost*) imageForPost;
-- (NSArray*) obtainArrayWithChosedPics;
+/*!
+ @method
+ @abstract call from shareviewcontroller in order to get array with chosen pics by a user
+ @param without
+ */
+- (NSArray*) obtainArrayWithChosenPics;
 @end

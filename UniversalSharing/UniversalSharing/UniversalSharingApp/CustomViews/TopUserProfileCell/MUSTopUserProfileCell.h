@@ -13,9 +13,7 @@
 
 + (NSString*) cellID;
 + (instancetype) profileUserTableViewCell;
-
+//===
 - (void) configurationProfileUserTableViewCellWithUser: (User*) currentUser;
-
-
 
 @end

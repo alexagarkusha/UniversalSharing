@@ -13,4 +13,5 @@
 + (CacheImage*) sharedManager;
 - (void)cacheImage:(UIImage*)image forKey:(NSURL*)key;
 - (UIImage*)obtainCachedImageForKey:(NSURL*)key;
+
 @end

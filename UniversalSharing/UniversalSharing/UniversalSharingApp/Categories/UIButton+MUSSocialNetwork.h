@@ -10,5 +10,7 @@
 #import "SocialNetwork.h"
 
 @interface UIButton (MUSSocialNetwork) <UIActionSheetDelegate>
+
 - (void) initiationSocialNetworkButtonForSocialNetwork :(SocialNetwork*) socialNetwork;
+
 @end

@@ -38,7 +38,7 @@
 @property (strong, nonatomic) NSIndexPath * selectedIndexPath;
 /*!
  @method check access to the Internet connection
-*/
+ */
 - (IBAction)updateNetworkConnection:(id)sender;
 
 @end
@@ -55,8 +55,10 @@
 }
 
 /*!
+ @method
  @abstract checking internet connection
-*/
+ @param without
+ */
 - (void) checkInternetConnection {
     BOOL isReachable = [ReachabilityManager isReachable];
     BOOL isReachableViaWiFi = [ReachabilityManager isReachableViaWiFi];
@@ -147,7 +149,7 @@
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath{
     /*
-     change socialnetwork objects when cells are changed 
+     change socialnetwork objects when cells are changed
      */
     [self.arrayWithNetworksObj exchangeObjectAtIndex:fromIndexPath.row withObjectAtIndex:toIndexPath.row];
 }

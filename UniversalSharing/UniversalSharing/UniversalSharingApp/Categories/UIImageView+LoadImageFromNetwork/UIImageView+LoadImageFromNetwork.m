@@ -16,11 +16,11 @@
 
 - (void) loadImageFromUrl : (NSURL*) url {
     UIImage *image = [[ CacheImage sharedManager] obtainCachedImageForKey:url];
-    if(image){
+    if(image) {
         self.image = image;
         return;
     }
-     __weak UIImageView *weakSelf = self;
+    __weak UIImageView *weakSelf = self;
     dispatch_queue_t q = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
     dispatch_async(q, ^{
         /* Fetch the image from the server... */
@@ -30,7 +30,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 weakSelf.image = image;
                 [[CacheImage sharedManager] cacheImage:weakSelf.image forKey:url];
-            });           
+            });
         });
     });
 }

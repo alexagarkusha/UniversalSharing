@@ -13,17 +13,15 @@
 @interface MUSLocationManager () <CLLocationManagerDelegate>
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
-@property (nonatomic, copy)   ComplitionLocation copyLocationBLock;
+@property (nonatomic, copy)   Complition copyLocationBLock;
 
 @end
-
 
 @implementation MUSLocationManager
 
 - (id) init {
     self = [super init];
-    if (self)
-    {
+    if (self) {
         self.locationManager = [[CLLocationManager alloc]init];
         [self setupLocationManager];
     }
@@ -36,41 +34,35 @@
     static dispatch_once_t onceTaken;
     dispatch_once (& onceTaken, ^{
         
-                       sharedManager = [MUSLocationManager new];
-                   });
+        sharedManager = [MUSLocationManager new];
+    });
     return sharedManager;
 }
 
-- (void) setupLocationManager
-{
+- (void) setupLocationManager {
     self.locationManager.delegate = self;
     [self.locationManager startMonitoringSignificantLocationChanges];
-
     self.locationManager.distanceFilter = kCLDistanceFilterNone;
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     
     NSString *versionDeviceString = [[UIDevice currentDevice] systemVersion];
-    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined)
-    {
+    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined) {
         if ([versionDeviceString floatValue] >= 8.0) {
             [self.locationManager requestWhenInUseAuthorization];
         }
     }
 }
 
-- (void) startTrackLocationWithComplition : (ComplitionLocation) block {
+- (void) startTrackLocationWithComplition : (Complition) block {
     self.copyLocationBLock = block;
     [self.locationManager startUpdatingLocation];
-        //block(self.locationManager,nil);
-
 }
 - (void) stopAndGetCurrentLocation {
     [self.locationManager stopUpdatingLocation];
     self.copyLocationBLock (self.locationManager.location, nil);
 }
 
-- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
-{
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
     
 }
 
@@ -80,8 +72,5 @@
         [self stopAndGetCurrentLocation];
     }
 }
-
-
-
 
 @end
