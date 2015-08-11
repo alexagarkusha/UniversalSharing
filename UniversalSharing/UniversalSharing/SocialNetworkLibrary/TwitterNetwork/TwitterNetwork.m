@@ -41,8 +41,10 @@ static TwitterNetwork *model = nil;
 
 - (instancetype) init {
     self = [super init];
-    [TwitterKit startWithConsumerKey:musTwitterConsumerKey consumerSecret:musTwitterConsumerSecret];
-    [Fabric with : @[TwitterKit] ];
+    [[Twitter sharedInstance] startWithConsumerKey:musTwitterConsumerKey consumerSecret:musTwitterConsumerSecret];
+    //[TwitterKit startWithConsumerKey:musTwitterConsumerKey consumerSecret:musTwitterConsumerSecret];
+    [Fabric with: @[TwitterKit]];
+    //[Fabric with : @[TwitterKit] ];
     if (self) {
         self.networkType = Twitters;
         if (![[Twitter sharedInstance ]session]) {
@@ -77,7 +79,7 @@ static TwitterNetwork *model = nil;
 - (void) loginWithComplition :(Complition) block {
     __weak TwitterNetwork *weakSell = self;
     
-    [TwitterKit logInWithCompletion:^(TWTRSession* session, NSError* error) {
+    [[Twitter sharedInstance] logInWithCompletion:^(TWTRSession *session, NSError *error) {
         if (session) {
             self.isLogin = YES;
             weakSell.isLogin = YES;
@@ -97,23 +99,15 @@ static TwitterNetwork *model = nil;
  */
 
 - (void) loginOut {
-    //[TwitterKit logOut];
-    //[TwitterKit logOutGuest];
-    
     [[Twitter sharedInstance] logOut];
-   
-    NSURL *url = [NSURL URLWithString:@"https://api.twitter.com"];
-    NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:url];
-    for (NSHTTPCookie *cookie in cookies)
-    {
-        [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
-    }
+    
+    NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    NSArray* twitterCookies = [cookies cookiesForURL:
+                                [NSURL URLWithString:@"https://api.twitter.com"]];
 
-    
-    
-    
-    //[[Twitter sharedInstance] logOutGuest];
-    
+    for (NSHTTPCookie* cookie in twitterCookies) {
+        [cookies deleteCookie:cookie];
+    }
     [self initiationPropertiesWithoutSession];
 }
 
