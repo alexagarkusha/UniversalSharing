@@ -75,11 +75,11 @@ static TwitterNetwork *model = nil;
 */
 
 - (void) loginWithComplition :(Complition) block {
-    
     __weak TwitterNetwork *weakSell = self;
     
     [TwitterKit logInWithCompletion:^(TWTRSession* session, NSError* error) {
         if (session) {
+            self.isLogin = YES;
             weakSell.isLogin = YES;
             [weakSell obtainInfoFromNetworkWithComplition:block];
         } else {
@@ -97,7 +97,23 @@ static TwitterNetwork *model = nil;
  */
 
 - (void) loginOut {
+    //[TwitterKit logOut];
+    //[TwitterKit logOutGuest];
+    
     [[Twitter sharedInstance] logOut];
+   
+    NSURL *url = [NSURL URLWithString:@"https://api.twitter.com"];
+    NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:url];
+    for (NSHTTPCookie *cookie in cookies)
+    {
+        [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
+    }
+
+    
+    
+    
+    //[[Twitter sharedInstance] logOutGuest];
+    
     [self initiationPropertiesWithoutSession];
 }
 
