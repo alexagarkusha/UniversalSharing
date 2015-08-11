@@ -80,7 +80,10 @@ static TwitterNetwork *model = nil;
     [TwitterKit logInWithCompletion:^(TWTRSession* session, NSError* error) {
         if (session) {
             self.isLogin = YES;
+            weakSell.isLogin = YES;
             [weakSell obtainInfoFromNetworkWithComplition:block];
+        } else {
+            block(nil, error);
         }
     }];
 }

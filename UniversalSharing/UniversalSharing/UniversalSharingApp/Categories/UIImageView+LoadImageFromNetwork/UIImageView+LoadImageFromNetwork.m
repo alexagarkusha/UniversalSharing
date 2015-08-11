@@ -29,6 +29,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             dispatch_async(dispatch_get_main_queue(), ^{
                 weakSelf.image = image;
+                if(weakSelf.image)
                 [[CacheImage sharedManager] cacheImage:weakSelf.image forKey:url];
             });
         });

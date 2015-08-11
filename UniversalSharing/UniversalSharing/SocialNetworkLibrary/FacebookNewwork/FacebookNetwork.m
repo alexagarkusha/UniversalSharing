@@ -66,7 +66,7 @@ static FacebookNetwork *model = nil;
 
 - (void) loginWithComplition :(Complition) block {
     FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
-    self.isLogin = YES;
+    
     
     __weak FacebookNetwork *weakSell = self;
     [login logInWithReadPermissions:@[musFacebookPermission_Email] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
@@ -76,6 +76,7 @@ static FacebookNetwork *model = nil;
             NSError *accessError = [NSError errorWithMessage: musErrorAccesDenied andCodeError:musErrorAccesDeniedCode];
             block(nil, accessError);
         } else {
+            weakSell.isLogin = YES;
             // If you ask for multiple permissions at once, you
             // should check if specific permissions missing
             if ([result.grantedPermissions containsObject: musFacebookPermission_Email]) {
