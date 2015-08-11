@@ -64,8 +64,13 @@ NSInteger const musVKErrorCode = 1100;
 
 #pragma mark Twitter Contants
 
-NSString *const musTwitterConsumerSecret = @"saz4WSOgOL6wFPFXuIq94zbkumbuZnkldHIKIaAsyhJpHAYdke";
-NSString *const musTwitterConsumerKey = @"lGBCsHPLRVXB2kxQgzaZCdf1q";
+//NSString *const musTwitterConsumerSecret = @"saz4WSOgOL6wFPFXuIq94zbkumbuZnkldHIKIaAsyhJpHAYdke";
+//NSString *const musTwitterConsumerKey = @"lGBCsHPLRVXB2kxQgzaZCdf1q";
+
+NSString *const musTwitterConsumerSecret = @"sQNqSfSGW5lksTvqTCqn407pSQXUNCBvIsHJrOYlNKMhREtyT2";
+NSString *const musTwitterConsumerKey = @"lUY36ubrBYXpYsZhJJvg8CYdf";
+
+
 
 NSString *const musTwitterTitle = @"Login Twitter";
 NSString *const musTwitterIconName = @"TWimage.jpeg";
