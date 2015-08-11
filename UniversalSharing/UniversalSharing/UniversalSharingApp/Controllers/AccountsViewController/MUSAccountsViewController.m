@@ -132,6 +132,8 @@
         [socialNetwork loginWithComplition:^(id result, NSError *error) {
             if (result) {
                 [weakSelf performSegueWithIdentifier: goToUserDetailViewControllerSegueIdentifier sender:nil];
+            } else {
+                [self.tableView reloadData];
             }
         }];
     }
