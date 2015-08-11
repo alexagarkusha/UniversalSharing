@@ -33,6 +33,7 @@
  @abstract  in order to up toolbar when the keyboard appears
  */
 @property (weak, nonatomic)     IBOutlet    NSLayoutConstraint* toolBarLayoutConstraint;
+@property (weak, nonatomic)     IBOutlet    NSLayoutConstraint* galeryViewLayoutConstraint;
 /*!
  @property
  @abstract  in order to up textview when the keyboard appears
@@ -51,6 +52,12 @@
  @abstract  in order to save origin position toolbar and return back when the keyboard disappears
  */
 @property (assign, nonatomic)               CGFloat toolBarLayoutConstraineOrigin;
+/*!
+ @property
+ @abstract  in order to save origin position galeryView and return back when the keyboard disappears
+ */
+@property (assign, nonatomic)               CGFloat GaleryViewLayoutConstraineOrigin;
+
 /*!
  @property
  @abstract  in order to save origin position textView and return back when the keyboard disappears
@@ -74,7 +81,7 @@
  @abstract in order to get place id from locationViewController and pass to network for location of a user
  */
 @property (strong, nonatomic)               NSString *placeID;
-
+//@property (assign, nonatomic)               CGFloat messageTextViewLayoutConstraintOrigin;
 @end
 
 @implementation MUSShareViewController
@@ -171,10 +178,16 @@
     [self forceTextViewWorkAsFacebookSharing];
     self.toolBarLayoutConstraineOrigin = self.toolBarLayoutConstraint.constant;
     self.messageTextViewLayoutConstraintOrigin = self.messageTextViewLayoutConstraint.constant;
+    if ([self obtainSizeScreen] <= 480) {
+        self.GaleryViewLayoutConstraineOrigin = self.galeryViewLayoutConstraint.constant;
+    }
     self.socialNetworkAccountsArray = [NSMutableArray new];
     //self.arrayWithNetworks = @[@(Twitters), @(VKontakt), @(Facebook)];
 }
 
+- (CGFloat) obtainSizeScreen {
+    return [UIScreen mainScreen].applicationFrame.size.height;
+}
 #pragma mark - Keyboard Show/Hide
 
 - (void) keyboardWillShow: (NSNotification*) notification {
@@ -184,7 +197,13 @@
     /*
      size up
      */
-    self.messageTextViewLayoutConstraint.constant = convertedFrame.size.height + self.shareToolBar.frame.size.height + 70.0f;
+    CGFloat addSize = 70.0f;
+    if ([self obtainSizeScreen] <= 480) {
+        addSize = 10.0f;
+        self.galeryViewLayoutConstraint.constant = 60.0;
+    }
+    self.messageTextViewLayoutConstraint.constant = convertedFrame.size.height + self.shareToolBar.frame.size.height + addSize;
+    
     
     [UIView animateWithDuration: 0.3  animations:^{
         [self.view layoutIfNeeded];
@@ -196,7 +215,9 @@
 - (void) keyboardWillHide: (NSNotification*) notification {
     self.toolBarLayoutConstraint.constant = self.toolBarLayoutConstraineOrigin;
     self.messageTextViewLayoutConstraint.constant = self.messageTextViewLayoutConstraintOrigin;
-    
+    if ([self obtainSizeScreen] <= 480) {
+    self.galeryViewLayoutConstraint.constant = self.GaleryViewLayoutConstraineOrigin;
+    }
     [UIView animateWithDuration: 0.6 animations:^{
         [self.view layoutIfNeeded];
         [self.view setNeedsLayout];
