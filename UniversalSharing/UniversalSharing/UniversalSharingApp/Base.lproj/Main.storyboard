@@ -239,7 +239,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Write something ..." translatesAutoresizingMaskIntoConstraints="NO" id="Omp-fe-BSg">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="350"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="405"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="250" id="bMK-ia-Ec8"/>
                                 </constraints>
@@ -255,13 +255,6 @@
                                     <outlet property="delegate" destination="8rJ-Kc-sve" id="Klg-5M-De3"/>
                                 </connections>
                             </textView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O2b-Bf-7wZ" customClass="MUSGaleryView">
-                                <rect key="frame" x="0.0" y="401" width="595" height="100"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="IY5-1K-cTz"/>
-                                </constraints>
-                            </view>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xwB-dx-Bb3">
                                 <rect key="frame" x="0.0" y="507" width="600" height="44"/>
                                 <constraints>
@@ -285,18 +278,26 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O2b-Bf-7wZ" customClass="MUSGaleryView">
+                                <rect key="frame" x="0.0" y="407" width="595" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="IY5-1K-cTz"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="bottomMargin" secondItem="xwB-dx-Bb3" secondAttribute="bottom" constant="49" id="1gg-bh-vNs"/>
+                            <constraint firstItem="Omp-fe-BSg" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" constant="-64" id="3Vb-1w-Qjd"/>
                             <constraint firstItem="Omp-fe-BSg" firstAttribute="leading" secondItem="O2b-Bf-7wZ" secondAttribute="leading" id="AtU-CM-UO6"/>
-                            <constraint firstAttribute="bottom" secondItem="Omp-fe-BSg" secondAttribute="bottom" constant="250" id="Ide-ic-TNq"/>
-                            <constraint firstItem="Omp-fe-BSg" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" constant="-64" id="Tja-zK-ebr"/>
+                            <constraint firstAttribute="bottom" secondItem="Omp-fe-BSg" secondAttribute="bottom" constant="195" id="Ide-ic-TNq"/>
+                            <constraint firstItem="Omp-fe-BSg" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" id="Tja-zK-ebr"/>
                             <constraint firstAttribute="bottomMargin" secondItem="xwB-dx-Bb3" secondAttribute="bottom" constant="49" id="Uc1-HQ-DZg"/>
                             <constraint firstAttribute="trailing" secondItem="xwB-dx-Bb3" secondAttribute="trailing" id="ZNb-yk-wzl"/>
                             <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="Omp-fe-BSg" secondAttribute="bottom" constant="49" id="oN1-aG-ILI"/>
-                            <constraint firstItem="xwB-dx-Bb3" firstAttribute="top" secondItem="O2b-Bf-7wZ" secondAttribute="bottom" constant="6" id="sRp-Od-pKE"/>
+                            <constraint firstItem="Omp-fe-BSg" firstAttribute="top" secondItem="QS5-Rx-YEW" secondAttribute="topMargin" constant="64" id="rZ9-0R-ocP"/>
+                            <constraint firstItem="xwB-dx-Bb3" firstAttribute="top" secondItem="O2b-Bf-7wZ" secondAttribute="bottom" id="sRp-Od-pKE"/>
                             <constraint firstItem="xwB-dx-Bb3" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="tqe-jA-4h7"/>
                             <constraint firstItem="Omp-fe-BSg" firstAttribute="trailing" secondItem="xwB-dx-Bb3" secondAttribute="trailing" id="wqe-97-vNS"/>
                             <constraint firstAttribute="trailing" secondItem="O2b-Bf-7wZ" secondAttribute="trailing" constant="5" id="xDi-i6-9gx"/>
@@ -304,6 +305,8 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="Tja-zK-ebr"/>
+                                <exclude reference="rZ9-0R-ocP"/>
                                 <exclude reference="Uc1-HQ-DZg"/>
                                 <exclude reference="oN1-aG-ILI"/>
                             </mask>
@@ -322,6 +325,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="galeryView" destination="O2b-Bf-7wZ" id="alu-vP-TdG"/>
+                        <outlet property="galeryViewLayoutConstraint" destination="IY5-1K-cTz" id="H0z-hY-kAC"/>
                         <outlet property="mainGestureRecognizer" destination="Q3Z-Zc-VoA" id="hSm-6a-V0c"/>
                         <outlet property="messageTextView" destination="Omp-fe-BSg" id="dOe-oP-nvs"/>
                         <outlet property="messageTextViewLayoutConstraint" destination="Ide-ic-TNq" id="qTc-KJ-tXg"/>
