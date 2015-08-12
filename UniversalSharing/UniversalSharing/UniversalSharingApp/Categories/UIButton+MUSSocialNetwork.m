@@ -17,7 +17,7 @@
     self = [super init];
     if (self) {
         //self.buttonType = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        self.frame = CGRectMake(6.0, 15.0, 75.0, 70.0);//while so
+        self.frame = CGRectMake(13.0, 13.0, 75.0, 75.0);//while so
         self.backgroundColor = [UIColor lightGrayColor];
         [self cornerRadius:10];
         [self initiationSocialNetworkButtonForSocialNetwork:nil];
@@ -30,7 +30,6 @@
     if (!currentSocialNetwork) {
         currentSocialNetwork = [SocialManager currentSocialNetwork];
     }
-    
     __weak UIButton *socialNetworkButton = self;
     [currentSocialNetwork obtainInfoFromNetworkWithComplition:^(id result, NSError *error) {
         SocialNetwork *currentSocialNetwork = (SocialNetwork*) result;

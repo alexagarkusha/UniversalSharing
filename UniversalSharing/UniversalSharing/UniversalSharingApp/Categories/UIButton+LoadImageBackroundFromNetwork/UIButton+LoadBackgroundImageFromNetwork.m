@@ -16,9 +16,9 @@
         /* Fetch the image from the server... */
         NSData *data = [NSData dataWithContentsOfURL:url];
         UIImage *image = [[UIImage alloc] initWithData:data];
-        
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self setBackgroundImage:image forState:UIControlStateNormal];
+            [self setImage:image forState:UIControlStateNormal];
+            [self.imageView setContentMode:UIViewContentModeScaleAspectFill];
         });
     });
 }

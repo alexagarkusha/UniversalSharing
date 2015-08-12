@@ -216,7 +216,9 @@ static FacebookNetwork *model = nil;
          if (!error) {
              self.copyComplition (musPostSuccess, nil);
          } else {
-             self.copyComplition (nil, [self errorFacebook]);
+             if ([error code] != 8){
+                 self.copyComplition (nil, [self errorFacebook]);
+             }
          }
      }];
 }
@@ -236,16 +238,23 @@ static FacebookNetwork *model = nil;
         params[musFacebookParameter_Place] = post.placeID;
     }
     
+    __weak NSArray *copyPostImagesArray = post.arrayImages;
+    __block int counterOfImages = 0;
     for (int i = 0; i < post.arrayImages.count; i++) {
         ImageToPost *imageToPost = [post.arrayImages objectAtIndex: i];
         params[musFacebookParameter_Picture] = imageToPost.image;
         FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc] initWithGraphPath: musFacebookGraphPath_Me_Photos
                                                                        parameters: params
                                                                        HTTPMethod: musPOST];
+        //counterOfImages ++;
         [connection addRequest: request
              completionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
                  if (!error) {
-                     self.copyComplition (musPostSuccess, nil);
+                     counterOfImages ++;
+                     if (counterOfImages == copyPostImagesArray.count) {
+                         self.copyComplition (musPostSuccess, nil);
+                     }
+                     //NSLog (@"connection error = %@", connection);
                  } else {
                      self.copyComplition (nil, [self errorFacebook]);
                  }
