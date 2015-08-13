@@ -69,6 +69,7 @@ static VKNetwork *model = nil;
     self.title = musVKTitle;
     self.icon = musVKIconName;
     self.isLogin = NO;
+    self.isVisible = NO;
 }
 
 #pragma mark - loginInNetwork

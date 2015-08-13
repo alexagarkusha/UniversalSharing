@@ -41,10 +41,8 @@ static TwitterNetwork *model = nil;
 
 - (instancetype) init {
     self = [super init];
-    [[Twitter sharedInstance] startWithConsumerKey:musTwitterConsumerKey consumerSecret:musTwitterConsumerSecret];
-    //[TwitterKit startWithConsumerKey:musTwitterConsumerKey consumerSecret:musTwitterConsumerSecret];
-    [Fabric with: @[TwitterKit]];
-    //[Fabric with : @[TwitterKit] ];
+    [TwitterKit startWithConsumerKey:musTwitterConsumerKey consumerSecret:musTwitterConsumerSecret];
+    [Fabric with : @[TwitterKit]];
     if (self) {
         self.networkType = Twitters;
         if (![[Twitter sharedInstance ]session]) {
@@ -65,6 +63,7 @@ static TwitterNetwork *model = nil;
     self.title = musTwitterTitle;
     self.icon = musTwitterIconName;
     self.isLogin = NO;
+    self.isVisible = NO;
     self.currentUser = nil;
 }
 
@@ -79,9 +78,8 @@ static TwitterNetwork *model = nil;
 - (void) loginWithComplition :(Complition) block {
     __weak TwitterNetwork *weakSell = self;
     
-    [[Twitter sharedInstance] logInWithCompletion:^(TWTRSession *session, NSError *error) {
+    [TwitterKit logInWithCompletion:^(TWTRSession* session, NSError* error) {
         if (session) {
-            self.isLogin = YES;
             weakSell.isLogin = YES;
             [weakSell obtainInfoFromNetworkWithComplition:block];
         } else {
@@ -99,15 +97,23 @@ static TwitterNetwork *model = nil;
  */
 
 - (void) loginOut {
-    [[Twitter sharedInstance] logOut];
+    //[TwitterKit logOut];
+    //[TwitterKit logOutGuest];
     
-    NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-    NSArray* twitterCookies = [cookies cookiesForURL:
-                                [NSURL URLWithString:@"https://api.twitter.com"]];
-
-    for (NSHTTPCookie* cookie in twitterCookies) {
-        [cookies deleteCookie:cookie];
+    [[Twitter sharedInstance] logOut];
+   
+    NSURL *url = [NSURL URLWithString:@"https://api.twitter.com"];
+    NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:url];
+    for (NSHTTPCookie *cookie in cookies)
+    {
+        [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
     }
+
+    
+    
+    
+    //[[Twitter sharedInstance] logOutGuest];
+    
     [self initiationPropertiesWithoutSession];
 }
 

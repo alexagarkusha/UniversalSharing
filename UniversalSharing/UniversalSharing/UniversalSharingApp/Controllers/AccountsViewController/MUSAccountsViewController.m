@@ -9,17 +9,17 @@
 #import "MUSAccountsViewController.h"
 #import "MUSUserDetailViewController.h"
 #import "MUSSocialNetworkLibraryHeader.h"
-#import "MUSAccountTableViewCell.h"
 #import "ConstantsApp.h"
 #import "ReachabilityManager.h"
 #import "UIButton+CornerRadiusButton.h"
+#import <AFMSlidingCell.h>
 
 
-@interface MUSAccountsViewController () <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate>
+@interface MUSAccountsViewController () <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, UIGestureRecognizerDelegate, AFMSlidingCellDelegate>
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet    UITableView *tableView;
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *btnEditOutlet;
+@property (weak, nonatomic) IBOutlet    UIBarButtonItem *btnEditOutlet;
 /*!
  @property error view - shows error Internet connection
  */
@@ -38,7 +38,12 @@
 @property (strong, nonatomic) NSIndexPath * selectedIndexPath;
 /*!
  @method check access to the Internet connection
+ 
  */
+
+@property (strong, nonatomic) NSMutableArray *arrayButtons;
+@property (assign, nonatomic) BOOL flag;
+
 - (IBAction)updateNetworkConnection:(id)sender;
 
 @end
@@ -47,11 +52,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self obtanObjectsOfSocialNetworks];
+    self.arrayButtons = [NSMutableArray new];
 }
+
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self checkInternetConnection];
+    [self.arrayButtons removeAllObjects];
 }
 
 /*!
@@ -70,12 +79,13 @@
     } else {
         self.errorView.hidden = YES;
         self.btnEditOutlet.enabled = YES;
-        [self obtanObjectsOfSocialNetworks];
         [self.tableView reloadData];
     }
 }
 
 - (IBAction)btnEditTapped:(id)sender {
+    [[self obtainCurrentCell:self.selectedIndexPath] hideButtonViewAnimated:YES];
+    
     if(self.editing) {
         [super setEditing:NO animated:NO];
         [self.tableView setEditing:NO animated:NO];
@@ -85,8 +95,6 @@
         [self.tableView setEditing:YES animated:YES];
         [self.navigationItem.leftBarButtonItem setTitle:doneButtonTitle];
     }
-    [self.tableView reloadData];
-    
 }
 
 /*!
@@ -110,17 +118,23 @@
      XIB
      */
     MUSAccountTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[MUSAccountTableViewCell cellID]];
-    SocialNetwork *socialNetwork = self.arrayWithNetworksObj[indexPath.row];
+    SocialNetwork *socialNetwork = [self obtainCurrentSocialNetwork:indexPath];
     if(!cell) {
         cell = [MUSAccountTableViewCell accountTableViewCell];
     }
+    __weak MUSAccountsViewController *weakSelf = self;
+    [cell setDelegate:self];
+    [cell addFirstButton:[self createButtonHideShow :indexPath :socialNetwork] withWidth:80.0 withTappedBlock:^(AFMSlidingCell *cell) {
+        [cell hideButtonViewAnimated:YES];
+        [weakSelf changeTitleButton:[weakSelf obtainIndexPath:cell]];
+    }];
     [cell configurateCellForNetwork:socialNetwork];
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     self.selectedIndexPath = indexPath;
-    SocialNetwork *socialNetwork = self.arrayWithNetworksObj[indexPath.row];
+    SocialNetwork *socialNetwork = [self obtainCurrentSocialNetwork:indexPath];
     /*!
      when cell is tapped we check this social network is login and existed a currentuser object  if YES we go to ditailviewcontroller, else to do login than go to ditailviewcontroller
      */
@@ -133,27 +147,38 @@
             if (result) {
                 [weakSelf performSegueWithIdentifier: goToUserDetailViewControllerSegueIdentifier sender:nil];
             } else {
-                [self.tableView reloadData];
+                [weakSelf.tableView reloadData];
             }
         }];
     }
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    SocialNetwork *socialNetwork = self.arrayWithNetworksObj[indexPath.row];
-    MUSAccountTableViewCell *cell = (MUSAccountTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath];
-    /*!
-     in order to set bool property isVisible for configurating color of cell
-     */
-    [cell changeColorOfCell:socialNetwork];
-    [self.tableView reloadData];
+    [self changeTitleButton:indexPath];
 }
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath{
     /*
-     change socialnetwork objects when cells are changed
+     change socialnetwork objects and position buttons when cells are changed
      */
-    [self.arrayWithNetworksObj exchangeObjectAtIndex:fromIndexPath.row withObjectAtIndex:toIndexPath.row];
+    SocialNetwork *socialNetwork = [self.arrayWithNetworksObj objectAtIndex:fromIndexPath.row];
+    [self.arrayWithNetworksObj removeObjectAtIndex:fromIndexPath.row];
+    [self.arrayWithNetworksObj insertObject:socialNetwork atIndex:toIndexPath.row];
+    
+    UIButton *currentButton = [self.arrayButtons objectAtIndex:fromIndexPath.row];
+    [self.arrayButtons removeObjectAtIndex:fromIndexPath.row];
+    [self.arrayButtons insertObject:currentButton atIndex:toIndexPath.row];
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)aTableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    // determine if it's in editing mode
+    if (self.tableView.editing) {
+        if ([self.arrayButtons[indexPath.row] isEqual:[NSNull null]]) {
+            return UITableViewCellEditingStyleNone;
+        }
+        return UITableViewCellEditingStyleDelete;
+    }
+    return UITableViewCellEditingStyleNone;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -161,12 +186,7 @@
 }
 
 -(NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
-    SocialNetwork *socialNetwork = self.arrayWithNetworksObj[indexPath.row];
-    return socialNetwork.isVisible ?  showButtonTitle : hideButtonTitle;
-}
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
+    return [self obtainCurrentSocialNetwork:indexPath].isVisible ?  showButtonTitle : hideButtonTitle;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -186,5 +206,58 @@
 
 - (IBAction)updateNetworkConnection:(id)sender {
     [self checkInternetConnection];
+}
+
+#pragma mark AFMSlidingCell Delegate
+
+- (void)buttonsDidShowForCell:(AFMSlidingCell *)cell {
+    _flag = YES;
+    
+    self.selectedIndexPath = [self obtainIndexPath:cell];
+}
+- (void)buttonsDidHideForCell:(AFMSlidingCell *)cell {
+    _flag = NO;
+}
+- (BOOL)shouldAllowShowingButtonsForCell:(AFMSlidingCell *)cell {
+    if (self.tableView.editing || _flag || [self.arrayButtons[[self obtainIndexPath:cell].row] isEqual:[NSNull null]]) {
+        return NO;
+    }
+    return YES;
+}
+
+- (NSIndexPath*) obtainIndexPath :(AFMSlidingCell *)cell {
+    CGPoint location = cell.layer.position;
+    return [self.tableView indexPathForRowAtPoint:location];
+}
+
+-(void) changeTitleButton :(NSIndexPath *)indexPath {
+    SocialNetwork *socialNetwork = [self obtainCurrentSocialNetwork:indexPath];
+    /*!
+     in order to set bool property isVisible for configurating color of cell
+     */
+    [[self obtainCurrentCell:indexPath] changeColorOfCell:socialNetwork];
+    [self.arrayButtons[indexPath.row] setTitle: socialNetwork.isVisible ?  showButtonTitle : hideButtonTitle forState:UIControlStateNormal];
+    [self.tableView reloadData];    
+}
+
+- (MUSAccountTableViewCell*) obtainCurrentCell :(NSIndexPath*) indexPath {
+    return  (MUSAccountTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+}
+
+- (SocialNetwork*) obtainCurrentSocialNetwork : (NSIndexPath*) indexPath {
+    return self.arrayWithNetworksObj[indexPath.row];
+}
+
+- (UIButton *)createButtonHideShow:(NSIndexPath *)indexPath :(SocialNetwork*)socialNetwork {
+    if (!socialNetwork.isLogin) {
+        [self.arrayButtons addObject:[NSNull null]];
+        return nil;
+    } else {
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        [button setTitle:socialNetwork.isVisible ?  showButtonTitle : hideButtonTitle forState:UIControlStateNormal];
+        [button setBackgroundColor:[UIColor redColor]];
+        [self.arrayButtons addObject:button];
+    }
+    return self.arrayButtons[indexPath.row];
 }
 @end
