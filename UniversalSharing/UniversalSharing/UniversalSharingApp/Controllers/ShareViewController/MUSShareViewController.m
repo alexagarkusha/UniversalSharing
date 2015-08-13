@@ -19,6 +19,7 @@
 #import "UIButton+MUSSocialNetwork.h"
 #import "MUSGaleryView.h"
 #import "ReachabilityManager.h"
+#import <CoreText/CoreText.h>
 
 @interface MUSShareViewController () <UITextViewDelegate, UIActionSheetDelegate, UIAlertViewDelegate, UINavigationControllerDelegate, UIToolbarDelegate, MUSGaleryViewDelegate>
 
@@ -27,7 +28,7 @@
 
 
 @property (weak, nonatomic)     IBOutlet    UIToolbar *shareToolBar;
-@property (weak, nonatomic)     IBOutlet    UITextView *messageTextView;
+//@property (weak, nonatomic)     IBOutlet    UITextView *messageTextView;
 @property (strong, nonatomic)   IBOutlet    UITapGestureRecognizer *mainGestureRecognizer;
 @property (weak, nonatomic)     IBOutlet    UIBarButtonItem *shareButtonOutlet;
 
@@ -43,7 +44,7 @@
  @property
  @abstract  in order to up textview when the keyboard appears
  */
-@property (weak, nonatomic)     IBOutlet    NSLayoutConstraint* messageTextViewLayoutConstraint;
+//@property (weak, nonatomic)     IBOutlet    NSLayoutConstraint* messageTextViewLayoutConstraint;
 /*!
  @property
  @abstract object with chosen pics and xib with collectionView
@@ -86,7 +87,13 @@
  @abstract in order to get place id from locationViewController and pass to network for location of a user
  */
 @property (strong, nonatomic)               NSString *placeID;
-//@property (assign, nonatomic)               CGFloat messageTextViewLayoutConstraintOrigin;
+
+@property (strong, nonatomic)               UIBezierPath *exclusivePath;
+@property (strong, nonatomic)               UITextView *messageTextView;
+@property (assign, nonatomic)               CGRect messageTextViewFrame;
+
+
+
 @end
 
 @implementation MUSShareViewController
@@ -95,31 +102,39 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self initiationMUSShareViewController];
-}
-
-- (void) viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:YES];
-    
     [[NSNotificationCenter defaultCenter] addObserver : self
                                              selector : @selector(keyboardWillShow:)
                                                  name : UIKeyboardWillShowNotification
                                                object : nil];
     [[NSNotificationCenter defaultCenter] addObserver : self
                                              selector : @selector(keyboardWillHide:)
-                                                 name : UIKeyboardDidHideNotification
+                                                 name : UIKeyboardWillHideNotification
                                                object : nil];
+    [self initiationMUSShareViewController];
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
     self.mainGestureRecognizer.enabled = NO;
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:YES];
-    [[NSNotificationCenter defaultCenter]removeObserver:self];
+    [self endEditingMessageTextView];
 }
 
 - (void) viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:YES];
+    /*
+    dispatch_queue_t q = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0ul);
+    dispatch_async(q, ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter]removeObserver:self];
+        });
+    });
+     */
 }
+
 /*!
  @method
  @abstract method of "changeSocialNetworkButton" is called for showing actionSheet with login and isVisible networks
@@ -137,7 +152,6 @@
      */
     self.changeSocialNetworkButton = [UIButton new];
     [self.changeSocialNetworkButton addTarget:self action:@selector(changeSocialNetworkAccount:)forControlEvents:UIControlEventTouchUpInside];
-    [self.messageTextView addSubview:self.changeSocialNetworkButton];
 }
 
 - (IBAction)btnShareLocationTapped:(id)sender {
@@ -147,19 +161,6 @@
 - (IBAction)btnSharePhotoTapped:(id)sender {
     [self obtainChosenImage];
 }
-/*!
- @method
- @abstract  detour to the right round "changeSocialNetworkButton" when text is being written by a user
- @param without
- */
-- (void) forceTextViewWorkAsFacebookSharing {// a little bug when scroll text
-    // CGRect buttonFrame = self.changeSocialNetworkButton.frame;
-    CGRect myFrame = CGRectMake(0, 0, self.changeSocialNetworkButton.frame.size.width + self.changeSocialNetworkButton.frame.origin.x, self.changeSocialNetworkButton.frame.size.height + self.changeSocialNetworkButton.frame.origin.x);
-    UIBezierPath *exclusivePath = [UIBezierPath bezierPathWithRect: myFrame];
-    self.messageTextView.textContainer.exclusionPaths = @[exclusivePath];
-
-}
-
 /*!
  @method
  @abstract  disappear keyboard when touch other place
@@ -180,26 +181,79 @@
     }
     
     [self addButtonOnTextView];
-    [self forceTextViewWorkAsFacebookSharing];
+    [self initiationMessageTextView];
     self.galeryView.delegate = self;
     self.shareButtonOutlet.enabled = NO;
     self.toolBarLayoutConstraineOrigin = self.toolBarLayoutConstraint.constant;
-    self.messageTextViewLayoutConstraintOrigin = self.messageTextViewLayoutConstraint.constant;
-    
     if ([self obtainSizeScreen] <= 480) {
         self.GaleryViewLayoutConstraineOrigin = self.galeryViewLayoutConstraint.constant;
     }
     self.socialNetworkAccountsArray = [NSMutableArray new];
-    //self.arrayWithNetworks = @[@(Twitters), @(VKontakt), @(Facebook)];
 }
 
 - (CGFloat) obtainSizeScreen {
     return [UIScreen mainScreen].applicationFrame.size.height;
 }
+
+#pragma mark - initiation Message UITextView
+
+/*!
+ @method
+ @abstract  detour to the right round "changeSocialNetworkButton" when text is being written by a user
+ @param without
+ */
+- (void) initiationMessageTextView {
+    NSDictionary* attrs = @{NSFontAttributeName:
+                                [UIFont preferredFontForTextStyle:UIFontTextStyleBody]};
+    NSAttributedString* attrString = [[NSAttributedString alloc]
+                                      initWithString: kPlaceholderText
+                                      attributes:attrs];
+    
+    
+    NSTextStorage* textStorage = [[NSTextStorage alloc] initWithAttributedString:attrString];
+    NSLayoutManager *layoutManager = [NSLayoutManager new];
+    [textStorage addLayoutManager:layoutManager];
+    
+    CGSize textSizeFrame = CGSizeMake([[UIScreen mainScreen] bounds].size.width,
+                                      [[UIScreen mainScreen] bounds].size.height - [UIApplication sharedApplication].statusBarFrame.size.height - self.navigationController.navigationBar.frame.size.height - self.galeryView.frame.size.height - self.shareToolBar.frame.size.height - self.tabBarController.tabBar.frame.size.height);
+    
+    
+    NSTextContainer *textContainer = [[NSTextContainer alloc] initWithSize: CGSizeMake (textSizeFrame.width, textSizeFrame.height)];
+    
+    UIBezierPath *rectanglePath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, self.changeSocialNetworkButton.frame.size.width + self.changeSocialNetworkButton.frame.origin.x, self.changeSocialNetworkButton.frame.size.height + self.changeSocialNetworkButton.frame.origin.x)];
+    
+    textContainer.exclusionPaths = @[rectanglePath];
+    
+    [layoutManager addTextContainer:textContainer];
+    
+    CGRect messageTextViewFrame = CGRectMake(0, self.navigationController.navigationBar.frame.size.height + [UIApplication sharedApplication].statusBarFrame.size.height, textSizeFrame.width, textSizeFrame.height);
+    
+    self.messageTextView = [[UITextView alloc] initWithFrame: messageTextViewFrame textContainer: textContainer];
+    self.messageTextView.editable = YES;
+    self.messageTextView.scrollEnabled = YES;
+    self.messageTextView.delegate = self;
+    self.messageTextView.textColor = [UIColor lightGrayColor];
+    self.messageTextView.tag = 0;
+    self.messageTextView.autocorrectionType = UITextAutocorrectionTypeNo;
+    
+    self.messageTextViewFrame = CGRectMake(self.messageTextView.frame.origin.x, self.messageTextView.frame.origin.y, self.messageTextView.frame.size.width, self.messageTextView.frame.size.height);
+    [self.view addSubview:self.messageTextView];
+    [self.messageTextView addSubview: self.changeSocialNetworkButton];
+}
+
+- (void) initialParametersOfMessageTextView {
+    /*
+     text : "write something"
+     */
+    self.messageTextView.text = kPlaceholderText;
+    self.messageTextView.textColor = [UIColor lightGrayColor];
+    self.messageTextView.tag = 0;
+}
+
 #pragma mark - Keyboard Show/Hide
 
 - (void) keyboardWillShow: (NSNotification*) notification {
-    CGRect initialFrame = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    CGRect initialFrame = [[[notification userInfo] objectForKey : UIKeyboardFrameEndUserInfoKey] CGRectValue];
     CGRect convertedFrame = [self.view convertRect:initialFrame fromView:nil];
     self.toolBarLayoutConstraint.constant = convertedFrame.size.height;
     /*
@@ -210,7 +264,12 @@
         galeryViewHeight = 60.0f;
         self.galeryViewLayoutConstraint.constant = galeryViewHeight;
     }
-    self.messageTextViewLayoutConstraint.constant = convertedFrame.size.height + self.shareToolBar.frame.size.height + galeryViewHeight;
+    self.messageTextView.frame = CGRectMake(self.messageTextView.frame.origin.x,
+                                             self.messageTextView.frame.origin.y,
+                                             self.messageTextView.frame.size.width,
+                                             self.messageTextView.frame.size.height
+                                             - convertedFrame.size.height +
+                                             self.tabBarController.tabBar.frame.size.height + self.galeryView.frame.size.height - galeryViewHeight);
     [UIView animateWithDuration: 0.3  animations:^{
         [self.view layoutIfNeeded];
         [self.view setNeedsLayout];
@@ -218,12 +277,17 @@
     [UIView commitAnimations];
 }
 
+
 - (void) keyboardWillHide: (NSNotification*) notification {
     self.toolBarLayoutConstraint.constant = self.toolBarLayoutConstraineOrigin;
-    self.messageTextViewLayoutConstraint.constant = self.messageTextViewLayoutConstraintOrigin;
     if ([self obtainSizeScreen] <= 480) {
-    self.galeryViewLayoutConstraint.constant = self.GaleryViewLayoutConstraineOrigin;
+        self.galeryViewLayoutConstraint.constant = self.GaleryViewLayoutConstraineOrigin;
     }
+    [UIView beginAnimations:@"TableViewDown" context:NULL];
+    [UIView setAnimationDuration:0.5f];
+    self.messageTextView.frame = self.messageTextViewFrame;
+    [UIView commitAnimations];
+
     [UIView animateWithDuration: 0.4 animations:^{
         [self.view layoutIfNeeded];
         [self.view setNeedsLayout];
@@ -231,12 +295,8 @@
     [UIView commitAnimations];
 }
 
-#pragma mark - UIChangeSocialNetwork
-/*!
- @method
- @abstract  detour to the right round "changeSocialNetworkButton" when text is being written by a user
- @param sender
- */
+#pragma mark - Share Post to Social network
+
 - (IBAction)shareToSocialNetwork:(id)sender {
     BOOL isReachable = [ReachabilityManager isReachable];
     BOOL isReachableViaWiFi = [ReachabilityManager isReachableViaWiFi];
@@ -277,24 +337,28 @@
         textView.text = changePlaceholderWhenStartEditing;
         textView.textColor = [UIColor blackColor];
         textView.tag = 1;
-        self.shareButtonOutlet.enabled = YES;
     }
     self.mainGestureRecognizer.enabled = YES;
     return YES;
 }
 
+- (void)textViewDidChange:(UITextView *)textView {
+    if (textView.text.length > 0) {
+        self.shareButtonOutlet.enabled = YES;
+    } else {
+        if ([self.galeryView obtainArrayWithChosenPics].count < 1) {
+            self.shareButtonOutlet.enabled = NO;
+        }
+    }
+}
+
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-    //    NSString *string=self.messageTextView.text;
-    //    NSArray *array=[string componentsSeparatedByString:@"\n"];
-    //    if ([array count] == 4) {
-    //        [self cancelForceTextViewWorkAsFacebookSharing];
-    //    }
-    return textView.text.length + (text.length - range.length) <= countOfAllowedLettersInTextView;
+      return textView.text.length + (text.length - range.length) <= countOfAllowedLettersInTextView;
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
     if([textView.text length] == 0) {
-        [self initiationMessageTextView];
+        [self initialParametersOfMessageTextView];
         if ([self.galeryView obtainArrayWithChosenPics].count < 1) {
             self.shareButtonOutlet.enabled = NO;
         }
@@ -303,20 +367,25 @@
     }
 }
 
-- (void) initiationMessageTextView {
-    /*
-     text : "write something"
-     */
-    self.messageTextView.text = kPlaceholderText;
-    self.messageTextView.textColor = [UIColor lightGrayColor];
-    self.messageTextView.tag = 0;
-}
-
 #pragma mark - UITapGestureRecognizer
 
 - (IBAction)endEditingMessage:(id)sender {
-    [self.messageTextView resignFirstResponder];
+    [self endEditingMessageTextView];
+}
+
+- (void) endEditingMessageTextView {
+    //[UIView animateWithDuration:1.0 animations:^(void){
+        [self.messageTextView resignFirstResponder];
+    //} completion:^(BOOL finished) {
+        //Do something
+    //}];
+
+    
+    
+    
+    //[self.messageTextView resignFirstResponder];
     self.mainGestureRecognizer.enabled = NO;
+    //[self performSelector:@selector(keyboardWillHide:)];
 }
 
 #pragma mark - UIActionSheet
@@ -332,7 +401,7 @@
     __weak MUSShareViewController *weakSelf = self;
     [[[SocialManager sharedManager] networks: self.arrayWithNetworks] enumerateObjectsUsingBlock:^(SocialNetwork *socialNetwork, NSUInteger index, BOOL *stop) {
         if (socialNetwork.isLogin && !socialNetwork.isVisible) {
-            NSString *buttonTitle = [NSString stringWithFormat:@"%@", NSStringFromClass([socialNetwork class])];
+            NSString *buttonTitle = [NSString stringWithFormat:@"%@", socialNetwork.name];
             [sheet addButtonWithTitle: buttonTitle];
             [weakSelf.socialNetworkAccountsArray addObject:socialNetwork];
         }
@@ -433,7 +502,6 @@
         if ([self.messageTextView.text isEqualToString:kPlaceholderText]) {
             self.shareButtonOutlet.enabled = NO;
         }
-        
     } else {
         [self.sharePhotoButton setTintColor:[UIColor redColor]];
         self.shareButtonOutlet.enabled = YES;
@@ -443,5 +511,12 @@
 
 
 @end
+
+
+
+
+
+
+
 
 

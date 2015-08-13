@@ -37,6 +37,7 @@ typedef NS_ENUM (NSInteger, DistanceType) {
 
 FOUNDATION_EXPORT NSString *const musFacebookTitle;
 FOUNDATION_EXPORT NSString *const musFacebookIconName;
+FOUNDATION_EXPORT NSString *const musFacebookName;
 
 FOUNDATION_EXPORT NSString *const musFacebookPermission_Email;
 FOUNDATION_EXPORT NSString *const musFacebookPermission_Publish_Actions;
@@ -69,6 +70,7 @@ FOUNDATION_EXPORT NSString *const musVKAppID;
 FOUNDATION_EXPORT NSString *const musVKAllUserFields;
 FOUNDATION_EXPORT NSString *const musVKTitle;
 FOUNDATION_EXPORT NSString *const musVKIconName;
+FOUNDATION_EXPORT NSString *const musVKName;
 
 FOUNDATION_EXPORT NSString *const musVKMethodPlacesSearch;
 
@@ -94,6 +96,7 @@ FOUNDATION_EXPORT NSString *const musTwitterConsumerKey;
 
 FOUNDATION_EXPORT NSString *const musTwitterTitle;
 FOUNDATION_EXPORT NSString *const musTwitterIconName;
+FOUNDATION_EXPORT NSString *const musTwitterName;
 
 FOUNDATION_EXPORT NSString *const musTwitterError;
 FOUNDATION_EXPORT NSInteger const musTwitterErrorCode;

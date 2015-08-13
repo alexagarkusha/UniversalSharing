@@ -45,6 +45,7 @@ static VKNetwork *model = nil;
     
     if (self) {
         self.networkType = VKontakt;
+        self.name = musVKName;
         if (![self isLoggedIn]) {
             [self initiationPropertiesWithoutSession];
         }

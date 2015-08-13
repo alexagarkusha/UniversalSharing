@@ -45,6 +45,7 @@ static TwitterNetwork *model = nil;
     [Fabric with : @[TwitterKit]];
     if (self) {
         self.networkType = Twitters;
+        self.name = musTwitterName;
         if (![[Twitter sharedInstance ]session]) {
             [self initiationPropertiesWithoutSession];
         }
