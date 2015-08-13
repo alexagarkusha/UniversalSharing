@@ -50,6 +50,7 @@
     [self.arrayWithChosenImages addObject: imageForPost];
     if ([self.arrayWithChosenImages count] == 1) {
         self.collectionView.backgroundColor = [UIColor grayColor];
+        [self.delegate changeSharePhotoButtonColorAndShareButtonState : YES];
     }
     [self.collectionView reloadData];
 }
@@ -115,6 +116,7 @@
             [self.arrayWithChosenImages removeObjectAtIndex:self.indexForDeletePicture];
             if ([self.arrayWithChosenImages count] == 0) {
                 self.collectionView.backgroundColor = [UIColor whiteColor];
+                [self.delegate changeSharePhotoButtonColorAndShareButtonState : NO];
             }
             [self.collectionView reloadData];
             break;

@@ -18,8 +18,9 @@
 #import "Place.h"
 #import "UIButton+MUSSocialNetwork.h"
 #import "MUSGaleryView.h"
+#import "ReachabilityManager.h"
 
-@interface MUSShareViewController () <UITextViewDelegate, UIActionSheetDelegate, UIAlertViewDelegate, UINavigationControllerDelegate, UIToolbarDelegate>
+@interface MUSShareViewController () <UITextViewDelegate, UIActionSheetDelegate, UIAlertViewDelegate, UINavigationControllerDelegate, UIToolbarDelegate, MUSGaleryViewDelegate>
 
 - (IBAction)shareToSocialNetwork:(id)sender;
 - (IBAction)endEditingMessage:(id)sender;
@@ -28,6 +29,10 @@
 @property (weak, nonatomic)     IBOutlet    UIToolbar *shareToolBar;
 @property (weak, nonatomic)     IBOutlet    UITextView *messageTextView;
 @property (strong, nonatomic)   IBOutlet    UITapGestureRecognizer *mainGestureRecognizer;
+@property (weak, nonatomic)     IBOutlet    UIBarButtonItem *shareButtonOutlet;
+
+
+
 /*!
  @property
  @abstract  in order to up toolbar when the keyboard appears
@@ -45,7 +50,7 @@
  */
 @property (weak, nonatomic)     IBOutlet    MUSGaleryView *galeryView;
 @property (weak, nonatomic)     IBOutlet    UIBarButtonItem *sharePhotoButton;
-@property (weak, nonatomic)     IBOutlet    UIBarButtonItem *sharaLocationButton;
+@property (weak, nonatomic)     IBOutlet    UIBarButtonItem *shareLocationButton;
 
 /*!
  @property
@@ -96,14 +101,14 @@
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow:)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillHide:)
-                                                 name:UIKeyboardDidHideNotification
-                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver : self
+                                             selector : @selector(keyboardWillShow:)
+                                                 name : UIKeyboardWillShowNotification
+                                               object : nil];
+    [[NSNotificationCenter defaultCenter] addObserver : self
+                                             selector : @selector(keyboardWillHide:)
+                                                 name : UIKeyboardDidHideNotification
+                                               object : nil];
     self.mainGestureRecognizer.enabled = NO;
 }
 
@@ -136,12 +141,10 @@
 }
 
 - (IBAction)btnShareLocationTapped:(id)sender {
-    [self.sharaLocationButton setTintColor:[UIColor redColor]] ;
     [self userCurrentLocation];
 }
 
 - (IBAction)btnSharePhotoTapped:(id)sender {
-    [self.sharePhotoButton setTintColor:[UIColor redColor]] ;
     [self obtainChosenImage];
 }
 /*!
@@ -151,9 +154,10 @@
  */
 - (void) forceTextViewWorkAsFacebookSharing {// a little bug when scroll text
     // CGRect buttonFrame = self.changeSocialNetworkButton.frame;
-    CGRect myFrame = CGRectMake(6, 15, 100, 50);
-    UIBezierPath *exclusivePath = [UIBezierPath bezierPathWithRect:myFrame];
+    CGRect myFrame = CGRectMake(0, 0, self.changeSocialNetworkButton.frame.size.width + self.changeSocialNetworkButton.frame.origin.x, self.changeSocialNetworkButton.frame.size.height + self.changeSocialNetworkButton.frame.origin.x);
+    UIBezierPath *exclusivePath = [UIBezierPath bezierPathWithRect: myFrame];
     self.messageTextView.textContainer.exclusionPaths = @[exclusivePath];
+
 }
 
 /*!
@@ -174,10 +178,14 @@
     if (!_currentSocialNetwork) {
         _currentSocialNetwork = [SocialManager currentSocialNetwork];
     }
+    
     [self addButtonOnTextView];
     [self forceTextViewWorkAsFacebookSharing];
+    self.galeryView.delegate = self;
+    self.shareButtonOutlet.enabled = NO;
     self.toolBarLayoutConstraineOrigin = self.toolBarLayoutConstraint.constant;
     self.messageTextViewLayoutConstraintOrigin = self.messageTextViewLayoutConstraint.constant;
+    
     if ([self obtainSizeScreen] <= 480) {
         self.GaleryViewLayoutConstraineOrigin = self.galeryViewLayoutConstraint.constant;
     }
@@ -197,14 +205,12 @@
     /*
      size up
      */
-    CGFloat addSize = 70.0f;
+    CGFloat galeryViewHeight = self.galeryView.frame.size.height;
     if ([self obtainSizeScreen] <= 480) {
-        addSize = 10.0f;
-        self.galeryViewLayoutConstraint.constant = 60.0;
+        galeryViewHeight = 60.0f;
+        self.galeryViewLayoutConstraint.constant = galeryViewHeight;
     }
-    self.messageTextViewLayoutConstraint.constant = convertedFrame.size.height + self.shareToolBar.frame.size.height + addSize;
-    
-    
+    self.messageTextViewLayoutConstraint.constant = convertedFrame.size.height + self.shareToolBar.frame.size.height + galeryViewHeight;
     [UIView animateWithDuration: 0.3  animations:^{
         [self.view layoutIfNeeded];
         [self.view setNeedsLayout];
@@ -218,7 +224,7 @@
     if ([self obtainSizeScreen] <= 480) {
     self.galeryViewLayoutConstraint.constant = self.GaleryViewLayoutConstraineOrigin;
     }
-    [UIView animateWithDuration: 0.6 animations:^{
+    [UIView animateWithDuration: 0.4 animations:^{
         [self.view layoutIfNeeded];
         [self.view setNeedsLayout];
     }];
@@ -232,19 +238,36 @@
  @param sender
  */
 - (IBAction)shareToSocialNetwork:(id)sender {
+    BOOL isReachable = [ReachabilityManager isReachable];
+    BOOL isReachableViaWiFi = [ReachabilityManager isReachableViaWiFi];
+    
+    if (!isReachableViaWiFi && !isReachable) {
+        [self showAlertWithMessage: musAppError_Internet_Connection];
+        return;
+    }
+    
     if(!self.post) {
         self.post = [[Post alloc] init];
-    }
-    self.post.placeID = self.placeID;
-    self.post.postDescription = self.messageTextView.text;
-    self.post.networkType = _currentSocialNetwork.networkType;
+    } else {
+        self.post.placeID = self.placeID;
+        if (![self.messageTextView.text isEqualToString: kPlaceholderText]) {
+            self.post.postDescription = self.messageTextView.text;
+        } else {
+            self.post.postDescription = @"";
+        }
+        self.post.networkType = _currentSocialNetwork.networkType;
     /*
      get array with chosen images from MUSGaleryView
      */
-    self.post.arrayImages = [self.galeryView obtainArrayWithChosenPics];
-    [_currentSocialNetwork sharePost:self.post withComplition:^(id result, NSError *error) {
-        [self congratulatoryAlertShow];
-    }];
+        self.post.arrayImages = [self.galeryView obtainArrayWithChosenPics];
+        [_currentSocialNetwork sharePost:self.post withComplition:^(id result, NSError *error) {
+            if (!error) {
+                [self showAlertWithMessage : titleCongratulatoryAlert];
+            } else {
+                [self showErrorAlertWithError : error];
+            }
+        }];
+    }
 }
 
 #pragma mark - UITextViewDelegate
@@ -254,6 +277,7 @@
         textView.text = changePlaceholderWhenStartEditing;
         textView.textColor = [UIColor blackColor];
         textView.tag = 1;
+        self.shareButtonOutlet.enabled = YES;
     }
     self.mainGestureRecognizer.enabled = YES;
     return YES;
@@ -271,6 +295,11 @@
 - (void)textViewDidEndEditing:(UITextView *)textView {
     if([textView.text length] == 0) {
         [self initiationMessageTextView];
+        if ([self.galeryView obtainArrayWithChosenPics].count < 1) {
+            self.shareButtonOutlet.enabled = NO;
+        }
+    } else {
+        self.shareButtonOutlet.enabled = YES;
     }
 }
 
@@ -318,6 +347,8 @@
          after a user chose new network we change current social network
          */
         _currentSocialNetwork = [self.socialNetworkAccountsArray objectAtIndex: buttonIndex - 1];
+        [self.shareLocationButton setTintColor: [UIColor blackColor]];
+        self.placeID = @"";
         [self.changeSocialNetworkButton initiationSocialNetworkButtonForSocialNetwork:_currentSocialNetwork];
     }
 }
@@ -330,16 +361,17 @@
  */
 - (void) obtainChosenImage {
     if ([[self.galeryView obtainArrayWithChosenPics] count] == countOfAllowedPics) {
-        [self warningNotAddMorePicsAlertShow];
+        [self showAlertWithMessage : musAppAlertTitle_NO_Pics_Anymore];
         return;
     }
     __weak MUSShareViewController *weakSelf = self;
     [[MUSPhotoManager sharedManager] photoShowFromViewController:self withComplition:^(id result, NSError *error) {
-        if(error) {
+        if(!error) {
+            [weakSelf.galeryView passChosenImageForCollection:result];
+        } else {
             [weakSelf showErrorAlertWithError : error];
             return;
         }
-        [weakSelf.galeryView passChosenImageForCollection:result];
     }];
 }
 
@@ -349,22 +381,26 @@
     [self performSegueWithIdentifier: goToLocationViewControllerSegueIdentifier sender:nil];
 }
 
-#pragma mark - warning, error alerts and posted one
-
-- (void) congratulatoryAlertShow {
-    UIAlertView *congratulatoryAlert = [[UIAlertView alloc] initWithTitle:titleCongratulatoryAlert message: nil delegate:nil cancelButtonTitle:musAppButtonTitle_OK otherButtonTitles: nil];
-    [congratulatoryAlert show];
-}
-
-- (void) warningNotAddMorePicsAlertShow {
-    UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle:musAppAlertTitle_NO_Pics_Anymore message: nil delegate:nil cancelButtonTitle:musAppButtonTitle_OK otherButtonTitles: nil];
-    [warningAlert show];
-}
+#pragma mark - error alert with error and alert with message
 
 - (void) showErrorAlertWithError : (NSError*) error {
-    UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:Error message:[error localizedFailureReason] delegate:nil cancelButtonTitle:musAppButtonTitle_OK otherButtonTitles: nil];
+    UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle : Error
+                                                         message : [error localizedFailureReason]
+                                                        delegate : nil
+                                               cancelButtonTitle : musAppButtonTitle_OK
+                                               otherButtonTitles : nil];
     [errorAlert show];
 }
+
+- (void) showAlertWithMessage : (NSString*) message {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle : musErrorWithDomainUniversalSharing
+                                                    message : message
+                                                   delegate : self
+                                          cancelButtonTitle : musAppButtonTitle_OK
+                                          otherButtonTitles : nil];
+    [alert show];
+}
+
 
 #pragma mark - prepareForSegue
 
@@ -380,10 +416,32 @@
             /*
              back place object and we get id for network
              */
-            weakSelf.placeID = result.placeID;
+            if (result) {
+                weakSelf.placeID = result.placeID;
+                [self.shareLocationButton setTintColor: [UIColor redColor]];
+            }
         };
     }
 }
+
+#pragma mark - MUSGaleryViewDelegate
+
+- (void)changeSharePhotoButtonColorAndShareButtonState: (BOOL) isPhotos {
+    if (!isPhotos) {
+        [self.sharePhotoButton setTintColor:[UIColor blackColor]];
+        
+        if ([self.messageTextView.text isEqualToString:kPlaceholderText]) {
+            self.shareButtonOutlet.enabled = NO;
+        }
+        
+    } else {
+        [self.sharePhotoButton setTintColor:[UIColor redColor]];
+        self.shareButtonOutlet.enabled = YES;
+    }
+}
+
+
+
 @end
 
 

@@ -30,7 +30,7 @@ NSString *const changePlaceholderWhenStartEditing = @"";
 
 //===
 NSInteger const countOfAllowedPics = 4;
-NSInteger const countOfAllowedLettersInTextView = 80;
+NSInteger const countOfAllowedLettersInTextView = 500;
 
 #pragma mark - Errors
 
