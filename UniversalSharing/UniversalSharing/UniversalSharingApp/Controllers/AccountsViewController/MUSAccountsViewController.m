@@ -18,13 +18,11 @@
 @interface MUSAccountsViewController () <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, UIGestureRecognizerDelegate, AFMSlidingCellDelegate>
 
 @property (weak, nonatomic) IBOutlet    UITableView *tableView;
-
 @property (weak, nonatomic) IBOutlet    UIBarButtonItem *btnEditOutlet;
 /*!
  @property error view - shows error Internet connection
  */
 @property (weak, nonatomic) IBOutlet UIView *errorView;
-
 @property (weak, nonatomic) IBOutlet UIButton *updateNetworkConnectionOutlet;
 /*!
  @property
@@ -33,17 +31,23 @@
 @property (strong, nonatomic) NSMutableArray *arrayWithNetworksObj;
 /*!
  @property
- @abstract initialization by NSIndexPath in method didSelectRowAtIndexPath in order to get current socialnetwork in method prepareForSegue from arrayWithNetworksObj
+ @abstract initialization by NSIndexPath in method didSelectRowAtIndexPath and buttonsDidShowForCell in order to get current socialnetwork in method prepareForSegue from arrayWithNetworksObj and disappear button when editing
  */
 @property (strong, nonatomic) NSIndexPath * selectedIndexPath;
 /*!
- @method check access to the Internet connection
- 
+ @property
+ @abstract array with buttons
  */
-
 @property (strong, nonatomic) NSMutableArray *arrayButtons;
+/*!
+ @property
+ @abstract using in order to forbid to swipe second cell when one is swiped
+ */
 @property (assign, nonatomic) BOOL flag;
 
+/*!
+ @method check access to the Internet connection
+ */
 - (IBAction)updateNetworkConnection:(id)sender;
 
 @end
@@ -60,6 +64,7 @@
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self checkInternetConnection];
+    [self.tableView reloadData];
     [self.arrayButtons removeAllObjects];
 }
 
@@ -79,7 +84,7 @@
     } else {
         self.errorView.hidden = YES;
         self.btnEditOutlet.enabled = YES;
-        [self.tableView reloadData];
+        //[self.tableView reloadData];
     }
 }
 
@@ -95,6 +100,7 @@
         [self.tableView setEditing:YES animated:YES];
         [self.navigationItem.leftBarButtonItem setTitle:doneButtonTitle];
     }
+    //[self.tableView reloadData];
 }
 
 /*!
@@ -119,15 +125,21 @@
      */
     MUSAccountTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[MUSAccountTableViewCell cellID]];
     SocialNetwork *socialNetwork = [self obtainCurrentSocialNetwork:indexPath];
+//    if(socialNetwork.isVisible){
+//        cell.userInteractionEnabled = NO;
+//    }
     if(!cell) {
         cell = [MUSAccountTableViewCell accountTableViewCell];
     }
     __weak MUSAccountsViewController *weakSelf = self;
     [cell setDelegate:self];
+    //if ([self.arrayButtons count] < 3) {
+        
     [cell addFirstButton:[self createButtonHideShow :indexPath :socialNetwork] withWidth:80.0 withTappedBlock:^(AFMSlidingCell *cell) {
         [cell hideButtonViewAnimated:YES];
         [weakSelf changeTitleButton:[weakSelf obtainIndexPath:cell]];
     }];
+   // }
     [cell configurateCellForNetwork:socialNetwork];
     return cell;
 }
@@ -135,6 +147,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     self.selectedIndexPath = indexPath;
     SocialNetwork *socialNetwork = [self obtainCurrentSocialNetwork:indexPath];
+        if(socialNetwork.isVisible){
+            return;
+        }
     /*!
      when cell is tapped we check this social network is login and existed a currentuser object  if YES we go to ditailviewcontroller, else to do login than go to ditailviewcontroller
      */
@@ -237,7 +252,36 @@
      */
     [[self obtainCurrentCell:indexPath] changeColorOfCell:socialNetwork];
     [self.arrayButtons[indexPath.row] setTitle: socialNetwork.isVisible ?  showButtonTitle : hideButtonTitle forState:UIControlStateNormal];
-    [self.tableView reloadData];    
+    //////////////
+    if (socialNetwork.isVisible) {
+//        NSIndexPath *a;
+//        a.row = 2;
+//        [self .tableView moveRowAtIndexPath:indexPath toIndexPath:(NSIndexPath*)2];
+//    [self.arrayButtons exchangeObjectAtIndex:indexPath.row withObjectAtIndex:2];
+//    [self.arrayWithNetworksObj exchangeObjectAtIndex:indexPath.row withObjectAtIndex:2];
+        //SocialNetwork *socialNetwork = [self.arrayWithNetworksObj objectAtIndex:indexPath.row];
+        [self.arrayWithNetworksObj removeObjectAtIndex:indexPath.row];
+        [self.arrayWithNetworksObj insertObject:socialNetwork atIndex:2];
+        
+//        UIButton *currentButton = [self.arrayButtons objectAtIndex:indexPath.row];
+//        [self.arrayButtons removeObjectAtIndex:indexPath.row];
+//        [self.arrayButtons insertObject:currentButton atIndex:2];
+    } else {
+//        [self.arrayButtons exchangeObjectAtIndex:indexPath.row withObjectAtIndex:0];
+//        [self.arrayWithNetworksObj exchangeObjectAtIndex:indexPath.row withObjectAtIndex:0];
+        [self.arrayWithNetworksObj removeObjectAtIndex:indexPath.row];
+        [self.arrayWithNetworksObj insertObject:socialNetwork atIndex:0];
+//        
+//        UIButton *currentButton = [self.arrayButtons objectAtIndex:indexPath.row];
+//        [self.arrayButtons removeObjectAtIndex:indexPath.row];
+//        [self.arrayButtons insertObject:currentButton atIndex:0];
+
+        
+    }
+    [self.arrayButtons removeAllObjects];
+
+    //////////////
+    [self.tableView reloadData];
 }
 
 - (MUSAccountTableViewCell*) obtainCurrentCell :(NSIndexPath*) indexPath {
