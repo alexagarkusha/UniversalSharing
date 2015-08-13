@@ -41,6 +41,7 @@ static FacebookNetwork *model = nil;
     self = [super init];
     if (self) {
         self.networkType = Facebook;
+        self.name = musFacebookName;
         if (![FBSDKAccessToken currentAccessToken]) {
             [self initiationPropertiesWithoutSession];
         }

@@ -12,6 +12,7 @@
 
 NSString *const musFacebookTitle = @"Login Facebook";
 NSString *const musFacebookIconName = @"FBimage.jpg";
+NSString *const musFacebookName = @"Facebook";
 
 NSString *const musFacebookPermission_Email = @"email";
 NSString *const musFacebookPermission_Publish_Actions = @"publish_actions";
@@ -44,6 +45,7 @@ NSString *const musVKAppID = @"5004830";
 NSString *const musVKAllUserFields = @"first_name,last_name,photo_200_orig,id,birthday";
 NSString *const musVKTitle = @"Login VKontakt";
 NSString *const musVKIconName = @"VKimage.png";
+NSString *const musVKName = @"VK";
 
 NSString *const musVKMethodPlacesSearch = @"places.search";
 
@@ -77,6 +79,7 @@ NSString *const musTwitterConsumerKey = @"lUY36ubrBYXpYsZhJJvg8CYdf";
 
 NSString *const musTwitterTitle = @"Login Twitter";
 NSString *const musTwitterIconName = @"TWimage.jpeg";
+NSString *const musTwitterName = @"Twitter";
 
 NSString *const musTwitterError = @"Twitter error. Please retry againe.";
 NSInteger const musTwitterErrorCode = 1200;

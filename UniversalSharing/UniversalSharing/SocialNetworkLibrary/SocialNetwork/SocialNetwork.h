@@ -34,7 +34,10 @@
  @abstract title of Social Network
  */
 @property (strong, nonatomic) NSString *title;
-
+/*!
+ @abstract name of Social Network
+ */
+@property (strong, nonatomic) NSString *name;
 /*!
  @abstract logged user of social network
  */
