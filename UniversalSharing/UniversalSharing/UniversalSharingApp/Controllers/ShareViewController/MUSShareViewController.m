@@ -110,6 +110,7 @@
                                              selector : @selector(keyboardWillHide:)
                                                  name : UIKeyboardWillHideNotification
                                                object : nil];
+    self.view.backgroundColor = [UIColor whiteColor];
     [self initiationMUSShareViewController];
 }
 
