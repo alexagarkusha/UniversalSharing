@@ -63,9 +63,12 @@ NSInteger const musVKErrorCode = 1100;
 
 
 #pragma mark Twitter Contants
+//keys from twitter
 
 //NSString *const musTwitterConsumerSecret = @"saz4WSOgOL6wFPFXuIq94zbkumbuZnkldHIKIaAsyhJpHAYdke";
 //NSString *const musTwitterConsumerKey = @"lGBCsHPLRVXB2kxQgzaZCdf1q";
+
+//keys from fabric
 
 NSString *const musTwitterConsumerSecret = @"sQNqSfSGW5lksTvqTCqn407pSQXUNCBvIsHJrOYlNKMhREtyT2";
 NSString *const musTwitterConsumerKey = @"lUY36ubrBYXpYsZhJJvg8CYdf";
@@ -96,6 +99,7 @@ NSString* const musTwitterJSONParameterForMediaID = @"media_id_string";
 
 
 #pragma mark General Constants
+
 NSString *const musGET = @"GET";
 NSString *const musPOST = @"POST";
 NSString *const musPostSuccess = @"Your post has been sent";

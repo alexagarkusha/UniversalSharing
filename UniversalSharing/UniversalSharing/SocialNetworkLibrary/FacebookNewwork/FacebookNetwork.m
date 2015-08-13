@@ -59,6 +59,7 @@ static FacebookNetwork *model = nil;
     self.title = musFacebookTitle;
     self.icon = musFacebookIconName;
     self.isLogin = NO;
+    self.isVisible = NO;
     self.currentUser = nil;
 }
 

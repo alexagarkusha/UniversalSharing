@@ -10,16 +10,17 @@
 #import "UIImageView+RoundImage.h"
 #import "UIImageView+LoadImageFromNetwork.h"
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 @interface MUSAccountTableViewCell ()
 
 @property (weak, nonatomic) IBOutlet UILabel *loginLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *networkIconImageView;
 @property (weak, nonatomic) IBOutlet UIView *viewAccountTableCell;
-
 @end
 
 
 @implementation MUSAccountTableViewCell
+
 
 + (NSString*) cellID {
     return NSStringFromClass([self class]);
@@ -56,10 +57,13 @@
     }
     
     if (socialNetwork.isVisible) {
-        self.viewAccountTableCell.backgroundColor = [UIColor grayColor];
+        //self.viewAccountTableCell.backgroundColor = [UIColor grayColor];
+        self.loginLabel.textColor = [UIColor greenColor];
     } else {
-        self.viewAccountTableCell.backgroundColor = [UIColor whiteColor];
+        //self.viewAccountTableCell.backgroundColor = [UIColor whiteColor];
+        self.loginLabel.textColor = [UIColor blackColor];
     }
+   
 }
 
 - (void) changeColorOfCell :(SocialNetwork *)socialNetwork {
@@ -69,4 +73,14 @@
         socialNetwork.isVisible = NO;
     }
 }
+
+
+
+
+
+
+
+
+
 @end
+

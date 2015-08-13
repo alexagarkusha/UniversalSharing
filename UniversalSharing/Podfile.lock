@@ -1,4 +1,5 @@
 PODS:
+  - AFMSlidingCell (1.0.0)
   - Bolts (1.2.0):
     - Bolts/AppLinks (= 1.2.0)
     - Bolts/Tasks (= 1.2.0)
@@ -27,6 +28,7 @@ PODS:
   - VK-ios-sdk (1.1.12)
 
 DEPENDENCIES:
+  - AFMSlidingCell (~> 1.0)
   - Fabric
   - FBSDKCoreKit (~> 4.4)
   - FBSDKLoginKit (~> 4.4)
@@ -37,6 +39,7 @@ DEPENDENCIES:
   - VK-ios-sdk (~> 1.1)
 
 SPEC CHECKSUMS:
+  AFMSlidingCell: 73da814bceb2786a0f92a0d6f44db404c915782a
   Bolts: d176cb1e0012175589e389a9db49b85e27787576
   Fabric: a9eabe53915e9f1db55a84dd2838737928675878
   FBSDKCoreKit: 75bdd75c980e811db218488d99dd93b7740f4474

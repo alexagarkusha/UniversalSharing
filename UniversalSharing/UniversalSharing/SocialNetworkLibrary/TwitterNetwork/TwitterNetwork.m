@@ -42,7 +42,7 @@ static TwitterNetwork *model = nil;
 - (instancetype) init {
     self = [super init];
     [TwitterKit startWithConsumerKey:musTwitterConsumerKey consumerSecret:musTwitterConsumerSecret];
-    [Fabric with : @[TwitterKit] ];
+    [Fabric with : @[TwitterKit]];
     if (self) {
         self.networkType = Twitters;
         if (![[Twitter sharedInstance ]session]) {
@@ -63,6 +63,7 @@ static TwitterNetwork *model = nil;
     self.title = musTwitterTitle;
     self.icon = musTwitterIconName;
     self.isLogin = NO;
+    self.isVisible = NO;
     self.currentUser = nil;
 }
 
@@ -79,7 +80,6 @@ static TwitterNetwork *model = nil;
     
     [TwitterKit logInWithCompletion:^(TWTRSession* session, NSError* error) {
         if (session) {
-            self.isLogin = YES;
             weakSell.isLogin = YES;
             [weakSell obtainInfoFromNetworkWithComplition:block];
         } else {
