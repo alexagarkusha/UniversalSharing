@@ -81,7 +81,6 @@ static VKNetwork *model = nil;
 */
 
 - (void) loginWithComplition :(Complition) block {
-    self.isLogin = YES;
     self.copyComplition = block;
     if (![self isLoggedIn])
     {
@@ -147,8 +146,8 @@ static VKNetwork *model = nil;
         params[musVKLoactionParameter_Q] = location.q;
         params[musVKLoactionParameter_Latitude] = location.latitude;
         params[musVKLoactionParameter_Longitude] = location.longitude;
-        params[musVKLoactionParameter_Radius] = [NSString stringWithFormat:@"%d",
-                                                    [self radiusForVKLocation: location.distance]];
+        params[musVKLoactionParameter_Radius] = [NSString stringWithFormat:@"%ld",
+                                                    (long)[self radiusForVKLocation: location.distance]];
     
     VKRequest * locationRequest = [VKApi requestWithMethod : musVKMethodPlacesSearch
                                              andParameters : params
@@ -333,7 +332,7 @@ static VKNetwork *model = nil;
 }
 
 - (void)vkSdkReceivedNewToken:(VKAccessToken *)newToken
-{
+{    self.isLogin = YES;
     [self obtainInfoFromNetworkWithComplition:self.copyComplition];
 }
 
@@ -350,6 +349,7 @@ static VKNetwork *model = nil;
 - (void)vkSdkUserDeniedAccess:(VKError *)authorizationError
 {
     self.isLogin = NO;
+    self.isVisible = NO;
     NSError *error = [NSError errorWithMessage: musErrorAccesDenied andCodeError: musErrorAccesDeniedCode];
     self.copyComplition (nil, error);
 }

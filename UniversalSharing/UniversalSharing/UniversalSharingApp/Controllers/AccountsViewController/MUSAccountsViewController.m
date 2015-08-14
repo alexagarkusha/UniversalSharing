@@ -15,6 +15,7 @@
 #import <AFMSlidingCell.h>
 
 
+
 @interface MUSAccountsViewController () <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, UIGestureRecognizerDelegate, AFMSlidingCellDelegate>
 
 @property (weak, nonatomic) IBOutlet    UITableView *tableView;
@@ -44,7 +45,7 @@
  @abstract using in order to forbid to swipe second cell when one is swiped
  */
 @property (assign, nonatomic) BOOL flag;
-
+@property (assign, nonatomic) BOOL flagTouches;
 /*!
  @method check access to the Internet connection
  */
@@ -58,14 +59,15 @@
     [super viewDidLoad];
     [self obtanObjectsOfSocialNetworks];
     self.arrayButtons = [NSMutableArray new];
+
 }
 
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self checkInternetConnection];
-    [self.tableView reloadData];
-    [self.arrayButtons removeAllObjects];
+    [self.tableView setUserInteractionEnabled:YES];
+    
 }
 
 /*!
@@ -84,7 +86,8 @@
     } else {
         self.errorView.hidden = YES;
         self.btnEditOutlet.enabled = YES;
-        //[self.tableView reloadData];
+        [self.tableView reloadData];
+        [self.arrayButtons removeAllObjects];
     }
 }
 
@@ -100,7 +103,6 @@
         [self.tableView setEditing:YES animated:YES];
         [self.navigationItem.leftBarButtonItem setTitle:doneButtonTitle];
     }
-    //[self.tableView reloadData];
 }
 
 /*!
@@ -125,26 +127,23 @@
      */
     MUSAccountTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[MUSAccountTableViewCell cellID]];
     SocialNetwork *socialNetwork = [self obtainCurrentSocialNetwork:indexPath];
-//    if(socialNetwork.isVisible){
-//        cell.userInteractionEnabled = NO;
-//    }
+
     if(!cell) {
         cell = [MUSAccountTableViewCell accountTableViewCell];
     }
     __weak MUSAccountsViewController *weakSelf = self;
-    [cell setDelegate:self];
-    //if ([self.arrayButtons count] < 3) {
-        
+    [cell setDelegate:self];    
     [cell addFirstButton:[self createButtonHideShow :indexPath :socialNetwork] withWidth:80.0 withTappedBlock:^(AFMSlidingCell *cell) {
         [cell hideButtonViewAnimated:YES];
         [weakSelf changeTitleButton:[weakSelf obtainIndexPath:cell]];
     }];
-   // }
+   
     [cell configurateCellForNetwork:socialNetwork];
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+   // self.tableView.multipleTouchEnabled = NO;
     self.selectedIndexPath = indexPath;
     SocialNetwork *socialNetwork = [self obtainCurrentSocialNetwork:indexPath];
         if(socialNetwork.isVisible){
@@ -162,10 +161,12 @@
             if (result) {
                 [weakSelf performSegueWithIdentifier: goToUserDetailViewControllerSegueIdentifier sender:nil];
             } else {
-                [weakSelf.tableView reloadData];
+              
+                //[weakSelf.tableView reloadData];
             }
         }];
     }
+    [self.tableView setUserInteractionEnabled:NO];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {

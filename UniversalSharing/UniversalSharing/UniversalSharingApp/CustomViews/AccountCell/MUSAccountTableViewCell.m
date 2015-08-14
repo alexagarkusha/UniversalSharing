@@ -55,11 +55,11 @@
     } else if(socialNetwork.isLogin && socialNetwork.isVisible){
         __weak MUSAccountTableViewCell *weakSelf = self;
         [socialNetwork obtainInfoFromNetworkWithComplition:^(id result, NSError *error) {
-            //UIImage * image = [UIImage l]
+            
             [weakSelf.networkIconImageView  loadImageFromUrl:[NSURL URLWithString:socialNetwork.icon]];
-            self.networkIconImageView.image = [self translucentImageFromImage:self.networkIconImageView.image withAlpha:0.3f];
+            weakSelf.networkIconImageView.image = [self translucentImageFromImage:self.networkIconImageView.image withAlpha:0.3f];
             weakSelf.loginLabel.text = socialNetwork.title;
-            self.loginLabel.textColor = [[UIColor lightGrayColor]colorWithAlphaComponent:0.3f];
+            weakSelf.loginLabel.textColor = [[UIColor lightGrayColor]colorWithAlphaComponent:0.3f];
         }];
     }
     else {
@@ -67,18 +67,6 @@
         self.loginLabel.text = socialNetwork.title;
         self.loginLabel.textColor = [UIColor blackColor];
     }
-    
-//    if (socialNetwork.isVisible) {
-//        //self.viewAccountTableCell.backgroundColor = [UIColor grayColor];
-//        self.loginLabel.textColor = [[UIColor lightGrayColor]colorWithAlphaComponent:0.3f];;
-//        self.networkIconImageView.image = [self translucentImageFromImage:self.networkIconImageView.image withAlpha:0.5f];
-//        //self.networkIconImageView.image =
-//
-//    } else {
-//        //self.viewAccountTableCell.backgroundColor = [UIColor whiteColor];
-//        self.loginLabel.textColor = [UIColor blackColor];
-//    }
-   
 }
 
 - (void) changeColorOfCell :(SocialNetwork *)socialNetwork {
@@ -89,11 +77,9 @@
     }
 }
 
-- (UIImage *)translucentImageFromImage:(UIImage *)image withAlpha:(CGFloat)alpha
-{
+- (UIImage *)translucentImageFromImage:(UIImage *)image withAlpha:(CGFloat)alpha {
     CGRect rect = CGRectZero;
     rect.size = image.size;
-    
     UIGraphicsBeginImageContext(image.size);
     [image drawInRect:rect blendMode:kCGBlendModeScreen alpha:alpha];
     UIImage * translucentImage = UIGraphicsGetImageFromCurrentImageContext();
@@ -101,11 +87,6 @@
     
     return translucentImage;
 }
-
-
-
-
-
 
 @end
 

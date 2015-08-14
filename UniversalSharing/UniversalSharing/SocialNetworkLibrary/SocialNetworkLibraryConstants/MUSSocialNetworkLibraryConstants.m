@@ -43,7 +43,7 @@ NSInteger const musFacebookErrorCode = 1300;
 
 NSString *const musVKAppID = @"5004830";
 NSString *const musVKAllUserFields = @"first_name,last_name,photo_200_orig,id,birthday";
-NSString *const musVKTitle = @"Login VKontakt";
+NSString *const musVKTitle = @"Login VK";
 NSString *const musVKIconName = @"VKimage.png";
 NSString *const musVKName = @"VK";
 
