@@ -51,6 +51,7 @@ static VKNetwork *model = nil;
         }
         else {
             self.isLogin = YES;
+            self.isVisible = YES;
         }
     }
     return self;
@@ -70,7 +71,7 @@ static VKNetwork *model = nil;
     self.title = musVKTitle;
     self.icon = musVKIconName;
     self.isLogin = NO;
-    self.isVisible = NO;
+    self.isVisible = YES;
 }
 
 #pragma mark - loginInNetwork
@@ -349,7 +350,7 @@ static VKNetwork *model = nil;
 - (void)vkSdkUserDeniedAccess:(VKError *)authorizationError
 {
     self.isLogin = NO;
-    self.isVisible = NO;
+    self.isVisible = YES;
     NSError *error = [NSError errorWithMessage: musErrorAccesDenied andCodeError: musErrorAccesDeniedCode];
     self.copyComplition (nil, error);
 }

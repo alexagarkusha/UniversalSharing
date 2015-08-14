@@ -146,7 +146,7 @@
    // self.tableView.multipleTouchEnabled = NO;
     self.selectedIndexPath = indexPath;
     SocialNetwork *socialNetwork = [self obtainCurrentSocialNetwork:indexPath];
-        if(socialNetwork.isVisible){
+        if(!socialNetwork.isVisible){
             return;
         }
     /*!
@@ -160,9 +160,6 @@
         [socialNetwork loginWithComplition:^(id result, NSError *error) {
             if (result) {
                 [weakSelf performSegueWithIdentifier: goToUserDetailViewControllerSegueIdentifier sender:nil];
-            } else {
-              
-                //[weakSelf.tableView reloadData];
             }
         }];
     }
@@ -202,7 +199,7 @@
 }
 
 -(NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [self obtainCurrentSocialNetwork:indexPath].isVisible ?  showButtonTitle : hideButtonTitle;
+    return ![self obtainCurrentSocialNetwork:indexPath].isVisible ?  showButtonTitle : hideButtonTitle;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -252,36 +249,19 @@
      in order to set bool property isVisible for configurating color of cell
      */
     [[self obtainCurrentCell:indexPath] changeColorOfCell:socialNetwork];
-    [self.arrayButtons[indexPath.row] setTitle: socialNetwork.isVisible ?  showButtonTitle : hideButtonTitle forState:UIControlStateNormal];
+    [self.arrayButtons[indexPath.row] setTitle: !socialNetwork.isVisible ?  showButtonTitle : hideButtonTitle forState:UIControlStateNormal];
     //////////////
-    if (socialNetwork.isVisible) {
-//        NSIndexPath *a;
-//        a.row = 2;
-//        [self .tableView moveRowAtIndexPath:indexPath toIndexPath:(NSIndexPath*)2];
-//    [self.arrayButtons exchangeObjectAtIndex:indexPath.row withObjectAtIndex:2];
-//    [self.arrayWithNetworksObj exchangeObjectAtIndex:indexPath.row withObjectAtIndex:2];
-        //SocialNetwork *socialNetwork = [self.arrayWithNetworksObj objectAtIndex:indexPath.row];
+    if (!socialNetwork.isVisible) {
+
         [self.arrayWithNetworksObj removeObjectAtIndex:indexPath.row];
         [self.arrayWithNetworksObj insertObject:socialNetwork atIndex:2];
-        
-//        UIButton *currentButton = [self.arrayButtons objectAtIndex:indexPath.row];
-//        [self.arrayButtons removeObjectAtIndex:indexPath.row];
-//        [self.arrayButtons insertObject:currentButton atIndex:2];
+
     } else {
-//        [self.arrayButtons exchangeObjectAtIndex:indexPath.row withObjectAtIndex:0];
-//        [self.arrayWithNetworksObj exchangeObjectAtIndex:indexPath.row withObjectAtIndex:0];
+
         [self.arrayWithNetworksObj removeObjectAtIndex:indexPath.row];
         [self.arrayWithNetworksObj insertObject:socialNetwork atIndex:0];
-//        
-//        UIButton *currentButton = [self.arrayButtons objectAtIndex:indexPath.row];
-//        [self.arrayButtons removeObjectAtIndex:indexPath.row];
-//        [self.arrayButtons insertObject:currentButton atIndex:0];
-
-        
     }
     [self.arrayButtons removeAllObjects];
-
-    //////////////
     [self.tableView reloadData];
 }
 
@@ -299,7 +279,7 @@
         return nil;
     } else {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [button setTitle:socialNetwork.isVisible ?  showButtonTitle : hideButtonTitle forState:UIControlStateNormal];
+        [button setTitle:!socialNetwork.isVisible ?  showButtonTitle : hideButtonTitle forState:UIControlStateNormal];
         [button setBackgroundColor:[UIColor redColor]];
         [self.arrayButtons addObject:button];
     }

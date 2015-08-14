@@ -65,7 +65,7 @@ static TwitterNetwork *model = nil;
     self.title = musTwitterTitle;
     self.icon = musTwitterIconName;
     self.isLogin = NO;
-    self.isVisible = NO;
+    self.isVisible = YES;
     self.currentUser = nil;
 }
 

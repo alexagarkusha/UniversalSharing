@@ -45,14 +45,14 @@
 
 - (void) configurateCellForNetwork:(SocialNetwork *)socialNetwork {
     
-    if (socialNetwork.isLogin && !socialNetwork.isVisible) {
+    if (socialNetwork.isLogin && socialNetwork.isVisible) {
         __weak MUSAccountTableViewCell *weakSelf = self;
         [socialNetwork obtainInfoFromNetworkWithComplition:^(id result, NSError *error) {
             [weakSelf.networkIconImageView loadImageFromUrl:[NSURL URLWithString:socialNetwork.icon]];
             weakSelf.loginLabel.text = socialNetwork.title;
             self.loginLabel.textColor = [UIColor blackColor];
         }];
-    } else if(socialNetwork.isLogin && socialNetwork.isVisible){
+    } else if(socialNetwork.isLogin && !socialNetwork.isVisible){
         __weak MUSAccountTableViewCell *weakSelf = self;
         [socialNetwork obtainInfoFromNetworkWithComplition:^(id result, NSError *error) {
             

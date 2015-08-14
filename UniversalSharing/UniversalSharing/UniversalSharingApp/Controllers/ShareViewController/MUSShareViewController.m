@@ -342,7 +342,7 @@
 }
 
 - (BOOL) checkStatusOfSocialNetworkVisibility {
-    if (!_currentSocialNetwork.isVisible) {
+    if (!_currentSocialNetwork.isVisible || !_currentSocialNetwork.isLogin) {
         [self showAlertWithMessage: musAppError_Logged_Into_Social_Networks];
         return NO;
     }
@@ -419,7 +419,7 @@
     
     __weak MUSShareViewController *weakSelf = self;
     [[[SocialManager sharedManager] networks: self.arrayWithNetworks] enumerateObjectsUsingBlock:^(SocialNetwork *socialNetwork, NSUInteger index, BOOL *stop) {
-        if (socialNetwork.isLogin && !socialNetwork.isVisible) {
+        if (socialNetwork.isLogin && socialNetwork.isVisible) {
             NSString *buttonTitle = [NSString stringWithFormat:@"%@", socialNetwork.name];
             [sheet addButtonWithTitle: buttonTitle];
             [weakSelf.socialNetworkAccountsArray addObject:socialNetwork];
