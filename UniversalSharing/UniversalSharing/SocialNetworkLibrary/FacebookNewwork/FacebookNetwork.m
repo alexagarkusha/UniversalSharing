@@ -47,6 +47,7 @@ static FacebookNetwork *model = nil;
         }
         else {
             self.isLogin = YES;
+            self.isVisible = YES;
         }
     }
     return self;
@@ -79,6 +80,7 @@ static FacebookNetwork *model = nil;
             block(nil, accessError);
         } else {
             weakSell.isLogin = YES;
+            weakSell.isVisible = YES;
             // If you ask for multiple permissions at once, you
             // should check if specific permissions missing
             if ([result.grantedPermissions containsObject: musFacebookPermission_Email]) {
@@ -251,16 +253,15 @@ static FacebookNetwork *model = nil;
         //counterOfImages ++;
         [connection addRequest: request
              completionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
-                 if (!error) {
-                     counterOfImages ++;
-                     if (counterOfImages == copyPostImagesArray.count) {
+                 counterOfImages ++;
+                 if (counterOfImages == copyPostImagesArray.count) {
+                     if (!error) {
                          self.copyComplition (musPostSuccess, nil);
+                     } else {
+                         self.copyComplition (nil, [self errorFacebook]);
                      }
-                     //NSLog (@"connection error = %@", connection);
-                 } else {
-                     self.copyComplition (nil, [self errorFacebook]);
                  }
-             }];
+        }];
     }
     [connection start];
 }

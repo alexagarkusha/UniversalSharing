@@ -15,11 +15,12 @@
 
 
 - (void) loadImageFromUrl : (NSURL*) url {
-    UIImage *image = [[ CacheImage sharedManager] obtainCachedImageForKey:url];
+    UIImage *image = [[CacheImage sharedManager] obtainCachedImageForKey:url];
     if(image) {
         self.image = image;
         return;
     }
+    
     __weak UIImageView *weakSelf = self;
     dispatch_queue_t q = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
     dispatch_async(q, ^{

@@ -53,6 +53,7 @@
 		97C460D31B68B77100C010DE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C460D21B68B77100C010DE /* CoreGraphics.framework */; };
 		97C460D51B68B78B00C010DE /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C460D41B68B78B00C010DE /* MobileCoreServices.framework */; };
 		97C63BD91B7246B6006E99C6 /* NSError+MUSError.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C63BD81B7246B6006E99C6 /* NSError+MUSError.m */; };
+		97C74ADE1B7DDEF4004DC863 /* UnknownUser.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 97C74ADD1B7DDEF4004DC863 /* UnknownUser.jpg */; };
 		97C7D79F1B73889B004DC83D /* MUSSocialNetworkLibraryConstantsForParseObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C7D79E1B73889B004DC83D /* MUSSocialNetworkLibraryConstantsForParseObjects.m */; };
 		97CA63CA1B6F66D300F9F0C1 /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CA63C91B6F66D300F9F0C1 /* Place.m */; };
 		97CA63CF1B6F737A00F9F0C1 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CA63CE1B6F737A00F9F0C1 /* Location.m */; };
@@ -155,6 +156,7 @@
 		97C460D41B68B78B00C010DE /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		97C63BD71B7246B6006E99C6 /* NSError+MUSError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSError+MUSError.h"; path = "UniversalSharing/SocialNetworkLibrary/Categories/NSError+MUSError.h"; sourceTree = SOURCE_ROOT; };
 		97C63BD81B7246B6006E99C6 /* NSError+MUSError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSError+MUSError.m"; path = "UniversalSharing/SocialNetworkLibrary/Categories/NSError+MUSError.m"; sourceTree = SOURCE_ROOT; };
+		97C74ADD1B7DDEF4004DC863 /* UnknownUser.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = UnknownUser.jpg; sourceTree = "<group>"; };
 		97C7D79D1B73889B004DC83D /* MUSSocialNetworkLibraryConstantsForParseObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSSocialNetworkLibraryConstantsForParseObjects.h; sourceTree = "<group>"; };
 		97C7D79E1B73889B004DC83D /* MUSSocialNetworkLibraryConstantsForParseObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSSocialNetworkLibraryConstantsForParseObjects.m; sourceTree = "<group>"; };
 		97CA63C81B6F66D300F9F0C1 /* Place.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Place.h; path = UniversalSharing/SocialNetworkLibrary/Place/Place.h; sourceTree = SOURCE_ROOT; };
@@ -308,6 +310,7 @@
 				30DBFDA41B6BAA52002F83D0 /* VKimage.png */,
 				30DBFDA21B6BAA48002F83D0 /* TWimage.jpeg */,
 				30DBFDA01B6BAA3F002F83D0 /* FBimage.jpg */,
+				97C74ADD1B7DDEF4004DC863 /* UnknownUser.jpg */,
 				18B505471B726FAF00679F9D /* Info.plist */,
 				18BB29A61B67E3F000B498AC /* main.m */,
 			);
@@ -766,6 +769,7 @@
 				18BB29AE1B67E3F000B498AC /* LaunchScreen.xib in Resources */,
 				18BB29C01B67E3F000B498AC /* Images.xcassets in Resources */,
 				18BB29BA1B67E3F000B498AC /* MUSAccountTableViewCell.xib in Resources */,
+				97C74ADE1B7DDEF4004DC863 /* UnknownUser.jpg in Resources */,
 				30DBFDA11B6BAA3F002F83D0 /* FBimage.jpg in Resources */,
 				30DBFDA31B6BAA48002F83D0 /* TWimage.jpeg in Resources */,
 				18BB29BC1B67E3F000B498AC /* MUSTopUserProfileCell.xib in Resources */,

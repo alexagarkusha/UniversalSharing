@@ -26,11 +26,12 @@ static SocialManager *model = nil;
 + (SocialNetwork*) currentSocialNetwork {
     SocialNetwork *currentSocialNetwork = nil;
     NSArray *accountsArray = [[SocialManager sharedManager] networks:@[@(Twitters), @(VKontakt), @(Facebook)]];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isLogin == %d AND isVisible == %d", YES, NO];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isLogin == %d AND isVisible == %d", YES, YES];
     NSArray *filteredArray = [accountsArray filteredArrayUsingPredicate:predicate];
     if (filteredArray.count > 0) {
         currentSocialNetwork = (SocialNetwork*) [filteredArray firstObject];
     }
+    
     return currentSocialNetwork;
 }
 
@@ -41,8 +42,11 @@ static SocialManager *model = nil;
     
     NSMutableArray *arrayWithNetworks = [NSMutableArray new];
     [arrayWithNetworkWithoutDuplicates enumerateObjectsUsingBlock:^(id obj, NSUInteger currentIndex, BOOL *stop) {
+        
         [arrayWithNetworks addObject:[SocialNetwork sharedManagerWithType: [arrayWithNetwork[currentIndex] integerValue]]];
-    }];    
+        
+    }];
+    
     return arrayWithNetworks;
 }
 

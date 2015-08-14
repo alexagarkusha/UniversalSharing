@@ -48,6 +48,7 @@ FOUNDATION_EXPORT NSInteger const countOfAllowedLettersInTextView;
 
 FOUNDATION_EXPORT NSString *const musAppError_With_Domain_Universal_Sharing;
 FOUNDATION_EXPORT NSString *const musAppError_Internet_Connection;
+FOUNDATION_EXPORT NSString *const musAppError_Logged_Into_Social_Networks;
 
 
 #pragma mark - MUSPhotoManager
@@ -87,5 +88,10 @@ FOUNDATION_EXPORT NSString *const titleAlertDeletePicShow;
 FOUNDATION_EXPORT NSString *const messageAlertDeletePicShow;
 FOUNDATION_EXPORT NSString *const cancelButtonTitleAlertDeletePicShow;
 FOUNDATION_EXPORT NSString *const otherButtonTitlesAlertDeletePicShow;
+
+#pragma mark - UIButton+MUSSocialNetwork
+
+FOUNDATION_EXPORT NSString *const musAppButton_ImageName_UnknownUser;
+
 
 @end

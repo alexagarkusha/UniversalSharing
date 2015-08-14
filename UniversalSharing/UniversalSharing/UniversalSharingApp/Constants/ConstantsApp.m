@@ -36,6 +36,7 @@ NSInteger const countOfAllowedLettersInTextView = 500;
 
 NSString *const musAppError_With_Domain_Universal_Sharing = @"Universal Sharing application";
 NSString *const musAppError_Internet_Connection = @"Please check your internet connection or try again later";
+NSString *const musAppError_Logged_Into_Social_Networks = @"You are not logged into any of social networks";
 
 #pragma mark - MUSPhotoManager
 
@@ -70,4 +71,9 @@ NSString *const titleAlertDeletePicShow = @"Photo";
 NSString *const messageAlertDeletePicShow = @"You want to delete a pic";
 NSString *const cancelButtonTitleAlertDeletePicShow = @"NO";
 NSString *const otherButtonTitlesAlertDeletePicShow = @"YES";
+
+#pragma mark - UIButton+MUSSocial
+
+NSString *const musAppButton_ImageName_UnknownUser = @"UnknownUser.jpg";
+
 @end
