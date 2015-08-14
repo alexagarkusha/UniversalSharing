@@ -116,7 +116,9 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];    
-    
+    if (!_currentSocialNetwork) {
+        _currentSocialNetwork = [SocialManager currentSocialNetwork];
+    }
     [self.changeSocialNetworkButton initiationSocialNetworkButtonForSocialNetwork: nil];
     self.mainGestureRecognizer.enabled = NO;
 }
@@ -342,6 +344,7 @@
 }
 
 - (BOOL) checkStatusOfSocialNetworkVisibility {
+    
     if (!_currentSocialNetwork.isVisible || !_currentSocialNetwork.isLogin) {
         [self showAlertWithMessage: musAppError_Logged_Into_Social_Networks];
         return NO;
