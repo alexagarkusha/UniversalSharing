@@ -51,6 +51,7 @@ static VKNetwork *model = nil;
         }
         else {
             self.isLogin = YES;
+            self.isVisible = YES;
         }
     }
     return self;
@@ -82,6 +83,7 @@ static VKNetwork *model = nil;
 
 - (void) loginWithComplition :(Complition) block {
     self.isLogin = YES;
+    self.isVisible = YES;
     self.copyComplition = block;
     if (![self isLoggedIn])
     {
@@ -350,6 +352,7 @@ static VKNetwork *model = nil;
 - (void)vkSdkUserDeniedAccess:(VKError *)authorizationError
 {
     self.isLogin = NO;
+    self.isVisible = NO;
     NSError *error = [NSError errorWithMessage: musErrorAccesDenied andCodeError: musErrorAccesDeniedCode];
     self.copyComplition (nil, error);
 }

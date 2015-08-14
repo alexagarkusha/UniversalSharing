@@ -8,6 +8,7 @@
 
 #import "UIButton+MUSSocialNetwork.h"
 #import "SocialManager.h"
+#import "ConstantsApp.h"
 #import "UIButton+LoadBackgroundImageFromNetwork.h"
 #import "UIButton+CornerRadiusButton.h"
 
@@ -26,16 +27,24 @@
 }
 
 - (void) initiationSocialNetworkButtonForSocialNetwork :(SocialNetwork*) socialNetwork {
+    
     SocialNetwork *currentSocialNetwork = socialNetwork;
     if (!currentSocialNetwork) {
         currentSocialNetwork = [SocialManager currentSocialNetwork];
     }
-    __weak UIButton *socialNetworkButton = self;
-    [currentSocialNetwork obtainInfoFromNetworkWithComplition:^(id result, NSError *error) {
-        SocialNetwork *currentSocialNetwork = (SocialNetwork*) result;
-        User *currentUser = currentSocialNetwork.currentUser;
-        [socialNetworkButton loadBackroundImageFromNetworkWithURL:[NSURL URLWithString: currentUser.photoURL]];
-    }];
+    
+    if (!currentSocialNetwork) {
+        [self setImage: [UIImage imageNamed: musAppButton_ImageName_UnknownUser] forState:UIControlStateNormal];
+        [self.imageView setContentMode:UIViewContentModeScaleAspectFill];
+        return;
+    } else {
+        __weak UIButton *socialNetworkButton = self;
+        [currentSocialNetwork obtainInfoFromNetworkWithComplition:^(id result, NSError *error) {
+            SocialNetwork *currentSocialNetwork = (SocialNetwork*) result;
+            User *currentUser = currentSocialNetwork.currentUser;
+            [socialNetworkButton loadBackroundImageFromNetworkWithURL:[NSURL URLWithString: currentUser.photoURL]];
+        }];
+    }
 }
 
 @end

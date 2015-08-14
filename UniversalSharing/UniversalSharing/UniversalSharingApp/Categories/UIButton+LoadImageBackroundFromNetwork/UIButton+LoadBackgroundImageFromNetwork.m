@@ -7,10 +7,19 @@
 //
 
 #import "UIButton+LoadBackgroundImageFromNetwork.h"
+#import "CacheImage.h"
 
 @implementation UIButton (LoadBackgroundImageFromNetwork)
 
 - (void) loadBackroundImageFromNetworkWithURL : (NSURL*) url {
+    UIImage *userPhoto = [[CacheImage sharedManager] obtainCachedImageForKey: url];
+    
+    if (userPhoto) {
+        [self setImage:userPhoto forState:UIControlStateNormal];
+        [self.imageView setContentMode:UIViewContentModeScaleAspectFill];
+        return;
+    }
+    
     dispatch_queue_t q = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
     dispatch_async(q, ^{
         /* Fetch the image from the server... */
@@ -22,5 +31,7 @@
         });
     });
 }
+
+
 
 @end

@@ -51,6 +51,7 @@ static TwitterNetwork *model = nil;
         }
         else {
             self.isLogin = YES;
+            self.isVisible = YES;
         }
     }
     return self;
@@ -82,6 +83,7 @@ static TwitterNetwork *model = nil;
     [TwitterKit logInWithCompletion:^(TWTRSession* session, NSError* error) {
         if (session) {
             weakSell.isLogin = YES;
+            weakSell.isVisible = YES;
             [weakSell obtainInfoFromNetworkWithComplition:block];
         } else {
             block(nil, error);

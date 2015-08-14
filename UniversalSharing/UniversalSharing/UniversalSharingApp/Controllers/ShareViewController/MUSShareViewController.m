@@ -115,7 +115,9 @@
 }
 
 - (void) viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:YES];
+    [super viewWillAppear:YES];    
+    
+    [self.changeSocialNetworkButton initiationSocialNetworkButtonForSocialNetwork: nil];
     self.mainGestureRecognizer.enabled = NO;
 }
 
@@ -299,11 +301,7 @@
 #pragma mark - Share Post to Social network
 
 - (IBAction)shareToSocialNetwork:(id)sender {
-    BOOL isReachable = [ReachabilityManager isReachable];
-    BOOL isReachableViaWiFi = [ReachabilityManager isReachableViaWiFi];
-    
-    if (!isReachableViaWiFi && !isReachable) {
-        [self showAlertWithMessage: musAppError_Internet_Connection];
+    if (![self checkStatusOftheNetworkConnection] || ![self checkStatusOfSocialNetworkVisibility]) {
         return;
     }
     
@@ -329,6 +327,26 @@
             }
         }];
     }
+}
+
+
+- (BOOL) checkStatusOftheNetworkConnection {
+    BOOL isReachable = [ReachabilityManager isReachable];
+    BOOL isReachableViaWiFi = [ReachabilityManager isReachableViaWiFi];
+    
+    if (!isReachableViaWiFi && !isReachable) {
+        [self showAlertWithMessage: musAppError_Internet_Connection];
+        return NO;
+    }
+    return YES;
+}
+
+- (BOOL) checkStatusOfSocialNetworkVisibility {
+    if (!_currentSocialNetwork.isVisible) {
+        [self showAlertWithMessage: musAppError_Logged_Into_Social_Networks];
+        return NO;
+    }
+    return YES;
 }
 
 #pragma mark - UITextViewDelegate
