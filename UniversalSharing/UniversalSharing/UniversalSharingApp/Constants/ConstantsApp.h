@@ -22,6 +22,12 @@ typedef NS_ENUM(NSInteger, AlertButtonIndex) {
     Remove,
 };
 
+typedef NS_ENUM(NSInteger, FilterInColumnType) {
+    ByNetworkType,
+    ByShareReason,
+};
+
+
 
 #pragma mark AccountsViewController Constants
 
@@ -92,6 +98,18 @@ FOUNDATION_EXPORT NSString *const otherButtonTitlesAlertDeletePicShow;
 #pragma mark - UIButton+MUSSocialNetwork
 
 FOUNDATION_EXPORT NSString *const musAppButton_ImageName_UnknownUser;
+
+#pragma mark - MUSPostCell
+
+FOUNDATION_EXPORT NSString *const musAppImage_Name_Comment;
+FOUNDATION_EXPORT NSString *const musAppImage_Name_Like;
+FOUNDATION_EXPORT NSString *const musAppImage_Name_VKIconImage;
+FOUNDATION_EXPORT NSString *const musAppImage_Name_FBIconImage;
+FOUNDATION_EXPORT NSString *const musAppImage_Name_TwitterIconImage;
+
+FOUNDATION_EXPORT NSString *const musAppFilter_Title_Shared;
+FOUNDATION_EXPORT NSString *const musAppFilter_Title_Offline;
+FOUNDATION_EXPORT NSString *const musAppFilter_Title_Error;
 
 
 @end
