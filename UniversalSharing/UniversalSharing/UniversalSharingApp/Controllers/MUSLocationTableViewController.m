@@ -7,6 +7,7 @@
 //
 
 #import "MUSLocationTableViewController.h"
+#import "MUSLocationManager.h"
 #import "Place.h"
 #import "ConstantsApp.h"
 
@@ -35,6 +36,10 @@
 }
 
 - (void) userCurrentLocation {
+    
+    [[MUSLocationManager sharedManager] startTrackLocationWithComplition:^(id result, NSError *error) {
+        
+    }];
     
     //    [[MUSLocationManager sharedManager] startTrackLocationWithComplition:^(id result, NSError *error) {
     //        if ([result isKindOfClass:[CLLocation class]]) {

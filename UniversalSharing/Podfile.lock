@@ -1,17 +1,17 @@
 PODS:
   - Bolts (1.2.0):
-    - Bolts/AppLinks (= 1.2.0)
-    - Bolts/Tasks (= 1.2.0)
+    - Bolts/AppLinks
+    - Bolts/Tasks
   - Bolts/AppLinks (1.2.0):
     - Bolts/Tasks
   - Bolts/Tasks (1.2.0)
   - Fabric (1.2.8):
-    - Fabric/Base (= 1.2.8)
+    - Fabric/Base
   - Fabric/Base (1.2.8)
   - FBSDKCoreKit (4.4.0):
     - Bolts (~> 1.1)
-    - FBSDKCoreKit/arc (= 4.4.0)
-    - FBSDKCoreKit/no-arc (= 4.4.0)
+    - FBSDKCoreKit/arc
+    - FBSDKCoreKit/no-arc
   - FBSDKCoreKit/arc (4.4.0):
     - Bolts (~> 1.1)
   - FBSDKCoreKit/no-arc (4.4.0):
@@ -44,4 +44,4 @@ SPEC CHECKSUMS:
   TwitterKit: 88daaebdb8bfb5847d76d8ae159841248427931d
   VK-ios-sdk: 53e366d221b24cc0ef6f31c6e9dfae5f12eea054
 
-COCOAPODS: 0.35.0
+COCOAPODS: 0.34.4
