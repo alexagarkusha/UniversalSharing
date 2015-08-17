@@ -63,11 +63,9 @@
 		97D1C43F1B81D0A200009BCF /* MUSPostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D1C43D1B81D0A200009BCF /* MUSPostCell.m */; };
 		97D1C4401B81D0A200009BCF /* MUSPostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97D1C43E1B81D0A200009BCF /* MUSPostCell.xib */; };
 		97D1C4441B81DB5D00009BCF /* Comment.png in Resources */ = {isa = PBXBuildFile; fileRef = 97D1C4411B81DB5D00009BCF /* Comment.png */; };
-		97D1C4461B81DB5D00009BCF /* noneImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 97D1C4431B81DB5D00009BCF /* noneImage.png */; };
 		97D1C4481B81DC8A00009BCF /* Like.png in Resources */ = {isa = PBXBuildFile; fileRef = 97D1C4471B81DC8A00009BCF /* Like.png */; };
 		97D1C44C1B81ED7F00009BCF /* DOPDropDownMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D1C44B1B81ED7F00009BCF /* DOPDropDownMenu.m */; };
 		97D1C4501B82047200009BCF /* UILabel+CornerRadiusLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D1C44F1B82047200009BCF /* UILabel+CornerRadiusLabel.m */; };
-		97D1C4521B820C4200009BCF /* nonePicture.png in Resources */ = {isa = PBXBuildFile; fileRef = 97D1C4511B820C4200009BCF /* nonePicture.png */; };
 		97D967CD1B6A14FF0060B2BC /* ImageToPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D967CC1B6A14FF0060B2BC /* ImageToPost.m */; };
 		FC79868BAD5DBAA5D3BB123C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 294811F54E6400CFBFD3EBDD /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -182,13 +180,11 @@
 		97D1C43D1B81D0A200009BCF /* MUSPostCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUSPostCell.m; path = PostCell/MUSPostCell.m; sourceTree = "<group>"; };
 		97D1C43E1B81D0A200009BCF /* MUSPostCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MUSPostCell.xib; path = PostCell/MUSPostCell.xib; sourceTree = "<group>"; };
 		97D1C4411B81DB5D00009BCF /* Comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Comment.png; sourceTree = "<group>"; };
-		97D1C4431B81DB5D00009BCF /* noneImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noneImage.png; sourceTree = "<group>"; };
 		97D1C4471B81DC8A00009BCF /* Like.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Like.png; sourceTree = "<group>"; };
 		97D1C44A1B81ED7F00009BCF /* DOPDropDownMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DOPDropDownMenu.h; sourceTree = "<group>"; };
 		97D1C44B1B81ED7F00009BCF /* DOPDropDownMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DOPDropDownMenu.m; sourceTree = "<group>"; };
 		97D1C44E1B82047200009BCF /* UILabel+CornerRadiusLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UILabel+CornerRadiusLabel.h"; path = "UILabel+CornerRadiusLabel/UILabel+CornerRadiusLabel.h"; sourceTree = "<group>"; };
 		97D1C44F1B82047200009BCF /* UILabel+CornerRadiusLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UILabel+CornerRadiusLabel.m"; path = "UILabel+CornerRadiusLabel/UILabel+CornerRadiusLabel.m"; sourceTree = "<group>"; };
-		97D1C4511B820C4200009BCF /* nonePicture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nonePicture.png; sourceTree = "<group>"; };
 		97D967CB1B6A14FF0060B2BC /* ImageToPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageToPost.h; path = UniversalSharing/SocialNetworkLibrary/ImageToPost/ImageToPost.h; sourceTree = SOURCE_ROOT; };
 		97D967CC1B6A14FF0060B2BC /* ImageToPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageToPost.m; path = UniversalSharing/SocialNetworkLibrary/ImageToPost/ImageToPost.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -335,8 +331,6 @@
 				97C74ADD1B7DDEF4004DC863 /* UnknownUser.jpg */,
 				97D1C4411B81DB5D00009BCF /* Comment.png */,
 				97D1C4471B81DC8A00009BCF /* Like.png */,
-				97D1C4431B81DB5D00009BCF /* noneImage.png */,
-				97D1C4511B820C4200009BCF /* nonePicture.png */,
 				18B505471B726FAF00679F9D /* Info.plist */,
 				18BB29A61B67E3F000B498AC /* main.m */,
 			);
@@ -826,9 +820,7 @@
 				30416A261B73A4AC000CB2C2 /* MUSGaleryView.xib in Resources */,
 				97D1C4441B81DB5D00009BCF /* Comment.png in Resources */,
 				18BB29BE1B67E3F000B498AC /* MUSUserProfileCell.xib in Resources */,
-				97D1C4461B81DB5D00009BCF /* noneImage.png in Resources */,
 				30DBFDA51B6BAA52002F83D0 /* VKimage.png in Resources */,
-				97D1C4521B820C4200009BCF /* nonePicture.png in Resources */,
 				18BB29AE1B67E3F000B498AC /* LaunchScreen.xib in Resources */,
 				18BB29C01B67E3F000B498AC /* Images.xcassets in Resources */,
 				18BB29BA1B67E3F000B498AC /* MUSAccountTableViewCell.xib in Resources */,

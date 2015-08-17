@@ -80,7 +80,6 @@ NSString *const musAppButton_ImageName_UnknownUser = @"UnknownUser.jpg";
 
 NSString *const musAppImage_Name_Comment = @"Comment.png";
 NSString *const musAppImage_Name_Like = @"Like.png";
-NSString *const musAppImage_Name_NoneImage = @"nonePicture.png";
 NSString *const musAppImage_Name_VKIconImage = @"VKimage.png";
 NSString *const musAppImage_Name_FBIconImage = @"FBimage.jpg";
 NSString *const musAppImage_Name_TwitterIconImage = @"TWimage.jpeg";

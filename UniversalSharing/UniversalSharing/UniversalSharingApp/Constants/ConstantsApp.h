@@ -103,7 +103,6 @@ FOUNDATION_EXPORT NSString *const musAppButton_ImageName_UnknownUser;
 
 FOUNDATION_EXPORT NSString *const musAppImage_Name_Comment;
 FOUNDATION_EXPORT NSString *const musAppImage_Name_Like;
-FOUNDATION_EXPORT NSString *const musAppImage_Name_NoneImage;
 FOUNDATION_EXPORT NSString *const musAppImage_Name_VKIconImage;
 FOUNDATION_EXPORT NSString *const musAppImage_Name_FBIconImage;
 FOUNDATION_EXPORT NSString *const musAppImage_Name_TwitterIconImage;
