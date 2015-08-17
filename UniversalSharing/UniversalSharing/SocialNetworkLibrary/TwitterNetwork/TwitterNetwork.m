@@ -18,7 +18,7 @@
 @property (copy, nonatomic) Complition copyComplition;
 @property (strong, nonatomic) NSArray *accountsArray;
 @property (strong, nonatomic) ACAccount *twitterAccount;
-
+@property (assign, nonatomic) BOOL doubleTouchFlag;
 @end
 
 static TwitterNetwork *model = nil;
@@ -41,6 +41,7 @@ static TwitterNetwork *model = nil;
 
 - (instancetype) init {
     self = [super init];
+    self.doubleTouchFlag = NO;
     [TwitterKit startWithConsumerKey:musTwitterConsumerKey consumerSecret:musTwitterConsumerSecret];
     [Fabric with : @[TwitterKit]];
     if (self) {
@@ -78,17 +79,22 @@ static TwitterNetwork *model = nil;
 */
 
 - (void) loginWithComplition :(Complition) block {
+    if (!self.doubleTouchFlag) {
+        self.doubleTouchFlag = YES;
     __weak TwitterNetwork *weakSell = self;
     
     [TwitterKit logInWithCompletion:^(TWTRSession* session, NSError* error) {
         if (session) {
             weakSell.isLogin = YES;
             weakSell.isVisible = YES;
+            
             [weakSell obtainInfoFromNetworkWithComplition:block];
         } else {
             block(nil, error);
         }
+        weakSell.doubleTouchFlag = NO;
     }];
+  }
 }
 
 #pragma mark - loginOut

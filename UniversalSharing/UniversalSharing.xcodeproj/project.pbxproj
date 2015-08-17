@@ -38,6 +38,7 @@
 		30416A2A1B73AF49000CB2C2 /* MUSCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 30416A281B73AF49000CB2C2 /* MUSCollectionViewCell.m */; };
 		30416A2B1B73AF49000CB2C2 /* MUSCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30416A291B73AF49000CB2C2 /* MUSCollectionViewCell.xib */; };
 		30416A641B79DDD4000CB2C2 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 30416A631B79DDD4000CB2C2 /* libsqlite3.dylib */; };
+		30416A6A1B81D0E0000CB2C2 /* DataBaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 30416A691B81D0E0000CB2C2 /* DataBaseManager.m */; };
 		306ED75C1B6FA3170014D975 /* MUSLocationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 306ED75B1B6FA3170014D975 /* MUSLocationTableViewController.m */; };
 		30DBFD8B1B677A9A002F83D0 /* TwitterNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD8A1B677A9A002F83D0 /* TwitterNetwork.m */; };
 		30DBFD8F1B677AD7002F83D0 /* VKNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD8E1B677AD7002F83D0 /* VKNetwork.m */; };
@@ -131,6 +132,8 @@
 		30416A281B73AF49000CB2C2 /* MUSCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSCollectionViewCell.m; sourceTree = "<group>"; };
 		30416A291B73AF49000CB2C2 /* MUSCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MUSCollectionViewCell.xib; sourceTree = "<group>"; };
 		30416A631B79DDD4000CB2C2 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		30416A681B81D0E0000CB2C2 /* DataBaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataBaseManager.h; sourceTree = "<group>"; };
+		30416A691B81D0E0000CB2C2 /* DataBaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataBaseManager.m; sourceTree = "<group>"; };
 		306ED75A1B6FA3170014D975 /* MUSLocationTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSLocationTableViewController.h; sourceTree = "<group>"; };
 		306ED75B1B6FA3170014D975 /* MUSLocationTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSLocationTableViewController.m; sourceTree = "<group>"; };
 		30DBFD891B677A9A002F83D0 /* TwitterNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterNetwork.h; sourceTree = "<group>"; };
@@ -244,6 +247,7 @@
 		187FC5111B65222D00A3916C /* SocialNetworkLibrary */ = {
 			isa = PBXGroup;
 			children = (
+				30416A671B81CFC8000CB2C2 /* DataBaseManager */,
 				30DBFD901B677B27002F83D0 /* SocialNetworkLibraryConstants */,
 				30DBFD8C1B677AD7002F83D0 /* VKNetwork */,
 				30DBFD881B677A9A002F83D0 /* TwitterNetwork */,
@@ -508,6 +512,15 @@
 				30416A251B73A4AC000CB2C2 /* MUSGaleryView.xib */,
 			);
 			name = GalleryView;
+			sourceTree = "<group>";
+		};
+		30416A671B81CFC8000CB2C2 /* DataBaseManager */ = {
+			isa = PBXGroup;
+			children = (
+				30416A681B81D0E0000CB2C2 /* DataBaseManager.h */,
+				30416A691B81D0E0000CB2C2 /* DataBaseManager.m */,
+			);
+			name = DataBaseManager;
 			sourceTree = "<group>";
 		};
 		306ED7591B6FA2DB0014D975 /* LocationTableViewController */ = {
@@ -870,6 +883,7 @@
 				187FC5271B65222D00A3916C /* SocialManager.m in Sources */,
 				97CCC9D81B749C2C00E0FAC6 /* ReachabilityManager.m in Sources */,
 				18BB29C21B67E3F000B498AC /* main.m in Sources */,
+				30416A6A1B81D0E0000CB2C2 /* DataBaseManager.m in Sources */,
 				187FC5261B65222D00A3916C /* FacebookNetwork.m in Sources */,
 				30416A241B73A49B000CB2C2 /* MUSGaleryView.m in Sources */,
 				97CA63CA1B6F66D300F9F0C1 /* Place.m in Sources */,

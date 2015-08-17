@@ -13,6 +13,7 @@
 #import "ReachabilityManager.h"
 #import "UIButton+CornerRadiusButton.h"
 #import <AFMSlidingCell.h>
+#import "DataBaseManager.h"
 
 
 
@@ -59,14 +60,14 @@
     [super viewDidLoad];
     [self obtanObjectsOfSocialNetworks];
     self.arrayButtons = [NSMutableArray new];
-
+    
 }
 
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self checkInternetConnection];
-    [self.tableView setUserInteractionEnabled:YES];
+    //[self.tableView setUserInteractionEnabled:YES];
     
 }
 
@@ -98,6 +99,9 @@
         [super setEditing:NO animated:NO];
         [self.tableView setEditing:NO animated:NO];
         [self.navigationItem.leftBarButtonItem setTitle:editButtonTitle];
+//        [self.arrayButtons removeAllObjects];
+//        [self.tableView reloadData];
+
     } else {
         [super setEditing:YES animated:YES];
         [self.tableView setEditing:YES animated:YES];
@@ -127,28 +131,28 @@
      */
     MUSAccountTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[MUSAccountTableViewCell cellID]];
     SocialNetwork *socialNetwork = [self obtainCurrentSocialNetwork:indexPath];
-
+    
     if(!cell) {
         cell = [MUSAccountTableViewCell accountTableViewCell];
     }
+    //if(!self.editing){
     __weak MUSAccountsViewController *weakSelf = self;
-    [cell setDelegate:self];    
+    [cell setDelegate:self];
     [cell addFirstButton:[self createButtonHideShow :indexPath :socialNetwork] withWidth:80.0 withTappedBlock:^(AFMSlidingCell *cell) {
         [cell hideButtonViewAnimated:YES];
         [weakSelf changeTitleButton:[weakSelf obtainIndexPath:cell]];
     }];
-   
+   // }
     [cell configurateCellForNetwork:socialNetwork];
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-   // self.tableView.multipleTouchEnabled = NO;
     self.selectedIndexPath = indexPath;
     SocialNetwork *socialNetwork = [self obtainCurrentSocialNetwork:indexPath];
-        if(!socialNetwork.isVisible){
-            return;
-        }
+    if(!socialNetwork.isVisible){
+        return;
+    }
     /*!
      when cell is tapped we check this social network is login and existed a currentuser object  if YES we go to ditailviewcontroller, else to do login than go to ditailviewcontroller
      */
@@ -157,13 +161,17 @@
         
     } else {
         __weak MUSAccountsViewController *weakSelf = self;
-        [socialNetwork loginWithComplition:^(id result, NSError *error) {
+        [socialNetwork loginWithComplition:^(SocialNetwork* result, NSError *error) {
             if (result) {
+                //////////////////////////////////////////////////////////////////////////////////////////////////[[DataBaseManager dataBaseManager] insertIntoTable:result.currentUser];
+                
+                
+                
+                ///////////////////////////////////////////////////////////////////////////////////////////////////
                 [weakSelf performSegueWithIdentifier: goToUserDetailViewControllerSegueIdentifier sender:nil];
             }
         }];
     }
-    [self.tableView setUserInteractionEnabled:NO];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -252,17 +260,21 @@
     [self.arrayButtons[indexPath.row] setTitle: !socialNetwork.isVisible ?  showButtonTitle : hideButtonTitle forState:UIControlStateNormal];
     //////////////
     if (!socialNetwork.isVisible) {
-
-        [self.arrayWithNetworksObj removeObjectAtIndex:indexPath.row];
-        [self.arrayWithNetworksObj insertObject:socialNetwork atIndex:2];
-
+        if (indexPath.row != 2) {
+            [self.arrayWithNetworksObj removeObjectAtIndex:indexPath.row];
+            [self.arrayWithNetworksObj insertObject:socialNetwork atIndex:2];
+        }
+        
     } else {
-
+        if (indexPath.row != 0) {
         [self.arrayWithNetworksObj removeObjectAtIndex:indexPath.row];
         [self.arrayWithNetworksObj insertObject:socialNetwork atIndex:0];
+        }
     }
+   // if(!self.editing)
     [self.arrayButtons removeAllObjects];
     [self.tableView reloadData];
+    
 }
 
 - (MUSAccountTableViewCell*) obtainCurrentCell :(NSIndexPath*) indexPath {

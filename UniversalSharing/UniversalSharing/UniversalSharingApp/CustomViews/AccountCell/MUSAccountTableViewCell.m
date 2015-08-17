@@ -32,6 +32,8 @@
 }
 
 - (void)awakeFromNib {
+    self.multipleTouchEnabled = YES;
+
     [self.networkIconImageView roundImageView];
 }
 
@@ -88,5 +90,21 @@
     return translucentImage;
 }
 
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    for (UITouch* touch in touches) {
+        if (touch.tapCount == 2)
+        {
+           // self.multipleTouchEnabled = NO;
+//                        CGPoint where = [touch locationInView:self];
+//                        NSIndexPath* ip = [self indexPathForRowAtPoint:where];
+//                        NSLog(@"double clicked index path: %@", ip);
+            
+            // do something useful with index path 'ip'
+        }
+    }
+    
+    [super touchesEnded:touches withEvent:event];
+}
 @end
 

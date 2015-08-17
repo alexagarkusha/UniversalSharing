@@ -20,6 +20,8 @@
 #import "MUSGaleryView.h"
 #import "ReachabilityManager.h"
 #import <CoreText/CoreText.h>
+//////////////////////////////////////////////
+#import "DataBaseManager.h"
 
 @interface MUSShareViewController () <UITextViewDelegate, UIActionSheetDelegate, UIAlertViewDelegate, UINavigationControllerDelegate, UIToolbarDelegate, MUSGaleryViewDelegate>
 
@@ -115,7 +117,7 @@
 }
 
 - (void) viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:YES];    
+    [super viewWillAppear:YES];
     if (!_currentSocialNetwork) {
         _currentSocialNetwork = [SocialManager currentSocialNetwork];
     }
@@ -131,12 +133,12 @@
 - (void) viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:YES];
     /*
-    dispatch_queue_t q = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0ul);
-    dispatch_async(q, ^{
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [[NSNotificationCenter defaultCenter]removeObserver:self];
-        });
-    });
+     dispatch_queue_t q = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0ul);
+     dispatch_async(q, ^{
+     dispatch_async(dispatch_get_main_queue(), ^{
+     [[NSNotificationCenter defaultCenter]removeObserver:self];
+     });
+     });
      */
 }
 
@@ -270,11 +272,11 @@
         self.galeryViewLayoutConstraint.constant = galeryViewHeight;
     }
     self.messageTextView.frame = CGRectMake(self.messageTextView.frame.origin.x,
-                                             self.messageTextView.frame.origin.y,
-                                             self.messageTextView.frame.size.width,
-                                             self.messageTextView.frame.size.height
-                                             - convertedFrame.size.height +
-                                             self.tabBarController.tabBar.frame.size.height + self.galeryView.frame.size.height - galeryViewHeight);
+                                            self.messageTextView.frame.origin.y,
+                                            self.messageTextView.frame.size.width,
+                                            self.messageTextView.frame.size.height
+                                            - convertedFrame.size.height +
+                                            self.tabBarController.tabBar.frame.size.height + self.galeryView.frame.size.height - galeryViewHeight);
     [UIView animateWithDuration: 0.3  animations:^{
         [self.view layoutIfNeeded];
         [self.view setNeedsLayout];
@@ -292,7 +294,7 @@
     [UIView setAnimationDuration:0.5f];
     self.messageTextView.frame = self.messageTextViewFrame;
     [UIView commitAnimations];
-
+    
     [UIView animateWithDuration: 0.4 animations:^{
         [self.view layoutIfNeeded];
         [self.view setNeedsLayout];
@@ -317,10 +319,13 @@
             self.post.postDescription = @"";
         }
         self.post.networkType = _currentSocialNetwork.networkType;
-    /*
-     get array with chosen images from MUSGaleryView
-     */
+        /*
+         get array with chosen images from MUSGaleryView
+         */
         self.post.arrayImages = [self.galeryView obtainArrayWithChosenPics];
+        [self saveImageToDocumentsFolderAndFillArrayWithUrl];/////////////////////////////////////////////////////////
+        
+        
         [_currentSocialNetwork sharePost:self.post withComplition:^(id result, NSError *error) {
             if (!error) {
                 [self showAlertWithMessage : titleCongratulatoryAlert];
@@ -331,6 +336,27 @@
     }
 }
 
+- (void) saveImageToDocumentsFolderAndFillArrayWithUrl {
+    if (!self.post.arrayImagesUrl) {
+        self.post.arrayImagesUrl = [NSMutableArray new];
+    }
+    [self.post.arrayImages enumerateObjectsUsingBlock:^(ImageToPost *image, NSUInteger index, BOOL *stop) {
+        NSData *data = UIImagePNGRepresentation(image.image);
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsPath = [paths objectAtIndex:0]; //Get the docs directory
+        NSString *filePath = [documentsPath stringByAppendingPathComponent:@"image"];
+        filePath = [filePath stringByAppendingString:[NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970] * 1000]];
+        filePath = [filePath stringByAppendingString:@".png"];
+        [self.post.arrayImagesUrl addObject:filePath];
+        [data writeToFile:filePath atomically:YES]; //Write the file
+    }];
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    [[DataBaseManager dataBaseManager] insertIntoTable:self.post];
+    
+    
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+}
 
 - (BOOL) checkStatusOftheNetworkConnection {
     BOOL isReachable = [ReachabilityManager isReachable];
@@ -375,7 +401,7 @@
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-      return textView.text.length + (text.length - range.length) <= countOfAllowedLettersInTextView;
+    return textView.text.length + (text.length - range.length) <= countOfAllowedLettersInTextView;
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
@@ -397,11 +423,11 @@
 
 - (void) endEditingMessageTextView {
     //[UIView animateWithDuration:1.0 animations:^(void){
-        [self.messageTextView resignFirstResponder];
+    [self.messageTextView resignFirstResponder];
     //} completion:^(BOOL finished) {
-        //Do something
+    //Do something
     //}];
-
+    
     
     
     

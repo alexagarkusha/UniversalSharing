@@ -28,11 +28,11 @@
 /*!
  @abstract number of likes received after sending post
  */
-@property (nonatomic, strong) NSString *likesCount;
+@property (nonatomic, assign) NSInteger  likesCount;
 /*!
  @abstract number of coments received after sending post
  */
-@property (nonatomic, assign) CGFloat comentsCount;
+@property (nonatomic, assign) NSInteger commentsCount;
 /*!
  @abstract unique identifier of the user position location
  */
@@ -42,6 +42,8 @@
  */
 @property (nonatomic, assign) NetworkType networkType;
 
+///////////////////////////////////////////////////////////////////////////////////////
 
+@property (nonatomic, strong) NSMutableArray *arrayImagesUrl;
 
 @end
