@@ -76,4 +76,18 @@ NSString *const otherButtonTitlesAlertDeletePicShow = @"YES";
 
 NSString *const musAppButton_ImageName_UnknownUser = @"UnknownUser.jpg";
 
+#pragma mark - MUSPostCell
+
+NSString *const musAppImage_Name_Comment = @"Comment.png";
+NSString *const musAppImage_Name_Like = @"Like.png";
+NSString *const musAppImage_Name_NoneImage = @"nonePicture.png";
+NSString *const musAppImage_Name_VKIconImage = @"VKimage.png";
+NSString *const musAppImage_Name_FBIconImage = @"FBimage.jpg";
+NSString *const musAppImage_Name_TwitterIconImage = @"TWimage.jpeg";
+
+NSString *const musAppFilter_Title_Shared = @"Shared";
+NSString *const musAppFilter_Title_Offline = @"Offline";
+NSString *const musAppFilter_Title_Error = @"Error";
+
+
 @end

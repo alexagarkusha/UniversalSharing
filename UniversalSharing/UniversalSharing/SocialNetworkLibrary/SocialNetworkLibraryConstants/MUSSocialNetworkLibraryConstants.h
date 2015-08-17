@@ -32,6 +32,12 @@ typedef NS_ENUM (NSInteger, DistanceType) {
     DistanceType4
 };
 
+typedef NS_ENUM (NSInteger, ReasonType) {
+    Offline,
+    ErrorConnection,
+    Connect
+};
+
 
 #pragma mark Facebook Constants
 
