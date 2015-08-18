@@ -76,10 +76,10 @@
     self.postDescription.text = currentPost.postDescription;
     self.iconOfSocialNetwork.image = [self iconOfSocialNetworkForPost : currentPost];
     self.commentImage.image = [UIImage imageNamed: musAppImage_Name_Comment];
-    self.numberOfComments.text = [NSString stringWithFormat: @"%d", currentPost.comentsCount];
+    self.numberOfComments.text = [NSString stringWithFormat: @"%d", currentPost.commentsCount];
     self.likeImage.image = [UIImage imageNamed: musAppImage_Name_Like];
     self.numberOfLikes.text = [NSString stringWithFormat: @"%d", currentPost.likesCount];
-    self.reasonOfPost.backgroundColor = [self reasonColorForPost : currentPost];
+    //self.reasonOfPost.backgroundColor = [self reasonColorForPost : currentPost];
 }
 
 - (UIImage*) iconOfSocialNetworkForPost : (Post*) currentPost {
@@ -98,6 +98,7 @@
     }
 }
 
+/*
 - (UIColor*) reasonColorForPost : (Post*) currentPost {
     switch (currentPost.reasonType) {
         case Connect:
@@ -113,6 +114,6 @@
             break;
     }
 }
-
+*/
 
 @end

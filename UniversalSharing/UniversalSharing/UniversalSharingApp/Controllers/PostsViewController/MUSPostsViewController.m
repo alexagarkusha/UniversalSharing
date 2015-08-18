@@ -11,6 +11,7 @@
 #import "MUSPostCell.h"
 #import "ConstantsApp.h"
 #import "SocialManager.h"
+#import "MUSDetailPostViewController.h"
 
 @interface MUSPostsViewController () <DOPDropDownMenuDataSource, DOPDropDownMenuDelegate, UITableViewDataSource, UITableViewDelegate>
 
@@ -67,6 +68,7 @@
         UITableView *tableView = [[UITableView alloc] initWithFrame: CGRectMake(0,  [UIApplication sharedApplication].statusBarFrame.size.height + self.navigationController.navigationBar.frame.size.height + self.menu.frame.size.height, screenSize.width, screenSize.height - self.menu.frame.origin.y - self.menu.frame.size.height - self.tabBarController.tabBar.frame.size.height)];
         tableView.dataSource = self;
         tableView.delegate = self;
+        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [self.view addSubview:tableView];
         tableView;
     });
@@ -108,6 +110,10 @@
     if(!cell) {
         cell = [MUSPostCell postCell];
     }
+    if (indexPath.row % 2 == 0) {
+        cell.backgroundColor = [UIColor colorWithRed: 1.0 green: 246.0 / 255.0 blue:248.0 / 255.0 alpha: 1.0f];
+    }
+    
     [cell configurationPostCell: [self.arrayPosts objectAtIndex: indexPath.row]];
     return cell;
 }
@@ -115,7 +121,10 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    MUSDetailPostViewController *detailPostViewController = [[MUSDetailPostViewController alloc] init];
+    detailPostViewController.currentPost = [self.arrayPosts objectAtIndex: indexPath.row];
+    [self.navigationController pushViewController:detailPostViewController animated:YES];
+    self.navigationController.navigationBar.translucent = YES;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -209,18 +218,6 @@
 #pragma mark - NetworkTypeFromMenuTitle
 
 - (NSInteger) networkTypeFromTitle : (NSString*) title {
-    if ([title isEqual: musAppFilter_Title_Error]) {
-        return ErrorConnection;
-    } else if ([title isEqual: musAppFilter_Title_Offline]) {
-        return Offline;
-    } else {
-        return Connect;
-    }
-}
-
-#pragma mark - ReasonFromMenuTitle
-
-- (NSInteger) reasonFromTitle : (NSString*) title {
     if ([title isEqual: musVKName]) {
         return VKontakt;
     } else if ([title isEqual: musFacebookName]) {
@@ -230,34 +227,59 @@
     }
 }
 
+#pragma mark - ReasonFromMenuTitle
+
+- (NSInteger) reasonFromTitle : (NSString*) title {
+    if ([title isEqual: musAppFilter_Title_Error]) {
+        return ErrorConnection;
+    } else if ([title isEqual: musAppFilter_Title_Offline]) {
+        return Offline;
+    } else {
+        return Connect;
+    }
+}
+
 
 ///////////////////// DELETE THIS AFTER Connect SQLite /////////////////////////
 
 - (void) POSTS {
     Post *post1 = [[Post alloc] init];
-    post1.postDescription = @"POST #1 - lskfdjnskdsflsdfksj  sdkjnksjfkjsdkj jsdkjnskjfnsk jsdnkjfskjd jsdkfjnskfjn jsdkjfk jsdkjnskd jsvcvxcvbfj";
-    post1.comentsCount = 2;
+    post1.postDescription = @"POST #1 - lskfdjnskdsflsdfksj  sdkjnksjfkjsdkj jsdkjnskjfnsk jsdnkjfskjd jsdkfjnskfjn jsdkjfk jsdkjnskd jsvcvxcvbfj jsdkjnksjnkjn kjndfkjnkdjf kjdfnkdkfngkd jkjfkjndkfnk jkjdfnknvkdfj kndkfn k nkfdnfkdn kfnkffkjfkknknk j k k jkfd kfkdnfd kjnfkdndkndkjnf kfnkjfdnkdjn kfdjnkfdnfkdf kdnkdj nkkdnfk jfnk";
+    post1.commentsCount = 2;
     post1.likesCount = 100;
-    post1.reasonType = Connect;
+    ImageToPost *image1 = [[ImageToPost alloc] init];
+    image1.image = [UIImage imageNamed: @"Comment.png"];
+    image1.imageType = JPEG;
+    
+    ImageToPost *image2 = [[ImageToPost alloc] init];
+    image2.image = [UIImage imageNamed: @"Like.png"];
+    image2.imageType = JPEG;
+    
+    ImageToPost *image3 = [[ImageToPost alloc] init];
+    image3.image = [UIImage imageNamed: @"UnknownUser.jpg"];
+    image3.imageType = JPEG;
+    
+    post1.arrayImages = [[NSArray alloc] initWithObjects: image1, image2, image3, nil];
+    
+    //post1.reasonType = Connect;
     post1.networkType = Facebook;
     
     Post *post2 = [[Post alloc] init];
-    post2.postDescription = @"POST #2 - lskfdjnskdsflsdfksj  sdkjnksjfkjsdkj jsdkjnskjfnsk jsdnkjfskjd jsdkfjnskfjn jsdkjfk jsdkjnskd jsvcvxcvbfj";
-    post2.comentsCount = 23;
+    post2.postDescription = @"POST #2 - lskfdjnskdsflsdfksj";
+    post2.commentsCount = 23;
     post2.likesCount = 200;
-    post2.reasonType = ErrorConnection;
+    //post2.reasonType = ErrorConnection;
     post2.networkType = Twitters;
 
     Post *post3 = [[Post alloc] init];
     post3.postDescription = @"POST #3 - lskfdjnskdsflsdfksj  sdkjnksjfkjsdkj jsdkjnskjfnsk jsdnkjfskjd jsdkfjnskfjn jsdkjfk jsdkjnskd jsvcvxcvbfj";
-    post3.comentsCount = 23333;
+    post3.commentsCount = 23333;
     post3.likesCount = 200;
-    post3.reasonType = Offline;
+    //post3.reasonType = Offline;
     post3.networkType = VKontakt;
     
     self.arrayPosts = [[NSArray alloc] initWithObjects: post1, post2, post3, nil];
 }
-
 
 
 

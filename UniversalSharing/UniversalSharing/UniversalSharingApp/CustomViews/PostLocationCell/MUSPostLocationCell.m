@@ -1,0 +1,64 @@
+//
+//  MUSPostLocationCell.m
+//  UniversalSharing
+//
+//  Created by U 2 on 18.08.15.
+//  Copyright (c) 2015 Mobindustry. All rights reserved.
+//
+
+#import "MUSPostLocationCell.h"
+#import <MapKit/MapKit.h>
+#import "MUSAnnotation.h"
+
+@interface MUSPostLocationCell () <MKMapViewDelegate>
+
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
+
+@property (nonatomic, strong) id<MKAnnotation> lastAnnotation;
+
+
+@end
+
+
+
+
+@implementation MUSPostLocationCell
+
+- (void)awakeFromNib {
+    // Initialization code
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+
+    // Configure the view for the selected state
+}
+
+
+- (NSString *)reuseIdentifier{
+    return [MUSPostLocationCell cellID];
+}
+
++ (NSString*) cellID {
+    return NSStringFromClass([self class]);
+}
+
++ (instancetype) postLocationCell {
+    NSArray* nibArray = [[NSBundle mainBundle]loadNibNamed:[self cellID] owner:nil options:nil];
+    return nibArray[0];
+}
+
+- (void) configurationPostLocationCellByPost:(Post *)currentPost {
+    //CLLocationCoordinate2D currentCityLocation = CLLocationCoordinate2DMake(<#CLLocationDegrees latitude#>, <#CLLocationDegrees longitude#>)
+    
+    CLLocationCoordinate2D currentCityLocation = CLLocationCoordinate2DMake(48.450063, 34.982602);
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(currentCityLocation, 400, 400);
+    MUSAnnotation *pin = [[MUSAnnotation alloc] init];
+    pin.title = @"Some house";
+    pin.coordinate = currentCityLocation;
+    [self.mapView setRegion:region animated:YES];
+    [self.mapView addAnnotation:pin];
+}
+
+
+@end
