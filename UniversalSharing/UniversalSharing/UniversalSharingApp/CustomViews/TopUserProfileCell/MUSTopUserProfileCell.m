@@ -47,7 +47,16 @@
 - (void) configurationProfileUserTableViewCellWithUser: (User*) currentUser {
     self.userNameLabel.text = currentUser.firstName;
     self.userLastNameLabel.text = currentUser.lastName;
-    [self.userImageView loadImageFromUrl: [NSURL URLWithString: currentUser.photoURL]];
+    NSData *data = [NSData dataWithContentsOfFile:[self obtainPathToDocumentsFolder:currentUser.photoURL]];
+    self.self.userImageView.image = [UIImage imageWithData:data];
+    //[self.userImageView loadImageFromUrl: [NSURL URLWithString: currentUser.photoURL]];
+    
+    
 }
 
+- (NSString*) obtainPathToDocumentsFolder :(NSString*) pathFromDataBase {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0];
+    return [documentsPath stringByAppendingPathComponent:pathFromDataBase];
+}
 @end

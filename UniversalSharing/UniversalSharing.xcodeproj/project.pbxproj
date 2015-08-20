@@ -32,6 +32,7 @@
 		18BB29C01B67E3F000B498AC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18BB29A41B67E3F000B498AC /* Images.xcassets */; };
 		18BB29C21B67E3F000B498AC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB29A61B67E3F000B498AC /* main.m */; };
 		18BB29C31B67E3F000B498AC /* MUSLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB29AA1B67E3F000B498AC /* MUSLocationManager.m */; };
+		303CAC7D1B860A2F00B48D72 /* NSString+MUSPathToDocumentsdirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = 303CAC7C1B860A2F00B48D72 /* NSString+MUSPathToDocumentsdirectory.m */; };
 		30416A191B7355BC000CB2C2 /* UIButton+MUSSocialNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 30416A181B7355BC000CB2C2 /* UIButton+MUSSocialNetwork.m */; };
 		30416A241B73A49B000CB2C2 /* MUSGaleryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30416A231B73A49B000CB2C2 /* MUSGaleryView.m */; };
 		30416A261B73A4AC000CB2C2 /* MUSGaleryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30416A251B73A4AC000CB2C2 /* MUSGaleryView.xib */; };
@@ -130,6 +131,8 @@
 		18BB29A91B67E3F000B498AC /* MUSLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSLocationManager.h; sourceTree = "<group>"; };
 		18BB29AA1B67E3F000B498AC /* MUSLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSLocationManager.m; sourceTree = "<group>"; };
 		294811F54E6400CFBFD3EBDD /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		303CAC7B1B860A2F00B48D72 /* NSString+MUSPathToDocumentsdirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MUSPathToDocumentsdirectory.h"; sourceTree = "<group>"; };
+		303CAC7C1B860A2F00B48D72 /* NSString+MUSPathToDocumentsdirectory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MUSPathToDocumentsdirectory.m"; sourceTree = "<group>"; };
 		30416A171B7355BC000CB2C2 /* UIButton+MUSSocialNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+MUSSocialNetwork.h"; sourceTree = "<group>"; };
 		30416A181B7355BC000CB2C2 /* UIButton+MUSSocialNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+MUSSocialNetwork.m"; sourceTree = "<group>"; };
 		30416A221B73A49B000CB2C2 /* MUSGaleryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSGaleryView.h; sourceTree = "<group>"; };
@@ -265,8 +268,8 @@
 		187FC5111B65222D00A3916C /* SocialNetworkLibrary */ = {
 			isa = PBXGroup;
 			children = (
-				30416A671B81CFC8000CB2C2 /* DataBaseManager */,
 				30DBFD901B677B27002F83D0 /* SocialNetworkLibraryConstants */,
+				30416A671B81CFC8000CB2C2 /* DataBaseManager */,
 				30DBFD8C1B677AD7002F83D0 /* VKNetwork */,
 				30DBFD881B677A9A002F83D0 /* TwitterNetwork */,
 				187FC5141B65222D00A3916C /* FacebookNetwork */,
@@ -520,6 +523,15 @@
 			path = LocationManager;
 			sourceTree = "<group>";
 		};
+		303CAC7A1B86099500B48D72 /* NSString+MUSPathToDocumentsdirectory */ = {
+			isa = PBXGroup;
+			children = (
+				303CAC7B1B860A2F00B48D72 /* NSString+MUSPathToDocumentsdirectory.h */,
+				303CAC7C1B860A2F00B48D72 /* NSString+MUSPathToDocumentsdirectory.m */,
+			);
+			name = "NSString+MUSPathToDocumentsdirectory";
+			sourceTree = "<group>";
+		};
 		30416A131B735328000CB2C2 /* UiButton+MUSSocialNetwork */ = {
 			isa = PBXGroup;
 			children = (
@@ -640,6 +652,7 @@
 		97C63BD61B724617006E99C6 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				303CAC7A1B86099500B48D72 /* NSString+MUSPathToDocumentsdirectory */,
 				97C63BD71B7246B6006E99C6 /* NSError+MUSError.h */,
 				97C63BD81B7246B6006E99C6 /* NSError+MUSError.m */,
 			);
@@ -934,6 +947,7 @@
 				18BB29BD1B67E3F000B498AC /* MUSUserProfileCell.m in Sources */,
 				18BB29B71B67E3F000B498AC /* MUSShareViewController.m in Sources */,
 				18BB29B41B67E3F000B498AC /* UIImageView+RoundImage.m in Sources */,
+				303CAC7D1B860A2F00B48D72 /* NSString+MUSPathToDocumentsdirectory.m in Sources */,
 				30416A2A1B73AF49000CB2C2 /* MUSCollectionViewCell.m in Sources */,
 				97D1C43F1B81D0A200009BCF /* MUSPostCell.m in Sources */,
 				18BB29B91B67E3F000B498AC /* MUSAccountTableViewCell.m in Sources */,

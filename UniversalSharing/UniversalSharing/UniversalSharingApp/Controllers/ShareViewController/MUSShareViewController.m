@@ -323,16 +323,27 @@
          get array with chosen images from MUSGaleryView
          */
         self.post.arrayImages = [self.galeryView obtainArrayWithChosenPics];
-        [self saveImageToDocumentsFolderAndFillArrayWithUrl];/////////////////////////////////////////////////////////
+        self.post.userId = [NSString stringWithFormat:@"%ld", (long)_currentSocialNetwork.currentUser.primaryKey];//or something else
         
+        BOOL isReachable = [ReachabilityManager isReachable];
+        BOOL isReachableViaWiFi = [ReachabilityManager isReachableViaWiFi];
         
+        if (isReachableViaWiFi && isReachable){
         [_currentSocialNetwork sharePost:self.post withComplition:^(id result, NSError *error) {
             if (!error) {
                 [self showAlertWithMessage : titleCongratulatoryAlert];
+                self.post.reason = Connect;
             } else {
                 [self showErrorAlertWithError : error];
+                self.post.reason = ErrorConnection;
             }
+            [self saveImageToDocumentsFolderAndFillArrayWithUrl];
         }];
+            
+        } else {
+            self.post.reason = Offline;
+            [self saveImageToDocumentsFolderAndFillArrayWithUrl];
+        }
     }
 }
 
@@ -351,7 +362,7 @@
         [data writeToFile:filePath atomically:YES]; //Write the file
     }];
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    [[DataBaseManager dataBaseManager] insertIntoTable:self.post];
+    [[DataBaseManager sharedManager] insertIntoTable:self.post];
     
     
     

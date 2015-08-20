@@ -43,7 +43,13 @@
 @property (nonatomic, assign) NetworkType networkType;
 
 ///////////////////////////////////////////////////////////////////////////////////////
-
+@property (nonatomic, assign) NSInteger primaryKey;
 @property (nonatomic, strong) NSMutableArray *arrayImagesUrl;
+@property (nonatomic, strong) NSString *longitude;
+@property (nonatomic, strong) NSString *latitude;
+@property (nonatomic, strong) NSString *userId;
+@property (nonatomic, strong) NSString *dateCreate;
+
+@property (nonatomic, assign) ReasonType reason;
 
 @end

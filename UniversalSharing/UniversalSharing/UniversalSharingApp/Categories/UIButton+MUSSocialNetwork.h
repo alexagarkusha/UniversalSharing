@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SocialNetwork.h"
 
-@interface UIButton (MUSSocialNetwork) <UIActionSheetDelegate>
+@interface UIButton (MUSSocialNetwork)
 
 - (void) initiationSocialNetworkButtonForSocialNetwork :(SocialNetwork*) socialNetwork;
 

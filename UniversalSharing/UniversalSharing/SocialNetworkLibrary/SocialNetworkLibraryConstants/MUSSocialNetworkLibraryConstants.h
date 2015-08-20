@@ -25,6 +25,7 @@ typedef NS_ENUM (NSInteger, ImageType) {
     JPEG
 };
 
+
 typedef NS_ENUM (NSInteger, DistanceType) {
     DistanceType1,
     DistanceType2,
