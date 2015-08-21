@@ -9,10 +9,19 @@
 #import <UIKit/UIKit.h>
 #import "MUSSocialNetworkLibraryHeader.h"
 
+
+@protocol MUSPostLocationCellDelegate <NSObject>
+- (void) changeLocationForPost;
+@end
+
 @interface MUSPostLocationCell : UITableViewCell
+@property (nonatomic, assign) id <MUSPostLocationCellDelegate> delegate;
+@property (nonatomic, assign) BOOL isEditableCell;
 
 + (NSString*) cellID;
 + (instancetype) postLocationCell;
++ (CGFloat) heightForPostLocationCell;
+
 
 - (void) configurationPostLocationCellByPost: (Post*) currentPost;
 

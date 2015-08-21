@@ -121,7 +121,11 @@
     if (!_currentSocialNetwork) {
         _currentSocialNetwork = [SocialManager currentSocialNetwork];
     }
-    [self.changeSocialNetworkButton initiationSocialNetworkButtonForSocialNetwork: nil];
+    if (!_currentSocialNetwork.isVisible) {
+        [self.changeSocialNetworkButton initiationSocialNetworkButtonForSocialNetwork: nil];
+    } else {
+        [self.changeSocialNetworkButton initiationSocialNetworkButtonForSocialNetwork:_currentSocialNetwork];
+    }
     self.mainGestureRecognizer.enabled = NO;
 }
 
@@ -311,20 +315,22 @@
     
     if(!self.post) {
         self.post = [[Post alloc] init];
+    }
+    
+    
+    
+    self.post.placeID = self.placeID;
+    if (![self.messageTextView.text isEqualToString: kPlaceholderText]) {
+        self.post.postDescription = self.messageTextView.text;
     } else {
-        self.post.placeID = self.placeID;
-        if (![self.messageTextView.text isEqualToString: kPlaceholderText]) {
-            self.post.postDescription = self.messageTextView.text;
-        } else {
-            self.post.postDescription = @"";
-        }
-        self.post.networkType = _currentSocialNetwork.networkType;
+        self.post.postDescription = @"";
+    }
+    self.post.networkType = _currentSocialNetwork.networkType;
         /*
          get array with chosen images from MUSGaleryView
          */
-        self.post.arrayImages = [self.galeryView obtainArrayWithChosenPics];
-        [self saveImageToDocumentsFolderAndFillArrayWithUrl];/////////////////////////////////////////////////////////
-        
+    self.post.arrayImages = [self.galeryView obtainArrayWithChosenPics];
+    [self saveImageToDocumentsFolderAndFillArrayWithUrl];///////////////////////////////
         
         [_currentSocialNetwork sharePost:self.post withComplition:^(id result, NSError *error) {
             if (!error) {
@@ -332,8 +338,7 @@
             } else {
                 [self showErrorAlertWithError : error];
             }
-        }];
-    }
+    }];
 }
 
 - (void) saveImageToDocumentsFolderAndFillArrayWithUrl {

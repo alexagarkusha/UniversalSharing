@@ -9,13 +9,18 @@
 #import "MUSPostLocationCell.h"
 #import <MapKit/MapKit.h>
 #import "MUSAnnotation.h"
+#import "ConstantsApp.h"
+#import "UIButton+MUSEditableButton.h"
 
 @interface MUSPostLocationCell () <MKMapViewDelegate>
+@property (weak, nonatomic) IBOutlet UILabel *placeNameLabel;
+@property (weak, nonatomic) IBOutlet UIButton *changeLocationButtonOutlet;
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
 @property (nonatomic, strong) id<MKAnnotation> lastAnnotation;
 
+- (IBAction)changeLocationButtonTouch:(id)sender;
 
 @end
 
@@ -26,6 +31,8 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    self.placeNameLabel.hidden = YES;
+    [self.changeLocationButtonOutlet editableButton];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -48,8 +55,21 @@
     return nibArray[0];
 }
 
++ (CGFloat) heightForPostLocationCell {
+    return musAppDetailPostVC_HeightOfPostLocationCell;
+}
+
 - (void) configurationPostLocationCellByPost:(Post *)currentPost {
     //CLLocationCoordinate2D currentCityLocation = CLLocationCoordinate2DMake(<#CLLocationDegrees latitude#>, <#CLLocationDegrees longitude#>)
+    [self checkChangeLocationButtonStatus];
+    
+    /*
+    if (currentPost.placeName) {
+        self.placeNameLabel.hidden = NO;
+        self.placeNameLabel.text = [NSString stringWithFormat: currentPost.placeName];
+    }
+    */
+    
     
     CLLocationCoordinate2D currentCityLocation = CLLocationCoordinate2DMake(48.450063, 34.982602);
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(currentCityLocation, 400, 400);
@@ -60,5 +80,17 @@
     [self.mapView addAnnotation:pin];
 }
 
+- (void) checkChangeLocationButtonStatus {
+    if (!self.isEditableCell) {
+        self.changeLocationButtonOutlet.hidden = YES;
+    } else {
+        self.changeLocationButtonOutlet.hidden = NO;
+    }
+}
+
+
+- (IBAction)changeLocationButtonTouch:(id)sender {
+    [self.delegate changeLocationForPost];
+}
 
 @end

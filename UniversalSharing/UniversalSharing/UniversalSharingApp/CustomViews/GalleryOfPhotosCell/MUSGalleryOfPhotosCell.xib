@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -14,29 +15,10 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="bYY-mV-0L3">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y4j-P6-qcN" customClass="MUSGalleryViewOfPhotos">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="149"/>
-                        <color key="backgroundColor" red="1" green="0.96389242500000005" blue="0.97274500139999998" alpha="1" colorSpace="calibratedRGB"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="vMC-4m-q6y">
-                            <size key="itemSize" width="320" height="150"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        </collectionViewFlowLayout>
-                        <connections>
-                            <outlet property="dataSource" destination="KGk-i7-Jjw" id="smP-lC-7b0"/>
-                            <outlet property="delegate" destination="KGk-i7-Jjw" id="g0X-nr-YXI"/>
-                        </connections>
-                    </collectionView>
-                    <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="4" translatesAutoresizingMaskIntoConstraints="NO" id="QpA-tM-c9B">
-                        <rect key="frame" x="244" y="104" width="68" height="37"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="68" id="7Hy-EG-zrv"/>
-                            <constraint firstAttribute="height" constant="37" id="oCd-bl-1t1"/>
-                        </constraints>
-                        <color key="pageIndicatorTintColor" red="0.91545024671052633" green="0.28574686578947278" blue="0.4159758813342106" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="currentPageIndicatorTintColor" red="0.96620579769736847" green="0.81594366776315785" blue="0.90745785361842102" alpha="1" colorSpace="calibratedRGB"/>
-                    </pageControl>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="h1E-fQ-zZP">
                         <rect key="frame" x="8" y="91" width="50" height="50"/>
                         <constraints>
@@ -51,7 +33,9 @@
                             <constraint firstAttribute="width" constant="126" id="sdq-1c-b3i"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="HiraMinProN-W6" family="Hiragino Mincho ProN" pointSize="15"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
+                        <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="e88-Ky-GeW">
                         <rect key="frame" x="66" y="119" width="126" height="21"/>
@@ -59,8 +43,10 @@
                             <constraint firstAttribute="height" constant="21" id="0ow-UK-PAo"/>
                             <constraint firstAttribute="width" constant="126" id="cNQ-Pn-cbl"/>
                         </constraints>
-                        <fontDescription key="fontDescription" name="TimesNewRomanPS-ItalicMT" family="Times New Roman" pointSize="17"/>
+                        <fontDescription key="fontDescription" name="TimesNewRomanPS-BoldItalicMT" family="Times New Roman" pointSize="17"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
+                        <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bQE-pg-2i5">
                         <rect key="frame" x="292" y="8" width="20" height="20"/>
@@ -68,26 +54,38 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I6K-rJ-8JI">
+                        <rect key="frame" x="277" y="57" width="35" height="35"/>
+                        <color key="backgroundColor" red="1" green="0.98607067339999999" blue="0.94532415430000005" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="35" id="JtI-zY-Ibn"/>
+                            <constraint firstAttribute="width" constant="35" id="vuo-1M-xDf"/>
+                        </constraints>
+                        <connections>
+                            <action selector="addPhotoTouch:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="TUB-oH-kiv"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="bYY-mV-0L3" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="1Zs-US-aO3"/>
                     <constraint firstItem="h1E-fQ-zZP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="3I6-M7-ATO"/>
                     <constraint firstItem="h1E-fQ-zZP" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="6XS-GG-10N"/>
+                    <constraint firstAttribute="trailing" secondItem="y4j-P6-qcN" secondAttribute="trailing" id="8K6-ah-SAK"/>
+                    <constraint firstItem="I6K-rJ-8JI" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="BP6-cr-Xbz"/>
                     <constraint firstItem="e88-Ky-GeW" firstAttribute="top" secondItem="XKx-fB-tTp" secondAttribute="bottom" constant="8" id="Bw7-oU-XYb"/>
-                    <constraint firstAttribute="bottom" secondItem="bYY-mV-0L3" secondAttribute="bottom" id="EdZ-JK-AEA"/>
-                    <constraint firstItem="bYY-mV-0L3" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="LI6-7j-Ips"/>
-                    <constraint firstItem="QpA-tM-c9B" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="Mre-9z-mwC"/>
+                    <constraint firstItem="y4j-P6-qcN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="EOU-4t-KjI"/>
+                    <constraint firstAttribute="bottom" secondItem="y4j-P6-qcN" secondAttribute="bottom" id="Haq-gN-E8c"/>
                     <constraint firstItem="e88-Ky-GeW" firstAttribute="leading" secondItem="h1E-fQ-zZP" secondAttribute="trailing" constant="8" id="Pod-Tt-Vqx"/>
                     <constraint firstItem="XKx-fB-tTp" firstAttribute="leading" secondItem="h1E-fQ-zZP" secondAttribute="trailing" constant="8" id="Vb7-mt-FbZ"/>
-                    <constraint firstAttribute="trailing" secondItem="bYY-mV-0L3" secondAttribute="trailing" id="cxM-lp-4AL"/>
-                    <constraint firstItem="QpA-tM-c9B" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="t6J-GZ-8fo"/>
+                    <constraint firstItem="y4j-P6-qcN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="YPg-3W-zzn"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="I6K-rJ-8JI" secondAttribute="bottom" constant="49" id="h0m-fB-XBP"/>
                     <constraint firstAttribute="bottomMargin" secondItem="e88-Ky-GeW" secondAttribute="bottom" constant="1" id="vEn-la-oQQ"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="addButtonButtomConstraint" destination="h0m-fB-XBP" id="crm-DN-uUw"/>
+                <outlet property="addPhotoButtonOutlet" destination="I6K-rJ-8JI" id="oJJ-Zy-1xY"/>
                 <outlet property="dateOfPostLabel" destination="e88-Ky-GeW" id="9Ur-0X-ePc"/>
-                <outlet property="galleryCollectionView" destination="bYY-mV-0L3" id="tGT-gP-C9n"/>
-                <outlet property="photoPageControl" destination="QpA-tM-c9B" id="rwE-2j-ldI"/>
+                <outlet property="galleryViewOfPhotos" destination="y4j-P6-qcN" id="6e6-rS-H7F"/>
                 <outlet property="reasonOfPostLabel" destination="bQE-pg-2i5" id="N7f-hW-Z6z"/>
                 <outlet property="userPhotoImageView" destination="h1E-fQ-zZP" id="EMU-gE-XaI"/>
                 <outlet property="usernameLabel" destination="XKx-fB-tTp" id="Olx-Vs-qT8"/>

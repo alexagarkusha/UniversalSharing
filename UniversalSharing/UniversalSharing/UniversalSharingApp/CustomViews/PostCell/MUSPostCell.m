@@ -34,7 +34,7 @@
     self.numberOfImagesInPost.hidden = YES;
     [self.iconOfSocialNetwork roundImageView];
     [self.reasonOfPost cornerRadius: CGRectGetHeight(self.reasonOfPost.frame) / 2];
-    [self.numberOfImagesInPost cornerRadius: CGRectGetHeight(self.reasonOfPost.frame) / 2];
+    [self.numberOfImagesInPost cornerRadius: CGRectGetHeight(self.numberOfImagesInPost.frame) / 2];
     [self.numberOfComments sizeToFit];
     [self.numberOfLikes sizeToFit];
     
@@ -62,7 +62,7 @@
 - (void) configurationPostCell: (Post*) currentPost {
     if (!currentPost.arrayImages) {
         self.firstImageOfPost.hidden = YES;
-        self.postDescriptionLeftConstraint.constant = 0;
+        self.postDescriptionLeftConstraint.constant = 8;
         //self.firstImageOfPost.image = [UIImage imageNamed: musAppImage_Name_NoneImage];
     } else if (currentPost.arrayImages.count == 1) {
         ImageToPost *imageToPost = [currentPost.arrayImages firstObject];

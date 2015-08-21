@@ -121,11 +121,28 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self performSegueWithIdentifier: goToDetailPostViewControllerSegueIdentifier sender:[self.arrayPosts objectAtIndex: indexPath.row]];
+
+
+    
+    
+    /*
     MUSDetailPostViewController *detailPostViewController = [[MUSDetailPostViewController alloc] init];
     detailPostViewController.currentPost = [self.arrayPosts objectAtIndex: indexPath.row];
     [self.navigationController pushViewController:detailPostViewController animated:YES];
     self.navigationController.navigationBar.translucent = YES;
+     */
 }
+     
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    MUSDetailPostViewController *detailPostViewController = [MUSDetailPostViewController new];
+    if ([[segue identifier] isEqualToString:goToDetailPostViewControllerSegueIdentifier]) {
+        detailPostViewController = [segue destinationViewController];
+        [detailPostViewController setCurrentPost: sender];
+    }
+}
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 98;
@@ -251,15 +268,11 @@
     image1.image = [UIImage imageNamed: @"Comment.png"];
     image1.imageType = JPEG;
     
-    ImageToPost *image2 = [[ImageToPost alloc] init];
-    image2.image = [UIImage imageNamed: @"Like.png"];
-    image2.imageType = JPEG;
-    
     ImageToPost *image3 = [[ImageToPost alloc] init];
     image3.image = [UIImage imageNamed: @"UnknownUser.jpg"];
     image3.imageType = JPEG;
     
-    post1.arrayImages = [[NSArray alloc] initWithObjects: image1, image2, image3, nil];
+    post1.arrayImages = [[NSArray alloc] initWithObjects: image1, image3, nil];
     
     //post1.reasonType = Connect;
     post1.networkType = Facebook;
@@ -278,7 +291,17 @@
     //post3.reasonType = Offline;
     post3.networkType = VKontakt;
     
-    self.arrayPosts = [[NSArray alloc] initWithObjects: post1, post2, post3, nil];
+    
+    Post *post4 = [[Post alloc] init];
+    post4.postDescription = @"";
+    post4.arrayImages = [[NSArray alloc] initWithObjects: image3, nil];
+    post4.commentsCount = 23333;
+    post4.likesCount = 200;
+    //post3.reasonType = Offline;
+    post4.networkType = VKontakt;
+
+    
+    self.arrayPosts = [[NSArray alloc] initWithObjects: post1, post2, post3, post4, nil];
 }
 
 

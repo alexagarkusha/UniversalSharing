@@ -10,19 +10,24 @@
 #import "MUSSocialNetworkLibraryHeader.h"
 
 @protocol MUSGalleryOfPhotosCellDelegate <NSObject>
-- (void) heightOfGalleryOfPhotosRow : (CGFloat) heightRow;
+- (void) arrayOfImagesOfUser : (NSArray*) arrayOfImages;
+@optional
+- (void) showImagePicker;
 @end
 
 
 
 @interface MUSGalleryOfPhotosCell : UITableViewCell
 @property (nonatomic, assign) id <MUSGalleryOfPhotosCellDelegate> delegate;
-@property (nonatomic, strong) Post *currentPost;
 @property (nonatomic, strong) User *currentUser;
+@property (nonatomic, assign) BOOL isEditableCell;
+
 
 + (NSString*) cellID;
 + (instancetype) galleryOfPhotosCell;
++ (CGFloat) heightForGalleryOfPhotosCell : (NSInteger) countOfImages;
 
-- (void) configurationGalleryOfPhotosCellByPost: (Post*) currentPost andUser : (User*) user;
+- (void) configurationGalleryOfPhotosCellByArrayOfImages: (NSMutableArray*) arrayOfImages andUser : (User*) user;
+
 
 @end

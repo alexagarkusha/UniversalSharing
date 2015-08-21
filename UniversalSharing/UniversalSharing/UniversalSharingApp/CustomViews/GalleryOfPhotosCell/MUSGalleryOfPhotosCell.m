@@ -10,16 +10,29 @@
 #import "MUSCollectionViewCell.h"
 #import "ConstantsApp.h"
 #import "UIImageView+LoadImageFromNetwork.h"
+#import "UIButton+MUSEditableButton.h"
+#import "MUSPhotoManager.h"
+#import "MUSGalleryViewOfPhotos.h"
 
-@interface MUSGalleryOfPhotosCell () <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface MUSGalleryOfPhotosCell () <MUSGalleryViewOfPhotosDelegate>
 
-@property (weak, nonatomic) IBOutlet UICollectionView *galleryCollectionView;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateOfPostLabel;
-@property (weak, nonatomic) IBOutlet UIPageControl *photoPageControl;
 @property (weak, nonatomic) IBOutlet UIImageView *userPhotoImageView;
 @property (weak, nonatomic) IBOutlet UILabel *reasonOfPostLabel;
 
+@property (strong, nonatomic)  NSMutableArray *arrayWithImages;
+
+@property (weak, nonatomic) IBOutlet UIButton *addPhotoButtonOutlet;
+@property (assign, nonatomic) BOOL isEditableGallery;
+@property (weak, nonatomic) IBOutlet MUSGalleryViewOfPhotos *galleryViewOfPhotos;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *addButtonButtomConstraint;
+
+//@property (assign, nonatomic) CGFloat heightOfRow;
+
+//@property (strong, nonatomic) MUSGalleryViewOfPhotos *galleryViewOfPhotos;
+
+- (IBAction)addPhotoTouch:(id)sender;
 
 @end
 
@@ -27,19 +40,15 @@
 @implementation MUSGalleryOfPhotosCell
 
 - (void)awakeFromNib {
-    [self.galleryCollectionView registerNib:[UINib nibWithNibName : nibWithNibName bundle:nil] forCellWithReuseIdentifier : collectionViewCellIdentifier];
-    [self.galleryCollectionView setPagingEnabled:YES];
-    
-    
     // Initialization code
+    //self.galleryViewOfPhotos = [[MUSGalleryViewOfPhotos alloc] init];
+    [self.addPhotoButtonOutlet editableButton];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
     // Configure the view for the selected state
 }
-
 
 - (NSString *)reuseIdentifier{
     return [MUSGalleryOfPhotosCell cellID];
@@ -54,24 +63,76 @@
     return nibArray[0];
 }
 
-- (void) configurationGalleryOfPhotosCellByPost: (Post*) currentPost andUser : (User*) user {
++ (CGFloat) heightForGalleryOfPhotosCell : (NSInteger) countOfImages {
     CGFloat heightOfRow;
-    
-    if (currentPost.arrayImages.count > 0) {
-        heightOfRow = 150;
+    if (countOfImages > 0) {
+        return heightOfRow = 150;
     } else {
-        heightOfRow = 70;
+        return heightOfRow = 70;
+    }
+}
+
+- (void) configurationGalleryOfPhotosCellByArrayOfImages: (NSMutableArray*) arrayOfImages andUser : (User*) user {
+    [self checkGalleryOfPhotosStatus];
+    
+    self.currentUser = user;
+    self.arrayWithImages = [NSMutableArray arrayWithArray: arrayOfImages];
+    
+    [self initiationAddButton];
+    [self initiationGalleryViewOfPhotos];
+    [self initiationGalleryOfPhotosCell];
+}
+
+#pragma mark initiation HeightOfRow
+
+- (void) initiationAddButton {
+    if (self.arrayWithImages.count > 0) {
+        self.addButtonButtomConstraint.constant = 50;
+    } else {
+        self.addButtonButtomConstraint.constant = 15;
+    }
+}
+
+#pragma mark initiation GalleryViewOfPhotos
+
+- (void) initiationGalleryViewOfPhotos {
+    
+        NSLog(@"Gallery view 1 x =%f, y=%f, w =%f, h=%f", self.galleryViewOfPhotos.frame.origin.x,
+          self.galleryViewOfPhotos.frame.origin.y, self.galleryViewOfPhotos.frame.size.width, self.galleryViewOfPhotos.frame.size.height);
+        NSLog(@"Gallery collection view 1 x =%f, y=%f, w =%f, h=%f", self.galleryViewOfPhotos.collectionView.frame.origin.x,
+          self.galleryViewOfPhotos.collectionView.frame.origin.y, self.galleryViewOfPhotos.collectionView.frame.size.width, self.galleryViewOfPhotos.collectionView.frame.size.height);
+        //self.galleryViewOfPhotos.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 150);
+        //self.galleryViewOfPhotos.collectionView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 150);
+    
+    
+    
+    
+    
+    
+        self.galleryViewOfPhotos.delegate = self;
+        self.galleryViewOfPhotos.collectionView.backgroundColor = [UIColor colorWithRed: 255.0/255.0 green: 251.0/255.0 blue: 241.0/255.0 alpha: 1.0];
+        self.galleryViewOfPhotos.arrayOfPhotos = [NSMutableArray arrayWithArray: self.arrayWithImages];
+    
+        [self.galleryViewOfPhotos isVisiblePageControl : YES];
+        [self.galleryViewOfPhotos.collectionView reloadData];
+}
+
+#pragma mark initiation GalleryOfPhotosCell 
+
+- (void) initiationGalleryOfPhotosCell {
+    if (self.arrayWithImages.count > 0) {
+        self.usernameLabel.textColor = [UIColor whiteColor];
+        self.dateOfPostLabel.textColor = [UIColor whiteColor];
+    } else {
+        self.usernameLabel.textColor = [UIColor blackColor];
+        self.dateOfPostLabel.textColor = [UIColor blackColor];
     }
     
-    self.photoPageControl.numberOfPages = self.currentPost.arrayImages.count;
-    self.photoPageControl.enabled = NO;
-    self.usernameLabel.text = user.username;
+    self.usernameLabel.text = self.currentUser.username;
     self.dateOfPostLabel.text = [self timeInDoubleFormatte: 1000000]; // deteleThis after connect sqlite - change it to self.post.dateOfPost
-    [self.userPhotoImageView loadImageFromUrl: [NSURL URLWithString: user.photoURL]];
-    
+    [self.userPhotoImageView loadImageFromUrl: [NSURL URLWithString: self.currentUser.photoURL]];
     [self.usernameLabel sizeToFit];
     [self.dateOfPostLabel sizeToFit];
-    [self.delegate heightOfGalleryOfPhotosRow: heightOfRow];
 }
 
 
@@ -83,31 +144,27 @@
     return dateStr;
 }
 
-#pragma mark - UICollectionViewDataSource
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.currentPost.arrayImages.count;
+#pragma mark - UIButton
+
+- (IBAction)addPhotoTouch:(id)sender {
+    [self.delegate showImagePicker];
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    MUSCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:collectionViewCellIdentifier forIndexPath : indexPath];
-    ImageToPost *imageToPost = [self.currentPost.arrayImages objectAtIndex : indexPath.row];
-    cell.photoImageViewCell.image = imageToPost.image;
-    return  cell;
+- (void) checkGalleryOfPhotosStatus {
+    if (!self.isEditableCell) {
+        self.addPhotoButtonOutlet.hidden = YES;
+        self.galleryViewOfPhotos.isEditableGallery = NO;
+    } else {
+        self.addPhotoButtonOutlet.hidden = NO;
+        self.galleryViewOfPhotos.isEditableGallery = YES;
+    }
 }
 
-#pragma mark - UICollectionViewDelegate
+#pragma mark - MUSGalleryViewOfPhotosDelegate
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake (self.galleryCollectionView.frame.size.width, self.galleryCollectionView.frame.size.height);
-}
-
-#pragma mark - UIScrollViewDelegate
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    CGFloat pageWidth = self.galleryCollectionView.frame.size.width;
-    self.photoPageControl.currentPage = (self.galleryCollectionView.contentOffset.x + pageWidth / 2) / pageWidth;
+- (void) arrayOfPhotos:(NSArray *)arrayOfPhotos {
+    [self.delegate arrayOfImagesOfUser: arrayOfPhotos];
 }
 
 

@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -20,16 +21,46 @@
                             <outlet property="delegate" destination="KGk-i7-Jjw" id="5n2-gI-OKN"/>
                         </connections>
                     </mapView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Place name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="s2W-iQ-k2g">
+                        <rect key="frame" x="8" y="8" width="212" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="hDe-O1-JUR"/>
+                            <constraint firstAttribute="width" constant="212" id="wCb-hk-Llr"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="TimesNewRomanPS-BoldItalicMT" family="Times New Roman" pointSize="20"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7hm-f2-P8D">
+                        <rect key="frame" x="272" y="55" width="40" height="40"/>
+                        <color key="backgroundColor" red="1" green="0.98607067339999999" blue="0.94532415430000005" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="OXy-nJ-f3i"/>
+                            <constraint firstAttribute="width" constant="40" id="goh-2u-Y2x"/>
+                        </constraints>
+                        <state key="normal">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="changeLocationButtonTouch:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Ixz-2g-V3O"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="7hm-f2-P8D" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="47" id="1xq-gP-kZt"/>
+                    <constraint firstItem="s2W-iQ-k2g" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="If2-iJ-EHQ"/>
                     <constraint firstItem="0Bv-6Z-rPl" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="QMt-bt-1Be"/>
+                    <constraint firstItem="s2W-iQ-k2g" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="Qxg-v9-keY"/>
+                    <constraint firstItem="7hm-f2-P8D" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="Zye-5m-udF"/>
                     <constraint firstAttribute="bottom" secondItem="0Bv-6Z-rPl" secondAttribute="bottom" constant="-1" id="bbK-7T-K8N"/>
                     <constraint firstItem="0Bv-6Z-rPl" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="gzx-ky-3aT"/>
                     <constraint firstAttribute="trailing" secondItem="0Bv-6Z-rPl" secondAttribute="trailing" id="pEk-LN-qUj"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="changeLocationButtonOutlet" destination="7hm-f2-P8D" id="soH-OM-PWA"/>
                 <outlet property="mapView" destination="0Bv-6Z-rPl" id="LzN-QT-4Cj"/>
+                <outlet property="placeNameLabel" destination="s2W-iQ-k2g" id="fxj-6j-Zec"/>
             </connections>
         </tableViewCell>
     </objects>

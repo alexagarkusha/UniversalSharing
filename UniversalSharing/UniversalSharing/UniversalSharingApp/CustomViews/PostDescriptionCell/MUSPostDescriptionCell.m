@@ -7,11 +7,9 @@
 //
 
 #import "MUSPostDescriptionCell.h"
+#import "ConstantsApp.h"
 
-@interface MUSPostDescriptionCell ()
-
-
-@property (weak, nonatomic) IBOutlet UITextView *postDescriptionTextView;
+@interface MUSPostDescriptionCell () <UITextViewDelegate>
 
 @end
 
@@ -20,6 +18,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    self.postDescriptionTextView.delegate = self;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -41,21 +40,80 @@
     return nibArray[0];
 }
 
-- (void) configurationPostDescriptionCellByPost: (Post*) currentPost {
-    
-    self.postDescriptionTextView.text = currentPost.postDescription;
-    CGFloat width = self.postDescriptionTextView.bounds.size.width - 2.0 * self.postDescriptionTextView.textContainer.lineFragmentPadding;
-    
-    NSDictionary *options = @{ NSFontAttributeName: self.postDescriptionTextView.font };
-    CGRect boundingRect = [self.postDescriptionTextView.text
-                           boundingRectWithSize : CGSizeMake(width, NSIntegerMax)
-                                        options : NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
-                                     attributes : options context:nil];
-    self.postDescriptionTextView.frame = CGRectMake(self.postDescriptionTextView.frame.origin.x, self.postDescriptionTextView.frame.origin.y, self.postDescriptionTextView.frame.size.width, boundingRect.size.height + 15);
-    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, self.postDescriptionTextView.frame.origin.y + self.postDescriptionTextView.frame.size.height + 4);
-    
-    [self.delegate heightOfPostDescriptionRow : self.frame.size.height];
++ (CGFloat) heightForPostDescriptionCell : (NSString*) postDescription {
 
+    UITextView *textView = [[UITextView alloc] initWithFrame: CGRectMake(8, 8, [UIScreen mainScreen].bounds.size.width - 8, 50)];
+                            
+    
+    textView.text = postDescription;
+    
+    CGFloat width = textView.bounds.size.width - 2.0 * textView.textContainer.lineFragmentPadding;
+    
+    NSDictionary *options = @{ NSFontAttributeName: [UIFont fontWithName: @"Times New Roman" size: 17]};
+    CGRect boundingRect = [textView.text
+                           boundingRectWithSize : CGSizeMake(width, NSIntegerMax)
+                           options : NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
+                           attributes : options context:nil];
+    textView.frame = CGRectMake(textView.frame.origin.x, textView.frame.origin.y, textView.frame.size.width, boundingRect.size.height);
+    
+    CGRect frame = CGRectMake( 0, 0, [UIScreen mainScreen].bounds.size.width, textView.frame.origin.y + textView.frame.size.height + 16);
+    
+    return frame.size.height;
+}
+
+- (void) configurationPostDescriptionCell: (NSString*) postDescription {
+    [self checkpostDescriptionTextViewStatus];
+    if (![postDescription isEqualToString: changePlaceholderWhenStartEditing] && ![postDescription isEqualToString: kPlaceholderText]) {
+        self.postDescriptionTextView.text = postDescription;
+        self.postDescriptionTextView.tag = 1;
+    } else {
+        [self initialPostDescriptionTextView];
+    }
+}
+
+- (void) checkpostDescriptionTextViewStatus {
+    if (!self.isEditableCell) {
+        self.postDescriptionTextView.editable = NO;
+    } else {
+        self.postDescriptionTextView.editable = YES;
+    }
+}
+
+#pragma mark - UITextViewDelegate
+
+- (BOOL) textViewShouldBeginEditing:(UITextView *)textView {
+    if(textView.tag == 0) {
+        textView.text = changePlaceholderWhenStartEditing;
+        textView.textColor = [UIColor blackColor];
+        textView.tag = 1;
+    }
+    return YES;
+}
+
+- (BOOL)textView:(UITextView *)txtView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    if( [text rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet]].location == NSNotFound ) {
+        return YES;
+    }
+    [txtView resignFirstResponder];
+    return NO;
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView {
+    if([textView.text length] == 0) {
+        [self initialPostDescriptionTextView];
+        [self.delegate saveChangesInPostDescription: textView.text];
+    } else {
+        [self.delegate saveChangesInPostDescription: textView.text];
+    }
+}
+
+- (void) initialPostDescriptionTextView {
+    self.postDescriptionTextView.editable = YES;
+    self.postDescriptionTextView.scrollEnabled = YES;
+    self.postDescriptionTextView.delegate = self;
+    self.postDescriptionTextView.textColor = [UIColor lightGrayColor];
+    self.postDescriptionTextView.tag = 0;
+    self.postDescriptionTextView.text = kPlaceholderText;
 }
 
 
