@@ -87,6 +87,7 @@
         textView.textColor = [UIColor blackColor];
         textView.tag = 1;
     }
+    [self.delegate beginEditingPostDescription: self.currentIndexPath];    
     return YES;
 }
 
