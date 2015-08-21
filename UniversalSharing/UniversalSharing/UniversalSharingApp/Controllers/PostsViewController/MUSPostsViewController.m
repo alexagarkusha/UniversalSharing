@@ -32,8 +32,8 @@
 @implementation MUSPostsViewController
 
 - (void)viewDidLoad {
-    [self POSTS]; // DELETE THIS AFTER Connect SQLite
-    //self.arrayPosts = [NSArray arrayWithArray: [[DataBaseManager sharedManager] obtainAllRowsFromTableNamedPosts]];
+    //[self POSTS]; // DELETE THIS AFTER Connect SQLite
+    self.arrayPosts = [NSArray arrayWithArray: [[DataBaseManager sharedManager] obtainAllRowsFromTableNamedPosts]];
     
     [self initiationArrayOfShareReason];
     [self initiationArrayOfActiveSocialNetwork];
@@ -138,12 +138,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self performSegueWithIdentifier: goToDetailPostViewControllerSegueIdentifier sender:[self.arrayPosts objectAtIndex: indexPath.row]];
-    /*
-    MUSDetailPostViewController *detailPostViewController = [[MUSDetailPostViewController alloc] init];
-    detailPostViewController.currentPost = [self.arrayPosts objectAtIndex: indexPath.row];
-    [self.navigationController pushViewController:detailPostViewController animated:YES];
-    self.navigationController.navigationBar.translucent = YES;
-     */
 }
      
 
