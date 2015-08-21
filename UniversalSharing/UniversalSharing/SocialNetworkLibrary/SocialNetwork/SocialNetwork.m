@@ -11,6 +11,10 @@
 #import "FacebookNetwork.h"
 #import "VKNetwork.h"
 #import "TwitterNetwork.h"
+#import "DataBaseManager.h"
+#import "NSString+MUSPathToDocumentsdirectory.h"
+#import "ReachabilityManager.h"
+#import "NSError+MUSError.h"
 @implementation SocialNetwork
 
 + (SocialNetwork*) sharedManagerWithType :(NetworkType) networkType {
@@ -54,7 +58,74 @@
 - (void) sharePost : (Post*) post withComplition : (Complition) block {
 }
 
+- (void) setIsVisible:(BOOL)isVisible {
+    
+    _isVisible = isVisible;
+    if (self.currentUser.isVisible != isVisible && self.currentUser) {
+        
+        self.currentUser.isVisible = isVisible;
+        [[DataBaseManager sharedManager] updateUserIsVisible:self.currentUser];
+    }
+    
+}
 
+- (void) saveImageToDocumentsFolderAndFillArrayWithUrl :(Post*) post {
+    if (!post.arrayImagesUrl) {
+        post.arrayImagesUrl = [NSMutableArray new];
+    } else {
+        [post.arrayImagesUrl removeAllObjects];
+    }
+   
+    [post.arrayImages enumerateObjectsUsingBlock:^(ImageToPost *image, NSUInteger index, BOOL *stop) {
+        NSData *data = UIImagePNGRepresentation(image.image);
+        //Get the docs directory
+        NSString *filePath = @"image";
+        filePath = [filePath stringByAppendingString:[NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970] * 1000]];
+        filePath = [filePath stringByAppendingString:@".png"];
+        [post.arrayImagesUrl addObject:filePath];
+        
+        [data writeToFile:[filePath obtainPathToDocumentsFolder:filePath] atomically:YES]; //Write the file
+    }];
+    [[DataBaseManager sharedManager] insertIntoTable:post];
+}
 
+- (void) removeUserFromDataBaseAndImageFromDocumentsFolder :(User*) user {
+    [self removeImagesOfPostFromDocumentsFolder:user.clientID];
+    [[DataBaseManager sharedManager] deleteUserByClientId:user.clientID];
+    NSError *error;
+    [[NSFileManager defaultManager] removeItemAtPath: [user.photoURL obtainPathToDocumentsFolder: user.photoURL] error: &error];
+}
 
+- (void) removeImagesOfPostFromDocumentsFolder :(NSString*) userId {
+   __block NSError *error;
+     NSArray *arrayWithPostsOfUser = [[DataBaseManager sharedManager] obtainAllRowsFromTableNamedPostsWithUserId:userId];
+    [arrayWithPostsOfUser enumerateObjectsUsingBlock:^(Post *post, NSUInteger idx, BOOL *stop) {
+        
+        [post.arrayImagesUrl enumerateObjectsUsingBlock:^(NSString *urlImage, NSUInteger idx, BOOL *stop) {
+            [[NSFileManager defaultManager] removeItemAtPath: [urlImage obtainPathToDocumentsFolder: urlImage] error: &error];
+
+        }];
+        
+    }];
+    
+    
+}
+
+- (BOOL) obtainCurrentConnection {
+    BOOL isReachable = [ReachabilityManager isReachable];
+    BOOL isReachableViaWiFi = [ReachabilityManager isReachableViaWiFi];
+    
+    if (!isReachableViaWiFi && !isReachable){
+        return NO;
+    }
+    return YES;
+}
+- (void) savePostDataBaseWithReason :(ReasonType) reason andPost :(Post*) post {
+    post.reason = reason;
+    [self saveImageToDocumentsFolderAndFillArrayWithUrl:post];
+    
+}
+- (NSError*) errorConnection {
+    return [NSError errorWithMessage: @"ErrorConnection" andCodeError: 1009];
+}
 @end

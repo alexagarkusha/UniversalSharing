@@ -13,7 +13,6 @@
 #import "ReachabilityManager.h"
 #import "UIButton+CornerRadiusButton.h"
 #import <AFMSlidingCell.h>
-#import "DataBaseManager.h"
 
 
 
@@ -93,7 +92,6 @@
 - (IBAction) buttonUseAnyWayTapped :(id)sender {
     self.errorView.hidden = YES;
     self.btnEditOutlet.enabled = YES;
-    //self.arrayWithNetworksObj = [[DataBaseManager sharedManager] obtainAllRowsFromTableNamedUsers];
     [self obtanObjectsOfSocialNetworks];
     [self.arrayButtons removeAllObjects];
     [self.tableView reloadData];

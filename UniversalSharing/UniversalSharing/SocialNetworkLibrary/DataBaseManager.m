@@ -201,6 +201,42 @@ static DataBaseManager *_database;
     }
     return arrayWithPosts;
 }
+
+- (NSMutableArray*)obtainAllRowsFromTableNamedPostsWithUserId :(NSString*) userId {
+    
+    NSMutableArray *arrayWithPosts = [NSMutableArray new];
+    NSString *qsql=[NSString stringWithFormat:@"SELECT * FROM %@ WHERE userId = \"%@\" ",@"Posts",userId];
+    sqlite3_stmt *statement = nil;
+    
+    if(sqlite3_prepare_v2(_database, [qsql UTF8String], -1, &statement, nil) == SQLITE_OK)
+    {
+        while (sqlite3_step(statement) == SQLITE_ROW)
+        {
+            Post *post = [Post new];
+            post.primaryKey = sqlite3_column_int(statement, 0);//perhaps it will be needed
+            post.postID = sqlite3_column_int(statement, 1);
+            post.postDescription = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 2)];
+            
+            NSString *stringWithImageUrls = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 3)];
+            post.arrayImagesUrl = [[stringWithImageUrls componentsSeparatedByString: @", "]mutableCopy];
+            
+            post.likesCount = sqlite3_column_int(statement, 4);
+            post.commentsCount = sqlite3_column_int(statement, 5);
+           // post.placeID = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 6)];
+            post.networkType = sqlite3_column_int(statement, 7);
+            //post.longitude = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 8)];
+            //post.latitude = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 9)];
+            //post.dateCreate = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 10)];
+            post.reason = sqlite3_column_int(statement, 11);
+            post.userId = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 12)];
+            
+            [arrayWithPosts addObject:post];
+            
+        }
+    }
+    return arrayWithPosts;
+}
+
 ////////////////////////////////////////////////////////////////////////////while so because we have two projects))
 - (NSArray*)obtainRowsFromTableNamedPostsWithReason :(NSInteger) reason andNetworkType :(NSInteger) networkType {
     
@@ -274,7 +310,7 @@ static DataBaseManager *_database;
         NSLog(@" the Post is deleted ");
     }
     if (sqlite3_step(statement) != SQLITE_DONE){
-        NSLog(@"Insert failed: %s", sqlite3_errmsg(_database));
+        NSLog(@"delete failed: %s", sqlite3_errmsg(_database));
         NSAssert(0, @"Error delete from table");
     }
     sqlite3_finalize(statement);
@@ -395,7 +431,7 @@ static DataBaseManager *_database;
         NSLog(@"delete failed: %s", sqlite3_errmsg(_database));
         NSAssert(0, @"Error delete from table");
     }
-    //[self deletePostByPrimeryId:primeryId];
+    [self deletePostByUserId:clientId];
     sqlite3_finalize(statement);
 }
 

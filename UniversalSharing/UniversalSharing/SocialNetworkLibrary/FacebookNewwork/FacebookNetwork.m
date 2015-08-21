@@ -57,10 +57,7 @@ static FacebookNetwork *model = nil;
             self.isVisible = self.currentUser.isVisible;
             //////////////////////////////////////////////////////////
             
-            BOOL isReachable = [ReachabilityManager isReachable];
-            BOOL isReachableViaWiFi = [ReachabilityManager isReachableViaWiFi];
-            
-            if (isReachableViaWiFi && isReachable){
+            if ([self obtainCurrentConnection]){
                
                 NSString *deleteImageFromFolder = self.currentUser.photoURL;
                                
@@ -69,10 +66,7 @@ static FacebookNetwork *model = nil;
                       result.currentUser.isVisible = self.isVisible;
                     [[DataBaseManager sharedManager] editUserByClientIdAndNetworkType:result.currentUser];
                 }];
-                
-
             }
-        
         }
     }
     return self;
@@ -117,12 +111,11 @@ static FacebookNetwork *model = nil;
 
 
 - (void) loginOut {
+    [self removeUserFromDataBaseAndImageFromDocumentsFolder:self.currentUser];
     [FBSDKAccessToken setCurrentAccessToken:nil];
     [FBSDKProfile setCurrentProfile:nil];
     [self initiationPropertiesWithoutSession];
 }
-
-
 
 
 #pragma mark - obtainUserFromNetwork
@@ -139,7 +132,7 @@ static FacebookNetwork *model = nil;
         weakSell.currentUser = [User createFromDictionary:result andNetworkType : weakSell.networkType];
         weakSell.title = [NSString stringWithFormat:@"%@  %@", weakSell.currentUser.firstName, weakSell.currentUser.lastName];
         //dispatch_async(dispatch_get_main_queue(), ^{
-        weakSell.icon = [weakSell saveImageOfUserToDocumentsFolder:weakSell.currentUser.photoURL];
+        weakSell.icon = [weakSell.currentUser.photoURL saveImageOfUserToDocumentsFolder:weakSell.currentUser.photoURL];
         //});
         
         
@@ -154,33 +147,6 @@ static FacebookNetwork *model = nil;
             block(weakSell,nil);
         });
     }];
-}
-
-- (NSString*) saveImageOfUserToDocumentsFolder :(NSString*) photoURL{
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsPath = [paths objectAtIndex:0]; //Get the docs directory
-    NSString *filePath = @"image";
-    filePath = [filePath stringByAppendingString:[NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970] * 1000]];
-    filePath = [filePath stringByAppendingString:@".png"];
-    NSString *finalFilePath = [documentsPath stringByAppendingPathComponent:filePath];
-    
-    
-    //    dispatch_queue_t q = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
-    //    dispatch_async(q, ^{
-    /* Fetch the image from the server... */
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString: photoURL]];
-    UIImage *image = [[UIImage alloc] initWithData:data];
-    // dispatch_async(dispatch_get_main_queue(), ^{
-    //            dispatch_async(dispatch_get_main_queue(), ^{
-    NSData *dataFolder = UIImagePNGRepresentation(image);
-    
-    
-    [dataFolder writeToFile:finalFilePath atomically:YES]; //Write the file
-    
-    //});
-    //});
-    //});
-    return filePath;
 }
 
 #pragma mark - obtainArrayOfPlacesFromNetwork
@@ -232,7 +198,13 @@ static FacebookNetwork *model = nil;
 #pragma mark - sharePost
 
 - (void) sharePost:(Post *)post withComplition:(Complition)block {
-    self.copyComplition = block;
+    
+    if (![self obtainCurrentConnection]){
+        [self savePostDataBaseWithReason:Offline andPost:post];
+        block(nil,[self errorConnection]);
+        return;
+    }
+     self.copyComplition = block;
     if ([[FBSDKAccessToken currentAccessToken] hasGranted: musFacebookPermission_Publish_Actions]) {
         [self sharePostToFacebook: post];
     } else {
@@ -281,8 +253,11 @@ static FacebookNetwork *model = nil;
      ^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
          if (!error) {
              self.copyComplition (musPostSuccess, nil);
+             [self savePostDataBaseWithReason:Connect andPost:post];
+
          } else {
              if ([error code] != 8){
+                 [self savePostDataBaseWithReason:ErrorConnection andPost:post];
                  self.copyComplition (nil, [self errorFacebook]);
              }
          }
@@ -319,7 +294,9 @@ static FacebookNetwork *model = nil;
                  if (counterOfImages == copyPostImagesArray.count) {
                      if (!error) {
                          self.copyComplition (musPostSuccess, nil);
+                         [self savePostDataBaseWithReason:Connect andPost:post];
                      } else {
+                         [self savePostDataBaseWithReason:ErrorConnection andPost:post];
                          self.copyComplition (nil, [self errorFacebook]);
                      }
                  }
@@ -335,6 +312,7 @@ static FacebookNetwork *model = nil;
 - (NSError*) errorFacebook {
     return [NSError errorWithMessage: musFacebookError andCodeError: musFacebookErrorCode];
 }
+
 
 
 

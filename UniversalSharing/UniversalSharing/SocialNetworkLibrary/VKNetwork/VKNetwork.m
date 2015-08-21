@@ -60,12 +60,9 @@ static VKNetwork *model = nil;
             self.icon = self.currentUser.photoURL;
             self.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
             self.isVisible = self.currentUser.isVisible;
-            //////////////////////////////////////////////////////////
+            /////////////////////////////////////////////////////////
             
-            BOOL isReachable = [ReachabilityManager isReachable];
-            BOOL isReachableViaWiFi = [ReachabilityManager isReachableViaWiFi];
-            
-            if (isReachableViaWiFi && isReachable){
+            if ([self obtainCurrentConnection]){
                 
                 NSString *deleteImageFromFolder = self.currentUser.photoURL;
                 
@@ -121,6 +118,7 @@ static VKNetwork *model = nil;
 
 - (void) loginOut {
     [VKSdk forceLogout];
+    [self removeUserFromDataBaseAndImageFromDocumentsFolder:self.currentUser];
     self.currentUser = nil;
     [self initiationPropertiesWithoutSession];
 }
@@ -137,7 +135,7 @@ static VKNetwork *model = nil;
          weakSell.currentUser = [User createFromDictionary:(NSDictionary*)[response.json firstObject] andNetworkType : weakSell.networkType];
          weakSell.title = [NSString stringWithFormat:@"%@  %@", weakSell.currentUser.firstName, weakSell.currentUser.lastName];
          //dispatch_async(dispatch_get_main_queue(), ^{
-         weakSell.icon = [weakSell saveImageOfUserToDocumentsFolder:weakSell.currentUser.photoURL];
+         weakSell.icon = [weakSell.currentUser.photoURL saveImageOfUserToDocumentsFolder:weakSell.currentUser.photoURL];
          //});
          
          
@@ -145,6 +143,7 @@ static VKNetwork *model = nil;
          //weakSell.icon = weakSell.currentUser.photoURL;////
          if (!weakSell.isLogin)
          [[DataBaseManager sharedManager] insertIntoTable:weakSell.currentUser];
+         
          dispatch_async(dispatch_get_main_queue(), ^{
               weakSell.isLogin = YES;
              block(weakSell,nil);
@@ -163,36 +162,6 @@ static VKNetwork *model = nil;
          }
      }];
 }
-- (NSString*) saveImageOfUserToDocumentsFolder :(NSString*) photoURL{
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsPath = [paths objectAtIndex:0]; //Get the docs directory
-    NSString *filePath = @"image";
-    filePath = [filePath stringByAppendingString:[NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970] * 1000]];
-    filePath = [filePath stringByAppendingString:@".png"];
-    NSString *finalFilePath = [documentsPath stringByAppendingPathComponent:filePath];
-    
-    
-    //    dispatch_queue_t q = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
-    //    dispatch_async(q, ^{
-    /* Fetch the image from the server... */
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString: photoURL]];
-    UIImage *image = [[UIImage alloc] initWithData:data];
-    // dispatch_async(dispatch_get_main_queue(), ^{
-    //            dispatch_async(dispatch_get_main_queue(), ^{
-    NSData *dataFolder = UIImagePNGRepresentation(image);
-    
-    
-    [dataFolder writeToFile:finalFilePath atomically:YES]; //Write the file
-    
-    //});
-    //});
-    //});
-    return filePath;
-}
-
-
-//#warning "Move method in constants"
-//#warning "Check messages"
 
 #pragma mark - obtainArrayOfPlacesFromNetwork
 
@@ -267,6 +236,11 @@ static VKNetwork *model = nil;
 #pragma mark - sharePostToNetwork
 
 - (void) sharePost : (Post*) post withComplition : (Complition) block {
+    if (![self obtainCurrentConnection]){
+        [self savePostDataBaseWithReason:Offline andPost:post];
+        block(nil,[self errorConnection]);
+        return;
+    }
     self.copyComplition = block;
     if ([post.arrayImages count] > 0) {
         [self postImagesToVK: post];
