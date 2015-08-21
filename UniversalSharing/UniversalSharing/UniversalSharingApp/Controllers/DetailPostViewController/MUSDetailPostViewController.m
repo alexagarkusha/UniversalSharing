@@ -51,14 +51,14 @@
     [self initiationTableView];
     [self initiationNavigationBar];
     [self initiationCurrentSocialNetwork];
-    [self initiationPostDescriptionArraOfPicturesAndPostLocation];
+    [self initiationPostDescriptionArrayOfPicturesAndPostLocation];
     self.tableViewFrame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height);
 }
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear : YES];
     [[NSNotificationCenter defaultCenter] addObserver : self
-                                             selector : @selector(keyboardWillShow:)
+                                             selector : @selector(keyboardShow:)
                                                  name : UIKeyboardWillShowNotification
                                                object : nil];
     [[NSNotificationCenter defaultCenter] addObserver : self
@@ -107,7 +107,7 @@
 
 #pragma mark initiation current postDescription, arrayOfUsersPictures, postLocation
 
-- (void) initiationPostDescriptionArraOfPicturesAndPostLocation {
+- (void) initiationPostDescriptionArrayOfPicturesAndPostLocation {
     self.arrayOfUsersPictures = [[NSMutableArray alloc] init];
     for (int i = 0; i < self.currentPost.arrayImages.count; i++) {
         ImageToPost *imageToPost = [self.currentPost.arrayImages objectAtIndex: i];
@@ -134,7 +134,8 @@
 - (void) actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if ( buttonIndex != 0 ) {
         if (buttonIndex == 1) {
-            NSLog(@"POST");
+            NSLog(@"POST"); // SEND POST METHOD;
+            [self sendPost];
         } else {
             //NSLog(@"EDIT");
             self.isEditableTableView = YES;
@@ -144,77 +145,10 @@
 }
 
 
-///////////// REMOVE THIS after addition to the SOCIAL NETWORK LIBRARY ////////////
 
-- (void) sharePost : (Post*) post {
-    if (![self checkStatusOftheNetworkConnection] || ![self checkStatusOfSocialNetworkVisibility]) {
-        return;
-    }
-    
-    if(!post) {
-        post = [[Post alloc] init];
-    }
-    
-    post.placeID = self.placeID;
-    if (![self.postDescription isEqualToString: kPlaceholderText]) {
-        post.postDescription = self.postDescription;
-    } else {
-        post.postDescription = @"";
-    }
-    /*
-     get array with chosen images from MUSGaleryView
-     */
-    self.currentPost.arrayImages = self.arrayOfUsersPictures;
-    [_currentSocialNetwork sharePost: self.currentPost withComplition:^(id result, NSError *error) {
-        if (!error) {
-            [self showAlertWithMessage : titleCongratulatoryAlert];
-        } else {
-            [self showErrorAlertWithError : error];
-        }
-    }];
+- (void) sendPost {
+    NSLog(@"Send Post");
 }
-
-- (BOOL) checkStatusOftheNetworkConnection {
-    BOOL isReachable = [ReachabilityManager isReachable];
-    BOOL isReachableViaWiFi = [ReachabilityManager isReachableViaWiFi];
-    
-    if (!isReachableViaWiFi && !isReachable) {
-        [self showAlertWithMessage: musAppError_Internet_Connection];
-        return NO;
-    }
-    return YES;
-}
-
-- (BOOL) checkStatusOfSocialNetworkVisibility {
-    if (!_currentSocialNetwork.isVisible || !_currentSocialNetwork.isLogin) {
-        [self showAlertWithMessage: musAppError_Logged_Into_Social_Networks];
-        return NO;
-    }
-    return YES;
-}
-
-#pragma mark - error alert with error and alert with message
-
-- (void) showErrorAlertWithError : (NSError*) error {
-    UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle : Error
-                                                         message : [error localizedFailureReason]
-                                                        delegate : nil
-                                               cancelButtonTitle : musAppButtonTitle_OK
-                                               otherButtonTitles : nil];
-    [errorAlert show];
-}
-
-- (void) showAlertWithMessage : (NSString*) message {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle : musErrorWithDomainUniversalSharing
-                                                    message : message
-                                                   delegate : self
-                                          cancelButtonTitle : musAppButtonTitle_OK
-                                          otherButtonTitles : nil];
-    [alert show];
-}
-
-
-///////////// /////////////////////////////////////////////////////////// ////////////
 
 
 #pragma mark - UITableViewDataSource
@@ -225,9 +159,6 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    /*!
-     XIB
-     */
     self.detailPostVC_CellType = indexPath.row;
     switch (self.detailPostVC_CellType) {
         case GalleryOfPhotosCellType: {
@@ -260,6 +191,7 @@
             }
             cell.delegate = self;
             cell.isEditableCell = self.isEditableTableView;
+            cell.currentIndexPath = indexPath;
             [cell configurationPostDescriptionCell: self.postDescription];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
@@ -282,10 +214,6 @@
 }
 
 #pragma mark - UITableViewDelegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"Selected Row");
-}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     self.detailPostVC_CellType = indexPath.row;
@@ -345,6 +273,23 @@
     [self.tableView reloadData];
 }
 
+- (void) beginEditingPostDescription:(NSIndexPath *)currentIndexPath {
+    [self performSelector:@selector(scrollToCell:) withObject: currentIndexPath afterDelay:0.5f];
+}
+
+-(void) scrollToCell:(NSIndexPath*) path {
+/*
+    UITableViewScrollPositionNone,
+    UITableViewScrollPositionTop,
+    UITableViewScrollPositionMiddle,
+    UITableViewScrollPositionBottom
+*/
+    
+    
+    [_tableView scrollToRowAtIndexPath:path atScrollPosition : UITableViewScrollPositionNone animated:YES];
+}
+
+
 #pragma mark - MUSGalleryOfPhotosCellDelegate
 
 - (void) arrayOfImagesOfUser:(NSArray *)arrayOfImages {
@@ -378,9 +323,23 @@
 
 
 #pragma mark - Keyboard Show/Hide
+-(void) keyboardShow:(NSNotification*) notification {
+    
+    CGRect initialFrame = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    CGRect convertedFrame = [self.view convertRect:initialFrame fromView:nil];
+    CGRect tvFrame = _tableView.frame;
+    tvFrame.size.height = convertedFrame.origin.y - self.tabBarController.tabBar.frame.size.height;
+    _tableView.frame = tvFrame;
+    
+}
 
+
+
+/*
 - (void) keyboardWillShow: (NSNotification*) notification {
     NSLog(@"table view y = %f", self.tableView.contentOffset.y);
+    
+    
     
     NSInteger tableViewY = self.tableView.contentOffset.y;
     
@@ -393,10 +352,32 @@
         self.tableView.frame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y + deltaHeight, self.tableView.frame.size.width, self.tableView.frame.size.height);
     }
 }
-
+*/
 
 - (void) keyboardWillHide: (NSNotification*) notification {
     self.tableView.frame = CGRectMake(self.tableViewFrame.origin.x, self.tableViewFrame.origin.y, self.tableViewFrame.size.width, self.tableViewFrame.size.height);
 }
+
+#pragma mark - error alert with error and alert with message
+
+- (void) showErrorAlertWithError : (NSError*) error {
+    UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle : Error
+                                                         message : [error localizedFailureReason]
+                                                        delegate : nil
+                                               cancelButtonTitle : musAppButtonTitle_OK
+                                               otherButtonTitles : nil];
+    [errorAlert show];
+}
+
+- (void) showAlertWithMessage : (NSString*) message {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle : musErrorWithDomainUniversalSharing
+                                                    message : message
+                                                   delegate : self
+                                          cancelButtonTitle : musAppButtonTitle_OK
+                                          otherButtonTitles : nil];
+    [alert show];
+}
+
+
 
 @end

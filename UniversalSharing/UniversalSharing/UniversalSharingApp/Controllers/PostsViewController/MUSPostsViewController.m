@@ -7,6 +7,7 @@
 //
 
 #import "MUSPostsViewController.h"
+#import "MUSDetailPostViewController.h"
 #import "DOPDropDownMenu.h"
 #import "MUSPostCell.h"
 #import "ConstantsApp.h"
@@ -32,10 +33,13 @@
 
 - (void)viewDidLoad {
     [self POSTS]; // DELETE THIS AFTER Connect SQLite
+    //self.arrayPosts = [NSArray arrayWithArray: [[DataBaseManager sharedManager] obtainAllRowsFromTableNamedPosts]];
+    
     [self initiationArrayOfShareReason];
     [self initiationArrayOfActiveSocialNetwork];
     [self initiationDropDownMenu];
     [self initiationTableView];
+
     // Do any additional setup after loading the view.
 }
 
@@ -144,7 +148,7 @@
      
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    MUSDetailPostViewController *detailPostViewController = [MUSDetailPostViewController new];
+    MUSDetailPostViewController *detailPostViewController = [[MUSDetailPostViewController alloc] init];
     if ([[segue identifier] isEqualToString:goToDetailPostViewControllerSegueIdentifier]) {
         detailPostViewController = [segue destinationViewController];
         [detailPostViewController setCurrentPost: sender];
@@ -268,9 +272,9 @@
 ///////////////////// DELETE THIS AFTER Connect SQLite /////////////////////////
 
 - (void) POSTS {
-    /*
+
     Post *post1 = [[Post alloc] init];
-    post1.postDescription = @"POST #1 - lskfdjnskdsflsdfksj  sdkjnksjfkjsdkj jsdkjnskjfnsk jsdnkjfskjd jsdkfjnskfjn jsdkjfk jsdkjnskd jsvcvxcvbfj jsdkjnksjnkjn kjndfkjnkdjf kjdfnkdkfngkd jkjfkjndkfnk jkjdfnknvkdfj kndkfn k nkfdnfkdn kfnkffkjfkknknk j k k jkfd kfkdnfd kjnfkdndkndkjnf kfnkjfdnkdjn kfdjnkfdnfkdf kdnkdj nkkdnfk jfnk";
+    post1.postDescription = @"POST #1 - lskfdjnskdsflsdfksj  sdkjnksjfkjsdkj jsdkjnskjfnsk jsdnkjfskjd jsdkfjnskfjn jsdkjfk jsdkjnskd jsvcvxcvbfj jsdkjnksjnkjn kjndfkjnkdjf kjdfnkdkfngkd jkjfkjndkfnk jkjdfnknvkdfj knnksnfk jsk fnsknfksdn fkns kfnks dnfkj ndskfndsk nfkdsn fkn dskfn kdsn k nk nknsfk nfk dsnk fs kdfn ksdn fkd nskfn dskf nkdsn fdkfn k nkfdnfkdn kfnkffkjfkknknk j k k jkfd kfkdnfd kjnfkdndkndkjnf kfnkjfdnkdjn kfdjnkfdnfkdf kdnkdj nkkdnfk jfnk";
     post1.commentsCount = 2;
     post1.likesCount = 100;
     ImageToPost *image1 = [[ImageToPost alloc] init];
@@ -311,7 +315,7 @@
 
     
     self.arrayPosts = [[NSArray alloc] initWithObjects: post1, post2, post3, post4, nil];
-     */
+     
 //    Post *post1 = [[Post alloc] init];
 //    post1.postDescription = @"POST #1 - lskfdjnskdsflsdfksj  sdkjnksjfkjsdkj jsdkjnskjfnsk jsdnkjfskjd jsdkfjnskfjn jsdkjfk jsdkjnskd jsvcvxcvbfj";
 //    post1.comentsCount = 2;
