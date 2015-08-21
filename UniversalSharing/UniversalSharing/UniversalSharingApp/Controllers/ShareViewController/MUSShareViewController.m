@@ -305,9 +305,9 @@
 #pragma mark - Share Post to Social network
 
 - (IBAction)shareToSocialNetwork:(id)sender {
-    if (![self checkStatusOftheNetworkConnection] || ![self checkStatusOfSocialNetworkVisibility]) {
-        return;
-    }
+//    if (![self checkStatusOftheNetworkConnection] || ![self checkStatusOfSocialNetworkVisibility]) {
+//        return;
+//    }
     
     if(!self.post) {
         self.post = [[Post alloc] init];
@@ -324,7 +324,7 @@
          */
         self.post.arrayImages = [self.galeryView obtainArrayWithChosenPics];
         self.post.userId = _currentSocialNetwork.currentUser.clientID;//or something else
-
+        self.post.dateCreate = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970]];
         
         [_currentSocialNetwork sharePost:self.post withComplition:^(id result, NSError *error) {
             if (!error) {
