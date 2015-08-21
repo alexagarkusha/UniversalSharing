@@ -10,7 +10,7 @@
 #import "MUSSocialNetworkLibraryHeader.h"
 
 @protocol MUSPostDescriptionCellDelegate <NSObject>
-- (void) heightOfPostDescriptionRow : (CGFloat) heightRow;
+- (void) saveChangesInPostDescription : (NSString*) postDescription;
 @end
 
 
@@ -18,11 +18,16 @@
 @interface MUSPostDescriptionCell : UITableViewCell
 
 @property (nonatomic, assign) id <MUSPostDescriptionCellDelegate> delegate;
+@property (nonatomic, assign) BOOL isEditableCell;
+
+@property (weak, nonatomic) IBOutlet UITextView *postDescriptionTextView;
+
 
 + (NSString*) cellID;
 + (instancetype) postDescriptionCell;
++ (CGFloat) heightForPostDescriptionCell : (NSString*) postDescription;
 
-- (void) configurationPostDescriptionCellByPost: (Post*) currentPost;
+- (void) configurationPostDescriptionCell: (NSString*) postDescription;
 
 
 @end

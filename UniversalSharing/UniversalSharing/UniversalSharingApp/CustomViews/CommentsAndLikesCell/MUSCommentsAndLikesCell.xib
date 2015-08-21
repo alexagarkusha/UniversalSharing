@@ -61,14 +61,14 @@
                     <constraint firstItem="xIa-Ks-g11" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" constant="-10" id="u1w-Mm-KBB"/>
                 </constraints>
             </tableViewCellContentView>
-            <color key="backgroundColor" red="1" green="0.96389242503137496" blue="0.97274500138214537" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="1" green="0.98607067338663679" blue="0.9453241543426717" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
                 <outlet property="commentImageView" destination="Mji-oC-1HX" id="Kdh-zp-g3C"/>
                 <outlet property="likeImageView" destination="1pH-pU-sP8" id="6Tw-zK-IUp"/>
                 <outlet property="numberOfCommentsLabel" destination="xIa-Ks-g11" id="7Gc-VP-6lr"/>
                 <outlet property="numberOfLikesLabel" destination="kfe-2R-His" id="NIm-OZ-NxR"/>
             </connections>
-            <point key="canvasLocation" x="294" y="234.5"/>
+            <point key="canvasLocation" x="294" y="234"/>
         </tableViewCell>
     </objects>
 </document>

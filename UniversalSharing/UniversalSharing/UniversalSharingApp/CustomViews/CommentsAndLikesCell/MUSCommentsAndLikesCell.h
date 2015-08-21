@@ -13,6 +13,8 @@
 
 + (NSString*) cellID;
 + (instancetype) commentsAndLikesCell;
++ (CGFloat) heightForCommentsAndLikesCell;
+
 
 - (void) configurationCommentsAndLikesCellByPost: (Post*) currentPost;
 

@@ -22,17 +22,17 @@
                     <tabBarItem key="tabBarItem" title="Posts" image="first" id="acW-dT-cKf"/>
                     <navigationItem key="navigationItem" id="pJr-Hq-3rU"/>
                     <connections>
-                        <segue destination="rW8-Fp-nEm" kind="show" identifier="showDetailPostViewController" id="mhy-BG-aNn"/>
+                        <segue destination="rW8-Fp-nEm" kind="show" identifier="DetailPostViewController" id="mhy-BG-aNn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1438" y="-554"/>
         </scene>
-        <!--View Controller-->
+        <!--Detail Post View Controller-->
         <scene sceneID="H6A-xt-P5i">
             <objects>
-                <viewController id="rW8-Fp-nEm" sceneMemberID="viewController">
+                <viewController id="rW8-Fp-nEm" customClass="MUSDetailPostViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="yYX-b1-i7w"/>
                         <viewControllerLayoutGuide type="bottom" id="arS-Kd-ubt"/>
@@ -41,7 +41,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                     </view>
+                    <connections>
+                        <segue destination="Wg0-6x-xhW" kind="show" id="Zpk-wC-Emq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ra9-yG-8AE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -159,7 +163,7 @@
                                             <constraint firstAttribute="height" constant="21" id="yjJ-Fj-bKC"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h9f-nw-3rM">
@@ -395,7 +399,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s8n-hd-1ig" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2095" y="184"/>
+            <point key="canvasLocation" x="2118" y="178"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
@@ -422,4 +426,7 @@
         <image name="first" width="30" height="30"/>
         <image name="second" width="30" height="30"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="Zpk-wC-Emq"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -132,8 +132,24 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    [self performSegueWithIdentifier: goToDetailPostViewControllerSegueIdentifier sender:[self.arrayPosts objectAtIndex: indexPath.row]];
+    /*
+    MUSDetailPostViewController *detailPostViewController = [[MUSDetailPostViewController alloc] init];
+    detailPostViewController.currentPost = [self.arrayPosts objectAtIndex: indexPath.row];
+    [self.navigationController pushViewController:detailPostViewController animated:YES];
+    self.navigationController.navigationBar.translucent = YES;
+     */
 }
+     
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    MUSDetailPostViewController *detailPostViewController = [MUSDetailPostViewController new];
+    if ([[segue identifier] isEqualToString:goToDetailPostViewControllerSegueIdentifier]) {
+        detailPostViewController = [segue destinationViewController];
+        [detailPostViewController setCurrentPost: sender];
+    }
+}
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 98;
@@ -251,6 +267,50 @@
 ///////////////////// DELETE THIS AFTER Connect SQLite /////////////////////////
 
 - (void) POSTS {
+    /*
+    Post *post1 = [[Post alloc] init];
+    post1.postDescription = @"POST #1 - lskfdjnskdsflsdfksj  sdkjnksjfkjsdkj jsdkjnskjfnsk jsdnkjfskjd jsdkfjnskfjn jsdkjfk jsdkjnskd jsvcvxcvbfj jsdkjnksjnkjn kjndfkjnkdjf kjdfnkdkfngkd jkjfkjndkfnk jkjdfnknvkdfj kndkfn k nkfdnfkdn kfnkffkjfkknknk j k k jkfd kfkdnfd kjnfkdndkndkjnf kfnkjfdnkdjn kfdjnkfdnfkdf kdnkdj nkkdnfk jfnk";
+    post1.commentsCount = 2;
+    post1.likesCount = 100;
+    ImageToPost *image1 = [[ImageToPost alloc] init];
+    image1.image = [UIImage imageNamed: @"Comment.png"];
+    image1.imageType = JPEG;
+    
+    ImageToPost *image3 = [[ImageToPost alloc] init];
+    image3.image = [UIImage imageNamed: @"UnknownUser.jpg"];
+    image3.imageType = JPEG;
+    
+    post1.arrayImages = [[NSArray alloc] initWithObjects: image1, image3, nil];
+    
+    //post1.reasonType = Connect;
+    post1.networkType = Facebook;
+    
+    Post *post2 = [[Post alloc] init];
+    post2.postDescription = @"POST #2 - lskfdjnskdsflsdfksj";
+    post2.commentsCount = 23;
+    post2.likesCount = 200;
+    //post2.reasonType = ErrorConnection;
+    post2.networkType = Twitters;
+
+    Post *post3 = [[Post alloc] init];
+    post3.postDescription = @"POST #3 - lskfdjnskdsflsdfksj  sdkjnksjfkjsdkj jsdkjnskjfnsk jsdnkjfskjd jsdkfjnskfjn jsdkjfk jsdkjnskd jsvcvxcvbfj";
+    post3.commentsCount = 23333;
+    post3.likesCount = 200;
+    //post3.reasonType = Offline;
+    post3.networkType = VKontakt;
+    
+    
+    Post *post4 = [[Post alloc] init];
+    post4.postDescription = @"";
+    post4.arrayImages = [[NSArray alloc] initWithObjects: image3, nil];
+    post4.commentsCount = 23333;
+    post4.likesCount = 200;
+    //post3.reasonType = Offline;
+    post4.networkType = VKontakt;
+
+    
+    self.arrayPosts = [[NSArray alloc] initWithObjects: post1, post2, post3, post4, nil];
+     */
 //    Post *post1 = [[Post alloc] init];
 //    post1.postDescription = @"POST #1 - lskfdjnskdsflsdfksj  sdkjnksjfkjsdkj jsdkjnskjfnsk jsdnkjfskjd jsdkfjnskfjn jsdkjfk jsdkjnskd jsvcvxcvbfj";
 //    post1.comentsCount = 2;

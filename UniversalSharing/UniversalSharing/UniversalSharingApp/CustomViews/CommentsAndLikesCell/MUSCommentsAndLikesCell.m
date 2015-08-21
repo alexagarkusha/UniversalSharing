@@ -16,7 +16,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *commentImageView;
 @property (weak, nonatomic) IBOutlet UILabel *numberOfCommentsLabel;
 
-
 @end
 
 
@@ -43,6 +42,10 @@
 + (instancetype) commentsAndLikesCell {
     NSArray* nibArray = [[NSBundle mainBundle]loadNibNamed:[self cellID] owner:nil options:nil];
     return nibArray[0];
+}
+
++ (CGFloat) heightForCommentsAndLikesCell {
+    return musAppDetailPostVC_HeightOfCommentsAndLikesCell;
 }
 
 - (void) configurationCommentsAndLikesCellByPost:(Post *)currentPost {
