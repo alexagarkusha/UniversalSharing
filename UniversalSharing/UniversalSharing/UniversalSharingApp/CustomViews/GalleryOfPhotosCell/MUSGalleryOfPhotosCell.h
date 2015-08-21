@@ -27,7 +27,7 @@
 + (instancetype) galleryOfPhotosCell;
 + (CGFloat) heightForGalleryOfPhotosCell : (NSInteger) countOfImages;
 
-- (void) configurationGalleryOfPhotosCellByArrayOfImages: (NSMutableArray*) arrayOfImages andUser : (User*) user;
+- (void) configurationGalleryOfPhotosCellByArrayOfImages: (NSMutableArray*) arrayOfImages andDateCreate : (NSString*) postDateCreate andUser : (User*) user;
 
 
 @end

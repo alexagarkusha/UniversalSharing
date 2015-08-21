@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *userPhotoImageView;
 @property (weak, nonatomic) IBOutlet UILabel *reasonOfPostLabel;
 
+@property (strong, nonatomic) NSString *postDateCreate;
 @property (strong, nonatomic)  NSMutableArray *arrayWithImages;
 
 @property (weak, nonatomic) IBOutlet UIButton *addPhotoButtonOutlet;
@@ -72,8 +73,9 @@
     }
 }
 
-- (void) configurationGalleryOfPhotosCellByArrayOfImages: (NSMutableArray*) arrayOfImages andUser : (User*) user {
+- (void) configurationGalleryOfPhotosCellByArrayOfImages: (NSMutableArray*) arrayOfImages andDateCreate : (NSString*) postDateCreate andUser : (User*) user {
     [self checkGalleryOfPhotosStatus];
+    self.postDateCreate = postDateCreate;
     
     self.currentUser = user;
     self.arrayWithImages = [NSMutableArray arrayWithArray: arrayOfImages];
@@ -95,7 +97,7 @@
 
 #pragma mark initiation GalleryViewOfPhotos
 
-- (void) initiationGalleryViewOfPhotos {
+- (void) initiationGalleryViewOfPhotos { /////////// ERROR //////
     
         NSLog(@"Gallery view 1 x =%f, y=%f, w =%f, h=%f", self.galleryViewOfPhotos.frame.origin.x,
           self.galleryViewOfPhotos.frame.origin.y, self.galleryViewOfPhotos.frame.size.width, self.galleryViewOfPhotos.frame.size.height);
@@ -103,11 +105,6 @@
           self.galleryViewOfPhotos.collectionView.frame.origin.y, self.galleryViewOfPhotos.collectionView.frame.size.width, self.galleryViewOfPhotos.collectionView.frame.size.height);
         //self.galleryViewOfPhotos.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 150);
         //self.galleryViewOfPhotos.collectionView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 150);
-    
-    
-    
-    
-    
     
         self.galleryViewOfPhotos.delegate = self;
         self.galleryViewOfPhotos.collectionView.backgroundColor = [UIColor colorWithRed: 255.0/255.0 green: 251.0/255.0 blue: 241.0/255.0 alpha: 1.0];
@@ -128,8 +125,10 @@
         self.dateOfPostLabel.textColor = [UIColor blackColor];
     }
     
-    self.usernameLabel.text = self.currentUser.username;
-    self.dateOfPostLabel.text = [self timeInDoubleFormatte: 1000000]; // deteleThis after connect sqlite - change it to self.post.dateOfPost
+    self.usernameLabel.text = [NSString stringWithFormat: @"%@ %@", self.currentUser.lastName, self.currentUser.firstName];
+    //self.usernameLabel.text = self.currentUser.username;
+    self.dateOfPostLabel.text = [self timeInDoubleFormatte: [self.postDateCreate integerValue]];
+    
     [self.userPhotoImageView loadImageFromUrl: [NSURL URLWithString: self.currentUser.photoURL]];
     [self.usernameLabel sizeToFit];
     [self.dateOfPostLabel sizeToFit];

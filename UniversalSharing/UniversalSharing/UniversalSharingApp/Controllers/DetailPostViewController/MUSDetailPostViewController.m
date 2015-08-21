@@ -15,6 +15,7 @@
 #import "MUSPhotoManager.h"
 #import "MUSLocationTableViewController.h"
 #import <CoreLocation/CoreLocation.h>
+#import "DataBaseManager.h"
 
 #import "ReachabilityManager.h" ///////////// REMOVE THIS after addition to the SOCIAL NETWORK LIBRARY ////////////
 
@@ -52,6 +53,11 @@
     [self initiationNavigationBar];
     [self initiationCurrentSocialNetwork];
     [self initiationPostDescriptionArrayOfPicturesAndPostLocation];
+    
+    
+    self.currentUser = [[DataBaseManager sharedManager] obtainRowsFromTableNamedUsersWithNetworkType: self.currentSocialNetwork.networkType];
+    
+
     self.tableViewFrame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height);
 }
 
@@ -168,7 +174,7 @@
             }
             cell.delegate = self;
             cell.isEditableCell = self.isEditableTableView;
-            [cell configurationGalleryOfPhotosCellByArrayOfImages: self.arrayOfUsersPictures andUser: self.currentUser];
+            [cell configurationGalleryOfPhotosCellByArrayOfImages:self.arrayOfUsersPictures andDateCreate: self.currentPost.dateCreate andUser: self.currentUser];
             [cell needsUpdateConstraints];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
@@ -284,8 +290,6 @@
     UITableViewScrollPositionMiddle,
     UITableViewScrollPositionBottom
 */
-    
-    
     [_tableView scrollToRowAtIndexPath:path atScrollPosition : UITableViewScrollPositionNone animated:YES];
 }
 
@@ -332,8 +336,6 @@
     _tableView.frame = tvFrame;
     
 }
-
-
 
 /*
 - (void) keyboardWillShow: (NSNotification*) notification {
