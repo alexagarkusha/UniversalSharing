@@ -10,7 +10,7 @@
 #import "MUSTopUserProfileCell.h"
 #import "MUSUserProfileCell.h"
 #import "MUSSocialNetworkLibraryHeader.h"
-
+#import "DataBaseManager.h"
 @interface MUSUserDetailViewController () <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
 /*!
  @property
@@ -39,6 +39,7 @@
     self.logoutButton = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:2 target:self action: @selector(logoutFromSocialNetwork)];
     self.navigationItem.rightBarButtonItem = self.logoutButton;
     self.userPropertyArray = @[@"profile", @"dateOfBirth", @"city", @"clientID"];
+    //[self.userTableView reloadData];
 }
 
 - (void)setNetwork:(id)socialNetwork {
@@ -50,11 +51,19 @@
  @param without
  */
 - (void) logoutFromSocialNetwork {
+    [[DataBaseManager sharedManager] deleteUserByClientId:self.socialNetwork.currentUser.clientID];
+    NSError *error;
+    [[NSFileManager defaultManager] removeItemAtPath: [self obtainPathToDocumentsFolder: self.socialNetwork.currentUser.photoURL] error: &error];
     [self.socialNetwork loginOut];
     [self.navigationController popViewControllerAnimated:YES];
     self.navigationController.navigationBar.translucent = YES;
-}
+    }
 
+- (NSString*) obtainPathToDocumentsFolder :(NSString*) pathFromDataBase {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0];
+    return [documentsPath stringByAppendingPathComponent:pathFromDataBase];
+}
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

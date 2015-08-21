@@ -60,7 +60,6 @@
     [super viewDidLoad];
     [self obtanObjectsOfSocialNetworks];
     self.arrayButtons = [NSMutableArray new];
-    
 }
 
 
@@ -90,6 +89,16 @@
         [self.tableView reloadData];
         [self.arrayButtons removeAllObjects];
     }
+}
+- (IBAction) buttonUseAnyWayTapped :(id)sender {
+    self.errorView.hidden = YES;
+    self.btnEditOutlet.enabled = YES;
+    //self.arrayWithNetworksObj = [[DataBaseManager sharedManager] obtainAllRowsFromTableNamedUsers];
+    [self obtanObjectsOfSocialNetworks];
+    [self.arrayButtons removeAllObjects];
+    [self.tableView reloadData];
+    
+    
 }
 
 - (IBAction)btnEditTapped:(id)sender {
@@ -163,11 +172,7 @@
         __weak MUSAccountsViewController *weakSelf = self;
         [socialNetwork loginWithComplition:^(SocialNetwork* result, NSError *error) {
             if (result) {
-                //////////////////////////////////////////////////////////////////////////////////////////////////[[DataBaseManager dataBaseManager] insertIntoTable:result.currentUser];
-                
-                
-                
-                ///////////////////////////////////////////////////////////////////////////////////////////////////
+               
                 [weakSelf performSegueWithIdentifier: goToUserDetailViewControllerSegueIdentifier sender:nil];
             }
         }];

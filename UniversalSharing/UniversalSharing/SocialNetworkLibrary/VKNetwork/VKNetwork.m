@@ -11,6 +11,10 @@
 #import "Place.h"
 #import <VKSdk.h>
 #import "NSError+MUSError.h"
+#import "DataBaseManager.h"
+#import "ReachabilityManager.h"
+#import "NSString+MUSPathToDocumentsdirectory.h"
+
 
 @interface VKNetwork () <VKSdkDelegate>
 @property (strong, nonatomic) UINavigationController *navigationController;
@@ -51,7 +55,26 @@ static VKNetwork *model = nil;
         }
         else {
             self.isLogin = YES;
-            self.isVisible = YES;
+            
+            self.currentUser = [[DataBaseManager sharedManager]obtainRowsFromTableNamedUsersWithNetworkType:self.networkType];
+            self.icon = self.currentUser.photoURL;
+            self.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
+            self.isVisible = self.currentUser.isVisible;
+            //////////////////////////////////////////////////////////
+            
+            BOOL isReachable = [ReachabilityManager isReachable];
+            BOOL isReachableViaWiFi = [ReachabilityManager isReachableViaWiFi];
+            
+            if (isReachableViaWiFi && isReachable){
+                
+                NSString *deleteImageFromFolder = self.currentUser.photoURL;
+                
+                [self obtainInfoFromNetworkWithComplition:^(SocialNetwork* result, NSError *error) {
+                    
+                    [[NSFileManager defaultManager] removeItemAtPath: [deleteImageFromFolder obtainPathToDocumentsFolder:deleteImageFromFolder] error: nil];
+                    [[DataBaseManager sharedManager] editUserByClientIdAndNetworkType:result.currentUser];
+                }];
+            }
         }
     }
     return self;
@@ -111,10 +134,25 @@ static VKNetwork *model = nil;
     VKRequest * request = [[VKApi users] get:@{ VK_API_FIELDS : musVKAllUserFields }];
     [request executeWithResultBlock:^(VKResponse * response)
      {
-         weakSell.currentUser = [User createFromDictionary:(NSDictionary*)[response.json firstObject] andNetworkType:weakSell.networkType];
-         weakSell.title = [NSString stringWithFormat:@"%@ %@", weakSell.currentUser.firstName, weakSell.currentUser.lastName];
-         weakSell.icon = weakSell.currentUser.photoURL;
-             block(weakSell, nil);
+         weakSell.currentUser = [User createFromDictionary:(NSDictionary*)[response.json firstObject] andNetworkType : weakSell.networkType];
+         weakSell.title = [NSString stringWithFormat:@"%@  %@", weakSell.currentUser.firstName, weakSell.currentUser.lastName];
+         //dispatch_async(dispatch_get_main_queue(), ^{
+         weakSell.icon = [weakSell saveImageOfUserToDocumentsFolder:weakSell.currentUser.photoURL];
+         //});
+         
+         
+         weakSell.currentUser.photoURL = weakSell.icon;
+         //weakSell.icon = weakSell.currentUser.photoURL;////
+         if (!weakSell.isLogin)
+         [[DataBaseManager sharedManager] insertIntoTable:weakSell.currentUser];
+         dispatch_async(dispatch_get_main_queue(), ^{
+              weakSell.isLogin = YES;
+             block(weakSell,nil);
+         });
+//         weakSell.currentUser = [User createFromDictionary:(NSDictionary*)[response.json firstObject] andNetworkType:weakSell.networkType];
+//         weakSell.title = [NSString stringWithFormat:@"%@ %@", weakSell.currentUser.firstName, weakSell.currentUser.lastName];
+//         weakSell.icon = weakSell.currentUser.photoURL;
+//             block(weakSell, nil);
          
      } errorBlock:^(NSError * error) {
          if (error.code != VK_API_ERROR) {
@@ -124,6 +162,32 @@ static VKNetwork *model = nil;
              block (nil, [self errorVkontakte]);
          }
      }];
+}
+- (NSString*) saveImageOfUserToDocumentsFolder :(NSString*) photoURL{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0]; //Get the docs directory
+    NSString *filePath = @"image";
+    filePath = [filePath stringByAppendingString:[NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970] * 1000]];
+    filePath = [filePath stringByAppendingString:@".png"];
+    NSString *finalFilePath = [documentsPath stringByAppendingPathComponent:filePath];
+    
+    
+    //    dispatch_queue_t q = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+    //    dispatch_async(q, ^{
+    /* Fetch the image from the server... */
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString: photoURL]];
+    UIImage *image = [[UIImage alloc] initWithData:data];
+    // dispatch_async(dispatch_get_main_queue(), ^{
+    //            dispatch_async(dispatch_get_main_queue(), ^{
+    NSData *dataFolder = UIImagePNGRepresentation(image);
+    
+    
+    [dataFolder writeToFile:finalFilePath atomically:YES]; //Write the file
+    
+    //});
+    //});
+    //});
+    return filePath;
 }
 
 
@@ -333,7 +397,7 @@ static VKNetwork *model = nil;
 }
 
 - (void)vkSdkReceivedNewToken:(VKAccessToken *)newToken
-{    self.isLogin = YES;
+{
     [self obtainInfoFromNetworkWithComplition:self.copyComplition];
 }
 

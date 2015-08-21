@@ -12,6 +12,9 @@
 #import <FBSDKShareKit/FBSDKShareKit.h>
 #import "Place.h"
 #import "NSError+MUSError.h"
+#import "DataBaseManager.h"
+#import "ReachabilityManager.h"
+#import "NSString+MUSPathToDocumentsdirectory.h"
 
 @interface FacebookNetwork()<FBSDKGraphRequestConnectionDelegate>
 
@@ -35,7 +38,7 @@ static FacebookNetwork *model = nil;
 
 /*!
  Initiation FacebookNetwork.
-*/
+ */
 
 - (instancetype) init {
     self = [super init];
@@ -47,7 +50,29 @@ static FacebookNetwork *model = nil;
         }
         else {
             self.isLogin = YES;
-            self.isVisible = YES;
+            
+            self.currentUser = [[DataBaseManager sharedManager]obtainRowsFromTableNamedUsersWithNetworkType:self.networkType];
+            self.icon = self.currentUser.photoURL;
+            self.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
+            self.isVisible = self.currentUser.isVisible;
+            //////////////////////////////////////////////////////////
+            
+            BOOL isReachable = [ReachabilityManager isReachable];
+            BOOL isReachableViaWiFi = [ReachabilityManager isReachableViaWiFi];
+            
+            if (isReachableViaWiFi && isReachable){
+               
+                NSString *deleteImageFromFolder = self.currentUser.photoURL;
+                               
+                [self obtainInfoFromNetworkWithComplition:^(SocialNetwork* result, NSError *error) {
+                    [[NSFileManager defaultManager] removeItemAtPath: [deleteImageFromFolder obtainPathToDocumentsFolder:deleteImageFromFolder] error: nil];
+                      result.currentUser.isVisible = self.isVisible;
+                    [[DataBaseManager sharedManager] editUserByClientIdAndNetworkType:result.currentUser];
+                }];
+                
+
+            }
+        
         }
     }
     return self;
@@ -79,7 +104,7 @@ static FacebookNetwork *model = nil;
             NSError *accessError = [NSError errorWithMessage: musErrorAccesDenied andCodeError:musErrorAccesDeniedCode];
             block(nil, accessError);
         } else {
-            weakSell.isLogin = YES;
+           
             weakSell.isVisible = YES;
             // If you ask for multiple permissions at once, you
             // should check if specific permissions missing
@@ -113,12 +138,49 @@ static FacebookNetwork *model = nil;
                                           NSError *error) {
         weakSell.currentUser = [User createFromDictionary:result andNetworkType : weakSell.networkType];
         weakSell.title = [NSString stringWithFormat:@"%@  %@", weakSell.currentUser.firstName, weakSell.currentUser.lastName];
-        weakSell.icon = weakSell.currentUser.photoURL;
+        //dispatch_async(dispatch_get_main_queue(), ^{
+        weakSell.icon = [weakSell saveImageOfUserToDocumentsFolder:weakSell.currentUser.photoURL];
+        //});
         
+        
+        weakSell.currentUser.photoURL = weakSell.icon;
+        //weakSell.icon = weakSell.currentUser.photoURL;////
+        if (!weakSell.isLogin) {
+             [[DataBaseManager sharedManager] insertIntoTable:weakSell.currentUser];
+        }
+       
         dispatch_async(dispatch_get_main_queue(), ^{
+             weakSell.isLogin = YES;
             block(weakSell,nil);
         });
     }];
+}
+
+- (NSString*) saveImageOfUserToDocumentsFolder :(NSString*) photoURL{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0]; //Get the docs directory
+    NSString *filePath = @"image";
+    filePath = [filePath stringByAppendingString:[NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970] * 1000]];
+    filePath = [filePath stringByAppendingString:@".png"];
+    NSString *finalFilePath = [documentsPath stringByAppendingPathComponent:filePath];
+    
+    
+    //    dispatch_queue_t q = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+    //    dispatch_async(q, ^{
+    /* Fetch the image from the server... */
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString: photoURL]];
+    UIImage *image = [[UIImage alloc] initWithData:data];
+    // dispatch_async(dispatch_get_main_queue(), ^{
+    //            dispatch_async(dispatch_get_main_queue(), ^{
+    NSData *dataFolder = UIImagePNGRepresentation(image);
+    
+    
+    [dataFolder writeToFile:finalFilePath atomically:YES]; //Write the file
+    
+    //});
+    //});
+    //});
+    return filePath;
 }
 
 #pragma mark - obtainArrayOfPlacesFromNetwork
@@ -211,11 +273,11 @@ static FacebookNetwork *model = nil;
     params[musFacebookParameter_Message] = post.postDescription;
     
     if (post.placeID) params[ musFacebookParameter_Place ] = post.placeID;
-
+    
     [[[FBSDKGraphRequest alloc] initWithGraphPath: musFacebookGraphPath_Me_Feed
                                        parameters: params
                                        HTTPMethod: musPOST]
-                       startWithCompletionHandler:
+     startWithCompletionHandler:
      ^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
          if (!error) {
              self.copyComplition (musPostSuccess, nil);
@@ -261,7 +323,7 @@ static FacebookNetwork *model = nil;
                          self.copyComplition (nil, [self errorFacebook]);
                      }
                  }
-        }];
+             }];
     }
     [connection start];
 }
