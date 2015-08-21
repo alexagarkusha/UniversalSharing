@@ -20,6 +20,7 @@
 - (void)insertIntoTable:(id) object;
 - (NSMutableArray*)obtainAllRowsFromTableNamedUsers;
 - (NSMutableArray*)obtainAllRowsFromTableNamedPosts;
+- (NSMutableArray*)obtainAllRowsFromTableNamedPostsWithUserId :(NSString*) userId;
 - (NSArray*)obtainRowsFromTableNamedPostsWithReason :(NSInteger) reason andNetworkType :(NSInteger) networkType;//while so because we have two projects))
 - (User*)obtainRowsFromTableNamedUsersWithNetworkType :(NSInteger) networkType;
 

@@ -99,9 +99,14 @@
  @warning This method requires that you have been login in Social Network.
 */
 
-
 - (void) sharePost : (Post*) post withComplition : (Complition) block;
 
+- (void) setIsVisible:(BOOL)isVisible;
 
+//- (void) saveImageToDocumentsFolderAndFillArrayWithUrl :(Post*) post;
 
+- (void) removeUserFromDataBaseAndImageFromDocumentsFolder :(User*) user;
+- (BOOL) obtainCurrentConnection;
+- (void) savePostDataBaseWithReason :(ReasonType) reason andPost :(Post*) post;
+- (NSError*) errorConnection;
 @end

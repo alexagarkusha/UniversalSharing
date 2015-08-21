@@ -51,19 +51,11 @@
  @param without
  */
 - (void) logoutFromSocialNetwork {
-    [[DataBaseManager sharedManager] deleteUserByClientId:self.socialNetwork.currentUser.clientID];
-    NSError *error;
-    [[NSFileManager defaultManager] removeItemAtPath: [self obtainPathToDocumentsFolder: self.socialNetwork.currentUser.photoURL] error: &error];
     [self.socialNetwork loginOut];
     [self.navigationController popViewControllerAnimated:YES];
     self.navigationController.navigationBar.translucent = YES;
     }
 
-- (NSString*) obtainPathToDocumentsFolder :(NSString*) pathFromDataBase {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsPath = [paths objectAtIndex:0];
-    return [documentsPath stringByAppendingPathComponent:pathFromDataBase];
-}
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

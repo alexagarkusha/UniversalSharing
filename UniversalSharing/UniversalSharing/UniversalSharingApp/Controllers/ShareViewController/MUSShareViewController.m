@@ -121,11 +121,7 @@
     if (!_currentSocialNetwork) {
         _currentSocialNetwork = [SocialManager currentSocialNetwork];
     }
-    if (!_currentSocialNetwork.isVisible) {
-        [self.changeSocialNetworkButton initiationSocialNetworkButtonForSocialNetwork: nil];
-    } else {
-        [self.changeSocialNetworkButton initiationSocialNetworkButtonForSocialNetwork:_currentSocialNetwork];
-    }
+    [self.changeSocialNetworkButton initiationSocialNetworkButtonForSocialNetwork: nil];
     self.mainGestureRecognizer.enabled = NO;
 }
 
@@ -315,69 +311,32 @@
     
     if(!self.post) {
         self.post = [[Post alloc] init];
-    }
-    
-    
-    
-    self.post.placeID = self.placeID;
-    if (![self.messageTextView.text isEqualToString: kPlaceholderText]) {
-        self.post.postDescription = self.messageTextView.text;
     } else {
-        self.post.postDescription = @"";
-    }
-    self.post.networkType = _currentSocialNetwork.networkType;
+        self.post.placeID = self.placeID;
+        if (![self.messageTextView.text isEqualToString: kPlaceholderText]) {
+            self.post.postDescription = self.messageTextView.text;
+        } else {
+            self.post.postDescription = @"";
+        }
+        self.post.networkType = _currentSocialNetwork.networkType;
         /*
          get array with chosen images from MUSGaleryView
          */
-    self.post.arrayImages = [self.galeryView obtainArrayWithChosenPics];
-    [self saveImageToDocumentsFolderAndFillArrayWithUrl];///////////////////////////////
         self.post.arrayImages = [self.galeryView obtainArrayWithChosenPics];
-        self.post.userId = [NSString stringWithFormat:@"%ld", (long)_currentSocialNetwork.currentUser.primaryKey];//or something else
+        self.post.userId = _currentSocialNetwork.currentUser.clientID;//or something else
+
         
-        BOOL isReachable = [ReachabilityManager isReachable];
-        BOOL isReachableViaWiFi = [ReachabilityManager isReachableViaWiFi];
-    
-        if (isReachableViaWiFi && isReachable){
         [_currentSocialNetwork sharePost:self.post withComplition:^(id result, NSError *error) {
             if (!error) {
                 [self showAlertWithMessage : titleCongratulatoryAlert];
-                self.post.reason = Connect;
             } else {
                 [self showErrorAlertWithError : error];
-                self.post.reason = ErrorConnection;
             }
-    }];
-            [self saveImageToDocumentsFolderAndFillArrayWithUrl];
         }];
-            
-        } else {
-            self.post.reason = Offline;
-            [self saveImageToDocumentsFolderAndFillArrayWithUrl];
-        }
+        
     }
 }
 
-- (void) saveImageToDocumentsFolderAndFillArrayWithUrl {
-    if (!self.post.arrayImagesUrl) {
-        self.post.arrayImagesUrl = [NSMutableArray new];
-    }
-    [self.post.arrayImages enumerateObjectsUsingBlock:^(ImageToPost *image, NSUInteger index, BOOL *stop) {
-        NSData *data = UIImagePNGRepresentation(image.image);
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentsPath = [paths objectAtIndex:0]; //Get the docs directory
-        NSString *filePath = [documentsPath stringByAppendingPathComponent:@"image"];
-        filePath = [filePath stringByAppendingString:[NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970] * 1000]];
-        filePath = [filePath stringByAppendingString:@".png"];
-        [self.post.arrayImagesUrl addObject:filePath];
-        [data writeToFile:filePath atomically:YES]; //Write the file
-    }];
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    [[DataBaseManager sharedManager] insertIntoTable:self.post];
-    
-    
-    
-    ///////////////////////////////////////////////////////////////////////////////////////////////////
-}
 
 - (BOOL) checkStatusOftheNetworkConnection {
     BOOL isReachable = [ReachabilityManager isReachable];

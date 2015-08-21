@@ -7,7 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface NSString (MUSPathToDocumentsdirectory)
+
 - (NSString*) obtainPathToDocumentsFolder :(NSString*) pathFromDataBase;
+- (NSString*) saveImageOfUserToDocumentsFolder :(NSString*) photoURL;
+
 @end

@@ -33,7 +33,7 @@
 
 - (void)awakeFromNib {
     //self.multipleTouchEnabled = YES;
-
+    
     [self.networkIconImageView roundImageView];
 }
 
@@ -53,15 +53,15 @@
     
     if (socialNetwork.isLogin && socialNetwork.isVisible) {
         
-       // __weak MUSAccountTableViewCell *weakSelf = self;
+        // __weak MUSAccountTableViewCell *weakSelf = self;
         
         //[socialNetwork obtainInfoFromNetworkWithComplition:^(id result, NSError *error) {
         NSData *data = [NSData dataWithContentsOfFile:[self obtainPathToDocumentsFolder:socialNetwork.icon]];
         self.networkIconImageView.image = [UIImage imageWithData:data];
-            //[weakSelf.networkIconImageView loadImageFromUrl:[NSURL URLWithString:socialNetwork.icon]];
-            self.loginLabel.text = socialNetwork.title;
-            self.loginLabel.textColor = [UIColor blackColor];
-       // }];
+        //[weakSelf.networkIconImageView loadImageFromUrl:[NSURL URLWithString:socialNetwork.icon]];
+        self.loginLabel.text = socialNetwork.title;
+        self.loginLabel.textColor = [UIColor blackColor];
+        // }];
     } else if(socialNetwork.isLogin && !socialNetwork.isVisible){
         
         NSData *data = [NSData dataWithContentsOfFile:[self obtainPathToDocumentsFolder:socialNetwork.icon]];
@@ -70,14 +70,14 @@
         self.loginLabel.text = socialNetwork.title;
         self.loginLabel.textColor = [[UIColor lightGrayColor]colorWithAlphaComponent:0.3f];
         
-//        __weak MUSAccountTableViewCell *weakSelf = self;
-//        [socialNetwork obtainInfoFromNetworkWithComplition:^(id result, NSError *error) {
-//            
-//            [weakSelf.networkIconImageView  loadImageFromUrl:[NSURL URLWithString:socialNetwork.icon]];
-//            weakSelf.networkIconImageView.image = [self translucentImageFromImage:self.networkIconImageView.image withAlpha:0.3f];
-//            weakSelf.loginLabel.text = socialNetwork.title;
-//            weakSelf.loginLabel.textColor = [[UIColor lightGrayColor]colorWithAlphaComponent:0.3f];
-//        }];
+        //        __weak MUSAccountTableViewCell *weakSelf = self;
+        //        [socialNetwork obtainInfoFromNetworkWithComplition:^(id result, NSError *error) {
+        //
+        //            [weakSelf.networkIconImageView  loadImageFromUrl:[NSURL URLWithString:socialNetwork.icon]];
+        //            weakSelf.networkIconImageView.image = [self translucentImageFromImage:self.networkIconImageView.image withAlpha:0.3f];
+        //            weakSelf.loginLabel.text = socialNetwork.title;
+        //            weakSelf.loginLabel.textColor = [[UIColor lightGrayColor]colorWithAlphaComponent:0.3f];
+        //        }];
     }
     else {
         self.networkIconImageView.image = [UIImage imageNamed:socialNetwork.icon];
@@ -88,13 +88,13 @@
 
 - (void) changeColorOfCell :(SocialNetwork *)socialNetwork {
     if (!socialNetwork.isVisible) {
-        socialNetwork.isVisible = YES;
-        socialNetwork.currentUser.isVisible = YES;
+        [socialNetwork setIsVisible:YES];
+        //socialNetwork.currentUser.isVisible = YES;
     } else {
-        socialNetwork.isVisible = NO;
-        socialNetwork.currentUser.isVisible = NO;
+        [socialNetwork setIsVisible:NO];
+        //socialNetwork.currentUser.isVisible = NO;
     }
-    [[DataBaseManager sharedManager] updateUserIsVisible:socialNetwork.currentUser];
+   
 }
 
 - (UIImage *)translucentImageFromImage:(UIImage *)image withAlpha:(CGFloat)alpha {
@@ -117,11 +117,11 @@
 ////                        CGPoint where = [touch locationInView:self];
 ////                        NSIndexPath* ip = [self indexPathForRowAtPoint:where];
 ////                        NSLog(@"double clicked index path: %@", ip);
-//            
+//
 //            // do something useful with index path 'ip'
 //        }
 //    }
-//    
+//
 //    [super touchesEnded:touches withEvent:event];
 //}
 @end
