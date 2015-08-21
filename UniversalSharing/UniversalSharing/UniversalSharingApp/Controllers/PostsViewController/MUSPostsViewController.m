@@ -12,6 +12,7 @@
 #import "ConstantsApp.h"
 #import "SocialManager.h"
 #import "DataBaseManager.h"
+#import "MUSDetailPostViewController.h"
 @interface MUSPostsViewController () <DOPDropDownMenuDataSource, DOPDropDownMenuDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) NSArray *arrayPosts;

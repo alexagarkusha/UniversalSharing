@@ -68,8 +68,8 @@ static DataBaseManager *_database;
     NSString *url = @"";
     if(sqlite3_prepare_v2(_database, sql, -1, &selectStmt, nil) == SQLITE_OK)
     {
-        sqlite3_bind_text(selectStmt, 1, [post.placeID UTF8String], -1, SQLITE_TRANSIENT);
-        sqlite3_bind_text(selectStmt, 2, [post.postDescription UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(selectStmt, 1, [[self checkExistedString: post.placeID] UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(selectStmt, 2, [[self checkExistedString: post.postDescription] UTF8String], -1, SQLITE_TRANSIENT);
         //[post.arrayImagesUrl enumerateObjectsUsingBlock:^(NSString *stringUrl, NSUInteger index, BOOL *stop) {
         for (int i = 0; i < post.arrayImagesUrl.count; i++) {
             url = [url stringByAppendingString:post.arrayImagesUrl[i]];
@@ -81,16 +81,16 @@ static DataBaseManager *_database;
         //                     url = [url stringByAppendingString:@", "];
         //                }
         //}];
-        sqlite3_bind_text(selectStmt, 3, [url UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(selectStmt, 3, [[self checkExistedString: url] UTF8String], -1, SQLITE_TRANSIENT);
         sqlite3_bind_int64(selectStmt, 4, post.likesCount);
         sqlite3_bind_int64(selectStmt, 5, post.commentsCount);
-        sqlite3_bind_text(selectStmt, 6, [post.placeID UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(selectStmt, 6, [[self checkExistedString: post.placeID] UTF8String], -1, SQLITE_TRANSIENT);
         sqlite3_bind_int64(selectStmt, 7, post.networkType);
-        sqlite3_bind_text(selectStmt, 8, [post.longitude UTF8String], -1, SQLITE_TRANSIENT);
-        sqlite3_bind_text(selectStmt, 9, [post.latitude UTF8String], -1, SQLITE_TRANSIENT);
-        sqlite3_bind_text(selectStmt, 10, [post.dateCreate UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(selectStmt, 8, [[self checkExistedString: post.longitude] UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(selectStmt, 9, [[self checkExistedString: post.latitude] UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(selectStmt, 10, [[self checkExistedString: post.dateCreate] UTF8String], -1, SQLITE_TRANSIENT);
         sqlite3_bind_int64(selectStmt, 11, post.reason);
-        sqlite3_bind_text(selectStmt, 12, [post.userId UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(selectStmt, 12, [[self checkExistedString: post.userId] UTF8String], -1, SQLITE_TRANSIENT);
     }
     
     return selectStmt;
@@ -106,18 +106,24 @@ static DataBaseManager *_database;
     
     if(sqlite3_prepare_v2(_database, sql, -1, &selectStmt, nil) == SQLITE_OK)
     {
-        sqlite3_bind_text(selectStmt, 1, [user.username UTF8String], -1, SQLITE_TRANSIENT);
-        sqlite3_bind_text(selectStmt, 2, [user.firstName UTF8String], -1, SQLITE_TRANSIENT);
-        sqlite3_bind_text(selectStmt, 3, [user.lastName UTF8String], -1, SQLITE_TRANSIENT);
-        sqlite3_bind_text(selectStmt, 4, [user.dateOfBirth UTF8String], -1, SQLITE_TRANSIENT);
-        sqlite3_bind_text(selectStmt, 5, [user.city UTF8String], -1, SQLITE_TRANSIENT);
-        sqlite3_bind_text(selectStmt, 6, [user.clientID UTF8String], -1, SQLITE_TRANSIENT);
-        sqlite3_bind_text(selectStmt, 7, [user.photoURL UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(selectStmt, 1, [[self checkExistedString: user.username] UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(selectStmt, 2, [[self checkExistedString: user.firstName] UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(selectStmt, 3, [[self checkExistedString: user.lastName] UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(selectStmt, 4, [[self checkExistedString: user.dateOfBirth] UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(selectStmt, 5, [[self checkExistedString: user.city] UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(selectStmt, 6, [[self checkExistedString: user.clientID] UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(selectStmt, 7, [[self checkExistedString: user.photoURL] UTF8String], -1, SQLITE_TRANSIENT);
         sqlite3_bind_int64(selectStmt, 8, user.isVisible);
         sqlite3_bind_int64(selectStmt, 9, user.isLogin);
         sqlite3_bind_int64(selectStmt, 10, user.networkType);
     }
     return selectStmt;
+}
+- (NSString*) checkExistedString :(NSString*) stringForChecking {
+    if (stringForChecking) {
+        return stringForChecking;
+    }
+    return @"";
 }
 
 -(void)insertIntoTable:(id) object {
@@ -154,8 +160,8 @@ static DataBaseManager *_database;
             user.username = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 1)];
             user.firstName = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 2)];
             user.lastName = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 3)];
-            //            user.dateOfBirth = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 4)];
-            //            user.city = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 5)];
+            user.dateOfBirth = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 4)];
+            user.city = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 5)];
             user.clientID = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 6)];
             user.photoURL = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 7)];
             user.isVisible = sqlite3_column_int(statement, 8);
@@ -222,7 +228,7 @@ static DataBaseManager *_database;
             
             post.likesCount = sqlite3_column_int(statement, 4);
             post.commentsCount = sqlite3_column_int(statement, 5);
-           // post.placeID = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 6)];
+            // post.placeID = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 6)];
             post.networkType = sqlite3_column_int(statement, 7);
             //post.longitude = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 8)];
             //post.latitude = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 9)];
@@ -282,11 +288,11 @@ static DataBaseManager *_database;
         
         while (sqlite3_step(statement) == SQLITE_ROW) {
             user.primaryKey = sqlite3_column_int(statement, 0);//perhaps it will be needed
-            //user.username = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 1)];
+            user.username = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 1)];
             user.firstName = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 2)];
             user.lastName = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 3)];
-            //            user.dateOfBirth = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 4)];
-            //            user.city = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 5)];
+            user.dateOfBirth = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 4)];
+            user.city = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 5)];
             user.clientID = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 6)];
             user.photoURL = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 7)];
             user.isVisible = sqlite3_column_int(statement, 8);
@@ -509,6 +515,10 @@ static DataBaseManager *_database;
     stringPostsTable = [stringPostsTable stringByAppendingString:@"reson INTEGER, "];
     stringPostsTable = [stringPostsTable stringByAppendingString:@"userId TEXT)"];
     return stringPostsTable;
+}
+
+- (void)dealloc {
+    sqlite3_close(_database);
 }
 
 //- (void) saveImageOfUserToDocumentsFolder :(User*) user {
