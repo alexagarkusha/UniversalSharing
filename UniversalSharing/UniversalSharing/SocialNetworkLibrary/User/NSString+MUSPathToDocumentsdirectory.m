@@ -16,7 +16,7 @@
     return [documentsPath stringByAppendingPathComponent:pathFromDataBase];
 }
 
-//TODO : get the knowledge of threads
+//TODO : get the knowledge of streams
 
 - (NSString*) saveImageOfUserToDocumentsFolder :(NSString*) photoURL{
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
