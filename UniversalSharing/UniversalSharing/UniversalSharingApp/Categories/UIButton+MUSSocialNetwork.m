@@ -38,13 +38,24 @@
         [self.imageView setContentMode:UIViewContentModeScaleAspectFill];
         return;
     } else {
-        __weak UIButton *socialNetworkButton = self;
-        [currentSocialNetwork obtainInfoFromNetworkWithComplition:^(id result, NSError *error) {
-            SocialNetwork *currentSocialNetwork = (SocialNetwork*) result;
-            User *currentUser = currentSocialNetwork.currentUser;
-            [socialNetworkButton loadBackroundImageFromNetworkWithURL:[NSURL URLWithString: currentUser.photoURL]];
-        }];
+        //__weak UIButton *socialNetworkButton = self;
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//        [currentSocialNetwork obtainInfoFromNetworkWithComplition:^(id result, NSError *error) {
+//            SocialNetwork *currentSocialNetwork = (SocialNetwork*) result;
+//            User *currentUser = currentSocialNetwork.currentUser;
+           //[socialNetworkButton loadBackroundImageFromNetworkWithURL:[NSURL URLWithString: currentUser.photoURL]];
+//        }];
+        NSData *data = [NSData dataWithContentsOfFile:[self obtainPathToDocumentsFolder:currentSocialNetwork.icon]];
+        UIImage *image = [UIImage imageWithData:data];
+        [self setImage:image forState:UIControlStateNormal];
+        [self.imageView setContentMode:UIViewContentModeScaleAspectFill];
     }
+}
+
+- (NSString*) obtainPathToDocumentsFolder :(NSString*) pathFromDataBase {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0];
+    return [documentsPath stringByAppendingPathComponent:pathFromDataBase];
 }
 
 @end

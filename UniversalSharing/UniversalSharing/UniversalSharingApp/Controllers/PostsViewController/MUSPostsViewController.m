@@ -7,11 +7,13 @@
 //
 
 #import "MUSPostsViewController.h"
+#import "MUSDetailPostViewController.h"
 #import "DOPDropDownMenu.h"
 #import "MUSPostCell.h"
 #import "ConstantsApp.h"
 #import "SocialManager.h"
-
+#import "DataBaseManager.h"
+#import "MUSDetailPostViewController.h"
 @interface MUSPostsViewController () <DOPDropDownMenuDataSource, DOPDropDownMenuDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) NSArray *arrayPosts;
@@ -30,11 +32,14 @@
 @implementation MUSPostsViewController
 
 - (void)viewDidLoad {
-    [self POSTS]; // DELETE THIS AFTER Connect SQLite
+    //[self POSTS]; // DELETE THIS AFTER Connect SQLite
+    self.arrayPosts = [NSArray arrayWithArray: [[DataBaseManager sharedManager] obtainAllRowsFromTableNamedPosts]];
+    
     [self initiationArrayOfShareReason];
     [self initiationArrayOfActiveSocialNetwork];
     [self initiationDropDownMenu];
     [self initiationTableView];
+
     // Do any additional setup after loading the view.
 }
 
@@ -80,7 +85,22 @@
 
 #pragma mark initiation ArrayOfPostsType
 
+//- (NSString*) obtainPathToDocumentsFolder :(NSString*) pathFromDataBase {
+//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *documentsPath = [paths objectAtIndex:0];
+//    return [documentsPath stringByAppendingPathComponent:pathFromDataBase];
+//}
+
 - (void) initiationArrayOfActiveSocialNetwork {
+    //////////////////////////////////////////////////////////////////////////////////////////
+//    NSArray *temp = [[DataBaseManager sharedManager] obtainAllRowsFromTableNamedUsers];
+//    [temp enumerateObjectsUsingBlock:^(User *user, NSUInteger index, BOOL *stop) {
+//        [[NSFileManager defaultManager] removeItemAtPath: [self obtainPathToDocumentsFolder:user.photoURL] error: nil];
+//        
+//    }];
+    
+    
+    ///////////////////////////////////////////////////////
     self.arrayOfActiveSocialNetwork = [[NSMutableArray alloc] init];
     [self.arrayOfActiveSocialNetwork addObject: @"All social networks"];
     NSArray *arrayWithNetworks = @[@(Twitters), @(VKontakt), @(Facebook)];
@@ -91,6 +111,8 @@
         }
         
     }];
+    
+    
 }
 
 #pragma mark - UITableViewDataSource
@@ -115,8 +137,18 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    [self performSegueWithIdentifier: goToDetailPostViewControllerSegueIdentifier sender:[self.arrayPosts objectAtIndex: indexPath.row]];
 }
+     
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    MUSDetailPostViewController *detailPostViewController = [[MUSDetailPostViewController alloc] init];
+    if ([[segue identifier] isEqualToString:goToDetailPostViewControllerSegueIdentifier]) {
+        detailPostViewController = [segue destinationViewController];
+        [detailPostViewController setCurrentPost: sender];
+    }
+}
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 98;
@@ -234,15 +266,25 @@
 ///////////////////// DELETE THIS AFTER Connect SQLite /////////////////////////
 
 - (void) POSTS {
+
     Post *post1 = [[Post alloc] init];
-    post1.postDescription = @"POST #1 - lskfdjnskdsflsdfksj  sdkjnksjfkjsdkj jsdkjnskjfnsk jsdnkjfskjd jsdkfjnskfjn jsdkjfk jsdkjnskd jsvcvxcvbfj";
+    post1.postDescription = @"POST #1 - lskfdjnskdsflsdfksj  sdkjnksjfkjsdkj jsdkjnskjfnsk jsdnkjfskjd jsdkfjnskfjn jsdkjfk jsdkjnskd jsvcvxcvbfj jsdkjnksjnkjn kjndfkjnkdjf kjdfnkdkfngkd jkjfkjndkfnk jkjdfnknvkdfj knnksnfk jsk fnsknfksdn fkns kfnks dnfkj ndskfndsk nfkdsn fkn dskfn kdsn k nk nknsfk nfk dsnk fs kdfn ksdn fkd nskfn dskf nkdsn fdkfn k nkfdnfkdn kfnkffkjfkknknk j k k jkfd kfkdnfd kjnfkdndkndkjnf kfnkjfdnkdjn kfdjnkfdnfkdf kdnkdj nkkdnfk jfnk";
     post1.commentsCount = 2;
     post1.likesCount = 100;
+    ImageToPost *image1 = [[ImageToPost alloc] init];
+    image1.image = [UIImage imageNamed: @"Comment.png"];
+    image1.imageType = JPEG;
+    
+    ImageToPost *image3 = [[ImageToPost alloc] init];
+    image3.image = [UIImage imageNamed: @"UnknownUser.jpg"];
+    image3.imageType = JPEG;
+    
+    post1.arrayImages = [[NSArray alloc] initWithObjects: image1, image3, nil];
     //post1.reasonType = Connect;
     post1.networkType = Facebook;
     
     Post *post2 = [[Post alloc] init];
-    post2.postDescription = @"POST #2 - lskfdjnskdsflsdfksj  sdkjnksjfkjsdkj jsdkjnskjfnsk jsdnkjfskjd jsdkfjnskfjn jsdkjfk jsdkjnskd jsvcvxcvbfj";
+    post2.postDescription = @"POST #2 - lskfdjnskdsflsdfksj  sdkjnksjfkjsdkj jsdkjnskjfnsk jsdnkjfskjd";
     post2.commentsCount = 23;
     post2.likesCount = 200;
     //post2.reasonType = ErrorConnection;
@@ -255,7 +297,40 @@
     //post3.reasonType = Offline;
     post3.networkType = VKontakt;
     
-    self.arrayPosts = [[NSArray alloc] initWithObjects: post1, post2, post3, nil];
+    
+    Post *post4 = [[Post alloc] init];
+    post4.postDescription = @"";
+    post4.arrayImages = [[NSArray alloc] initWithObjects: image3, nil];
+    post4.commentsCount = 23333;
+    post4.likesCount = 200;
+    //post3.reasonType = Offline;
+    post4.networkType = VKontakt;
+
+    
+    self.arrayPosts = [[NSArray alloc] initWithObjects: post1, post2, post3, post4, nil];
+     
+//    Post *post1 = [[Post alloc] init];
+//    post1.postDescription = @"POST #1 - lskfdjnskdsflsdfksj  sdkjnksjfkjsdkj jsdkjnskjfnsk jsdnkjfskjd jsdkfjnskfjn jsdkjfk jsdkjnskd jsvcvxcvbfj";
+//    post1.comentsCount = 2;
+//    post1.likesCount = 100;
+//    post1.reasonType = Connect;
+//    post1.networkType = Facebook;
+//    
+//    Post *post2 = [[Post alloc] init];
+//    post2.postDescription = @"POST #2 - lskfdjnskdsflsdfksj  sdkjnksjfkjsdkj jsdkjnskjfnsk jsdnkjfskjd jsdkfjnskfjn jsdkjfk jsdkjnskd jsvcvxcvbfj";
+//    post2.comentsCount = 23;
+//    post2.likesCount = 200;
+//    post2.reasonType = ErrorConnection;
+//    post2.networkType = Twitters;
+//
+//    Post *post3 = [[Post alloc] init];
+//    post3.postDescription = @"POST #3 - lskfdjnskdsflsdfksj  sdkjnksjfkjsdkj jsdkjnskjfnsk jsdnkjfskjd jsdkfjnskfjn jsdkjfk jsdkjnskd jsvcvxcvbfj";
+//    post3.comentsCount = 23333;
+//    post3.likesCount = 200;
+//    post3.reasonType = Offline;
+//    post3.networkType = VKontakt;
+//    
+//    self.arrayPosts = [[NSArray alloc] initWithObjects: post1, post2, post3, nil];
 }
 
 

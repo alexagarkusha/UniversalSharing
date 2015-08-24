@@ -12,6 +12,8 @@
 #import <FBSDKShareKit/FBSDKShareKit.h>
 #import "Place.h"
 #import "NSError+MUSError.h"
+#import "DataBaseManager.h"
+#import "NSString+MUSPathToDocumentsdirectory.h"
 
 @interface FacebookNetwork()<FBSDKGraphRequestConnectionDelegate>
 
@@ -35,7 +37,7 @@ static FacebookNetwork *model = nil;
 
 /*!
  Initiation FacebookNetwork.
-*/
+ */
 
 - (instancetype) init {
     self = [super init];
@@ -48,12 +50,22 @@ static FacebookNetwork *model = nil;
         else {
             self.isLogin = YES;
             
-            //get user from DB
+            self.currentUser = [[DataBaseManager sharedManager]obtainRowsFromTableNamedUsersWithNetworkType:self.networkType];
+            self.icon = self.currentUser.photoURL;
+            self.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
+            self.isVisible = self.currentUser.isVisible;
+            //////////////////////////////////////////////////////////
             
-            
-            self.isVisible = YES;
-            
-            //in BG update
+            if ([self obtainCurrentConnection]){
+               
+                NSString *deleteImageFromFolder = self.currentUser.photoURL;
+                               
+                [self obtainInfoFromNetworkWithComplition:^(SocialNetwork* result, NSError *error) {
+                    [[NSFileManager defaultManager] removeItemAtPath: [deleteImageFromFolder obtainPathToDocumentsFolder:deleteImageFromFolder] error: nil];
+                      result.currentUser.isVisible = self.isVisible;
+                    [[DataBaseManager sharedManager] editUserByClientIdAndNetworkType:result.currentUser];
+                }];
+            }
         }
     }
     return self;
@@ -85,7 +97,7 @@ static FacebookNetwork *model = nil;
             NSError *accessError = [NSError errorWithMessage: musErrorAccesDenied andCodeError:musErrorAccesDeniedCode];
             block(nil, accessError);
         } else {
-            weakSell.isLogin = YES;
+           
             weakSell.isVisible = YES;
             // If you ask for multiple permissions at once, you
             // should check if specific permissions missing
@@ -98,12 +110,11 @@ static FacebookNetwork *model = nil;
 
 
 - (void) loginOut {
+    [self removeUserFromDataBaseAndImageFromDocumentsFolder:self.currentUser];
     [FBSDKAccessToken setCurrentAccessToken:nil];
     [FBSDKProfile setCurrentProfile:nil];
     [self initiationPropertiesWithoutSession];
 }
-
-
 
 
 #pragma mark - obtainUserFromNetwork
@@ -119,9 +130,19 @@ static FacebookNetwork *model = nil;
                                           NSError *error) {
         weakSell.currentUser = [User createFromDictionary:result andNetworkType : weakSell.networkType];
         weakSell.title = [NSString stringWithFormat:@"%@  %@", weakSell.currentUser.firstName, weakSell.currentUser.lastName];
-        weakSell.icon = weakSell.currentUser.photoURL;
+        //dispatch_async(dispatch_get_main_queue(), ^{
+        weakSell.icon = [weakSell.currentUser.photoURL saveImageOfUserToDocumentsFolder:weakSell.currentUser.photoURL];
+        //});
         
+        
+        weakSell.currentUser.photoURL = weakSell.icon;
+        //weakSell.icon = weakSell.currentUser.photoURL;////
+        if (!weakSell.isLogin) {
+             [[DataBaseManager sharedManager] insertIntoTable:weakSell.currentUser];
+        }
+       
         dispatch_async(dispatch_get_main_queue(), ^{
+             weakSell.isLogin = YES;
             block(weakSell,nil);
         });
     }];
@@ -176,7 +197,13 @@ static FacebookNetwork *model = nil;
 #pragma mark - sharePost
 
 - (void) sharePost:(Post *)post withComplition:(Complition)block {
-    self.copyComplition = block;
+    
+    if (![self obtainCurrentConnection]){
+        [self savePostDataBaseWithReason:Offline andPost:post];
+        block(nil,[self errorConnection]);
+        return;
+    }
+     self.copyComplition = block;
     if ([[FBSDKAccessToken currentAccessToken] hasGranted: musFacebookPermission_Publish_Actions]) {
         [self sharePostToFacebook: post];
     } else {
@@ -217,16 +244,19 @@ static FacebookNetwork *model = nil;
     params[musFacebookParameter_Message] = post.postDescription;
     
     if (post.placeID) params[ musFacebookParameter_Place ] = post.placeID;
-
+    
     [[[FBSDKGraphRequest alloc] initWithGraphPath: musFacebookGraphPath_Me_Feed
                                        parameters: params
                                        HTTPMethod: musPOST]
-                       startWithCompletionHandler:
+     startWithCompletionHandler:
      ^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
          if (!error) {
              self.copyComplition (musPostSuccess, nil);
+             [self savePostDataBaseWithReason:Connect andPost:post];
+
          } else {
              if ([error code] != 8){
+                 [self savePostDataBaseWithReason:ErrorConnection andPost:post];
                  self.copyComplition (nil, [self errorFacebook]);
              }
          }
@@ -263,11 +293,13 @@ static FacebookNetwork *model = nil;
                  if (counterOfImages == copyPostImagesArray.count) {
                      if (!error) {
                          self.copyComplition (musPostSuccess, nil);
+                         [self savePostDataBaseWithReason:Connect andPost:post];
                      } else {
+                         [self savePostDataBaseWithReason:ErrorConnection andPost:post];
                          self.copyComplition (nil, [self errorFacebook]);
                      }
                  }
-        }];
+             }];
     }
     [connection start];
 }
@@ -279,6 +311,7 @@ static FacebookNetwork *model = nil;
 - (NSError*) errorFacebook {
     return [NSError errorWithMessage: musFacebookError andCodeError: musFacebookErrorCode];
 }
+
 
 
 

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="MUSGalleryOfPhotosCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="150"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y4j-P6-qcN" customClass="MUSGalleryViewOfPhotos">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="149"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="h1E-fQ-zZP">
+                        <rect key="frame" x="8" y="91" width="50" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="50" id="3Zs-Mo-W6G"/>
+                            <constraint firstAttribute="width" constant="50" id="eIT-wM-zdR"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UserName" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="XKx-fB-tTp">
+                        <rect key="frame" x="66" y="90" width="126" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="XH1-QH-Adk"/>
+                            <constraint firstAttribute="width" constant="126" id="sdq-1c-b3i"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="HiraMinProN-W6" family="Hiragino Mincho ProN" pointSize="15"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                        <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="e88-Ky-GeW">
+                        <rect key="frame" x="66" y="119" width="126" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="0ow-UK-PAo"/>
+                            <constraint firstAttribute="width" constant="126" id="cNQ-Pn-cbl"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="TimesNewRomanPS-BoldItalicMT" family="Times New Roman" pointSize="17"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                        <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bQE-pg-2i5">
+                        <rect key="frame" x="292" y="8" width="20" height="20"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I6K-rJ-8JI">
+                        <rect key="frame" x="277" y="57" width="35" height="35"/>
+                        <color key="backgroundColor" red="1" green="0.98607067339999999" blue="0.94532415430000005" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="35" id="JtI-zY-Ibn"/>
+                            <constraint firstAttribute="width" constant="35" id="vuo-1M-xDf"/>
+                        </constraints>
+                        <connections>
+                            <action selector="addPhotoTouch:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="TUB-oH-kiv"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="h1E-fQ-zZP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="3I6-M7-ATO"/>
+                    <constraint firstItem="h1E-fQ-zZP" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="6XS-GG-10N"/>
+                    <constraint firstAttribute="trailing" secondItem="y4j-P6-qcN" secondAttribute="trailing" id="8K6-ah-SAK"/>
+                    <constraint firstItem="I6K-rJ-8JI" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="BP6-cr-Xbz"/>
+                    <constraint firstItem="e88-Ky-GeW" firstAttribute="top" secondItem="XKx-fB-tTp" secondAttribute="bottom" constant="8" id="Bw7-oU-XYb"/>
+                    <constraint firstItem="y4j-P6-qcN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="EOU-4t-KjI"/>
+                    <constraint firstAttribute="bottom" secondItem="y4j-P6-qcN" secondAttribute="bottom" id="Haq-gN-E8c"/>
+                    <constraint firstItem="e88-Ky-GeW" firstAttribute="leading" secondItem="h1E-fQ-zZP" secondAttribute="trailing" constant="8" id="Pod-Tt-Vqx"/>
+                    <constraint firstItem="XKx-fB-tTp" firstAttribute="leading" secondItem="h1E-fQ-zZP" secondAttribute="trailing" constant="8" id="Vb7-mt-FbZ"/>
+                    <constraint firstItem="y4j-P6-qcN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="YPg-3W-zzn"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="I6K-rJ-8JI" secondAttribute="bottom" constant="49" id="h0m-fB-XBP"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="e88-Ky-GeW" secondAttribute="bottom" constant="1" id="vEn-la-oQQ"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="addButtonButtomConstraint" destination="h0m-fB-XBP" id="crm-DN-uUw"/>
+                <outlet property="addPhotoButtonOutlet" destination="I6K-rJ-8JI" id="oJJ-Zy-1xY"/>
+                <outlet property="dateOfPostLabel" destination="e88-Ky-GeW" id="9Ur-0X-ePc"/>
+                <outlet property="galleryViewOfPhotos" destination="y4j-P6-qcN" id="6e6-rS-H7F"/>
+                <outlet property="reasonOfPostLabel" destination="bQE-pg-2i5" id="N7f-hW-Z6z"/>
+                <outlet property="userPhotoImageView" destination="h1E-fQ-zZP" id="EMU-gE-XaI"/>
+                <outlet property="usernameLabel" destination="XKx-fB-tTp" id="Olx-Vs-qT8"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>

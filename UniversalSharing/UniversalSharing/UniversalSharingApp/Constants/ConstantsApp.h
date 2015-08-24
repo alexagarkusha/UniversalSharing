@@ -27,6 +27,13 @@ typedef NS_ENUM(NSInteger, FilterInColumnType) {
     ByShareReason,
 };
 
+typedef NS_ENUM(NSInteger, DetailPostVC_CellType) {
+    GalleryOfPhotosCellType,
+    CommentsAndLikesCellType,
+    PostDescriptionCellType,
+    PostLocationCellType,
+};
+
 
 
 #pragma mark AccountsViewController Constants
@@ -37,6 +44,7 @@ FOUNDATION_EXPORT NSString *const goToUserDetailViewControllerSegueIdentifier;
 
 FOUNDATION_EXPORT NSString *const kPlaceholderText;
 FOUNDATION_EXPORT NSString *const goToLocationViewControllerSegueIdentifier;
+FOUNDATION_EXPORT NSString *const goToDetailPostViewControllerSegueIdentifier;
 FOUNDATION_EXPORT NSString *const collectionViewCellIdentifier;
 FOUNDATION_EXPORT NSString *const distanceEqual100;
 FOUNDATION_EXPORT NSString *const distanceEqual1000;
@@ -84,6 +92,8 @@ FOUNDATION_EXPORT NSString *const musAppButtonTitle_Cancel;
 FOUNDATION_EXPORT NSString *const musAppButtonTitle_OK;
 FOUNDATION_EXPORT NSString *const musAppButtonTitle_Album;
 FOUNDATION_EXPORT NSString *const musAppButtonTitle_Camera;
+FOUNDATION_EXPORT NSString *const musAppButtonTitle_Edit;
+FOUNDATION_EXPORT NSString *const musAppButtonTitle_Share;
 FOUNDATION_EXPORT NSString *const Error;
 
 #pragma mark - MUSGaleryView
@@ -111,5 +121,21 @@ FOUNDATION_EXPORT NSString *const musAppFilter_Title_Shared;
 FOUNDATION_EXPORT NSString *const musAppFilter_Title_Offline;
 FOUNDATION_EXPORT NSString *const musAppFilter_Title_Error;
 
+#pragma mark - MUSPostCell
+
+FOUNDATION_EXPORT NSString *const musApp_ActionSheet_Title_ChooseAction;
+
+#pragma mark - MUSGalleryViewOfPhotos
+
+FOUNDATION_EXPORT NSString *const musApp_GalleryOfPhotos_NibName;
+
+#pragma mark - MUSGalleryOfPhotosCell
+
+FOUNDATION_EXPORT NSString *const musAppButton_ImageName_ButtonAdd;
+
+#pragma mark - MUSDetailPostViewController
+
+FOUNDATION_EXPORT NSInteger const musAppDetailPostVC_HeightOfCommentsAndLikesCell;
+FOUNDATION_EXPORT NSInteger const musAppDetailPostVC_HeightOfPostLocationCell;
 
 @end

@@ -305,9 +305,9 @@
 #pragma mark - Share Post to Social network
 
 - (IBAction)shareToSocialNetwork:(id)sender {
-    if (![self checkStatusOftheNetworkConnection] || ![self checkStatusOfSocialNetworkVisibility]) {
-        return;
-    }
+//    if (![self checkStatusOftheNetworkConnection] || ![self checkStatusOfSocialNetworkVisibility]) {
+//        return;
+//    }
     
     if(!self.post) {
         self.post = [[Post alloc] init];
@@ -323,8 +323,8 @@
          get array with chosen images from MUSGaleryView
          */
         self.post.arrayImages = [self.galeryView obtainArrayWithChosenPics];
-        [self saveImageToDocumentsFolderAndFillArrayWithUrl];/////////////////////////////////////////////////////////
-        
+        self.post.userId = _currentSocialNetwork.currentUser.clientID;//or something else
+        self.post.dateCreate = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970]];
         
         [_currentSocialNetwork sharePost:self.post withComplition:^(id result, NSError *error) {
             if (!error) {
@@ -333,30 +333,10 @@
                 [self showErrorAlertWithError : error];
             }
         }];
+        
     }
 }
 
-- (void) saveImageToDocumentsFolderAndFillArrayWithUrl {
-    if (!self.post.arrayImagesUrl) {
-        self.post.arrayImagesUrl = [NSMutableArray new];
-    }
-    [self.post.arrayImages enumerateObjectsUsingBlock:^(ImageToPost *image, NSUInteger index, BOOL *stop) {
-        NSData *data = UIImagePNGRepresentation(image.image);
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentsPath = [paths objectAtIndex:0]; //Get the docs directory
-        NSString *filePath = [documentsPath stringByAppendingPathComponent:@"image"];
-        filePath = [filePath stringByAppendingString:[NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970] * 1000]];
-        filePath = [filePath stringByAppendingString:@".png"];
-        [self.post.arrayImagesUrl addObject:filePath];
-        [data writeToFile:filePath atomically:YES]; //Write the file
-    }];
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    [[DataBaseManager dataBaseManager] insertIntoTable:self.post];
-    
-    
-    
-    ///////////////////////////////////////////////////////////////////////////////////////////////////
-}
 
 - (BOOL) checkStatusOftheNetworkConnection {
     BOOL isReachable = [ReachabilityManager isReachable];

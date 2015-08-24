@@ -11,6 +11,9 @@
 #import "Place.h"
 #import <VKSdk.h>
 #import "NSError+MUSError.h"
+#import "DataBaseManager.h"
+#import "NSString+MUSPathToDocumentsdirectory.h"
+
 
 @interface VKNetwork () <VKSdkDelegate>
 @property (strong, nonatomic) UINavigationController *navigationController;
@@ -51,7 +54,23 @@ static VKNetwork *model = nil;
         }
         else {
             self.isLogin = YES;
-            self.isVisible = YES;
+            
+            self.currentUser = [[DataBaseManager sharedManager]obtainRowsFromTableNamedUsersWithNetworkType:self.networkType];
+            self.icon = self.currentUser.photoURL;
+            self.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
+            self.isVisible = self.currentUser.isVisible;
+            /////////////////////////////////////////////////////////
+            
+            if ([self obtainCurrentConnection]){
+                
+                NSString *deleteImageFromFolder = self.currentUser.photoURL;
+                
+                [self obtainInfoFromNetworkWithComplition:^(SocialNetwork* result, NSError *error) {
+                    
+                    [[NSFileManager defaultManager] removeItemAtPath: [deleteImageFromFolder obtainPathToDocumentsFolder:deleteImageFromFolder] error: nil];
+                    [[DataBaseManager sharedManager] editUserByClientIdAndNetworkType:result.currentUser];
+                }];
+            }
         }
     }
     return self;
@@ -98,6 +117,7 @@ static VKNetwork *model = nil;
 
 - (void) loginOut {
     [VKSdk forceLogout];
+    [self removeUserFromDataBaseAndImageFromDocumentsFolder:self.currentUser];
     self.currentUser = nil;
     [self initiationPropertiesWithoutSession];
 }
@@ -111,10 +131,26 @@ static VKNetwork *model = nil;
     VKRequest * request = [[VKApi users] get:@{ VK_API_FIELDS : musVKAllUserFields }];
     [request executeWithResultBlock:^(VKResponse * response)
      {
-         weakSell.currentUser = [User createFromDictionary:(NSDictionary*)[response.json firstObject] andNetworkType:weakSell.networkType];
-         weakSell.title = [NSString stringWithFormat:@"%@ %@", weakSell.currentUser.firstName, weakSell.currentUser.lastName];
-         weakSell.icon = weakSell.currentUser.photoURL;
-             block(weakSell, nil);
+         weakSell.currentUser = [User createFromDictionary:(NSDictionary*)[response.json firstObject] andNetworkType : weakSell.networkType];
+         weakSell.title = [NSString stringWithFormat:@"%@  %@", weakSell.currentUser.firstName, weakSell.currentUser.lastName];
+         //dispatch_async(dispatch_get_main_queue(), ^{
+         weakSell.icon = [weakSell.currentUser.photoURL saveImageOfUserToDocumentsFolder:weakSell.currentUser.photoURL];
+         //});
+         
+         
+         weakSell.currentUser.photoURL = weakSell.icon;
+         //weakSell.icon = weakSell.currentUser.photoURL;////
+         if (!weakSell.isLogin)
+         [[DataBaseManager sharedManager] insertIntoTable:weakSell.currentUser];
+         
+         dispatch_async(dispatch_get_main_queue(), ^{
+              weakSell.isLogin = YES;
+             block(weakSell,nil);
+         });
+//         weakSell.currentUser = [User createFromDictionary:(NSDictionary*)[response.json firstObject] andNetworkType:weakSell.networkType];
+//         weakSell.title = [NSString stringWithFormat:@"%@ %@", weakSell.currentUser.firstName, weakSell.currentUser.lastName];
+//         weakSell.icon = weakSell.currentUser.photoURL;
+//             block(weakSell, nil);
          
      } errorBlock:^(NSError * error) {
          if (error.code != VK_API_ERROR) {
@@ -125,10 +161,6 @@ static VKNetwork *model = nil;
          }
      }];
 }
-
-
-//#warning "Move method in constants"
-//#warning "Check messages"
 
 #pragma mark - obtainArrayOfPlacesFromNetwork
 
@@ -203,6 +235,11 @@ static VKNetwork *model = nil;
 #pragma mark - sharePostToNetwork
 
 - (void) sharePost : (Post*) post withComplition : (Complition) block {
+    if (![self obtainCurrentConnection]){
+        [self savePostDataBaseWithReason:Offline andPost:post];
+        block(nil,[self errorConnection]);
+        return;
+    }
     self.copyComplition = block;
     if ([post.arrayImages count] > 0) {
         [self postImagesToVK: post];
@@ -333,7 +370,7 @@ static VKNetwork *model = nil;
 }
 
 - (void)vkSdkReceivedNewToken:(VKAccessToken *)newToken
-{    self.isLogin = YES;
+{
     [self obtainInfoFromNetworkWithComplition:self.copyComplition];
 }
 

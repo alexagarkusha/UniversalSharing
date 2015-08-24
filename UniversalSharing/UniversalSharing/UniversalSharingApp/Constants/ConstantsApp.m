@@ -19,6 +19,7 @@ NSString *const goToUserDetailViewControllerSegueIdentifier = @"goToInfo";
 
 NSString *const kPlaceholderText = @"Write something...";
 NSString *const goToLocationViewControllerSegueIdentifier = @"Location";
+NSString *const goToDetailPostViewControllerSegueIdentifier = @"DetailPostViewController";
 NSString *const collectionViewCellIdentifier = @"CollectionViewCellIdentifier";
 NSString *const distanceEqual100 = @"100";
 NSString *const distanceEqual1000 = @"1000";
@@ -62,6 +63,8 @@ NSString *const musAppButtonTitle_Cancel = @"Cancel";
 NSString *const musAppButtonTitle_OK = @"Ok";
 NSString *const musAppButtonTitle_Album = @"Album";
 NSString *const musAppButtonTitle_Camera = @"Camera";
+NSString *const musAppButtonTitle_Edit = @"Edit";
+NSString *const musAppButtonTitle_Share = @"Share";
 NSString *const Error = @"Error";
 
 #pragma mark - MUSGaleryView
@@ -87,6 +90,24 @@ NSString *const musAppImage_Name_TwitterIconImage = @"TWimage.jpeg";
 NSString *const musAppFilter_Title_Shared = @"Shared";
 NSString *const musAppFilter_Title_Offline = @"Offline";
 NSString *const musAppFilter_Title_Error = @"Error";
+
+#pragma mark - MUSPostCell
+
+NSString *const musApp_ActionSheet_Title_ChooseAction = @"Choose action";
+
+#pragma mark - MUSGalleryViewOfPhotos
+
+NSString *const musApp_GalleryOfPhotos_NibName = @"MUSGalleryViewOfPhotos";
+
+#pragma mark - MUSGalleryOfPhotosCell
+
+NSString *const musAppButton_ImageName_ButtonAdd = @"Button_Add.png";
+
+#pragma mark - MUSDetailPostViewController
+
+NSInteger const musAppDetailPostVC_HeightOfCommentsAndLikesCell = 40;
+NSInteger const musAppDetailPostVC_HeightOfPostLocationCell = 200;
+
 
 
 @end

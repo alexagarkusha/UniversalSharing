@@ -43,8 +43,15 @@
  @abstract type of Social network. (like Facebook, Twitters, Vkontakte)
  */
 @property (assign, nonatomic) NetworkType networkType;
+/*!
+ @abstract
+ */
+@property (assign, nonatomic) NSInteger primaryKey;
+//////////////////////////////////////////////////////////////////////for database
+@property (assign, nonatomic) NSInteger isLogin;
 
-
+@property (assign, nonatomic) NSInteger isVisible;
+///////////////////////////////////////////////////////////////////////////////////////
 /*!
  @abstract return an instance of the User.
  @param dictionary takes dictionary from social network.

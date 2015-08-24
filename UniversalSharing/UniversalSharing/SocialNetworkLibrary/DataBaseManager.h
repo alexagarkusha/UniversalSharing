@@ -7,6 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MUSSocialNetworkLibraryConstants.h"
+#import "User.h"
+#import "Post.h"
 #import <sqlite3.h>
 
 #warning "why database in h file?"
@@ -15,8 +18,21 @@
     sqlite3 *_database;
 }
 
-+ (DataBaseManager*)dataBaseManager;
++ (DataBaseManager*)sharedManager;
+- (void)insertIntoTable:(id) object;
+- (NSMutableArray*)obtainAllRowsFromTableNamedUsers;
+- (NSMutableArray*)obtainAllRowsFromTableNamedPosts;
+- (NSMutableArray*)obtainAllRowsFromTableNamedPostsWithUserId :(NSString*) userId;
+- (NSArray*)obtainRowsFromTableNamedPostsWithReason :(NSInteger) reason andNetworkType :(NSInteger) networkType;//while so because we have two projects))
+- (User*)obtainRowsFromTableNamedUsersWithNetworkType :(NSInteger) networkType;
 
--(void)insertIntoTable:(id) object;
+- (void)deletePostByUserId :(NSString*) userId;
+- (void)deletePostByPrimeryId :(NSInteger) primeryId;
+- (void)editPostByPrimeryId :(Post*) post;
 
+- (void)deleteUserByPrimeryId :(NSInteger) primeryId;
+- (void)editUserByClientIdAndNetworkType :(User*) user;
+- (void) updateUserIsVisible : (User*) user;
+
+- (void)deleteUserByClientId :(NSString*) clientId;
 @end

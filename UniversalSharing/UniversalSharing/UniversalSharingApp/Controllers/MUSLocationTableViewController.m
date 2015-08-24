@@ -80,14 +80,26 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"LocationCell"];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: @"LocationCell"];
+    }
+    
+    /*!
+     get object Place and show name of that on tableviewcell
+     */
+    
+    Place *place = self.arrayLocations[indexPath.row];
+    cell.textLabel.text = place.fullName;
+    
+        /*
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LocationCell" forIndexPath:indexPath];
     if (cell) {
-        /*!
-         get object Place and show name of that on tableviewcell
-         */
         Place *place = self.arrayLocations[indexPath.row];
         cell.textLabel.text = place.fullName;
     }
+         */
     return cell;
 }
 
