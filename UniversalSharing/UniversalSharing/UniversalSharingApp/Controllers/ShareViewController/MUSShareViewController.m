@@ -104,6 +104,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+#warning "Must be remove observe"
     [[NSNotificationCenter defaultCenter] addObserver : self
                                              selector : @selector(keyboardWillShow:)
                                                  name : UIKeyboardWillShowNotification
@@ -136,7 +137,8 @@
      dispatch_queue_t q = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0ul);
      dispatch_async(q, ^{
      dispatch_async(dispatch_get_main_queue(), ^{
-     [[NSNotificationCenter defaultCenter]removeObserver:self];
+     
+[[NSNotificationCenter defaultCenter]removeObserver:self];
      });
      });
      */
@@ -157,6 +159,7 @@
     /*
      using category
      */
+#warning "???"
     self.changeSocialNetworkButton = [UIButton new];
     [self.changeSocialNetworkButton addTarget:self action:@selector(changeSocialNetworkAccount:)forControlEvents:UIControlEventTouchUpInside];
 }
@@ -309,6 +312,8 @@
 //        return;
 //    }
     
+#warning "validation"
+    
     if(!self.post) {
         self.post = [[Post alloc] init];
     } else {
@@ -337,7 +342,7 @@
     }
 }
 
-
+#warning "The same method"
 - (BOOL) checkStatusOftheNetworkConnection {
     BOOL isReachable = [ReachabilityManager isReachable];
     BOOL isReachableViaWiFi = [ReachabilityManager isReachableViaWiFi];
@@ -349,6 +354,7 @@
     return YES;
 }
 
+#warning "???"
 - (BOOL) checkStatusOfSocialNetworkVisibility {
     
     if (!_currentSocialNetwork.isVisible || !_currentSocialNetwork.isLogin) {
@@ -479,7 +485,7 @@
 }
 
 #pragma mark - error alert with error and alert with message
-
+#warning "Same methods :("
 - (void) showErrorAlertWithError : (NSError*) error {
     UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle : Error
                                                          message : [error localizedFailureReason]

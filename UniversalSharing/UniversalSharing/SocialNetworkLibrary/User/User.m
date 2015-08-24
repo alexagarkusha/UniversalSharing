@@ -39,6 +39,7 @@
  */
 
 - (User*) createUserFromFB:(id)userDictionary {
+    #warning "One more init?"
     User* currentUser = [[User alloc] init];
     
     if ([userDictionary isKindOfClass: [NSDictionary class]]) {
@@ -64,6 +65,8 @@
  */
 
 - (User*) createUserFromVK : (id) userDictionary {
+    #warning "One more init?"
+    
     User *currentUser = [[User alloc] init];
     if ([userDictionary isKindOfClass:[NSDictionary class]]){
         currentUser.dateOfBirth = [userDictionary objectForKey : musVKParseUser_BirthDate];
@@ -90,6 +93,7 @@
 
 - (User*) createUserFromTwitter:(TWTRUser*)userDictionary {
     
+    #warning "One more init?"
     User *currentUser = [[User alloc] init];
     currentUser.clientID = userDictionary.userID;
     currentUser.lastName = userDictionary.screenName;

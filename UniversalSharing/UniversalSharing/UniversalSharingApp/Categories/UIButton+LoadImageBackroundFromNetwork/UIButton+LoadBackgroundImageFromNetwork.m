@@ -26,6 +26,7 @@
         NSData *data = [NSData dataWithContentsOfURL:url];
         UIImage *image = [[UIImage alloc] initWithData:data];
         dispatch_async(dispatch_get_main_queue(), ^{
+#warning "When we save in cache?"
             [self setImage:image forState:UIControlStateNormal];
             [self.imageView setContentMode:UIViewContentModeScaleAspectFill];
         });

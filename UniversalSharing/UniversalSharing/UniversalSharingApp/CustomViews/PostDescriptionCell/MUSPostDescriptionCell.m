@@ -42,6 +42,7 @@
 
 + (CGFloat) heightForPostDescriptionCell : (NSString*) postDescription {
 
+#warning "Magic digits :)"
     UITextView *textView = [[UITextView alloc] initWithFrame: CGRectMake(8, 8, [UIScreen mainScreen].bounds.size.width - 8, 50)];
                             
     

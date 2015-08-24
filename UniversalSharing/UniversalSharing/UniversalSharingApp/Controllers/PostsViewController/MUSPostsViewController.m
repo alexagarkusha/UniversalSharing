@@ -45,6 +45,7 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear : YES];
+#warning "Twice?"
     [self initiationArrayOfShareReason];
     [self initiationArrayOfActiveSocialNetwork];
 }
@@ -100,6 +101,7 @@
 //    }];
     
     
+#warning "???"
     ///////////////////////////////////////////////////////
     self.arrayOfActiveSocialNetwork = [[NSMutableArray alloc] init];
     [self.arrayOfActiveSocialNetwork addObject: @"All social networks"];
@@ -151,6 +153,7 @@
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+#warning "Cell knows it size"
     return 98;
 }
 
