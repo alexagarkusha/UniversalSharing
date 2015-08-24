@@ -10,19 +10,21 @@
 #import "MUSSocialNetworkLibraryConstants.h"
 #import "SocialNetwork.h"
 /*
-@class MUSLocationTableViewController
+ @class MUSLocationTableViewController
  
  */
 @interface MUSLocationTableViewController : UITableViewController
 
-/*
+/*!
+ @property
  @abstract return object Place from arrayLocations
  */
 @property (copy, nonatomic) Complition placeComplition;
 
 /*!
+ @method
  @abstract set current user in order to get array places
- @params current user(facebook or twitter or VK)
+ @param current user(facebook or twitter or VK)
  */
 - (void)setCurrentUser:(SocialNetwork*)socialNetwork;
 

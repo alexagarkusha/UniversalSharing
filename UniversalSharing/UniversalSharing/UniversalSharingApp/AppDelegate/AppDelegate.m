@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 #import "MUSSocialNetworkLibraryHeader.h"
+#import "ReachabilityManager.h"
+
 
 @interface AppDelegate ()
 
@@ -17,8 +19,9 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [ReachabilityManager sharedManager];
     return [[FBSDKApplicationDelegate sharedInstance] application:application
-                                    didFinishLaunchingWithOptions:launchOptions];
+                                    didFinishLaunchingWithOptions:launchOptions];;
 }
 
 
@@ -46,6 +49,7 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
+#warning "Check urls and separate methods"
     [[FBSDKApplicationDelegate sharedInstance] application:application
                                                    openURL:url
                                          sourceApplication:sourceApplication

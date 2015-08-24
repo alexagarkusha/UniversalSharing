@@ -16,32 +16,85 @@
 #import "MUSCollectionViewCell.h"
 #import "MUSLocationTableViewController.h"
 #import "Place.h"
+#import "UIButton+MUSSocialNetwork.h"
+#import "MUSGaleryView.h"
+#import "ReachabilityManager.h"
+#import <CoreText/CoreText.h>
+//////////////////////////////////////////////
+#import "DataBaseManager.h"
 
-@interface MUSShareViewController () <UITextViewDelegate, UIActionSheetDelegate, UITabBarDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate>
+@interface MUSShareViewController () <UITextViewDelegate, UIActionSheetDelegate, UIAlertViewDelegate, UINavigationControllerDelegate, UIToolbarDelegate, MUSGaleryViewDelegate>
 
 - (IBAction)shareToSocialNetwork:(id)sender;
 - (IBAction)endEditingMessage:(id)sender;
-//===
-@property (weak, nonatomic)     IBOutlet    UITabBar *shareTabBar;
-@property (weak, nonatomic)     IBOutlet    UITextView *messageTextView;
+
+
+@property (weak, nonatomic)     IBOutlet    UIToolbar *shareToolBar;
+//@property (weak, nonatomic)     IBOutlet    UITextView *messageTextView;
 @property (strong, nonatomic)   IBOutlet    UITapGestureRecognizer *mainGestureRecognizer;
-@property (weak, nonatomic)     IBOutlet    NSLayoutConstraint* tabBarLayoutConstraint;
-@property (weak, nonatomic)     IBOutlet    NSLayoutConstraint* messageTextViewLayoutConstraint;
-@property (weak, nonatomic)     IBOutlet    UICollectionView *collectionView;
-//===
-@property (assign, nonatomic)               CGFloat tabBarLayoutConstaineOrigin;
+@property (weak, nonatomic)     IBOutlet    UIBarButtonItem *shareButtonOutlet;
+
+
+
+/*!
+ @property
+ @abstract  in order to up toolbar when the keyboard appears
+ */
+@property (weak, nonatomic)     IBOutlet    NSLayoutConstraint* toolBarLayoutConstraint;
+@property (weak, nonatomic)     IBOutlet    NSLayoutConstraint* galeryViewLayoutConstraint;
+/*!
+ @property
+ @abstract  in order to up textview when the keyboard appears
+ */
+//@property (weak, nonatomic)     IBOutlet    NSLayoutConstraint* messageTextViewLayoutConstraint;
+/*!
+ @property
+ @abstract object with chosen pics and xib with collectionView
+ */
+@property (weak, nonatomic)     IBOutlet    MUSGaleryView *galeryView;
+@property (weak, nonatomic)     IBOutlet    UIBarButtonItem *sharePhotoButton;
+@property (weak, nonatomic)     IBOutlet    UIBarButtonItem *shareLocationButton;
+
+/*!
+ @property
+ @abstract  in order to save origin position toolbar and return back when the keyboard disappears
+ */
+@property (assign, nonatomic)               CGFloat toolBarLayoutConstraineOrigin;
+/*!
+ @property
+ @abstract  in order to save origin position galeryView and return back when the keyboard disappears
+ */
+@property (assign, nonatomic)               CGFloat GaleryViewLayoutConstraineOrigin;
+
+/*!
+ @property
+ @abstract  in order to save origin position textView and return back when the keyboard disappears
+ */
 @property (assign, nonatomic)               CGFloat messageTextViewLayoutConstraintOrigin;
-@property (strong, nonatomic)               User *currentUser;
 @property (strong, nonatomic)               SocialNetwork *currentSocialNetwork;
+/*!
+ @property
+ @abstract  use this array for actionsheet to show networks which are login and isVisible(we can do network unvisible in account controller) and for change currentusernetwork after a user chose other network
+ */
 @property (strong, nonatomic)               NSMutableArray *socialNetworkAccountsArray;
-@property (assign, nonatomic)               TabBarItemIndex tabBarItemIndex;
-@property (assign, nonatomic)               AlertButtonIndex alertButtonIndex;
-@property (assign, nonatomic)               NSUInteger indexForDeletePicture;
+/*!
+ @property
+ @abstract  in order to add  existed networks in our app
+ */
 @property (strong, nonatomic)               NSArray *arrayWithNetworks;
-@property (assign, nonatomic)               CLLocationCoordinate2D currentLocation;
-@property (strong, nonatomic)               NSMutableArray *arrayWithChosenImages;
 @property (strong, nonatomic)               Post *post;
 @property (strong, nonatomic)               UIButton *changeSocialNetworkButton;
+/*!
+ @property
+ @abstract in order to get place id from locationViewController and pass to network for location of a user
+ */
+@property (strong, nonatomic)               NSString *placeID;
+
+@property (strong, nonatomic)               UIBezierPath *exclusivePath;
+@property (strong, nonatomic)               UITextView *messageTextView;
+@property (assign, nonatomic)               CGRect messageTextViewFrame;
+
+
 
 @end
 
@@ -51,73 +104,75 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [[NSNotificationCenter defaultCenter] addObserver : self
+                                             selector : @selector(keyboardWillShow:)
+                                                 name : UIKeyboardWillShowNotification
+                                               object : nil];
+    [[NSNotificationCenter defaultCenter] addObserver : self
+                                             selector : @selector(keyboardWillHide:)
+                                                 name : UIKeyboardWillHideNotification
+                                               object : nil];
+    self.view.backgroundColor = [UIColor whiteColor];
     [self initiationMUSShareViewController];
-    [self addButtonOnTextView];
-    [self setFlowLayout];
-    [self setGestureRecognizer];
-    self.arrayWithChosenImages = [NSMutableArray new];
 }
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow:)
-                                                 name:@"UIKeyboardWillShowNotification"
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillHide:)
-                                                 name:@"UIKeyboardDidHideNotification"
-                                               object:nil];
+    if (!_currentSocialNetwork) {
+        _currentSocialNetwork = [SocialManager currentSocialNetwork];
+    }
+    [self.changeSocialNetworkButton initiationSocialNetworkButtonForSocialNetwork: nil];
     self.mainGestureRecognizer.enabled = NO;
-    [self initiationSocialNetworkButtonForSocialNetwork];
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:YES];
-    [[NSNotificationCenter defaultCenter]removeObserver:self];
+    [self endEditingMessageTextView];
 }
 
 - (void) viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:YES];
+    /*
+     dispatch_queue_t q = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0ul);
+     dispatch_async(q, ^{
+     dispatch_async(dispatch_get_main_queue(), ^{
+     [[NSNotificationCenter defaultCenter]removeObserver:self];
+     });
+     });
+     */
 }
 
-- (void) setFlowLayout {
-    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    [flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
-    [_collectionView setCollectionViewLayout:flowLayout];
-}
-
+/*!
+ @method
+ @abstract method of "changeSocialNetworkButton" is called for showing actionSheet with login and isVisible networks
+ @param sender
+ */
 - (void)changeSocialNetworkAccount:(id)sender{
     [self showUserAccountsInActionSheet];
 }
 
-- (void) setGestureRecognizer {
-    UILongPressGestureRecognizer *pressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGesture:)];
-    pressGesture.minimumPressDuration = .5;
-    pressGesture.delegate = self;
-    [self.collectionView addGestureRecognizer:pressGesture];
-}
+#pragma mark - UIButton
 
 - (void) addButtonOnTextView {
-    
-    self.changeSocialNetworkButton  =   [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    self.changeSocialNetworkButton.frame  =   CGRectMake(6.0, 15.0, 75.0, 70.0);
-    
+    /*
+     using category
+     */
+    self.changeSocialNetworkButton = [UIButton new];
     [self.changeSocialNetworkButton addTarget:self action:@selector(changeSocialNetworkAccount:)forControlEvents:UIControlEventTouchUpInside];
-    self.changeSocialNetworkButton.backgroundColor=[UIColor blueColor];
-    // CGRect buttonFrame = self.changeSocialNetworkButton.frame;
-    [self forceTextViewWorkAsFacebookSharing];
-    [self.messageTextView addSubview:self.changeSocialNetworkButton];
 }
 
-- (void) forceTextViewWorkAsFacebookSharing {
-    CGRect myFrame = CGRectMake(6, 15, 100, 50);
-    UIBezierPath *exclusivePath = [UIBezierPath bezierPathWithRect:myFrame];
-    self.messageTextView.textContainer.exclusionPaths = @[exclusivePath];
+- (IBAction)btnShareLocationTapped:(id)sender {
+    [self userCurrentLocation];
 }
 
+- (IBAction)btnSharePhotoTapped:(id)sender {
+    [self obtainChosenImage];
+}
+/*!
+ @method
+ @abstract  disappear keyboard when touch other place
+ @param event
+ */
 -(void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [self.view endEditing:YES];
 }
@@ -125,43 +180,103 @@
 #pragma mark - initiation MUSShareViewController
 
 - (void) initiationMUSShareViewController {
-    self.tabBarLayoutConstaineOrigin = self.tabBarLayoutConstraint.constant;
-    self.messageTextViewLayoutConstraintOrigin = self.messageTextViewLayoutConstraint.constant;
-    
-    //self.tabBarLayoutConstraint.constant = self.tabBarController.tabBar.frame.size.height;
-    //self.messageTextViewLayoutConstraint.constant = self.tabBarController.tabBar.frame.size.height + self.shareTabBar.frame.size.height;
-    
-    self.messageTextView.delegate = self;
-    [self.changeSocialNetworkButton cornerRadius:10];
-    //[self.shareButtonOutlet cornerRadius:10];
-    self.socialNetworkAccountsArray = [[NSMutableArray alloc] init];
-    self.shareTabBar.delegate = self;
-    self.arrayWithNetworks = @[@(Twitters), @(VKontakt), @(Facebook)];
-}
-
-#pragma mark - UIButton
-
-- (void) initiationSocialNetworkButtonForSocialNetwork {
+    /*
+     init current social network for "changeSocialNetworkButton"(image)
+     */
     if (!_currentSocialNetwork) {
         _currentSocialNetwork = [SocialManager currentSocialNetwork];
     }
     
-    __weak UIButton *socialNetworkButton = self.changeSocialNetworkButton;
-    [_currentSocialNetwork obtainInfoFromNetworkWithComplition:^(id result, NSError *error) {
-        SocialNetwork *currentSocialNetwork = (SocialNetwork*) result;
-        self.currentUser = currentSocialNetwork.currentUser;
-        [socialNetworkButton loadBackroundImageFromNetworkWithURL:[NSURL URLWithString: self.currentUser.photoURL]];
-    }];
+    [self addButtonOnTextView];
+    [self initiationMessageTextView];
+    self.galeryView.delegate = self;
+    self.shareButtonOutlet.enabled = NO;
+    self.toolBarLayoutConstraineOrigin = self.toolBarLayoutConstraint.constant;
+    if ([self obtainSizeScreen] <= 480) {
+        self.GaleryViewLayoutConstraineOrigin = self.galeryViewLayoutConstraint.constant;
+    }
+    self.socialNetworkAccountsArray = [NSMutableArray new];
+}
+
+- (CGFloat) obtainSizeScreen {
+    return [UIScreen mainScreen].applicationFrame.size.height;
+}
+
+#pragma mark - initiation Message UITextView
+
+/*!
+ @method
+ @abstract  detour to the right round "changeSocialNetworkButton" when text is being written by a user
+ @param without
+ */
+- (void) initiationMessageTextView {
+    NSDictionary* attrs = @{NSFontAttributeName:
+                                [UIFont preferredFontForTextStyle:UIFontTextStyleBody]};
+    NSAttributedString* attrString = [[NSAttributedString alloc]
+                                      initWithString: kPlaceholderText
+                                      attributes:attrs];
+    
+    
+    NSTextStorage* textStorage = [[NSTextStorage alloc] initWithAttributedString:attrString];
+    NSLayoutManager *layoutManager = [NSLayoutManager new];
+    [textStorage addLayoutManager:layoutManager];
+    
+    CGSize textSizeFrame = CGSizeMake([[UIScreen mainScreen] bounds].size.width,
+                                      [[UIScreen mainScreen] bounds].size.height - [UIApplication sharedApplication].statusBarFrame.size.height - self.navigationController.navigationBar.frame.size.height - self.galeryView.frame.size.height - self.shareToolBar.frame.size.height - self.tabBarController.tabBar.frame.size.height);
+    
+    
+    NSTextContainer *textContainer = [[NSTextContainer alloc] initWithSize: CGSizeMake (textSizeFrame.width, textSizeFrame.height)];
+    
+    UIBezierPath *rectanglePath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, self.changeSocialNetworkButton.frame.size.width + self.changeSocialNetworkButton.frame.origin.x, self.changeSocialNetworkButton.frame.size.height + self.changeSocialNetworkButton.frame.origin.x)];
+    
+    textContainer.exclusionPaths = @[rectanglePath];
+    
+    [layoutManager addTextContainer:textContainer];
+    
+    CGRect messageTextViewFrame = CGRectMake(0, self.navigationController.navigationBar.frame.size.height + [UIApplication sharedApplication].statusBarFrame.size.height, textSizeFrame.width, textSizeFrame.height);
+    
+    self.messageTextView = [[UITextView alloc] initWithFrame: messageTextViewFrame textContainer: textContainer];
+    self.messageTextView.editable = YES;
+    self.messageTextView.scrollEnabled = YES;
+    self.messageTextView.delegate = self;
+    self.messageTextView.textColor = [UIColor lightGrayColor];
+    self.messageTextView.tag = 0;
+    self.messageTextView.autocorrectionType = UITextAutocorrectionTypeNo;
+    
+    self.messageTextViewFrame = CGRectMake(self.messageTextView.frame.origin.x, self.messageTextView.frame.origin.y, self.messageTextView.frame.size.width, self.messageTextView.frame.size.height);
+    [self.view addSubview:self.messageTextView];
+    [self.messageTextView addSubview: self.changeSocialNetworkButton];
+}
+
+- (void) initialParametersOfMessageTextView {
+    /*
+     text : "write something"
+     */
+    self.messageTextView.text = kPlaceholderText;
+    self.messageTextView.textColor = [UIColor lightGrayColor];
+    self.messageTextView.tag = 0;
 }
 
 #pragma mark - Keyboard Show/Hide
 
 - (void) keyboardWillShow: (NSNotification*) notification {
-    CGRect initialFrame = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    CGRect initialFrame = [[[notification userInfo] objectForKey : UIKeyboardFrameEndUserInfoKey] CGRectValue];
     CGRect convertedFrame = [self.view convertRect:initialFrame fromView:nil];
-    self.tabBarLayoutConstraint.constant = convertedFrame.size.height;
-    self.messageTextViewLayoutConstraint.constant = convertedFrame.size.height + self.shareTabBar.frame.size.height + self.collectionView.frame.size.height;
-    
+    self.toolBarLayoutConstraint.constant = convertedFrame.size.height;
+    /*
+     size up
+     */
+    CGFloat galeryViewHeight = self.galeryView.frame.size.height;
+    if ([self obtainSizeScreen] <= 480) {
+        galeryViewHeight = 60.0f;
+        self.galeryViewLayoutConstraint.constant = galeryViewHeight;
+    }
+    self.messageTextView.frame = CGRectMake(self.messageTextView.frame.origin.x,
+                                            self.messageTextView.frame.origin.y,
+                                            self.messageTextView.frame.size.width,
+                                            self.messageTextView.frame.size.height
+                                            - convertedFrame.size.height +
+                                            self.tabBarController.tabBar.frame.size.height + self.galeryView.frame.size.height - galeryViewHeight);
     [UIView animateWithDuration: 0.3  animations:^{
         [self.view layoutIfNeeded];
         [self.view setNeedsLayout];
@@ -169,39 +284,105 @@
     [UIView commitAnimations];
 }
 
+
 - (void) keyboardWillHide: (NSNotification*) notification {
-    self.tabBarLayoutConstraint.constant = self.tabBarLayoutConstaineOrigin;
-    self.messageTextViewLayoutConstraint.constant = self.messageTextViewLayoutConstraintOrigin;
+    self.toolBarLayoutConstraint.constant = self.toolBarLayoutConstraineOrigin;
+    if ([self obtainSizeScreen] <= 480) {
+        self.galeryViewLayoutConstraint.constant = self.GaleryViewLayoutConstraineOrigin;
+    }
+    [UIView beginAnimations:@"TableViewDown" context:NULL];
+    [UIView setAnimationDuration:0.5f];
+    self.messageTextView.frame = self.messageTextViewFrame;
+    [UIView commitAnimations];
     
-    [UIView animateWithDuration: 0.6 animations:^{
+    [UIView animateWithDuration: 0.4 animations:^{
         [self.view layoutIfNeeded];
         [self.view setNeedsLayout];
     }];
     [UIView commitAnimations];
 }
 
-#pragma mark - UIChangeSocialNetwork
+#pragma mark - Share Post to Social network
 
 - (IBAction)shareToSocialNetwork:(id)sender {
+    if (![self checkStatusOftheNetworkConnection] || ![self checkStatusOfSocialNetworkVisibility]) {
+        return;
+    }
+    
     if(!self.post) {
         self.post = [[Post alloc] init];
+    } else {
+        self.post.placeID = self.placeID;
+        if (![self.messageTextView.text isEqualToString: kPlaceholderText]) {
+            self.post.postDescription = self.messageTextView.text;
+        } else {
+            self.post.postDescription = @"";
+        }
+        self.post.networkType = _currentSocialNetwork.networkType;
+        /*
+         get array with chosen images from MUSGaleryView
+         */
+        self.post.arrayImages = [self.galeryView obtainArrayWithChosenPics];
+        [self saveImageToDocumentsFolderAndFillArrayWithUrl];/////////////////////////////////////////////////////////
+        
+        
+        [_currentSocialNetwork sharePost:self.post withComplition:^(id result, NSError *error) {
+            if (!error) {
+                [self showAlertWithMessage : titleCongratulatoryAlert];
+            } else {
+                [self showErrorAlertWithError : error];
+            }
+        }];
     }
-    self.post.postDescription = self.messageTextView.text;
-    self.post.networkType = _currentSocialNetwork.networkType;
-    self.post.arrayImages = self.arrayWithChosenImages;
-    self.post.latitude = self.currentLocation.latitude;
-    self.post.longitude = self.currentLocation.longitude;
-    
-    [_currentSocialNetwork sharePost:self.post withComplition:^(id result, NSError *error) {
-        NSLog(@"POSTED");
+}
+
+- (void) saveImageToDocumentsFolderAndFillArrayWithUrl {
+    if (!self.post.arrayImagesUrl) {
+        self.post.arrayImagesUrl = [NSMutableArray new];
+    }
+    [self.post.arrayImages enumerateObjectsUsingBlock:^(ImageToPost *image, NSUInteger index, BOOL *stop) {
+        NSData *data = UIImagePNGRepresentation(image.image);
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsPath = [paths objectAtIndex:0]; //Get the docs directory
+        NSString *filePath = [documentsPath stringByAppendingPathComponent:@"image"];
+        filePath = [filePath stringByAppendingString:[NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970] * 1000]];
+        filePath = [filePath stringByAppendingString:@".png"];
+        [self.post.arrayImagesUrl addObject:filePath];
+        [data writeToFile:filePath atomically:YES]; //Write the file
     }];
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    [[DataBaseManager dataBaseManager] insertIntoTable:self.post];
+    
+    
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+}
+
+- (BOOL) checkStatusOftheNetworkConnection {
+    BOOL isReachable = [ReachabilityManager isReachable];
+    BOOL isReachableViaWiFi = [ReachabilityManager isReachableViaWiFi];
+    
+    if (!isReachableViaWiFi && !isReachable) {
+        [self showAlertWithMessage: musAppError_Internet_Connection];
+        return NO;
+    }
+    return YES;
+}
+
+- (BOOL) checkStatusOfSocialNetworkVisibility {
+    
+    if (!_currentSocialNetwork.isVisible || !_currentSocialNetwork.isLogin) {
+        [self showAlertWithMessage: musAppError_Logged_Into_Social_Networks];
+        return NO;
+    }
+    return YES;
 }
 
 #pragma mark - UITextViewDelegate
 
 - (BOOL) textViewShouldBeginEditing:(UITextView *)textView {
     if(textView.tag == 0) {
-        textView.text = @"";
+        textView.text = changePlaceholderWhenStartEditing;
         textView.textColor = [UIColor blackColor];
         textView.tag = 1;
     }
@@ -209,27 +390,50 @@
     return YES;
 }
 
+- (void)textViewDidChange:(UITextView *)textView {
+    if (textView.text.length > 0) {
+        self.shareButtonOutlet.enabled = YES;
+    } else {
+        if ([self.galeryView obtainArrayWithChosenPics].count < 1) {
+            self.shareButtonOutlet.enabled = NO;
+        }
+    }
+}
+
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-    return textView.text.length + (text.length - range.length) <= 80;
+    return textView.text.length + (text.length - range.length) <= countOfAllowedLettersInTextView;
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
     if([textView.text length] == 0) {
-        [self initiationMessageTextView];
+        [self initialParametersOfMessageTextView];
+        if ([self.galeryView obtainArrayWithChosenPics].count < 1) {
+            self.shareButtonOutlet.enabled = NO;
+        }
+    } else {
+        self.shareButtonOutlet.enabled = YES;
     }
-}
-
-- (void) initiationMessageTextView {
-    self.messageTextView.text = kPlaceholderText;
-    self.messageTextView.textColor = [UIColor lightGrayColor];
-    self.messageTextView.tag = 0;
 }
 
 #pragma mark - UITapGestureRecognizer
 
 - (IBAction)endEditingMessage:(id)sender {
+    [self endEditingMessageTextView];
+}
+
+- (void) endEditingMessageTextView {
+    //[UIView animateWithDuration:1.0 animations:^(void){
     [self.messageTextView resignFirstResponder];
+    //} completion:^(BOOL finished) {
+    //Do something
+    //}];
+    
+    
+    
+    
+    //[self.messageTextView resignFirstResponder];
     self.mainGestureRecognizer.enabled = NO;
+    //[self performSelector:@selector(keyboardWillHide:)];
 }
 
 #pragma mark - UIActionSheet
@@ -237,254 +441,85 @@
 - (void) showUserAccountsInActionSheet {
     [self.socialNetworkAccountsArray removeAllObjects];
     UIActionSheet* sheet = [UIActionSheet new];
-    sheet.title = @"Select account";
+    sheet.title = titleActionSheet;
     sheet.delegate = self;
-    sheet.cancelButtonIndex = [sheet addButtonWithTitle:@"Cancel"];
+    sheet.cancelButtonIndex = [sheet addButtonWithTitle:musAppButtonTitle_Cancel];
+    self.arrayWithNetworks = @[@(Twitters), @(VKontakt), @(Facebook)];
     
-    for (int i = 0; i < [[[SocialManager sharedManager] networks: self.arrayWithNetworks] count]; i++) {
-        SocialNetwork *socialNetwork = [[[SocialManager sharedManager] networks: self.arrayWithNetworks] objectAtIndex:i];
-        if (socialNetwork.isLogin && !socialNetwork.isVisible) {
-            NSString *buttonTitle = [NSString stringWithFormat:@"%@", NSStringFromClass([socialNetwork class])];
+    __weak MUSShareViewController *weakSelf = self;
+    [[[SocialManager sharedManager] networks: self.arrayWithNetworks] enumerateObjectsUsingBlock:^(SocialNetwork *socialNetwork, NSUInteger index, BOOL *stop) {
+        if (socialNetwork.isLogin && socialNetwork.isVisible) {
+            NSString *buttonTitle = [NSString stringWithFormat:@"%@", socialNetwork.name];
             [sheet addButtonWithTitle: buttonTitle];
-            [self.socialNetworkAccountsArray addObject:socialNetwork];
+            [weakSelf.socialNetworkAccountsArray addObject:socialNetwork];
         }
-    }
-    [sheet showInView:[UIApplication sharedApplication].keyWindow];
+    }];
+    [sheet showInView:self.view];
+    //[sheet showInView:[UIApplication sharedApplication].keyWindow];
 }
 
 - (void) actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if ( buttonIndex != 0 ) {
+        /*
+         after a user chose new network we change current social network
+         */
         _currentSocialNetwork = [self.socialNetworkAccountsArray objectAtIndex: buttonIndex - 1];
-        [self initiationSocialNetworkButtonForSocialNetwork];
+        [self.shareLocationButton setTintColor: [UIColor blackColor]];
+        self.placeID = @"";
+        [self.changeSocialNetworkButton initiationSocialNetworkButtonForSocialNetwork:_currentSocialNetwork];
     }
 }
 
-#pragma mark - UITabBar
-
-- (void) tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
-    _tabBarItemIndex = item.tag;
-    
-    switch (_tabBarItemIndex) {
-        case Share_photo:
-            NSLog(@"Share photo");
-            [self photoAlertShow];
-            break;
-        case Share_location:
-            NSLog(@"Share location");
-            [self userCurrentLocation];
-            break;
-        default:
-            break;
+#pragma mark - obtainChosenImage
+/*!
+ @method
+ @abstract  get array chosen images from galeryView in order to check count of allowed pics than go to photomanager in order to chose any pic and pass chosen a pic to galeryView(for collectionView)
+ @param without
+ */
+- (void) obtainChosenImage {
+    if ([[self.galeryView obtainArrayWithChosenPics] count] == countOfAllowedPics) {
+        [self showAlertWithMessage : musAppAlertTitle_NO_Pics_Anymore];
+        return;
     }
+    __weak MUSShareViewController *weakSelf = self;
+    [[MUSPhotoManager sharedManager] photoShowFromViewController:self withComplition:^(id result, NSError *error) {
+        if(!error) {
+            [weakSelf.galeryView passChosenImageForCollection:result];
+        } else {
+            [weakSelf showErrorAlertWithError : error];
+            return;
+        }
+    }];
 }
 
-#pragma mark - ShareLocationTabBarItemClick
-
-//#warning "REplace in location controller"
+#pragma mark - ShareLocationToolBarItemClick
 
 - (void) userCurrentLocation {
     [self performSegueWithIdentifier: goToLocationViewControllerSegueIdentifier sender:nil];
-    //<<<<<<< HEAD
-    //    [[MUSLocationManager sharedManager] startTrackLocationWithComplition:^(id result, NSError *error) {
-    //        if ([result isKindOfClass:[CLLocation class]]) {
-    //            CLLocation* location = result;
-    //            self.currentLocation = location.coordinate;
-    //=======
-    
-    //    Location *currentLocation = [[Location alloc] init];
-    //    currentLocation.longitude = @"-122.40828";
-    //    currentLocation.latitude = @"37.768641";
-    //    currentLocation.type = @"place";
-    //    currentLocation.q = @"";
-    //    currentLocation.distance = @"1000";
-    //    __weak MUSShareViewController *weakSelf = self;
-    //
-    //    [_currentSocialNetwork obtainArrayOfPlaces:currentLocation withComplition:^(NSMutableArray *places, NSError *error) {
-    //        NSLog(@"%@", places);
-    //        if (places.count > 1) {
-    //            weakSelf.arrayPlaces = places;
-    //            [weakSelf performSegueWithIdentifier: goToLocationViewControllerSegueIdentifier sender:nil];
-    //        } else {
-    //            if(!weakSelf.post){
-    //                weakSelf.post = [[Post alloc] init];
-    //            }
-    //            Place *place = [places firstObject];
-    //            weakSelf.post.placeID = place.placeID;
-    //        }
-    //
-    //    }];
-    
-    
-    
-    
-    /*
-     [[MUSLocationManager sharedManager] startTrackLocationWithComplition:^(id result, NSError *error) {
-     if ([result isKindOfClass:[CLLocation class]]) {
-     CLLocation* location = result;
-     self.currentLocation = location.coordinate;
-     >>>>>>> 43859dc699e5a361212ca2cae3f67f6bd8dc661c
-     Location *currentLocation = [[Location alloc] init];
-     currentLocation.longitude = [NSString stringWithFormat: @"%f", location.coordinate.longitude];
-     currentLocation.latitude = [NSString stringWithFormat: @"%f", location.coordinate.latitude];
-     currentLocation.type = @"place";
-     currentLocation.q = @"";
-     
-     [_currentSocialNetwork obtainArrayOfPlaces:currentLocation withComplition:^(NSMutableArray *places, NSError *error) {
-     NSLog(@"%@", places);
-     }];
-     
-     //NSLog(@"Current location lat = %f, long =%f", self.currentLocation.latitude, locationCoordinate.longitude);
-     <<<<<<< HEAD
-     //}
-     // }];
-     =======
-     }
-     }];
-     */
-    //>>>>>>> 43859dc699e5a361212ca2cae3f67f6bd8dc661c
 }
 
-
-#pragma mark - SharePhotoTabBarItemClick
-
-- (void) photoAlertShow {
-    UIAlertView *photoAlert = [[UIAlertView alloc] initWithTitle:@"Share photo" message: nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Album", @"Camera", nil];
-    photoAlert.tag = 0;
-    [photoAlert show];
-}
-
-- (void) photoAlertDeletePicShow {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Photo"
-                                                    message:@"You want to delete a pic"
-                                                   delegate:self
-                                          cancelButtonTitle:@"NO"
-                                          otherButtonTitles:@"YES", nil];
-    alert.tag = 1;
-    [alert show];
-}
-
-- (void) warningNotAddMorePicsAlertShow {
-    UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle:@"You can not add pics anymore :[" message: nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-    warningAlert.tag = 2;
-    [warningAlert show];
-}
+#pragma mark - error alert with error and alert with message
 
 - (void) showErrorAlertWithError : (NSError*) error {
-    UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:[error localizedFailureReason] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
+    UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle : Error
+                                                         message : [error localizedFailureReason]
+                                                        delegate : nil
+                                               cancelButtonTitle : musAppButtonTitle_OK
+                                               otherButtonTitles : nil];
     [errorAlert show];
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    _alertButtonIndex = buttonIndex;
-    if (alertView.tag == 0) {
-        
-        switch (_alertButtonIndex) {
-            case Cancel:
-                break;
-            case Album:
-                [self selectPhotoFromAlbum];
-                break;
-            case Camera:
-                [self takePhotoFromCamera];
-                break;
-                
-            default:
-                break;
-        }
-    } else {
-        switch (_alertButtonIndex) {
-            case YES:
-                [self.arrayWithChosenImages removeObjectAtIndex:self.indexForDeletePicture];
-                if ([self.arrayWithChosenImages count] == 0) {
-                    self.collectionView.backgroundColor = [UIColor whiteColor];
-                }
-                [self.collectionView reloadData];
-                break;
-            case NO:
-                break;
-            default:
-                break;
-        }
-    }
+- (void) showAlertWithMessage : (NSString*) message {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle : musErrorWithDomainUniversalSharing
+                                                    message : message
+                                                   delegate : self
+                                          cancelButtonTitle : musAppButtonTitle_OK
+                                          otherButtonTitles : nil];
+    [alert show];
 }
 
-#pragma mark - CollectionView
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.arrayWithChosenImages.count;
-}
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    MUSCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:collectionViewCellIdentifier forIndexPath:indexPath];
-    
-    if (self.arrayWithChosenImages[indexPath.row] != nil) {
-        ImageToPost *image = self.arrayWithChosenImages[indexPath.row];
-        cell.photoImageView.image = image.image;
-    } else {
-        cell.photoImageView.image = nil;
-    }
-    return  cell;
-}
-
--(void)handleLongPressGesture:(UILongPressGestureRecognizer *) gestureRecognizer {
-    if (gestureRecognizer.state != UIGestureRecognizerStateEnded) {
-        return;
-    }
-    CGPoint point = [gestureRecognizer locationInView:self.collectionView];
-    NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:point];
-    
-    if (indexPath == nil){
-        NSLog(@"couldn't find index path");
-    } else {
-        [self photoAlertDeletePicShow];
-        self.indexForDeletePicture = indexPath.row;
-    }
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(self.collectionView.frame.size.height, self.collectionView.frame.size.height);
-}
-
-#pragma mark - MUSPhotoManager
-
-- (void) selectPhotoFromAlbum {
-    if ([self.arrayWithChosenImages count] == countOfAllowedPics) {
-        [self warningNotAddMorePicsAlertShow];
-        return;
-    }
-    __weak MUSShareViewController *weakSelf = self;
-    [[MUSPhotoManager sharedManager] selectPhotoFromAlbumFromViewController: self withComplition:^(id result, NSError *error) {
-        if (!error) {
-            ImageToPost *imageToPost = [[ImageToPost alloc] init];
-            imageToPost.image = (UIImage*) result;
-            imageToPost.imageType = JPEG;
-            imageToPost.quality = 0.8f;
-            [weakSelf.arrayWithChosenImages addObject: imageToPost];
-            weakSelf.collectionView.backgroundColor = [UIColor grayColor];//just trying
-            [weakSelf.collectionView reloadData];
-        }
-    }];
-}
-
-- (void) takePhotoFromCamera {
-    if ([self.arrayWithChosenImages count] == countOfAllowedPics) {
-        [self warningNotAddMorePicsAlertShow];
-        return;
-    }
-    __weak MUSShareViewController *weakSelf = self;
-    [[MUSPhotoManager sharedManager] takePhotoFromCameraFromViewController: self withComplition:^(id result, NSError *error) {
-        if (!error) {
-            ImageToPost *imageToPost = [[ImageToPost alloc] init];
-            imageToPost.image = (UIImage*) result;
-            imageToPost.imageType = JPEG;
-            imageToPost.quality = 0.8f;
-            [weakSelf.arrayWithChosenImages addObject: imageToPost];
-            [weakSelf.collectionView reloadData];
-        } else {
-            [weakSelf showErrorAlertWithError : error];
-        }
-    }];
-}
+#pragma mark - prepareForSegue
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     MUSLocationTableViewController *vc = [MUSLocationTableViewController new];
@@ -495,13 +530,41 @@
         
         __weak MUSShareViewController *weakSelf = self;
         vc.placeComplition = ^(Place* result, NSError *error) {
-            if(!weakSelf.post) {
-                weakSelf.post = [[Post alloc] init];
+            /*
+             back place object and we get id for network
+             */
+            if (result) {
+                weakSelf.placeID = result.placeID;
+                [self.shareLocationButton setTintColor: [UIColor redColor]];
             }
-            weakSelf.post.placeID = result.placeID;
         };
     }
 }
+
+#pragma mark - MUSGaleryViewDelegate
+
+- (void)changeSharePhotoButtonColorAndShareButtonState: (BOOL) isPhotos {
+    if (!isPhotos) {
+        [self.sharePhotoButton setTintColor:[UIColor blackColor]];
+        
+        if ([self.messageTextView.text isEqualToString:kPlaceholderText]) {
+            self.shareButtonOutlet.enabled = NO;
+        }
+    } else {
+        [self.sharePhotoButton setTintColor:[UIColor redColor]];
+        self.shareButtonOutlet.enabled = YES;
+    }
+}
+
+
+
 @end
+
+
+
+
+
+
+
 
 

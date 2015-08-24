@@ -25,31 +25,30 @@ static SocialManager *model = nil;
 
 + (SocialNetwork*) currentSocialNetwork {
     SocialNetwork *currentSocialNetwork = nil;
+    
+#warning If networks array was created before, we must use it, instead of create new
     NSArray *accountsArray = [[SocialManager sharedManager] networks:@[@(Twitters), @(VKontakt), @(Facebook)]];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isLogin == %d", YES];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isLogin == %d AND isVisible == %d", YES, YES];
     NSArray *filteredArray = [accountsArray filteredArrayUsingPredicate:predicate];
     if (filteredArray.count > 0) {
         currentSocialNetwork = (SocialNetwork*) [filteredArray firstObject];
     }
+    
     return currentSocialNetwork;
 }
 
-//#warning "Add availability to choose networks and they position, means just Twitter or VK and FB"
-//#warning "Check if networks types repeads in array"
-//#warning "Replace switch in SocialNetwork class"
-//#warning "Update for on block"
 
 - (NSMutableArray*) networks :(NSArray*) arrayWithNetwork {
-    //Check if networks types repeads in array
     NSOrderedSet *orderedSet = [NSOrderedSet orderedSetWithArray:arrayWithNetwork];
     NSArray *arrayWithNetworkWithoutDuplicates = [orderedSet array];
     
-//#warning "change parameter name to avoid problems"
-//#warning "why arrayWithNetwork[idx]?"
     NSMutableArray *arrayWithNetworks = [NSMutableArray new];
     [arrayWithNetworkWithoutDuplicates enumerateObjectsUsingBlock:^(id obj, NSUInteger currentIndex, BOOL *stop) {
+        
         [arrayWithNetworks addObject:[SocialNetwork sharedManagerWithType: [arrayWithNetwork[currentIndex] integerValue]]];
-    }];    
+        
+    }];
+    
     return arrayWithNetworks;
 }
 

@@ -13,15 +13,37 @@
 
 @interface Post : NSObject
 
+/*!
+ @abstract unique post id is assigned after sending post to the social network.
+*/
 @property (nonatomic, assign) NSInteger postID;
+/*!
+ @abstract description of post.
+ */
 @property (nonatomic, strong) NSString *postDescription;
-@property (nonatomic, assign) NetworkType networkType;
+/*!
+ @abstract array of Images to post (@class ImageToPost)
+ */
 @property (nonatomic, strong) NSArray *arrayImages;
-@property (nonatomic, strong) ImageToPost *imageToPost;
-@property (nonatomic, strong) NSString *likesCount;
-@property (nonatomic, assign) CGFloat longitude;
-@property (nonatomic, assign) CGFloat latitude;
-@property (nonatomic, assign) CGFloat comentsCount;
+/*!
+ @abstract number of likes received after sending post
+ */
+@property (nonatomic, assign) NSInteger  likesCount;
+/*!
+ @abstract number of coments received after sending post
+ */
+@property (nonatomic, assign) NSInteger commentsCount;
+/*!
+ @abstract unique identifier of the user position location
+ */
 @property (nonatomic, assign) NSString *placeID;
+/*!
+ @abstract type of Social network. (like Facebook, Twitters, Vkontakte)
+ */
+@property (nonatomic, assign) NetworkType networkType;
+
+///////////////////////////////////////////////////////////////////////////////////////
+
+@property (nonatomic, strong) NSMutableArray *arrayImagesUrl;
 
 @end

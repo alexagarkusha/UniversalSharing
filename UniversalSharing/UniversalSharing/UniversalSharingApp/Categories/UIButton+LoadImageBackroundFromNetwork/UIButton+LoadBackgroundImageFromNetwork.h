@@ -12,5 +12,4 @@
 
 - (void) loadBackroundImageFromNetworkWithURL : (NSURL*) url;
 
-
 @end

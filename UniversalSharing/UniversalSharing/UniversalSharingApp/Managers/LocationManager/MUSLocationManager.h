@@ -13,7 +13,6 @@
 @interface MUSLocationManager : NSObject
 
 + (MUSLocationManager*) sharedManager;
-- (void) startTrackLocationWithComplition : (ComplitionLocation) block;
-
+- (void) startTrackLocationWithComplition : (Complition) block;
 
 @end

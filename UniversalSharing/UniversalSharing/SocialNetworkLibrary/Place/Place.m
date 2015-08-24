@@ -7,6 +7,7 @@
 //
 
 #import "Place.h"
+#import "MUSSocialNetworkLibraryConstantsForParseObjects.h"
 
 @implementation Place
 
@@ -30,49 +31,60 @@
     return place;
 }
 
+/*!
+ @abstract return an instance of the Place for facebook network.
+ @param dictionary takes dictionary from facebook network.
+ */
+
 - (Place*) createPlaceFromFB : (NSDictionary *) dictionary {
     Place *currentPlace = [[Place alloc] init];
-    currentPlace.placeID = [dictionary objectForKey: @"id"];
-    currentPlace.fullName = [dictionary objectForKey: @"name"];
-    currentPlace.placeType = [dictionary objectForKey: @"category"];
     
-    NSDictionary *locationFBDictionary = [dictionary objectForKey: @"location"];
-    currentPlace.country = [locationFBDictionary objectForKey: @"country"];
-    currentPlace.city = [locationFBDictionary objectForKey: @"city"];
+    currentPlace.placeID = [dictionary objectForKey: musFacebookParsePlace_ID];
+    currentPlace.fullName = [dictionary objectForKey: musFacebookParsePlace_Name];
+    currentPlace.placeType = [dictionary objectForKey: musFacebookParsePlace_Category];
+    
+    NSDictionary *locationFBDictionary = [dictionary objectForKey: musFacebookParsePlace_Location];
+    currentPlace.country = [locationFBDictionary objectForKey: musFacebookParsePlace_Country];
+    currentPlace.city = [locationFBDictionary objectForKey: musFacebookParsePlace_City];
     
     return currentPlace;
 }
+
+/*!
+ @abstract return an instance of the Place for vkontakte network.
+ @param dictionary takes dictionary from vkontakte network.
+ */
 
 - (Place*) createPlaceFromVK : (NSDictionary *) dictionary {
     Place *currentPlace = [[Place alloc] init];
     
-    currentPlace.placeID = [dictionary objectForKey: @"id"];
-    currentPlace.fullName = [dictionary objectForKey: @"title"];
-    currentPlace.placeType = [dictionary objectForKey: @"type"];
-    currentPlace.country = [dictionary objectForKey: @"country"];
-    currentPlace.city = [dictionary objectForKey: @"city"];
+    currentPlace.placeID = [dictionary objectForKey: musVKParsePlace_ID];
+    currentPlace.fullName = [dictionary objectForKey: musVKParsePlace_Title];
+    currentPlace.placeType = [dictionary objectForKey: musVKParsePlace_Type];
+    currentPlace.country = [dictionary objectForKey: musVKParsePlace_Country];
+    currentPlace.city = [dictionary objectForKey: musVKParsePlace_City];
     
     return currentPlace;
 }
+
+/*!
+ @abstract return an instance of the Place for twitter network.
+ @param dictionary takes dictionary from twitter network.
+ */
 
 - (Place*) createPlaceFromTwitter : (NSDictionary *) dictionary {
     Place *currentPlace = [[Place alloc] init];
     
-    currentPlace.placeID   = [dictionary objectForKey: @"id" ];
-    currentPlace.name      = [dictionary objectForKey: @"name" ];
-    currentPlace.placeType = [dictionary objectForKey: @"place_type" ];
-    currentPlace.country   = [dictionary objectForKey: @"country" ];
-    currentPlace.fullName  = [dictionary objectForKey: @"full_name" ];
+    currentPlace.placeID   = [dictionary objectForKey: musTwitterParsePlace_ID];
+    currentPlace.placeType = [dictionary objectForKey: musTwitterParsePlace_Place_Type];
+    currentPlace.country   = [dictionary objectForKey: musTwitterParsePlace_Country];
+    currentPlace.fullName  = [dictionary objectForKey: musTwitterParsePlace_Full_Name];
     
-    NSArray *containedWithinArray = [dictionary objectForKey: @"contained_within"];
+    NSArray *containedWithinArray = [dictionary objectForKey: musTwitterParsePlace_Contained_Within];
     NSDictionary *locationTwitterDictionary = [containedWithinArray firstObject];
-    currentPlace.city = [locationTwitterDictionary objectForKey: @"name"];
+    currentPlace.city = [locationTwitterDictionary objectForKey: musTwitterParsePlace_Name];
     
     return currentPlace;
 }
-
-
-
-
 
 @end

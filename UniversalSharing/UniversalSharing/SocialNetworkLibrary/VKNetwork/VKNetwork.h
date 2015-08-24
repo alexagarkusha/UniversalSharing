@@ -11,6 +11,11 @@
 #import "SocialNetwork.h"
 
 @interface VKNetwork : SocialNetwork
+
+/*!
+ @abstract return an instance of the social network in a single copy. Singleton method.
+ */
+
 + (VKNetwork*) sharedManager;
 
 @end

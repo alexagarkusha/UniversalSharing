@@ -10,31 +10,17 @@
 #import "UIImageView+RoundImage.h"
 #import "UIImageView+LoadImageFromNetwork.h"
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 @interface MUSAccountTableViewCell ()
 
 @property (weak, nonatomic) IBOutlet UILabel *loginLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *networkIconImageView;
 @property (weak, nonatomic) IBOutlet UIView *viewAccountTableCell;
-
 @end
 
 
 @implementation MUSAccountTableViewCell
 
-- (void)awakeFromNib {
-    // Initialization code
-    [self.networkIconImageView roundImageView];
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-    
-    // Configure the view for the selected state
-}
-
-- (NSString *)reuseIdentifier{
-    return [MUSAccountTableViewCell cellID];
-}
 
 + (NSString*) cellID {
     return NSStringFromClass([self class]);
@@ -45,24 +31,43 @@
     return nibArray[0];
 }
 
-- (void) configurateCellForNetwork:(SocialNetwork *)socialNetwork {    
-    if (socialNetwork.isLogin) {
+- (void)awakeFromNib {
+    self.multipleTouchEnabled = YES;
+
+    [self.networkIconImageView roundImageView];
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+}
+
+- (NSString *)reuseIdentifier{
+    return [MUSAccountTableViewCell cellID];
+}
+
+- (void) configurateCellForNetwork:(SocialNetwork *)socialNetwork {
+    
+    if (socialNetwork.isLogin && socialNetwork.isVisible) {
         __weak MUSAccountTableViewCell *weakSelf = self;
         [socialNetwork obtainInfoFromNetworkWithComplition:^(id result, NSError *error) {
             [weakSelf.networkIconImageView loadImageFromUrl:[NSURL URLWithString:socialNetwork.icon]];
             weakSelf.loginLabel.text = socialNetwork.title;
+            self.loginLabel.textColor = [UIColor blackColor];
+        }];
+    } else if(socialNetwork.isLogin && !socialNetwork.isVisible){
+        __weak MUSAccountTableViewCell *weakSelf = self;
+        [socialNetwork obtainInfoFromNetworkWithComplition:^(id result, NSError *error) {
             
+            [weakSelf.networkIconImageView  loadImageFromUrl:[NSURL URLWithString:socialNetwork.icon]];
+            weakSelf.networkIconImageView.image = [self translucentImageFromImage:self.networkIconImageView.image withAlpha:0.3f];
+            weakSelf.loginLabel.text = socialNetwork.title;
+            weakSelf.loginLabel.textColor = [[UIColor lightGrayColor]colorWithAlphaComponent:0.3f];
         }];
     }
     else {
         self.networkIconImageView.image = [UIImage imageNamed:socialNetwork.icon];
         self.loginLabel.text = socialNetwork.title;
-    }
-    
-    if (socialNetwork.isVisible) {
-        self.viewAccountTableCell.backgroundColor = [UIColor grayColor];
-    } else {
-        self.viewAccountTableCell.backgroundColor = [UIColor whiteColor];
+        self.loginLabel.textColor = [UIColor blackColor];
     }
 }
 
@@ -73,4 +78,33 @@
         socialNetwork.isVisible = NO;
     }
 }
+
+- (UIImage *)translucentImageFromImage:(UIImage *)image withAlpha:(CGFloat)alpha {
+    CGRect rect = CGRectZero;
+    rect.size = image.size;
+    UIGraphicsBeginImageContext(image.size);
+    [image drawInRect:rect blendMode:kCGBlendModeScreen alpha:alpha];
+    UIImage * translucentImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return translucentImage;
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    for (UITouch* touch in touches) {
+        if (touch.tapCount == 2)
+        {
+           // self.multipleTouchEnabled = NO;
+//                        CGPoint where = [touch locationInView:self];
+//                        NSIndexPath* ip = [self indexPathForRowAtPoint:where];
+//                        NSLog(@"double clicked index path: %@", ip);
+            
+            // do something useful with index path 'ip'
+        }
+    }
+    
+    [super touchesEnded:touches withEvent:event];
+}
 @end
+

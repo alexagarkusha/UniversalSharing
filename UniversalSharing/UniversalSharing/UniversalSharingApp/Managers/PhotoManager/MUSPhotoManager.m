@@ -10,73 +10,95 @@
 #import <CoreImage/CoreImage.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <MobileCoreServices/UTCoreTypes.h>
+#import "ConstantsApp.h"
+#import "ImageToPost.h"
+#import "UIImage+ChangeScaleImage.h"
 
 
+@interface MUSPhotoManager () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate>
 
-@interface MUSPhotoManager () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
-
-@property (copy, nonatomic)    ComplitionPhoto     copyComplition;
+@property (copy, nonatomic) Complition copyComplition;
 @property (strong, nonatomic) UIImagePickerController *imagePickerController;
+@property (strong, nonatomic) UIViewController *viewController;
 @end
 
 static MUSPhotoManager* sharedManager = nil;
+
 @implementation MUSPhotoManager
 
 //#warning "init UIImagePickerController just ones in shareManager"
 
 + (MUSPhotoManager*) sharedManager {
     static dispatch_once_t onceTaken;
-    dispatch_once (& onceTaken, ^
-                   {
-                       sharedManager = [MUSPhotoManager new];
-                       
-                   });
+    dispatch_once (& onceTaken, ^ {
+        sharedManager = [MUSPhotoManager new];
+    });
     return sharedManager;
 }
 
 - (instancetype) init {
     self = [super init];
     if (self) {
-       self.imagePickerController = [[UIImagePickerController alloc] init];
+        self.imagePickerController = [[UIImagePickerController alloc] init];
     }
     return self;
 }
-// this method is not used!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//- (UIViewController*) viewConterollerForImagePickerController {
-//    UIWindow *window=[UIApplication sharedApplication].keyWindow;
-//    UIViewController *viewController=[window rootViewController];
-//    if(viewController.presentedViewController)
-//        return viewController.presentedViewController;
-//    else
-//        return viewController;
-//}
 
-
-- (void) selectPhotoFromAlbumFromViewController : (UIViewController*) viewController withComplition: (ComplitionPhoto) block{
+- (void) photoShowFromViewController :(UIViewController*) viewController withComplition: (Complition) block {
     self.copyComplition = block;
-        _imagePickerController.delegate = self;
-    _imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    _imagePickerController.mediaTypes = @[(NSString*) kUTTypeImage];
-    [viewController presentViewController:_imagePickerController animated:YES completion:nil];
+    self.viewController = viewController;
+    [self photoAlertShow];
 }
 
-- (void) takePhotoFromCameraFromViewController : (UIViewController*) viewController withComplition: (ComplitionPhoto) block {
-    self.copyComplition = block;
-    
-    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        block (nil, [self cameraError]);
-    } else {
-        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-        picker.delegate = self;
-        picker.allowsEditing = YES;
-        picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-        [viewController presentViewController:picker animated:YES completion:nil];
+- (void) photoAlertShow {
+    UIAlertView *photoAlert = [[UIAlertView alloc]
+                               initWithTitle : musAppAlertTitle_Share_Photo
+                               message : nil
+                               delegate : self
+                               cancelButtonTitle : musAppButtonTitle_Cancel
+                               otherButtonTitles : musAppButtonTitle_Album, musAppButtonTitle_Camera, nil];
+    photoAlert.tag = 0;
+    [photoAlert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    switch (buttonIndex) {
+        case Cancel:
+            break;
+        case Album:
+            [self selectPhotoFromAlbum];
+            break;
+        case Camera:
+            [self takePhotoFromCamera];
+            break;
+            
+        default:
+            break;
     }
 }
 
-#warning "Replace strings and code to Constants"
+- (void) selectPhotoFromAlbum {
+    _imagePickerController.delegate = self ;
+    _imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    _imagePickerController.mediaTypes = @[(NSString*) kUTTypeImage];
+    [self.viewController presentViewController:_imagePickerController animated:YES completion:nil];
+}
+
+- (void) takePhotoFromCamera {
+    
+    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        self.copyComplition (nil, [self cameraError]);
+    } else {
+        _imagePickerController.delegate = self;
+        _imagePickerController.allowsEditing = YES;
+        _imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+        [self.viewController presentViewController:_imagePickerController animated:YES completion:nil];
+    }
+    
+}
+
 - (NSError*) cameraError {
-    NSError *error = [[NSError alloc] initWithDomain:@"Universal Sharing" code: 1000 userInfo:@{ NSLocalizedFailureReasonErrorKey: @"Device has no camera"}];
+    NSError *error = [[NSError alloc] initWithDomain: musAppError_With_Domain_Universal_Sharing code: musAppError_NO_Camera_Code userInfo:@{ NSLocalizedFailureReasonErrorKey: musAppError_NO_Camera}];
     return error;
 }
 
@@ -92,7 +114,12 @@ static MUSPhotoManager* sharedManager = nil;
     UIImage *image = [info objectForKey: UIImagePickerControllerOriginalImage];
     
     if (image != nil) {
-        self.copyComplition (image, nil);
+        ImageToPost *imageToPost = [[ImageToPost alloc] init];
+        UIImage *compressedImage = [UIImage scaleImage: image toSize: CGSizeMake(musAppCompressionSizePicture_By_Width, musAppCompressionSizePicture_By_Height)];
+        imageToPost.image = compressedImage;
+        imageToPost.imageType = JPEG;
+        imageToPost.quality = 1.0f;
+        self.copyComplition (imageToPost, nil);
     }
     
     [picker dismissViewControllerAnimated:YES completion:nil];

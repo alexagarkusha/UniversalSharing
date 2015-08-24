@@ -7,19 +7,38 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MUSSocialNetworkLibraryHeader.h"
+#import "MUSSocialNetworkLibraryConstants.h"
 
 @interface Place : NSObject
 
-@property (nonatomic, strong) NSString *name;
+/*!
+ @abstract full place name. Like 'The Circus hostel'
+*/
 @property (nonatomic, strong) NSString *fullName;
+/*!
+ @abstract unique identifier of the place. Like '6333547'
+ */
 @property (nonatomic, strong) NSString *placeID;
+/*!
+ @abstract name of the state. Like 'Germany'
+ */
 @property (nonatomic, strong) NSString *country;
+/*!
+ @abstract type of the place. Like 'Local business'
+ */
 @property (nonatomic, strong) NSString *placeType;
+/*!
+ @abstract name of the city. Like 'Berlin'
+ */
 @property (nonatomic, strong) NSString *city;
 
+/*!
+ @abstract return an instance of the Place.
+ @param dictionary takes dictionary from social network.
+ @param networkType takes the type of social network (like Facebook, Twitters, Vkontakte)
+ */
 
-+ (Place*) createFromDictionary: (NSDictionary*) dictionary andNetworkType :(NetworkType) networkType;
++ (Place*) createFromDictionary: (NSDictionary*) dictionary andNetworkType : (NetworkType) networkType;
 
 
 @end

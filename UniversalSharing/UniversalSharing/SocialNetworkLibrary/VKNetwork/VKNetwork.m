@@ -10,12 +10,11 @@
 #import "Location.h"
 #import "Place.h"
 #import <VKSdk.h>
-
+#import "NSError+MUSError.h"
 
 @interface VKNetwork () <VKSdkDelegate>
 @property (strong, nonatomic) UINavigationController *navigationController;
 @property (copy, nonatomic) Complition copyComplition;
-@property (copy, nonatomic) Complition copyPostComplition;
 
 @end
 
@@ -24,6 +23,8 @@ static VKNetwork *model = nil;
 //#warning "Use isLoggedIn method to check is login"
 
 @implementation VKNetwork
+
+#pragma mark Singleton Method
 
 + (VKNetwork*) sharedManager {
     static dispatch_once_t onceToken;
@@ -34,49 +35,53 @@ static VKNetwork *model = nil;
 }
 
 #pragma mark - initiation VKNetwork
+/*!
+ Initiation VKNetwork.
+*/
 
 - (instancetype) init {
     self = [super init];
-    [VKSdk initializeWithDelegate:self andAppId:kVkAppID];
+    [VKSdk initializeWithDelegate:self andAppId:musVKAppID];
     
     if (self) {
         self.networkType = VKontakt;
+        self.name = musVKName;
         if (![self isLoggedIn]) {
             [self initiationPropertiesWithoutSession];
         }
         else {
             self.isLogin = YES;
+            self.isVisible = YES;
         }
     }
     return self;
 }
 
-/*
- * Checks if somebody logged in with SDK or not
- */
+/*!
+ Checks if somebody logged in with SDK
+*/
 - (BOOL) isLoggedIn {
     return [VKSdk wakeUpSession];
 }
 
-/*
- * Initiation properties of VKNetwork without session
- */
+/*!
+ Initiation properties of VKNetwork without session
+*/
 - (void) initiationPropertiesWithoutSession {
-    self.title = kTitleVkontakte;
-    self.icon = kIconNameVkontakte;
+    self.title = musVKTitle;
+    self.icon = musVKIconName;
     self.isLogin = NO;
+    self.isVisible = YES;
 }
 
 #pragma mark - loginInNetwork
 
-/*
+/*!
  Starts authorization process. If VKapp is available in system, it will opens and requests access from user.
  Otherwise Mobile Safari will be opened for access request.
- If authorization process is SUCCESS block returned authorized user, but if no, block returned with ERROR.
- */
+*/
 
 - (void) loginWithComplition :(Complition) block {
-    self.isLogin = YES;
     self.copyComplition = block;
     if (![self isLoggedIn])
     {
@@ -86,12 +91,10 @@ static VKNetwork *model = nil;
 
 #pragma mark - logoutInNetwork
 
-/*
+/*!
  Forces logout using OAuth (with VKAuthorizeController). Removes all cookies for *.vk.com.
  Has no effect for logout in VK app
- Current user for social network become nil
- And initiation properties of VKNetwork without session
- */
+*/
 
 - (void) loginOut {
     [VKSdk forceLogout];
@@ -101,15 +104,11 @@ static VKNetwork *model = nil;
 
 #pragma mark - obtainUserFromNetwork
 
-/*
- @abstract return VKNetwork object with filling properties for logged user.
-*/
-
 - (void) obtainInfoFromNetworkWithComplition :(Complition) block {
 
     __weak VKNetwork *weakSell = self;
     
-    VKRequest * request = [[VKApi users] get:@{ VK_API_FIELDS : ALL_USER_FIELDS }];
+    VKRequest * request = [[VKApi users] get:@{ VK_API_FIELDS : musVKAllUserFields }];
     [request executeWithResultBlock:^(VKResponse * response)
      {
          weakSell.currentUser = [User createFromDictionary:(NSDictionary*)[response.json firstObject] andNetworkType:weakSell.networkType];
@@ -122,148 +121,179 @@ static VKNetwork *model = nil;
              [error.vkError.request repeat];
          }
          else {
-             NSLog(@"VK error: %@", error);
+             block (nil, [self errorVkontakte]);
          }
      }];
 }
 
 
 //#warning "Move method in constants"
-#warning "Check messages"
+//#warning "Check messages"
 
 #pragma mark - obtainArrayOfPlacesFromNetwork
 
-/*!
-@abstract return a list of objects like @class Place found by the search params.
-@params object of @class Location (current location of user)
-*/
 
-
-- (void) obtainArrayOfPlaces: (Location *) location withComplition: (ComplitionPlaces) block {
+- (void) obtainArrayOfPlaces: (Location *) location withComplition: (Complition) block {
+    self.copyComplition = block;
+    
+    if (!location.q || !location.latitude || !location.longitude || !location.distance || [location.latitude floatValue] < -90.0f || [location.latitude floatValue] > 90.0f || [location.longitude floatValue] < -180.0f  || [location.longitude floatValue] > 180.0f) {
+        
+        NSError *error = [NSError errorWithMessage: musErrorLocationProperties andCodeError: musErrorLocationPropertiesCode];
+        return block (nil, error);
+    }
     
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
-    params[kLoactionQ] = location.q;
-    params[kLoactionLatitude] = location.latitude;
-    params[kLoactionLongitude] = location.longitude;
-    params[kLoactionRadius] = [NSString stringWithFormat:@"%d", [self radiusForVKLocation: location.distance]];
     
-    VKRequest * locationRequest = [VKApi requestWithMethod : kVkMethodPlacesSearch
+        params[musVKLoactionParameter_Q] = location.q;
+        params[musVKLoactionParameter_Latitude] = location.latitude;
+        params[musVKLoactionParameter_Longitude] = location.longitude;
+        params[musVKLoactionParameter_Radius] = [NSString stringWithFormat:@"%ld",
+                                                    (long)[self radiusForVKLocation: location.distance]];
+    
+    VKRequest * locationRequest = [VKApi requestWithMethod : musVKMethodPlacesSearch
                                              andParameters : params
-                                             andHttpMethod : kHttpMethodGET];
+                                             andHttpMethod : musGET];
                            
     [locationRequest executeWithResultBlock:^(VKResponse * response)
      {
          NSDictionary *resultDictionary = (NSDictionary*) response.json;
-         NSArray *places = [resultDictionary objectForKey: kVKKeyOfPlaceDictionary];
+         NSArray *places = [resultDictionary objectForKey: musVKKeyOfPlaceDictionary];
          NSMutableArray *placesArray = [[NSMutableArray alloc] init];
          
-         for (int i = 0; i < places.count; i++) {
+         for (int i = 0; i < [places count]; i++) {
              Place *place = [Place createFromDictionary: [places objectAtIndex: i] andNetworkType:self.networkType];
              [placesArray addObject:place];
          }
          
-         if (placesArray.count != 0) {
+         if ([placesArray count] != 0) {
              block (placesArray, nil);
          }   else {
-             //// ADD ERROR /////
+             NSError *error = [NSError errorWithMessage: musErrorLocationDistance andCodeError: musErrorLocationDistanceCode];
+             block (nil, error);
          }
      } errorBlock:^(NSError * error) {
          if (error.code != VK_API_ERROR) {
              [error.vkError.request repeat];
          }
          else {
-             NSLog(@"VK error: %@", error);
+             block (nil, [self errorVkontakte]);
          }
      }];
 }
 
 /*!
-@abstract return type radius search area (1 to 4 )
-@params current distance of @class Location
+@abstract return type radius search area (DistanceType 1..4)
+@param current distance of @class Location
 */
 
 - (DistanceType) radiusForVKLocation : (NSString*) distanceString {
     NSInteger distance = [distanceString floatValue];
-    if (distance <= kVKDistanceEqual300) {
+    if (distance <= musVKDistanceEqual300) {
         return DistanceType1;
-    } else if (distance > kVKDistanceEqual300 && distance <= kVKDistanceEqual2400) {
+    } else if (distance > musVKDistanceEqual300 && distance <= musVKDistanceEqual2400) {
         return DistanceType2;
-    } else if (distance > kVKDistanceEqual2400 && distance <= kVKDistanceEqual18000) {
+    } else if (distance > musVKDistanceEqual2400 && distance <= musVKDistanceEqual18000) {
         return DistanceType3;
     } else {
         return DistanceType4;
     }
 }
 
+
 #pragma mark - sharePostToNetwork
 
-
-
 - (void) sharePost : (Post*) post withComplition : (Complition) block {
-    self.copyPostComplition = block;
-    if (post.arrayImages.count > 0) {
+    self.copyComplition = block;
+    if ([post.arrayImages count] > 0) {
         [self postImagesToVK: post];
     } else {
         [self postMessageToVK: post];
     }
 }
 
+/*!
+ @abstract upload message and user location (optional)
+ @param current post of @class Post
+ */
+
 #pragma mark - postMessageToNetwork
 
 - (void) postMessageToVK : (Post*) post {
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-                              [VKSdk getAccessToken].userId , VK_API_OWNER_ID,
-                              post.postDescription          , VK_API_MESSAGE,
-                                       nil];
-    if (post.placeID)  parameters [VK_API_PLACE_ID] = post.placeID;
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    
+        parameters [VK_API_OWNER_ID] = [VKSdk getAccessToken].userId;
+        parameters [VK_API_MESSAGE] = post.postDescription;
+        if (post.placeID) {
+            parameters [VK_API_PLACE_ID] = post.placeID;
+        }
     
     VKRequest *request = [[VKApi wall] post: parameters];
     
     [request executeWithResultBlock: ^(VKResponse *response) {
-        self.copyPostComplition (@"Post is success", nil);
+        self.copyComplition (musPostSuccess, nil);
     } errorBlock: ^(NSError *error) {
-        self.copyPostComplition (nil, error);
+        self.copyComplition (nil, [self errorVkontakte]);
     }];
     
 }
 
+/*!
+ @abstract upload image(s) with message (optional) and user location (optional)
+ @param current post of @class Post
+ */
 
-#pragma mark - postSingleImageToNetwork
-
-- (void) postImageToVK : (Post*) post {
-    __weak VKNetwork *weakSell = self;
-    
-    ImageToPost *imageToPost = [post.arrayImages firstObject];
-    
+- (void) postImagesToVK : (Post*) post {
     NSInteger userId = [self.currentUser.clientID integerValue];
-    VKRequest * request = [VKApi uploadWallPhotoRequest: imageToPost.image
-                                             parameters: [self imageForVKNetwork: imageToPost]
-                                                 userId: userId
-                                                groupId: 0];
+    NSMutableArray *requestArray = [[NSMutableArray alloc] init]; //array of requests to add pictures in the social network
     
-    [request executeWithResultBlock: ^(VKResponse *response) {
+    for (int i = 0; i < [post.arrayImages count]; i++) {
+        ImageToPost *imageToPost = [post.arrayImages objectAtIndex: i];
         
-        VKPhoto *photoInfo = [(VKPhotoArray*)response.parsedModel objectAtIndex:0];
-        NSString *photoAttachment = [NSString stringWithFormat:@"photo%@_%@", photoInfo.owner_id, photoInfo.id];
+        VKRequest * request = [VKApi uploadWallPhotoRequest: imageToPost.image
+                                                 parameters: [self imageForVKNetwork: imageToPost]
+                                                     userId: userId
+                                                    groupId: 0];
+        [requestArray addObject: request];
+    }
+    
+    VKBatchRequest *batch = [[VKBatchRequest alloc] initWithRequestsArray: requestArray];
+    
+    [batch executeWithResultBlock: ^(NSArray *responses) {
         
-        VKRequest *postRequest = [[VKApi wall] post:@{ VK_API_ATTACHMENTS : photoAttachment,
-                                                          VK_API_OWNER_ID : weakSell.currentUser.clientID,
-                                                           VK_API_MESSAGE : post.postDescription,
-                                                          VK_API_PLACE_ID : post.placeID}];
+    NSMutableArray *photosAttachments = [[NSMutableArray alloc] init];
         
-            [postRequest executeWithResultBlock: ^(VKResponse *response) {
-                NSLog(@"Result: %@", @"Posted");
-                self.copyPostComplition (@"Post is success", nil);
-            } errorBlock: ^(NSError *error) {
-                NSLog(@"Error: %@", error);
-                self.copyPostComplition (nil, error);
-            }];
+        for (VKResponse * resp in responses) {
+            VKPhoto *photoInfo = [(VKPhotoArray*)resp.parsedModel objectAtIndex:0];
+            [photosAttachments addObject:[NSString stringWithFormat:@"photo%@_%@",
+                                                            photoInfo.owner_id, photoInfo.id]];
+        }
         
+        NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+        
+            parameters [VK_API_OWNER_ID] = [VKSdk getAccessToken].userId;
+            parameters [VK_API_ATTACHMENTS] = [photosAttachments componentsJoinedByString: @","];
+            if (post.placeID) {
+                parameters [VK_API_PLACE_ID] = post.placeID;
+            }
+            if (post.postDescription) {
+                parameters [VK_API_MESSAGE] = post.postDescription;
+            }
+        
+        VKRequest *postRequest = [[VKApi wall] post: parameters];
+        [postRequest executeWithResultBlock: ^(VKResponse *response) {
+            self.copyComplition (musPostSuccess, nil);
+        } errorBlock: ^(NSError *error) {
+            self.copyComplition (nil, [self errorVkontakte]);
+        }];
     } errorBlock: ^(NSError *error) {
-        self.copyPostComplition (nil, error);
-        NSLog(@"Error: %@", error);
+        self.copyComplition (nil, [self errorVkontakte]);
     }];
 }
+
+/*!
+ @abstract settings parameters for image for uploading image into VK servers
+ @param current ImageToPost of @class ImageToPost
+ */
 
 - (VKImageParameters*) imageForVKNetwork : (ImageToPost*) imageToPost {
     switch (imageToPost.imageType) {
@@ -282,60 +312,13 @@ static VKNetwork *model = nil;
     }
 }
 
-
-- (void) postImagesToVK : (Post*) post {
-   // __weak VKNetwork *weakSell = self;
-
-    NSInteger userId = [self.currentUser.clientID integerValue];
-    NSMutableArray *requestArray = [[NSMutableArray alloc] init];
-
-    for (int i = 0; i < post.arrayImages.count; i++) {
-        ImageToPost *imageToPost = [post.arrayImages objectAtIndex: i];
-
-        VKRequest * request = [VKApi uploadWallPhotoRequest: imageToPost.image
-                                                 parameters: [self imageForVKNetwork: imageToPost]
-                                                     userId: userId
-                                                    groupId: 0];
-        [requestArray addObject: request];
-    }
-    
-    VKBatchRequest *batch = [[VKBatchRequest alloc] initWithRequestsArray: requestArray];
-    
-    [batch executeWithResultBlock: ^(NSArray *responses) {
-
-        NSLog(@"Photos: %@", responses);
-            NSMutableArray *photosAttachments = [NSMutableArray new];
-        
-            for (VKResponse * resp in responses) {
-                VKPhoto *photoInfo = [(VKPhotoArray*)resp.parsedModel objectAtIndex:0];
-                
-                [photosAttachments addObject:[NSString stringWithFormat:@"photo%@_%@", photoInfo.owner_id, photoInfo.id]];
-            }
-        
-        
-        
-        NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-                                           [VKSdk getAccessToken].userId , VK_API_OWNER_ID,
-                      [photosAttachments componentsJoinedByString: @","] , VK_API_ATTACHMENTS,
-                                           nil];
-        if (post.placeID)  parameters [VK_API_PLACE_ID] = post.placeID;
-        if (post.placeID)  parameters [VK_API_MESSAGE] = post.postDescription;
-
-        VKRequest *postRequest = [[VKApi wall] post: parameters];
-            [postRequest executeWithResultBlock: ^(VKResponse *response) {
-                    NSLog(@"Result: %@", response);
-                } errorBlock: ^(NSError *error) {
-                    NSLog(@"Error: %@", error);
-                }];
-        } errorBlock: ^(NSError *error) {
-            NSLog(@"Error: %@", error);
-    }];
-}
-
+/*!
+ @abstract current root View Controller
+*/
 
 - (UIViewController*) vcForLoginVK {
-    UIWindow *window=[UIApplication sharedApplication].keyWindow;
-    UIViewController *vc=[window rootViewController];
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    UIViewController *vc = [window rootViewController];
     if(vc.presentedViewController)
         return vc.presentedViewController;
     else
@@ -344,15 +327,13 @@ static VKNetwork *model = nil;
 
 #pragma mark - VK Delegate
 
-#warning "Check error"
-
 - (void)vkSdkTokenHasExpired:(VKAccessToken *)expiredToken
 {
     // [self authorize:nil];
 }
 
 - (void)vkSdkReceivedNewToken:(VKAccessToken *)newToken
-{
+{    self.isLogin = YES;
     [self obtainInfoFromNetworkWithComplition:self.copyComplition];
 }
 
@@ -366,11 +347,12 @@ static VKNetwork *model = nil;
     //[self obtainDataFromVK];
 }
 
-#warning "Check error"
-
 - (void)vkSdkUserDeniedAccess:(VKError *)authorizationError
 {
-    NSLog(@"Access denied");
+    self.isLogin = NO;
+    self.isVisible = YES;
+    NSError *error = [NSError errorWithMessage: musErrorAccesDenied andCodeError: musErrorAccesDeniedCode];
+    self.copyComplition (nil, error);
 }
 
 
@@ -384,4 +366,14 @@ static VKNetwork *model = nil;
     VKCaptchaViewController *vc = [VKCaptchaViewController captchaControllerWithError:captchaError];
     [vc presentIn:self.navigationController.topViewController];
 }
+
+/*!
+ @abstract returned Vkontakte network error
+ */
+- (NSError*) errorVkontakte {
+    return [NSError errorWithMessage: musFacebookError andCodeError: musFacebookErrorCode];
+}
+
+
+
 @end

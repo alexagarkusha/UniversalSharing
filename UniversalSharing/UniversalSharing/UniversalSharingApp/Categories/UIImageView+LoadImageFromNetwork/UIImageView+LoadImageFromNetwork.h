@@ -15,5 +15,4 @@
 - (void) loadImageFromUrl : (NSURL*) url;
 
 
-
 @end
