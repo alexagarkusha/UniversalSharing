@@ -92,7 +92,7 @@
 - (void) initiationArrayOfActiveSocialNetwork {
     self.arrayOfActiveSocialNetwork = [[NSMutableArray alloc] init];
     [self.arrayOfActiveSocialNetwork addObject: @"All social networks"];
-    self.arrayOfUsers = [[DataBaseManager sharedManager] obtainAllRowsFromTableNamedUsers];
+    self.arrayOfUsers = [[DataBaseManager sharedManager] obtainAllUsers];
     NSMutableArray *arrayWithNetworks = [[NSMutableArray alloc] init];
     for (int i = 0; i < self.arrayOfUsers.count; i++) {
         User *currentUser = [self.arrayOfUsers objectAtIndex: i];
