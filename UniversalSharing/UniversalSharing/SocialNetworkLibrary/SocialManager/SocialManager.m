@@ -10,7 +10,7 @@
 #import "MUSSocialNetworkLibraryConstants.h"
 
 @interface SocialManager()
-@property (assign, nonatomic) NetworkType networkType;
+//@property (assign, nonatomic) NetworkType networkType;
 @property (strong, nonatomic) NSArray *accountsArray;
 @end
 static SocialManager *model = nil;

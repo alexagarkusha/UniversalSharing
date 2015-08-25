@@ -52,7 +52,7 @@
     [self initiationPostDescriptionArrayOfPicturesAndPostLocation];
     
     
-    self.currentUser = [[DataBaseManager sharedManager] obtainRowsFromTableNamedUsersWithNetworkType: self.currentSocialNetwork.networkType];
+    self.currentUser = [[DataBaseManager sharedManager] obtainUsersWithNetworkType: self.currentSocialNetwork.networkType];
     
 
     self.tableViewFrame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height);
@@ -170,7 +170,7 @@
 }
 
 - (void) updatePostInDataBase {
-    [[DataBaseManager sharedManager] editPostByPrimeryId: self.currentPost];
+    [[DataBaseManager sharedManager] editPost: self.currentPost];
 }
 
 

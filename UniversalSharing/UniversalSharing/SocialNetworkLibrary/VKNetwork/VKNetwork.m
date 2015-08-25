@@ -55,11 +55,10 @@ static VKNetwork *model = nil;
         else {
             self.isLogin = YES;
             
-            self.currentUser = [[DataBaseManager sharedManager]obtainRowsFromTableNamedUsersWithNetworkType:self.networkType];
+            self.currentUser = [[DataBaseManager sharedManager]obtainUsersWithNetworkType:self.networkType];
             self.icon = self.currentUser.photoURL;
             self.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
             self.isVisible = self.currentUser.isVisible;
-            /////////////////////////////////////////////////////////
             
             if ([self obtainCurrentConnection]){
                 
@@ -68,7 +67,7 @@ static VKNetwork *model = nil;
                 [self obtainInfoFromNetworkWithComplition:^(SocialNetwork* result, NSError *error) {
                     
                     [[NSFileManager defaultManager] removeItemAtPath: [deleteImageFromFolder obtainPathToDocumentsFolder:deleteImageFromFolder] error: nil];
-                    [[DataBaseManager sharedManager] editUserByClientIdAndNetworkType:result.currentUser];
+                    [[DataBaseManager sharedManager] editUser:result.currentUser];
                 }];
             }
         }

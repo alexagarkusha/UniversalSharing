@@ -64,7 +64,7 @@
     if (self.currentUser.isVisible != isVisible && self.currentUser) {
         
         self.currentUser.isVisible = isVisible;
-        [[DataBaseManager sharedManager] updateUserIsVisible:self.currentUser];
+        [[DataBaseManager sharedManager] editUser:self.currentUser];
     }
     
 }

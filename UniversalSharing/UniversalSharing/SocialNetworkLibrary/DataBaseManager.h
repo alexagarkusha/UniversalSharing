@@ -12,38 +12,29 @@
 #import "Post.h"
 #import <sqlite3.h>
 
-#warning "why database in h file?"
-
 @interface DataBaseManager : NSObject 
 
 + (DataBaseManager*)sharedManager;
 
 - (void)insertIntoTable:(id) object;
-
-#warning "Some methods gets objects (User or Post), another just ID"
-
-//#warning "Change methods name. F.ex. obtainAllUsers, obtainAllPosts, etc"
-
+//==
 - (NSMutableArray*)obtainAllUsers;
 - (NSMutableArray*)obtainAllPosts;
 - (NSMutableArray*)obtainAllPostsWithUserId :(NSString*) userId;
-
 - (NSArray*)obtainPostsWithReason :(ReasonType) reason andNetworkType :(NetworkType) networkType;
-
-- (User*)obtainRowsFromTableNamedUsersWithNetworkType :(NSInteger) networkType;
-
-#warning "Primary, not Primery"
+- (User*)obtainUsersWithNetworkType :(NSInteger) networkType;
+//===
+- (void)editPost :(Post*) post;
+- (void)editUser :(User*) user;
+//===
 - (void)deletePostByUserId :(NSString*) userId;
-- (void)deletePostByPrimeryId :(NSInteger) primeryId;
-- (void)editPostByPrimeryId :(Post*) post;
-
-- (void)deleteUserByPrimeryId :(NSInteger) primeryId;
-
-#warning "Incorrect name and getting parameter. Should be editUser:"
-- (void)editUserByClientIdAndNetworkType :(User*) user;
-#warning "Is it necessary have 2 methods for edit user?"
-- (void) updateUserIsVisible : (User*) user;
-
 - (void)deleteUserByClientId :(NSString*) clientId;
+
+
+// maybe come in handy when something would be changed
+
+//- (void)deletePostByPrimeryId :(NSInteger) primeryId;
+//- (void) updateUserIsVisible : (User*) user;
+//- (void)deleteUserByPrimeryId :(NSInteger) primeryId;
 
 @end

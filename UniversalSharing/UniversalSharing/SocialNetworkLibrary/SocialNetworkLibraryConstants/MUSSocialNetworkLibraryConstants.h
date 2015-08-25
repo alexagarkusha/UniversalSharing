@@ -148,6 +148,10 @@ FOUNDATION_EXPORT NSInteger const musErrorAccesDeniedCode;
 FOUNDATION_EXPORT NSString *const musErrorConnection;
 FOUNDATION_EXPORT NSInteger const musErrorConnectionCode;
 
+#pragma mark DataBase Constants
+
+FOUNDATION_EXPORT NSString *const nameDataBase;
+
 
 
 

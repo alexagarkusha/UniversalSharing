@@ -40,8 +40,7 @@ static DataBaseManager *databaseManager;
 - (NSString *) filePath {
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentDirectory=[paths objectAtIndex:0];
-#warning "Replace DB name im constants"
-    return [documentDirectory stringByAppendingPathComponent:@"UniversalSharing.sql"];
+    return [documentDirectory stringByAppendingPathComponent: nameDataBase];
 }
 
 -(void) createSqliteTables {
@@ -244,12 +243,12 @@ static DataBaseManager *databaseManager;
     
     NSMutableArray *arrayWithPosts = [NSMutableArray new];
     NSString *requestString = nil;
-    if (reason == AllReasons) {
-        requestString=[NSString stringWithFormat:@"SELECT * FROM %@ WHERE networkType=\"%ld\"",@"Posts",(long)networkType];
-    } else if(networkType == AllNetworks){
-        requestString = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE reason=\"%ld\"",@"Posts",(long)reason];
-    } else if(networkType == AllNetworks && reason == AllReasons){
+     if(networkType == AllNetworks && reason == AllReasons){
         requestString = [NSString stringWithFormat:@"SELECT * FROM %@",@"Posts"];
+    } else if (reason == AllNetworks) {
+        requestString=[NSString stringWithFormat:@"SELECT * FROM %@ WHERE networkType=\"%ld\"",@"Posts",(long)networkType];
+    } else if(networkType == AllReasons){
+        requestString = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE reason=\"%ld\"",@"Posts",(long)reason];
     }else {
         requestString=[NSString stringWithFormat:@"SELECT * FROM %@ WHERE reason=\"%ld\" AND networkType=\"%ld\"",@"Posts",(long)reason,(long)networkType];
     }
@@ -284,7 +283,7 @@ static DataBaseManager *databaseManager;
     return arrayWithPosts;
 }
 
-- (User*)obtainRowsFromTableNamedUsersWithNetworkType :(NSInteger) networkType {
+- (User*)obtainUsersWithNetworkType :(NSInteger) networkType {
     
     NSString *qsql = [NSString stringWithFormat:@"SELECT * FROM Users WHERE networkType = %ld", (long)networkType];
     sqlite3_stmt *statement = nil;
@@ -327,24 +326,24 @@ static DataBaseManager *databaseManager;
     sqlite3_finalize(statement);
 }
 
-- (void)deletePostByPrimeryId :(NSInteger) primeryId {
-    
-    sqlite3_stmt *statement = nil;
-    NSString *deleteSQL = [NSString stringWithFormat:@"DELETE from Posts WHERE userId = \"%ld\"",(long)primeryId];
-    
-    const char *delete_stmt = [deleteSQL UTF8String];
-    
-    if( sqlite3_prepare_v2(_database, delete_stmt, -1, &statement, NULL ) == SQLITE_OK){
-        NSLog(@" the Post is deleted ");
-    }
-    if (sqlite3_step(statement) != SQLITE_DONE){
-        NSLog(@"Insert failed: %s", sqlite3_errmsg(_database));
-        NSAssert(0, @"Error delete from table");
-    }
-    sqlite3_finalize(statement);
-}
+//- (void)deletePostByPrimeryId :(NSInteger) primeryId {
+//    
+//    sqlite3_stmt *statement = nil;
+//    NSString *deleteSQL = [NSString stringWithFormat:@"DELETE from Posts WHERE userId = \"%ld\"",(long)primeryId];
+//    
+//    const char *delete_stmt = [deleteSQL UTF8String];
+//    
+//    if( sqlite3_prepare_v2(_database, delete_stmt, -1, &statement, NULL ) == SQLITE_OK){
+//        NSLog(@" the Post is deleted ");
+//    }
+//    if (sqlite3_step(statement) != SQLITE_DONE){
+//        NSLog(@"Insert failed: %s", sqlite3_errmsg(_database));
+//        NSAssert(0, @"Error delete from table");
+//    }
+//    sqlite3_finalize(statement);
+//}
 
-- (void)editPostByPrimeryId :(Post*) post {
+- (void)editPost :(Post*) post {
     NSString *url = @"";//go to  method
     for (int i = 0; i < post.arrayImagesUrl.count; i++) {
         url = [url stringByAppendingString:post.arrayImagesUrl[i]];
@@ -372,27 +371,27 @@ static DataBaseManager *databaseManager;
     sqlite3_finalize(selectStmt);
 }
 
-- (void) updateUserIsVisible : (User*) user {
-    
-    NSString *stringUsersForUpdate = [NSString stringWithFormat:[self createStringUsersForUpdateIsVisible], user.isVisible, user.networkType, user.clientID];
-    
-    const char *update_stmt = [stringUsersForUpdate UTF8String];
-    sqlite3_stmt *selectStmt;
-    
-    if(sqlite3_prepare_v2(_database, update_stmt, -1, &selectStmt, nil) == SQLITE_OK)
-    {
-        NSLog(@"the user is updated");
-    }
-    
-    if(sqlite3_step(selectStmt) != SQLITE_DONE){
-        NSLog(@"Update failed: %s", sqlite3_errmsg(_database));
-        NSAssert(0, @"Error upadating table");
-    }
-    sqlite3_finalize(selectStmt);
-    
-}
+//- (void) updateUserIsVisible : (User*) user {
+//    
+//    NSString *stringUsersForUpdate = [NSString stringWithFormat:[self createStringUsersForUpdateIsVisible], user.isVisible, user.networkType, user.clientID];
+//    
+//    const char *update_stmt = [stringUsersForUpdate UTF8String];
+//    sqlite3_stmt *selectStmt;
+//    
+//    if(sqlite3_prepare_v2(_database, update_stmt, -1, &selectStmt, nil) == SQLITE_OK)
+//    {
+//        NSLog(@"the user is updated");
+//    }
+//    
+//    if(sqlite3_step(selectStmt) != SQLITE_DONE){
+//        NSLog(@"Update failed: %s", sqlite3_errmsg(_database));
+//        NSAssert(0, @"Error upadating table");
+//    }
+//    sqlite3_finalize(selectStmt);
+//    
+//}
 
-- (void)editUserByClientIdAndNetworkType :(User*) user {
+- (void)editUser :(User*) user {
     NSString *stringUsersForUpdate = [NSString stringWithFormat:[self createStringUsersForUpdate], user.username, user.firstName, user.lastName, user.dateOfBirth, user.city, user.networkType, user.clientID, user.photoURL, user.isVisible, user.isLogin, user.networkType, user.clientID];
     
     const char *update_stmt = [stringUsersForUpdate UTF8String];
@@ -410,23 +409,23 @@ static DataBaseManager *databaseManager;
     sqlite3_finalize(selectStmt);
 }
 
-- (void)deleteUserByPrimeryId :(NSInteger) primeryId {
-    
-    sqlite3_stmt *statement = nil;
-    NSString *deleteSQL = [NSString stringWithFormat:@"DELETE from Users WHERE id=\"%ld\"",(long)primeryId];
-    
-    const char *delete_stmt = [deleteSQL UTF8String];
-    
-    if( sqlite3_prepare_v2(_database, delete_stmt, -1, &statement, NULL ) == SQLITE_OK){
-        NSLog(@" the User is deleted ");
-    }
-    if (sqlite3_step(statement) != SQLITE_DONE){
-        NSLog(@"delete failed: %s", sqlite3_errmsg(_database));
-        NSAssert(0, @"Error delete from table");
-    }
-    [self deletePostByPrimeryId:primeryId];
-    sqlite3_finalize(statement);
-}
+//- (void)deleteUserByPrimeryId :(NSInteger) primeryId {
+//    
+//    sqlite3_stmt *statement = nil;
+//    NSString *deleteSQL = [NSString stringWithFormat:@"DELETE from Users WHERE id=\"%ld\"",(long)primeryId];
+//    
+//    const char *delete_stmt = [deleteSQL UTF8String];
+//    
+//    if( sqlite3_prepare_v2(_database, delete_stmt, -1, &statement, NULL ) == SQLITE_OK){
+//        NSLog(@" the User is deleted ");
+//    }
+//    if (sqlite3_step(statement) != SQLITE_DONE){
+//        NSLog(@"delete failed: %s", sqlite3_errmsg(_database));
+//        NSAssert(0, @"Error delete from table");
+//    }
+//    [self deletePostByPrimeryId:primeryId];
+//    sqlite3_finalize(statement);
+//}
 
 - (void)deleteUserByClientId :(NSString*) clientId {
     
@@ -446,12 +445,12 @@ static DataBaseManager *databaseManager;
     sqlite3_finalize(statement);
 }
 
-- (NSString *) createStringUsersForUpdateIsVisible {
-    NSString *stringUsersForUpdate =  @"UPDATE Users set ";
-    stringUsersForUpdate = [stringUsersForUpdate stringByAppendingString:@"isVisible = \"%d\" "];
-    stringUsersForUpdate = [stringUsersForUpdate stringByAppendingString:@"WHERE networkType = \"%d\" AND clientID = \"%@\""];
-    return stringUsersForUpdate;
-}
+//- (NSString *) createStringUsersForUpdateIsVisible {
+//    NSString *stringUsersForUpdate =  @"UPDATE Users set ";
+//    stringUsersForUpdate = [stringUsersForUpdate stringByAppendingString:@"isVisible = \"%d\" "];
+//    stringUsersForUpdate = [stringUsersForUpdate stringByAppendingString:@"WHERE networkType = \"%d\" AND clientID = \"%@\""];
+//    return stringUsersForUpdate;
+//}
 
 - (NSString *) createStringUsersForUpdate {
     NSString *stringUsersForUpdate = @"UPDATE Users set ";
