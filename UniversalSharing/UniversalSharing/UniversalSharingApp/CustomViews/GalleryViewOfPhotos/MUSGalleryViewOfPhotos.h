@@ -23,6 +23,6 @@
 @property (strong, nonatomic) IBOutlet UIView *view;
 
 - (void) isVisiblePageControl : (BOOL) isVisible;
-
+- (void) scrollCollectionViewToLastPhoto;
 
 @end

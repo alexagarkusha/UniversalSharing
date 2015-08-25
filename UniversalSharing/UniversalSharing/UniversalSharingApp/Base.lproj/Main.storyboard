@@ -9,7 +9,7 @@
         <!--Posts-->
         <scene sceneID="hNz-n2-bh7">
             <objects>
-                <viewController id="9pv-A4-QxB" customClass="MUSPostsViewController" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="9pv-A4-QxB" customClass="MUSPostsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ia1-K6-d13"/>
                         <viewControllerLayoutGuide type="bottom" id="4ug-Mw-9AY"/>
@@ -32,7 +32,7 @@
         <!--Detail Post View Controller-->
         <scene sceneID="H6A-xt-P5i">
             <objects>
-                <viewController id="rW8-Fp-nEm" customClass="MUSDetailPostViewController" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="rW8-Fp-nEm" customClass="MUSDetailPostViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="yYX-b1-i7w"/>
                         <viewControllerLayoutGuide type="bottom" id="arS-Kd-ubt"/>
