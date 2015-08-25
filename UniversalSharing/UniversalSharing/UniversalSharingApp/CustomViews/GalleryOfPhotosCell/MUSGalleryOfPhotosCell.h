@@ -19,7 +19,6 @@
 
 @interface MUSGalleryOfPhotosCell : UITableViewCell
 @property (nonatomic, assign) id <MUSGalleryOfPhotosCellDelegate> delegate;
-@property (nonatomic, strong) User *currentUser;
 @property (nonatomic, assign) BOOL isEditableCell;
 
 
@@ -27,7 +26,7 @@
 + (instancetype) galleryOfPhotosCell;
 + (CGFloat) heightForGalleryOfPhotosCell : (NSInteger) countOfImages;
 
-- (void) configurationGalleryOfPhotosCellByArrayOfImages: (NSMutableArray*) arrayOfImages andDateCreate : (NSString*) postDateCreate andUser : (User*) user;
 
+- (void) configurationGalleryOfPhotosCellByArrayOfImages: (NSMutableArray*) arrayOfImages andDateCreatePost:(NSString *)postDateCreate withReasonOfPost : (ReasonType) reasonOfPost andWithSocialNetworkIconName:(NSString *)socialNetworkIconName andUser: (User*)user;
 
 @end

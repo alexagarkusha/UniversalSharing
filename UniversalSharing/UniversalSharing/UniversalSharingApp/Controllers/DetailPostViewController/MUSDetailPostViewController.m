@@ -17,10 +17,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "DataBaseManager.h"
 
-#import "ReachabilityManager.h" ///////////// REMOVE THIS after addition to the SOCIAL NETWORK LIBRARY ////////////
-
-
-@interface MUSDetailPostViewController () <UITableViewDataSource, UITableViewDelegate, MUSPostDescriptionCellDelegate, MUSGalleryOfPhotosCellDelegate, MUSPostLocationCellDelegate,  UIActionSheetDelegate>
+@interface MUSDetailPostViewController () <UITableViewDataSource, UITableViewDelegate, MUSPostDescriptionCellDelegate, MUSGalleryOfPhotosCellDelegate, MUSPostLocationCellDelegate,  UIActionSheetDelegate, UIAlertViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, assign) DetailPostVC_CellType detailPostVC_CellType;
@@ -101,8 +98,13 @@
 #pragma mark initiation UINavigationBar
 
 - (void) initiationNavigationBar {
-    UIBarButtonItem *actionButton = [[UIBarButtonItem alloc] initWithTitle : @"Action" style:2 target:self action: @selector(showActionSheet)];
-    self.navigationItem.rightBarButtonItem = actionButton;
+    ReasonType currentReasonType = self.currentPost.reason;
+    if (currentReasonType == Offline || currentReasonType == ErrorConnection) {
+        UIBarButtonItem *actionButton = [[UIBarButtonItem alloc] initWithTitle : @"Action" style:2 target:self action: @selector(showActionSheet)];
+        self.navigationItem.rightBarButtonItem = actionButton;
+    }
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:2 target:self action: @selector(backToThePostsViewController)];
+    self.navigationItem.leftBarButtonItem = backButton;
 }
 
 #pragma mark initiation CurrentSocialNetwork
@@ -120,7 +122,7 @@
         [self.arrayOfUsersPictures addObject: imageToPost.image];
     }
     self.postDescription = self.currentPost.postDescription;
-    //self.currentLocationOfPost = CLLocationCoordinate2DMake(<#CLLocationDegrees latitude#>, <#CLLocationDegrees longitude#>)
+    self.currentLocationOfPost = CLLocationCoordinate2DMake([self.currentPost.latitude floatValue], [self.currentPost.longitude floatValue]);
 }
 
 #pragma mark UIActionSheet
@@ -141,7 +143,7 @@
     if ( buttonIndex != 0 ) {
         if (buttonIndex == 1) {
             NSLog(@"POST"); // SEND POST METHOD;
-            [self sendPost];
+            [self sentPost];
         } else {
             //NSLog(@"EDIT");
             self.isEditableTableView = YES;
@@ -150,12 +152,45 @@
     }
 }
 
+- (void) updatePost {
+    self.currentPost.postDescription = self.postDescription;
+    self.currentPost.placeID = self.placeID;
+    //self.currentPost.placeName = self.placeName;
+    self.currentPost.latitude = [NSString stringWithFormat: @"%f", self.currentLocationOfPost.latitude];
+    self.currentPost.longitude = [NSString stringWithFormat: @"%f", self.currentLocationOfPost.latitude];
+    NSMutableArray *arrayOfImagesToPost = [[NSMutableArray alloc] init];
+    for (int i = 0; i < arrayOfImagesToPost.count; i++) {
+        ImageToPost *imageToPost = [[ImageToPost alloc] init];
+        imageToPost.image = [arrayOfImagesToPost objectAtIndex: i];
+        imageToPost.quality = 0.8f;
+        imageToPost.imageType = JPEG;
+        [arrayOfImagesToPost addObject: imageToPost];
+    }
+    self.currentPost.arrayImages = [NSArray arrayWithArray : arrayOfImagesToPost];
+}
+
+- (void) updatePostInDataBase {
+    [[DataBaseManager sharedManager] editPostByPrimeryId: self.currentPost];
+}
 
 
-- (void) sendPost {
+- (void) sentPost {
+    // 1) Обновить пост
+    // 2) Есть ли проверка на создан такой пост уже или нет
+    // 3) Оправка поста и обновление должны происходить только в библиотеке
     NSLog(@"Send Post");
 }
 
+#pragma mark BackToThePostsViewController
+
+- (void) backToThePostsViewController {
+    // back to the Posts ViewController. If user did some changes in post - show alert. And then update post.
+    if (self.isEditableTableView) {
+        [self showUpdateAlert];
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
 
 #pragma mark - UITableViewDataSource
 
@@ -174,7 +209,13 @@
             }
             cell.delegate = self;
             cell.isEditableCell = self.isEditableTableView;
-            [cell configurationGalleryOfPhotosCellByArrayOfImages:self.arrayOfUsersPictures andDateCreate: self.currentPost.dateCreate andUser: self.currentUser];
+            
+            [cell configurationGalleryOfPhotosCellByArrayOfImages : self.arrayOfUsersPictures
+                                                andDateCreatePost : self.currentPost.dateCreate
+                                                 withReasonOfPost : self.currentPost.reason
+                                     andWithSocialNetworkIconName : self.currentSocialNetwork.icon
+                                                          andUser : self.currentUser];
+     
             [cell needsUpdateConstraints];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
@@ -332,7 +373,7 @@
     CGRect initialFrame = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     CGRect convertedFrame = [self.view convertRect:initialFrame fromView:nil];
     CGRect tvFrame = _tableView.frame;
-    tvFrame.size.height = convertedFrame.origin.y - self.tabBarController.tabBar.frame.size.height;
+    tvFrame.size.height = convertedFrame.origin.y /*- self.tabBarController.tabBar.frame.size.height*/;
     _tableView.frame = tvFrame;
     
 }
@@ -380,6 +421,28 @@
     [alert show];
 }
 
+- (void) showUpdateAlert  {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle : musErrorWithDomainUniversalSharing
+                                                    message : musAppDetailPostVC_UpdatePostAlert
+                                                   delegate : self
+                                          cancelButtonTitle : musAppButtonTitle_Cancel
+                                          otherButtonTitles : musAppButtonTitle_OK, nil];
+    [alert show];
+}
 
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    switch (buttonIndex) {
+        case YES:
+            [self updatePost];
+            [self updatePostInDataBase];
+            [self.navigationController popViewControllerAnimated:YES];
+            break;
+        default:
+            [self.navigationController popViewControllerAnimated:YES];
+            break;
+    }
+}
 
 @end

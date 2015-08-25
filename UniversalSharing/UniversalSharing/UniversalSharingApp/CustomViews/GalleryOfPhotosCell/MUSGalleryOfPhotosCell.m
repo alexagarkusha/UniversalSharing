@@ -9,10 +9,11 @@
 #import "MUSGalleryOfPhotosCell.h"
 #import "MUSCollectionViewCell.h"
 #import "ConstantsApp.h"
-#import "UIImageView+LoadImageFromNetwork.h"
+#import "UIImageView+MUSLoadImageFromDataBase.h"
 #import "UIButton+MUSEditableButton.h"
 #import "MUSPhotoManager.h"
 #import "MUSGalleryViewOfPhotos.h"
+#import "UILabel+CornerRadiusLabel.h"
 
 @interface MUSGalleryOfPhotosCell () <MUSGalleryViewOfPhotosDelegate>
 
@@ -20,18 +21,14 @@
 @property (weak, nonatomic) IBOutlet UILabel *dateOfPostLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *userPhotoImageView;
 @property (weak, nonatomic) IBOutlet UILabel *reasonOfPostLabel;
-
-@property (strong, nonatomic) NSString *postDateCreate;
-@property (strong, nonatomic)  NSMutableArray *arrayWithImages;
-
 @property (weak, nonatomic) IBOutlet UIButton *addPhotoButtonOutlet;
-@property (assign, nonatomic) BOOL isEditableGallery;
 @property (weak, nonatomic) IBOutlet MUSGalleryViewOfPhotos *galleryViewOfPhotos;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *addButtonButtomConstraint;
 
-//@property (assign, nonatomic) CGFloat heightOfRow;
-
-//@property (strong, nonatomic) MUSGalleryViewOfPhotos *galleryViewOfPhotos;
+@property (strong, nonatomic)  NSMutableArray *arrayWithImages;
+@property (assign, nonatomic) BOOL isEditableGallery;
+@property (strong, nonatomic) User *currentUser;
+@property (assign, nonatomic) ReasonType reasonType;
 
 - (IBAction)addPhotoTouch:(id)sender;
 
@@ -73,16 +70,19 @@
     }
 }
 
-- (void) configurationGalleryOfPhotosCellByArrayOfImages: (NSMutableArray*) arrayOfImages andDateCreate : (NSString*) postDateCreate andUser : (User*) user {
+
+- (void) configurationGalleryOfPhotosCellByArrayOfImages: (NSMutableArray*) arrayOfImages andDateCreatePost:(NSString *)postDateCreate withReasonOfPost : (ReasonType) reasonOfPost andWithSocialNetworkIconName:(NSString *)socialNetworkIconName andUser: (User*)user {
     [self checkGalleryOfPhotosStatus];
-    self.postDateCreate = postDateCreate;
-    
     self.currentUser = user;
+    self.reasonType = reasonOfPost;
     self.arrayWithImages = [NSMutableArray arrayWithArray: arrayOfImages];
     
     [self initiationAddButton];
     [self initiationGalleryViewOfPhotos];
-    [self initiationGalleryOfPhotosCell];
+    [self initiationUserNameLabel: user];
+    [self initiationUserDateOfPostLabel: postDateCreate];
+    [self initiationUserPhotoImageView: socialNetworkIconName];
+    [self initiationReasonOfPostLabelColor];
 }
 
 #pragma mark initiation HeightOfRow
@@ -91,7 +91,7 @@
     if (self.arrayWithImages.count > 0) {
         self.addButtonButtomConstraint.constant = 50;
     } else {
-        self.addButtonButtomConstraint.constant = 15;
+        self.addButtonButtomConstraint.constant = -4;
     }
 }
 
@@ -114,9 +114,9 @@
         [self.galleryViewOfPhotos.collectionView reloadData];
 }
 
-#pragma mark initiation GalleryOfPhotosCell 
+#pragma mark initiation UserNameLabel
 
-- (void) initiationGalleryOfPhotosCell {
+- (void) initiationUserNameLabel : (User*) user {
     if (self.arrayWithImages.count > 0) {
         self.usernameLabel.textColor = [UIColor whiteColor];
         self.dateOfPostLabel.textColor = [UIColor whiteColor];
@@ -126,12 +126,45 @@
     }
     
     self.usernameLabel.text = [NSString stringWithFormat: @"%@ %@", self.currentUser.lastName, self.currentUser.firstName];
-    //self.usernameLabel.text = self.currentUser.username;
-    self.dateOfPostLabel.text = [self timeInDoubleFormatte: [self.postDateCreate integerValue]];
-    
-    [self.userPhotoImageView loadImageFromUrl: [NSURL URLWithString: self.currentUser.photoURL]];
     [self.usernameLabel sizeToFit];
+}
+
+#pragma mark initiation UserDateOfPostLabel
+
+- (void) initiationUserDateOfPostLabel : (NSString*) dateOfPostCreate {
+    
+    self.dateOfPostLabel.text = [self timeInDoubleFormatte: [dateOfPostCreate integerValue]];
     [self.dateOfPostLabel sizeToFit];
+}
+
+#pragma mark initiation UserPhotoImageView
+
+- (void) initiationUserPhotoImageView : (NSString*) socialNetworkIconName {
+    [self.userPhotoImageView loadImageFromDataBase: socialNetworkIconName];
+}
+
+#pragma mark initiation ReasonOfPostLabel
+
+- (void) initiationReasonOfPostLabelColor {
+    [self.reasonOfPostLabel cornerRadius: CGRectGetHeight(self.reasonOfPostLabel.frame) / 2];
+    self.reasonOfPostLabel.backgroundColor = [self reasonColorForPost : self.reasonType];
+}
+
+- (UIColor*) reasonColorForPost : (ReasonType) currentReasonType {
+    switch (currentReasonType) {
+        case Connect:
+            return [UIColor greenColor];
+            break;
+        case ErrorConnection:
+            return [UIColor orangeColor];
+            break;
+        case Offline:
+            return [UIColor redColor];
+            break;
+        default:
+            break;
+    }
+    return nil;
 }
 
 

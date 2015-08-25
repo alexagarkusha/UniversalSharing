@@ -32,11 +32,11 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7hm-f2-P8D">
-                        <rect key="frame" x="272" y="55" width="40" height="40"/>
+                        <rect key="frame" x="272" y="55" width="35" height="35"/>
                         <color key="backgroundColor" red="1" green="0.98607067339999999" blue="0.94532415430000005" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="40" id="OXy-nJ-f3i"/>
-                            <constraint firstAttribute="width" constant="40" id="goh-2u-Y2x"/>
+                            <constraint firstAttribute="height" constant="35" id="OXy-nJ-f3i"/>
+                            <constraint firstAttribute="width" constant="35" id="goh-2u-Y2x"/>
                         </constraints>
                         <state key="normal">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -49,13 +49,21 @@
                 <constraints>
                     <constraint firstItem="7hm-f2-P8D" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="47" id="1xq-gP-kZt"/>
                     <constraint firstItem="s2W-iQ-k2g" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="If2-iJ-EHQ"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="7hm-f2-P8D" secondAttribute="trailing" constant="5" id="MQg-sM-CP6"/>
+                    <constraint firstAttribute="centerY" secondItem="7hm-f2-P8D" secondAttribute="centerY" constant="2" id="NDs-xA-WP8"/>
                     <constraint firstItem="0Bv-6Z-rPl" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="QMt-bt-1Be"/>
                     <constraint firstItem="s2W-iQ-k2g" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="Qxg-v9-keY"/>
-                    <constraint firstItem="7hm-f2-P8D" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="Zye-5m-udF"/>
+                    <constraint firstItem="7hm-f2-P8D" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" constant="-5" id="Zye-5m-udF"/>
                     <constraint firstAttribute="bottom" secondItem="0Bv-6Z-rPl" secondAttribute="bottom" constant="-1" id="bbK-7T-K8N"/>
                     <constraint firstItem="0Bv-6Z-rPl" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="gzx-ky-3aT"/>
                     <constraint firstAttribute="trailing" secondItem="0Bv-6Z-rPl" secondAttribute="trailing" id="pEk-LN-qUj"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="1xq-gP-kZt"/>
+                        <exclude reference="Zye-5m-udF"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="changeLocationButtonOutlet" destination="7hm-f2-P8D" id="soH-OM-PWA"/>

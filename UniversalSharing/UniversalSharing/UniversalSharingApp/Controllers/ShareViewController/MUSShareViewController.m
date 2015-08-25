@@ -311,7 +311,7 @@
     
     if(!self.post) {
         self.post = [[Post alloc] init];
-    } else {
+    }
         self.post.placeID = self.placeID;
         if (![self.messageTextView.text isEqualToString: kPlaceholderText]) {
             self.post.postDescription = self.messageTextView.text;
@@ -334,7 +334,6 @@
             }
         }];
         
-    }
 }
 
 

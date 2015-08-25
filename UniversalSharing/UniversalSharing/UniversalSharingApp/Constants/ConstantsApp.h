@@ -137,5 +137,7 @@ FOUNDATION_EXPORT NSString *const musAppButton_ImageName_ButtonAdd;
 
 FOUNDATION_EXPORT NSInteger const musAppDetailPostVC_HeightOfCommentsAndLikesCell;
 FOUNDATION_EXPORT NSInteger const musAppDetailPostVC_HeightOfPostLocationCell;
+FOUNDATION_EXPORT NSString *const musAppDetailPostVC_UpdatePostAlert;
+
 
 @end

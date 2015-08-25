@@ -17,6 +17,9 @@
 #import <VKSdk.h>
 
 #pragma mark SocialNetworkLibrary
+
+#import "DataBaseManager.h"
+
 #import "Location.h"
 
 #import "MUSSocialNetworkLibraryConstants.h"

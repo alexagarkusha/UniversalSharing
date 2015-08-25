@@ -33,8 +33,6 @@
 
 - (void)viewDidLoad {
     //[self POSTS]; // DELETE THIS AFTER Connect SQLite
-    self.arrayPosts = [NSArray arrayWithArray: [[DataBaseManager sharedManager] obtainAllRowsFromTableNamedPosts]];
-    
     [self initiationArrayOfShareReason];
     [self initiationArrayOfActiveSocialNetwork];
     [self initiationDropDownMenu];
@@ -47,6 +45,9 @@
     [super viewWillAppear : YES];
     [self initiationArrayOfShareReason];
     [self initiationArrayOfActiveSocialNetwork];
+    self.arrayPosts = [NSArray arrayWithArray: [[DataBaseManager sharedManager] obtainAllRowsFromTableNamedPosts]];
+    [self.tableView reloadData];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -85,22 +86,7 @@
 
 #pragma mark initiation ArrayOfPostsType
 
-//- (NSString*) obtainPathToDocumentsFolder :(NSString*) pathFromDataBase {
-//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//    NSString *documentsPath = [paths objectAtIndex:0];
-//    return [documentsPath stringByAppendingPathComponent:pathFromDataBase];
-//}
-
 - (void) initiationArrayOfActiveSocialNetwork {
-    //////////////////////////////////////////////////////////////////////////////////////////
-//    NSArray *temp = [[DataBaseManager sharedManager] obtainAllRowsFromTableNamedUsers];
-//    [temp enumerateObjectsUsingBlock:^(User *user, NSUInteger index, BOOL *stop) {
-//        [[NSFileManager defaultManager] removeItemAtPath: [self obtainPathToDocumentsFolder:user.photoURL] error: nil];
-//        
-//    }];
-    
-    
-    ///////////////////////////////////////////////////////
     self.arrayOfActiveSocialNetwork = [[NSMutableArray alloc] init];
     [self.arrayOfActiveSocialNetwork addObject: @"All social networks"];
     NSArray *arrayWithNetworks = @[@(Twitters), @(VKontakt), @(Facebook)];
@@ -216,15 +202,19 @@
             if (indexPath.row == 0) {
                 self.predicateReason = @"";
             } else {
-                self.predicateReason = [NSString stringWithFormat:@" reason=\"%d\"", [self reasonFromTitle:title]];
+                self.predicateReason = [NSString stringWithFormat:@" reson=\"%d\"", [self reasonFromTitle:title]];
             }
         }
             break;
         default:
             break;
     }
+    self.arrayPosts = [[DataBaseManager sharedManager] filterPostsWithReason: self.predicateReason andNetworkType: self.predicateNetworkType];
+    [self.tableView reloadData];
+
     
     
+    /*
     NSString *query = [[NSString alloc] init];
     if (self.predicateNetworkType.length > 0) {
         query = self.predicateNetworkType;
@@ -233,14 +223,53 @@
             query = [query stringByAppendingString: [NSString stringWithFormat: @"%@", self.predicateReason]];
         }
     } else {
-        query = self.predicateReason;
+        query = @" WHERE ";
+        query = [query stringByAppendingString: self.predicateReason];
     }
     NSLog(@"query = %@", query);
+     */
 }
 
-#pragma mark - NetworkTypeFromMenuTitle
+/*
+- (void)menu:(DOPDropDownMenu *)menu didSelectRowAtIndexPath:(DOPIndexPath *)indexPath {
+    NSLog(@"column:%li row:%li", (long)indexPath.column, (long)indexPath.row);
+    NSLog(@"%@",[menu titleForRowAtIndexPath:indexPath]);
+    
+    NSString *title = [menu titleForRowAtIndexPath:indexPath];
+    
+    self.columnType = indexPath.column;
+    
+    switch (self.columnType) {
+        case ByNetworkType:{
+            if (indexPath.row == 0) {
+                self.predicateNetworkType = @"";
+            } else {
+                self.predicateNetworkType = [NSString stringWithFormat: @"%d", [self networkTypeFromTitle: title]];
+            }
+        }
+            break;
+        case ByShareReason:{
+            if (indexPath.row == 0) {
+                self.predicateReason = @"";
+            } else {
+                self.predicateReason = [NSString stringWithFormat:@"%d", [self reasonFromTitle:title]];
+            }
+        }
+            break;
+        default:
+            break;
+    }
+    
+    NSLog(@"network type = %d, reason = %d", [self.predicateNetworkType integerValue], [self.predicateReason integerValue]);
+    
+    self.arrayPosts = [[DataBaseManager sharedManager] obtainRowsFromTableNamedPostsWithReason: [self.predicateReason integerValue] andNetworkType: [self.predicateNetworkType integerValue]];
+    [self.tableView reloadData];
+}
+*/
 
-- (NSInteger) networkTypeFromTitle : (NSString*) title {
+#pragma mark - ReasonFromMenuTitle
+
+- (NSInteger) reasonFromTitle : (NSString*) title {
     if ([title isEqual: musAppFilter_Title_Error]) {
         return ErrorConnection;
     } else if ([title isEqual: musAppFilter_Title_Offline]) {
@@ -250,9 +279,9 @@
     }
 }
 
-#pragma mark - ReasonFromMenuTitle
+#pragma mark - NetworkTypeFromMenuTitle
 
-- (NSInteger) reasonFromTitle : (NSString*) title {
+- (NSInteger) networkTypeFromTitle : (NSString*) title {
     if ([title isEqual: musVKName]) {
         return VKontakt;
     } else if ([title isEqual: musFacebookName]) {
@@ -261,80 +290,6 @@
         return Twitters;
     }
 }
-
-
-///////////////////// DELETE THIS AFTER Connect SQLite /////////////////////////
-
-- (void) POSTS {
-
-    Post *post1 = [[Post alloc] init];
-    post1.postDescription = @"POST #1 - lskfdjnskdsflsdfksj  sdkjnksjfkjsdkj jsdkjnskjfnsk jsdnkjfskjd jsdkfjnskfjn jsdkjfk jsdkjnskd jsvcvxcvbfj jsdkjnksjnkjn kjndfkjnkdjf kjdfnkdkfngkd jkjfkjndkfnk jkjdfnknvkdfj knnksnfk jsk fnsknfksdn fkns kfnks dnfkj ndskfndsk nfkdsn fkn dskfn kdsn k nk nknsfk nfk dsnk fs kdfn ksdn fkd nskfn dskf nkdsn fdkfn k nkfdnfkdn kfnkffkjfkknknk j k k jkfd kfkdnfd kjnfkdndkndkjnf kfnkjfdnkdjn kfdjnkfdnfkdf kdnkdj nkkdnfk jfnk";
-    post1.commentsCount = 2;
-    post1.likesCount = 100;
-    ImageToPost *image1 = [[ImageToPost alloc] init];
-    image1.image = [UIImage imageNamed: @"Comment.png"];
-    image1.imageType = JPEG;
-    
-    ImageToPost *image3 = [[ImageToPost alloc] init];
-    image3.image = [UIImage imageNamed: @"UnknownUser.jpg"];
-    image3.imageType = JPEG;
-    
-    post1.arrayImages = [[NSArray alloc] initWithObjects: image1, image3, nil];
-    
-    //post1.reasonType = Connect;
-    post1.networkType = Facebook;
-    
-    Post *post2 = [[Post alloc] init];
-    post2.postDescription = @"POST #2 - lskfdjnskdsflsdfksj";
-    post2.commentsCount = 23;
-    post2.likesCount = 200;
-    //post2.reasonType = ErrorConnection;
-    post2.networkType = Twitters;
-
-    Post *post3 = [[Post alloc] init];
-    post3.postDescription = @"POST #3 - lskfdjnskdsflsdfksj  sdkjnksjfkjsdkj jsdkjnskjfnsk jsdnkjfskjd jsdkfjnskfjn jsdkjfk jsdkjnskd jsvcvxcvbfj";
-    post3.commentsCount = 23333;
-    post3.likesCount = 200;
-    //post3.reasonType = Offline;
-    post3.networkType = VKontakt;
-    
-    
-    Post *post4 = [[Post alloc] init];
-    post4.postDescription = @"";
-    post4.arrayImages = [[NSArray alloc] initWithObjects: image3, nil];
-    post4.commentsCount = 23333;
-    post4.likesCount = 200;
-    //post3.reasonType = Offline;
-    post4.networkType = VKontakt;
-
-    
-    self.arrayPosts = [[NSArray alloc] initWithObjects: post1, post2, post3, post4, nil];
-     
-//    Post *post1 = [[Post alloc] init];
-//    post1.postDescription = @"POST #1 - lskfdjnskdsflsdfksj  sdkjnksjfkjsdkj jsdkjnskjfnsk jsdnkjfskjd jsdkfjnskfjn jsdkjfk jsdkjnskd jsvcvxcvbfj";
-//    post1.comentsCount = 2;
-//    post1.likesCount = 100;
-//    post1.reasonType = Connect;
-//    post1.networkType = Facebook;
-//    
-//    Post *post2 = [[Post alloc] init];
-//    post2.postDescription = @"POST #2 - lskfdjnskdsflsdfksj  sdkjnksjfkjsdkj jsdkjnskjfnsk jsdnkjfskjd jsdkfjnskfjn jsdkjfk jsdkjnskd jsvcvxcvbfj";
-//    post2.comentsCount = 23;
-//    post2.likesCount = 200;
-//    post2.reasonType = ErrorConnection;
-//    post2.networkType = Twitters;
-//
-//    Post *post3 = [[Post alloc] init];
-//    post3.postDescription = @"POST #3 - lskfdjnskdsflsdfksj  sdkjnksjfkjsdkj jsdkjnskjfnsk jsdnkjfskjd jsdkfjnskfjn jsdkjfk jsdkjnskd jsvcvxcvbfj";
-//    post3.comentsCount = 23333;
-//    post3.likesCount = 200;
-//    post3.reasonType = Offline;
-//    post3.networkType = VKontakt;
-//    
-//    self.arrayPosts = [[NSArray alloc] initWithObjects: post1, post2, post3, nil];
-}
-
-
 
 
 @end

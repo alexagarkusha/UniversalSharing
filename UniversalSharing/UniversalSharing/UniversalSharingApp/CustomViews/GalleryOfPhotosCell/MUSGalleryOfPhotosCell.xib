@@ -48,8 +48,12 @@
                         <nil key="highlightedColor"/>
                         <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bQE-pg-2i5">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bQE-pg-2i5">
                         <rect key="frame" x="292" y="8" width="20" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="20" id="IKs-p2-Tbv"/>
+                            <constraint firstAttribute="height" constant="20" id="YjS-QM-RET"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -74,7 +78,9 @@
                     <constraint firstItem="e88-Ky-GeW" firstAttribute="top" secondItem="XKx-fB-tTp" secondAttribute="bottom" constant="8" id="Bw7-oU-XYb"/>
                     <constraint firstItem="y4j-P6-qcN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="EOU-4t-KjI"/>
                     <constraint firstAttribute="bottom" secondItem="y4j-P6-qcN" secondAttribute="bottom" id="Haq-gN-E8c"/>
+                    <constraint firstItem="bQE-pg-2i5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="LqA-TG-eNe"/>
                     <constraint firstItem="e88-Ky-GeW" firstAttribute="leading" secondItem="h1E-fQ-zZP" secondAttribute="trailing" constant="8" id="Pod-Tt-Vqx"/>
+                    <constraint firstItem="bQE-pg-2i5" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="QuY-ma-3IB"/>
                     <constraint firstItem="XKx-fB-tTp" firstAttribute="leading" secondItem="h1E-fQ-zZP" secondAttribute="trailing" constant="8" id="Vb7-mt-FbZ"/>
                     <constraint firstItem="y4j-P6-qcN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="YPg-3W-zzn"/>
                     <constraint firstAttribute="bottomMargin" secondItem="I6K-rJ-8JI" secondAttribute="bottom" constant="49" id="h0m-fB-XBP"/>

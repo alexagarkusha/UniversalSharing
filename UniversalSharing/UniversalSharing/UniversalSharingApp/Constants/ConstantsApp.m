@@ -107,6 +107,7 @@ NSString *const musAppButton_ImageName_ButtonAdd = @"Button_Add.png";
 
 NSInteger const musAppDetailPostVC_HeightOfCommentsAndLikesCell = 40;
 NSInteger const musAppDetailPostVC_HeightOfPostLocationCell = 200;
+NSString *const musAppDetailPostVC_UpdatePostAlert = @"Do you want to update your Post?";
 
 
 

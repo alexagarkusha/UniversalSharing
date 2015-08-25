@@ -63,6 +63,7 @@
     //CLLocationCoordinate2D currentCityLocation = CLLocationCoordinate2DMake(<#CLLocationDegrees latitude#>, <#CLLocationDegrees longitude#>)
     [self checkChangeLocationButtonStatus];
     
+    
     /*
     if (currentPost.placeName) {
         self.placeNameLabel.hidden = NO;

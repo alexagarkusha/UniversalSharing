@@ -50,6 +50,7 @@
 		30DBFDA51B6BAA52002F83D0 /* VKimage.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBFDA41B6BAA52002F83D0 /* VKimage.png */; };
 		973D67AE1B69114C00A20D00 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 973D67AD1B69114C00A20D00 /* Post.m */; };
 		97903B581B7B983600FF24E7 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97903B571B7B983600FF24E7 /* CoreText.framework */; };
+		97B2B54A1B87B387009FAB12 /* UIImageView+MUSLoadImageFromDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 97B2B5491B87B387009FAB12 /* UIImageView+MUSLoadImageFromDataBase.m */; };
 		97B98EDE1B874AA9006ADD26 /* Like.png in Resources */ = {isa = PBXBuildFile; fileRef = 97B98EDD1B874AA9006ADD26 /* Like.png */; };
 		97BF252B1B85BB8B00A4938E /* UIButton+MUSEditableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 97BF252A1B85BB8B00A4938E /* UIButton+MUSEditableButton.m */; };
 		97C350541B8490C7002C6D8E /* Button_Add.png in Resources */ = {isa = PBXBuildFile; fileRef = 97C350531B8490C7002C6D8E /* Button_Add.png */; };
@@ -177,6 +178,8 @@
 		973D67AC1B69114C00A20D00 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Post.h; path = UniversalSharing/SocialNetworkLibrary/Post/Post.h; sourceTree = SOURCE_ROOT; };
 		973D67AD1B69114C00A20D00 /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Post.m; path = UniversalSharing/SocialNetworkLibrary/Post/Post.m; sourceTree = SOURCE_ROOT; };
 		97903B571B7B983600FF24E7 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		97B2B5481B87B387009FAB12 /* UIImageView+MUSLoadImageFromDataBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+MUSLoadImageFromDataBase.h"; sourceTree = "<group>"; };
+		97B2B5491B87B387009FAB12 /* UIImageView+MUSLoadImageFromDataBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+MUSLoadImageFromDataBase.m"; sourceTree = "<group>"; };
 		97B98EDD1B874AA9006ADD26 /* Like.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Like.png; sourceTree = "<group>"; };
 		97BF25291B85BB8B00A4938E /* UIButton+MUSEditableButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIButton+MUSEditableButton.h"; path = "UniversalSharing/UniversalSharingApp/Categories/UIButton+EditableButton/UIButton+MUSEditableButton.h"; sourceTree = SOURCE_ROOT; };
 		97BF252A1B85BB8B00A4938E /* UIButton+MUSEditableButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIButton+MUSEditableButton.m"; path = "UniversalSharing/UniversalSharingApp/Categories/UIButton+EditableButton/UIButton+MUSEditableButton.m"; sourceTree = SOURCE_ROOT; };
@@ -404,6 +407,7 @@
 				97D1C44D1B8203ED00009BCF /* UILabel+CornerRadiusLabel */,
 				97CCC9D91B74AB4100E0FAC6 /* UIImage+ChangeScaleImage */,
 				18BB29821B67E3F000B498AC /* UIImageView+LoadImageFromNetwork */,
+				97B2B5441B87A145009FAB12 /* UIImageView+LoadImageFromDataBase */,
 				18BB29851B67E3F000B498AC /* UIImageView+RoundImage */,
 			);
 			path = Categories;
@@ -683,6 +687,16 @@
 				973D67AD1B69114C00A20D00 /* Post.m */,
 			);
 			name = Post;
+			sourceTree = "<group>";
+		};
+		97B2B5441B87A145009FAB12 /* UIImageView+LoadImageFromDataBase */ = {
+			isa = PBXGroup;
+			children = (
+				97B2B5481B87B387009FAB12 /* UIImageView+MUSLoadImageFromDataBase.h */,
+				97B2B5491B87B387009FAB12 /* UIImageView+MUSLoadImageFromDataBase.m */,
+			);
+			name = "UIImageView+LoadImageFromDataBase";
+			path = "UIImageView+LoadImageFromNetwork";
 			sourceTree = "<group>";
 		};
 		97BF25281B85BB0B00A4938E /* UIButton+EditableButton */ = {
@@ -1112,6 +1126,7 @@
 				18BB29B21B67E3F000B498AC /* UIButton+LoadBackgroundImageFromNetwork.m in Sources */,
 				30DBFD931B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.m in Sources */,
 				97CCC9DC1B74ABAE00E0FAC6 /* UIImage+ChangeScaleImage.m in Sources */,
+				97B2B54A1B87B387009FAB12 /* UIImageView+MUSLoadImageFromDataBase.m in Sources */,
 				187FC5271B65222D00A3916C /* SocialManager.m in Sources */,
 				97CCC9D81B749C2C00E0FAC6 /* ReachabilityManager.m in Sources */,
 				97C49E851B835B64005241CE /* MUSPostDescriptionCell.m in Sources */,
