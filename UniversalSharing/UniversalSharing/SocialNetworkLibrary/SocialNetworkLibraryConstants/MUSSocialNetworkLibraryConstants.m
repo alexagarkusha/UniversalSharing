@@ -122,5 +122,8 @@ NSInteger const musErrorAccesDeniedCode = 1020;
 NSString *const musErrorConnection = @"Error connection to social network. Please, retry again";
 NSInteger const musErrorConnectionCode = 1030;
 
+#pragma mark DataBase Constants
+
+NSString *const nameDataBase = @"UniversalSharing.sql";
 
 
