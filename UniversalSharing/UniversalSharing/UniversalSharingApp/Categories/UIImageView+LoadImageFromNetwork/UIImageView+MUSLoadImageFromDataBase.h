@@ -12,6 +12,6 @@
 
 @interface UIImageView (MUSLoadImageFromDataBase)
 
-- (void) loadImageFromDataBase : (NSString*) socialNetworkIcon;
+- (void) loadImageFromDataBase : (NSString*) urlOfImage;
 
 @end

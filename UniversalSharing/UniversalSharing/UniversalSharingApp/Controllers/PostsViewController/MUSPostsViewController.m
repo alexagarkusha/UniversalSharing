@@ -25,8 +25,8 @@
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, assign) FilterInColumnType columnType;
 
-@property (nonatomic, strong) NSString *predicateNetworkType;
-@property (nonatomic, strong) NSString *predicateReason;
+@property (nonatomic, assign) NSInteger predicateNetworkType;
+@property (nonatomic, assign) NSInteger predicateReason;
 
 
 @end
@@ -92,7 +92,7 @@
 - (void) initiationArrayOfActiveSocialNetwork {
     self.arrayOfActiveSocialNetwork = [[NSMutableArray alloc] init];
     [self.arrayOfActiveSocialNetwork addObject: @"All social networks"];
-    self.arrayOfUsers = [[DataBaseManager sharedManager] obtainAllRowsFromTableNamedUsers];
+    self.arrayOfUsers = [[DataBaseManager sharedManager] obtainAllUsers];
     NSMutableArray *arrayWithNetworks = [[NSMutableArray alloc] init];
     for (int i = 0; i < self.arrayOfUsers.count; i++) {
         User *currentUser = [self.arrayOfUsers objectAtIndex: i];
@@ -201,80 +201,26 @@
     switch (self.columnType) {
         case ByNetworkType:{
             if (indexPath.row == 0) {
-                self.predicateNetworkType = @"";
+                self.predicateNetworkType = 0;
             } else {
-                self.predicateNetworkType = [NSString stringWithFormat: @" WHERE networkType=\"%d\"", [self networkTypeFromTitle: title]];
+                self.predicateNetworkType = [self networkTypeFromTitle: title];
             }
         }
             break;
         case ByShareReason:{
             if (indexPath.row == 0) {
-                self.predicateReason = @"";
+                self.predicateReason = 0;
             } else {
-                self.predicateReason = [NSString stringWithFormat:@" reson=\"%d\"", [self reasonFromTitle:title]];
+                self.predicateReason = [self reasonFromTitle:title];
             }
         }
             break;
         default:
             break;
     }
-//    self.arrayPosts = [[DataBaseManager sharedManager] filterPostsWithReason: self.predicateReason andNetworkType: self.predicateNetworkType];
-    [self.tableView reloadData];
-
-    
-    
-    /*
-    NSString *query = [[NSString alloc] init];
-    if (self.predicateNetworkType.length > 0) {
-        query = self.predicateNetworkType;
-        if (self.predicateReason.length > 0) {
-            query = [query stringByAppendingString: @" AND"];
-            query = [query stringByAppendingString: [NSString stringWithFormat: @"%@", self.predicateReason]];
-        }
-    } else {
-        query = @" WHERE ";
-        query = [query stringByAppendingString: self.predicateReason];
-    }
-    NSLog(@"query = %@", query);
-     */
-}
-
-/*
-- (void)menu:(DOPDropDownMenu *)menu didSelectRowAtIndexPath:(DOPIndexPath *)indexPath {
-    NSLog(@"column:%li row:%li", (long)indexPath.column, (long)indexPath.row);
-    NSLog(@"%@",[menu titleForRowAtIndexPath:indexPath]);
-    
-    NSString *title = [menu titleForRowAtIndexPath:indexPath];
-    
-    self.columnType = indexPath.column;
-    
-    switch (self.columnType) {
-        case ByNetworkType:{
-            if (indexPath.row == 0) {
-                self.predicateNetworkType = @"";
-            } else {
-                self.predicateNetworkType = [NSString stringWithFormat: @"%d", [self networkTypeFromTitle: title]];
-            }
-        }
-            break;
-        case ByShareReason:{
-            if (indexPath.row == 0) {
-                self.predicateReason = @"";
-            } else {
-                self.predicateReason = [NSString stringWithFormat:@"%d", [self reasonFromTitle:title]];
-            }
-        }
-            break;
-        default:
-            break;
-    }
-    
-    NSLog(@"network type = %d, reason = %d", [self.predicateNetworkType integerValue], [self.predicateReason integerValue]);
-    
-    self.arrayPosts = [[DataBaseManager sharedManager] obtainRowsFromTableNamedPostsWithReason: [self.predicateReason integerValue] andNetworkType: [self.predicateNetworkType integerValue]];
+    self.arrayPosts = [[DataBaseManager sharedManager] obtainPostsWithReason: self.predicateReason andNetworkType:self.predicateNetworkType];
     [self.tableView reloadData];
 }
-*/
 
 #pragma mark - ReasonFromMenuTitle
 

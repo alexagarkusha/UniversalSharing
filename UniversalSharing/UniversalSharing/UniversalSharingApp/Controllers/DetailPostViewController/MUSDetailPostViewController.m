@@ -16,6 +16,10 @@
 #import "MUSLocationTableViewController.h"
 #import <CoreLocation/CoreLocation.h>
 #import "DataBaseManager.h"
+#import "NSString+MUSPathToDocumentsdirectory.h"
+#import "UIImage+LoadImageFromDataBase.h"
+
+
 
 @interface MUSDetailPostViewController () <UITableViewDataSource, UITableViewDelegate, MUSPostDescriptionCellDelegate, MUSGalleryOfPhotosCellDelegate, MUSPostLocationCellDelegate,  UIActionSheetDelegate, UIAlertViewDelegate>
 
@@ -111,10 +115,24 @@
 #pragma mark initiation current postDescription, arrayOfUsersPictures, postLocation
 
 - (void) initiationPostDescriptionArrayOfPicturesAndPostLocation {
+    //self.arrayOfUsersPictures = [[NSMutableArray alloc] init];
+    //for (int i = 0; i < self.currentPost.arrayImages.count; i++) {
+      //  ImageToPost *imageToPost = [self.currentPost.arrayImages objectAtIndex: i];
+       // [self.arrayOfUsersPictures addObject: imageToPost.image];
+    //}
+    
+    
     self.arrayOfUsersPictures = [[NSMutableArray alloc] init];
-    for (int i = 0; i < self.currentPost.arrayImages.count; i++) {
-        ImageToPost *imageToPost = [self.currentPost.arrayImages objectAtIndex: i];
-        [self.arrayOfUsersPictures addObject: imageToPost.image];
+    NSLog(@"%@", self.currentPost.arrayImagesUrl);
+#warning КОСТЫЛЬ - т.к. - если нет рисунков приходит массив с одним обектом типа ""
+    if (![[self.currentPost.arrayImagesUrl firstObject] isEqualToString: @""]) {
+        for (int i = 0; i < self.currentPost.arrayImagesUrl.count; i++) {
+            UIImage *currentImage = [[UIImage alloc] init];
+            //[currentImage loadImageFromDataBase: [self.currentPost.arrayImagesUrl objectAtIndex: i]];
+            currentImage = [currentImage loadImageFromDataBase: [self.currentPost.arrayImagesUrl objectAtIndex: i]];
+        
+            [self.arrayOfUsersPictures addObject: currentImage];
+        }
     }
     self.postDescription = self.currentPost.postDescription;
     self.currentLocationOfPost = CLLocationCoordinate2DMake([self.currentPost.latitude floatValue], [self.currentPost.longitude floatValue]);
@@ -147,6 +165,8 @@
     }
 }
 
+#pragma mark UpdatePost
+
 - (void) updatePost {
     self.currentPost.postDescription = self.postDescription;
     self.currentPost.placeID = self.placeID;
@@ -162,6 +182,24 @@
         [arrayOfImagesToPost addObject: imageToPost];
     }
     self.currentPost.arrayImages = [NSArray arrayWithArray : arrayOfImagesToPost];
+}
+
+- (void) saveImageToDocumentsFolderAndFillArrayWithUrl :(Post*) post {
+    if (!post.arrayImagesUrl) {
+        post.arrayImagesUrl = [NSMutableArray new];
+    } else {
+        [post.arrayImagesUrl removeAllObjects];
+    }
+    
+    [post.arrayImages enumerateObjectsUsingBlock:^(ImageToPost *image, NSUInteger index, BOOL *stop) {
+        NSData *data = UIImagePNGRepresentation(image.image);
+        //Get the docs directory
+        NSString *filePath = @"image";
+        filePath = [filePath stringByAppendingString:[NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970] * 1000]];
+        filePath = [filePath stringByAppendingString:@".png"];
+        [post.arrayImagesUrl addObject:filePath];
+        [data writeToFile:[filePath obtainPathToDocumentsFolder:filePath] atomically:YES]; //Write the file
+    }];
 }
 
 - (void) updatePostInDataBase {
@@ -323,10 +361,27 @@
     [_tableView scrollToRowAtIndexPath:path atScrollPosition : UITableViewScrollPositionNone animated:YES];
 }
 
+- (void) removeImagesOfPostFromDocumentsFolder :(NSString*) userId {
+    __block NSError *error;
+    NSArray *arrayWithPostsOfUser = [[DataBaseManager sharedManager] obtainAllPostsWithUserId:userId];
+    [arrayWithPostsOfUser enumerateObjectsUsingBlock:^(Post *post, NSUInteger idx, BOOL *stop) {
+        
+        [post.arrayImagesUrl enumerateObjectsUsingBlock:^(NSString *urlImage, NSUInteger idx, BOOL *stop) {
+            [[NSFileManager defaultManager] removeItemAtPath: [urlImage obtainPathToDocumentsFolder: urlImage] error: &error];
+            
+        }];
+    }];
+}
+
+
+
+
 
 #pragma mark - MUSGalleryOfPhotosCellDelegate
 
 - (void) arrayOfImagesOfUser:(NSArray *)arrayOfImages {
+    
+    //[[NSFileManager defaultManager] removeItemAtPath: [urlImage obtainPathToDocumentsFolder: urlImage] error: &error];
     
     if (!arrayOfImages.firstObject) {
         [self.arrayOfUsersPictures removeAllObjects];
@@ -357,6 +412,7 @@
 
 
 #pragma mark - Keyboard Show/Hide
+
 -(void) keyboardShow:(NSNotification*) notification {
     
     CGRect initialFrame = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
@@ -366,25 +422,6 @@
     _tableView.frame = tvFrame;
     
 }
-
-/*
-- (void) keyboardWillShow: (NSNotification*) notification {
-    NSLog(@"table view y = %f", self.tableView.contentOffset.y);
-    
-    
-    
-    NSInteger tableViewY = self.tableView.contentOffset.y;
-    
-    CGRect initialFrame = [[[notification userInfo] objectForKey : UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    CGRect convertedFrame = [self.view convertRect:initialFrame fromView:nil];
-    CGFloat height = self.heightOfGalleryWithPhotosRow + self.heightOfCommentsAndLikeRow + self.heightOfPostDescriptionRow + self.tabBarController.tabBar.frame.size.height + [UIApplication sharedApplication].statusBarFrame.size.height;
-    
-    if (height > convertedFrame.origin.y) {
-        CGFloat deltaHeight = convertedFrame.origin.y - height + tableViewY + 8;
-        self.tableView.frame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y + deltaHeight, self.tableView.frame.size.width, self.tableView.frame.size.height);
-    }
-}
-*/
 
 - (void) keyboardWillHide: (NSNotification*) notification {
     self.tableView.frame = CGRectMake(self.tableViewFrame.origin.x, self.tableViewFrame.origin.y, self.tableViewFrame.size.width, self.tableViewFrame.size.height);
@@ -425,6 +462,7 @@
     switch (buttonIndex) {
         case YES:
             [self updatePost];
+            [self saveImageToDocumentsFolderAndFillArrayWithUrl : self.currentPost];
             [self updatePostInDataBase];
             [self.navigationController popViewControllerAnimated:YES];
             break;
