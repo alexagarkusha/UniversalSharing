@@ -11,6 +11,10 @@
 
 @implementation DataBaseManager
 
+#warning "the same names for DB and DB manager"
+
+#warning "open DB for every request or just once?"
+
 static DataBaseManager *_database;
 
 + (DataBaseManager*)sharedManager {
@@ -35,6 +39,7 @@ static DataBaseManager *_database;
 - (NSString *) filePath {
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentDirectory=[paths objectAtIndex:0];
+#warning "Replace DB name im constants"
     return [documentDirectory stringByAppendingPathComponent:@"UniversalSharing.sql"];
 }
 
@@ -71,6 +76,7 @@ static DataBaseManager *_database;
         sqlite3_bind_text(selectStmt, 1, [[self checkExistedString: post.placeID] UTF8String], -1, SQLITE_TRANSIENT);
         sqlite3_bind_text(selectStmt, 2, [[self checkExistedString: post.postDescription] UTF8String], -1, SQLITE_TRANSIENT);
         //[post.arrayImagesUrl enumerateObjectsUsingBlock:^(NSString *stringUrl, NSUInteger index, BOOL *stop) {
+#warning "Replace this logic on Post"
         for (int i = 0; i < post.arrayImagesUrl.count; i++) {
             url = [url stringByAppendingString:post.arrayImagesUrl[i]];
             if(post.arrayImagesUrl.count - 1 != i)

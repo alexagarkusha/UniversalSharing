@@ -168,6 +168,8 @@
 }
 
 
+#warning "Can be category"
+
 - (NSString*) timeInDoubleFormatte: (double) dateInDouble {
     NSDate *date = [NSDate dateWithTimeIntervalSince1970: dateInDouble];
     NSDateFormatter *formatDate = [[NSDateFormatter alloc] init];

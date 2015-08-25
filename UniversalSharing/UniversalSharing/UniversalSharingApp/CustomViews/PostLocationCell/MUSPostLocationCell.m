@@ -71,7 +71,7 @@
     }
     */
     
-    
+#warning "add pin every time"
     CLLocationCoordinate2D currentCityLocation = CLLocationCoordinate2DMake(48.450063, 34.982602);
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(currentCityLocation, 400, 400);
     MUSAnnotation *pin = [[MUSAnnotation alloc] init];

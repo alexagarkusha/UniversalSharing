@@ -52,7 +52,7 @@ static FacebookNetwork *model = nil;
             
             self.currentUser = [[DataBaseManager sharedManager]obtainRowsFromTableNamedUsersWithNetworkType:self.networkType];
             self.icon = self.currentUser.photoURL;
-            self.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
+            self.title = [NSString stringWithFormat:@"%@ %@", self.currentUser.firstName, self.currentUser.lastName];
             self.isVisible = self.currentUser.isVisible;
             //////////////////////////////////////////////////////////
             

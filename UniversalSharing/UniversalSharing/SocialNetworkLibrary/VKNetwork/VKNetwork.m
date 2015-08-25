@@ -79,6 +79,7 @@ static VKNetwork *model = nil;
 /*!
  Checks if somebody logged in with SDK
 */
+#warning "check VK method +isLoggedIn"
 - (BOOL) isLoggedIn {
     return [VKSdk wakeUpSession];
 }

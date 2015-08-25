@@ -37,6 +37,7 @@
  */
 
 - (Place*) createPlaceFromFB : (NSDictionary *) dictionary {
+#warning "One more init?"
     Place *currentPlace = [[Place alloc] init];
     
     currentPlace.placeID = [dictionary objectForKey: musFacebookParsePlace_ID];
@@ -56,6 +57,7 @@
  */
 
 - (Place*) createPlaceFromVK : (NSDictionary *) dictionary {
+#warning "One more init?"
     Place *currentPlace = [[Place alloc] init];
     
     currentPlace.placeID = [dictionary objectForKey: musVKParsePlace_ID];
@@ -73,6 +75,7 @@
  */
 
 - (Place*) createPlaceFromTwitter : (NSDictionary *) dictionary {
+#warning "One more init?"
     Place *currentPlace = [[Place alloc] init];
     
     currentPlace.placeID   = [dictionary objectForKey: musTwitterParsePlace_ID];

@@ -25,6 +25,8 @@ static SocialManager *model = nil;
 
 + (SocialNetwork*) currentSocialNetwork {
     SocialNetwork *currentSocialNetwork = nil;
+    
+#warning If networks array was created before, we must use it, instead of create new
     NSArray *accountsArray = [[SocialManager sharedManager] networks:@[@(Twitters), @(VKontakt), @(Facebook)]];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isLogin == %d AND isVisible == %d", YES, YES];
     NSArray *filteredArray = [accountsArray filteredArrayUsingPredicate:predicate];

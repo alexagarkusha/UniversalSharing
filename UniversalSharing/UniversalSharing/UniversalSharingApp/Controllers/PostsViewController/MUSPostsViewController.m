@@ -43,6 +43,7 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear : YES];
+#warning "Twice?"
     [self initiationArrayOfShareReason];
     [self initiationArrayOfActiveSocialNetwork];
     self.arrayPosts = [NSArray arrayWithArray: [[DataBaseManager sharedManager] obtainAllRowsFromTableNamedPosts]];
@@ -87,6 +88,7 @@
 #pragma mark initiation ArrayOfPostsType
 
 - (void) initiationArrayOfActiveSocialNetwork {
+#warning "???"
     self.arrayOfActiveSocialNetwork = [[NSMutableArray alloc] init];
     [self.arrayOfActiveSocialNetwork addObject: @"All social networks"];
     NSArray *arrayWithNetworks = @[@(Twitters), @(VKontakt), @(Facebook)];
@@ -137,6 +139,7 @@
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+#warning "Cell knows it size"
     return 98;
 }
 
@@ -290,6 +293,5 @@
         return Twitters;
     }
 }
-
 
 @end
