@@ -14,9 +14,7 @@
 
 #warning "why database in h file?"
 
-@interface DataBaseManager : NSObject {
-    sqlite3 *_database;
-}
+@interface DataBaseManager : NSObject 
 
 + (DataBaseManager*)sharedManager;
 
@@ -24,12 +22,14 @@
 
 #warning "Some methods gets objects (User or Post), another just ID"
 
-#warning "Change methods name. F.ex. obtainAllUsers, obtainAllPosts, etc"
+//#warning "Change methods name. F.ex. obtainAllUsers, obtainAllPosts, etc"
 
-- (NSMutableArray*)obtainAllRowsFromTableNamedUsers;
-- (NSMutableArray*)obtainAllRowsFromTableNamedPosts;
-- (NSMutableArray*)obtainAllRowsFromTableNamedPostsWithUserId :(NSString*) userId;
-- (NSArray*)obtainRowsFromTableNamedPostsWithReason :(NSInteger) reason andNetworkType :(NSInteger) networkType;//while so because we have two projects))
+- (NSMutableArray*)obtainAllUsers;
+- (NSMutableArray*)obtainAllPosts;
+- (NSMutableArray*)obtainAllPostsWithUserId :(NSString*) userId;
+
+- (NSArray*)obtainPostsWithReason :(ReasonType) reason andNetworkType :(NetworkType) networkType;
+
 - (User*)obtainRowsFromTableNamedUsersWithNetworkType :(NSInteger) networkType;
 
 #warning "Primary, not Primery"

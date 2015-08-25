@@ -103,9 +103,9 @@
         case Twitters:
             return [UIImage imageNamed: musAppImage_Name_TwitterIconImage];
             break;
-        default:
-            break;
+       
     }
+    return nil;
 }
 
 - (UIColor*) reasonColorForPost : (Post*) currentPost {

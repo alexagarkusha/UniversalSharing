@@ -15,6 +15,7 @@ typedef void (^Complition)(id result, NSError *error);
 #pragma mark Types
 
 typedef NS_ENUM (NSInteger, NetworkType) {
+    AllNetworks,
     Facebook,
     VKontakt,
     Twitters
@@ -34,6 +35,7 @@ typedef NS_ENUM (NSInteger, DistanceType) {
 };
 
 typedef NS_ENUM (NSInteger, ReasonType) {
+    AllReasons,
     Offline,
     ErrorConnection,
     Connect

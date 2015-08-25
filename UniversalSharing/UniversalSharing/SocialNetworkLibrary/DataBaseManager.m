@@ -9,20 +9,21 @@
 #import "DataBaseManager.h"
 #import "SocialNetwork.h"
 
+@interface DataBaseManager() {
+    sqlite3 *_database;
+}
+@end
+
 @implementation DataBaseManager
 
-#warning "the same names for DB and DB manager"
-
-#warning "open DB for every request or just once?"
-
-static DataBaseManager *_database;
+static DataBaseManager *databaseManager;
 
 + (DataBaseManager*)sharedManager {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _database = [[DataBaseManager alloc] init];
+        databaseManager = [[DataBaseManager alloc] init];
     });
-    return _database;
+    return databaseManager;
 }
 
 - (id)init {
@@ -63,8 +64,6 @@ static DataBaseManager *_database;
 
 
 - (sqlite3_stmt*) savePostToTableWithObject :(Post*) object {
-    if (sqlite3_open_v2([[self filePath] UTF8String], &_database, SQLITE_OPEN_READWRITE, NULL) == SQLITE_OK)
-        NSLog(@"Database opened");
     
     sqlite3_stmt *selectStmt = nil;
     Post *post = object;
@@ -103,8 +102,6 @@ static DataBaseManager *_database;
 }
 
 - (sqlite3_stmt*) saveUserToTableWithObject :(User*) object {
-    if (sqlite3_open_v2([[self filePath] UTF8String], &_database, SQLITE_OPEN_READWRITE, NULL) == SQLITE_OK)
-        NSLog(@"Database opened");
     User *user = object;
     sqlite3_stmt *selectStmt = nil;
     NSString *sqlStr = [NSString stringWithFormat:@"INSERT INTO '%@'('%@','%@','%@','%@','%@','%@','%@','%@','%@','%@')VALUES(?,?,?,?,?,?,?,?,?,?)",@"Users",@"username",@"firstName",@"lastName",@"dateOfBirth",@"city",@"clientID",@"photoURL",@"isVisible",@"isLogin",@"networkType"];
@@ -133,26 +130,20 @@ static DataBaseManager *_database;
 }
 
 -(void)insertIntoTable:(id) object {
-    if (sqlite3_open_v2([[self filePath] UTF8String], &_database, SQLITE_OPEN_READWRITE, NULL) == SQLITE_OK)
-        NSLog(@"Database opened");
     sqlite3_stmt *selectStmt = nil;
     if ([object isKindOfClass:[User class]]) {
         selectStmt = [self saveUserToTableWithObject:object];
-        
     } else {
         selectStmt = [self savePostToTableWithObject:object];
-        
     }
-    
     if(sqlite3_step(selectStmt) != SQLITE_DONE){
         NSLog(@"Insert failed: %s", sqlite3_errmsg(_database));
         NSAssert(0, @"Error insert table");
     }
     sqlite3_finalize(selectStmt);
-    
 }
 
-- (NSMutableArray*)obtainAllRowsFromTableNamedUsers {
+- (NSMutableArray*)obtainAllUsers {
     NSMutableArray *arrayWithUsers = [NSMutableArray new];
     NSString *qsql=[NSString stringWithFormat:@"SELECT * FROM %@",@"Users"];
     sqlite3_stmt *statement = nil;
@@ -180,9 +171,9 @@ static DataBaseManager *_database;
     return arrayWithUsers;
 }
 
-- (NSMutableArray*)obtainAllRowsFromTableNamedPosts {
+- (NSMutableArray*)obtainAllPosts {
     NSMutableArray *arrayWithPosts = [NSMutableArray new];
-    NSString *qsql=[NSString stringWithFormat:@"SELECT * FROM %@",@"Posts"];
+    NSString *qsql = [NSString stringWithFormat:@"SELECT * FROM %@",@"Posts"];
     sqlite3_stmt *statement = nil;
     
     if(sqlite3_prepare_v2(_database, [qsql UTF8String], -1, &statement, nil) == SQLITE_OK)
@@ -214,7 +205,7 @@ static DataBaseManager *_database;
     return arrayWithPosts;
 }
 
-- (NSMutableArray*)obtainAllRowsFromTableNamedPostsWithUserId :(NSString*) userId {
+- (NSMutableArray*)obtainAllPostsWithUserId :(NSString*) userId {
     
     NSMutableArray *arrayWithPosts = [NSMutableArray new];
     NSString *qsql=[NSString stringWithFormat:@"SELECT * FROM %@ WHERE userId = \"%@\" ",@"Posts",userId];
@@ -249,14 +240,22 @@ static DataBaseManager *_database;
     return arrayWithPosts;
 }
 
-////////////////////////////////////////////////////////////////////////////while so because we have two projects))
-- (NSArray*)obtainRowsFromTableNamedPostsWithReason :(NSInteger) reason andNetworkType :(NSInteger) networkType {
+- (NSArray*)obtainPostsWithReason :(ReasonType) reason andNetworkType :(NetworkType) networkType {
     
     NSMutableArray *arrayWithPosts = [NSMutableArray new];
-    NSString *qsql=[NSString stringWithFormat:@"SELECT * FROM %@ WHERE reason=\"%ld\" AND networkType=\"%ld\"",@"Posts",(long)reason,(long)networkType];
+    NSString *requestString = nil;
+    if (reason == AllReasons) {
+        requestString=[NSString stringWithFormat:@"SELECT * FROM %@ WHERE networkType=\"%ld\"",@"Posts",(long)networkType];
+    } else if(networkType == AllNetworks){
+        requestString = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE reason=\"%ld\"",@"Posts",(long)reason];
+    } else if(networkType == AllNetworks && reason == AllReasons){
+        requestString = [NSString stringWithFormat:@"SELECT * FROM %@",@"Posts"];
+    }else {
+        requestString=[NSString stringWithFormat:@"SELECT * FROM %@ WHERE reason=\"%ld\" AND networkType=\"%ld\"",@"Posts",(long)reason,(long)networkType];
+    }
     sqlite3_stmt *statement = nil;
     
-    if(sqlite3_prepare_v2(_database, [qsql UTF8String], -1, &statement, nil) == SQLITE_OK)
+    if(sqlite3_prepare_v2(_database, [requestString UTF8String], -1, &statement, nil) == SQLITE_OK)
     {
         while (sqlite3_step(statement) == SQLITE_ROW)
         {
