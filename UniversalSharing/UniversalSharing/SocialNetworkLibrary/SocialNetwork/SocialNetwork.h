@@ -103,9 +103,7 @@
 
 - (void) setIsVisible:(BOOL)isVisible;
 
-//- (void) saveImageToDocumentsFolderAndFillArrayWithUrl :(Post*) post;
 
-#warning "Is this method should be visible?"
 - (void) removeUserFromDataBaseAndImageFromDocumentsFolder :(User*) user;
 - (BOOL) obtainCurrentConnection;
 - (void) savePostDataBaseWithReason :(ReasonType) reason andPost :(Post*) post;

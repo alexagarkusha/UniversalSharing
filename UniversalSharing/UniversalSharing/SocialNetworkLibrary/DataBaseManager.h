@@ -24,12 +24,14 @@
 
 #warning "Some methods gets objects (User or Post), another just ID"
 
-#warning "Change methods name. F.ex. obtainAllUsers, obtainAllPosts, etc"
+//#warning "Change methods name. F.ex. obtainAllUsers, obtainAllPosts, etc"
 
-- (NSMutableArray*)obtainAllRowsFromTableNamedUsers;
-- (NSMutableArray*)obtainAllRowsFromTableNamedPosts;
+- (NSMutableArray*)obtainAllUsers;
+- (NSMutableArray*)obtainAllPosts;
 - (NSMutableArray*)obtainAllRowsFromTableNamedPostsWithUserId :(NSString*) userId;
-- (NSArray*)obtainRowsFromTableNamedPostsWithReason :(NSInteger) reason andNetworkType :(NSInteger) networkType;//while so because we have two projects))
+
+- (NSArray*)obtainRowsFromTableNamedPostsWithReason :(ReasonType) reason andNetworkType :(NetworkType) networkType;
+
 - (User*)obtainRowsFromTableNamedUsersWithNetworkType :(NSInteger) networkType;
 
 #warning "Primary, not Primery"

@@ -152,7 +152,7 @@ static DataBaseManager *_database;
     
 }
 
-- (NSMutableArray*)obtainAllRowsFromTableNamedUsers {
+- (NSMutableArray*)obtainAllUsers {
     NSMutableArray *arrayWithUsers = [NSMutableArray new];
     NSString *qsql=[NSString stringWithFormat:@"SELECT * FROM %@",@"Users"];
     sqlite3_stmt *statement = nil;
@@ -180,7 +180,7 @@ static DataBaseManager *_database;
     return arrayWithUsers;
 }
 
-- (NSMutableArray*)obtainAllRowsFromTableNamedPosts {
+- (NSMutableArray*)obtainAllPosts {
     NSMutableArray *arrayWithPosts = [NSMutableArray new];
     NSString *qsql=[NSString stringWithFormat:@"SELECT * FROM %@",@"Posts"];
     sqlite3_stmt *statement = nil;
@@ -249,14 +249,20 @@ static DataBaseManager *_database;
     return arrayWithPosts;
 }
 
-////////////////////////////////////////////////////////////////////////////while so because we have two projects))
-- (NSArray*)obtainRowsFromTableNamedPostsWithReason :(NSInteger) reason andNetworkType :(NSInteger) networkType {
+- (NSArray*)obtainRowsFromTableNamedPostsWithReason :(ReasonType) reason andNetworkType :(NetworkType) networkType {
     
     NSMutableArray *arrayWithPosts = [NSMutableArray new];
-    NSString *qsql=[NSString stringWithFormat:@"SELECT * FROM %@ WHERE reason=\"%ld\" AND networkType=\"%ld\"",@"Posts",(long)reason,(long)networkType];
+    NSString *requestString = nil;
+    if (reason == AllReasons) {
+         requestString=[NSString stringWithFormat:@"SELECT * FROM %@ WHERE networkType=\"%ld\"",@"Posts",(long)networkType];
+    } else if(networkType == AllNetworks){
+        requestString=[NSString stringWithFormat:@"SELECT * FROM %@ WHERE reason=\"%ld\"",@"Posts",(long)reason];
+    } else {
+         requestString=[NSString stringWithFormat:@"SELECT * FROM %@ WHERE reason=\"%ld\" AND networkType=\"%ld\"",@"Posts",(long)reason,(long)networkType];
+    }
     sqlite3_stmt *statement = nil;
     
-    if(sqlite3_prepare_v2(_database, [qsql UTF8String], -1, &statement, nil) == SQLITE_OK)
+    if(sqlite3_prepare_v2(_database, [requestString UTF8String], -1, &statement, nil) == SQLITE_OK)
     {
         while (sqlite3_step(statement) == SQLITE_ROW)
         {

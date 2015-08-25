@@ -46,7 +46,7 @@
 #warning "Twice?"
     [self initiationArrayOfShareReason];
     [self initiationArrayOfActiveSocialNetwork];
-    self.arrayPosts = [NSArray arrayWithArray: [[DataBaseManager sharedManager] obtainAllRowsFromTableNamedPosts]];
+    self.arrayPosts = [NSArray arrayWithArray: [[DataBaseManager sharedManager] obtainAllPosts]];
     [self.tableView reloadData];
 
 }
@@ -212,7 +212,7 @@
         default:
             break;
     }
-    self.arrayPosts = [[DataBaseManager sharedManager] filterPostsWithReason: self.predicateReason andNetworkType: self.predicateNetworkType];
+//    self.arrayPosts = [[DataBaseManager sharedManager] filterPostsWithReason: self.predicateReason andNetworkType: self.predicateNetworkType];
     [self.tableView reloadData];
 
     
