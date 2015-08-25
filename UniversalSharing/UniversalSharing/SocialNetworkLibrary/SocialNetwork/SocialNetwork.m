@@ -98,7 +98,7 @@
 
 - (void) removeImagesOfPostFromDocumentsFolder :(NSString*) userId {
    __block NSError *error;
-     NSArray *arrayWithPostsOfUser = [[DataBaseManager sharedManager] obtainAllRowsFromTableNamedPostsWithUserId:userId];
+     NSArray *arrayWithPostsOfUser = [[DataBaseManager sharedManager] obtainAllPostsWithUserId:userId];
     [arrayWithPostsOfUser enumerateObjectsUsingBlock:^(Post *post, NSUInteger idx, BOOL *stop) {
         
         [post.arrayImagesUrl enumerateObjectsUsingBlock:^(NSString *urlImage, NSUInteger idx, BOOL *stop) {

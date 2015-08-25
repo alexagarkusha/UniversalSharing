@@ -14,9 +14,7 @@
 
 #warning "why database in h file?"
 
-@interface DataBaseManager : NSObject {
-    sqlite3 *_database;
-}
+@interface DataBaseManager : NSObject 
 
 + (DataBaseManager*)sharedManager;
 
@@ -28,9 +26,9 @@
 
 - (NSMutableArray*)obtainAllUsers;
 - (NSMutableArray*)obtainAllPosts;
-- (NSMutableArray*)obtainAllRowsFromTableNamedPostsWithUserId :(NSString*) userId;
+- (NSMutableArray*)obtainAllPostsWithUserId :(NSString*) userId;
 
-- (NSArray*)obtainRowsFromTableNamedPostsWithReason :(ReasonType) reason andNetworkType :(NetworkType) networkType;
+- (NSArray*)obtainPostsWithReason :(ReasonType) reason andNetworkType :(NetworkType) networkType;
 
 - (User*)obtainRowsFromTableNamedUsersWithNetworkType :(NSInteger) networkType;
 

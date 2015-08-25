@@ -49,7 +49,7 @@ static VKNetwork *model = nil;
     if (self) {
         self.networkType = VKontakt;
         self.name = musVKName;
-        if (![self isLoggedIn]) {
+        if (![VKNetwork isLoggedIn]) {
             [self initiationPropertiesWithoutSession];
         }
         else {
@@ -79,8 +79,8 @@ static VKNetwork *model = nil;
 /*!
  Checks if somebody logged in with SDK
 */
-#warning "check VK method +isLoggedIn"
-- (BOOL) isLoggedIn {
+//#warning "check VK method +isLoggedIn"
++ (BOOL) isLoggedIn {
     return [VKSdk wakeUpSession];
 }
 
@@ -103,7 +103,7 @@ static VKNetwork *model = nil;
 
 - (void) loginWithComplition :(Complition) block {
     self.copyComplition = block;
-    if (![self isLoggedIn])
+    if (![VKNetwork isLoggedIn])
     {
         [VKSdk authorize:@[VK_PER_NOHTTPS, VK_PER_OFFLINE, VK_PER_PHOTOS, VK_PER_WALL, VK_PER_EMAIL]];
     }
