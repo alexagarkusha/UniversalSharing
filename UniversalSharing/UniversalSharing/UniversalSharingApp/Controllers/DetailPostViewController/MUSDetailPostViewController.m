@@ -27,11 +27,6 @@
 @property (nonatomic, assign) CGRect tableViewFrame;
 @property (nonatomic, strong) SocialNetwork *currentSocialNetwork;
 
-@property (nonatomic, assign) CGFloat heightOfGalleryWithPhotosRow;
-@property (nonatomic, assign) CGFloat heightOfCommentsAndLikeRow;
-@property (nonatomic, assign) CGFloat heightOfPostDescriptionRow;
-@property (nonatomic, assign) CGFloat heightOfPostLocationRow;
-
 @property (nonatomic, strong) NSString *placeName;
 @property (nonatomic, strong) NSString *placeID;
 @property (nonatomic, assign) CLLocationCoordinate2D currentLocationOfPost;
@@ -206,17 +201,14 @@
             MUSGalleryOfPhotosCell *cell = [tableView dequeueReusableCellWithIdentifier:[MUSGalleryOfPhotosCell cellID]];
             if(!cell) {
                 cell = [MUSGalleryOfPhotosCell galleryOfPhotosCell];
-            }
+            }            
             cell.delegate = self;
             cell.isEditableCell = self.isEditableTableView;
-            
             [cell configurationGalleryOfPhotosCellByArrayOfImages : self.arrayOfUsersPictures
                                                 andDateCreatePost : self.currentPost.dateCreate
                                                  withReasonOfPost : self.currentPost.reason
                                      andWithSocialNetworkIconName : self.currentSocialNetwork.icon
                                                           andUser : self.currentUser];
-     
-            [cell needsUpdateConstraints];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
             break;
@@ -266,23 +258,22 @@
     self.detailPostVC_CellType = indexPath.row;
     switch (self.detailPostVC_CellType) {
         case GalleryOfPhotosCellType:
-            self.heightOfGalleryWithPhotosRow =  [MUSGalleryOfPhotosCell heightForGalleryOfPhotosCell: self.arrayOfUsersPictures.count];
-            return self.heightOfGalleryWithPhotosRow;
+            return [MUSGalleryOfPhotosCell heightForGalleryOfPhotosCell: self.arrayOfUsersPictures.count];
             break;
         case CommentsAndLikesCellType:
-            self.heightOfCommentsAndLikeRow = [MUSCommentsAndLikesCell heightForCommentsAndLikesCell];
-            return self.heightOfCommentsAndLikeRow;
+            return [MUSCommentsAndLikesCell heightForCommentsAndLikesCell];;
             break;
         case PostDescriptionCellType:
-            self.heightOfPostDescriptionRow = [MUSPostDescriptionCell heightForPostDescriptionCell: self.postDescription];
-            if (self.heightOfPostDescriptionRow < 100 && self.isEditableTableView) {
-                self.heightOfPostDescriptionRow = 100;
+        {
+            CGFloat heightOfPostDescriptionRow = [MUSPostDescriptionCell heightForPostDescriptionCell: self.postDescription];
+            if (heightOfPostDescriptionRow < 100 && self.isEditableTableView) {
+                heightOfPostDescriptionRow = 100;
             }
-            return self.heightOfPostDescriptionRow;
+            return heightOfPostDescriptionRow;
             break;
+        }
         default:
-            self.heightOfPostLocationRow = [MUSPostLocationCell heightForPostLocationCell];
-            return self.heightOfPostLocationRow;
+            return [MUSPostLocationCell heightForPostLocationCell];
             break;
     }
 }
@@ -298,8 +289,6 @@
     if ([[segue identifier] isEqualToString:goToLocationViewControllerSegueIdentifier]) {
         locationTableViewController = [segue destinationViewController];
         [locationTableViewController setCurrentUser:_currentSocialNetwork];
-        
-        
         __weak MUSDetailPostViewController *weakSelf = self;
         locationTableViewController.placeComplition = ^(Place* result, NSError *error) {
             /*
@@ -340,7 +329,7 @@
 - (void) arrayOfImagesOfUser:(NSArray *)arrayOfImages {
     
     if (!arrayOfImages.firstObject) {
-        self.arrayOfUsersPictures = nil;
+        [self.arrayOfUsersPictures removeAllObjects];
         [self.tableView reloadData];
         return;
     }
@@ -373,7 +362,7 @@
     CGRect initialFrame = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     CGRect convertedFrame = [self.view convertRect:initialFrame fromView:nil];
     CGRect tvFrame = _tableView.frame;
-    tvFrame.size.height = convertedFrame.origin.y /*- self.tabBarController.tabBar.frame.size.height*/;
+    tvFrame.size.height = convertedFrame.origin.y - self.tabBarController.tabBar.frame.size.height - 16;
     _tableView.frame = tvFrame;
     
 }
@@ -415,7 +404,7 @@
 - (void) showAlertWithMessage : (NSString*) message {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle : musErrorWithDomainUniversalSharing
                                                     message : message
-                                                   delegate : self
+                                                   delegate : nil
                                           cancelButtonTitle : musAppButtonTitle_OK
                                           otherButtonTitles : nil];
     [alert show];

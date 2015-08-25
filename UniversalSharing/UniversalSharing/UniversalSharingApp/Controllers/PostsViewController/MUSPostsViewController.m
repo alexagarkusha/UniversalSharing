@@ -17,6 +17,8 @@
 @interface MUSPostsViewController () <DOPDropDownMenuDataSource, DOPDropDownMenuDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) NSArray *arrayPosts;
+@property (nonatomic, strong) NSArray *arrayOfUsers;
+
 @property (nonatomic, strong) NSArray *arrayOfShareReason;
 @property (nonatomic, strong) NSMutableArray *arrayOfActiveSocialNetwork;
 @property (nonatomic, strong) DOPDropDownMenu *menu;
@@ -44,7 +46,6 @@
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear : YES];
 #warning "Twice?"
-    [self initiationArrayOfShareReason];
     [self initiationArrayOfActiveSocialNetwork];
     self.arrayPosts = [NSArray arrayWithArray: [[DataBaseManager sharedManager] obtainAllPosts]];
     [self.tableView reloadData];
@@ -74,6 +75,7 @@
         UITableView *tableView = [[UITableView alloc] initWithFrame: CGRectMake(0,  [UIApplication sharedApplication].statusBarFrame.size.height + self.navigationController.navigationBar.frame.size.height + self.menu.frame.size.height, screenSize.width, screenSize.height - self.menu.frame.origin.y - self.menu.frame.size.height - self.tabBarController.tabBar.frame.size.height)];
         tableView.dataSource = self;
         tableView.delegate = self;
+        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [self.view addSubview:tableView];
         tableView;
     });
@@ -88,10 +90,15 @@
 #pragma mark initiation ArrayOfPostsType
 
 - (void) initiationArrayOfActiveSocialNetwork {
-#warning "???"
     self.arrayOfActiveSocialNetwork = [[NSMutableArray alloc] init];
     [self.arrayOfActiveSocialNetwork addObject: @"All social networks"];
-    NSArray *arrayWithNetworks = @[@(Twitters), @(VKontakt), @(Facebook)];
+    self.arrayOfUsers = [[DataBaseManager sharedManager] obtainAllRowsFromTableNamedUsers];
+    NSMutableArray *arrayWithNetworks = [[NSMutableArray alloc] init];
+    for (int i = 0; i < self.arrayOfUsers.count; i++) {
+        User *currentUser = [self.arrayOfUsers objectAtIndex: i];
+        [arrayWithNetworks addObject: @(currentUser.networkType)];
+    }
+//#warning "???"
     __weak MUSPostsViewController *weakSelf = self;
     [[[SocialManager sharedManager] networks: arrayWithNetworks] enumerateObjectsUsingBlock:^(SocialNetwork *socialNetwork, NSUInteger index, BOOL *stop) {
         if (socialNetwork.isLogin) {
@@ -99,7 +106,6 @@
         }
         
     }];
-    
     
 }
 
@@ -139,8 +145,8 @@
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-#warning "Cell knows it size"
-    return 98;
+//#warning "Cell knows it size"
+    return [MUSPostCell heightForPostCell];
 }
 
 

@@ -13,6 +13,7 @@
 
 + (NSString*) cellID;
 + (instancetype) postCell;
++ (CGFloat) heightForPostCell;
 
 - (void) configurationPostCell: (Post*) currentPost;
 

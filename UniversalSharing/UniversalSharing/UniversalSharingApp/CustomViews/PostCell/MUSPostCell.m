@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *numberOfLikes;
 @property (weak, nonatomic) IBOutlet UILabel *reasonOfPost;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint* postDescriptionLeftConstraint;
+@property (weak, nonatomic) IBOutlet UIImageView *backGroundImageView;
 
 
 @end
@@ -38,6 +39,12 @@
     [self.numberOfComments sizeToFit];
     [self.numberOfLikes sizeToFit];
     
+    self.backGroundImageView.layer.masksToBounds = YES;
+    self.backGroundImageView.layer.cornerRadius = 30;
+    //self.backGroundImageView.clipsToBounds = YES;
+    self.backGroundImageView.layer.borderWidth = 2.0;
+    self.backGroundImageView.layer.borderColor = [UIColor colorWithRed: 255.0/255.0 green: 255.0/255.0 blue: 100.0/255.0 alpha: 1.0].CGColor;
+
     // Initialization code
 }
 
@@ -59,11 +66,14 @@
     return nibArray[0];
 }
 
++ (CGFloat) heightForPostCell {
+    return 100;
+}
+
 - (void) configurationPostCell: (Post*) currentPost {
     if (!currentPost.arrayImages) {
         self.firstImageOfPost.hidden = YES;
         self.postDescriptionLeftConstraint.constant = 8;
-        //self.firstImageOfPost.image = [UIImage imageNamed: musAppImage_Name_NoneImage];
     } else if (currentPost.arrayImages.count == 1) {
         ImageToPost *imageToPost = [currentPost.arrayImages firstObject];
         self.firstImageOfPost.image = imageToPost.image;

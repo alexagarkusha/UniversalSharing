@@ -10,10 +10,12 @@
 #import "MUSCollectionViewCell.h"
 #import "ConstantsApp.h"
 #import "UIImageView+MUSLoadImageFromDataBase.h"
+#import "UIImageView+RoundImage.h"
 #import "UIButton+MUSEditableButton.h"
 #import "MUSPhotoManager.h"
 #import "MUSGalleryViewOfPhotos.h"
 #import "UILabel+CornerRadiusLabel.h"
+#import "NSString+DateStringFromUNIXTimestamp.h"
 
 @interface MUSGalleryOfPhotosCell () <MUSGalleryViewOfPhotosDelegate>
 
@@ -24,8 +26,12 @@
 @property (weak, nonatomic) IBOutlet UIButton *addPhotoButtonOutlet;
 @property (weak, nonatomic) IBOutlet MUSGalleryViewOfPhotos *galleryViewOfPhotos;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *addButtonButtomConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *galleryViewOfPhotosButtomConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *galleryViewOfPhotosTopConstraint;
 
-@property (strong, nonatomic)  NSMutableArray *arrayWithImages;
+
+
+@property (strong, nonatomic) NSMutableArray *arrayWithImages;
 @property (assign, nonatomic) BOOL isEditableGallery;
 @property (strong, nonatomic) User *currentUser;
 @property (assign, nonatomic) ReasonType reasonType;
@@ -70,8 +76,8 @@
     }
 }
 
-
 - (void) configurationGalleryOfPhotosCellByArrayOfImages: (NSMutableArray*) arrayOfImages andDateCreatePost:(NSString *)postDateCreate withReasonOfPost : (ReasonType) reasonOfPost andWithSocialNetworkIconName:(NSString *)socialNetworkIconName andUser: (User*)user {
+    
     [self checkGalleryOfPhotosStatus];
     self.currentUser = user;
     self.reasonType = reasonOfPost;
@@ -97,21 +103,16 @@
 
 #pragma mark initiation GalleryViewOfPhotos
 
-- (void) initiationGalleryViewOfPhotos { /////////// ERROR //////
-    
-        NSLog(@"Gallery view 1 x =%f, y=%f, w =%f, h=%f", self.galleryViewOfPhotos.frame.origin.x,
-          self.galleryViewOfPhotos.frame.origin.y, self.galleryViewOfPhotos.frame.size.width, self.galleryViewOfPhotos.frame.size.height);
-        NSLog(@"Gallery collection view 1 x =%f, y=%f, w =%f, h=%f", self.galleryViewOfPhotos.collectionView.frame.origin.x,
-          self.galleryViewOfPhotos.collectionView.frame.origin.y, self.galleryViewOfPhotos.collectionView.frame.size.width, self.galleryViewOfPhotos.collectionView.frame.size.height);
-        //self.galleryViewOfPhotos.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 150);
-        //self.galleryViewOfPhotos.collectionView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 150);
-    
+- (void) initiationGalleryViewOfPhotos {
+        self.galleryViewOfPhotos.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [MUSGalleryOfPhotosCell heightForGalleryOfPhotosCell: self.arrayWithImages.count]);
         self.galleryViewOfPhotos.delegate = self;
         self.galleryViewOfPhotos.collectionView.backgroundColor = [UIColor colorWithRed: 255.0/255.0 green: 251.0/255.0 blue: 241.0/255.0 alpha: 1.0];
         self.galleryViewOfPhotos.arrayOfPhotos = [NSMutableArray arrayWithArray: self.arrayWithImages];
-    
         [self.galleryViewOfPhotos isVisiblePageControl : YES];
         [self.galleryViewOfPhotos.collectionView reloadData];
+    if (self.arrayWithImages.count > 1 && self.isEditableCell) {
+        [self.galleryViewOfPhotos scrollCollectionViewToLastPhoto];
+    }
 }
 
 #pragma mark initiation UserNameLabel
@@ -132,8 +133,8 @@
 #pragma mark initiation UserDateOfPostLabel
 
 - (void) initiationUserDateOfPostLabel : (NSString*) dateOfPostCreate {
-    
-    self.dateOfPostLabel.text = [self timeInDoubleFormatte: [dateOfPostCreate integerValue]];
+    NSString *date = [[NSString alloc] init];
+    self.dateOfPostLabel.text = [date dateStringFromUNIXTimestamp:[dateOfPostCreate integerValue]];
     [self.dateOfPostLabel sizeToFit];
 }
 
@@ -141,6 +142,10 @@
 
 - (void) initiationUserPhotoImageView : (NSString*) socialNetworkIconName {
     [self.userPhotoImageView loadImageFromDataBase: socialNetworkIconName];
+    [self.userPhotoImageView roundImageView];
+    self.userPhotoImageView.clipsToBounds = YES;
+    self.userPhotoImageView.layer.borderWidth = 2.0;
+    self.userPhotoImageView.layer.borderColor = [UIColor whiteColor].CGColor;
 }
 
 #pragma mark initiation ReasonOfPostLabel
@@ -167,17 +172,7 @@
     return nil;
 }
 
-
-#warning "Can be category"
-
-- (NSString*) timeInDoubleFormatte: (double) dateInDouble {
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970: dateInDouble];
-    NSDateFormatter *formatDate = [[NSDateFormatter alloc] init];
-    [formatDate setDateFormat:@"MMMM dd, yyyy"];
-    NSString *dateStr = [formatDate stringFromDate:date];
-    return dateStr;
-}
-
+//#warning "Can be category"
 
 #pragma mark - UIButton
 

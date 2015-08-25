@@ -49,7 +49,6 @@ static SocialManager *model = nil;
         [arrayWithNetworks addObject:[SocialNetwork sharedManagerWithType: [arrayWithNetwork[currentIndex] integerValue]]];
         
     }];
-    
     return arrayWithNetworks;
 }
 

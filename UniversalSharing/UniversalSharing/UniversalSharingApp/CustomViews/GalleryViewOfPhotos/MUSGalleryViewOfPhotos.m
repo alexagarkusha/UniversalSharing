@@ -48,14 +48,12 @@
     self.photoPageControl.hidden = YES;
 }
 
-#pragma mark <UICollectionViewDataSource>
+#pragma mark UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     self.photoPageControl.numberOfPages = self.arrayOfPhotos.count;
     
     NSLog(@"view.width = %f", self.view.frame.size.width);
-    
-    
     return self.arrayOfPhotos.count;
 }
 
@@ -66,7 +64,7 @@
     return  cell;
 }
 
-#pragma mark <UICollectionViewDelegate>
+#pragma mark UICollectionViewDelegate
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -82,6 +80,13 @@
 }
 
 
+- (void) scrollCollectionViewToLastPhoto {
+    NSInteger section = [self.collectionView numberOfSections] - 1 ;
+    NSInteger item = [self.collectionView numberOfItemsInSection:section] - 1 ;
+    NSIndexPath *lastIndexPath = [NSIndexPath indexPathForItem:item inSection:section] ;
+    [self.collectionView scrollToItemAtIndexPath:lastIndexPath atScrollPosition:(UICollectionViewScrollPositionRight) animated:YES];
+}
+
 
 
 #pragma mark - UIScrollViewDelegate
@@ -91,8 +96,6 @@
     CGFloat pageWidth = self.collectionView.frame.size.width;
     self.photoPageControl.currentPage = (self.collectionView.contentOffset.x + pageWidth / 2) / pageWidth;
 }
-
-
 
 
 #pragma mark - Edit Gallery
