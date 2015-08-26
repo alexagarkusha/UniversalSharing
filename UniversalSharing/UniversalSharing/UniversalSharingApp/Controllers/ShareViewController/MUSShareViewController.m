@@ -88,7 +88,8 @@
  @property
  @abstract in order to get place id from locationViewController and pass to network for location of a user
  */
-@property (strong, nonatomic)               NSString *placeID;
+//@property (strong, nonatomic)               NSString *placeID;
+@property (strong, nonatomic)               Place *place;
 
 @property (strong, nonatomic)               UIBezierPath *exclusivePath;
 @property (strong, nonatomic)               UITextView *messageTextView;
@@ -122,7 +123,7 @@
     if (!_currentSocialNetwork) {
         _currentSocialNetwork = [SocialManager currentSocialNetwork];
     }
-    [self.changeSocialNetworkButton initiationSocialNetworkButtonForSocialNetwork: nil];
+    [self.changeSocialNetworkButton initiationSocialNetworkButtonForSocialNetwork: [SocialManager currentSocialNetwork]];
     self.mainGestureRecognizer.enabled = NO;
 }
 
@@ -317,7 +318,7 @@
     if(!self.post) {
         self.post = [[Post alloc] init];
     }
-        self.post.placeID = self.placeID;
+        self.post.place = self.place;
         if (![self.messageTextView.text isEqualToString: kPlaceholderText]) {
             self.post.postDescription = self.messageTextView.text;
         } else {
@@ -450,7 +451,7 @@
          */
         _currentSocialNetwork = [self.socialNetworkAccountsArray objectAtIndex: buttonIndex - 1];
         [self.shareLocationButton setTintColor: [UIColor blackColor]];
-        self.placeID = @"";
+        //self.placeID = @"";
         [self.changeSocialNetworkButton initiationSocialNetworkButtonForSocialNetwork:_currentSocialNetwork];
     }
 }
@@ -519,7 +520,7 @@
              back place object and we get id for network
              */
             if (result) {
-                weakSelf.placeID = result.placeID;
+                weakSelf.place = result;
                 [self.shareLocationButton setTintColor: [UIColor redColor]];
             }
         };

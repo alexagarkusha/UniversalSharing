@@ -10,6 +10,7 @@
 #import "MUSSocialNetworkLibraryConstants.h"
 #import "User.h"
 #import "Post.h"
+#import "Place.h"
 #import <sqlite3.h>
 
 @interface DataBaseManager : NSObject 
@@ -29,12 +30,5 @@
 //===
 - (void)deletePostByUserId :(NSString*) userId;
 - (void)deleteUserByClientId :(NSString*) clientId;
-
-
-// maybe come in handy when something would be changed
-
-//- (void)deletePostByPrimeryId :(NSInteger) primeryId;
-//- (void) updateUserIsVisible : (User*) user;
-//- (void)deleteUserByPrimeryId :(NSInteger) primeryId;
 
 @end

@@ -120,7 +120,7 @@
         }
     }
     self.postDescription = self.currentPost.postDescription;
-    self.currentLocationOfPost = CLLocationCoordinate2DMake([self.currentPost.latitude floatValue], [self.currentPost.longitude floatValue]);
+//    self.currentLocationOfPost = CLLocationCoordinate2DMake([self.currentPost.latitude floatValue], [self.currentPost.longitude floatValue]);
 }
 
 #pragma mark UIActionSheet
@@ -156,8 +156,8 @@
     self.currentPost.postDescription = self.postDescription;
     self.currentPost.placeID = self.placeID;
     //self.currentPost.placeName = self.placeName;
-    self.currentPost.latitude = [NSString stringWithFormat: @"%f", self.currentLocationOfPost.latitude];
-    self.currentPost.longitude = [NSString stringWithFormat: @"%f", self.currentLocationOfPost.latitude];
+//    self.currentPost.latitude = [NSString stringWithFormat: @"%f", self.currentLocationOfPost.latitude];
+//    self.currentPost.longitude = [NSString stringWithFormat: @"%f", self.currentLocationOfPost.latitude];
     NSMutableArray *arrayOfImagesToPost = [[NSMutableArray alloc] init];
     
     for (int i = 0; i < self.arrayOfUsersPictures.count; i++) {

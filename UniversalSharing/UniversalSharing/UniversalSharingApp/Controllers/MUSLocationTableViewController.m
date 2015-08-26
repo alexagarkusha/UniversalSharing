@@ -28,6 +28,8 @@
  */
 @property (strong, nonatomic) NSString *stringDistance;
 
+/////////////////////////////////////////////////
+@property (strong, nonatomic) Location *currentLocation;
 @end
 
 @implementation MUSLocationTableViewController
@@ -58,15 +60,15 @@
     [[MUSLocationManager sharedManager] startTrackLocationWithComplition:^(id result, NSError *error) {
         if ([result isKindOfClass:[CLLocation class]]) {
             CLLocation* location = result;
-            Location *currentLocation = [[Location alloc] init];
-            currentLocation.longitude = [NSString stringWithFormat: @"%f",location.coordinate.longitude];
-            currentLocation.latitude = [NSString stringWithFormat: @"%f",location.coordinate.latitude];
-            currentLocation.type = @"place";
-            currentLocation.q = @"";
-            currentLocation.distance = self.stringDistance;
+            self.currentLocation = [[Location alloc] init];
+            self.currentLocation.longitude = [NSString stringWithFormat: @"%f",location.coordinate.longitude];
+            self.currentLocation.latitude = [NSString stringWithFormat: @"%f",location.coordinate.latitude];
+            self.currentLocation.type = @"place";
+            self.currentLocation.q = @"";
+            self.currentLocation.distance = self.stringDistance;
             __weak MUSLocationTableViewController *weakSelf = self;
             
-            [_currentSocialNetwork obtainArrayOfPlaces:currentLocation withComplition:^(NSMutableArray *places, NSError *error) {
+            [_currentSocialNetwork obtainArrayOfPlaces:self.currentLocation withComplition:^(NSMutableArray *places, NSError *error) {
                 weakSelf.arrayLocations = places;
                 [weakSelf.tableView reloadData];
             }];            }
