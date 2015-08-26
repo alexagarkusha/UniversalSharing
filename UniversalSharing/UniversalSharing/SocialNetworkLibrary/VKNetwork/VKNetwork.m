@@ -236,7 +236,7 @@ static VKNetwork *model = nil;
 
 - (void) sharePost : (Post*) post withComplition : (Complition) block {
     if (![self obtainCurrentConnection]){
-        [self savePostDataBaseWithReason:Offline andPost:post];
+        [self saveOrUpdatePost: post withReason: Offline];
         block(nil,[self errorConnection]);
         return;
     }
@@ -268,8 +268,10 @@ static VKNetwork *model = nil;
     
     [request executeWithResultBlock: ^(VKResponse *response) {
         self.copyComplition (musPostSuccess, nil);
+        [self saveOrUpdatePost: post withReason: Connect];
     } errorBlock: ^(NSError *error) {
         self.copyComplition (nil, [self errorVkontakte]);
+        [self saveOrUpdatePost: post withReason: ErrorConnection];
     }];
     
 }
@@ -319,8 +321,9 @@ static VKNetwork *model = nil;
         VKRequest *postRequest = [[VKApi wall] post: parameters];
         [postRequest executeWithResultBlock: ^(VKResponse *response) {
             self.copyComplition (musPostSuccess, nil);
+            [self saveOrUpdatePost: post withReason: Connect];
         } errorBlock: ^(NSError *error) {
-            self.copyComplition (nil, [self errorVkontakte]);
+            [self saveOrUpdatePost: post withReason: ErrorConnection];
         }];
     } errorBlock: ^(NSError *error) {
         self.copyComplition (nil, [self errorVkontakte]);

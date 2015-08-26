@@ -27,8 +27,8 @@
 @property (nonatomic, strong) NSMutableArray *arrayOfUsersPictures;
 @property (nonatomic, assign) CGRect tableViewFrame;
 @property (nonatomic, strong) SocialNetwork *currentSocialNetwork;
+@property (nonatomic, strong) Place *postPlace;
 @property (nonatomic, strong) NSString *placeName;
-@property (nonatomic, strong) NSString *placeID;
 @property (nonatomic, assign) CLLocationCoordinate2D currentLocationOfPost;
 @property (nonatomic, assign) BOOL isEditableTableView;
 
@@ -120,7 +120,7 @@
         }
     }
     self.postDescription = self.currentPost.postDescription;
-//    self.currentLocationOfPost = CLLocationCoordinate2DMake([self.currentPost.latitude floatValue], [self.currentPost.longitude floatValue]);
+    self.postPlace = self.currentPost.place;
 }
 
 #pragma mark UIActionSheet
@@ -154,10 +154,8 @@
 
 - (void) updatePost {
     self.currentPost.postDescription = self.postDescription;
-    self.currentPost.placeID = self.placeID;
-    //self.currentPost.placeName = self.placeName;
-//    self.currentPost.latitude = [NSString stringWithFormat: @"%f", self.currentLocationOfPost.latitude];
-//    self.currentPost.longitude = [NSString stringWithFormat: @"%f", self.currentLocationOfPost.latitude];
+    self.currentPost.place = self.postPlace;
+
     NSMutableArray *arrayOfImagesToPost = [[NSMutableArray alloc] init];
     
     for (int i = 0; i < self.arrayOfUsersPictures.count; i++) {
@@ -206,10 +204,19 @@
 
 
 - (void) sentPost {
-    // 1) Обновить пост
-    // 2) Есть ли проверка на создан такой пост уже или нет
-    // 3) Оправка поста и обновление должны происходить только в библиотеке
-    NSLog(@"Send Post");
+    [self updatePost];
+    [self deletePostImagesFromDocumentsFolder: self.currentPost];
+    [self saveImageToDocumentsFolderAndFillArrayWithUrl : self.currentPost];
+    
+    
+    
+    [_currentSocialNetwork sharePost: self.currentPost withComplition:^(id result, NSError *error) {
+        if (!error) {
+            [self showAlertWithMessage : titleCongratulatoryAlert];
+        } else {
+            [self showErrorAlertWithError : error];
+        }
+    }];
 }
 
 #pragma mark BackToThePostsViewController
@@ -226,7 +233,11 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
+    if (!self.currentPost.place && !self.isEditableTableView) {
+        return 3;
+    } else {
+        return 4;
+    }
 }
 
 
@@ -280,7 +291,7 @@
             cell.isEditableCell = self.isEditableTableView;
             cell.delegate = self;
             cell.isEditableCell = self.isEditableTableView;
-            [cell configurationPostLocationCellByPost: self.currentPost];
+            [cell configurationPostLocationCellByPostPlace: self.postPlace];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
             break;
@@ -331,8 +342,8 @@
              back place object and we get id for network
              */
             if (result) {
-                weakSelf.placeID = result.placeID;
-                weakSelf.placeName = result.fullName;
+                weakSelf.postPlace = result;
+                [weakSelf.tableView reloadData];
             }
         };
     }

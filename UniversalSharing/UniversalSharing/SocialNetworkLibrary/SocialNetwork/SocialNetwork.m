@@ -123,8 +123,24 @@
 - (void) savePostDataBaseWithReason :(ReasonType) reason andPost :(Post*) post {
     post.reason = reason;
     [self saveImageToDocumentsFolderAndFillArrayWithUrl:post];
-    
 }
+
+- (void) updatePostDataBaseWithReason :(ReasonType) reason andPost :(Post*) post {
+    post.reason = reason;
+    [[DataBaseManager sharedManager] editPost: post];
+}
+
+- (void) saveOrUpdatePost : (Post*) post withReason : (ReasonType) reason {
+    if (!post.primaryKey) {
+        [self savePostDataBaseWithReason: reason andPost: post];
+    } else {
+        [self updatePostDataBaseWithReason: reason andPost: post];
+    }
+}
+
+
+
+
 - (NSError*) errorConnection {
     return [NSError errorWithMessage: @"ErrorConnection" andCodeError: 1009];
 }

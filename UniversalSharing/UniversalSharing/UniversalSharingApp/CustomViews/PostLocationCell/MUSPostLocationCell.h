@@ -23,6 +23,6 @@
 + (CGFloat) heightForPostLocationCell;
 
 
-- (void) configurationPostLocationCellByPost: (Post*) currentPost;
+- (void) configurationPostLocationCellByPostPlace: (Place *) currentPlace;
 
 @end

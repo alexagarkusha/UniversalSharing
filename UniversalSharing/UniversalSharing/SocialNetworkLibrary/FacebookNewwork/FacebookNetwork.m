@@ -201,7 +201,7 @@ static FacebookNetwork *model = nil;
 - (void) sharePost:(Post *)post withComplition:(Complition)block {
     
     if (![self obtainCurrentConnection]){
-        [self savePostDataBaseWithReason:Offline andPost:post];
+        [self saveOrUpdatePost: post withReason: Offline];
         block(nil,[self errorConnection]);
         return;
     }
@@ -254,11 +254,10 @@ static FacebookNetwork *model = nil;
      ^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
          if (!error) {
              self.copyComplition (musPostSuccess, nil);
-             [self savePostDataBaseWithReason:Connect andPost:post];
-
+             [self saveOrUpdatePost: post withReason: Connect];
          } else {
              if ([error code] != 8){
-                 [self savePostDataBaseWithReason:ErrorConnection andPost:post];
+                 [self saveOrUpdatePost: post withReason: ErrorConnection];
                  self.copyComplition (nil, [self errorFacebook]);
              }
          }
@@ -295,9 +294,9 @@ static FacebookNetwork *model = nil;
                  if (counterOfImages == copyPostImagesArray.count) {
                      if (!error) {
                          self.copyComplition (musPostSuccess, nil);
-                         [self savePostDataBaseWithReason:Connect andPost:post];
+                         [self saveOrUpdatePost: post withReason: Connect];
                      } else {
-                         [self savePostDataBaseWithReason:ErrorConnection andPost:post];
+                         [self saveOrUpdatePost: post withReason: ErrorConnection];
                          self.copyComplition (nil, [self errorFacebook]);
                      }
                  }
@@ -313,8 +312,6 @@ static FacebookNetwork *model = nil;
 - (NSError*) errorFacebook {
     return [NSError errorWithMessage: musFacebookError andCodeError: musFacebookErrorCode];
 }
-
-
 
 
 @end

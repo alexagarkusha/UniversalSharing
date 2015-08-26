@@ -19,6 +19,8 @@
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
 @property (nonatomic, strong) id<MKAnnotation> lastAnnotation;
+@property (weak, nonatomic) IBOutlet UIView *addLocationView;
+
 
 - (IBAction)changeLocationButtonTouch:(id)sender;
 
@@ -59,26 +61,30 @@
     return musAppDetailPostVC_HeightOfPostLocationCell;
 }
 
-- (void) configurationPostLocationCellByPost:(Post *)currentPost {
+- (void) configurationPostLocationCellByPostPlace: (Place *) currentPlace {
     //CLLocationCoordinate2D currentCityLocation = CLLocationCoordinate2DMake(<#CLLocationDegrees latitude#>, <#CLLocationDegrees longitude#>)
     [self checkChangeLocationButtonStatus];
-    
-    
-    /*
-    if (currentPost.placeName) {
-        self.placeNameLabel.hidden = NO;
-        self.placeNameLabel.text = [NSString stringWithFormat: currentPost.placeName];
-    }
-    */
-    
+    if (!currentPlace) {
+        
+    } else {
+        self.addLocationView.hidden = YES;
+        if (currentPlace.fullName) {
+            self.placeNameLabel.hidden = NO;
+            self.placeNameLabel.text = [NSString stringWithFormat: @"%@", currentPlace.fullName];
+        }
 #warning "add pin every time"
-    CLLocationCoordinate2D currentCityLocation = CLLocationCoordinate2DMake(48.450063, 34.982602);
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(currentCityLocation, 400, 400);
-    MUSAnnotation *pin = [[MUSAnnotation alloc] init];
-    pin.title = @"Some house";
-    pin.coordinate = currentCityLocation;
-    [self.mapView setRegion:region animated:YES];
-    [self.mapView addAnnotation:pin];
+        CLLocationCoordinate2D currentCityLocation = CLLocationCoordinate2DMake([currentPlace.latitude floatValue], [currentPlace.longitude floatValue]);
+        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(currentCityLocation, 400, 400);
+        
+        
+        
+        MUSAnnotation *pin = [[MUSAnnotation alloc] init];
+        pin.title = currentPlace.fullName;
+        pin.coordinate = currentCityLocation;
+        [self.mapView setRegion:region animated:YES];
+        [self.mapView removeAnnotation:pin];
+        [self.mapView addAnnotation:pin];
+    }
 }
 
 - (void) checkChangeLocationButtonStatus {

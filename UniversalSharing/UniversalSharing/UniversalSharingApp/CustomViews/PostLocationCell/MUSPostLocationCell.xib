@@ -22,7 +22,7 @@
                         </connections>
                     </mapView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Place name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="s2W-iQ-k2g">
-                        <rect key="frame" x="8" y="8" width="212" height="21"/>
+                        <rect key="frame" x="8" y="120" width="212" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="hDe-O1-JUR"/>
                             <constraint firstAttribute="width" constant="212" id="wCb-hk-Llr"/>
@@ -31,6 +31,18 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Loz-Pa-Uz7">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="150"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Add location to your Post" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3cX-aj-nKp">
+                                <rect key="frame" x="32" y="53" width="257" height="43"/>
+                                <fontDescription key="fontDescription" name="SavoyeLetPlain" family="Savoye LET" pointSize="31"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="0.94161536938157897" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7hm-f2-P8D">
                         <rect key="frame" x="272" y="55" width="35" height="35"/>
                         <color key="backgroundColor" red="1" green="0.98607067339999999" blue="0.94532415430000005" alpha="1" colorSpace="calibratedRGB"/>
@@ -48,14 +60,18 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="7hm-f2-P8D" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="47" id="1xq-gP-kZt"/>
-                    <constraint firstItem="s2W-iQ-k2g" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="If2-iJ-EHQ"/>
+                    <constraint firstItem="s2W-iQ-k2g" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="2sR-iF-zd7"/>
                     <constraint firstAttribute="trailingMargin" secondItem="7hm-f2-P8D" secondAttribute="trailing" constant="5" id="MQg-sM-CP6"/>
                     <constraint firstAttribute="centerY" secondItem="7hm-f2-P8D" secondAttribute="centerY" constant="2" id="NDs-xA-WP8"/>
                     <constraint firstItem="0Bv-6Z-rPl" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="QMt-bt-1Be"/>
+                    <constraint firstItem="Loz-Pa-Uz7" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Qsw-9t-2sF"/>
                     <constraint firstItem="s2W-iQ-k2g" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="Qxg-v9-keY"/>
                     <constraint firstItem="7hm-f2-P8D" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" constant="-5" id="Zye-5m-udF"/>
+                    <constraint firstAttribute="trailing" secondItem="Loz-Pa-Uz7" secondAttribute="trailing" id="aXP-bV-kbQ"/>
                     <constraint firstAttribute="bottom" secondItem="0Bv-6Z-rPl" secondAttribute="bottom" constant="-1" id="bbK-7T-K8N"/>
+                    <constraint firstItem="Loz-Pa-Uz7" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="bsN-rH-yBg"/>
                     <constraint firstItem="0Bv-6Z-rPl" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="gzx-ky-3aT"/>
+                    <constraint firstAttribute="bottom" secondItem="Loz-Pa-Uz7" secondAttribute="bottom" constant="-1" id="mKr-h3-XW5"/>
                     <constraint firstAttribute="trailing" secondItem="0Bv-6Z-rPl" secondAttribute="trailing" id="pEk-LN-qUj"/>
                 </constraints>
                 <variation key="default">
@@ -66,6 +82,7 @@
                 </variation>
             </tableViewCellContentView>
             <connections>
+                <outlet property="addLocationView" destination="Loz-Pa-Uz7" id="C4f-eu-5M9"/>
                 <outlet property="changeLocationButtonOutlet" destination="7hm-f2-P8D" id="soH-OM-PWA"/>
                 <outlet property="mapView" destination="0Bv-6Z-rPl" id="LzN-QT-4Cj"/>
                 <outlet property="placeNameLabel" destination="s2W-iQ-k2g" id="fxj-6j-Zec"/>

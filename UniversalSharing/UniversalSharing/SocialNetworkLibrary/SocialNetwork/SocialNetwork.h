@@ -106,6 +106,11 @@
 
 - (void) removeUserFromDataBaseAndImageFromDocumentsFolder :(User*) user;
 - (BOOL) obtainCurrentConnection;
-- (void) savePostDataBaseWithReason :(ReasonType) reason andPost :(Post*) post;
+//- (void) savePostDataBaseWithReason :(ReasonType) reason andPost :(Post*) post;
+//- (void) updatePostDataBaseWithReason :(ReasonType) reason andPost :(Post*) post;
+- (void) saveOrUpdatePost : (Post*) post withReason : (ReasonType) reason;
+
+
+
 - (NSError*) errorConnection;
 @end

@@ -253,7 +253,7 @@ static TwitterNetwork *model = nil;
 
 - (void) sharePost:(Post *)post withComplition:(Complition)block {
     if (![self obtainCurrentConnection]){
-        [self savePostDataBaseWithReason:Offline andPost:post];
+        [self saveOrUpdatePost: post withReason: Offline];
         block(nil,[self errorConnection]);
         return;
     }
@@ -293,12 +293,10 @@ static TwitterNetwork *model = nil;
                     completion:^(NSURLResponse *urlResponse, NSData *responseData, NSError *error){
                         if(!error){
                             self.copyComplition (musPostSuccess, nil);
-                            [self savePostDataBaseWithReason:Connect andPost:post];
-
+                            [self saveOrUpdatePost: post withReason: Connect];
                         }else{
                             self.copyComplition (nil, [self errorTwitter]);
-                            [self savePostDataBaseWithReason:ErrorConnection andPost:post];
-
+                            [self saveOrUpdatePost: post withReason: ErrorConnection];
                         }
                     }];
 }
@@ -338,8 +336,7 @@ static TwitterNetwork *model = nil;
                                                            error: &error];
             if (error) {
                 self.copyComplition (nil, [self errorTwitter]);
-                [self savePostDataBaseWithReason:ErrorConnection andPost:post];
-
+                [self saveOrUpdatePost: post withReason: ErrorConnection];
                 return;
             }
             [client sendTwitterRequest : request
@@ -356,14 +353,12 @@ static TwitterNetwork *model = nil;
                                      }
                                      */
                                     self.copyComplition (musPostSuccess, nil);
-                                    [self savePostDataBaseWithReason:Connect andPost:post];
-
+                                    [self saveOrUpdatePost: post withReason: Connect];
                                 } else {
                                     NSError *connectionError = [NSError errorWithMessage: musErrorConnection
                                                                             andCodeError: musErrorConnectionCode];
                                     self.copyComplition (nil, connectionError);
-                                    [self savePostDataBaseWithReason:ErrorConnection andPost:post];
-
+                                    [self saveOrUpdatePost: post withReason: ErrorConnection];
                                     return;
                                 }
                             }];
