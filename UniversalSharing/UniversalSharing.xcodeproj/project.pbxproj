@@ -51,6 +51,7 @@
 		973D67AE1B69114C00A20D00 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 973D67AD1B69114C00A20D00 /* Post.m */; };
 		97903B581B7B983600FF24E7 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97903B571B7B983600FF24E7 /* CoreText.framework */; };
 		979164A81B8C60F500DFCE64 /* NSString+DateStringFromUNIXTimestamp.m in Sources */ = {isa = PBXBuildFile; fileRef = 979164A71B8C60F500DFCE64 /* NSString+DateStringFromUNIXTimestamp.m */; };
+		979164B41B8CADDA00DFCE64 /* UIImage+LoadImageFromDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 979164B31B8CADDA00DFCE64 /* UIImage+LoadImageFromDataBase.m */; };
 		97B2B54A1B87B387009FAB12 /* UIImageView+MUSLoadImageFromDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 97B2B5491B87B387009FAB12 /* UIImageView+MUSLoadImageFromDataBase.m */; };
 		97B98EDE1B874AA9006ADD26 /* Like.png in Resources */ = {isa = PBXBuildFile; fileRef = 97B98EDD1B874AA9006ADD26 /* Like.png */; };
 		97BF252B1B85BB8B00A4938E /* UIButton+MUSEditableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 97BF252A1B85BB8B00A4938E /* UIButton+MUSEditableButton.m */; };
@@ -181,6 +182,8 @@
 		97903B571B7B983600FF24E7 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		979164A61B8C60F500DFCE64 /* NSString+DateStringFromUNIXTimestamp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+DateStringFromUNIXTimestamp.h"; path = "UniversalSharing/UniversalSharingApp/Categories/NSString+DateStringFromUNIXTimestamp/NSString+DateStringFromUNIXTimestamp.h"; sourceTree = SOURCE_ROOT; };
 		979164A71B8C60F500DFCE64 /* NSString+DateStringFromUNIXTimestamp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+DateStringFromUNIXTimestamp.m"; path = "UniversalSharing/UniversalSharingApp/Categories/NSString+DateStringFromUNIXTimestamp/NSString+DateStringFromUNIXTimestamp.m"; sourceTree = SOURCE_ROOT; };
+		979164B21B8CADDA00DFCE64 /* UIImage+LoadImageFromDataBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+LoadImageFromDataBase.h"; path = "UniversalSharing/UniversalSharingApp/Categories/UIImage+LoadImageToPostFromDataBase/UIImage+LoadImageFromDataBase.h"; sourceTree = SOURCE_ROOT; };
+		979164B31B8CADDA00DFCE64 /* UIImage+LoadImageFromDataBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+LoadImageFromDataBase.m"; path = "UniversalSharing/UniversalSharingApp/Categories/UIImage+LoadImageToPostFromDataBase/UIImage+LoadImageFromDataBase.m"; sourceTree = SOURCE_ROOT; };
 		97B2B5481B87B387009FAB12 /* UIImageView+MUSLoadImageFromDataBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+MUSLoadImageFromDataBase.h"; sourceTree = "<group>"; };
 		97B2B5491B87B387009FAB12 /* UIImageView+MUSLoadImageFromDataBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+MUSLoadImageFromDataBase.m"; sourceTree = "<group>"; };
 		97B98EDD1B874AA9006ADD26 /* Like.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Like.png; sourceTree = "<group>"; };
@@ -410,6 +413,7 @@
 				30416A131B735328000CB2C2 /* UiButton+MUSSocialNetwork */,
 				97D1C44D1B8203ED00009BCF /* UILabel+CornerRadiusLabel */,
 				97CCC9D91B74AB4100E0FAC6 /* UIImage+ChangeScaleImage */,
+				979164B11B8CADA500DFCE64 /* UIImage+LoadImageFromDataBase */,
 				18BB29821B67E3F000B498AC /* UIImageView+LoadImageFromNetwork */,
 				97B2B5441B87A145009FAB12 /* UIImageView+LoadImageFromDataBase */,
 				18BB29851B67E3F000B498AC /* UIImageView+RoundImage */,
@@ -700,6 +704,16 @@
 				979164A71B8C60F500DFCE64 /* NSString+DateStringFromUNIXTimestamp.m */,
 			);
 			name = "NSString+DateStringFromUNIXTimestamp";
+			path = "UIButton+CornerRadiusButton";
+			sourceTree = "<group>";
+		};
+		979164B11B8CADA500DFCE64 /* UIImage+LoadImageFromDataBase */ = {
+			isa = PBXGroup;
+			children = (
+				979164B21B8CADDA00DFCE64 /* UIImage+LoadImageFromDataBase.h */,
+				979164B31B8CADDA00DFCE64 /* UIImage+LoadImageFromDataBase.m */,
+			);
+			name = "UIImage+LoadImageFromDataBase";
 			path = "UIButton+CornerRadiusButton";
 			sourceTree = "<group>";
 		};
@@ -1149,6 +1163,7 @@
 				30416A6A1B81D0E0000CB2C2 /* DataBaseManager.m in Sources */,
 				187FC5261B65222D00A3916C /* FacebookNetwork.m in Sources */,
 				30416A241B73A49B000CB2C2 /* MUSGaleryView.m in Sources */,
+				979164B41B8CADDA00DFCE64 /* UIImage+LoadImageFromDataBase.m in Sources */,
 				97CA63CA1B6F66D300F9F0C1 /* Place.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
