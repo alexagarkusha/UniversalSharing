@@ -225,20 +225,21 @@ static DataBaseManager *databaseManager;
             Post *post = [Post new];
             post.primaryKey = sqlite3_column_int(statement, 0);//perhaps it will be needed
             //post.postID = sqlite3_column_int(statement, 1);
-            post.postDescription = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 1)];
+             post.locationId = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 1)];
+            post.postDescription = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 2)];
             
-            NSString *stringWithImageUrls = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 2)];
+            NSString *stringWithImageUrls = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 3)];
             post.arrayImagesUrl = [[stringWithImageUrls componentsSeparatedByString: @", "]mutableCopy];
             
-            post.likesCount = sqlite3_column_int(statement, 3);
-            post.commentsCount = sqlite3_column_int(statement, 4);
+            post.likesCount = sqlite3_column_int(statement, 4);
+            post.commentsCount = sqlite3_column_int(statement, 5);
             //post.placeID = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 6)];
-            post.networkType = sqlite3_column_int(statement, 5);
+            post.networkType = sqlite3_column_int(statement, 6);
            // post.longitude = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 8)];
             //post.latitude = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 9)];
-            post.dateCreate = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 6)];
-            post.reason = sqlite3_column_int(statement, 7);
-            post.userId = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 8)];
+            post.dateCreate = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 7)];
+            post.reason = sqlite3_column_int(statement, 8);
+            post.userId = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 9)];
             
             [arrayWithPosts addObject:post];
             
@@ -306,20 +307,21 @@ static DataBaseManager *databaseManager;
             Post *post = [Post new];
             post.primaryKey = sqlite3_column_int(statement, 0);//perhaps it will be needed
            // post.postID = sqlite3_column_int(statement, 1);
-            post.postDescription = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 1)];
+            post.locationId = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 1)];
+            post.postDescription = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 2)];
             
-            NSString *stringWithImageUrls = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 2)];
+            NSString *stringWithImageUrls = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 3)];
             post.arrayImagesUrl = [[stringWithImageUrls componentsSeparatedByString: @", "]mutableCopy];
             
-            post.likesCount = sqlite3_column_int(statement, 3);
-            post.commentsCount = sqlite3_column_int(statement, 4);
+            post.likesCount = sqlite3_column_int(statement, 4);
+            post.commentsCount = sqlite3_column_int(statement, 5);
             //post.placeID = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 6)];
-            post.networkType = sqlite3_column_int(statement, 5);
+            post.networkType = sqlite3_column_int(statement, 6);
            // post.longitude = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 8)];
             //post.latitude = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 9)];
-            post.dateCreate = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 6)];
-            post.reason = sqlite3_column_int(statement, 7);
-            post.userId = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 8)];
+            post.dateCreate = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 7)];
+            post.reason = sqlite3_column_int(statement, 8);
+            post.userId = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 9)];
             
             [arrayWithPosts addObject:post];
             
