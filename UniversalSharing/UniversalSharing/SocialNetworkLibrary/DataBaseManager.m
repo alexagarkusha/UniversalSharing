@@ -47,6 +47,7 @@ static DataBaseManager *databaseManager;
     char *error;
     NSString *stringUsersTable = [self createStringUsersTable];
     NSString *stringPostsTable = [self createStringPostsTable];
+    NSString *stringLocationsTable = [self createStringLocationsTable];
     
     if(sqlite3_exec(_database, [stringPostsTable UTF8String], NULL, NULL, &error) != SQLITE_OK) {
         NSLog(@"Insert failed: %s", sqlite3_errmsg(_database));
@@ -58,6 +59,11 @@ static DataBaseManager *databaseManager;
         sqlite3_close(_database);
         NSAssert(0, @"Table Users failed to create");
     }
+    
+    if(sqlite3_exec(_database, [stringLocationsTable UTF8String], NULL, NULL, &error) != SQLITE_OK) {
+        sqlite3_close(_database);
+        NSAssert(0, @"Table Location failed to create");
+    }
 }
 
 
@@ -66,12 +72,17 @@ static DataBaseManager *databaseManager;
     
     sqlite3_stmt *selectStmt = nil;
     Post *post = object;
-    NSString *sqlStr = [NSString stringWithFormat:@"INSERT INTO '%@'('%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@')VALUES(?,?,?,?,?,?,?,?,?,?,?,?)",@"Posts",@"postID",@"postDescription",@"arrayImagesUrl",@"likesCount",@"commentsCount",@"placeID",@"networkType",@"longitude",@"latitude",@"dateCreate",@"reson",@"userId"];
+    post.locationId = [self saveLocationToTableWithObject:post];
+    NSString *sqlStr = [NSString stringWithFormat:@"INSERT INTO '%@'('%@','%@','%@','%@','%@','%@','%@','%@','%@')VALUES(?,?,?,?,?,?,?,?,?)",@"Posts",@"locationID",@"postDescription",@"arrayImagesUrl",@"likesCount",@"commentsCount",@"networkType",@"dateCreate",@"reson",@"userId"];
     const char *sql = [sqlStr UTF8String];
     NSString *url = @"";
     if(sqlite3_prepare_v2(_database, sql, -1, &selectStmt, nil) == SQLITE_OK)
     {
-        sqlite3_bind_text(selectStmt, 1, [[self checkExistedString: post.placeID] UTF8String], -1, SQLITE_TRANSIENT);
+        //location id
+        
+        
+        
+        sqlite3_bind_text(selectStmt, 1, [[self checkExistedString: post.locationId] UTF8String], -1, SQLITE_TRANSIENT);
         sqlite3_bind_text(selectStmt, 2, [[self checkExistedString: post.postDescription] UTF8String], -1, SQLITE_TRANSIENT);
         //[post.arrayImagesUrl enumerateObjectsUsingBlock:^(NSString *stringUrl, NSUInteger index, BOOL *stop) {
 #warning "Replace this logic on Post"
@@ -88,16 +99,48 @@ static DataBaseManager *databaseManager;
         sqlite3_bind_text(selectStmt, 3, [[self checkExistedString: url] UTF8String], -1, SQLITE_TRANSIENT);
         sqlite3_bind_int64(selectStmt, 4, post.likesCount);
         sqlite3_bind_int64(selectStmt, 5, post.commentsCount);
-        sqlite3_bind_text(selectStmt, 6, [[self checkExistedString: post.placeID] UTF8String], -1, SQLITE_TRANSIENT);
-        sqlite3_bind_int64(selectStmt, 7, post.networkType);
-        sqlite3_bind_text(selectStmt, 8, [[self checkExistedString: post.longitude] UTF8String], -1, SQLITE_TRANSIENT);
-        sqlite3_bind_text(selectStmt, 9, [[self checkExistedString: post.latitude] UTF8String], -1, SQLITE_TRANSIENT);
-        sqlite3_bind_text(selectStmt, 10, [[self checkExistedString: post.dateCreate] UTF8String], -1, SQLITE_TRANSIENT);
-        sqlite3_bind_int64(selectStmt, 11, post.reason);
-        sqlite3_bind_text(selectStmt, 12, [[self checkExistedString: post.userId] UTF8String], -1, SQLITE_TRANSIENT);
+        //sqlite3_bind_text(selectStmt, 6, [[self checkExistedString: post.placeID] UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_int64(selectStmt, 6, post.networkType);
+//        sqlite3_bind_text(selectStmt, 8, [[self checkExistedString: post.longitude] UTF8String], -1, SQLITE_TRANSIENT);
+//        sqlite3_bind_text(selectStmt, 9, [[self checkExistedString: post.latitude] UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(selectStmt, 7, [[self checkExistedString: post.dateCreate] UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_int64(selectStmt, 8, post.reason);
+        sqlite3_bind_text(selectStmt, 9, [[self checkExistedString: post.userId] UTF8String], -1, SQLITE_TRANSIENT);
     }
     
     return selectStmt;
+}
+
+- (NSString*) saveLocationToTableWithObject :(Post*) object {
+    
+    sqlite3_stmt *selectStmt = nil;
+    Place *place = object.place;
+    NSString *stringLocationsTable = @"CREATE TABLE IF NOT EXISTS Locations (";
+    stringLocationsTable = [stringLocationsTable stringByAppendingString:@"placeID TEXT, "];
+    stringLocationsTable = [stringLocationsTable stringByAppendingString:@"longitude TEXT, "];
+    stringLocationsTable = [stringLocationsTable stringByAppendingString:@"latitude TEXT, "];
+    stringLocationsTable = [stringLocationsTable stringByAppendingString:@"placeName TEXT, "];
+    stringLocationsTable = [stringLocationsTable stringByAppendingString:@"locationID TEXT)"];
+    NSString *locationID = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970] * 1000];
+    NSString *sqlStr = [NSString stringWithFormat:@"INSERT INTO '%@'('%@','%@','%@','%@','%@','%@')VALUES(?,?,?,?,?,?)",@"Locations",@"placeID",@"longitude",@"latitude",@"placeName",@"locationID",@"userID"];
+    const char *sql = [sqlStr UTF8String];
+    
+    if(sqlite3_prepare_v2(_database, sql, -1, &selectStmt, nil) == SQLITE_OK) {
+        
+        sqlite3_bind_text(selectStmt, 1, [[self checkExistedString: place.placeID] UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(selectStmt, 2, [[self checkExistedString: place.longitude] UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(selectStmt, 3, [[self checkExistedString: place.latitude] UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(selectStmt, 4, [[self checkExistedString: place.fullName] UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(selectStmt, 5, [[self checkExistedString: locationID] UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(selectStmt, 6, [[self checkExistedString: object.userId] UTF8String], -1, SQLITE_TRANSIENT);
+    }
+    if(sqlite3_step(selectStmt) != SQLITE_DONE){
+        NSLog(@"Insert failed: %s", sqlite3_errmsg(_database));
+        NSAssert(0, @"Error insert table");
+    }
+    sqlite3_finalize(selectStmt);
+    
+    return locationID;
 }
 
 - (sqlite3_stmt*) saveUserToTableWithObject :(User*) object {
@@ -181,21 +224,21 @@ static DataBaseManager *databaseManager;
         {
             Post *post = [Post new];
             post.primaryKey = sqlite3_column_int(statement, 0);//perhaps it will be needed
-            post.postID = sqlite3_column_int(statement, 1);
-            post.postDescription = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 2)];
+            //post.postID = sqlite3_column_int(statement, 1);
+            post.postDescription = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 1)];
             
-            NSString *stringWithImageUrls = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 3)];
+            NSString *stringWithImageUrls = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 2)];
             post.arrayImagesUrl = [[stringWithImageUrls componentsSeparatedByString: @", "]mutableCopy];
             
-            post.likesCount = sqlite3_column_int(statement, 4);
-            post.commentsCount = sqlite3_column_int(statement, 5);
-            post.placeID = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 6)];
-            post.networkType = sqlite3_column_int(statement, 7);
-            post.longitude = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 8)];
-            post.latitude = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 9)];
-            post.dateCreate = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 10)];
-            post.reason = sqlite3_column_int(statement, 11);
-            post.userId = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 12)];
+            post.likesCount = sqlite3_column_int(statement, 3);
+            post.commentsCount = sqlite3_column_int(statement, 4);
+            //post.placeID = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 6)];
+            post.networkType = sqlite3_column_int(statement, 5);
+           // post.longitude = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 8)];
+            //post.latitude = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 9)];
+            post.dateCreate = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 6)];
+            post.reason = sqlite3_column_int(statement, 7);
+            post.userId = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 8)];
             
             [arrayWithPosts addObject:post];
             
@@ -216,21 +259,21 @@ static DataBaseManager *databaseManager;
         {
             Post *post = [Post new];
             post.primaryKey = sqlite3_column_int(statement, 0);//perhaps it will be needed
-            post.postID = sqlite3_column_int(statement, 1);
-            post.postDescription = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 2)];
+            //post.postID = sqlite3_column_int(statement, 1);
+            post.postDescription = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 1)];
             
-            NSString *stringWithImageUrls = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 3)];
+            NSString *stringWithImageUrls = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 2)];
             post.arrayImagesUrl = [[stringWithImageUrls componentsSeparatedByString: @", "]mutableCopy];
             
-            post.likesCount = sqlite3_column_int(statement, 4);
-            post.commentsCount = sqlite3_column_int(statement, 5);
+            post.likesCount = sqlite3_column_int(statement, 3);
+            post.commentsCount = sqlite3_column_int(statement, 4);
             // post.placeID = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 6)];
-            post.networkType = sqlite3_column_int(statement, 7);
+            post.networkType = sqlite3_column_int(statement, 5);
             //post.longitude = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 8)];
             //post.latitude = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 9)];
-            //post.dateCreate = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 10)];
-            post.reason = sqlite3_column_int(statement, 11);
-            post.userId = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 12)];
+            post.dateCreate = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 6)];
+            post.reason = sqlite3_column_int(statement, 7);
+            post.userId = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 8)];
             
             [arrayWithPosts addObject:post];
             
@@ -240,18 +283,19 @@ static DataBaseManager *databaseManager;
 }
 
 - (NSArray*)obtainPostsWithReason :(ReasonType) reason andNetworkType :(NetworkType) networkType {
-    
     NSMutableArray *arrayWithPosts = [NSMutableArray new];
-    NSString *requestString = nil;
-     if(networkType == AllNetworks && reason == AllReasons){
-        requestString = [NSString stringWithFormat:@"SELECT * FROM %@",@"Posts"];
-    } else if (reason == AllNetworks) {
-        requestString=[NSString stringWithFormat:@"SELECT * FROM %@ WHERE networkType=\"%ld\"",@"Posts",(long)networkType];
-    } else if(networkType == AllReasons){
-        requestString = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE reason=\"%ld\"",@"Posts",(long)reason];
-    }else {
-        requestString=[NSString stringWithFormat:@"SELECT * FROM %@ WHERE reason=\"%ld\" AND networkType=\"%ld\"",@"Posts",(long)reason,(long)networkType];
+    NSString *requestString = [NSString stringWithFormat:@"SELECT * FROM %@",@"Posts"];
+    
+    if (networkType != AllNetworks) {
+        requestString = [requestString stringByAppendingString:[NSString stringWithFormat:@" WHERE networkType = \"%ld\"", (long)networkType]];
+        
+        if (reason != AllReasons) {
+            requestString = [requestString stringByAppendingString: [NSString stringWithFormat: @" AND reason = \"%ld\"", (long)reason]];
+        }
+    } else if (reason != AllReasons && networkType == AllNetworks) {
+        requestString = [requestString stringByAppendingString: [NSString stringWithFormat: @" WHERE reason=\"%ld\"", (long)reason]];
     }
+
     sqlite3_stmt *statement = nil;
     
     if(sqlite3_prepare_v2(_database, [requestString UTF8String], -1, &statement, nil) == SQLITE_OK)
@@ -260,21 +304,21 @@ static DataBaseManager *databaseManager;
         {
             Post *post = [Post new];
             post.primaryKey = sqlite3_column_int(statement, 0);//perhaps it will be needed
-            post.postID = sqlite3_column_int(statement, 1);
-            post.postDescription = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 2)];
+           // post.postID = sqlite3_column_int(statement, 1);
+            post.postDescription = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 1)];
             
-            NSString *stringWithImageUrls = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 3)];
+            NSString *stringWithImageUrls = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 2)];
             post.arrayImagesUrl = [[stringWithImageUrls componentsSeparatedByString: @", "]mutableCopy];
             
-            post.likesCount = sqlite3_column_int(statement, 4);
-            post.commentsCount = sqlite3_column_int(statement, 5);
-            post.placeID = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 6)];
-            post.networkType = sqlite3_column_int(statement, 7);
-            post.longitude = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 8)];
-            post.latitude = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 9)];
-            post.dateCreate = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 10)];
-            post.reason = sqlite3_column_int(statement, 11);
-            post.userId = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 12)];
+            post.likesCount = sqlite3_column_int(statement, 3);
+            post.commentsCount = sqlite3_column_int(statement, 4);
+            //post.placeID = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 6)];
+            post.networkType = sqlite3_column_int(statement, 5);
+           // post.longitude = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 8)];
+            //post.latitude = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 9)];
+            post.dateCreate = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 6)];
+            post.reason = sqlite3_column_int(statement, 7);
+            post.userId = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 8)];
             
             [arrayWithPosts addObject:post];
             
@@ -312,7 +356,7 @@ static DataBaseManager *databaseManager;
 - (void)deletePostByUserId :(NSString*) userId {
     
     sqlite3_stmt *statement = nil;
-    NSString *deleteSQL = [NSString stringWithFormat:@"DELETE from Posts WHERE userId=\"%@\"",userId];
+    NSString *deleteSQL = [NSString stringWithFormat:@"DELETE from Posts WHERE userId = \"%@\"",userId];
     
     const char *delete_stmt = [deleteSQL UTF8String];
     
@@ -323,25 +367,26 @@ static DataBaseManager *databaseManager;
         NSLog(@"delete failed: %s", sqlite3_errmsg(_database));
         NSAssert(0, @"Error delete from table");
     }
+    [self deleteLocationByUserId:userId];
     sqlite3_finalize(statement);
 }
 
-//- (void)deletePostByPrimeryId :(NSInteger) primeryId {
-//    
-//    sqlite3_stmt *statement = nil;
-//    NSString *deleteSQL = [NSString stringWithFormat:@"DELETE from Posts WHERE userId = \"%ld\"",(long)primeryId];
-//    
-//    const char *delete_stmt = [deleteSQL UTF8String];
-//    
-//    if( sqlite3_prepare_v2(_database, delete_stmt, -1, &statement, NULL ) == SQLITE_OK){
-//        NSLog(@" the Post is deleted ");
-//    }
-//    if (sqlite3_step(statement) != SQLITE_DONE){
-//        NSLog(@"Insert failed: %s", sqlite3_errmsg(_database));
-//        NSAssert(0, @"Error delete from table");
-//    }
-//    sqlite3_finalize(statement);
-//}
+- (void)deleteLocationByUserId :(NSString*) userId {
+    
+    sqlite3_stmt *statement = nil;
+    NSString *deleteSQL = [NSString stringWithFormat:@"DELETE from Locations WHERE userId = \"%@\"",userId];
+    
+    const char *delete_stmt = [deleteSQL UTF8String];
+    
+    if( sqlite3_prepare_v2(_database, delete_stmt, -1, &statement, NULL ) == SQLITE_OK){
+        NSLog(@" the location is deleted ");
+    }
+    if (sqlite3_step(statement) != SQLITE_DONE){
+        NSLog(@"delete failed: %s", sqlite3_errmsg(_database));
+        NSAssert(0, @"Error delete from table");
+    }
+    sqlite3_finalize(statement);
+}
 
 - (void)editPost :(Post*) post {
     NSString *url = @"";//go to  method
@@ -350,7 +395,8 @@ static DataBaseManager *databaseManager;
         if(post.arrayImagesUrl.count - 1 != i)
             url = [url stringByAppendingString:@", "];
     }
-    NSString *stringPostsForUpdate = [NSString stringWithFormat:[self createStringPostsForUpdate], post.placeID, post.postDescription, post, url, post.likesCount, post.commentsCount, post.placeID, post.networkType, post.longitude, post.latitude, post.dateCreate, post.reason, post.userId, post.primaryKey];
+    
+    NSString *stringPostsForUpdate = [NSString stringWithFormat:[self createStringPostsForUpdate], post.postDescription, url, post.likesCount, post.commentsCount, post.networkType, post.dateCreate, post.reason, post.userId, post.primaryKey];
     
     
     const char *update_stmt = [stringPostsForUpdate UTF8String];
@@ -371,26 +417,6 @@ static DataBaseManager *databaseManager;
     sqlite3_finalize(selectStmt);
 }
 
-//- (void) updateUserIsVisible : (User*) user {
-//    
-//    NSString *stringUsersForUpdate = [NSString stringWithFormat:[self createStringUsersForUpdateIsVisible], user.isVisible, user.networkType, user.clientID];
-//    
-//    const char *update_stmt = [stringUsersForUpdate UTF8String];
-//    sqlite3_stmt *selectStmt;
-//    
-//    if(sqlite3_prepare_v2(_database, update_stmt, -1, &selectStmt, nil) == SQLITE_OK)
-//    {
-//        NSLog(@"the user is updated");
-//    }
-//    
-//    if(sqlite3_step(selectStmt) != SQLITE_DONE){
-//        NSLog(@"Update failed: %s", sqlite3_errmsg(_database));
-//        NSAssert(0, @"Error upadating table");
-//    }
-//    sqlite3_finalize(selectStmt);
-//    
-//}
-
 - (void)editUser :(User*) user {
     NSString *stringUsersForUpdate = [NSString stringWithFormat:[self createStringUsersForUpdate], user.username, user.firstName, user.lastName, user.dateOfBirth, user.city, user.networkType, user.clientID, user.photoURL, user.isVisible, user.isLogin, user.networkType, user.clientID];
     
@@ -409,24 +435,6 @@ static DataBaseManager *databaseManager;
     sqlite3_finalize(selectStmt);
 }
 
-//- (void)deleteUserByPrimeryId :(NSInteger) primeryId {
-//    
-//    sqlite3_stmt *statement = nil;
-//    NSString *deleteSQL = [NSString stringWithFormat:@"DELETE from Users WHERE id=\"%ld\"",(long)primeryId];
-//    
-//    const char *delete_stmt = [deleteSQL UTF8String];
-//    
-//    if( sqlite3_prepare_v2(_database, delete_stmt, -1, &statement, NULL ) == SQLITE_OK){
-//        NSLog(@" the User is deleted ");
-//    }
-//    if (sqlite3_step(statement) != SQLITE_DONE){
-//        NSLog(@"delete failed: %s", sqlite3_errmsg(_database));
-//        NSAssert(0, @"Error delete from table");
-//    }
-//    [self deletePostByPrimeryId:primeryId];
-//    sqlite3_finalize(statement);
-//}
-
 - (void)deleteUserByClientId :(NSString*) clientId {
     
     sqlite3_stmt *statement = nil;
@@ -444,13 +452,6 @@ static DataBaseManager *databaseManager;
     [self deletePostByUserId:clientId];
     sqlite3_finalize(statement);
 }
-
-//- (NSString *) createStringUsersForUpdateIsVisible {
-//    NSString *stringUsersForUpdate =  @"UPDATE Users set ";
-//    stringUsersForUpdate = [stringUsersForUpdate stringByAppendingString:@"isVisible = \"%d\" "];
-//    stringUsersForUpdate = [stringUsersForUpdate stringByAppendingString:@"WHERE networkType = \"%d\" AND clientID = \"%@\""];
-//    return stringUsersForUpdate;
-//}
 
 - (NSString *) createStringUsersForUpdate {
     NSString *stringUsersForUpdate = @"UPDATE Users set ";
@@ -471,15 +472,15 @@ static DataBaseManager *databaseManager;
 - (NSString *) createStringPostsForUpdate {
     NSString *stringPostsForUpdate = @"UPDATE Posts set ";
     
-    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"postID = \"%d\", "];
+    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"locationID = \"%@\", "];
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"postDescription = \"%@\", "];
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"arrayImagesUrl = \"%@\", "];/////////////////
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"likesCount = \"%d\", "];
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"commentsCount = \"%d\", "];
-    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"placeID = \"%@\", "];
+    //stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"placeID = \"%@\", "];
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"networkType = \"%d\", "];
-    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"longitude = \"%@\", "];
-    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"latitude = \"%@\", "];
+   // stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"longitude = \"%@\", "];
+    //stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"latitude = \"%@\", "];
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"dateCreate = \"%@\", "];
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"reson = \"%d\", "];
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"userId = \"%@\" "];
@@ -503,18 +504,29 @@ static DataBaseManager *databaseManager;
     return stringUsersTable;
 }
 
+- (NSString *) createStringLocationsTable {
+     NSString *stringLocationsTable = @"CREATE TABLE IF NOT EXISTS Locations (";
+    stringLocationsTable = [stringLocationsTable stringByAppendingString:@"userID TEXT, "];
+    stringLocationsTable = [stringLocationsTable stringByAppendingString:@"placeID TEXT, "];
+    stringLocationsTable = [stringLocationsTable stringByAppendingString:@"longitude TEXT, "];
+    stringLocationsTable = [stringLocationsTable stringByAppendingString:@"latitude TEXT, "];
+    stringLocationsTable = [stringLocationsTable stringByAppendingString:@"placeName TEXT, "];
+    stringLocationsTable = [stringLocationsTable stringByAppendingString:@"locationID TEXT)"];
+    return stringLocationsTable;
+}
+
 - (NSString *) createStringPostsTable {
     NSString *stringPostsTable = @"CREATE TABLE IF NOT EXISTS Posts (";
     stringPostsTable = [stringPostsTable stringByAppendingString:@"id INTEGER PRIMARY KEY AUTOINCREMENT, "];
-    stringPostsTable = [stringPostsTable stringByAppendingString:@"postID INTEGER, "];
+    stringPostsTable = [stringPostsTable stringByAppendingString:@"locationID TEXT, "];
     stringPostsTable = [stringPostsTable stringByAppendingString:@"postDescription TEXT, "];
-    stringPostsTable = [stringPostsTable stringByAppendingString:@"arrayImagesUrl TEXT,"];////////////////////////////
+    stringPostsTable = [stringPostsTable stringByAppendingString:@"arrayImagesUrl TEXT,"];
     stringPostsTable = [stringPostsTable stringByAppendingString:@"likesCount INTEGER, "];
     stringPostsTable = [stringPostsTable stringByAppendingString:@"commentsCount INTEGER, "];
-    stringPostsTable = [stringPostsTable stringByAppendingString:@"placeID TEXT, "];
+    //stringPostsTable = [stringPostsTable stringByAppendingString:@"placeID TEXT, "];
     stringPostsTable = [stringPostsTable stringByAppendingString:@"networkType INTEGER, "];
-    stringPostsTable = [stringPostsTable stringByAppendingString:@"longitude TEXT, "];
-    stringPostsTable = [stringPostsTable stringByAppendingString:@"latitude TEXT, "];
+    //stringPostsTable = [stringPostsTable stringByAppendingString:@"longitude TEXT, "];
+    //stringPostsTable = [stringPostsTable stringByAppendingString:@"latitude TEXT, "];
     stringPostsTable = [stringPostsTable stringByAppendingString:@"dateCreate TEXT, "];
     stringPostsTable = [stringPostsTable stringByAppendingString:@"reson INTEGER, "];
     stringPostsTable = [stringPostsTable stringByAppendingString:@"userId TEXT)"];
@@ -525,30 +537,4 @@ static DataBaseManager *databaseManager;
     sqlite3_close(_database);
 }
 
-//- (void) saveImageOfUserToDocumentsFolder :(User*) user {
-//    //    UIImageView *d;
-//    //    __weak MUSAccountsViewController *weakSelf = self;
-//    dispatch_queue_t q = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
-//    dispatch_async(q, ^{
-//        /* Fetch the image from the server... */
-//        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString: user.photoURL]];
-//        UIImage *image = [[UIImage alloc] initWithData:data];
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                NSData *data = UIImagePNGRepresentation(image);
-//                NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//                NSString *documentsPath = [paths objectAtIndex:0]; //Get the docs directory
-//                NSString *filePath = [documentsPath stringByAppendingPathComponent:@"image"];
-//                filePath = [filePath stringByAppendingString:[NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970] * 1000]];
-//                filePath = [filePath stringByAppendingString:@".png"];
-//                user.photoURL = filePath;
-//                [data writeToFile:filePath atomically:YES]; //Write the file
-//                [[DataBaseManager sharedManager] insertIntoTable:user];
-//
-//            });
-//        });
-//    });
-//
-//
-//}
 @end

@@ -38,6 +38,10 @@
  @param networkType takes the type of social network (like Facebook, Twitters, Vkontakte)
  */
 
+@property (nonatomic, strong) NSString *longitude;
+@property (nonatomic, strong) NSString *latitude;
+//@property (nonatomic, strong) NSString *placeName;
+
 + (Place*) createFromDictionary: (NSDictionary*) dictionary andNetworkType : (NetworkType) networkType;
 
 
