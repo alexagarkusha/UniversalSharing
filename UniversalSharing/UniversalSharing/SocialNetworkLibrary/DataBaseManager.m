@@ -101,8 +101,8 @@ static DataBaseManager *databaseManager;
         sqlite3_bind_int64(selectStmt, 5, post.commentsCount);
         //sqlite3_bind_text(selectStmt, 6, [[self checkExistedString: post.placeID] UTF8String], -1, SQLITE_TRANSIENT);
         sqlite3_bind_int64(selectStmt, 6, post.networkType);
-//        sqlite3_bind_text(selectStmt, 8, [[self checkExistedString: post.longitude] UTF8String], -1, SQLITE_TRANSIENT);
-//        sqlite3_bind_text(selectStmt, 9, [[self checkExistedString: post.latitude] UTF8String], -1, SQLITE_TRANSIENT);
+        //        sqlite3_bind_text(selectStmt, 8, [[self checkExistedString: post.longitude] UTF8String], -1, SQLITE_TRANSIENT);
+        //        sqlite3_bind_text(selectStmt, 9, [[self checkExistedString: post.latitude] UTF8String], -1, SQLITE_TRANSIENT);
         sqlite3_bind_text(selectStmt, 7, [[self checkExistedString: post.dateCreate] UTF8String], -1, SQLITE_TRANSIENT);
         sqlite3_bind_int64(selectStmt, 8, post.reason);
         sqlite3_bind_text(selectStmt, 9, [[self checkExistedString: post.userId] UTF8String], -1, SQLITE_TRANSIENT);
@@ -115,12 +115,6 @@ static DataBaseManager *databaseManager;
     
     sqlite3_stmt *selectStmt = nil;
     Place *place = object.place;
-    NSString *stringLocationsTable = @"CREATE TABLE IF NOT EXISTS Locations (";
-    stringLocationsTable = [stringLocationsTable stringByAppendingString:@"placeID TEXT, "];
-    stringLocationsTable = [stringLocationsTable stringByAppendingString:@"longitude TEXT, "];
-    stringLocationsTable = [stringLocationsTable stringByAppendingString:@"latitude TEXT, "];
-    stringLocationsTable = [stringLocationsTable stringByAppendingString:@"placeName TEXT, "];
-    stringLocationsTable = [stringLocationsTable stringByAppendingString:@"locationID TEXT)"];
     NSString *locationID = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970] * 1000];
     NSString *sqlStr = [NSString stringWithFormat:@"INSERT INTO '%@'('%@','%@','%@','%@','%@','%@')VALUES(?,?,?,?,?,?)",@"Locations",@"placeID",@"longitude",@"latitude",@"placeName",@"locationID",@"userID"];
     const char *sql = [sqlStr UTF8String];
@@ -225,7 +219,7 @@ static DataBaseManager *databaseManager;
             Post *post = [Post new];
             post.primaryKey = sqlite3_column_int(statement, 0);//perhaps it will be needed
             //post.postID = sqlite3_column_int(statement, 1);
-             post.locationId = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 1)];
+            post.locationId = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 1)];
             post.postDescription = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 2)];
             
             NSString *stringWithImageUrls = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 3)];
@@ -235,17 +229,36 @@ static DataBaseManager *databaseManager;
             post.commentsCount = sqlite3_column_int(statement, 5);
             //post.placeID = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 6)];
             post.networkType = sqlite3_column_int(statement, 6);
-           // post.longitude = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 8)];
+            // post.longitude = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 8)];
             //post.latitude = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 9)];
             post.dateCreate = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 7)];
             post.reason = sqlite3_column_int(statement, 8);
             post.userId = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 9)];
-            
+            post.place = [self obtainLocations:post];
             [arrayWithPosts addObject:post];
             
         }
     }
     return arrayWithPosts;
+}
+
+- (Place*) obtainLocations :(Post*) post {
+    
+    NSString *qsql = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE locationID =  \"%@\"",@"Locations",post.locationId];
+    sqlite3_stmt *statement = nil;
+    Place *place = [Place new];
+    if(sqlite3_prepare_v2(_database, [qsql UTF8String], -1, &statement, nil) == SQLITE_OK)
+    {
+        while (sqlite3_step(statement) == SQLITE_ROW)
+        {
+            
+            place.placeID = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 1)];
+            place.longitude = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 2)];
+            place.latitude = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 3)];
+            place.fullName = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 4)];
+        }
+    }
+    return place;
 }
 
 - (NSMutableArray*)obtainAllPostsWithUserId :(NSString*) userId {
@@ -276,7 +289,7 @@ static DataBaseManager *databaseManager;
             post.dateCreate = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 7)];
             post.reason = sqlite3_column_int(statement, 8);
             post.userId = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 9)];
-            
+             post.place = [self obtainLocations:post];
             [arrayWithPosts addObject:post];
             
         }
@@ -297,7 +310,7 @@ static DataBaseManager *databaseManager;
     } else if (reason != AllReasons && networkType == AllNetworks) {
         requestString = [requestString stringByAppendingString: [NSString stringWithFormat: @" WHERE reason=\"%ld\"", (long)reason]];
     }
-
+    
     sqlite3_stmt *statement = nil;
     
     if(sqlite3_prepare_v2(_database, [requestString UTF8String], -1, &statement, nil) == SQLITE_OK)
@@ -306,7 +319,7 @@ static DataBaseManager *databaseManager;
         {
             Post *post = [Post new];
             post.primaryKey = sqlite3_column_int(statement, 0);//perhaps it will be needed
-           // post.postID = sqlite3_column_int(statement, 1);
+            // post.postID = sqlite3_column_int(statement, 1);
             post.locationId = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 1)];
             post.postDescription = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 2)];
             
@@ -317,12 +330,12 @@ static DataBaseManager *databaseManager;
             post.commentsCount = sqlite3_column_int(statement, 5);
             //post.placeID = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 6)];
             post.networkType = sqlite3_column_int(statement, 6);
-           // post.longitude = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 8)];
+            // post.longitude = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 8)];
             //post.latitude = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 9)];
             post.dateCreate = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 7)];
             post.reason = sqlite3_column_int(statement, 8);
             post.userId = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 9)];
-            
+            post.place = [self obtainLocations:post];
             [arrayWithPosts addObject:post];
             
         }
@@ -392,6 +405,7 @@ static DataBaseManager *databaseManager;
 }
 
 - (void)editPost :(Post*) post {
+    [self editLocation:post];
     NSString *url = @"";//go to  method
     for (int i = 0; i < post.arrayImagesUrl.count; i++) {
         url = [url stringByAppendingString:post.arrayImagesUrl[i]];
@@ -399,12 +413,33 @@ static DataBaseManager *databaseManager;
             url = [url stringByAppendingString:@", "];
     }
     
-    NSString *stringPostsForUpdate = [NSString stringWithFormat:[self createStringPostsForUpdate], post.postDescription, url, post.likesCount, post.commentsCount, post.networkType, post.dateCreate, post.reason, post.userId, post.primaryKey];
+    NSString *stringPostsForUpdate = [NSString stringWithFormat:[self createStringPostsForUpdate],post.locationId, post.postDescription, url, post.likesCount, post.commentsCount, post.networkType, post.dateCreate, post.reason, post.userId, post.primaryKey];
     
     
     const char *update_stmt = [stringPostsForUpdate UTF8String];
     
     ////////////////////////////////////////////////////////////
+    
+    sqlite3_stmt *selectStmt;
+    
+    if(sqlite3_prepare_v2(_database, update_stmt, -1, &selectStmt, nil) == SQLITE_OK)
+    {
+        NSLog(@"the post is updated");
+    }
+    
+    if(sqlite3_step(selectStmt) != SQLITE_DONE){
+        NSLog(@"Update failed: %s", sqlite3_errmsg(_database));
+        NSAssert(0, @"Error upadating table");
+    }
+    sqlite3_finalize(selectStmt);
+}
+
+- (void)editLocation :(Post*) post {
+    //Place *place = post.place;
+    NSString *stringLocationsForUpdate = [NSString stringWithFormat:[self createStringLocationsForUpdate],post.userId, post.place.placeID, post.place.longitude,post.place.latitude, post.place.fullName, post.locationId];
+    
+    
+    const char *update_stmt = [stringLocationsForUpdate UTF8String];
     
     sqlite3_stmt *selectStmt;
     
@@ -482,13 +517,28 @@ static DataBaseManager *databaseManager;
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"commentsCount = \"%d\", "];
     //stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"placeID = \"%@\", "];
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"networkType = \"%d\", "];
-   // stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"longitude = \"%@\", "];
+    // stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"longitude = \"%@\", "];
     //stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"latitude = \"%@\", "];
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"dateCreate = \"%@\", "];
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"reson = \"%d\", "];
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"userId = \"%@\" "];
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"WHERE id = \"%d\""];
     return stringPostsForUpdate;
+}
+
+- (NSString *) createStringLocationsForUpdate {
+    
+    NSString *stringLocationsForUpdate = @"UPDATE Locations set ";
+    
+    stringLocationsForUpdate = [stringLocationsForUpdate stringByAppendingString:@"userID = \"%@\", "];
+    stringLocationsForUpdate = [stringLocationsForUpdate stringByAppendingString:@"placeID = \"%@\", "];
+    stringLocationsForUpdate = [stringLocationsForUpdate stringByAppendingString:@"longitude = \"%@\", "];
+    stringLocationsForUpdate = [stringLocationsForUpdate stringByAppendingString:@"latitude = \"%@\", "];
+    stringLocationsForUpdate = [stringLocationsForUpdate stringByAppendingString:@"placeName = \"%@\" "];
+    //stringLocationsForUpdate = [stringLocationsForUpdate stringByAppendingString:@"locationID = \"%d\", "];
+    
+    stringLocationsForUpdate = [stringLocationsForUpdate stringByAppendingString:@"WHERE locationID = \"%@\""];
+    return stringLocationsForUpdate;
 }
 
 - (NSString *) createStringUsersTable {
@@ -508,7 +558,7 @@ static DataBaseManager *databaseManager;
 }
 
 - (NSString *) createStringLocationsTable {
-     NSString *stringLocationsTable = @"CREATE TABLE IF NOT EXISTS Locations (";
+    NSString *stringLocationsTable = @"CREATE TABLE IF NOT EXISTS Locations (";
     stringLocationsTable = [stringLocationsTable stringByAppendingString:@"userID TEXT, "];
     stringLocationsTable = [stringLocationsTable stringByAppendingString:@"placeID TEXT, "];
     stringLocationsTable = [stringLocationsTable stringByAppendingString:@"longitude TEXT, "];
