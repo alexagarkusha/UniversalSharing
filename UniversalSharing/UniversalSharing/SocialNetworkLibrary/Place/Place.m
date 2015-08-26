@@ -13,22 +13,20 @@
 
 + (Place*) createFromDictionary: (NSDictionary*) dictionary andNetworkType :(NetworkType) networkType
 {
-    Place *place = [[Place alloc] init];
-    
     switch (networkType) {
         case Facebook:
-            place = [place createPlaceFromFB: dictionary];
+            return [Place createPlaceFromFB: dictionary];
             break;
         case VKontakt:
-            place = [place createPlaceFromVK: dictionary];
+            return [Place createPlaceFromVK: dictionary];
             break;
         case Twitters:
-            place = [place createPlaceFromTwitter: dictionary];
+            return [Place createPlaceFromTwitter: dictionary];
             break;
         default:
             break;
     }
-    return place;
+    return nil;
 }
 
 /*!
@@ -36,8 +34,7 @@
  @param dictionary takes dictionary from facebook network.
  */
 
-- (Place*) createPlaceFromFB : (NSDictionary *) dictionary {
-#warning "One more init?"
++ (Place*) createPlaceFromFB : (NSDictionary *) dictionary {
     Place *currentPlace = [[Place alloc] init];
     
     currentPlace.placeID = [dictionary objectForKey: musFacebookParsePlace_ID];
@@ -56,8 +53,7 @@
  @param dictionary takes dictionary from vkontakte network.
  */
 
-- (Place*) createPlaceFromVK : (NSDictionary *) dictionary {
-#warning "One more init?"
++ (Place*) createPlaceFromVK : (NSDictionary *) dictionary {
     Place *currentPlace = [[Place alloc] init];
     
     currentPlace.placeID = [dictionary objectForKey: musVKParsePlace_ID];
@@ -74,8 +70,7 @@
  @param dictionary takes dictionary from twitter network.
  */
 
-- (Place*) createPlaceFromTwitter : (NSDictionary *) dictionary {
-#warning "One more init?"
++ (Place*) createPlaceFromTwitter : (NSDictionary *) dictionary {
     Place *currentPlace = [[Place alloc] init];
     
     currentPlace.placeID   = [dictionary objectForKey: musTwitterParsePlace_ID];
