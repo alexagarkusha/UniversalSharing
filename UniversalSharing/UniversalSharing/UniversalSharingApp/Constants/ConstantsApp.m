@@ -94,6 +94,7 @@ NSString *const musAppFilter_Title_Error = @"Error";
 #pragma mark - MUSPostCell
 
 NSString *const musApp_ActionSheet_Title_ChooseAction = @"Choose action";
+NSInteger musApp_EightPixels = 8;
 
 #pragma mark - MUSGalleryViewOfPhotos
 

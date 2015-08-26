@@ -49,7 +49,6 @@
     [self initiationArrayOfActiveSocialNetwork];
     self.arrayPosts = [NSArray arrayWithArray: [[DataBaseManager sharedManager] obtainAllPosts]];
     [self.tableView reloadData];
-
 }
 
 - (void)didReceiveMemoryWarning {
@@ -90,6 +89,7 @@
 #pragma mark initiation ArrayOfPostsType
 
 - (void) initiationArrayOfActiveSocialNetwork {
+    
     self.arrayOfActiveSocialNetwork = [[NSMutableArray alloc] init];
     [self.arrayOfActiveSocialNetwork addObject: @"All social networks"];
     self.arrayOfUsers = [[DataBaseManager sharedManager] obtainAllUsers];

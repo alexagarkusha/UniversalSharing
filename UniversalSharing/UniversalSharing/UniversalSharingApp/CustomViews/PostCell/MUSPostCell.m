@@ -11,6 +11,7 @@
 #import "ImageToPost.h"
 #import "UILabel+CornerRadiusLabel.h"
 #import "UIImageView+RoundImage.h"
+#import "UIImageView+MUSLoadImageFromDataBase.h"
 
 @interface MUSPostCell ()
 
@@ -71,6 +72,28 @@
 }
 
 - (void) configurationPostCell: (Post*) currentPost {
+#warning КОСТЫЛЬ - т.к. - если нет рисунков приходит массив с одним объектом типа ""
+    self.firstImageOfPost.image = nil;
+    if (![[currentPost.arrayImagesUrl firstObject] isEqualToString: @""]) {
+        if (currentPost.arrayImagesUrl.count == 1) {
+            self.numberOfImagesInPost.hidden = YES;
+            [self.firstImageOfPost loadImageFromDataBase: [currentPost.arrayImagesUrl firstObject]];
+        } else {
+            [self.firstImageOfPost loadImageFromDataBase: [currentPost.arrayImagesUrl firstObject]];
+            self.numberOfImagesInPost.hidden = NO;
+            self.numberOfImagesInPost.text = [NSString stringWithFormat: @"%lu", (unsigned long)currentPost.arrayImagesUrl.count];
+        }
+    }
+    
+    if (!self.firstImageOfPost.image) {
+        self.firstImageOfPost.hidden = YES;
+        self.numberOfImagesInPost.hidden = YES;
+        self.postDescriptionLeftConstraint.constant = musApp_EightPixels;
+    } else {
+        self.firstImageOfPost.hidden = NO;
+        self.postDescriptionLeftConstraint.constant = self.firstImageOfPost.frame.origin.x + self.firstImageOfPost.frame.size.width + musApp_EightPixels;
+    }
+    /*
     if (!currentPost.arrayImages) {
         self.firstImageOfPost.hidden = YES;
         self.postDescriptionLeftConstraint.constant = 8;
@@ -83,12 +106,13 @@
         self.numberOfImagesInPost.hidden = NO;
         self.numberOfImagesInPost.text = [NSString stringWithFormat: @"%d", currentPost.arrayImages.count];
     }
+    */
     self.postDescription.text = currentPost.postDescription;
     self.iconOfSocialNetwork.image = [self iconOfSocialNetworkForPost : currentPost];
     self.commentImage.image = [UIImage imageNamed: musAppImage_Name_Comment];
-    self.numberOfComments.text = [NSString stringWithFormat: @"%d", currentPost.commentsCount];
+    self.numberOfComments.text = [NSString stringWithFormat: @"%ld", (long)currentPost.commentsCount];
     self.likeImage.image = [UIImage imageNamed: musAppImage_Name_Like];
-    self.numberOfLikes.text = [NSString stringWithFormat: @"%d", currentPost.likesCount];
+    self.numberOfLikes.text = [NSString stringWithFormat: @"%ld", (long)currentPost.likesCount];
     self.reasonOfPost.backgroundColor = [self reasonColorForPost : currentPost];
 }
 
@@ -103,7 +127,8 @@
         case Twitters:
             return [UIImage imageNamed: musAppImage_Name_TwitterIconImage];
             break;
-       
+        case AllNetworks:
+            break;
     }
     return nil;
 }

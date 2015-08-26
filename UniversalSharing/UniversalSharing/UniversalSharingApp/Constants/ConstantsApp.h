@@ -124,6 +124,7 @@ FOUNDATION_EXPORT NSString *const musAppFilter_Title_Error;
 #pragma mark - MUSPostCell
 
 FOUNDATION_EXPORT NSString *const musApp_ActionSheet_Title_ChooseAction;
+FOUNDATION_EXPORT NSInteger musApp_EightPixels;
 
 #pragma mark - MUSGalleryViewOfPhotos
 

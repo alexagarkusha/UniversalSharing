@@ -19,22 +19,17 @@
 #import "NSString+MUSPathToDocumentsdirectory.h"
 #import "UIImage+LoadImageFromDataBase.h"
 
-
-
 @interface MUSDetailPostViewController () <UITableViewDataSource, UITableViewDelegate, MUSPostDescriptionCellDelegate, MUSGalleryOfPhotosCellDelegate, MUSPostLocationCellDelegate,  UIActionSheetDelegate, UIAlertViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, assign) DetailPostVC_CellType detailPostVC_CellType;
-
 @property (nonatomic, strong) NSString *postDescription;
 @property (nonatomic, strong) NSMutableArray *arrayOfUsersPictures;
 @property (nonatomic, assign) CGRect tableViewFrame;
 @property (nonatomic, strong) SocialNetwork *currentSocialNetwork;
-
 @property (nonatomic, strong) NSString *placeName;
 @property (nonatomic, strong) NSString *placeID;
 @property (nonatomic, assign) CLLocationCoordinate2D currentLocationOfPost;
-
 @property (nonatomic, assign) BOOL isEditableTableView;
 
 
@@ -50,10 +45,7 @@
     [self initiationCurrentSocialNetwork];
     [self initiationPostDescriptionArrayOfPicturesAndPostLocation];
     
-    
     self.currentUser = [[DataBaseManager sharedManager] obtainUsersWithNetworkType: self.currentSocialNetwork.networkType];
-    
-
     self.tableViewFrame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height);
 }
 
@@ -115,16 +107,9 @@
 #pragma mark initiation current postDescription, arrayOfUsersPictures, postLocation
 
 - (void) initiationPostDescriptionArrayOfPicturesAndPostLocation {
-    //self.arrayOfUsersPictures = [[NSMutableArray alloc] init];
-    //for (int i = 0; i < self.currentPost.arrayImages.count; i++) {
-      //  ImageToPost *imageToPost = [self.currentPost.arrayImages objectAtIndex: i];
-       // [self.arrayOfUsersPictures addObject: imageToPost.image];
-    //}
-    
-    
     self.arrayOfUsersPictures = [[NSMutableArray alloc] init];
     NSLog(@"%@", self.currentPost.arrayImagesUrl);
-#warning КОСТЫЛЬ - т.к. - если нет рисунков приходит массив с одним обектом типа ""
+#warning КОСТЫЛЬ - т.к. - если нет рисунков приходит массив с одним объектом типа ""
     if (![[self.currentPost.arrayImagesUrl firstObject] isEqualToString: @""]) {
         for (int i = 0; i < self.currentPost.arrayImagesUrl.count; i++) {
             UIImage *currentImage = [[UIImage alloc] init];
@@ -174,14 +159,17 @@
     self.currentPost.latitude = [NSString stringWithFormat: @"%f", self.currentLocationOfPost.latitude];
     self.currentPost.longitude = [NSString stringWithFormat: @"%f", self.currentLocationOfPost.latitude];
     NSMutableArray *arrayOfImagesToPost = [[NSMutableArray alloc] init];
-    for (int i = 0; i < arrayOfImagesToPost.count; i++) {
+    
+    for (int i = 0; i < self.arrayOfUsersPictures.count; i++) {
         ImageToPost *imageToPost = [[ImageToPost alloc] init];
-        imageToPost.image = [arrayOfImagesToPost objectAtIndex: i];
+        imageToPost.image = [self.arrayOfUsersPictures objectAtIndex: i];
         imageToPost.quality = 0.8f;
         imageToPost.imageType = JPEG;
         [arrayOfImagesToPost addObject: imageToPost];
     }
+   
     self.currentPost.arrayImages = [NSArray arrayWithArray : arrayOfImagesToPost];
+
 }
 
 - (void) saveImageToDocumentsFolderAndFillArrayWithUrl :(Post*) post {
@@ -190,7 +178,6 @@
     } else {
         [post.arrayImagesUrl removeAllObjects];
     }
-    
     [post.arrayImages enumerateObjectsUsingBlock:^(ImageToPost *image, NSUInteger index, BOOL *stop) {
         NSData *data = UIImagePNGRepresentation(image.image);
         //Get the docs directory
@@ -199,7 +186,18 @@
         filePath = [filePath stringByAppendingString:@".png"];
         [post.arrayImagesUrl addObject:filePath];
         [data writeToFile:[filePath obtainPathToDocumentsFolder:filePath] atomically:YES]; //Write the file
+        
     }];
+}
+
+
+- (void) deletePostImagesFromDocumentsFolder : (Post*) post {
+    if (![[post.arrayImagesUrl firstObject] isEqualToString: @""] && post.arrayImagesUrl.count > 0) {
+        __block NSError *error;
+        [post.arrayImagesUrl enumerateObjectsUsingBlock:^(NSString *urlImage, NSUInteger idx, BOOL *stop) {
+        [[NSFileManager defaultManager] removeItemAtPath: [urlImage obtainPathToDocumentsFolder: urlImage] error: &error];
+        }];
+    }
 }
 
 - (void) updatePostInDataBase {
@@ -361,28 +359,9 @@
     [_tableView scrollToRowAtIndexPath:path atScrollPosition : UITableViewScrollPositionNone animated:YES];
 }
 
-- (void) removeImagesOfPostFromDocumentsFolder :(NSString*) userId {
-    __block NSError *error;
-    NSArray *arrayWithPostsOfUser = [[DataBaseManager sharedManager] obtainAllPostsWithUserId:userId];
-    [arrayWithPostsOfUser enumerateObjectsUsingBlock:^(Post *post, NSUInteger idx, BOOL *stop) {
-        
-        [post.arrayImagesUrl enumerateObjectsUsingBlock:^(NSString *urlImage, NSUInteger idx, BOOL *stop) {
-            [[NSFileManager defaultManager] removeItemAtPath: [urlImage obtainPathToDocumentsFolder: urlImage] error: &error];
-            
-        }];
-    }];
-}
-
-
-
-
-
 #pragma mark - MUSGalleryOfPhotosCellDelegate
 
 - (void) arrayOfImagesOfUser:(NSArray *)arrayOfImages {
-    
-    //[[NSFileManager defaultManager] removeItemAtPath: [urlImage obtainPathToDocumentsFolder: urlImage] error: &error];
-    
     if (!arrayOfImages.firstObject) {
         [self.arrayOfUsersPictures removeAllObjects];
         [self.tableView reloadData];
@@ -462,6 +441,7 @@
     switch (buttonIndex) {
         case YES:
             [self updatePost];
+            [self deletePostImagesFromDocumentsFolder: self.currentPost];
             [self saveImageToDocumentsFolderAndFillArrayWithUrl : self.currentPost];
             [self updatePostInDataBase];
             [self.navigationController popViewControllerAnimated:YES];
