@@ -11,25 +11,34 @@
 #import "User.h"
 #import "Post.h"
 #import "Place.h"
-#import <sqlite3.h>
+
 
 @interface DataBaseManager : NSObject 
 
 + (DataBaseManager*)sharedManager;
-
+//===
 - (void)insertIntoTable:(id) object;
 //==
-- (NSMutableArray*)obtainAllUsers;
-- (NSMutableArray*)obtainAllPosts;
-- (NSMutableArray*)obtainAllPostsWithUserId :(NSString*) userId;
-- (NSArray*)obtainPostsWithReason :(ReasonType) reason andNetworkType :(NetworkType) networkType;
-- (User*)obtainUsersWithNetworkType :(NSInteger) networkType;
+//- (NSMutableArray*)obtainAllUsers;//will be deleted
+//- (User*)obtainUsersWithNetworkType :(NSInteger) networkType;//will be deleted
+- (NSMutableArray*)obtainAllPosts;///will be deleted
+- (NSMutableArray*)obtainAllPostsWithUserId :(NSString*) userId;///will be deleted
+- (NSArray*)obtainPostsWithReason :(ReasonType) reason andNetworkType :(NetworkType) networkType;///will be deleted
+
 //===
-- (void)editPost :(Post*) post;
-- (void)editUser :(User*) user;
+- (void)editPost :(Post*) post;///will be deleted
+//- (void)editUser :(User*) user;///will be deleted
 //===
 - (void)deletePostByUserId :(NSString*) userId;
 - (void)deletePostByPrimaryKey :(Post*) post;
 - (void)deleteUserByClientId :(NSString*) clientId;
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+
+- (void) editObjectAtDataBaseWithRequestString : (NSString*) requestString;// it would be a method for edit
+- (NSMutableArray*)obtainPostsFromDataBaseWithRequestString : (NSString*) requestString;
+- (NSMutableArray*)obtainUsersFromDataBaseWithRequestString : (NSString*) requestString;
 
 @end

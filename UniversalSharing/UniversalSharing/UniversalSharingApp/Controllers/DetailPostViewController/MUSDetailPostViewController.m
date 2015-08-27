@@ -18,6 +18,7 @@
 #import "DataBaseManager.h"
 #import "NSString+MUSPathToDocumentsdirectory.h"
 #import "UIImage+LoadImageFromDataBase.h"
+#import "MUSDatabaseRequestStringsHelper.h"
 
 @interface MUSDetailPostViewController () <UITableViewDataSource, UITableViewDelegate, MUSPostDescriptionCellDelegate, MUSGalleryOfPhotosCellDelegate, MUSPostLocationCellDelegate,  UIActionSheetDelegate, UIAlertViewDelegate>
 
@@ -44,9 +45,12 @@
     [self initiationTableView];
     [self initiationCurrentSocialNetwork];
     [self initiationPostDescriptionArrayOfPicturesAndPostLocation];
+    //////////////////////////////////////////////// it was changed by roman
+//    self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForUsersWithNetworkType:self.currentSocialNetwork.networkType]]firstObject];
+    //obtainUsersWithNetworkType: self.currentSocialNetwork.networkType];
     [self initiationNavigationBar];
     [self initiationActivityIndicator];
-    self.currentUser = [[DataBaseManager sharedManager] obtainUsersWithNetworkType: self.currentSocialNetwork.networkType];
+    //self.currentUser = [[DataBaseManager sharedManager] obtainUsersWithNetworkType: self.currentSocialNetwork.networkType];
     self.tableViewFrame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height);
 }
 

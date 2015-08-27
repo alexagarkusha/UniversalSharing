@@ -15,6 +15,8 @@
 #import "NSString+MUSPathToDocumentsdirectory.h"
 #import "ReachabilityManager.h"
 #import "NSError+MUSError.h"
+#import "MUSDatabaseRequestStringsHelper.h"
+
 @implementation SocialNetwork
 
 + (SocialNetwork*) sharedManagerWithType :(NetworkType) networkType {
@@ -64,9 +66,8 @@
     if (self.currentUser.isVisible != isVisible && self.currentUser) {
         
         self.currentUser.isVisible = isVisible;
-        [[DataBaseManager sharedManager] editUser:self.currentUser];
-    }
-    
+        [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringUsersForUpdateWithObjectUser:self.currentUser]];
+    }    
 }
 
 - (void) saveImageToDocumentsFolderAndFillArrayWithUrl :(Post*) post {
@@ -75,7 +76,7 @@
     } else {
         [post.arrayImagesUrl removeAllObjects];
     }
-   
+    
     [post.arrayImages enumerateObjectsUsingBlock:^(ImageToPost *image, NSUInteger index, BOOL *stop) {
         NSData *data = UIImagePNGRepresentation(image.image);
         //Get the docs directory
@@ -97,13 +98,13 @@
 }
 
 - (void) removeImagesOfPostFromDocumentsFolder :(NSString*) userId {
-   __block NSError *error;
-     NSArray *arrayWithPostsOfUser = [[DataBaseManager sharedManager] obtainAllPostsWithUserId:userId];
+    __block NSError *error;
+    NSArray *arrayWithPostsOfUser = [[DataBaseManager sharedManager] obtainAllPostsWithUserId:userId];
     [arrayWithPostsOfUser enumerateObjectsUsingBlock:^(Post *post, NSUInteger idx, BOOL *stop) {
         
         [post.arrayImagesUrl enumerateObjectsUsingBlock:^(NSString *urlImage, NSUInteger idx, BOOL *stop) {
             [[NSFileManager defaultManager] removeItemAtPath: [urlImage obtainPathToDocumentsFolder: urlImage] error: &error];
-
+            
         }];
         
     }];

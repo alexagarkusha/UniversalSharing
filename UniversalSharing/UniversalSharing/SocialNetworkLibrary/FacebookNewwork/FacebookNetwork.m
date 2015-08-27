@@ -14,7 +14,7 @@
 #import "NSError+MUSError.h"
 #import "DataBaseManager.h"
 #import "NSString+MUSPathToDocumentsdirectory.h"
-
+#import "MUSDatabaseRequestStringsHelper.h"
 @interface FacebookNetwork()<FBSDKGraphRequestConnectionDelegate>
 
 @property (copy, nonatomic) Complition copyComplition;
@@ -50,7 +50,7 @@ static FacebookNetwork *model = nil;
         else {
             self.isLogin = YES;
             
-            self.currentUser = [[DataBaseManager sharedManager]obtainUsersWithNetworkType:self.networkType];
+            self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForUsersWithNetworkType:self.networkType]]firstObject]; // obtainUsersWithNetworkType:self.networkType];
             self.icon = self.currentUser.photoURL;
             self.title = [NSString stringWithFormat:@"%@ %@", self.currentUser.firstName, self.currentUser.lastName];
             self.isVisible = self.currentUser.isVisible;
@@ -63,7 +63,7 @@ static FacebookNetwork *model = nil;
                 [self obtainInfoFromNetworkWithComplition:^(SocialNetwork* result, NSError *error) {
                     [[NSFileManager defaultManager] removeItemAtPath: [deleteImageFromFolder obtainPathToDocumentsFolder:deleteImageFromFolder] error: nil];
                       result.currentUser.isVisible = self.isVisible;
-                    [[DataBaseManager sharedManager] editUser:result.currentUser];
+                    [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringUsersForUpdateWithObjectUser:result.currentUser]];//editUser:result.currentUser];
                 }];
             }
         }

@@ -14,6 +14,7 @@
 #import "NSError+MUSError.h"
 #import "DataBaseManager.h"
 #import "NSString+MUSPathToDocumentsdirectory.h"
+#import "MUSDatabaseRequestStringsHelper.h"
 
 @interface TwitterNetwork () //<TWTRCoreOAuthSigning>
 
@@ -55,21 +56,21 @@ static TwitterNetwork *model = nil;
         else {
             self.isLogin = YES;
             
-            self.currentUser = [[DataBaseManager sharedManager]obtainUsersWithNetworkType:self.networkType];
+            self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForUsersWithNetworkType:self.networkType]]firstObject];
             self.icon = self.currentUser.photoURL;
             self.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
             self.isVisible = self.currentUser.isVisible;
             //////////////////////////////////////////////////////////
-        
+            
             if ([self obtainCurrentConnection]){
-               
-                    
-                    NSString *deleteImageFromFolder = self.currentUser.photoURL;
                 
-                    [self obtainInfoFromNetworkWithComplition:^(SocialNetwork* result, NSError *error) {
-                        [[NSFileManager defaultManager] removeItemAtPath: [deleteImageFromFolder obtainPathToDocumentsFolder:deleteImageFromFolder] error: nil];
-                        [[DataBaseManager sharedManager] editUser:result.currentUser];
-                    }];               
+                
+                NSString *deleteImageFromFolder = self.currentUser.photoURL;
+                
+                [self obtainInfoFromNetworkWithComplition:^(SocialNetwork* result, NSError *error) {
+                    [[NSFileManager defaultManager] removeItemAtPath: [deleteImageFromFolder obtainPathToDocumentsFolder:deleteImageFromFolder] error: nil];
+                    [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringUsersForUpdateWithObjectUser:result.currentUser]];
+                }];
             }
             
         }
@@ -105,7 +106,7 @@ static TwitterNetwork *model = nil;
         [TwitterKit logInWithCompletion:^(TWTRSession* session, NSError* error) {
             if (session) {
                 weakSell.isVisible = YES;
-               
+                
                 
                 [weakSell obtainInfoFromNetworkWithComplition:block];
             } else {
@@ -142,7 +143,7 @@ static TwitterNetwork *model = nil;
     
     //[[Twitter sharedInstance] logOutGuest];
     [self removeUserFromDataBaseAndImageFromDocumentsFolder:self.currentUser];
-
+    
     [self initiationPropertiesWithoutSession];
 }
 
@@ -166,10 +167,10 @@ static TwitterNetwork *model = nil;
              weakSell.currentUser.photoURL = weakSell.icon;
              //weakSell.icon = weakSell.currentUser.photoURL;////
              if (!weakSell.isLogin)
-             [[DataBaseManager sharedManager] insertIntoTable:weakSell.currentUser];
+                 [[DataBaseManager sharedManager] insertIntoTable:weakSell.currentUser];
              
              dispatch_async(dispatch_get_main_queue(), ^{
-                  weakSell.isLogin = YES;
+                 weakSell.isLogin = YES;
                  block(weakSell,nil);
              });
              //             weakSell.currentUser = [User createFromDictionary : user
