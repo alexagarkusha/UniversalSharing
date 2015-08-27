@@ -15,9 +15,6 @@
 + (instancetype) commentsAndLikesCell;
 + (CGFloat) heightForCommentsAndLikesCell;
 
-
 - (void) configurationCommentsAndLikesCellByPost: (Post*) currentPost;
-
-
 
 @end

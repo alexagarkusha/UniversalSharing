@@ -17,7 +17,7 @@
                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Some message text " translatesAutoresizingMaskIntoConstraints="NO" id="3Xp-we-H9A">
                         <rect key="frame" x="8" y="8" width="304" height="50"/>
                         <color key="backgroundColor" red="1" green="0.98643045949999997" blue="0.98892372529999995" alpha="1" colorSpace="calibratedRGB"/>
-                        <fontDescription key="fontDescription" name="TimesNewRomanPSMT" family="Times New Roman" pointSize="17"/>
+                        <fontDescription key="fontDescription" name="TimesNewRomanPSMT" family="Times New Roman" pointSize="3"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no"/>
                         <connections>
                             <outlet property="delegate" destination="KGk-i7-Jjw" id="iGU-pZ-dCf"/>

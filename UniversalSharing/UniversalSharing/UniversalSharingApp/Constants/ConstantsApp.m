@@ -94,7 +94,7 @@ NSString *const musAppFilter_Title_Error = @"Error";
 #pragma mark - MUSPostCell
 
 NSString *const musApp_ActionSheet_Title_ChooseAction = @"Choose action";
-NSInteger musApp_EightPixels = 8;
+NSInteger const musApp_EightPixels = 8;
 
 #pragma mark - MUSGalleryViewOfPhotos
 
@@ -103,6 +103,17 @@ NSString *const musApp_GalleryOfPhotos_NibName = @"MUSGalleryViewOfPhotos";
 #pragma mark - MUSGalleryOfPhotosCell
 
 NSString *const musAppButton_ImageName_ButtonAdd = @"Button_Add.png";
+
+#pragma mark - MUSPostDescriptionCell
+
+NSInteger const musApp_PostDescriptionCell_TextView_TopConstraint = 8;
+NSInteger const musApp_PostDescriptionCell_TextView_BottomConstraint = 8;
+NSInteger const musApp_PostDescriptionCell_TextView_LeftConstraint = 8;
+NSInteger const musApp_PostDescriptionCell_TextView_RightConstraint = 8;
+
+NSString *const musApp_PostDescriptionCell_TextView_Font_Name = @"Times New Roman";
+NSInteger const musApp_PostDescriptionCell_TextView_Font_Size = 17;
+
 
 #pragma mark - MUSDetailPostViewController
 

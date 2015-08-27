@@ -55,6 +55,7 @@
 		979164B41B8CADDA00DFCE64 /* UIImage+LoadImageFromDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 979164B31B8CADDA00DFCE64 /* UIImage+LoadImageFromDataBase.m */; };
 		97B2B54A1B87B387009FAB12 /* UIImageView+MUSLoadImageFromDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 97B2B5491B87B387009FAB12 /* UIImageView+MUSLoadImageFromDataBase.m */; };
 		97B98EDE1B874AA9006ADD26 /* Like.png in Resources */ = {isa = PBXBuildFile; fileRef = 97B98EDD1B874AA9006ADD26 /* Like.png */; };
+		97BD0B5F1B8F4D7B00BFD4AF /* UIColor+ReasonColorForPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 97BD0B5E1B8F4D7B00BFD4AF /* UIColor+ReasonColorForPost.m */; };
 		97BF252B1B85BB8B00A4938E /* UIButton+MUSEditableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 97BF252A1B85BB8B00A4938E /* UIButton+MUSEditableButton.m */; };
 		97C350541B8490C7002C6D8E /* Button_Add.png in Resources */ = {isa = PBXBuildFile; fileRef = 97C350531B8490C7002C6D8E /* Button_Add.png */; };
 		97C3505E1B84AA50002C6D8E /* MUSGalleryViewOfPhotos.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C3505D1B84AA50002C6D8E /* MUSGalleryViewOfPhotos.m */; };
@@ -190,6 +191,8 @@
 		97B2B5481B87B387009FAB12 /* UIImageView+MUSLoadImageFromDataBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+MUSLoadImageFromDataBase.h"; sourceTree = "<group>"; };
 		97B2B5491B87B387009FAB12 /* UIImageView+MUSLoadImageFromDataBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+MUSLoadImageFromDataBase.m"; sourceTree = "<group>"; };
 		97B98EDD1B874AA9006ADD26 /* Like.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Like.png; sourceTree = "<group>"; };
+		97BD0B5D1B8F4D7B00BFD4AF /* UIColor+ReasonColorForPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+ReasonColorForPost.h"; path = "UIColor+ReasonColorForPost/UIColor+ReasonColorForPost.h"; sourceTree = "<group>"; };
+		97BD0B5E1B8F4D7B00BFD4AF /* UIColor+ReasonColorForPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+ReasonColorForPost.m"; path = "UIColor+ReasonColorForPost/UIColor+ReasonColorForPost.m"; sourceTree = "<group>"; };
 		97BF25291B85BB8B00A4938E /* UIButton+MUSEditableButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIButton+MUSEditableButton.h"; path = "UniversalSharing/UniversalSharingApp/Categories/UIButton+EditableButton/UIButton+MUSEditableButton.h"; sourceTree = SOURCE_ROOT; };
 		97BF252A1B85BB8B00A4938E /* UIButton+MUSEditableButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIButton+MUSEditableButton.m"; path = "UniversalSharing/UniversalSharingApp/Categories/UIButton+EditableButton/UIButton+MUSEditableButton.m"; sourceTree = SOURCE_ROOT; };
 		97C350531B8490C7002C6D8E /* Button_Add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Button_Add.png; sourceTree = "<group>"; };
@@ -415,6 +418,7 @@
 				97BF25281B85BB0B00A4938E /* UIButton+EditableButton */,
 				18BB297F1B67E3F000B498AC /* UIButton+LoadImageBackroundFromNetwork */,
 				30416A131B735328000CB2C2 /* UiButton+MUSSocialNetwork */,
+				97BD0B5C1B8F4D1F00BFD4AF /* UIColor+ReasonColorForPost */,
 				97D1C44D1B8203ED00009BCF /* UILabel+CornerRadiusLabel */,
 				97CCC9D91B74AB4100E0FAC6 /* UIImage+ChangeScaleImage */,
 				979164B11B8CADA500DFCE64 /* UIImage+LoadImageFromDataBase */,
@@ -738,6 +742,15 @@
 			);
 			name = "UIImageView+LoadImageFromDataBase";
 			path = "UIImageView+LoadImageFromNetwork";
+			sourceTree = "<group>";
+		};
+		97BD0B5C1B8F4D1F00BFD4AF /* UIColor+ReasonColorForPost */ = {
+			isa = PBXGroup;
+			children = (
+				97BD0B5D1B8F4D7B00BFD4AF /* UIColor+ReasonColorForPost.h */,
+				97BD0B5E1B8F4D7B00BFD4AF /* UIColor+ReasonColorForPost.m */,
+			);
+			name = "UIColor+ReasonColorForPost";
 			sourceTree = "<group>";
 		};
 		97BF25281B85BB0B00A4938E /* UIButton+EditableButton */ = {
@@ -1136,6 +1149,7 @@
 				18BB29B51B67E3F000B498AC /* ConstantsApp.m in Sources */,
 				979164A81B8C60F500DFCE64 /* NSString+DateStringFromUNIXTimestamp.m in Sources */,
 				97C7D79F1B73889B004DC83D /* MUSSocialNetworkLibraryConstantsForParseObjects.m in Sources */,
+				97BD0B5F1B8F4D7B00BFD4AF /* UIColor+ReasonColorForPost.m in Sources */,
 				97D1C44C1B81ED7F00009BCF /* DOPDropDownMenu.m in Sources */,
 				973D67AE1B69114C00A20D00 /* Post.m in Sources */,
 				30DBFD9F1B6B7A1A002F83D0 /* CacheImage.m in Sources */,

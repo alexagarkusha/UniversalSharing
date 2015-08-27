@@ -12,6 +12,7 @@
 #import "UILabel+CornerRadiusLabel.h"
 #import "UIImageView+RoundImage.h"
 #import "UIImageView+MUSLoadImageFromDataBase.h"
+#import "UIColor+ReasonColorForPost.h"
 
 @interface MUSPostCell ()
 
@@ -33,20 +34,14 @@
 @implementation MUSPostCell
 
 - (void)awakeFromNib {
+    // Initialization code
     self.numberOfImagesInPost.hidden = YES;
     [self.iconOfSocialNetwork roundImageView];
     [self.reasonOfPost cornerRadius: CGRectGetHeight(self.reasonOfPost.frame) / 2];
     [self.numberOfImagesInPost cornerRadius: CGRectGetHeight(self.numberOfImagesInPost.frame) / 2];
     [self.numberOfComments sizeToFit];
     [self.numberOfLikes sizeToFit];
-    
-    self.backGroundImageView.layer.masksToBounds = YES;
-    self.backGroundImageView.layer.cornerRadius = 30;
-    //self.backGroundImageView.clipsToBounds = YES;
-    self.backGroundImageView.layer.borderWidth = 2.0;
-    self.backGroundImageView.layer.borderColor = [UIColor colorWithRed: 255.0/255.0 green: 255.0/255.0 blue: 100.0/255.0 alpha: 1.0].CGColor;
-
-    // Initialization code
+    [self initiationBackgroundImageView];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -72,14 +67,12 @@
 }
 
 - (void) configurationPostCell: (Post*) currentPost {
-#warning КОСТЫЛЬ - т.к. - если нет рисунков приходит массив с одним объектом типа ""
     self.firstImageOfPost.image = nil;
-    if (![[currentPost.arrayImagesUrl firstObject] isEqualToString: @""]) {
+    if (![[currentPost.arrayImagesUrl firstObject] isEqualToString: @""] || ![currentPost.arrayImagesUrl firstObject]) {
+        [self.firstImageOfPost loadImageFromDataBase: [currentPost.arrayImagesUrl firstObject]];
         if (currentPost.arrayImagesUrl.count == 1) {
             self.numberOfImagesInPost.hidden = YES;
-            [self.firstImageOfPost loadImageFromDataBase: [currentPost.arrayImagesUrl firstObject]];
         } else {
-            [self.firstImageOfPost loadImageFromDataBase: [currentPost.arrayImagesUrl firstObject]];
             self.numberOfImagesInPost.hidden = NO;
             self.numberOfImagesInPost.text = [NSString stringWithFormat: @"%lu", (unsigned long)currentPost.arrayImagesUrl.count];
         }
@@ -93,27 +86,14 @@
         self.firstImageOfPost.hidden = NO;
         self.postDescriptionLeftConstraint.constant = self.firstImageOfPost.frame.origin.x + self.firstImageOfPost.frame.size.width + musApp_EightPixels;
     }
-    /*
-    if (!currentPost.arrayImages) {
-        self.firstImageOfPost.hidden = YES;
-        self.postDescriptionLeftConstraint.constant = 8;
-    } else if (currentPost.arrayImages.count == 1) {
-        ImageToPost *imageToPost = [currentPost.arrayImages firstObject];
-        self.firstImageOfPost.image = imageToPost.image;
-    } else {
-        ImageToPost *imageToPost = [currentPost.arrayImages firstObject];
-        self.firstImageOfPost.image = imageToPost.image;
-        self.numberOfImagesInPost.hidden = NO;
-        self.numberOfImagesInPost.text = [NSString stringWithFormat: @"%d", currentPost.arrayImages.count];
-    }
-    */
+  
     self.postDescription.text = currentPost.postDescription;
-    self.iconOfSocialNetwork.image = [self iconOfSocialNetworkForPost : currentPost];
-    self.commentImage.image = [UIImage imageNamed: musAppImage_Name_Comment];
     self.numberOfComments.text = [NSString stringWithFormat: @"%ld", (long)currentPost.commentsCount];
-    self.likeImage.image = [UIImage imageNamed: musAppImage_Name_Like];
+    self.iconOfSocialNetwork.image = [self iconOfSocialNetworkForPost : currentPost];
     self.numberOfLikes.text = [NSString stringWithFormat: @"%ld", (long)currentPost.likesCount];
-    self.reasonOfPost.backgroundColor = [self reasonColorForPost : currentPost];
+    self.commentImage.image = [UIImage imageNamed: musAppImage_Name_Comment];
+    self.reasonOfPost.backgroundColor = [UIColor reasonColorForPost: currentPost.reason];
+    self.likeImage.image = [UIImage imageNamed: musAppImage_Name_Like];
 }
 
 - (UIImage*) iconOfSocialNetworkForPost : (Post*) currentPost {
@@ -133,22 +113,13 @@
     return nil;
 }
 
-- (UIColor*) reasonColorForPost : (Post*) currentPost {
-    switch (currentPost.reason) {
-        case Connect:
-            return [UIColor greenColor];
-            break;
-        case ErrorConnection:
-            return [UIColor orangeColor];
-            break;
-        case Offline:
-            return [UIColor redColor];
-            break;
-        default:
-            break;
-    }
-    return nil;
-}
+#pragma mark initiation PostDescriptionTextView
 
+- (void) initiationBackgroundImageView {
+    self.backGroundImageView.layer.masksToBounds = YES;
+    self.backGroundImageView.layer.cornerRadius = 30;
+    self.backGroundImageView.layer.borderWidth = 2.0;
+    self.backGroundImageView.layer.borderColor = [UIColor colorWithRed: 255.0/255.0 green: 255.0/255.0 blue: 100.0/255.0 alpha: 1.0].CGColor;
+}
 
 @end

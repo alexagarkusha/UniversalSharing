@@ -18,6 +18,9 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y4j-P6-qcN" customClass="MUSGalleryViewOfPhotos">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="150"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="150" id="lzQ-yl-fMl"/>
+                        </constraints>
                     </view>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="h1E-fQ-zZP">
                         <rect key="frame" x="8" y="91" width="50" height="50"/>
@@ -73,7 +76,6 @@
                 <constraints>
                     <constraint firstItem="h1E-fQ-zZP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="3I6-M7-ATO"/>
                     <constraint firstItem="h1E-fQ-zZP" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="6XS-GG-10N"/>
-                    <constraint firstAttribute="bottom" secondItem="y4j-P6-qcN" secondAttribute="bottom" constant="-1" id="8KO-nR-ZxG"/>
                     <constraint firstItem="y4j-P6-qcN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="8jW-F9-bvh"/>
                     <constraint firstItem="I6K-rJ-8JI" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="BP6-cr-Xbz"/>
                     <constraint firstItem="e88-Ky-GeW" firstAttribute="top" secondItem="XKx-fB-tTp" secondAttribute="bottom" constant="8" id="Bw7-oU-XYb"/>
@@ -83,11 +85,11 @@
                     <constraint firstItem="bQE-pg-2i5" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="QuY-ma-3IB"/>
                     <constraint firstItem="XKx-fB-tTp" firstAttribute="leading" secondItem="h1E-fQ-zZP" secondAttribute="trailing" constant="8" id="Vb7-mt-FbZ"/>
                     <constraint firstItem="y4j-P6-qcN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Y5p-Wl-OfK"/>
-                    <constraint firstAttribute="centerX" secondItem="y4j-P6-qcN" secondAttribute="centerX" id="eul-bc-4XG"/>
                     <constraint firstAttribute="bottomMargin" secondItem="I6K-rJ-8JI" secondAttribute="bottom" constant="49" id="h0m-fB-XBP"/>
                     <constraint firstAttribute="bottomMargin" secondItem="e88-Ky-GeW" secondAttribute="bottom" constant="1" id="vEn-la-oQQ"/>
                 </constraints>
             </tableViewCellContentView>
+            <color key="backgroundColor" red="1" green="1" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
                 <outlet property="addButtonButtomConstraint" destination="h0m-fB-XBP" id="crm-DN-uUw"/>
                 <outlet property="addPhotoButtonOutlet" destination="I6K-rJ-8JI" id="oJJ-Zy-1xY"/>

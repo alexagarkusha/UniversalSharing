@@ -183,9 +183,16 @@
 #pragma mark UpdatePost
 
 - (void) updatePost {
-    self.currentPost.postDescription = self.postDescription;
-    self.currentPost.place = self.postPlace;
-
+    if (![self.postDescription isEqualToString: kPlaceholderText]) {
+        self.currentPost.postDescription = self.postDescription;
+    } else {
+        self.currentPost.postDescription = @"";
+    }
+    
+    if (self.postPlace) {
+        self.currentPost.place = self.postPlace;
+    }
+    
     NSMutableArray *arrayOfImagesToPost = [[NSMutableArray alloc] init];
     
     for (int i = 0; i < self.arrayOfUsersPictures.count; i++) {

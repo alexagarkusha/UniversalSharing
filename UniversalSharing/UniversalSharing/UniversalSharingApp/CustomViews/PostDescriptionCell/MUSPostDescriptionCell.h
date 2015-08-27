@@ -10,21 +10,13 @@
 #import "MUSSocialNetworkLibraryHeader.h"
 
 @protocol MUSPostDescriptionCellDelegate <NSObject>
+
 - (void) beginEditingPostDescription : (NSIndexPath*) currentIndexPath;
 - (void) saveChangesInPostDescription : (NSString*) postDescription;
 
 @end
 
-
-
 @interface MUSPostDescriptionCell : UITableViewCell
-
-@property (nonatomic, assign) id <MUSPostDescriptionCellDelegate> delegate;
-@property (nonatomic, assign) BOOL isEditableCell;
-
-@property (weak, nonatomic) IBOutlet UITextView *postDescriptionTextView;
-@property (strong, nonatomic) NSIndexPath* currentIndexPath;
-
 
 + (NSString*) cellID;
 + (instancetype) postDescriptionCell;
@@ -32,5 +24,10 @@
 
 - (void) configurationPostDescriptionCell: (NSString*) postDescription;
 
+@property (nonatomic, weak) IBOutlet UITextView *postDescriptionTextView;
+
+@property (nonatomic, assign) id <MUSPostDescriptionCellDelegate> delegate;
+@property (nonatomic, assign) BOOL isEditableCell;
+@property (nonatomic, strong) NSIndexPath* currentIndexPath;
 
 @end
