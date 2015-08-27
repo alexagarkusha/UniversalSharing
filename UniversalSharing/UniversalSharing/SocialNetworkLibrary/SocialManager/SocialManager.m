@@ -10,9 +10,11 @@
 #import "MUSSocialNetworkLibraryConstants.h"
 
 @interface SocialManager()
-//@property (assign, nonatomic) NetworkType networkType;
+
 @property (strong, nonatomic) NSArray *accountsArray;
+
 @end
+
 static SocialManager *model = nil;
 
 @implementation SocialManager
@@ -24,13 +26,17 @@ static SocialManager *model = nil;
     return  model;
 }
 
+- (instancetype) init {
+    self = [super init];
+    if (self) {
+        self.accountsArray = [self networks:@[@(Twitters), @(VKontakt), @(Facebook)]];
+    }
+    return self;
+}
 + (SocialNetwork*) currentSocialNetwork {
-    SocialNetwork *currentSocialNetwork = nil;
-    
-#warning If networks array was created before, we must use it, instead of create new
-    NSArray *accountsArray = [[SocialManager sharedManager] networks:@[@(Twitters), @(VKontakt), @(Facebook)]];
+    SocialNetwork *currentSocialNetwork = nil;    
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isLogin == %d AND isVisible == %d", YES, YES];
-    NSArray *filteredArray = [accountsArray filteredArrayUsingPredicate:predicate];
+    NSArray *filteredArray = [[[SocialManager sharedManager] obtainAccountsArray] filteredArrayUsingPredicate:predicate];
     if (filteredArray.count > 0) {
         currentSocialNetwork = (SocialNetwork*) [filteredArray firstObject];
     }
@@ -38,6 +44,10 @@ static SocialManager *model = nil;
     return currentSocialNetwork;
 }
 
+- (NSArray*) obtainAccountsArray {
+    
+    return self.accountsArray;
+}
 
 - (NSMutableArray*) networks :(NSArray*) arrayWithNetwork {
     NSOrderedSet *orderedSet = [NSOrderedSet orderedSetWithArray:arrayWithNetwork];

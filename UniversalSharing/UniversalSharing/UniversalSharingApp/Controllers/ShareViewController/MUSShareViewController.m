@@ -157,10 +157,6 @@
 #pragma mark - UIButton
 
 - (void) addButtonOnTextView {
-    /*
-     using category
-     */
-#warning "???"
     self.changeSocialNetworkButton = [UIButton new];
     [self.changeSocialNetworkButton addTarget:self action:@selector(changeSocialNetworkAccount:)forControlEvents:UIControlEventTouchUpInside];
 }
@@ -308,13 +304,7 @@
 
 #pragma mark - Share Post to Social network
 
-- (IBAction)shareToSocialNetwork:(id)sender {
-//    if (![self checkStatusOftheNetworkConnection] || ![self checkStatusOfSocialNetworkVisibility]) {
-//        return;
-//    }
-    
-#warning "validation"
-    
+- (IBAction)shareToSocialNetwork:(id)sender {    
     if(!self.post) {
         self.post = [[Post alloc] init];
     }
@@ -340,28 +330,6 @@
             }
         }];
         
-}
-
-#warning "The same method"
-- (BOOL) checkStatusOftheNetworkConnection {
-    BOOL isReachable = [ReachabilityManager isReachable];
-    BOOL isReachableViaWiFi = [ReachabilityManager isReachableViaWiFi];
-    
-    if (!isReachableViaWiFi && !isReachable) {
-        [self showAlertWithMessage: musAppError_Internet_Connection];
-        return NO;
-    }
-    return YES;
-}
-
-#warning "???"
-- (BOOL) checkStatusOfSocialNetworkVisibility {
-    
-    if (!_currentSocialNetwork.isVisible || !_currentSocialNetwork.isLogin) {
-        [self showAlertWithMessage: musAppError_Logged_Into_Social_Networks];
-        return NO;
-    }
-    return YES;
 }
 
 #pragma mark - UITextViewDelegate

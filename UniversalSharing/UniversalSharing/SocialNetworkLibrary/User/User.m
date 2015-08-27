@@ -15,22 +15,22 @@
 
 + (User*) createFromDictionary:(id) dict andNetworkType :(NetworkType) networkType
 {
-    User *user = [[User alloc] init];
+   // User *user = [[User alloc] init];
     
     switch (networkType) {
         case Facebook:
-            user = [user createUserFromFB: dict];
+            return [User createUserFromFB: dict];
             break;
         case VKontakt:
-            user = [user createUserFromVK: dict];
+           return [User createUserFromVK: dict];
             break;
         case Twitters:
-            user = [user createUserFromTwitter: dict];
+            return [User createUserFromTwitter: dict];
             break;
         default:
             break;
     }
-    return user;
+    return nil;
 }
 
 /*!
@@ -38,8 +38,7 @@
  @param dictionary takes dictionary from facebook network.
  */
 
-- (User*) createUserFromFB:(id)userDictionary {
-    #warning "One more init?"
++ (User*) createUserFromFB:(id)userDictionary {
     User* currentUser = [[User alloc] init];
     
     if ([userDictionary isKindOfClass: [NSDictionary class]]) {
@@ -64,9 +63,7 @@
  @param dictionary takes dictionary from vkontakte network.
  */
 
-- (User*) createUserFromVK : (id) userDictionary {
-    #warning "One more init?"
-    
++ (User*) createUserFromVK : (id) userDictionary {
     User *currentUser = [[User alloc] init];
     if ([userDictionary isKindOfClass:[NSDictionary class]]){
         currentUser.dateOfBirth = [userDictionary objectForKey : musVKParseUser_BirthDate];
@@ -91,9 +88,7 @@
  @param dictionary takes dictionary from twitter network.
  */
 
-- (User*) createUserFromTwitter:(TWTRUser*)userDictionary {
-    
-    #warning "One more init?"
++ (User*) createUserFromTwitter:(TWTRUser*)userDictionary {
     User *currentUser = [[User alloc] init];
     currentUser.clientID = userDictionary.userID;
     currentUser.lastName = userDictionary.screenName;
@@ -108,7 +103,6 @@
                                                            withString:@""];
     currentUser.photoURL = photoURL_max;
     return currentUser;
-    
     
 }
 

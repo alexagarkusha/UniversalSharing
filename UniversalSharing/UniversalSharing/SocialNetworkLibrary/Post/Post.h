@@ -51,4 +51,8 @@
 @property (strong, nonatomic) NSString *locationId;
 @property (strong, nonatomic) Place *place;
 
+//===
+
+- (NSString*) convertArrayImagesUrlToString;
+
 @end

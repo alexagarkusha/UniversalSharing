@@ -10,5 +10,13 @@
 
 @implementation Post
 
-
+- (NSString*) convertArrayImagesUrlToString {
+    NSString *url = @"";
+    for (int i = 0; i < self.arrayImagesUrl.count; i++) {
+        url = [url stringByAppendingString:self.arrayImagesUrl[i]];
+        if(self.arrayImagesUrl.count - 1 != i)
+            url = [url stringByAppendingString:@", "];
+    }
+    return url;    
+}
 @end
