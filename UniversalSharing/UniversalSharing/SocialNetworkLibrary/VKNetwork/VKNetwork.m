@@ -258,11 +258,18 @@ static VKNetwork *model = nil;
 - (void) postMessageToVK : (Post*) post {
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     
-    parameters [VK_API_OWNER_ID] = [VKSdk getAccessToken].userId;
-    parameters [VK_API_MESSAGE] = post.postDescription;
-    if (post.placeID) {
-        parameters [VK_API_PLACE_ID] = post.placeID;
-    }
+//<<<<<<< HEAD
+//    parameters [VK_API_OWNER_ID] = [VKSdk getAccessToken].userId;
+//    parameters [VK_API_MESSAGE] = post.postDescription;
+//    if (post.placeID) {
+//        parameters [VK_API_PLACE_ID] = post.placeID;
+//    }
+//=======
+        parameters [VK_API_OWNER_ID] = [VKSdk getAccessToken].userId;
+        parameters [VK_API_MESSAGE] = post.postDescription;
+        if (post.place.placeID) {
+            parameters [VK_API_PLACE_ID] = post.place.placeID;
+        }
     
     VKRequest *request = [[VKApi wall] post: parameters];
     

@@ -34,14 +34,21 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Loz-Pa-Uz7">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="150"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Add location to your Post" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3cX-aj-nKp">
-                                <rect key="frame" x="32" y="53" width="257" height="43"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add location to your Post" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3cX-aj-nKp">
+                                <rect key="frame" x="32" y="56" width="257" height="37"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="257" id="eKG-57-6O5"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="SavoyeLetPlain" family="Savoye LET" pointSize="31"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="0.94161536938157897" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="3cX-aj-nKp" secondAttribute="centerX" id="Qrq-hm-Qox"/>
+                            <constraint firstAttribute="centerY" secondItem="3cX-aj-nKp" secondAttribute="centerY" id="UMT-dT-jkr"/>
+                        </constraints>
                     </view>
                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7hm-f2-P8D">
                         <rect key="frame" x="272" y="55" width="35" height="35"/>

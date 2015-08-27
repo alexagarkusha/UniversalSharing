@@ -11,7 +11,6 @@
 
 @interface MUSDetailPostViewController : UIViewController
 
-@property (nonatomic, strong) User *currentUser;
 @property (nonatomic, strong) Post *currentPost;
 
 @end

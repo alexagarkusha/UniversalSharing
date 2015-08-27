@@ -68,13 +68,14 @@
         
     } else {
         self.addLocationView.hidden = YES;
+        [self.mapView removeAnnotations: self.mapView.annotations];
         if (currentPlace.fullName) {
             self.placeNameLabel.hidden = NO;
             self.placeNameLabel.text = [NSString stringWithFormat: @"%@", currentPlace.fullName];
         }
 #warning "add pin every time"
         CLLocationCoordinate2D currentCityLocation = CLLocationCoordinate2DMake([currentPlace.latitude floatValue], [currentPlace.longitude floatValue]);
-        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(currentCityLocation, 400, 400);
+        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(currentCityLocation, 500, 500);
         
         
         

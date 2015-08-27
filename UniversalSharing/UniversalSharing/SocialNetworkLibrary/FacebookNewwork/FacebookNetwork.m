@@ -245,7 +245,9 @@ static FacebookNetwork *model = nil;
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
     params[musFacebookParameter_Message] = post.postDescription;
     
-    if (post.placeID) params[ musFacebookParameter_Place ] = post.placeID;
+    if (post.place.placeID) {
+        params[ musFacebookParameter_Place ] = post.place.placeID;
+    }
     
     [[[FBSDKGraphRequest alloc] initWithGraphPath: musFacebookGraphPath_Me_Feed
                                        parameters: params
@@ -275,8 +277,8 @@ static FacebookNetwork *model = nil;
     FBSDKGraphRequestConnection *connection = [[FBSDKGraphRequestConnection alloc] init];
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
     params[musFacebookParameter_Message] = post.postDescription;
-    if (post.placeID)  {
-        params[musFacebookParameter_Place] = post.placeID;
+    if (post.place.placeID)  {
+        params[musFacebookParameter_Place] = post.place.placeID;
     }
     
     __weak NSArray *copyPostImagesArray = post.arrayImages;
