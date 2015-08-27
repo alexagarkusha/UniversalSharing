@@ -17,10 +17,10 @@
         requestString = [requestString stringByAppendingString:[NSString stringWithFormat:@" WHERE networkType = \"%ld\"", (long)networkType]];
         
         if (reason != AllReasons) {
-            requestString = [requestString stringByAppendingString: [NSString stringWithFormat: @" AND reason = \"%ld\"", (long)reason]];
+            requestString = [requestString stringByAppendingString: [NSString stringWithFormat: @" AND reson = \"%ld\"", (long)reason]];
         }
     } else if (reason != AllReasons && networkType == AllNetworks) {
-        requestString = [requestString stringByAppendingString: [NSString stringWithFormat: @" WHERE reason=\"%ld\"", (long)reason]];
+        requestString = [requestString stringByAppendingString: [NSString stringWithFormat: @" WHERE reson=\"%ld\"", (long)reason]];
     }
     
     return requestString;
