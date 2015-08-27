@@ -280,8 +280,8 @@ static TwitterNetwork *model = nil;
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     
     params [musTwitterParameter_Status] = post.postDescription;
-    if (post.placeID) {
-        params [musTwitterParameter_PlaceID] = post.placeID;
+    if (post.place.placeID) {
+        params [musTwitterParameter_PlaceID] = post.place.placeID;
     }
     
     NSURLRequest *preparedRequest = [client URLRequestWithMethod : musPOST
@@ -324,8 +324,8 @@ static TwitterNetwork *model = nil;
             if (post.postDescription) {
                 params [musTwitterParameter_Status] = post.postDescription;
             }
-            if (post.placeID) {
-                params [musTwitterParameter_PlaceID] = post.placeID;
+            if (post.place.placeID) {
+                params [musTwitterParameter_PlaceID] = post.place.placeID;
             }
             NSError *error = nil;
             

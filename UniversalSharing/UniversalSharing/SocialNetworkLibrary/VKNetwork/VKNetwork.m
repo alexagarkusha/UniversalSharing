@@ -260,8 +260,8 @@ static VKNetwork *model = nil;
     
         parameters [VK_API_OWNER_ID] = [VKSdk getAccessToken].userId;
         parameters [VK_API_MESSAGE] = post.postDescription;
-        if (post.placeID) {
-            parameters [VK_API_PLACE_ID] = post.placeID;
+        if (post.place.placeID) {
+            parameters [VK_API_PLACE_ID] = post.place.placeID;
         }
     
     VKRequest *request = [[VKApi wall] post: parameters];

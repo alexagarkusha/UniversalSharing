@@ -16,7 +16,7 @@
 #import "MUSDetailPostViewController.h"
 @interface MUSPostsViewController () <DOPDropDownMenuDataSource, DOPDropDownMenuDelegate, UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic, strong) NSArray *arrayPosts;
+@property (nonatomic, strong) NSMutableArray *arrayPosts;
 @property (nonatomic, strong) NSArray *arrayOfUsers;
 
 @property (nonatomic, strong) NSArray *arrayOfShareReason;
@@ -34,9 +34,6 @@
 @implementation MUSPostsViewController
 
 - (void)viewDidLoad {
-    //[self POSTS]; // DELETE THIS AFTER Connect SQLite
-    [self initiationArrayOfShareReason];
-    [self initiationArrayOfActiveSocialNetwork];
     [self initiationDropDownMenu];
     [self initiationTableView];
 
@@ -47,7 +44,8 @@
     [super viewWillAppear : YES];
 #warning "Twice?"
     [self initiationArrayOfActiveSocialNetwork];
-    self.arrayPosts = [NSArray arrayWithArray: [[DataBaseManager sharedManager] obtainAllPosts]];
+    self.arrayPosts = [[NSMutableArray alloc] initWithArray: [[DataBaseManager sharedManager] obtainAllPosts]];
+    //self.arrayPosts = [NSArray arrayWithArray: [[DataBaseManager sharedManager] obtainAllPosts]];
     [self.tableView reloadData];
 }
 
@@ -60,6 +58,8 @@
 
 - (void) initiationDropDownMenu {
     [super viewDidLoad];
+    [self initiationArrayOfActiveSocialNetwork];
+    [self initiationArrayOfShareReason];
     self.menu = [[DOPDropDownMenu alloc] initWithOrigin:CGPointMake(0, [UIApplication sharedApplication].statusBarFrame.size.height + self.navigationController.navigationBar.frame.size.height) andHeight: 40];
     self.menu.dataSource = self;
     self.menu.delegate = self;
@@ -124,6 +124,7 @@
     if(!cell) {
         cell = [MUSPostCell postCell];
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone; // disable the cell selection highlighting
     [cell configurationPostCell: [self.arrayPosts objectAtIndex: indexPath.row]];
     return cell;
 }
@@ -149,7 +150,16 @@
     return [MUSPostCell heightForPostCell];
 }
 
-
+/*
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Remove the row from data model
+    [self.arrayPosts removeObjectAtIndex:indexPath.row];
+    
+    // Request table view to reload
+    [tableView reloadData];
+}
+*/
 
 #pragma mark - DOPDropDownMenuDataSource
 
@@ -218,7 +228,9 @@
         default:
             break;
     }
-    self.arrayPosts = [[DataBaseManager sharedManager] obtainPostsWithReason: self.predicateReason andNetworkType:self.predicateNetworkType];
+    [self.arrayPosts removeAllObjects];
+    [self.arrayPosts addObjectsFromArray: [[DataBaseManager sharedManager] obtainPostsWithReason: self.predicateReason andNetworkType:self.predicateNetworkType]];
+    //self.arrayPosts = [[DataBaseManager sharedManager] obtainPostsWithReason: self.predicateReason andNetworkType:self.predicateNetworkType];
     [self.tableView reloadData];
 }
 

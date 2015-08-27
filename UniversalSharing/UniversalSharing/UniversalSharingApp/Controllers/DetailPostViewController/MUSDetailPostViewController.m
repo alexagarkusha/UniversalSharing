@@ -29,9 +29,10 @@
 @property (nonatomic, strong) SocialNetwork *currentSocialNetwork;
 @property (nonatomic, strong) Place *postPlace;
 @property (nonatomic, strong) NSString *placeName;
-@property (nonatomic, assign) CLLocationCoordinate2D currentLocationOfPost;
 @property (nonatomic, assign) BOOL isEditableTableView;
-
+@property (nonatomic, strong) User *currentUser;
+@property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
+@property (nonatomic, strong) UIBarButtonItem *actionBarButton;
 
 @end
 
@@ -41,10 +42,10 @@
 - (void)viewDidLoad {
     // Do any additional setup after loading the view.
     [self initiationTableView];
-    [self initiationNavigationBar];
     [self initiationCurrentSocialNetwork];
     [self initiationPostDescriptionArrayOfPicturesAndPostLocation];
-    
+    [self initiationNavigationBar];
+    [self initiationActivityIndicator];
     self.currentUser = [[DataBaseManager sharedManager] obtainUsersWithNetworkType: self.currentSocialNetwork.networkType];
     self.tableViewFrame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height);
 }
@@ -91,8 +92,8 @@
 - (void) initiationNavigationBar {
     ReasonType currentReasonType = self.currentPost.reason;
     if (currentReasonType == Offline || currentReasonType == ErrorConnection) {
-        UIBarButtonItem *actionButton = [[UIBarButtonItem alloc] initWithTitle : @"Action" style:2 target:self action: @selector(showActionSheet)];
-        self.navigationItem.rightBarButtonItem = actionButton;
+        self.actionBarButton = [[UIBarButtonItem alloc] initWithTitle : @"Action" style:2 target:self action: @selector(showActionSheet)];
+        self.navigationItem.rightBarButtonItem = self.actionBarButton;
     }
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:2 target:self action: @selector(backToThePostsViewController)];
     self.navigationItem.leftBarButtonItem = backButton;
@@ -120,8 +121,35 @@
         }
     }
     self.postDescription = self.currentPost.postDescription;
-    self.postPlace = self.currentPost.place;
+    
+    if (self.currentPost.place.longitude.length > 0 && self.currentPost.place.latitude.length > 0) {
+        self.postPlace = self.currentPost.place;
+    }
 }
+
+#pragma mark  initiation Activity Indicator
+
+- (void) initiationActivityIndicator {
+    self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.activityIndicator.center=self.view.center;
+    self.activityIndicator.hidesWhenStopped = YES;
+    [self.view addSubview:self.activityIndicator];
+}
+
+#pragma mark  start Activity Indicator Animating
+
+- (void) startActivityIndicatorAnimating {
+    [self.activityIndicator startAnimating];
+    self.actionBarButton.enabled = NO;
+}
+
+#pragma mark  stop Activity Indicator Animating
+
+- (void) stopActivityIndicatorAnimating {
+    [self.activityIndicator stopAnimating];
+    self.actionBarButton.enabled = YES;
+}
+
 
 #pragma mark UIActionSheet
 
@@ -140,10 +168,8 @@
 - (void) actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if ( buttonIndex != 0 ) {
         if (buttonIndex == 1) {
-            NSLog(@"POST"); // SEND POST METHOD;
             [self sentPost];
         } else {
-            //NSLog(@"EDIT");
             self.isEditableTableView = YES;
             [self.tableView reloadData];
         }
@@ -208,13 +234,20 @@
     [self deletePostImagesFromDocumentsFolder: self.currentPost];
     [self saveImageToDocumentsFolderAndFillArrayWithUrl : self.currentPost];
     
-    
-    
+    [self startActivityIndicatorAnimating];
+    __weak MUSDetailPostViewController *weakSelf = self;
     [_currentSocialNetwork sharePost: self.currentPost withComplition:^(id result, NSError *error) {
         if (!error) {
             [self showAlertWithMessage : titleCongratulatoryAlert];
+            weakSelf.isEditableTableView = NO;
+            [weakSelf stopActivityIndicatorAnimating];
+            self.navigationItem.rightBarButtonItem = nil;
+            [weakSelf.tableView reloadData];
         } else {
             [self showErrorAlertWithError : error];
+            weakSelf.isEditableTableView = NO;
+            [weakSelf stopActivityIndicatorAnimating];
+            [weakSelf.tableView reloadData];
         }
     }];
 }
@@ -233,7 +266,7 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (!self.currentPost.place && !self.isEditableTableView) {
+    if (!self.postPlace && !self.isEditableTableView) {
         return 3;
     } else {
         return 4;

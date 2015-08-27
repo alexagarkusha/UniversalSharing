@@ -75,8 +75,10 @@
 - (void) checkpostDescriptionTextViewStatus {
     if (!self.isEditableCell) {
         self.postDescriptionTextView.editable = NO;
+        self.postDescriptionTextView.scrollEnabled = NO;
     } else {
         self.postDescriptionTextView.editable = YES;
+        self.postDescriptionTextView.scrollEnabled = YES;
     }
 }
 
