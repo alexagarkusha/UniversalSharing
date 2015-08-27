@@ -23,7 +23,6 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
     // Configure the view for the selected state
 }
 
@@ -40,39 +39,37 @@
     return nibArray[0];
 }
 
-+ (CGFloat) heightForPostDescriptionCell : (NSString*) postDescription {
+#pragma mark - height for PostDescriptionCell
 
-#warning "Magic digits :)"
-    UITextView *textView = [[UITextView alloc] initWithFrame: CGRectMake(8, 8, [UIScreen mainScreen].bounds.size.width - 8, 50)];
-                            
-    
-    textView.text = postDescription;
-    
-    CGFloat width = textView.bounds.size.width - 2.0 * textView.textContainer.lineFragmentPadding;
-    
-    NSDictionary *options = @{ NSFontAttributeName: [UIFont fontWithName: @"Times New Roman" size: 17]};
-    CGRect boundingRect = [textView.text
-                           boundingRectWithSize : CGSizeMake(width, NSIntegerMax)
-                           options : NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
-                           attributes : options context:nil];
-    textView.frame = CGRectMake(textView.frame.origin.x, textView.frame.origin.y, textView.frame.size.width, boundingRect.size.height);
-    
-    CGRect frame = CGRectMake( 0, 0, [UIScreen mainScreen].bounds.size.width, textView.frame.origin.y + textView.frame.size.height + 16);
-    
-    return frame.size.height;
++ (CGFloat) heightForPostDescriptionCell : (NSString*) postDescription {
+    UITextView *calculationView = [[UITextView alloc] init];
+    NSDictionary *options = @{ NSFontAttributeName: [UIFont
+                            fontWithName : musApp_PostDescriptionCell_TextView_Font_Name
+                                    size : musApp_PostDescriptionCell_TextView_Font_Size]};
+    NSAttributedString* attrString = [[NSAttributedString alloc] initWithString : postDescription
+                                                                     attributes : options];
+    [calculationView setAttributedText : attrString];
+    CGSize size = [calculationView sizeThatFits: CGSizeMake ([UIScreen mainScreen].bounds.size.width - musApp_PostDescriptionCell_TextView_LeftConstraint - musApp_PostDescriptionCell_TextView_RightConstraint, FLT_MAX)];
+    return size.height + musApp_PostDescriptionCell_TextView_BottomConstraint + musApp_PostDescriptionCell_TextView_TopConstraint;
+
 }
 
+#pragma mark - configuration PostDescriptionCell
+
 - (void) configurationPostDescriptionCell: (NSString*) postDescription {
-    [self checkpostDescriptionTextViewStatus];
+    [self checkPostDescriptionTextViewStatus];
+    
     if (![postDescription isEqualToString: changePlaceholderWhenStartEditing] && ![postDescription isEqualToString: kPlaceholderText]) {
-        self.postDescriptionTextView.text = postDescription;
+        [self initialParametersOfTextInTextView: postDescription];
         self.postDescriptionTextView.tag = 1;
     } else {
         [self initialPostDescriptionTextView];
     }
 }
 
-- (void) checkpostDescriptionTextViewStatus {
+#pragma mark - Check PostDescriptionTextView status
+
+- (void) checkPostDescriptionTextViewStatus {
     if (!self.isEditableCell) {
         self.postDescriptionTextView.editable = NO;
         self.postDescriptionTextView.scrollEnabled = NO;
@@ -86,7 +83,7 @@
 
 - (BOOL) textViewShouldBeginEditing:(UITextView *)textView {
     if(textView.tag == 0) {
-        textView.text = changePlaceholderWhenStartEditing;
+        [self initialParametersOfTextInTextView: changePlaceholderWhenStartEditing];
         textView.textColor = [UIColor blackColor];
         textView.tag = 1;
     }
@@ -111,14 +108,23 @@
     }
 }
 
+#pragma mark initiation PostDescriptionTextView
+
 - (void) initialPostDescriptionTextView {
-    self.postDescriptionTextView.editable = YES;
-    self.postDescriptionTextView.scrollEnabled = YES;
-    self.postDescriptionTextView.delegate = self;
-    self.postDescriptionTextView.textColor = [UIColor lightGrayColor];
     self.postDescriptionTextView.tag = 0;
-    self.postDescriptionTextView.text = kPlaceholderText;
+    [self initialParametersOfTextInTextView: kPlaceholderText];
+    self.postDescriptionTextView.textColor = [UIColor lightGrayColor];
 }
 
+#pragma mark initiation Parameters of text in text view
+
+- (void) initialParametersOfTextInTextView : (NSString*) text {
+    NSDictionary *options = @{ NSFontAttributeName: [UIFont
+                                fontWithName : musApp_PostDescriptionCell_TextView_Font_Name
+                                        size : musApp_PostDescriptionCell_TextView_Font_Size]};
+    NSAttributedString* attrString = [[NSAttributedString alloc] initWithString : text
+                                                                     attributes : options];
+    [self.postDescriptionTextView setAttributedText : attrString];
+}
 
 @end

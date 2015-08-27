@@ -124,7 +124,7 @@ FOUNDATION_EXPORT NSString *const musAppFilter_Title_Error;
 #pragma mark - MUSPostCell
 
 FOUNDATION_EXPORT NSString *const musApp_ActionSheet_Title_ChooseAction;
-FOUNDATION_EXPORT NSInteger musApp_EightPixels;
+FOUNDATION_EXPORT NSInteger const musApp_EightPixels;
 
 #pragma mark - MUSGalleryViewOfPhotos
 
@@ -133,6 +133,17 @@ FOUNDATION_EXPORT NSString *const musApp_GalleryOfPhotos_NibName;
 #pragma mark - MUSGalleryOfPhotosCell
 
 FOUNDATION_EXPORT NSString *const musAppButton_ImageName_ButtonAdd;
+
+#pragma mark - MUSPostDescriptionCell
+
+FOUNDATION_EXPORT NSInteger const musApp_PostDescriptionCell_TextView_TopConstraint;
+FOUNDATION_EXPORT NSInteger const musApp_PostDescriptionCell_TextView_BottomConstraint;
+FOUNDATION_EXPORT NSInteger const musApp_PostDescriptionCell_TextView_LeftConstraint;
+FOUNDATION_EXPORT NSInteger const musApp_PostDescriptionCell_TextView_RightConstraint;
+
+FOUNDATION_EXPORT NSString *const musApp_PostDescriptionCell_TextView_Font_Name;
+FOUNDATION_EXPORT NSInteger const musApp_PostDescriptionCell_TextView_Font_Size;
+
 
 #pragma mark - MUSDetailPostViewController
 

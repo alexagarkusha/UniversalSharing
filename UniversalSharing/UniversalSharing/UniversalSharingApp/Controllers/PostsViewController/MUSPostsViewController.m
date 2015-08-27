@@ -28,7 +28,6 @@
 @property (nonatomic, assign) NSInteger predicateNetworkType;
 @property (nonatomic, assign) NSInteger predicateReason;
 
-
 @end
 
 @implementation MUSPostsViewController
@@ -44,8 +43,7 @@
     [super viewWillAppear : YES];
 #warning "Twice?"
     [self initiationArrayOfActiveSocialNetwork];
-    self.arrayPosts = [[NSMutableArray alloc] initWithArray: [[DataBaseManager sharedManager] obtainAllPosts]];
-    //self.arrayPosts = [NSArray arrayWithArray: [[DataBaseManager sharedManager] obtainAllPosts]];
+    self.arrayPosts = [[NSMutableArray alloc] initWithArray: [[DataBaseManager sharedManager] obtainPostsWithReason: self.predicateReason andNetworkType: self.predicateNetworkType]];
     [self.tableView reloadData];
 }
 
@@ -150,16 +148,16 @@
     return [MUSPostCell heightForPostCell];
 }
 
-/*
+
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [[DataBaseManager sharedManager] deletePostByPrimaryKey: [self.arrayPosts objectAtIndex:indexPath.row]];
     // Remove the row from data model
     [self.arrayPosts removeObjectAtIndex:indexPath.row];
     
     // Request table view to reload
     [tableView reloadData];
 }
-*/
 
 #pragma mark - DOPDropDownMenuDataSource
 
@@ -230,7 +228,6 @@
     }
     [self.arrayPosts removeAllObjects];
     [self.arrayPosts addObjectsFromArray: [[DataBaseManager sharedManager] obtainPostsWithReason: self.predicateReason andNetworkType:self.predicateNetworkType]];
-    //self.arrayPosts = [[DataBaseManager sharedManager] obtainPostsWithReason: self.predicateReason andNetworkType:self.predicateNetworkType];
     [self.tableView reloadData];
 }
 

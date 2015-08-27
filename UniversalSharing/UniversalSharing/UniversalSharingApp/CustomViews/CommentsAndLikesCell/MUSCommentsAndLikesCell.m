@@ -44,9 +44,13 @@
     return nibArray[0];
 }
 
+#pragma mark - height for CommentsAndLikesCell
+
 + (CGFloat) heightForCommentsAndLikesCell {
     return musAppDetailPostVC_HeightOfCommentsAndLikesCell;
 }
+
+#pragma mark - configuration CommentsAndLikesCellByPost
 
 - (void) configurationCommentsAndLikesCellByPost:(Post *)currentPost {
     self.likeImageView.image = [UIImage imageNamed: musAppImage_Name_Like];

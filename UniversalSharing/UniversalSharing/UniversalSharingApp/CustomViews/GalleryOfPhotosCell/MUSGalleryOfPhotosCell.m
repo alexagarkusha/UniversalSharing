@@ -26,11 +26,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *addPhotoButtonOutlet;
 @property (weak, nonatomic) IBOutlet MUSGalleryViewOfPhotos *galleryViewOfPhotos;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *addButtonButtomConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *galleryViewOfPhotosButtomConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *galleryViewOfPhotosTopConstraint;
-
-
-
 @property (strong, nonatomic) NSMutableArray *arrayWithImages;
 @property (assign, nonatomic) BOOL isEditableGallery;
 @property (strong, nonatomic) User *currentUser;
@@ -81,10 +76,14 @@
     [self checkGalleryOfPhotosStatus];
     self.currentUser = user;
     self.reasonType = reasonOfPost;
-    self.arrayWithImages = [NSMutableArray arrayWithArray: arrayOfImages];
+    [self initiationGalleryViewOfPhotos : arrayOfImages];
     
+    if (arrayOfImages.count > self.arrayWithImages.count && self.arrayWithImages.count >= 1) {
+        [self.galleryViewOfPhotos scrollCollectionViewToLastPhoto];
+    }
+    self.arrayWithImages = [NSMutableArray arrayWithArray: arrayOfImages];
+
     [self initiationAddButton];
-    [self initiationGalleryViewOfPhotos];
     [self initiationUserNameLabel: user];
     [self initiationUserDateOfPostLabel: postDateCreate];
     [self initiationUserPhotoImageView: socialNetworkIconName];
@@ -103,17 +102,14 @@
 
 #pragma mark initiation GalleryViewOfPhotos
 
-- (void) initiationGalleryViewOfPhotos {
-        self.galleryViewOfPhotos.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [MUSGalleryOfPhotosCell heightForGalleryOfPhotosCell: self.arrayWithImages.count]);
+- (void) initiationGalleryViewOfPhotos : (NSMutableArray*) arrayWithImages {
+        //self.galleryViewOfPhotos.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [MUSGalleryOfPhotosCell heightForGalleryOfPhotosCell: arrayWithImages.count]);
         self.galleryViewOfPhotos.delegate = self;
         self.galleryViewOfPhotos.collectionView.backgroundColor = [UIColor colorWithRed: 255.0/255.0 green: 251.0/255.0 blue: 241.0/255.0 alpha: 1.0];
-        self.galleryViewOfPhotos.arrayOfPhotos = [NSMutableArray arrayWithArray: self.arrayWithImages];
+        self.galleryViewOfPhotos.arrayOfPhotos = [NSMutableArray arrayWithArray : arrayWithImages];
         [self.galleryViewOfPhotos isVisiblePageControl : YES];
         [self.galleryViewOfPhotos.collectionView reloadData];
-    if (self.arrayWithImages.count > 1 && self.isEditableCell) {
-        [self.galleryViewOfPhotos scrollCollectionViewToLastPhoto];
-    }
-}
+ }
 
 #pragma mark initiation UserNameLabel
 
@@ -121,9 +117,11 @@
     if (self.arrayWithImages.count > 0) {
         self.usernameLabel.textColor = [UIColor whiteColor];
         self.dateOfPostLabel.textColor = [UIColor whiteColor];
+        self.galleryViewOfPhotos.hidden = NO;
     } else {
         self.usernameLabel.textColor = [UIColor blackColor];
         self.dateOfPostLabel.textColor = [UIColor blackColor];
+        self.galleryViewOfPhotos.hidden = YES;
     }
     
     self.usernameLabel.text = [NSString stringWithFormat: @"%@ %@", self.currentUser.lastName, self.currentUser.firstName];
@@ -172,13 +170,13 @@
     return nil;
 }
 
-//#warning "Can be category"
-
 #pragma mark - UIButton
 
 - (IBAction)addPhotoTouch:(id)sender {
     [self.delegate showImagePicker];
 }
+
+#pragma mark - check GalleryOfPhotosStatus
 
 - (void) checkGalleryOfPhotosStatus {
     if (!self.isEditableCell) {
@@ -194,7 +192,9 @@
 
 - (void) arrayOfPhotos:(NSArray *)arrayOfPhotos {
     [self.delegate arrayOfImagesOfUser: arrayOfPhotos];
+    self.arrayWithImages = [NSMutableArray arrayWithArray: arrayOfPhotos];
 }
+
 
 
 @end
