@@ -14,6 +14,8 @@
 #import "SocialManager.h"
 #import "DataBaseManager.h"
 #import "MUSDetailPostViewController.h"
+#import "MUSDatabaseRequestStringsHelper.h"
+
 @interface MUSPostsViewController () <DOPDropDownMenuDataSource, DOPDropDownMenuDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) NSArray *arrayPosts;
@@ -92,7 +94,8 @@
     
     self.arrayOfActiveSocialNetwork = [[NSMutableArray alloc] init];
     [self.arrayOfActiveSocialNetwork addObject: @"All social networks"];
-    self.arrayOfUsers = [[DataBaseManager sharedManager] obtainAllUsers];
+    ////////////////////////////////////////////////////////////////////////////////////////////// it was changed by roman
+    self.arrayOfUsers = [[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForAllUsers]];
     NSMutableArray *arrayWithNetworks = [[NSMutableArray alloc] init];
     for (int i = 0; i < self.arrayOfUsers.count; i++) {
         User *currentUser = [self.arrayOfUsers objectAtIndex: i];

@@ -13,7 +13,7 @@
 #import "NSError+MUSError.h"
 #import "DataBaseManager.h"
 #import "NSString+MUSPathToDocumentsdirectory.h"
-
+#import "MUSDatabaseRequestStringsHelper.h"
 
 @interface VKNetwork () <VKSdkDelegate>
 @property (strong, nonatomic) UINavigationController *navigationController;
@@ -40,7 +40,7 @@ static VKNetwork *model = nil;
 #pragma mark - initiation VKNetwork
 /*!
  Initiation VKNetwork.
-*/
+ */
 
 - (instancetype) init {
     self = [super init];
@@ -55,7 +55,7 @@ static VKNetwork *model = nil;
         else {
             self.isLogin = YES;
             
-            self.currentUser = [[DataBaseManager sharedManager]obtainUsersWithNetworkType:self.networkType];
+            self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForUsersWithNetworkType:self.networkType]]firstObject];
             self.icon = self.currentUser.photoURL;
             self.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
             self.isVisible = self.currentUser.isVisible;
@@ -67,7 +67,7 @@ static VKNetwork *model = nil;
                 [self obtainInfoFromNetworkWithComplition:^(SocialNetwork* result, NSError *error) {
                     
                     [[NSFileManager defaultManager] removeItemAtPath: [deleteImageFromFolder obtainPathToDocumentsFolder:deleteImageFromFolder] error: nil];
-                    [[DataBaseManager sharedManager] editUser:result.currentUser];
+                    [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringUsersForUpdateWithObjectUser:result.currentUser]];
                 }];
             }
         }
@@ -77,7 +77,7 @@ static VKNetwork *model = nil;
 
 /*!
  Checks if somebody logged in with SDK
-*/
+ */
 //#warning "check VK method +isLoggedIn"
 + (BOOL) isLoggedIn {
     return [VKSdk wakeUpSession];
@@ -85,7 +85,7 @@ static VKNetwork *model = nil;
 
 /*!
  Initiation properties of VKNetwork without session
-*/
+ */
 - (void) initiationPropertiesWithoutSession {
     self.title = musVKTitle;
     self.icon = musVKIconName;
@@ -98,7 +98,7 @@ static VKNetwork *model = nil;
 /*!
  Starts authorization process. If VKapp is available in system, it will opens and requests access from user.
  Otherwise Mobile Safari will be opened for access request.
-*/
+ */
 
 - (void) loginWithComplition :(Complition) block {
     self.copyComplition = block;
@@ -113,7 +113,7 @@ static VKNetwork *model = nil;
 /*!
  Forces logout using OAuth (with VKAuthorizeController). Removes all cookies for *.vk.com.
  Has no effect for logout in VK app
-*/
+ */
 
 - (void) loginOut {
     [VKSdk forceLogout];
@@ -125,7 +125,7 @@ static VKNetwork *model = nil;
 #pragma mark - obtainUserFromNetwork
 
 - (void) obtainInfoFromNetworkWithComplition :(Complition) block {
-
+    
     __weak VKNetwork *weakSell = self;
     
     VKRequest * request = [[VKApi users] get:@{ VK_API_FIELDS : musVKAllUserFields }];
@@ -141,16 +141,16 @@ static VKNetwork *model = nil;
          weakSell.currentUser.photoURL = weakSell.icon;
          //weakSell.icon = weakSell.currentUser.photoURL;////
          if (!weakSell.isLogin)
-         [[DataBaseManager sharedManager] insertIntoTable:weakSell.currentUser];
+             [[DataBaseManager sharedManager] insertIntoTable:weakSell.currentUser];
          
          dispatch_async(dispatch_get_main_queue(), ^{
-              weakSell.isLogin = YES;
+             weakSell.isLogin = YES;
              block(weakSell,nil);
          });
-//         weakSell.currentUser = [User createFromDictionary:(NSDictionary*)[response.json firstObject] andNetworkType:weakSell.networkType];
-//         weakSell.title = [NSString stringWithFormat:@"%@ %@", weakSell.currentUser.firstName, weakSell.currentUser.lastName];
-//         weakSell.icon = weakSell.currentUser.photoURL;
-//             block(weakSell, nil);
+         //         weakSell.currentUser = [User createFromDictionary:(NSDictionary*)[response.json firstObject] andNetworkType:weakSell.networkType];
+         //         weakSell.title = [NSString stringWithFormat:@"%@ %@", weakSell.currentUser.firstName, weakSell.currentUser.lastName];
+         //         weakSell.icon = weakSell.currentUser.photoURL;
+         //             block(weakSell, nil);
          
      } errorBlock:^(NSError * error) {
          if (error.code != VK_API_ERROR) {
@@ -176,16 +176,16 @@ static VKNetwork *model = nil;
     
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
     
-        params[musVKLoactionParameter_Q] = location.q;
-        params[musVKLoactionParameter_Latitude] = location.latitude;
-        params[musVKLoactionParameter_Longitude] = location.longitude;
-        params[musVKLoactionParameter_Radius] = [NSString stringWithFormat:@"%ld",
-                                                    (long)[self radiusForVKLocation: location.distance]];
+    params[musVKLoactionParameter_Q] = location.q;
+    params[musVKLoactionParameter_Latitude] = location.latitude;
+    params[musVKLoactionParameter_Longitude] = location.longitude;
+    params[musVKLoactionParameter_Radius] = [NSString stringWithFormat:@"%ld",
+                                             (long)[self radiusForVKLocation: location.distance]];
     
     VKRequest * locationRequest = [VKApi requestWithMethod : musVKMethodPlacesSearch
                                              andParameters : params
                                              andHttpMethod : musGET];
-                           
+    
     [locationRequest executeWithResultBlock:^(VKResponse * response)
      {
          NSDictionary *resultDictionary = (NSDictionary*) response.json;
@@ -214,9 +214,9 @@ static VKNetwork *model = nil;
 }
 
 /*!
-@abstract return type radius search area (DistanceType 1..4)
-@param current distance of @class Location
-*/
+ @abstract return type radius search area (DistanceType 1..4)
+ @param current distance of @class Location
+ */
 
 - (DistanceType) radiusForVKLocation : (NSString*) distanceString {
     NSInteger distance = [distanceString floatValue];
@@ -258,11 +258,11 @@ static VKNetwork *model = nil;
 - (void) postMessageToVK : (Post*) post {
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     
-        parameters [VK_API_OWNER_ID] = [VKSdk getAccessToken].userId;
-        parameters [VK_API_MESSAGE] = post.postDescription;
-        if (post.placeID) {
-            parameters [VK_API_PLACE_ID] = post.placeID;
-        }
+    parameters [VK_API_OWNER_ID] = [VKSdk getAccessToken].userId;
+    parameters [VK_API_MESSAGE] = post.postDescription;
+    if (post.placeID) {
+        parameters [VK_API_PLACE_ID] = post.placeID;
+    }
     
     VKRequest *request = [[VKApi wall] post: parameters];
     
@@ -299,24 +299,24 @@ static VKNetwork *model = nil;
     
     [batch executeWithResultBlock: ^(NSArray *responses) {
         
-    NSMutableArray *photosAttachments = [[NSMutableArray alloc] init];
+        NSMutableArray *photosAttachments = [[NSMutableArray alloc] init];
         
         for (VKResponse * resp in responses) {
             VKPhoto *photoInfo = [(VKPhotoArray*)resp.parsedModel objectAtIndex:0];
             [photosAttachments addObject:[NSString stringWithFormat:@"photo%@_%@",
-                                                            photoInfo.owner_id, photoInfo.id]];
+                                          photoInfo.owner_id, photoInfo.id]];
         }
         
         NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
         
-            parameters [VK_API_OWNER_ID] = [VKSdk getAccessToken].userId;
-            parameters [VK_API_ATTACHMENTS] = [photosAttachments componentsJoinedByString: @","];
-            if (post.placeID) {
-                parameters [VK_API_PLACE_ID] = post.placeID;
-            }
-            if (post.postDescription) {
-                parameters [VK_API_MESSAGE] = post.postDescription;
-            }
+        parameters [VK_API_OWNER_ID] = [VKSdk getAccessToken].userId;
+        parameters [VK_API_ATTACHMENTS] = [photosAttachments componentsJoinedByString: @","];
+        if (post.placeID) {
+            parameters [VK_API_PLACE_ID] = post.placeID;
+        }
+        if (post.postDescription) {
+            parameters [VK_API_MESSAGE] = post.postDescription;
+        }
         
         VKRequest *postRequest = [[VKApi wall] post: parameters];
         [postRequest executeWithResultBlock: ^(VKResponse *response) {
@@ -354,7 +354,7 @@ static VKNetwork *model = nil;
 
 /*!
  @abstract current root View Controller
-*/
+ */
 
 - (UIViewController*) vcForLoginVK {
     UIWindow *window = [UIApplication sharedApplication].keyWindow;

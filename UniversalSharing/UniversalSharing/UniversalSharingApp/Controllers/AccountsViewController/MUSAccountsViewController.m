@@ -13,6 +13,7 @@
 #import "ReachabilityManager.h"
 #import "UIButton+CornerRadiusButton.h"
 #import <AFMSlidingCell.h>
+#import "MUSDatabaseRequestStringsHelper.h"
 
 
 
