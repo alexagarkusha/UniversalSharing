@@ -33,6 +33,7 @@
 		18BB29C21B67E3F000B498AC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB29A61B67E3F000B498AC /* main.m */; };
 		18BB29C31B67E3F000B498AC /* MUSLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB29AA1B67E3F000B498AC /* MUSLocationManager.m */; };
 		303CAC7D1B860A2F00B48D72 /* NSString+MUSPathToDocumentsdirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = 303CAC7C1B860A2F00B48D72 /* NSString+MUSPathToDocumentsdirectory.m */; };
+		303CAC821B8F0B8600B48D72 /* MUSDatabaseRequestStringsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 303CAC811B8F0B8600B48D72 /* MUSDatabaseRequestStringsHelper.m */; };
 		30416A191B7355BC000CB2C2 /* UIButton+MUSSocialNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 30416A181B7355BC000CB2C2 /* UIButton+MUSSocialNetwork.m */; };
 		30416A241B73A49B000CB2C2 /* MUSGaleryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30416A231B73A49B000CB2C2 /* MUSGaleryView.m */; };
 		30416A261B73A4AC000CB2C2 /* MUSGaleryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30416A251B73A4AC000CB2C2 /* MUSGaleryView.xib */; };
@@ -151,6 +152,8 @@
 		294811F54E6400CFBFD3EBDD /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		303CAC7B1B860A2F00B48D72 /* NSString+MUSPathToDocumentsdirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MUSPathToDocumentsdirectory.h"; sourceTree = "<group>"; };
 		303CAC7C1B860A2F00B48D72 /* NSString+MUSPathToDocumentsdirectory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MUSPathToDocumentsdirectory.m"; sourceTree = "<group>"; };
+		303CAC801B8F0B8600B48D72 /* MUSDatabaseRequestStringsHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSDatabaseRequestStringsHelper.h; sourceTree = "<group>"; };
+		303CAC811B8F0B8600B48D72 /* MUSDatabaseRequestStringsHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSDatabaseRequestStringsHelper.m; sourceTree = "<group>"; };
 		30416A171B7355BC000CB2C2 /* UIButton+MUSSocialNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+MUSSocialNetwork.h"; sourceTree = "<group>"; };
 		30416A181B7355BC000CB2C2 /* UIButton+MUSSocialNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+MUSSocialNetwork.m"; sourceTree = "<group>"; };
 		30416A221B73A49B000CB2C2 /* MUSGaleryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSGaleryView.h; sourceTree = "<group>"; };
@@ -316,6 +319,7 @@
 		187FC5111B65222D00A3916C /* SocialNetworkLibrary */ = {
 			isa = PBXGroup;
 			children = (
+				303CAC7F1B8F0ACE00B48D72 /* DatabaseRequestStringsHelper */,
 				30DBFD901B677B27002F83D0 /* SocialNetworkLibraryConstants */,
 				30416A671B81CFC8000CB2C2 /* DataBaseManager */,
 				30DBFD8C1B677AD7002F83D0 /* VKNetwork */,
@@ -587,6 +591,15 @@
 				303CAC7C1B860A2F00B48D72 /* NSString+MUSPathToDocumentsdirectory.m */,
 			);
 			name = "NSString+MUSPathToDocumentsdirectory";
+			sourceTree = "<group>";
+		};
+		303CAC7F1B8F0ACE00B48D72 /* DatabaseRequestStringsHelper */ = {
+			isa = PBXGroup;
+			children = (
+				303CAC801B8F0B8600B48D72 /* MUSDatabaseRequestStringsHelper.h */,
+				303CAC811B8F0B8600B48D72 /* MUSDatabaseRequestStringsHelper.m */,
+			);
+			name = DatabaseRequestStringsHelper;
 			sourceTree = "<group>";
 		};
 		30416A131B735328000CB2C2 /* UiButton+MUSSocialNetwork */ = {
@@ -1155,6 +1168,7 @@
 				18BB29B21B67E3F000B498AC /* UIButton+LoadBackgroundImageFromNetwork.m in Sources */,
 				30DBFD931B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.m in Sources */,
 				97CCC9DC1B74ABAE00E0FAC6 /* UIImage+ChangeScaleImage.m in Sources */,
+				303CAC821B8F0B8600B48D72 /* MUSDatabaseRequestStringsHelper.m in Sources */,
 				97B2B54A1B87B387009FAB12 /* UIImageView+MUSLoadImageFromDataBase.m in Sources */,
 				187FC5271B65222D00A3916C /* SocialManager.m in Sources */,
 				97CCC9D81B749C2C00E0FAC6 /* ReachabilityManager.m in Sources */,
