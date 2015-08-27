@@ -29,6 +29,7 @@
 - (void)editUser :(User*) user;
 //===
 - (void)deletePostByUserId :(NSString*) userId;
+- (void)deletePostByPrimaryKey :(Post*) post;
 - (void)deleteUserByClientId :(NSString*) clientId;
 
 @end
