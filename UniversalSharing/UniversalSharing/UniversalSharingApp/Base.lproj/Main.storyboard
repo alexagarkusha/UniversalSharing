@@ -129,7 +129,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ERROR" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mfr-Hw-2bg">
-                                        <rect key="frame" x="250" y="115" width="101" height="21"/>
+                                        <rect key="frame" x="250" y="90" width="101" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="AcL-wR-e5a"/>
                                             <constraint firstAttribute="width" constant="101" id="ES9-Mk-7nJ"/>
@@ -138,17 +138,17 @@
                                         <color key="textColor" red="1" green="0.0" blue="0.037066020669999998" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Cannot establish a network connection!" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Mac-t5-Efr">
-                                        <rect key="frame" x="139" y="163" width="323" height="66"/>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="Cannot establish a network connection!" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mac-t5-Efr">
+                                        <rect key="frame" x="139" y="138" width="323" height="79"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="66" id="wrh-Om-4as"/>
+                                            <constraint firstAttribute="height" constant="79" id="wrh-Om-4as"/>
                                             <constraint firstAttribute="width" constant="323" id="yHk-dE-vf3"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Check internet or wifi settings " textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="3aS-oL-xbj">
-                                        <rect key="frame" x="151" y="257" width="299" height="38"/>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="Check internet or wifi settings " textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3aS-oL-xbj">
+                                        <rect key="frame" x="151" y="227" width="299" height="38"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="38" id="3VM-kq-PGq"/>
                                             <constraint firstAttribute="width" constant="299" id="52K-Xy-qhb"/>
@@ -157,7 +157,7 @@
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OR" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hcg-gL-usD">
-                                        <rect key="frame" x="288" y="315" width="25" height="21"/>
+                                        <rect key="frame" x="288" y="272" width="25" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="25" id="dCg-0o-WEx"/>
                                             <constraint firstAttribute="height" constant="21" id="yjJ-Fj-bKC"/>
@@ -197,9 +197,9 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.63852076727631479" green="0.80806535141315794" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="3aS-oL-xbj" firstAttribute="top" secondItem="Mac-t5-Efr" secondAttribute="bottom" constant="28" id="1QF-t3-GI0"/>
+                                    <constraint firstItem="3aS-oL-xbj" firstAttribute="top" secondItem="Mac-t5-Efr" secondAttribute="bottom" constant="10" id="1QF-t3-GI0"/>
                                     <constraint firstAttribute="centerX" secondItem="Hcg-gL-usD" secondAttribute="centerX" id="1Ve-NM-izk"/>
-                                    <constraint firstItem="Mfr-Hw-2bg" firstAttribute="top" secondItem="4DR-Db-4eE" secondAttribute="top" constant="115" id="6CD-r6-SoW"/>
+                                    <constraint firstItem="Mfr-Hw-2bg" firstAttribute="top" secondItem="4DR-Db-4eE" secondAttribute="top" constant="90" id="6CD-r6-SoW"/>
                                     <constraint firstAttribute="centerX" secondItem="h9f-nw-3rM" secondAttribute="centerX" id="BzW-Mb-cMY"/>
                                     <constraint firstItem="Mac-t5-Efr" firstAttribute="top" secondItem="Mfr-Hw-2bg" secondAttribute="bottom" constant="27" id="EL5-VF-UMw"/>
                                     <constraint firstItem="s3b-v5-BFs" firstAttribute="centerX" secondItem="h9f-nw-3rM" secondAttribute="centerX" id="Yjf-md-j60"/>
@@ -211,7 +211,7 @@
                                     <constraint firstItem="s3b-v5-BFs" firstAttribute="height" secondItem="h9f-nw-3rM" secondAttribute="height" id="qLB-jQ-JwV"/>
                                     <constraint firstItem="h9f-nw-3rM" firstAttribute="top" secondItem="Hcg-gL-usD" secondAttribute="bottom" constant="100" id="uUR-A9-XCF"/>
                                     <constraint firstAttribute="bottomMargin" secondItem="h9f-nw-3rM" secondAttribute="bottom" constant="50" id="vy1-iH-425"/>
-                                    <constraint firstItem="Hcg-gL-usD" firstAttribute="top" secondItem="3aS-oL-xbj" secondAttribute="bottom" constant="20" id="zUA-jT-bNI"/>
+                                    <constraint firstItem="Hcg-gL-usD" firstAttribute="top" secondItem="3aS-oL-xbj" secondAttribute="bottom" constant="7" id="zUA-jT-bNI"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
