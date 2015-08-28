@@ -27,7 +27,7 @@
 }
 
 + (NSString*) createStringForSavePostToTable {
-    return [NSString stringWithFormat:@"INSERT INTO '%@'('%@','%@','%@','%@','%@','%@','%@','%@','%@')VALUES(?,?,?,?,?,?,?,?,?)",@"Posts",@"locationID",@"postDescription",@"arrayImagesUrl",@"likesCount",@"commentsCount",@"networkType",@"dateCreate",@"reson",@"userId"];
+    return [NSString stringWithFormat:@"INSERT INTO '%@'('%@','%@','%@','%@','%@','%@','%@','%@','%@','%@')VALUES(?,?,?,?,?,?,?,?,?,?)",@"Posts",@"locationID",@"postDescription",@"arrayImagesUrl",@"likesCount",@"commentsCount",@"networkType",@"dateCreate",@"reson",@"userId",@"postId"];
 }
 
 + (NSString*) createStringForSaveLocationToTable {
@@ -172,7 +172,9 @@
     stringPostsTable = [stringPostsTable stringByAppendingString:@"networkType INTEGER, "];
     stringPostsTable = [stringPostsTable stringByAppendingString:@"dateCreate TEXT, "];
     stringPostsTable = [stringPostsTable stringByAppendingString:@"reson INTEGER, "];
-    stringPostsTable = [stringPostsTable stringByAppendingString:@"userId TEXT)"];
+    stringPostsTable = [stringPostsTable stringByAppendingString:@"userId TEXT, "];
+    stringPostsTable = [stringPostsTable stringByAppendingString:@"postId TEXT)"];
+
     return stringPostsTable;
 }
 

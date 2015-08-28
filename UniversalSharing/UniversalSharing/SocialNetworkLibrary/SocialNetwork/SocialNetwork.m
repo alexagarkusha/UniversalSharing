@@ -99,7 +99,7 @@
 
 - (void) removeImagesOfPostFromDocumentsFolder :(NSString*) userId {
     __block NSError *error;
-    NSArray *arrayWithPostsOfUser = [[DataBaseManager sharedManager] obtainAllPostsWithUserId:userId];
+    NSArray *arrayWithPostsOfUser = [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForPostWithUserId:userId]];
     [arrayWithPostsOfUser enumerateObjectsUsingBlock:^(Post *post, NSUInteger idx, BOOL *stop) {
         
         [post.arrayImagesUrl enumerateObjectsUsingBlock:^(NSString *urlImage, NSUInteger idx, BOOL *stop) {
@@ -128,7 +128,9 @@
 
 - (void) updatePostDataBaseWithReason :(ReasonType) reason andPost :(Post*) post {
     post.reason = reason;
-    [[DataBaseManager sharedManager] editPost: post];
+    //[[DataBaseManager sharedManager] editPost: post];
+    [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost:post]];
+    [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringLocationsForUpdateWithObjectPost:post]];
 }
 
 - (void) saveOrUpdatePost : (Post*) post withReason : (ReasonType) reason {

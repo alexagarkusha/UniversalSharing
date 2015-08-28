@@ -295,6 +295,7 @@ static FacebookNetwork *model = nil;
                  counterOfImages ++;
                  if (counterOfImages == copyPostImagesArray.count) {
                      if (!error) {
+                         post.postID = [result objectForKey:@"post_id"];
                          self.copyComplition (musPostSuccess, nil);
                          [self saveOrUpdatePost: post withReason: Connect];
                      } else {

@@ -81,6 +81,7 @@ static DataBaseManager *databaseManager;
         sqlite3_bind_text(statement, 7, [[self checkExistedString: post.dateCreate] UTF8String], -1, SQLITE_TRANSIENT);
         sqlite3_bind_int64(statement, 8, post.reason);
         sqlite3_bind_text(statement, 9, [[self checkExistedString: post.userId] UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(statement, 10, [[self checkExistedString: post.postID] UTF8String], -1, SQLITE_TRANSIENT);
     }
     
     return statement;
@@ -284,6 +285,7 @@ static DataBaseManager *databaseManager;
             post.dateCreate = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 7)];
             post.reason = sqlite3_column_int(statement, 8);
             post.userId = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 9)];
+            post.postID = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 10)];
             post.place = [self obtainLocations:post];
             [arrayWithPosts addObject:post];
         }
