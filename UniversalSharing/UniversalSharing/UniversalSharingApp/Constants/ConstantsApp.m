@@ -93,8 +93,10 @@ NSString *const musAppFilter_Title_Error = @"Error";
 
 #pragma mark - MUSPostCell
 
+NSInteger const musAppPostsVC_HeightOfPostCell = 100;
 NSString *const musApp_ActionSheet_Title_ChooseAction = @"Choose action";
-NSInteger const musApp_EightPixels = 8;
+NSInteger const musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithoutUserPhotos = 8;
+NSInteger const musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithUserPhotos = 53;
 
 #pragma mark - MUSGalleryViewOfPhotos
 

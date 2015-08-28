@@ -123,8 +123,10 @@ FOUNDATION_EXPORT NSString *const musAppFilter_Title_Error;
 
 #pragma mark - MUSPostCell
 
+FOUNDATION_EXPORT NSInteger const musAppPostsVC_HeightOfPostCell;
 FOUNDATION_EXPORT NSString *const musApp_ActionSheet_Title_ChooseAction;
-FOUNDATION_EXPORT NSInteger const musApp_EightPixels;
+FOUNDATION_EXPORT NSInteger const musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithoutUserPhotos;
+FOUNDATION_EXPORT NSInteger const musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithUserPhotos;
 
 #pragma mark - MUSGalleryViewOfPhotos
 

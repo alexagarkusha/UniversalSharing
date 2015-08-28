@@ -236,6 +236,8 @@
 - (void) updatePostInDataBase {
 
     [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost: self.currentPost]];
+    [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringLocationsForUpdateWithObjectPost: self.currentPost]];
+
     //[[DataBaseManager sharedManager] editPost: self.currentPost];
 }
 
