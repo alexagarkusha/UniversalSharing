@@ -29,7 +29,7 @@
 - (void)editPost :(Post*) post;///will be deleted
 //- (void)editUser :(User*) user;///will be deleted
 //===
-- (void)deletePostByUserId :(NSString*) userId;
+//- (void)deletePostByUserId :(NSString*) userId;
 - (void)deletePostByPrimaryKey :(Post*) post;
 - (void)deleteUserByClientId :(NSString*) clientId;
 

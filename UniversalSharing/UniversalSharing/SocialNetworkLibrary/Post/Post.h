@@ -16,7 +16,7 @@
 /*!
  @abstract unique post id is assigned after sending post to the social network.
 */
-@property (nonatomic, assign) NSInteger postID;
+@property (nonatomic, assign) NSString *postID;
 /*!
  @abstract description of post.
  */
