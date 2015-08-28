@@ -13,6 +13,7 @@
 #import "UIImageView+RoundImage.h"
 #import "UIImageView+MUSLoadImageFromDataBase.h"
 #import "UIColor+ReasonColorForPost.h"
+#import "UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.h"
 
 @interface MUSPostCell ()
 
@@ -36,6 +37,7 @@
 - (void)awakeFromNib {
     // Initialization code
     self.numberOfImagesInPost.hidden = YES;
+    self.backgroundColor = YELLOW_COLOR_Slightly;
     [self.iconOfSocialNetwork roundImageView];
     [self.reasonOfPost cornerRadius: CGRectGetHeight(self.reasonOfPost.frame) / 2];
     [self.numberOfImagesInPost cornerRadius: CGRectGetHeight(self.numberOfImagesInPost.frame) / 2];
@@ -78,8 +80,7 @@
 }
 
 - (void) configurateFirstImageOfPost : (Post*) currentPost {
-    self.firstImageOfPost.layer.masksToBounds = YES;
-    self.firstImageOfPost.layer.cornerRadius = 10;
+    [self.firstImageOfPost cornerRadius: 10.0 andBorderWidth: 0.0 withBorderColor: nil];
     
     self.firstImageOfPost.image = nil;
     if (![[currentPost.arrayImagesUrl firstObject] isEqualToString: @""] || ![currentPost.arrayImagesUrl firstObject]) {
@@ -122,10 +123,8 @@
 #pragma mark initiation PostDescriptionTextView
 
 - (void) initiationBackgroundImageView {
-    self.backGroundImageView.layer.masksToBounds = YES;
-    self.backGroundImageView.layer.cornerRadius = 30;
-    self.backGroundImageView.layer.borderWidth = 2.0;
-    self.backGroundImageView.layer.borderColor = [UIColor colorWithRed: 255.0/255.0 green: 255.0/255.0 blue: 100.0/255.0 alpha: 1.0].CGColor;
+    self.backGroundImageView.backgroundColor = YELLOW_COLOR_MidLight;
+    [self.backGroundImageView cornerRadius: 30.0 andBorderWidth: 2.0 withBorderColor: YELLOW_COLOR_UpperMid];
 }
 
 @end

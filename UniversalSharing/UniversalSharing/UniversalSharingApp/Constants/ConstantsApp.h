@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface ConstantsApp : NSObject
 
@@ -88,6 +89,11 @@ FOUNDATION_EXPORT NSString *const hideButtonTitle;
 
 #pragma mark - General constants
 
+#define YELLOW_COLOR_Slightly [UIColor colorWithRed: 255.0/255.0 green: 255.0/255.0 blue: 240.0/255.0 alpha: 1.0]
+#define YELLOW_COLOR_Light [UIColor colorWithRed: 255.0/255.0 green: 255.0/255.0 blue: 220.0/255.0 alpha: 1.0]
+#define YELLOW_COLOR_MidLight [UIColor colorWithRed: 255.0/255.0 green: 255.0/255.0 blue: 190.0/255.0 alpha: 1.0]
+#define YELLOW_COLOR_UpperMid [UIColor colorWithRed: 255.0/255.0 green: 255.0/255.0 blue: 100.0/255.0 alpha: 1.0]
+
 FOUNDATION_EXPORT NSString *const musAppButtonTitle_Cancel;
 FOUNDATION_EXPORT NSString *const musAppButtonTitle_OK;
 FOUNDATION_EXPORT NSString *const musAppButtonTitle_Album;
@@ -152,6 +158,8 @@ FOUNDATION_EXPORT NSInteger const musApp_PostDescriptionCell_TextView_Font_Size;
 FOUNDATION_EXPORT NSInteger const musAppDetailPostVC_HeightOfCommentsAndLikesCell;
 FOUNDATION_EXPORT NSInteger const musAppDetailPostVC_HeightOfPostLocationCell;
 FOUNDATION_EXPORT NSString *const musAppDetailPostVC_UpdatePostAlert;
+
+
 
 
 @end

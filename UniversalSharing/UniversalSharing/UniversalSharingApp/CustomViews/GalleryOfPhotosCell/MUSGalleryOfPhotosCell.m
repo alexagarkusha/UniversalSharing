@@ -42,6 +42,7 @@
     // Initialization code
     //self.galleryViewOfPhotos = [[MUSGalleryViewOfPhotos alloc] init];
     [self.addPhotoButtonOutlet editableButton];
+    self.backgroundColor = YELLOW_COLOR_Slightly;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -105,7 +106,7 @@
 - (void) initiationGalleryViewOfPhotos : (NSMutableArray*) arrayWithImages {
         //self.galleryViewOfPhotos.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [MUSGalleryOfPhotosCell heightForGalleryOfPhotosCell: arrayWithImages.count]);
         self.galleryViewOfPhotos.delegate = self;
-        self.galleryViewOfPhotos.collectionView.backgroundColor = [UIColor colorWithRed: 255.0/255.0 green: 251.0/255.0 blue: 241.0/255.0 alpha: 1.0];
+        self.galleryViewOfPhotos.collectionView.backgroundColor = YELLOW_COLOR_Slightly;
         self.galleryViewOfPhotos.arrayOfPhotos = [NSMutableArray arrayWithArray : arrayWithImages];
         [self.galleryViewOfPhotos isVisiblePageControl : YES];
         [self.galleryViewOfPhotos.collectionView reloadData];
