@@ -63,10 +63,24 @@
 }
 
 + (CGFloat) heightForPostCell {
-    return 100;
+    return musAppPostsVC_HeightOfPostCell;
 }
 
 - (void) configurationPostCell: (Post*) currentPost {
+    [self configurateFirstImageOfPost: currentPost];
+    self.postDescription.text = currentPost.postDescription;
+    self.numberOfComments.text = [NSString stringWithFormat: @"%ld", (long)currentPost.commentsCount];
+    self.iconOfSocialNetwork.image = [self iconOfSocialNetworkForPost : currentPost];
+    self.numberOfLikes.text = [NSString stringWithFormat: @"%ld", (long)currentPost.likesCount];
+    self.commentImage.image = [UIImage imageNamed: musAppImage_Name_Comment];
+    self.reasonOfPost.backgroundColor = [UIColor reasonColorForPost: currentPost.reason];
+    self.likeImage.image = [UIImage imageNamed: musAppImage_Name_Like];
+}
+
+- (void) configurateFirstImageOfPost : (Post*) currentPost {
+    self.firstImageOfPost.layer.masksToBounds = YES;
+    self.firstImageOfPost.layer.cornerRadius = 10;
+    
     self.firstImageOfPost.image = nil;
     if (![[currentPost.arrayImagesUrl firstObject] isEqualToString: @""] || ![currentPost.arrayImagesUrl firstObject]) {
         [self.firstImageOfPost loadImageFromDataBase: [currentPost.arrayImagesUrl firstObject]];
@@ -81,19 +95,11 @@
     if (!self.firstImageOfPost.image) {
         self.firstImageOfPost.hidden = YES;
         self.numberOfImagesInPost.hidden = YES;
-        self.postDescriptionLeftConstraint.constant = musApp_EightPixels;
+        self.postDescriptionLeftConstraint.constant = musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithoutUserPhotos;
     } else {
         self.firstImageOfPost.hidden = NO;
-        self.postDescriptionLeftConstraint.constant = self.firstImageOfPost.frame.origin.x + self.firstImageOfPost.frame.size.width + musApp_EightPixels;
+        self.postDescriptionLeftConstraint.constant = musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithUserPhotos;
     }
-  
-    self.postDescription.text = currentPost.postDescription;
-    self.numberOfComments.text = [NSString stringWithFormat: @"%ld", (long)currentPost.commentsCount];
-    self.iconOfSocialNetwork.image = [self iconOfSocialNetworkForPost : currentPost];
-    self.numberOfLikes.text = [NSString stringWithFormat: @"%ld", (long)currentPost.likesCount];
-    self.commentImage.image = [UIImage imageNamed: musAppImage_Name_Comment];
-    self.reasonOfPost.backgroundColor = [UIColor reasonColorForPost: currentPost.reason];
-    self.likeImage.image = [UIImage imageNamed: musAppImage_Name_Like];
 }
 
 - (UIImage*) iconOfSocialNetworkForPost : (Post*) currentPost {

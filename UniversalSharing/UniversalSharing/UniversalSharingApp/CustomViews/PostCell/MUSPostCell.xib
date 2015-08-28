@@ -19,7 +19,7 @@
                         <rect key="frame" x="0.0" y="4" width="320" height="92"/>
                         <color key="backgroundColor" red="1" green="1" blue="0.74519428450000003" alpha="1" colorSpace="calibratedRGB"/>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lob-KA-c90">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lob-KA-c90">
                         <rect key="frame" x="11" y="16" width="42" height="42"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="42" id="dd5-4r-sYG"/>
@@ -32,7 +32,7 @@
                             <constraint firstAttribute="height" constant="40" id="1EO-ln-gcF"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="TimesNewRomanPSMT" family="Times New Roman" pointSize="17"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lym-1x-GVE">
@@ -63,7 +63,7 @@
                             <constraint firstAttribute="width" constant="90" id="auR-MS-gmd"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="SQp-lL-rDz">
@@ -73,11 +73,11 @@
                             <constraint firstAttribute="width" constant="87" id="qec-H8-8sn"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bfI-Lf-Bqn">
-                        <rect key="frame" x="44" y="8" width="14" height="14"/>
+                        <rect key="frame" x="45" y="8" width="14" height="14"/>
                         <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="14" id="L92-g4-IJ1"/>
@@ -94,7 +94,7 @@
                             <constraint firstAttribute="height" constant="20" id="efA-bc-xrj"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
@@ -104,7 +104,7 @@
                     <constraint firstItem="lob-KA-c90" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="8" id="6jr-u4-mb7"/>
                     <constraint firstItem="lym-1x-GVE" firstAttribute="leading" secondItem="9a0-JS-qNj" secondAttribute="trailing" constant="12" id="8MV-YU-uyK"/>
                     <constraint firstItem="XnW-XA-7nO" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" constant="-2" id="Cvy-zt-V0E"/>
-                    <constraint firstItem="bfI-Lf-Bqn" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="36" id="Du9-Ti-R9a"/>
+                    <constraint firstItem="bfI-Lf-Bqn" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="37" id="Du9-Ti-R9a"/>
                     <constraint firstAttribute="bottom" secondItem="xWC-5X-yHe" secondAttribute="bottom" constant="8" id="EbI-QH-aOR"/>
                     <constraint firstAttribute="bottom" secondItem="twD-vE-OAC" secondAttribute="bottom" constant="8" id="HvO-K4-ivb"/>
                     <constraint firstItem="XnW-XA-7nO" firstAttribute="leading" secondItem="xWC-5X-yHe" secondAttribute="trailing" constant="16" id="LEz-3C-Ach"/>
@@ -112,6 +112,7 @@
                     <constraint firstItem="twD-vE-OAC" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="11" id="OI1-eV-Js2"/>
                     <constraint firstItem="lym-1x-GVE" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="8" id="PTm-rB-rtl"/>
                     <constraint firstItem="lob-KA-c90" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="3" id="Qbp-AR-PEm"/>
+                    <constraint firstItem="9a0-JS-qNj" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="53" id="RJg-XB-Wcd"/>
                     <constraint firstAttribute="trailingMargin" secondItem="XnW-XA-7nO" secondAttribute="trailing" constant="2" id="RQT-Of-5WT"/>
                     <constraint firstAttribute="bottom" secondItem="viq-PX-hUM" secondAttribute="bottom" constant="3" id="Sxp-Fz-Jzu"/>
                     <constraint firstItem="bfI-Lf-Bqn" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="WyB-LR-gZn"/>
@@ -120,7 +121,6 @@
                     <constraint firstAttribute="bottom" secondItem="SQp-lL-rDz" secondAttribute="bottom" constant="8" id="eA5-OG-eIS"/>
                     <constraint firstItem="viq-PX-hUM" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="muG-DC-ejN"/>
                     <constraint firstItem="SQp-lL-rDz" firstAttribute="leading" secondItem="twD-vE-OAC" secondAttribute="trailing" constant="8" id="vgG-M2-ckB"/>
-                    <constraint firstItem="9a0-JS-qNj" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="53" id="zLH-vw-jzN"/>
                     <constraint firstItem="lym-1x-GVE" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="zig-pK-gRX"/>
                 </constraints>
             </tableViewCellContentView>
@@ -135,7 +135,7 @@
                 <outlet property="numberOfImagesInPost" destination="bfI-Lf-Bqn" id="D77-vg-LmM"/>
                 <outlet property="numberOfLikes" destination="SQp-lL-rDz" id="cqc-iX-ki7"/>
                 <outlet property="postDescription" destination="9a0-JS-qNj" id="nh3-RZ-UDl"/>
-                <outlet property="postDescriptionLeftConstraint" destination="zLH-vw-jzN" id="g2N-fK-zHY"/>
+                <outlet property="postDescriptionLeftConstraint" destination="RJg-XB-Wcd" id="aYK-98-N5w"/>
                 <outlet property="reasonOfPost" destination="XnW-XA-7nO" id="fQ3-P5-kHR"/>
             </connections>
             <point key="canvasLocation" x="357" y="238"/>

@@ -45,12 +45,10 @@
     [self initiationTableView];
     [self initiationCurrentSocialNetwork];
     [self initiationPostDescriptionArrayOfPicturesAndPostLocation];
-    //////////////////////////////////////////////// it was changed by roman
-//    self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForUsersWithNetworkType:self.currentSocialNetwork.networkType]]firstObject];
-    //obtainUsersWithNetworkType: self.currentSocialNetwork.networkType];
     [self initiationNavigationBar];
     [self initiationActivityIndicator];
-    //self.currentUser = [[DataBaseManager sharedManager] obtainUsersWithNetworkType: self.currentSocialNetwork.networkType];
+    
+    self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForUsersWithNetworkType: self.currentSocialNetwork.networkType]] firstObject];
     self.tableViewFrame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height);
 }
 
@@ -236,7 +234,11 @@
 }
 
 - (void) updatePostInDataBase {
-    [[DataBaseManager sharedManager] editPost: self.currentPost];
+
+    [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost: self.currentPost]];
+    [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringLocationsForUpdateWithObjectPost: self.currentPost]];
+
+    //[[DataBaseManager sharedManager] editPost: self.currentPost];
 }
 
 

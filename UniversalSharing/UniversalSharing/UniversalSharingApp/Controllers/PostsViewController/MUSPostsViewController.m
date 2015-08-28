@@ -45,7 +45,7 @@
     [super viewWillAppear : YES];
 #warning "Twice?"
     [self initiationArrayOfActiveSocialNetwork];
-    self.arrayPosts = [[NSMutableArray alloc] initWithArray: [[DataBaseManager sharedManager] obtainPostsWithReason: self.predicateReason andNetworkType: self.predicateNetworkType]];
+    self.arrayPosts = [[NSMutableArray alloc] initWithArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper createStringForPostWithReason: self.predicateReason andNetworkType: self.predicateNetworkType]]];
     [self.tableView reloadData];
 }
 
@@ -92,7 +92,6 @@
     
     self.arrayOfActiveSocialNetwork = [[NSMutableArray alloc] init];
     [self.arrayOfActiveSocialNetwork addObject: @"All social networks"];
-    ////////////////////////////////////////////////////////////////////////////////////////////// it was changed by roman
     self.arrayOfUsers = [[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForAllUsers]];
     NSMutableArray *arrayWithNetworks = [[NSMutableArray alloc] init];
     for (int i = 0; i < self.arrayOfUsers.count; i++) {
@@ -230,7 +229,7 @@
             break;
     }
     [self.arrayPosts removeAllObjects];
-    [self.arrayPosts addObjectsFromArray: [[DataBaseManager sharedManager] obtainPostsWithReason: self.predicateReason andNetworkType:self.predicateNetworkType]];
+    self.arrayPosts = [[NSMutableArray alloc] initWithArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper createStringForPostWithReason: self.predicateReason andNetworkType: self.predicateNetworkType]]];
     [self.tableView reloadData];
 }
 
