@@ -55,7 +55,8 @@ static TwitterNetwork *model = nil;
         }
         else {
             self.isLogin = YES;
-            
+            [self updatePost];
+            //[self startTimerForUpdatePosts];
             self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForUsersWithNetworkType:self.networkType]]firstObject];
             self.icon = self.currentUser.photoURL;
             self.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
@@ -88,6 +89,16 @@ static TwitterNetwork *model = nil;
     self.isLogin = NO;
     self.isVisible = YES;
     self.currentUser = nil;
+    [self.timer invalidate];
+    self.timer = nil;
+}
+
+- (void) startTimerForUpdatePosts {
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:600.0f
+                                                  target:self
+                                                selector:@selector(updatePost)
+                                                userInfo:nil
+                                                 repeats:YES];
 }
 
 #pragma mark - loginInNetwork
@@ -187,6 +198,53 @@ static TwitterNetwork *model = nil;
              block (nil, [self errorTwitter]);
          }
      }];
+}
+
+- (void) updatePost {
+    
+    NSArray * posts = [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForPostWithReason:Connect andNetworkType:Twitters]];
+//    Post *post = posts[2];
+//    [self obtainCountOfLikesAndCommentsFromPost:post];
+    [posts enumerateObjectsUsingBlock:^(Post *post, NSUInteger idx, BOOL *stop) {
+        [self obtainCountOfLikesAndCommentsFromPost:post];
+    }];
+    
+    
+}
+
+- (void) obtainCountOfLikesAndCommentsFromPost :(Post*) post {
+     
+    NSString *statusesShowEndpoint = [NSString stringWithFormat:@"https://api.twitter.com/1.1/statuses/retweets/%@.json",post.postID];
+    
+    NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:post.postID,@"id",@"100",@"count",nil];
+    NSError *clientError;
+    
+    NSURLRequest *request = [[[Twitter sharedInstance] APIClient] URLRequestWithMethod:@"GET" URL:statusesShowEndpoint parameters:params error:&clientError];
+    
+    if (request) {
+        [[[Twitter sharedInstance] APIClient] sendTwitterRequest:request completion:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+            if (data) {
+                NSError *jsonError;
+                NSArray *arrayJson = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+                if (!arrayJson.count) {
+                    return;
+                }
+                if (post.likesCount == [[arrayJson[0] objectForKey:@"favorited"] integerValue] &&  post.commentsCount == [[arrayJson[0] objectForKey:@"retweet_count"] integerValue] ) {
+                    return;
+                }
+                post.likesCount = [[arrayJson[0] objectForKey:@"favorited"] integerValue];
+                post.commentsCount = [[arrayJson[0] objectForKey:@"retweet_count"] integerValue];
+                
+                [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost:post]];
+            }
+            else {
+                NSLog(@"Error: %@", connectionError);
+            }
+        }];
+    }
+    else {
+        NSLog(@"Error: %@", clientError);
+    }
 }
 
 
@@ -293,6 +351,19 @@ static TwitterNetwork *model = nil;
     [client sendTwitterRequest:preparedRequest
                     completion:^(NSURLResponse *urlResponse, NSData *responseData, NSError *error){
                         if(!error){
+                            NSError *jsonError = nil;
+
+                            NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:responseData
+                                                                                       options:NSJSONReadingMutableContainers
+                                                                                         error:&jsonError];
+                            if (jsonError) {
+                                //[self errorTwitter];
+                                self.copyComplition (nil, [self errorTwitter]);
+                                [self saveOrUpdatePost: post withReason: ErrorConnection];
+                                return;
+                            }
+                            post.postID = [[jsonData objectForKey:@"id"]stringValue];
+
                             self.copyComplition (musPostSuccess, nil);
                             [self saveOrUpdatePost: post withReason: Connect];
                         }else{
@@ -343,16 +414,18 @@ static TwitterNetwork *model = nil;
             [client sendTwitterRequest : request
                             completion : ^(NSURLResponse *response, NSData *data, NSError *connectionError) {
                                 if (!connectionError) {
-                                    /*
+                                    
                                      NSError *jsonError = nil;
-                                     id jsonData = [NSJSONSerialization JSONObjectWithData:data
+
+                                     NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:data
                                      options:NSJSONReadingMutableContainers
                                      error:&jsonError];
                                      if (jsonError) {
-                                     [self errorTwitter];
+                                         self.copyComplition (nil, [self errorTwitter]);
+                                         [self saveOrUpdatePost: post withReason: ErrorConnection];
                                      return;
                                      }
-                                     */
+                                    post.postID = [[jsonData objectForKey:@"id"] stringValue];
                                     self.copyComplition (musPostSuccess, nil);
                                     [self saveOrUpdatePost: post withReason: Connect];
                                 } else {

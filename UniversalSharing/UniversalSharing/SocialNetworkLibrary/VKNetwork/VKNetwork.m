@@ -54,7 +54,8 @@ static VKNetwork *model = nil;
         }
         else {
             self.isLogin = YES;
-            
+            [self startTimerForUpdatePosts];
+            //[self updatePost];////////////////////////////////////////////////////////////
             self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForUsersWithNetworkType:self.networkType]]firstObject];
             self.icon = self.currentUser.photoURL;
             self.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
@@ -91,8 +92,17 @@ static VKNetwork *model = nil;
     self.icon = musVKIconName;
     self.isLogin = NO;
     self.isVisible = YES;
+    [self.timer invalidate];
+    self.timer = nil;
 }
 
+- (void) startTimerForUpdatePosts {
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:600.0f
+                                                  target:self
+                                                selector:@selector(updatePost)
+                                                userInfo:nil
+                                                 repeats:YES];
+}
 #pragma mark - loginInNetwork
 
 /*!
@@ -144,6 +154,7 @@ static VKNetwork *model = nil;
              [[DataBaseManager sharedManager] insertIntoTable:weakSell.currentUser];
          
          dispatch_async(dispatch_get_main_queue(), ^{
+             //[weakSell startTimerForUpdatePosts];
              weakSell.isLogin = YES;
              block(weakSell,nil);
          });
@@ -158,6 +169,71 @@ static VKNetwork *model = nil;
          }
          else {
              block (nil, [self errorVkontakte]);
+         }
+     }];
+}
+
+
+- (void) updatePost {
+    
+    NSArray * posts = [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForPostWithReason:Connect andNetworkType:VKontakt]];
+    NSMutableArray *requestArray = [[NSMutableArray alloc] init]; //array of requests to add pictures in the social network
+    [posts enumerateObjectsUsingBlock:^(Post *post, NSUInteger index, BOOL *stop) {
+        
+//        [self obtainCountOfLikesFromPost:post andConnection:connection];
+//        [self obtainCountOfCommentsFromPost:post andConnection:connection];
+    }];
+    
+    Post *post = posts[0];
+    [self obtainCountOfLikesFromPost:post];
+    
+    [self obtainCountOfCommentsFromPost:post];
+    
+}
+
+- (void) obtainCountOfLikesFromPost :(Post*) post {
+  
+    NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"post",@"type",post.userId,@"owner_id",post.postID,@"item_id",@"likes",@"filter",@"1000",@"count",nil];
+    
+    
+    VKRequest * locationRequest = [VKApi requestWithMethod : @"likes.getList"
+                                             andParameters : params
+                                             andHttpMethod : musGET];
+    
+    [locationRequest executeWithResultBlock:^(VKResponse * response)
+     {
+         post.likesCount = [[response.json objectForKey:@"count"] integerValue];
+         [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost:post]];
+     } errorBlock:^(NSError * error) {
+         if (error.code != VK_API_ERROR) {
+             [error.vkError.request repeat];
+         }
+         else {
+             //block (nil, [self errorVkontakte]);
+         }
+     }];
+    
+}
+
+- (void) obtainCountOfCommentsFromPost :(Post*) post {
+    NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"100",@"count",post.userId,@"owner_id",post.postID,@"post_id",@"1",@"need_likes",nil];
+    
+    
+    VKRequest * locationRequest = [VKApi requestWithMethod : @"wall.getComments"
+                                             andParameters : params
+                                             andHttpMethod : musGET];
+    
+    [locationRequest executeWithResultBlock:^(VKResponse * response)
+     {
+         post.commentsCount = [[response.json objectForKey:@"count"] integerValue];
+         [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost:post]];
+         
+     } errorBlock:^(NSError * error) {
+         if (error.code != VK_API_ERROR) {
+             [error.vkError.request repeat];
+         }
+         else {
+             //block (nil, [self errorVkontakte]);
          }
      }];
 }
@@ -258,13 +334,6 @@ static VKNetwork *model = nil;
 - (void) postMessageToVK : (Post*) post {
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     
-//<<<<<<< HEAD
-//    parameters [VK_API_OWNER_ID] = [VKSdk getAccessToken].userId;
-//    parameters [VK_API_MESSAGE] = post.postDescription;
-//    if (post.placeID) {
-//        parameters [VK_API_PLACE_ID] = post.placeID;
-//    }
-//=======
         parameters [VK_API_OWNER_ID] = [VKSdk getAccessToken].userId;
         parameters [VK_API_MESSAGE] = post.postDescription;
         if (post.place.placeID) {
@@ -275,6 +344,7 @@ static VKNetwork *model = nil;
     
     [request executeWithResultBlock: ^(VKResponse *response) {
         self.copyComplition (musPostSuccess, nil);
+        post.postID = [[response.json objectForKey:@"post_id"] stringValue];
         [self saveOrUpdatePost: post withReason: Connect];
     } errorBlock: ^(NSError *error) {
         self.copyComplition (nil, [self errorVkontakte]);
@@ -328,6 +398,7 @@ static VKNetwork *model = nil;
         VKRequest *postRequest = [[VKApi wall] post: parameters];
         [postRequest executeWithResultBlock: ^(VKResponse *response) {
             self.copyComplition (musPostSuccess, nil);
+            post.postID = [[response.json objectForKey:@"post_id"] stringValue];///////////////////////////////////////////
             [self saveOrUpdatePost: post withReason: Connect];
         } errorBlock: ^(NSError *error) {
             [self saveOrUpdatePost: post withReason: ErrorConnection];
@@ -381,6 +452,7 @@ static VKNetwork *model = nil;
 
 - (void)vkSdkReceivedNewToken:(VKAccessToken *)newToken
 {
+    [self startTimerForUpdatePosts];// check it later
     [self obtainInfoFromNetworkWithComplition:self.copyComplition];
 }
 

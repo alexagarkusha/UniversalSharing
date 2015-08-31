@@ -323,56 +323,58 @@ static FacebookNetwork *model = nil;
 
 - (void) updatePost {
     
-    NSArray * posts = [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForAllPosts]];
+    NSArray * posts = [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForPostWithReason:Connect andNetworkType:Facebook]];
+    FBSDKGraphRequestConnection *connection = [[FBSDKGraphRequestConnection alloc] init];
+
     [posts enumerateObjectsUsingBlock:^(Post *post, NSUInteger index, BOOL *stop) {
-        if (post.reason == Connect) {
-            [self obtainCountOfLikesFromPost:post];
-            [self obtainCountOfCommentsFromPost:post];
-            //if(index == 0)
-        }
+ 
+        [self obtainCountOfLikesFromPost:post andConnection:connection];
+        [self obtainCountOfCommentsFromPost:post andConnection:connection];
     }];
-    //[[NSNotificationCenter defaultCenter] postNotificationName:MUSNotificationPostsInfoWereUpDated object:nil];
+    connection.delegate = self;
+    [connection start];
+    
 
 }
 
-- (void) obtainCountOfLikesFromPost :(Post*) post {
-    NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:post.postID,@"ObjectId",@"true",@"summary",nil];
+- (void) obtainCountOfLikesFromPost :(Post*) post andConnection:(FBSDKGraphRequestConnection*)connection {
+       NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:post.postID,@"ObjectId",@"true",@"summary",nil];
     NSString *stringPath = [NSString stringWithFormat:@"/%@/likes",post.postID];
     FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]initWithGraphPath: stringPath
                                                                   parameters: params
                                                                   HTTPMethod: musGET];
+    [connection addRequest:request
+         completionHandler:^(FBSDKGraphRequestConnection *innerConnection, NSDictionary *result, NSError *error) {
+             
+             if (post.likesCount == [[[result objectForKey:@"summary"]objectForKey:@"total_count"] integerValue]) {
+                 return;
+             }
+             post.likesCount = [[[result objectForKey:@"summary"]objectForKey:@"total_count"] integerValue];
+             [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost:post]];
+         }];
     
-    [request startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection,
-                                          id result,
-                                          NSError *error) {
-        if (post.likesCount == [[[result objectForKey:@"summary"]objectForKey:@"total_count"] integerValue]) {
-            return;
-        }
-        post.likesCount = [[[result objectForKey:@"summary"]objectForKey:@"total_count"] integerValue];
-        [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost:post]];
-
-    }];
-
+}
+- (void)requestConnectionDidFinishLoading:(FBSDKGraphRequestConnection *)connection {
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:MUSNotificationPostsInfoWereUpDated object:nil];
     
 }
 
-- (void) obtainCountOfCommentsFromPost :(Post*) post {
+- (void) obtainCountOfCommentsFromPost :(Post*) post andConnection:(FBSDKGraphRequestConnection*)connection{
     NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:post.postID,@"ObjectId",@"true",@"summary",nil];
     NSString *stringPath = [NSString stringWithFormat:@"/%@/comments",post.postID];
     FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]initWithGraphPath: stringPath
                                                                    parameters: params
                                                                    HTTPMethod: musGET];
-    
-    [request startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection,
-                                           id result,
-                                           NSError *error) {
-        if (post.commentsCount == [[[result objectForKey:@"summary"]objectForKey:@"total_count"] integerValue]) {
-            return;
-        }
-        post.commentsCount = [[[result objectForKey:@"summary"]objectForKey:@"total_count"] integerValue];
-        [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost:post]];
-
-    }];
+    [connection addRequest:request
+         completionHandler:^(FBSDKGraphRequestConnection *innerConnection, NSDictionary *result, NSError *error) {
+             
+             if (post.commentsCount == [[[result objectForKey:@"summary"]objectForKey:@"total_count"] integerValue]) {
+                 return;
+             }
+             post.commentsCount = [[[result objectForKey:@"summary"]objectForKey:@"total_count"] integerValue];
+             [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost:post]];
+         }];
 }
 
 /*!
