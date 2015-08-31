@@ -201,13 +201,11 @@
 #pragma mark - DOPDropDownMenuDelegate
 
 - (void)menu:(DOPDropDownMenu *)menu didSelectRowAtIndexPath:(DOPIndexPath *)indexPath {
-    NSLog(@"column:%li row:%li", (long)indexPath.column, (long)indexPath.row);
-    NSLog(@"%@",[menu titleForRowAtIndexPath:indexPath]);
+//    NSLog(@"column:%li row:%li", (long)indexPath.column, (long)indexPath.row);
+//    NSLog(@"%@",[menu titleForRowAtIndexPath:indexPath]);
     
     NSString *title = [menu titleForRowAtIndexPath:indexPath];
-
     self.columnType = indexPath.column;
-
     switch (self.columnType) {
         case ByNetworkType:{
             if (indexPath.row == 0) {

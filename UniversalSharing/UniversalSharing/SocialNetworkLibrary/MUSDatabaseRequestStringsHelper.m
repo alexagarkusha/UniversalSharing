@@ -11,7 +11,7 @@
 @implementation MUSDatabaseRequestStringsHelper
 
 + (NSString*)createStringForPostWithReason :(ReasonType) reason andNetworkType :(NetworkType) networkType {
-    NSString *requestString = [NSString stringWithFormat:@"SELECT * FROM %@",@"Posts"];
+    NSString *requestString = [NSString stringWithFormat:@"SELECT * FROM %@ ORDER BY dateCreate DESC",@"Posts"];
     
     if (networkType != AllNetworks) {
         requestString = [requestString stringByAppendingString:[NSString stringWithFormat:@" WHERE networkType = \"%ld\"", (long)networkType]];
@@ -47,7 +47,7 @@
 }
 
 + (NSString*) createStringForAllPosts {
-    return [NSString stringWithFormat:@"SELECT * FROM %@",@"Posts"];
+    return [NSString stringWithFormat:@"SELECT * FROM %@ ORDER BY dateCreate DESC",@"Posts"];
 }
 
 + (NSString*) createStringForAllUsers {
