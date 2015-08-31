@@ -43,6 +43,7 @@
  */
 @property (strong, nonatomic) User *currentUser;
 
+@property (strong, nonatomic) NSTimer *timer;
 /*!
  @abstract type of social network (like Facebook, Twitters, Vkontakte)
  */

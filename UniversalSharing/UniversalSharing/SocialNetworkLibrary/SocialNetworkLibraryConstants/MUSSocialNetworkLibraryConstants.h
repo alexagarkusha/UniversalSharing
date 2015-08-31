@@ -132,6 +132,7 @@ FOUNDATION_EXPORT NSString *const musGET;
 FOUNDATION_EXPORT NSString *const musPOST;
 FOUNDATION_EXPORT NSString *const musPostSuccess;
 FOUNDATION_EXPORT NSString *const musErrorWithDomainUniversalSharing;
+FOUNDATION_EXPORT NSString *const MUSNotificationPostsInfoWereUpDated;
 
 
 #pragma mark Error Constants

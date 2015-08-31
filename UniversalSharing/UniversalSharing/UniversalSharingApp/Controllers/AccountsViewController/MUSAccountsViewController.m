@@ -16,7 +16,6 @@
 #import "MUSDatabaseRequestStringsHelper.h"
 
 
-
 @interface MUSAccountsViewController () <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, UIGestureRecognizerDelegate, AFMSlidingCellDelegate>
 
 @property (weak, nonatomic) IBOutlet    UITableView *tableView;
@@ -57,6 +56,7 @@
 @implementation MUSAccountsViewController
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     [self obtanObjectsOfSocialNetworks];
     self.arrayButtons = [NSMutableArray new];

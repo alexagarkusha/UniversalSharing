@@ -46,10 +46,13 @@ static FacebookNetwork *model = nil;
         self.name = musFacebookName;
         if (![FBSDKAccessToken currentAccessToken]) {
             [self initiationPropertiesWithoutSession];
+            
         }
         else {
             self.isLogin = YES;
-            
+            [self updatePost];/////////////////////////////////////////////////////////////////////////////////////////////
+
+            [self startTimerForUpdatePosts];
             self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForUsersWithNetworkType:self.networkType]]firstObject]; // obtainUsersWithNetworkType:self.networkType];
             self.icon = self.currentUser.photoURL;
             self.title = [NSString stringWithFormat:@"%@ %@", self.currentUser.firstName, self.currentUser.lastName];
@@ -81,8 +84,17 @@ static FacebookNetwork *model = nil;
     self.isLogin = NO;
     self.isVisible = YES;
     self.currentUser = nil;
-}
+    [self.timer invalidate];
+    self.timer = nil;
+    }
 
+- (void) startTimerForUpdatePosts {
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:600.0f
+                                                  target:self
+                                                selector:@selector(updatePost)
+                                                userInfo:nil
+                                                 repeats:YES];
+}
 #pragma mark - loginInNetwork
 
 - (void) loginWithComplition :(Complition) block {
@@ -102,6 +114,7 @@ static FacebookNetwork *model = nil;
             // If you ask for multiple permissions at once, you
             // should check if specific permissions missing
             if ([result.grantedPermissions containsObject: musFacebookPermission_Email]) {
+                [self startTimerForUpdatePosts];
                 [weakSell obtainInfoFromNetworkWithComplition:block];
             }
         }
@@ -306,6 +319,60 @@ static FacebookNetwork *model = nil;
              }];
     }
     [connection start];
+}
+
+- (void) updatePost {
+    
+    NSArray * posts = [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForAllPosts]];
+    [posts enumerateObjectsUsingBlock:^(Post *post, NSUInteger index, BOOL *stop) {
+        if (post.reason == Connect) {
+            [self obtainCountOfLikesFromPost:post];
+            [self obtainCountOfCommentsFromPost:post];
+            //if(index == 0)
+        }
+    }];
+    //[[NSNotificationCenter defaultCenter] postNotificationName:MUSNotificationPostsInfoWereUpDated object:nil];
+
+}
+
+- (void) obtainCountOfLikesFromPost :(Post*) post {
+    NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:post.postID,@"ObjectId",@"true",@"summary",nil];
+    NSString *stringPath = [NSString stringWithFormat:@"/%@/likes",post.postID];
+    FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]initWithGraphPath: stringPath
+                                                                  parameters: params
+                                                                  HTTPMethod: musGET];
+    
+    [request startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection,
+                                          id result,
+                                          NSError *error) {
+        if (post.likesCount == [[[result objectForKey:@"summary"]objectForKey:@"total_count"] integerValue]) {
+            return;
+        }
+        post.likesCount = [[[result objectForKey:@"summary"]objectForKey:@"total_count"] integerValue];
+        [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost:post]];
+
+    }];
+
+    
+}
+
+- (void) obtainCountOfCommentsFromPost :(Post*) post {
+    NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:post.postID,@"ObjectId",@"true",@"summary",nil];
+    NSString *stringPath = [NSString stringWithFormat:@"/%@/comments",post.postID];
+    FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]initWithGraphPath: stringPath
+                                                                   parameters: params
+                                                                   HTTPMethod: musGET];
+    
+    [request startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection,
+                                           id result,
+                                           NSError *error) {
+        if (post.commentsCount == [[[result objectForKey:@"summary"]objectForKey:@"total_count"] integerValue]) {
+            return;
+        }
+        post.commentsCount = [[[result objectForKey:@"summary"]objectForKey:@"total_count"] integerValue];
+        [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost:post]];
+
+    }];
 }
 
 /*!
