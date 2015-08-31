@@ -21,6 +21,8 @@
 
 @property (nonatomic, assign) id <MUSGaleryViewDelegate> delegate;
 
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+
 /*!
  @method
  @abstract call from shareviewcontroller

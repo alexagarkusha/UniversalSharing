@@ -279,6 +279,7 @@
                                             self.tabBarController.tabBar.frame.size.height + self.galeryView.frame.size.height - galeryViewHeight);
     [UIView animateWithDuration: 0.3  animations:^{
         [self.view layoutIfNeeded];
+        [self.galeryView.collectionView reloadData];
         [self.view setNeedsLayout];
     }];
     [UIView commitAnimations];
@@ -297,6 +298,7 @@
     
     [UIView animateWithDuration: 0.4 animations:^{
         [self.view layoutIfNeeded];
+        [self.galeryView.collectionView reloadData];
         [self.view setNeedsLayout];
     }];
     [UIView commitAnimations];

@@ -12,7 +12,6 @@
 
 @interface MUSGaleryView()<UICollectionViewDelegate, UICollectionViewDataSource, UIGestureRecognizerDelegate, UIAlertViewDelegate, MUSCollectionViewCellDelegate>
 
-@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 //===
 @property (strong, nonatomic)  UIView *view;
 @property (strong, nonatomic)  NSMutableArray *arrayWithChosenImages;
@@ -67,6 +66,7 @@
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    //NSLog(@"COUNT ROW = %d", [self.arrayWithChosenImages count]);
     return  [self.arrayWithChosenImages count];
 }
 
@@ -91,25 +91,42 @@
 #pragma mark - initiation UILongPressGestureRecognizer
 
 - (void) initiationGestureRecognizer {
-    self.pressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGesture)];
+    self.pressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGesture:)];
     self.pressGesture.minimumPressDuration = .2;
     self.pressGesture.delegate = self;
     [self.collectionView addGestureRecognizer: self.pressGesture];
 }
 
 
--(void)handleLongPressGesture {
+-(void)handleLongPressGesture : (UILongPressGestureRecognizer*) gestureRecognizer {
     
-    if (self.pressGesture.state == UIGestureRecognizerStateBegan) {
+    if (gestureRecognizer.state != UIGestureRecognizerStateBegan) {
+        return;
+    }
+    CGPoint point = [gestureRecognizer locationInView:self.collectionView];
+    NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:point];
+    
+    if (!indexPath && self.isEditableCollectionView){
+        [self notEditableCollectionView];
+    } else if (indexPath) {
         if (!self.isEditableCollectionView) {
-            self.isEditableCollectionView = YES;
-            [self.collectionView reloadData];
+            [self editableCollectionView];
         } else {
-            self.isEditableCollectionView = NO;
-            [self.collectionView reloadData];
+            [self notEditableCollectionView];
         }
     }
 }
+
+- (void) editableCollectionView {
+    self.isEditableCollectionView = YES;
+    [self.collectionView reloadData];
+}
+
+- (void) notEditableCollectionView {
+    self.isEditableCollectionView = NO;
+    [self.collectionView reloadData];
+}
+
 
 #pragma mark - passChosenImageForCollection
 
@@ -151,8 +168,10 @@
             [self.collectionView reloadData];
             break;
         case NO:
+            //[self.collectionView reloadData];
             break;
         default:
+            
             break;
     }
 }
