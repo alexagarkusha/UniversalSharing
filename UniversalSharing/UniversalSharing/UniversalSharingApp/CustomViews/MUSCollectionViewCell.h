@@ -8,7 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol MUSCollectionViewCellDelegate <NSObject>
+- (void) deletePhoto : (NSIndexPath*) currentInadexPath;
+@end
+
 @interface MUSCollectionViewCell : UICollectionViewCell
+
++ (NSString*) customCellID;
++ (instancetype) musCollectionViewCell;
+- (void) configurationCellWithPhoto: (UIImage*) photoImageView;
+
+@property (assign, nonatomic) id <MUSCollectionViewCellDelegate> delegate;
+@property (strong, nonatomic) NSIndexPath *indexPath;
+@property (assign, nonatomic) BOOL isEditable;
+
 
 @property (weak, nonatomic) IBOutlet UIImageView *photoImageViewCell;
 

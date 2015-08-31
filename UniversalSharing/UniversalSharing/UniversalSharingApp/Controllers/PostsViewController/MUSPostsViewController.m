@@ -35,10 +35,10 @@
 @implementation MUSPostsViewController
 
 - (void)viewDidLoad {
+    // Do any additional setup after loading the view.
     [self initiationDropDownMenu];
     [self initiationTableView];
-
-    // Do any additional setup after loading the view.
+    self.title = musApp_PostsViewController_NavigationBar_Title;
 }
 
 - (void) viewWillAppear:(BOOL)animated {

@@ -20,6 +20,7 @@
 @interface MUSGaleryView : UIView
 
 @property (nonatomic, assign) id <MUSGaleryViewDelegate> delegate;
+
 /*!
  @method
  @abstract call from shareviewcontroller
@@ -32,5 +33,6 @@
  @param without
  */
 - (NSArray*) obtainArrayWithChosenPics;
+
 
 @end

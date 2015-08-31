@@ -156,8 +156,8 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OR" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hcg-gL-usD">
-                                        <rect key="frame" x="288" y="272" width="25" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="OR" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hcg-gL-usD">
+                                        <rect key="frame" x="288" y="281" width="25" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="25" id="dCg-0o-WEx"/>
                                             <constraint firstAttribute="height" constant="21" id="yjJ-Fj-bKC"/>
@@ -211,7 +211,7 @@
                                     <constraint firstItem="s3b-v5-BFs" firstAttribute="height" secondItem="h9f-nw-3rM" secondAttribute="height" id="qLB-jQ-JwV"/>
                                     <constraint firstItem="h9f-nw-3rM" firstAttribute="top" secondItem="Hcg-gL-usD" secondAttribute="bottom" constant="100" id="uUR-A9-XCF"/>
                                     <constraint firstAttribute="bottomMargin" secondItem="h9f-nw-3rM" secondAttribute="bottom" constant="50" id="vy1-iH-425"/>
-                                    <constraint firstItem="Hcg-gL-usD" firstAttribute="top" secondItem="3aS-oL-xbj" secondAttribute="bottom" constant="7" id="zUA-jT-bNI"/>
+                                    <constraint firstItem="Hcg-gL-usD" firstAttribute="top" secondItem="3aS-oL-xbj" secondAttribute="bottom" constant="20" id="zUA-jT-bNI"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -361,6 +361,7 @@
                 <tapGestureRecognizer id="Q3Z-Zc-VoA">
                     <connections>
                         <action selector="endEditingMessage:" destination="8rJ-Kc-sve" id="sCW-Vf-L8J"/>
+                        <outlet property="delegate" destination="8rJ-Kc-sve" id="4NP-o5-7Md"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
@@ -427,6 +428,6 @@
         <image name="second" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Zpk-wC-Emq"/>
+        <segue reference="kha-pS-nBS"/>
     </inferredMetricsTieBreakers>
 </document>

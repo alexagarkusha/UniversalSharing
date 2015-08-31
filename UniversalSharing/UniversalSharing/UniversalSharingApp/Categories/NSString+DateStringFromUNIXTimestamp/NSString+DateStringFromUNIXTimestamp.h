@@ -10,7 +10,7 @@
 
 @interface NSString (DateStringFromUNIXTimestamp)
 
-- (NSString*) dateStringFromUNIXTimestamp: (double) dateInDouble;
++ (NSString*) dateStringFromUNIXTimestamp: (double) dateInDouble;
 
 
 
