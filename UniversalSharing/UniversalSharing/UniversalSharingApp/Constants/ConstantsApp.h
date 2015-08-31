@@ -100,6 +100,8 @@ FOUNDATION_EXPORT NSString *const musAppButtonTitle_Album;
 FOUNDATION_EXPORT NSString *const musAppButtonTitle_Camera;
 FOUNDATION_EXPORT NSString *const musAppButtonTitle_Edit;
 FOUNDATION_EXPORT NSString *const musAppButtonTitle_Share;
+FOUNDATION_EXPORT NSString *const musAppButtonTitle_Action;
+FOUNDATION_EXPORT NSString *const musAppButtonTitle_Back;
 FOUNDATION_EXPORT NSString *const Error;
 
 #pragma mark - MUSGaleryView
@@ -115,6 +117,11 @@ FOUNDATION_EXPORT NSString *const otherButtonTitlesAlertDeletePicShow;
 
 FOUNDATION_EXPORT NSString *const musAppButton_ImageName_UnknownUser;
 
+
+#pragma mark - MUSPostsViewController
+
+FOUNDATION_EXPORT NSString *const musApp_PostsViewController_NavigationBar_Title;
+
 #pragma mark - MUSPostCell
 
 FOUNDATION_EXPORT NSString *const musAppImage_Name_Comment;
@@ -122,13 +129,9 @@ FOUNDATION_EXPORT NSString *const musAppImage_Name_Like;
 FOUNDATION_EXPORT NSString *const musAppImage_Name_VKIconImage;
 FOUNDATION_EXPORT NSString *const musAppImage_Name_FBIconImage;
 FOUNDATION_EXPORT NSString *const musAppImage_Name_TwitterIconImage;
-
 FOUNDATION_EXPORT NSString *const musAppFilter_Title_Shared;
 FOUNDATION_EXPORT NSString *const musAppFilter_Title_Offline;
 FOUNDATION_EXPORT NSString *const musAppFilter_Title_Error;
-
-#pragma mark - MUSPostCell
-
 FOUNDATION_EXPORT NSInteger const musAppPostsVC_HeightOfPostCell;
 FOUNDATION_EXPORT NSString *const musApp_ActionSheet_Title_ChooseAction;
 FOUNDATION_EXPORT NSInteger const musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithoutUserPhotos;
@@ -141,6 +144,8 @@ FOUNDATION_EXPORT NSString *const musApp_GalleryOfPhotos_NibName;
 #pragma mark - MUSGalleryOfPhotosCell
 
 FOUNDATION_EXPORT NSString *const musAppButton_ImageName_ButtonAdd;
+FOUNDATION_EXPORT NSInteger const musApp_GalleryOfPhotosCell_addButton_ButtomConstraint_WithoutPhotos;
+FOUNDATION_EXPORT NSInteger const musApp_GalleryOfPhotosCell_addButton_ButtomConstraint_WithPhotos;
 
 #pragma mark - MUSPostDescriptionCell
 
@@ -157,6 +162,8 @@ FOUNDATION_EXPORT NSInteger const musApp_PostDescriptionCell_TextView_Font_Size;
 
 FOUNDATION_EXPORT NSInteger const musAppDetailPostVC_HeightOfCommentsAndLikesCell;
 FOUNDATION_EXPORT NSInteger const musAppDetailPostVC_HeightOfPostLocationCell;
+FOUNDATION_EXPORT NSInteger const musAppDetailPostVC_HeightOfGalleryOfPhotosCell_WithoutPhotos;
+FOUNDATION_EXPORT NSInteger const musAppDetailPostVC_HeightOfGalleryOfPhotosCell_WithPhotos;
 FOUNDATION_EXPORT NSString *const musAppDetailPostVC_UpdatePostAlert;
 
 

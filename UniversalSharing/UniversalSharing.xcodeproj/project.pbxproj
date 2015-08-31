@@ -78,9 +78,12 @@
 		97C63BD91B7246B6006E99C6 /* NSError+MUSError.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C63BD81B7246B6006E99C6 /* NSError+MUSError.m */; };
 		97C74ADE1B7DDEF4004DC863 /* UnknownUser.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 97C74ADD1B7DDEF4004DC863 /* UnknownUser.jpg */; };
 		97C7D79F1B73889B004DC83D /* MUSSocialNetworkLibraryConstantsForParseObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C7D79E1B73889B004DC83D /* MUSSocialNetworkLibraryConstantsForParseObjects.m */; };
+		97C8A9DE1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C8A9DC1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.m */; };
+		97C8A9DF1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97C8A9DD1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.xib */; };
 		97CA63CA1B6F66D300F9F0C1 /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CA63C91B6F66D300F9F0C1 /* Place.m */; };
 		97CA63CF1B6F737A00F9F0C1 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CA63CE1B6F737A00F9F0C1 /* Location.m */; };
 		97CB10DB1B904D7B0061F851 /* UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CB10DA1B904D7B0061F851 /* UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.m */; };
+		97CB10DD1B9086D30061F851 /* btn-close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 97CB10DC1B9086D30061F851 /* btn-close@2x.png */; };
 		97CCC9D81B749C2C00E0FAC6 /* ReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CCC9D71B749C2C00E0FAC6 /* ReachabilityManager.m */; };
 		97CCC9DC1B74ABAE00E0FAC6 /* UIImage+ChangeScaleImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CCC9DB1B74ABAE00E0FAC6 /* UIImage+ChangeScaleImage.m */; };
 		97D1C43A1B81CF5100009BCF /* MUSPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D1C4391B81CF5100009BCF /* MUSPostsViewController.m */; };
@@ -227,12 +230,16 @@
 		97C74ADD1B7DDEF4004DC863 /* UnknownUser.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = UnknownUser.jpg; sourceTree = "<group>"; };
 		97C7D79D1B73889B004DC83D /* MUSSocialNetworkLibraryConstantsForParseObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSSocialNetworkLibraryConstantsForParseObjects.h; sourceTree = "<group>"; };
 		97C7D79E1B73889B004DC83D /* MUSSocialNetworkLibraryConstantsForParseObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSSocialNetworkLibraryConstantsForParseObjects.m; sourceTree = "<group>"; };
+		97C8A9DB1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUSDetailPostCollectionViewCell.h; path = DetailPostCollectionViewCell/MUSDetailPostCollectionViewCell.h; sourceTree = "<group>"; };
+		97C8A9DC1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUSDetailPostCollectionViewCell.m; path = DetailPostCollectionViewCell/MUSDetailPostCollectionViewCell.m; sourceTree = "<group>"; };
+		97C8A9DD1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MUSDetailPostCollectionViewCell.xib; path = DetailPostCollectionViewCell/MUSDetailPostCollectionViewCell.xib; sourceTree = "<group>"; };
 		97CA63C81B6F66D300F9F0C1 /* Place.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Place.h; path = UniversalSharing/SocialNetworkLibrary/Place/Place.h; sourceTree = SOURCE_ROOT; };
 		97CA63C91B6F66D300F9F0C1 /* Place.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Place.m; path = UniversalSharing/SocialNetworkLibrary/Place/Place.m; sourceTree = SOURCE_ROOT; };
 		97CA63CD1B6F737A00F9F0C1 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Location.h; path = UniversalSharing/SocialNetworkLibrary/Location/Location.h; sourceTree = SOURCE_ROOT; };
 		97CA63CE1B6F737A00F9F0C1 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Location.m; path = UniversalSharing/SocialNetworkLibrary/Location/Location.m; sourceTree = SOURCE_ROOT; };
 		97CB10D91B904D7B0061F851 /* UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.h"; path = "UniversalSharing/UniversalSharingApp/Categories/UIImageView+CornerRadiusBorderWidthAndBorderColorImageView/UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.h"; sourceTree = SOURCE_ROOT; };
 		97CB10DA1B904D7B0061F851 /* UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.m"; path = "UniversalSharing/UniversalSharingApp/Categories/UIImageView+CornerRadiusBorderWidthAndBorderColorImageView/UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.m"; sourceTree = SOURCE_ROOT; };
+		97CB10DC1B9086D30061F851 /* btn-close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-close@2x.png"; sourceTree = "<group>"; };
 		97CCC9D61B749C2C00E0FAC6 /* ReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReachabilityManager.h; path = UniversalSharing/UniversalSharingApp/Managers/ReachabilityManager/ReachabilityManager.h; sourceTree = SOURCE_ROOT; };
 		97CCC9D71B749C2C00E0FAC6 /* ReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReachabilityManager.m; path = UniversalSharing/UniversalSharingApp/Managers/ReachabilityManager/ReachabilityManager.m; sourceTree = SOURCE_ROOT; };
 		97CCC9DA1B74ABAE00E0FAC6 /* UIImage+ChangeScaleImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+ChangeScaleImage.h"; path = "UniversalSharing/UniversalSharingApp/Categories/UIImage+ChangeScaleImage/UIImage+ChangeScaleImage.h"; sourceTree = SOURCE_ROOT; };
@@ -398,6 +405,7 @@
 				97D1C4411B81DB5D00009BCF /* Comment.png */,
 				97B98EDD1B874AA9006ADD26 /* Like.png */,
 				97C350531B8490C7002C6D8E /* Button_Add.png */,
+				97CB10DC1B9086D30061F851 /* btn-close@2x.png */,
 				18B505471B726FAF00679F9D /* Info.plist */,
 				18BB29A61B67E3F000B498AC /* main.m */,
 			);
@@ -535,6 +543,7 @@
 				97D1C4491B81ECC100009BCF /* DOPDropDownMenu */,
 				97D1C43B1B81D00800009BCF /* PostCell */,
 				30416A1F1B73A28D000CB2C2 /* GalleryView */,
+				97C8A9DA1B944B6600031CB0 /* DetailPostCollectionViewCell */,
 				30F334071B6F6855007C15D7 /* CollectionViewCell */,
 				18BB29971B67E3F000B498AC /* AccountCell */,
 				18BB299B1B67E3F000B498AC /* TopUserProfileCell */,
@@ -877,6 +886,16 @@
 			path = User;
 			sourceTree = "<group>";
 		};
+		97C8A9DA1B944B6600031CB0 /* DetailPostCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				97C8A9DB1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.h */,
+				97C8A9DC1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.m */,
+				97C8A9DD1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.xib */,
+			);
+			name = DetailPostCollectionViewCell;
+			sourceTree = "<group>";
+		};
 		97CA63C71B6F668C00F9F0C1 /* Place */ = {
 			isa = PBXGroup;
 			children = (
@@ -1077,9 +1096,11 @@
 				97C49E801B835130005241CE /* MUSCommentsAndLikesCell.xib in Resources */,
 				30DBFDA51B6BAA52002F83D0 /* VKimage.png in Resources */,
 				18BB29AE1B67E3F000B498AC /* LaunchScreen.xib in Resources */,
+				97CB10DD1B9086D30061F851 /* btn-close@2x.png in Resources */,
 				18BB29C01B67E3F000B498AC /* Images.xcassets in Resources */,
 				18BB29BA1B67E3F000B498AC /* MUSAccountTableViewCell.xib in Resources */,
 				97C74ADE1B7DDEF4004DC863 /* UnknownUser.jpg in Resources */,
+				97C8A9DF1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.xib in Resources */,
 				30DBFDA11B6BAA3F002F83D0 /* FBimage.jpg in Resources */,
 				97C49E8C1B836AFD005241CE /* MUSPostLocationCell.xib in Resources */,
 				30DBFDA31B6BAA48002F83D0 /* TWimage.jpeg in Resources */,
@@ -1172,6 +1193,7 @@
 				97C460CF1B68B6AD00C010DE /* MUSPhotoManager.m in Sources */,
 				187FC52A1B65222D00A3916C /* User.m in Sources */,
 				18BB29BB1B67E3F000B498AC /* MUSTopUserProfileCell.m in Sources */,
+				97C8A9DE1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.m in Sources */,
 				306ED75C1B6FA3170014D975 /* MUSLocationTableViewController.m in Sources */,
 				30DBFD8B1B677A9A002F83D0 /* TwitterNetwork.m in Sources */,
 				18BB29AD1B67E3F000B498AC /* AppDelegate.m in Sources */,

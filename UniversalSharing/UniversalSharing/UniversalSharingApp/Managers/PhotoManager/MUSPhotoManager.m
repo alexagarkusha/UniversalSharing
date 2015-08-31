@@ -90,9 +90,9 @@ static MUSPhotoManager* sharedManager = nil;
         self.copyComplition (nil, [self cameraError]);
     } else {
         _imagePickerController.delegate = self;
-        _imagePickerController.allowsEditing = YES;
+        _imagePickerController.allowsEditing = NO; // If you want to edit photo - you need to set YES
         _imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
-        [self.viewController presentViewController:_imagePickerController animated:YES completion:nil];
+        [self.viewController presentViewController:_imagePickerController animated: YES completion:nil];
     }
     
 }
@@ -110,8 +110,7 @@ static MUSPhotoManager* sharedManager = nil;
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    
-    UIImage *image = [info objectForKey: UIImagePickerControllerOriginalImage];
+    UIImage *image = [info objectForKey: UIImagePickerControllerOriginalImage]; // If you want to show editable photo - you need to set UIImagePickerControllerEditedImage
     
     if (image != nil) {
         ImageToPost *imageToPost = [[ImageToPost alloc] init];

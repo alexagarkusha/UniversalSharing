@@ -7,7 +7,7 @@
 //
 
 #import "MUSGalleryViewOfPhotos.h"
-#import "MUSCollectionViewCell.h"
+#import "MUSDetailPostCollectionViewCell.h"
 #import "ConstantsApp.h"
 
 
@@ -24,10 +24,10 @@
 
 -(id) initWithFrame:(CGRect)frame
 {
-    
     self = [super initWithFrame:frame];
     if (self) {
-
+        self.view = [self loadViewFromNib];
+        [self addSubview : self.view];
     }
     return self;
 }
@@ -35,14 +35,20 @@
 - (id) initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder: aDecoder];
     if (self) {
-        [[NSBundle mainBundle] loadNibNamed: @"MUSGalleryViewOfPhotos" owner: self options: nil];
+        self.view = [self loadViewFromNib];
         [self addSubview : self.view];
     }
     return self;
 }
 
+-(UIView*)loadViewFromNib {
+    NSArray *nibObjects = [[NSBundle mainBundle]loadNibNamed: @"MUSGalleryViewOfPhotos" owner:self options:nil];
+    return [nibObjects firstObject];
+}
+
 - (void) awakeFromNib {
-    [self.collectionView registerNib:[UINib nibWithNibName:nibWithNibName bundle:nil] forCellWithReuseIdentifier:collectionViewCellIdentifier];
+    NSString *cellIdentifier = [MUSDetailPostCollectionViewCell customCellID];
+    [self.collectionView registerNib:[UINib nibWithNibName: cellIdentifier bundle: nil] forCellWithReuseIdentifier: cellIdentifier];
     self.collectionView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     self.arrayOfPhotos = [[NSMutableArray alloc] init];
     self.photoPageControl.hidden = YES;
@@ -53,14 +59,16 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     self.photoPageControl.numberOfPages = self.arrayOfPhotos.count;
     
-    NSLog(@"view.width = %f", self.view.frame.size.width);
+    NSLog(@"VIEW x =%f, y=%f, w=%f, h=%f", self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
+
+    //NSLog(@"view.width = %f", self.view.frame.size.width);
     return self.arrayOfPhotos.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    MUSCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:collectionViewCellIdentifier forIndexPath : indexPath];
-    cell.photoImageViewCell.image = [self.arrayOfPhotos objectAtIndex: indexPath.row];
-   
+    
+    MUSDetailPostCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier: [MUSDetailPostCollectionViewCell customCellID] forIndexPath : indexPath];
+    [cell configurationCellWithPhoto: [self.arrayOfPhotos objectAtIndex: indexPath.row]];
     return  cell;
 }
 
@@ -71,14 +79,13 @@
     return CGSizeMake ([UIScreen mainScreen].bounds.size.width, self.collectionView.frame.size.height);
 }
 
-
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
     if (self.isEditableGallery) {
         self.indexForDeletePicture = indexPath.row;
         [self photoAlertDeletePicShow];
     }
 }
-
 
 - (void) scrollCollectionViewToLastPhoto {
     NSInteger section = [self.collectionView numberOfSections] - 1 ;
@@ -129,5 +136,6 @@
         self.photoPageControl.hidden = NO;
     }
 }
+
 
 @end

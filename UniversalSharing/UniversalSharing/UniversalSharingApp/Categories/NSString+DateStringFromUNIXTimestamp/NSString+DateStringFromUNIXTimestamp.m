@@ -10,7 +10,7 @@
 
 @implementation NSString (DateStringFromUNIXTimestamp)
 
-- (NSString*) dateStringFromUNIXTimestamp: (double) dateInDouble {
++ (NSString*) dateStringFromUNIXTimestamp: (double) dateInDouble {
     NSDate *date = [NSDate dateWithTimeIntervalSince1970: dateInDouble];
     NSDateFormatter *formatDate = [[NSDateFormatter alloc] init];
     [formatDate setDateFormat:@"MMMM dd, yyyy"];

@@ -16,10 +16,10 @@
 
 - (IBAction)changeLocationButtonTouch:(id)sender;
 
-@property (weak, nonatomic) IBOutlet  UIView *addLocationView;
-@property (weak, nonatomic) IBOutlet  UIButton *changeLocationButtonOutlet;
-@property (weak, nonatomic) IBOutlet  UILabel *placeNameLabel;
-@property (weak, nonatomic) IBOutlet  MKMapView *mapView;
+@property (weak, nonatomic) IBOutlet    MKMapView  *mapView;
+@property (weak, nonatomic) IBOutlet    UIButton   *changeLocationButtonOutlet;
+@property (weak, nonatomic) IBOutlet    UILabel    *placeNameLabel;
+@property (weak, nonatomic) IBOutlet    UIView     *addLocationView;
 
 @property (nonatomic, strong) id<MKAnnotation> lastAnnotation;
 

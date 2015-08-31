@@ -35,10 +35,10 @@
 @implementation MUSPostsViewController
 
 - (void)viewDidLoad {
+    // Do any additional setup after loading the view.
     [self initiationDropDownMenu];
     [self initiationTableView];
-
-    // Do any additional setup after loading the view.
+    self.title = musApp_PostsViewController_NavigationBar_Title;
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -201,13 +201,11 @@
 #pragma mark - DOPDropDownMenuDelegate
 
 - (void)menu:(DOPDropDownMenu *)menu didSelectRowAtIndexPath:(DOPIndexPath *)indexPath {
-    NSLog(@"column:%li row:%li", (long)indexPath.column, (long)indexPath.row);
-    NSLog(@"%@",[menu titleForRowAtIndexPath:indexPath]);
+//    NSLog(@"column:%li row:%li", (long)indexPath.column, (long)indexPath.row);
+//    NSLog(@"%@",[menu titleForRowAtIndexPath:indexPath]);
     
     NSString *title = [menu titleForRowAtIndexPath:indexPath];
-
     self.columnType = indexPath.column;
-
     switch (self.columnType) {
         case ByNetworkType:{
             if (indexPath.row == 0) {
