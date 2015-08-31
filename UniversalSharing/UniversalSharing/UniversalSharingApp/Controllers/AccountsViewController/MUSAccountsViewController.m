@@ -25,6 +25,8 @@
  */
 @property (weak, nonatomic) IBOutlet UIView *errorView;
 @property (weak, nonatomic) IBOutlet UIButton *updateNetworkConnectionOutlet;
+@property (weak, nonatomic) IBOutlet UIButton *buttonUseAnywayOutlet;
+
 /*!
  @property
  @abstract initialization by socialnetwork objects from socialmanager(facebook or twitter or VK)
@@ -83,6 +85,7 @@
         self.errorView.hidden = NO;
         self.btnEditOutlet.enabled = NO;
         [self.updateNetworkConnectionOutlet cornerRadius:CGRectGetHeight(self.updateNetworkConnectionOutlet.frame) / 2];
+        [self.buttonUseAnywayOutlet cornerRadius: CGRectGetHeight(self.buttonUseAnywayOutlet.frame) / 2];
     } else {
         self.errorView.hidden = YES;
         self.btnEditOutlet.enabled = YES;

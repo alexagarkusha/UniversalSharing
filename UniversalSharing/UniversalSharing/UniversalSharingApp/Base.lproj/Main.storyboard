@@ -241,6 +241,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="btnEditOutlet" destination="yGE-qs-s5D" id="MsF-jc-JQQ"/>
+                        <outlet property="buttonUseAnywayOutlet" destination="s3b-v5-BFs" id="a6f-oy-Ho9"/>
                         <outlet property="errorView" destination="4DR-Db-4eE" id="acr-xg-AAm"/>
                         <outlet property="tableView" destination="ICe-7s-J4T" id="Dua-2r-x8s"/>
                         <outlet property="updateNetworkConnectionOutlet" destination="h9f-nw-3rM" id="4RX-TQ-P5u"/>
