@@ -119,6 +119,17 @@
     return finalStringPostsForUpdate;
 }
 
++ (NSString*) createStringPostsForUpdateWithObjectPostForVK :(Post*) post {
+    NSString *stringPostsForUpdate = @"UPDATE Posts set ";
+    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"likesCount = \"%d\", "];
+    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"commentsCount = \"%d\" "];
+    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"WHERE userId = \"%@\" AND postId = \"%@\""];
+    
+    NSString *finalStringPostsForUpdate = [NSString stringWithFormat:stringPostsForUpdate, post.likesCount, post.commentsCount,  post.userId, post.postID];
+    
+    return finalStringPostsForUpdate;
+}
+
 + (NSString*) createStringLocationsForUpdateWithObjectPost :(Post*) post {
     
     NSString *stringLocationsForUpdate = @"UPDATE Locations set ";
