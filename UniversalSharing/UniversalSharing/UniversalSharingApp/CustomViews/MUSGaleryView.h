@@ -22,6 +22,7 @@
 @property (nonatomic, assign) id <MUSGaleryViewDelegate> delegate;
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (nonatomic, assign)  BOOL isEditableCollectionView;
 
 /*!
  @method

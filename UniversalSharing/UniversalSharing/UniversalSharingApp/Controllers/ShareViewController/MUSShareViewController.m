@@ -482,7 +482,8 @@
     if ([[segue identifier] isEqualToString:goToLocationViewControllerSegueIdentifier]) {
         vc = [segue destinationViewController];
         [vc setCurrentUser:_currentSocialNetwork];
-        
+        self.galeryView.isEditableCollectionView = NO;
+        [self.galeryView.collectionView reloadData];
         
         __weak MUSShareViewController *weakSelf = self;
         vc.placeComplition = ^(Place* result, NSError *error) {

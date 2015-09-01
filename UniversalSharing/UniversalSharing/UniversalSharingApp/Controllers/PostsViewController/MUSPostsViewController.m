@@ -45,8 +45,11 @@
     [super viewWillAppear : YES];
 #warning "Twice?"
     [self initiationArrayOfActiveSocialNetwork];
-    self.arrayPosts = [[NSMutableArray alloc] initWithArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper createStringForPostWithReason: self.predicateReason andNetworkType: self.predicateNetworkType]]];
-    [self.tableView reloadData];
+    [self obtainPosts];
+    [[NSNotificationCenter defaultCenter] addObserver : self
+                                             selector : @selector(obtainPosts)
+                                                 name : MUSNotificationPostsInfoWereUpDated
+                                               object : nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -227,8 +230,7 @@
             break;
     }
     [self.arrayPosts removeAllObjects];
-    self.arrayPosts = [[NSMutableArray alloc] initWithArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper createStringForPostWithReason: self.predicateReason andNetworkType: self.predicateNetworkType]]];
-    [self.tableView reloadData];
+    [self obtainPosts];
 }
 
 #pragma mark - ReasonFromMenuTitle
@@ -253,6 +255,11 @@
     } else {
         return Twitters;
     }
+}
+
+- (void) obtainPosts {
+    self.arrayPosts = [[NSMutableArray alloc] initWithArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper createStringForPostWithReason: self.predicateReason andNetworkType: self.predicateNetworkType]]];
+    [self.tableView reloadData];
 }
 
 @end

@@ -55,8 +55,8 @@
 - (void) configurationCommentsAndLikesCellByPost:(Post *)currentPost {
     self.likeImageView.image = [UIImage imageNamed: musAppImage_Name_Like];
     self.commentImageView.image = [UIImage imageNamed: musAppImage_Name_Comment];
-    self.numberOfLikesLabel.text = [NSString stringWithFormat:@"%d", currentPost.likesCount];
-    self.numberOfCommentsLabel.text = [NSString stringWithFormat:@"%d", currentPost.commentsCount];
+    self.numberOfLikesLabel.text = [NSString stringWithFormat:@"%ld", (long)currentPost.likesCount];
+    self.numberOfCommentsLabel.text = [NSString stringWithFormat:@"%ld", (long)currentPost.commentsCount];
 }
 
 
