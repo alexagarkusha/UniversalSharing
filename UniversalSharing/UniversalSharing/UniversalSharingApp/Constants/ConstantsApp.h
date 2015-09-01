@@ -58,6 +58,8 @@ FOUNDATION_EXPORT NSString *const changePlaceholderWhenStartEditing;
 //===
 FOUNDATION_EXPORT NSInteger const countOfAllowedPics;
 FOUNDATION_EXPORT NSInteger const countOfAllowedLettersInTextView;
+FOUNDATION_EXPORT NSInteger const musApp_TextView_CountOfAllowedLetters_ForTwitter;
+
 
 #pragma mark - Errors
 

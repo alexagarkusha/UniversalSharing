@@ -11,6 +11,8 @@
 
 @interface MUSPostDescriptionCell () <UITextViewDelegate>
 
+@property (nonatomic, assign) NetworkType currentNetworkType;
+
 @end
 
 
@@ -56,9 +58,9 @@
 
 #pragma mark - configuration PostDescriptionCell
 
-- (void) configurationPostDescriptionCell: (NSString*) postDescription {
+- (void) configurationPostDescriptionCell: (NSString*) postDescription andNetworkType: (NetworkType) networkType {
     [self checkPostDescriptionTextViewStatus];
-    
+    self.currentNetworkType = networkType;
     if (![postDescription isEqualToString: changePlaceholderWhenStartEditing] && ![postDescription isEqualToString: kPlaceholderText]) {
         [self initialParametersOfTextInTextView: postDescription];
         self.postDescriptionTextView.tag = 1;
@@ -91,11 +93,15 @@
     return YES;
 }
 
-- (BOOL)textView:(UITextView *)txtView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     if( [text rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet]].location == NSNotFound ) {
-        return YES;
+        if (self.currentNetworkType != Twitters) {
+            return textView.text.length + (text.length - range.length) <= countOfAllowedLettersInTextView;
+        } else {
+            return textView.text.length + (text.length - range.length) <= musApp_TextView_CountOfAllowedLetters_ForTwitter;
+        }
     }
-    [txtView resignFirstResponder];
+    [textView resignFirstResponder];
     return NO;
 }
 

@@ -22,7 +22,7 @@
 + (instancetype) postDescriptionCell;
 + (CGFloat) heightForPostDescriptionCell : (NSString*) postDescription;
 
-- (void) configurationPostDescriptionCell: (NSString*) postDescription;
+- (void) configurationPostDescriptionCell: (NSString*) postDescription andNetworkType: (NetworkType) networkType;
 
 @property (nonatomic, weak) IBOutlet UITextView *postDescriptionTextView;
 
