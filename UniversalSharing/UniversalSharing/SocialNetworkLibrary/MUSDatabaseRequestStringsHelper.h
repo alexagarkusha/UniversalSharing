@@ -19,6 +19,7 @@
 + (NSString*) createStringUsersForUpdateWithObjectUser :(User*) user;
 + (NSString*) createStringPostsForUpdateWithObjectPost :(Post*) post;
 + (NSString*) createStringLocationsForUpdateWithObjectPost :(Post*) post;
++ (NSString*) createStringPostsForUpdateWithObjectPostForVK :(Post*) post;
 + (NSString*) createStringUsersTable;
 + (NSString*) createStringLocationsTable;
 + (NSString*) createStringPostsTable;

@@ -236,6 +236,8 @@ static TwitterNetwork *model = nil;
                 post.commentsCount = [[arrayJson[0] objectForKey:@"retweet_count"] integerValue];
                 
                 [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost:post]];
+                [[NSNotificationCenter defaultCenter] postNotificationName:MUSNotificationPostsInfoWereUpDated object:nil];
+
             }
             else {
                 NSLog(@"Error: %@", connectionError);
