@@ -16,7 +16,6 @@
 @property (strong, nonatomic)  UIView *view;
 @property (strong, nonatomic)  NSMutableArray *arrayWithChosenImages;
 @property (strong, nonatomic)  UILongPressGestureRecognizer *pressGesture;
-@property (nonatomic, assign)  BOOL isEditableCollectionView;
 
 /*!
  @property
@@ -59,8 +58,7 @@
     NSString *cellIdentifier = [MUSCollectionViewCell customCellID];
     [self.collectionView registerNib:[UINib nibWithNibName: cellIdentifier bundle: nil] forCellWithReuseIdentifier: cellIdentifier];
     self.collectionView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-    
-    self.arrayWithChosenImages = [[NSMutableArray alloc] init];
+    //self.arrayWithChosenImages = [[NSMutableArray alloc] init];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -72,15 +70,12 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     MUSCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[MUSCollectionViewCell customCellID] forIndexPath:indexPath];
-    if (self.arrayWithChosenImages[indexPath.row] != nil) {
+        cell.indexPath = indexPath;
+        NSLog(@"INDEXPATH %@", indexPath);
         ImageToPost *image = self.arrayWithChosenImages[indexPath.row];
         cell.isEditable = self.isEditableCollectionView;
         [cell configurationCellWithPhoto: image.image];
         cell.delegate = self;
-        cell.indexPath = indexPath;
-    } else {
-        [cell configurationCellWithPhoto: nil];
-    }
     return  cell;
 }
 
@@ -103,6 +98,7 @@
     if (gestureRecognizer.state != UIGestureRecognizerStateBegan) {
         return;
     }
+    
     CGPoint point = [gestureRecognizer locationInView:self.collectionView];
     NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:point];
     
@@ -131,7 +127,13 @@
 #pragma mark - passChosenImageForCollection
 
 - (void) passChosenImageForCollection :(ImageToPost*) imageForPost {
+    if (!self.arrayWithChosenImages) {
+        self.arrayWithChosenImages = [[NSMutableArray alloc] init];
+    }
     [self.arrayWithChosenImages addObject: imageForPost];
+    
+    NSLog(@"Array with Images = %@", self.arrayWithChosenImages);
+    
     if ([self.arrayWithChosenImages count] == 1) {
         self.collectionView.backgroundColor = YELLOW_COLOR_Slightly;
         [self.delegate changeSharePhotoButtonColorAndShareButtonState : YES];
@@ -161,9 +163,13 @@
     switch (buttonIndex) {
         case YES:
             [self.arrayWithChosenImages removeObjectAtIndex: self.indexForDeletePicture];
+
             if ([self.arrayWithChosenImages count] == 0) {
                 self.collectionView.backgroundColor = [UIColor whiteColor];
+                self.arrayWithChosenImages = nil;
+                [self.collectionView reloadData];
                 [self.delegate changeSharePhotoButtonColorAndShareButtonState : NO];
+                return;
             }
             [self.collectionView reloadData];
             break;
