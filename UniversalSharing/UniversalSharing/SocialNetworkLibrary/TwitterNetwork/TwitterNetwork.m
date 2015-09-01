@@ -94,7 +94,7 @@ static TwitterNetwork *model = nil;
 }
 
 - (void) startTimerForUpdatePosts {
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:120.0f
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:30.0f
                                                   target:self
                                                 selector:@selector(updatePost)
                                                 userInfo:nil
@@ -182,6 +182,7 @@ static TwitterNetwork *model = nil;
              
              dispatch_async(dispatch_get_main_queue(), ^{
                  weakSell.isLogin = YES;
+                  [weakSell startTimerForUpdatePosts];
                  block(weakSell,nil);
              });
              //             weakSell.currentUser = [User createFromDictionary : user
@@ -201,7 +202,8 @@ static TwitterNetwork *model = nil;
 }
 
 - (void) updatePost {
-    
+    if (![self obtainCurrentConnection])
+        return;
     NSArray * posts = [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForPostWithReason:Connect andNetworkType:Twitters]];
 //    Post *post = posts[2];
 //    [self obtainCountOfLikesAndCommentsFromPost:post];

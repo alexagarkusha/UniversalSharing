@@ -89,7 +89,7 @@ static FacebookNetwork *model = nil;
     }
 
 - (void) startTimerForUpdatePosts {
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:120.0f
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:30.0f
                                                   target:self
                                                 selector:@selector(updatePost)
                                                 userInfo:nil
@@ -322,7 +322,8 @@ static FacebookNetwork *model = nil;
 }
 
 - (void) updatePost {
-    
+    if (![self obtainCurrentConnection])
+        return;
     NSArray * posts = [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForPostWithReason:Connect andNetworkType:Facebook]];
     FBSDKGraphRequestConnection *connection = [[FBSDKGraphRequestConnection alloc] init];
 
