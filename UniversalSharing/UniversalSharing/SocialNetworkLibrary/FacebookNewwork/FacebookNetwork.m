@@ -50,7 +50,7 @@ static FacebookNetwork *model = nil;
         }
         else {
             self.isLogin = YES;
-            [self updatePost];/////////////////////////////////////////////////////////////////////////////////////////////
+            //[self updatePost];/////////////////////////////////////////////////////////////////////////////////////////////
 
             [self startTimerForUpdatePosts];
             self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForUsersWithNetworkType:self.networkType]]firstObject]; // obtainUsersWithNetworkType:self.networkType];
@@ -331,8 +331,11 @@ static FacebookNetwork *model = nil;
         [self obtainCountOfLikesFromPost:post andConnection:connection];
         [self obtainCountOfCommentsFromPost:post andConnection:connection];
     }];
-    connection.delegate = self;
-    [connection start];
+    if (posts.count) {
+        connection.delegate = self;
+        [connection start];
+    }
+    
     
 
 }
