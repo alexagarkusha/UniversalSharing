@@ -120,10 +120,10 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
-    if (!_currentSocialNetwork) {
+    if (!_currentSocialNetwork || !_currentSocialNetwork.isVisible) {
         _currentSocialNetwork = [SocialManager currentSocialNetwork];
+        [self.changeSocialNetworkButton initiationSocialNetworkButtonForSocialNetwork: [SocialManager currentSocialNetwork]];
     }
-    [self.changeSocialNetworkButton initiationSocialNetworkButtonForSocialNetwork: [SocialManager currentSocialNetwork]];
     self.mainGestureRecognizer.enabled = NO;
 }
 
@@ -363,7 +363,10 @@
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-    return textView.text.length + (text.length - range.length) <= countOfAllowedLettersInTextView;
+    if (_currentSocialNetwork.networkType != Twitters) {
+        return textView.text.length + (text.length - range.length) <= countOfAllowedLettersInTextView;
+    }
+    return textView.text.length + (text.length - range.length) <= musApp_TextView_CountOfAllowedLetters_ForTwitter;
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {

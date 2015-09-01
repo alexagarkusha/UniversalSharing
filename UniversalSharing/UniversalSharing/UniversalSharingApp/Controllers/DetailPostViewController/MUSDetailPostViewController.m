@@ -259,7 +259,7 @@
             cell.delegate = self;
             cell.isEditableCell = self.isEditableTableView;
             cell.currentIndexPath = indexPath;
-            [cell configurationPostDescriptionCell: self.postDescription];
+            [cell configurationPostDescriptionCell: self.postDescription andNetworkType: self.currentSocialNetwork.networkType];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
             break;

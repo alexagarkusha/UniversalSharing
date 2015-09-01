@@ -20,6 +20,8 @@ FOUNDATION_EXPORT NSString *const musFacebookParsePlace_Category;
 FOUNDATION_EXPORT NSString *const musFacebookParsePlace_Location;
 FOUNDATION_EXPORT NSString *const musFacebookParsePlace_Country;
 FOUNDATION_EXPORT NSString *const musFacebookParsePlace_City;
+FOUNDATION_EXPORT NSString *const musFacebookParsePlace_Longitude;
+FOUNDATION_EXPORT NSString *const musFacebookParsePlace_Latitude;
 
 #pragma mark - ParseUser
 
@@ -42,6 +44,8 @@ FOUNDATION_EXPORT NSString *const musVKParsePlace_Title;
 FOUNDATION_EXPORT NSString *const musVKParsePlace_Type;
 FOUNDATION_EXPORT NSString *const musVKParsePlace_Country;
 FOUNDATION_EXPORT NSString *const musVKParsePlace_City;
+FOUNDATION_EXPORT NSString *const musVKParsePlace_Longitude;
+FOUNDATION_EXPORT NSString *const musVKParsePlace_Latitude;
 
 #pragma mark - ParseUser
 
@@ -65,7 +69,7 @@ FOUNDATION_EXPORT NSString *const musTwitterParsePlace_Country;
 FOUNDATION_EXPORT NSString *const musTwitterParsePlace_Full_Name;
 FOUNDATION_EXPORT NSString *const musTwitterParsePlace_Contained_Within;
 FOUNDATION_EXPORT NSString *const musTwitterParsePlace_Name;
-
+FOUNDATION_EXPORT NSString *const musTwitterParsePlace_Centroid;
 
 
 

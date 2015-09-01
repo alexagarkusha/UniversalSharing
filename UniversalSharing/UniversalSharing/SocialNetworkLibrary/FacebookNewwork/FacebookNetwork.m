@@ -192,8 +192,8 @@ static FacebookNetwork *model = nil;
             
             for (int i = 0; i < places.count; i++) {
                 Place *place = [Place createFromDictionary: [places objectAtIndex: i] andNetworkType:self.networkType];
-                place.latitude = location.latitude;
-                place.longitude = location.longitude;
+                //place.latitude = location.latitude;
+                //place.longitude = location.longitude;
                 [placesArray addObject:place];
             }
             

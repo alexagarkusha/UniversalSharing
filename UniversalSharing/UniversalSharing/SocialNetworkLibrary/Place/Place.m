@@ -40,6 +40,8 @@
     currentPlace.placeID = [dictionary objectForKey: musFacebookParsePlace_ID];
     currentPlace.fullName = [dictionary objectForKey: musFacebookParsePlace_Name];
     currentPlace.placeType = [dictionary objectForKey: musFacebookParsePlace_Category];
+    currentPlace.longitude = [dictionary objectForKey: musFacebookParsePlace_Longitude];
+    currentPlace.latitude = [dictionary objectForKey: musFacebookParsePlace_Latitude];
     
     NSDictionary *locationFBDictionary = [dictionary objectForKey: musFacebookParsePlace_Location];
     currentPlace.country = [locationFBDictionary objectForKey: musFacebookParsePlace_Country];
@@ -56,11 +58,13 @@
 + (Place*) createPlaceFromVK : (NSDictionary *) dictionary {
     Place *currentPlace = [[Place alloc] init];
     
-    currentPlace.placeID = [dictionary objectForKey: musVKParsePlace_ID];
+    currentPlace.placeID = [NSString stringWithFormat: @"%@", [dictionary objectForKey: musVKParsePlace_ID]];
     currentPlace.fullName = [dictionary objectForKey: musVKParsePlace_Title];
     currentPlace.placeType = [dictionary objectForKey: musVKParsePlace_Type];
     currentPlace.country = [dictionary objectForKey: musVKParsePlace_Country];
     currentPlace.city = [dictionary objectForKey: musVKParsePlace_City];
+    currentPlace.longitude = [NSString stringWithFormat: @"%@", [dictionary objectForKey: musVKParsePlace_Longitude]];
+    currentPlace.latitude = [NSString stringWithFormat: @"%@", [dictionary objectForKey: musVKParsePlace_Latitude]];
     
     return currentPlace;
 }
@@ -77,6 +81,10 @@
     currentPlace.placeType = [dictionary objectForKey: musTwitterParsePlace_Place_Type];
     currentPlace.country   = [dictionary objectForKey: musTwitterParsePlace_Country];
     currentPlace.fullName  = [dictionary objectForKey: musTwitterParsePlace_Full_Name];
+    
+    NSArray *centroid = [dictionary objectForKey: musTwitterParsePlace_Centroid];
+    currentPlace.latitude = [NSString stringWithFormat: @"%@", [centroid lastObject]];
+    currentPlace.longitude = [NSString stringWithFormat: @"%@", [centroid firstObject]];
     
     NSArray *containedWithinArray = [dictionary objectForKey: musTwitterParsePlace_Contained_Within];
     NSDictionary *locationTwitterDictionary = [containedWithinArray firstObject];
