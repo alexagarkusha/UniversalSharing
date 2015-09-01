@@ -20,6 +20,12 @@
         //self.buttonType = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         self.frame = CGRectMake(13.0, 13.0, 75.0, 75.0);//while so
         self.backgroundColor = [UIColor lightGrayColor];
+        [NSTimer scheduledTimerWithTimeInterval : 9.0f
+                                         target : self
+                                       selector : @selector(buttonAnimationStart)
+                                       userInfo : nil
+                                        repeats : YES];
+        
         [self cornerRadius:10];
         [self initiationSocialNetworkButtonForSocialNetwork:nil];
     }
@@ -38,12 +44,11 @@
         [self.imageView setContentMode:UIViewContentModeScaleAspectFill];
         return;
     } else {
-        //__weak UIButton *socialNetworkButton = self;
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//        __weak UIButton *socialNetworkButton = self;
 //        [currentSocialNetwork obtainInfoFromNetworkWithComplition:^(id result, NSError *error) {
 //            SocialNetwork *currentSocialNetwork = (SocialNetwork*) result;
 //            User *currentUser = currentSocialNetwork.currentUser;
-           //[socialNetworkButton loadBackroundImageFromNetworkWithURL:[NSURL URLWithString: currentUser.photoURL]];
+//            [socialNetworkButton loadBackroundImageFromNetworkWithURL:[NSURL URLWithString: currentUser.photoURL]];
 //        }];
         NSData *data = [NSData dataWithContentsOfFile:[self obtainPathToDocumentsFolder:currentSocialNetwork.icon]];
         UIImage *image = [UIImage imageWithData:data];
@@ -58,4 +63,33 @@
     return [documentsPath stringByAppendingPathComponent:pathFromDataBase];
 }
 
+
+- (void) buttonAnimationStart {
+   [NSTimer scheduledTimerWithTimeInterval : 1.0f
+                                    target : self
+                                  selector : @selector(changeScaleButton)
+                                  userInfo : nil
+                                   repeats : NO];
+   [NSTimer scheduledTimerWithTimeInterval : 1.5f
+                                    target : self
+                                  selector : @selector(undoChangeScaleButton)
+                                  userInfo : nil
+                                   repeats : NO];
+}
+
+- (void) changeScaleButton {
+    [UIView beginAnimations:@"ScaleButton" context:NULL];
+    [UIView setAnimationDuration: 0.4f];
+    self.transform = CGAffineTransformMakeScale(1.12,1.12);
+    [UIView commitAnimations];
+}
+
+
+- (void) undoChangeScaleButton {
+    [UIView beginAnimations:@"UndoScaleButton" context:NULL];
+    [UIView setAnimationDuration: 0.4f];
+    self.transform = CGAffineTransformMakeScale(1,1);
+    [UIView commitAnimations];
+
+}
 @end

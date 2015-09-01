@@ -177,6 +177,10 @@
 #pragma mark SentPost
 
 - (void) sentPost {
+    if (!_currentSocialNetwork.isVisible || !_currentSocialNetwork) {
+        [self showAlertWithMessage: musAppError_Logged_Into_Social_Networks];
+        return;
+    }
     [self updatePost: self.currentPost];
     [self startActivityIndicatorAnimating];
     __weak MUSDetailPostViewController *weakSelf = self;

@@ -44,36 +44,31 @@
 
 - (void) configurationCellWithPhoto: (UIImage*) photoImageView {
     self.photoImageViewCell.image = photoImageView;
-    if (!self.isEditable) {
-        [self notEditableCellConfiguration];
-    } else {
-        [self editableCellConfiguration];
-    }
 }
 
-- (void) editableCellConfiguration {
+- (IBAction)deletePhoto:(id)sender {
+//    if (self.isEditable) {
+        [self.delegate deletePhoto: self.indexPath];
+//    }
+}
+
+
+/*
+ - (void) editableCellConfiguration {
     self.deleteIconImageView.hidden = NO;
     self.deletePhotoButtonOutlet.hidden = NO;
     self.deleteIconBackgroungImageView.hidden = NO;
     [self startQuivering];
-}
-
-- (void) notEditableCellConfiguration {
+ }
+ 
+ - (void) notEditableCellConfiguration {
     [self stopQuivering];
     self.deleteIconImageView.hidden = YES;
     self.deletePhotoButtonOutlet.hidden = YES;
     self.deleteIconBackgroungImageView.hidden = YES;
-}
+ }
 
-
-
-- (IBAction)deletePhoto:(id)sender {
-    if (self.isEditable) {
-        [self.delegate deletePhoto: self.indexPath];
-    }
-}
-
-- (void) startQuivering {
+ - (void) startQuivering {
     CABasicAnimation *quiverAnim = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
     float startAngle = (-4) * M_PI/180.0;
     float stopAngle = -startAngle;
@@ -95,5 +90,5 @@
     CALayer *layer = self.layer;
     [layer removeAnimationForKey:@"quivering"];
 }
-
+*/
 @end

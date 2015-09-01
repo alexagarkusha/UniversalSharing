@@ -306,10 +306,15 @@
 
 #pragma mark - Share Post to Social network
 
-- (IBAction)shareToSocialNetwork:(id)sender {    
-    if(!self.post) {
-        self.post = [[Post alloc] init];
+- (IBAction)shareToSocialNetwork:(id)sender {
+    if (!_currentSocialNetwork.isVisible || !_currentSocialNetwork) {
+        [self showAlertWithMessage: musAppError_Logged_Into_Social_Networks];
+        return;
     }
+        if(!self.post) {
+            self.post = [[Post alloc] init];
+        }
+        self.shareButtonOutlet.enabled = NO;
         self.post.place = self.place;
         if (![self.messageTextView.text isEqualToString: kPlaceholderText]) {
             self.post.postDescription = self.messageTextView.text;
@@ -323,15 +328,16 @@
         self.post.arrayImages = [self.galeryView obtainArrayWithChosenPics];
         self.post.userId = _currentSocialNetwork.currentUser.clientID;//or something else
         self.post.dateCreate = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970]];
-        
+        __weak MUSShareViewController *weakSelf = self;
         [_currentSocialNetwork sharePost:self.post withComplition:^(id result, NSError *error) {
+            weakSelf.shareButtonOutlet.enabled = YES;
             if (!error) {
                 [self showAlertWithMessage : titleCongratulatoryAlert];
             } else {
                 [self showErrorAlertWithError : error];
             }
         }];
-        
+    
 }
 
 #pragma mark - UITextViewDelegate
