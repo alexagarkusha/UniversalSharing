@@ -55,8 +55,8 @@ static TwitterNetwork *model = nil;
         }
         else {
             self.isLogin = YES;
-            [self updatePost];
-            //[self startTimerForUpdatePosts];
+            //[self updatePost];
+            [self startTimerForUpdatePosts];
             self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForUsersWithNetworkType:self.networkType]]firstObject];
             self.icon = self.currentUser.photoURL;
             self.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
@@ -94,7 +94,7 @@ static TwitterNetwork *model = nil;
 }
 
 - (void) startTimerForUpdatePosts {
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:600.0f
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:120.0f
                                                   target:self
                                                 selector:@selector(updatePost)
                                                 userInfo:nil
@@ -213,10 +213,10 @@ static TwitterNetwork *model = nil;
 }
 
 - (void) obtainCountOfLikesAndCommentsFromPost :(Post*) post {
-     
-    NSString *statusesShowEndpoint = [NSString stringWithFormat:@"https://api.twitter.com/1.1/statuses/retweets/%@.json",post.postID];
+     //https://api.twitter.com/1.1/statuses/retweets/509457288717819904.json
+    NSString *statusesShowEndpoint = @"https://api.twitter.com/1.1/statuses/show.json";//[NSString stringWithFormat:@"https://api.twitter.com/1.1/statuses/retweets/%@.json",post.postID];
     
-    NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:post.postID,@"id",@"100",@"count",nil];
+    NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:post.postID,@"id",@"true",@"include_my_retweet",nil];//,@"100",@"count"
     NSError *clientError;
     
     NSURLRequest *request = [[[Twitter sharedInstance] APIClient] URLRequestWithMethod:@"GET" URL:statusesShowEndpoint parameters:params error:&clientError];
@@ -225,15 +225,15 @@ static TwitterNetwork *model = nil;
         [[[Twitter sharedInstance] APIClient] sendTwitterRequest:request completion:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
             if (data) {
                 NSError *jsonError;
-                NSArray *arrayJson = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+                NSDictionary *arrayJson = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
                 if (!arrayJson.count) {
                     return;
                 }
-                if (post.likesCount == [[arrayJson[0] objectForKey:@"favorited"] integerValue] &&  post.commentsCount == [[arrayJson[0] objectForKey:@"retweet_count"] integerValue] ) {
+                if (post.likesCount == [[arrayJson  objectForKey:@"favorite_count"] integerValue] &&  post.commentsCount == [[arrayJson  objectForKey:@"retweet_count"] integerValue] ) {
                     return;
                 }
-                post.likesCount = [[arrayJson[0] objectForKey:@"favorited"] integerValue];
-                post.commentsCount = [[arrayJson[0] objectForKey:@"retweet_count"] integerValue];
+                post.likesCount = [[arrayJson  objectForKey:@"favorite_count"] integerValue];
+                post.commentsCount = [[arrayJson objectForKey:@"retweet_count"] integerValue];
                 
                 [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost:post]];
                 [[NSNotificationCenter defaultCenter] postNotificationName:MUSNotificationPostsInfoWereUpDated object:nil];

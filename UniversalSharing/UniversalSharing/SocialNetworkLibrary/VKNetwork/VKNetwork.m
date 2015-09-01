@@ -55,7 +55,7 @@ static VKNetwork *model = nil;
         else {
             self.isLogin = YES;
             [self startTimerForUpdatePosts];
-            [self updatePost];////////////////////////////////////////////////////////////
+            //[self updatePost];////////////////////////////////////////////////////////////
             self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForUsersWithNetworkType:self.networkType]]firstObject];
             self.icon = self.currentUser.photoURL;
             self.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
@@ -97,7 +97,7 @@ static VKNetwork *model = nil;
 }
 
 - (void) startTimerForUpdatePosts {
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:600.0f
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:120.0f
                                                   target:self
                                                 selector:@selector(updatePost)
                                                 userInfo:nil
