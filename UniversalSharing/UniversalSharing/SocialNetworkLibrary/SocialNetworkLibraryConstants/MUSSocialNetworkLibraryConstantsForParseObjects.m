@@ -20,6 +20,8 @@ NSString *const musFacebookParsePlace_Category = @"category";
 NSString *const musFacebookParsePlace_Location = @"location";
 NSString *const musFacebookParsePlace_Country = @"country";
 NSString *const musFacebookParsePlace_City = @"city";
+NSString *const musFacebookParsePlace_Longitude = @"longitude";
+NSString *const musFacebookParsePlace_Latitude = @"latitude";
 
 #pragma mark - ParseUser
 
@@ -42,6 +44,8 @@ NSString *const musVKParsePlace_Title = @"title";
 NSString *const musVKParsePlace_Type = @"type";
 NSString *const musVKParsePlace_Country = @"country";
 NSString *const musVKParsePlace_City = @"city";
+NSString *const musVKParsePlace_Longitude = @"longitude";
+NSString *const musVKParsePlace_Latitude = @"latitude";
 
 #pragma mark - ParseUser
 
@@ -65,7 +69,6 @@ NSString *const musTwitterParsePlace_Country = @"country";
 NSString *const musTwitterParsePlace_Full_Name = @"full_name";
 NSString *const musTwitterParsePlace_Contained_Within = @"contained_within";
 NSString *const musTwitterParsePlace_Name = @"name";
-
-
+NSString *const musTwitterParsePlace_Centroid = @"centroid";
 
 

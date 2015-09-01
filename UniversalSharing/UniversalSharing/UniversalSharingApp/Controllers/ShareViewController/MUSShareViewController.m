@@ -120,10 +120,10 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
-    if (!_currentSocialNetwork) {
+    if (!_currentSocialNetwork || !_currentSocialNetwork.isVisible) {
         _currentSocialNetwork = [SocialManager currentSocialNetwork];
+        [self.changeSocialNetworkButton initiationSocialNetworkButtonForSocialNetwork: [SocialManager currentSocialNetwork]];
     }
-    [self.changeSocialNetworkButton initiationSocialNetworkButtonForSocialNetwork: [SocialManager currentSocialNetwork]];
     self.mainGestureRecognizer.enabled = NO;
 }
 
