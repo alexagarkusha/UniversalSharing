@@ -177,6 +177,9 @@ static VKNetwork *model = nil;
 - (void) updatePost {
     
     NSArray * posts = [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForPostWithReason:Connect andNetworkType:VKontakt]];
+    if (!posts.count) {
+        return;
+    }
     __block NSString *stringPostsWithUserIdAndPostId = @"";
     [posts enumerateObjectsUsingBlock:^(Post *post, NSUInteger index, BOOL *stop) {
         stringPostsWithUserIdAndPostId = [stringPostsWithUserIdAndPostId stringByAppendingString:[NSString stringWithFormat:@"%@_%@", post.userId, post.postID]];
