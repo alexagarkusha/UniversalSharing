@@ -52,12 +52,21 @@
                                                object : nil];
 }
 
+- (void) viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear: YES];
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
 #pragma mark initiation DOPDropDownMenu 
+
+/*!
+ Initiation DropDownMenu - filters for posts.
+ */
 
 - (void) initiationDropDownMenu {
     [super viewDidLoad];
@@ -70,6 +79,9 @@
 }
 
 #pragma mark initiation UITableView
+/*!
+ Initiation Table view - a table that contains an array of posts.
+ */
 
 - (void) initiationTableView {
     self.tableView = ({
@@ -84,24 +96,28 @@
 }
 
 #pragma mark initiation ArrayOfShareReason
-
+/*!
+ Initiation Array of share reason - it is needed for "reason filter" of DropDownMenu .
+ */
 - (void) initiationArrayOfShareReason {
-    self.arrayOfShareReason = [[NSArray alloc] initWithObjects: @"All share reasons", musAppFilter_Title_Shared, musAppFilter_Title_Offline, musAppFilter_Title_Error,  nil];
+    self.arrayOfShareReason = [[NSArray alloc] initWithObjects: musApp_PostsViewController_AllShareReasons, musAppFilter_Title_Shared, musAppFilter_Title_Offline, musAppFilter_Title_Error,  nil];
 }
 
 #pragma mark initiation ArrayOfPostsType
+/*!
+ Initiation Array of share reason - it is needed for "network filter" of DropDownMenu .
+ */
 
 - (void) initiationArrayOfActiveSocialNetwork {
     
     self.arrayOfActiveSocialNetwork = [[NSMutableArray alloc] init];
-    [self.arrayOfActiveSocialNetwork addObject: @"All social networks"];
+    [self.arrayOfActiveSocialNetwork addObject: musApp_PostsViewController_AllSocialNetworks];
     self.arrayOfUsers = [[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForAllUsers]];
     NSMutableArray *arrayWithNetworks = [[NSMutableArray alloc] init];
     for (int i = 0; i < self.arrayOfUsers.count; i++) {
         User *currentUser = [self.arrayOfUsers objectAtIndex: i];
         [arrayWithNetworks addObject: @(currentUser.networkType)];
     }
-//#warning "???"
     __weak MUSPostsViewController *weakSelf = self;
     [[[SocialManager sharedManager] networks: arrayWithNetworks] enumerateObjectsUsingBlock:^(SocialNetwork *socialNetwork, NSUInteger index, BOOL *stop) {
         if (socialNetwork.isLogin) {
@@ -134,22 +150,7 @@
 
 #pragma mark - UITableViewDelegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self performSegueWithIdentifier: goToDetailPostViewControllerSegueIdentifier sender:[self.arrayPosts objectAtIndex: indexPath.row]];
-}
-     
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    MUSDetailPostViewController *detailPostViewController = [[MUSDetailPostViewController alloc] init];
-    if ([[segue identifier] isEqualToString:goToDetailPostViewControllerSegueIdentifier]) {
-        detailPostViewController = [segue destinationViewController];
-        [detailPostViewController setCurrentPost: sender];
-    }
-}
-
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-//#warning "Cell knows it size"
     return [MUSPostCell heightForPostCell];
 }
 
@@ -159,10 +160,23 @@
     [[DataBaseManager sharedManager] deletePostByPrimaryKey: [self.arrayPosts objectAtIndex:indexPath.row]];
     // Remove the row from data model
     [self.arrayPosts removeObjectAtIndex:indexPath.row];
-    
     // Request table view to reload
     [tableView reloadData];
 }
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self performSegueWithIdentifier: goToDetailPostViewControllerSegueIdentifier sender:[self.arrayPosts objectAtIndex: indexPath.row]];
+}
+
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    MUSDetailPostViewController *detailPostViewController = [[MUSDetailPostViewController alloc] init];
+    if ([[segue identifier] isEqualToString:goToDetailPostViewControllerSegueIdentifier]) {
+        detailPostViewController = [segue destinationViewController];
+        [detailPostViewController setCurrentPost: sender];
+    }
+}
+
 
 #pragma mark - DOPDropDownMenuDataSource
 
@@ -204,9 +218,6 @@
 #pragma mark - DOPDropDownMenuDelegate
 
 - (void)menu:(DOPDropDownMenu *)menu didSelectRowAtIndexPath:(DOPIndexPath *)indexPath {
-//    NSLog(@"column:%li row:%li", (long)indexPath.column, (long)indexPath.row);
-//    NSLog(@"%@",[menu titleForRowAtIndexPath:indexPath]);
-    
     NSString *title = [menu titleForRowAtIndexPath:indexPath];
     self.columnType = indexPath.column;
     switch (self.columnType) {
@@ -257,6 +268,9 @@
     }
 }
 
+/*!
+ Obtain posts from Data Base.
+ */
 - (void) obtainPosts {
     self.arrayPosts = [[NSMutableArray alloc] initWithArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper createStringForPostWithReason: self.predicateReason andNetworkType: self.predicateNetworkType]]];
     [self.tableView reloadData];

@@ -50,7 +50,7 @@
 
 -(UIView*)loadViewFromNib {
     NSArray *nibObjects = [[NSBundle mainBundle]loadNibNamed:loadNibNamed owner:self options:nil];
-    [self initiationGestureRecognizer];
+    //[self initiationGestureRecognizer];
     return [nibObjects firstObject];
 }
 
@@ -70,12 +70,12 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     MUSCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[MUSCollectionViewCell customCellID] forIndexPath:indexPath];
+        cell.delegate = self;
         cell.indexPath = indexPath;
         NSLog(@"INDEXPATH %@", indexPath);
         ImageToPost *image = self.arrayWithChosenImages[indexPath.row];
-        cell.isEditable = self.isEditableCollectionView;
+        //cell.isEditable = self.isEditableCollectionView;
         [cell configurationCellWithPhoto: image.image];
-        cell.delegate = self;
     return  cell;
 }
 
@@ -84,7 +84,7 @@
 }
 
 #pragma mark - initiation UILongPressGestureRecognizer
-
+/*
 - (void) initiationGestureRecognizer {
     self.pressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGesture:)];
     self.pressGesture.minimumPressDuration = .2;
@@ -122,7 +122,7 @@
     self.isEditableCollectionView = NO;
     [self.collectionView reloadData];
 }
-
+*/
 
 #pragma mark - passChosenImageForCollection
 

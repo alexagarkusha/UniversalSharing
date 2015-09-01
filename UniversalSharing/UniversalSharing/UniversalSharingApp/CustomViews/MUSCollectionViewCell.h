@@ -20,7 +20,7 @@
 
 @property (assign, nonatomic) id <MUSCollectionViewCellDelegate> delegate;
 @property (strong, nonatomic) NSIndexPath *indexPath;
-@property (assign, nonatomic) BOOL isEditable;
+//@property (assign, nonatomic) BOOL isEditable;
 
 
 @property (weak, nonatomic) IBOutlet UIImageView *photoImageViewCell;
