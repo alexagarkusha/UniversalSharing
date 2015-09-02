@@ -120,10 +120,14 @@
 - (void) initiationUserNameLabel : (User*) user {
     if (self.numberOfImages > 0) {
         self.usernameLabel.textColor = [UIColor whiteColor];
+        self.usernameLabel.shadowColor = [UIColor blackColor];
         self.dateOfPostLabel.textColor = [UIColor whiteColor];
+        self.dateOfPostLabel.shadowColor = [UIColor blackColor];
     } else {
         self.usernameLabel.textColor = [UIColor blackColor];
+        self.usernameLabel.shadowColor = [UIColor whiteColor];
         self.dateOfPostLabel.textColor = [UIColor blackColor];
+        self.dateOfPostLabel.shadowColor = [UIColor whiteColor];
     }
     
     self.usernameLabel.text = [NSString stringWithFormat: @"%@ %@", user.lastName, user.firstName];
