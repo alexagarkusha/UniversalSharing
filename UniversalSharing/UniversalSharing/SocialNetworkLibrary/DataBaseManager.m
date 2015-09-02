@@ -38,11 +38,15 @@ static DataBaseManager *databaseManager;
     return self;
 }
 
+#pragma mark - get filePath
+
 - (NSString *) filePath {
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentDirectory=[paths objectAtIndex:0];
     return [documentDirectory stringByAppendingPathComponent: nameDataBase];
 }
+
+#pragma mark - createSqliteTables
 
 -(void) createSqliteTables {
     char *error;
@@ -66,6 +70,8 @@ static DataBaseManager *databaseManager;
         NSAssert(0, @"Table Location failed to create");
     }
 }
+
+#pragma mark - save objects to dataBase
 
 - (sqlite3_stmt*) savePostToTableWithObject :(Post*) post {
     sqlite3_stmt *statement = nil;
@@ -137,6 +143,8 @@ static DataBaseManager *databaseManager;
     return @"";
 }
 
+#pragma mark - insertIntoTable
+
 -(void)insertIntoTable:(id) object {
     sqlite3_stmt *selectStmt = nil;
     if ([object isKindOfClass:[User class]]) {
@@ -151,60 +159,8 @@ static DataBaseManager *databaseManager;
     sqlite3_finalize(selectStmt);
 }
 
-- (NSMutableArray*)obtainAllUsers {
-    NSMutableArray *arrayWithUsers = [NSMutableArray new];
-    //NSString *qsql=[NSString stringWithFormat:@"SELECT * FROM %@",@"Users"];
-    sqlite3_stmt *statement = nil;
-    
-    if(sqlite3_prepare_v2(_database, [[MUSDatabaseRequestStringsHelper createStringForAllUsers] UTF8String], -1, &statement, nil) == SQLITE_OK)
-    {
-        while (sqlite3_step(statement) == SQLITE_ROW)
-        {
-            User *user = [User new];
-            user.primaryKey = sqlite3_column_int(statement, 0);//perhaps it will be needed
-            user.username = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 1)];
-            user.firstName = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 2)];
-            user.lastName = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 3)];
-            user.dateOfBirth = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 4)];
-            user.city = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 5)];
-            user.clientID = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 6)];
-            user.photoURL = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 7)];
-            user.isVisible = sqlite3_column_int(statement, 8);
-            user.isLogin = sqlite3_column_int(statement, 9);
-            user.networkType = sqlite3_column_int(statement, 10);
-            [arrayWithUsers addObject:user];
-            
-        }
-    }
-    return arrayWithUsers;
-}
+#pragma mark - obtainUsersFromDataBaseWithRequestString
 
-- (User*)obtainUsersWithNetworkType :(NSInteger) networkType {
-    
-    //NSString *qsql = [NSString stringWithFormat:@"SELECT * FROM Users WHERE networkType = %ld", (long)networkType];
-    sqlite3_stmt *statement = nil;
-    User *user = [User new];
-    if(sqlite3_prepare_v2(_database, [[MUSDatabaseRequestStringsHelper createStringForUsersWithNetworkType:networkType] UTF8String], -1, &statement, nil) == SQLITE_OK) {
-        
-        while (sqlite3_step(statement) == SQLITE_ROW) {
-            user.primaryKey = sqlite3_column_int(statement, 0);//perhaps it will be needed
-            user.username = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 1)];
-            user.firstName = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 2)];
-            user.lastName = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 3)];
-            user.dateOfBirth = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 4)];
-            user.city = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 5)];
-            user.clientID = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 6)];
-            user.photoURL = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 7)];
-            user.isVisible = sqlite3_column_int(statement, 8);
-            user.isLogin = sqlite3_column_int(statement, 9);
-            user.networkType = sqlite3_column_int(statement, 10);
-            
-        }
-    }
-    
-    return user;
-}
-// the main method
 - (NSMutableArray*)obtainUsersFromDataBaseWithRequestString : (NSString*) requestString {
     NSMutableArray *arrayWithUsers = [NSMutableArray new];
     sqlite3_stmt *statement = nil;
@@ -232,9 +188,7 @@ static DataBaseManager *databaseManager;
     return arrayWithUsers;
 }
 
-////////////////////////////////////////////////////////////////////////////////////
 - (Place*) obtainLocations :(Post*) post {
-   // NSString *qsql = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE locationID =  \"%@\"",@"Locations",post.locationId];
     sqlite3_stmt *statement = nil;
     Place *place = [Place new];
     if(sqlite3_prepare_v2(_database, [[MUSDatabaseRequestStringsHelper createStringForLocationsWithLocationId:post.locationId] UTF8String], -1, &statement, nil) == SQLITE_OK) {
@@ -247,27 +201,9 @@ static DataBaseManager *databaseManager;
     }
     return place;
 }
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-- (NSMutableArray*)obtainAllPosts {////////////////////////////////////
-    NSString *requestString = [MUSDatabaseRequestStringsHelper createStringForAllPosts];
-   
-    return [self obtainPostsFromDataBaseWithRequestString:requestString];
-}
 
-- (NSMutableArray*)obtainAllPostsWithUserId :(NSString*) userId {/////////////////////////////////////////
-    
-    NSString *requestString = [MUSDatabaseRequestStringsHelper createStringForPostWithUserId:userId]; //[NSString stringWithFormat:@"SELECT * FROM %@ WHERE userId = \"%@\" ",@"Posts",userId];
-  
-    return [self obtainPostsFromDataBaseWithRequestString:requestString];
-}
+#pragma mark - obtainPostsFromDataBaseWithRequestString
 
-- (NSArray*)obtainPostsWithReason :(ReasonType) reason andNetworkType :(NetworkType) networkType {////////////////////////////
-    NSString *requestString = [MUSDatabaseRequestStringsHelper createStringForPostWithReason:reason andNetworkType:networkType];
-    
-    return [self obtainPostsFromDataBaseWithRequestString:requestString];
-}
-
-// the main method
 - (NSMutableArray*)obtainPostsFromDataBaseWithRequestString : (NSString*) requestString {
     NSMutableArray *arrayWithPosts = [NSMutableArray new];
     sqlite3_stmt *statement = nil;
@@ -292,40 +228,24 @@ static DataBaseManager *databaseManager;
     }
     return arrayWithPosts;
 }
-/////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
+#pragma mark - delete methods
 
 - (void)deleteUserByClientId :(NSString*) clientId {
-    //NSString *deleteSQL = [NSString stringWithFormat:@"DELETE from Users WHERE clientID = \"%@\"",clientId];
     [self deleteObjectFromDataDase:[MUSDatabaseRequestStringsHelper createStringForDeleteUserWithClientId:clientId]];
     [self deletePostByUserId:clientId];
     
 }
 
 - (void)deletePostByPrimaryKey :(Post*) post {
-   // NSString *deleteSQL = [NSString stringWithFormat:@"DELETE from Posts WHERE id = \"%ld\"",(long)post.primaryKey];
     [self deleteObjectFromDataDase:[MUSDatabaseRequestStringsHelper createStringForDeletePostWithPrimaryKey:post.primaryKey]];
     [self deleteObjectFromDataDase:[MUSDatabaseRequestStringsHelper createStringForDeleteLocationWithLocationId: post.locationId]];
 }
 
 - (void)deletePostByUserId :(NSString*) userId {
-   // NSString *deleteSQL = [NSString stringWithFormat:@"DELETE from Posts WHERE userId = \"%@\"",userId];
     [self deleteObjectFromDataDase:[MUSDatabaseRequestStringsHelper createStringForDeletePostWithUserId:userId]];
     [self deleteObjectFromDataDase:[MUSDatabaseRequestStringsHelper createStringForDeleteLocationWithUserId:userId]];
-    //[self deleteLocationByUserId:userId];/////////////
 }
-
-//- (void)deleteLocationByUserId :(NSString*) userId {
-//    NSString *deleteSQL = [NSString stringWithFormat:@"DELETE from Locations WHERE userId = \"%@\"",userId];
-//    [self deleteObjectFromDataDase:deleteSQL];
-//}
-
-//- (void)deleteLocationByLocationId :(NSString*) locationId {
-//    NSString *deleteSQL = [NSString stringWithFormat:@"DELETE from Locations WHERE locationID = \"%@\"",locationId];
-//    [self deleteObjectFromDataDase:deleteSQL];
-//}
 
 - (void) deleteObjectFromDataDase : (NSString*) deleteSQL {
     sqlite3_stmt *statement = nil;
@@ -340,23 +260,8 @@ static DataBaseManager *databaseManager;
     sqlite3_finalize(statement);
 }
 
-//////////////////////////////////////////////////////////////////////////////
-- (void)editPost :(Post*) post {
-    [self editLocation:post];
-    NSString *stringPostsForUpdate = [MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost:post];
-    [self editObjectAtDataBaseWithRequestString:stringPostsForUpdate];
-}
+#pragma mark - edit method
 
-- (void)editLocation :(Post*) post {
-    NSString *stringLocationsForUpdate = [MUSDatabaseRequestStringsHelper createStringLocationsForUpdateWithObjectPost:post];
-    [self editObjectAtDataBaseWithRequestString:stringLocationsForUpdate];
-}
-
-- (void)editUser :(User*) user {
-    NSString *stringUsersForUpdate = [MUSDatabaseRequestStringsHelper createStringUsersForUpdateWithObjectUser:user];
-    [self editObjectAtDataBaseWithRequestString:stringUsersForUpdate];
-}
-// the main method
 - (void) editObjectAtDataBaseWithRequestString : (NSString*) requestString {
     const char *update_stmt = [requestString UTF8String];
     sqlite3_stmt *selectStmt;
@@ -371,6 +276,8 @@ static DataBaseManager *databaseManager;
     }
     sqlite3_finalize(selectStmt);
 }
+
+#pragma mark - close dataBase
 
 - (void)dealloc {
     sqlite3_close(_database);
