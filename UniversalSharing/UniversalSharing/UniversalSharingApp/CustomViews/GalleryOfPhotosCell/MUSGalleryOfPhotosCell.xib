@@ -29,7 +29,7 @@
                             <constraint firstAttribute="width" constant="50" id="eIT-wM-zdR"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Липтуга Михаил" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="XKx-fB-tTp">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="XKx-fB-tTp">
                         <rect key="frame" x="66" y="90" width="126" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="XH1-QH-Adk"/>
