@@ -52,7 +52,7 @@ static FacebookNetwork *model = nil;
             self.isLogin = YES;
             //[self updatePost];/////////////////////////////////////////////////////////////////////////////////////////////
 
-            //[self startTimerForUpdatePosts];
+            [self startTimerForUpdatePosts];
             self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForUsersWithNetworkType:self.networkType]]firstObject]; // obtainUsersWithNetworkType:self.networkType];
             self.icon = self.currentUser.photoURL;
             self.title = [NSString stringWithFormat:@"%@ %@", self.currentUser.firstName, self.currentUser.lastName];
