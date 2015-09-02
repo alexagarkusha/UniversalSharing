@@ -40,12 +40,13 @@
     currentPlace.placeID = [dictionary objectForKey: musFacebookParsePlace_ID];
     currentPlace.fullName = [dictionary objectForKey: musFacebookParsePlace_Name];
     currentPlace.placeType = [dictionary objectForKey: musFacebookParsePlace_Category];
-    currentPlace.longitude = [dictionary objectForKey: musFacebookParsePlace_Longitude];
-    currentPlace.latitude = [dictionary objectForKey: musFacebookParsePlace_Latitude];
     
     NSDictionary *locationFBDictionary = [dictionary objectForKey: musFacebookParsePlace_Location];
     currentPlace.country = [locationFBDictionary objectForKey: musFacebookParsePlace_Country];
     currentPlace.city = [locationFBDictionary objectForKey: musFacebookParsePlace_City];
+    currentPlace.longitude = [NSString stringWithFormat: @"%@", [locationFBDictionary objectForKey: musFacebookParsePlace_Longitude]];
+    currentPlace.latitude = [NSString stringWithFormat: @"%@", [locationFBDictionary objectForKey: musFacebookParsePlace_Latitude]];
+
     
     return currentPlace;
 }
