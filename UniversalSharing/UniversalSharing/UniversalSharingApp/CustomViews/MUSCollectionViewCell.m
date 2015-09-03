@@ -72,7 +72,11 @@
     return nibArray[0];
 }
 
+//<<<<<<< HEAD
 - (void) configurationCellWithPhoto:(UIImage *)photoImageView andEditableState: (BOOL)isEditable {
+    self.photoImageViewCell.alpha = 1;
+    self.deleteIconImageView.alpha = 1;
+    
     if (!photoImageView && isEditable) {
         [self hideDeleteButton];
         self.photoImageViewCell.hidden = YES;
@@ -94,6 +98,12 @@
 
 - (void) showDeleteButton {
     self.deletePhotoButtonOutlet.hidden = NO;
+//=======
+//- (void) configurationCellWithPhoto: (UIImage*) photoImageView {
+//    self.photoImageViewCell.alpha = 1;
+//     self.deleteIconImageView.alpha = 1;
+//    self.photoImageViewCell.image = photoImageView;
+//>>>>>>> d7110c7994ff5a4e92ad4ce34f8737fdb345df2e
 }
 
 
