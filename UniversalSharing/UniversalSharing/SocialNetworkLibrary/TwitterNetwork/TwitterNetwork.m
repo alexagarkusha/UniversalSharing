@@ -70,6 +70,7 @@ static TwitterNetwork *model = nil;
                 
                 [self obtainInfoFromNetworkWithComplition:^(SocialNetwork* result, NSError *error) {
                     [[NSFileManager defaultManager] removeItemAtPath: [deleteImageFromFolder obtainPathToDocumentsFolder:deleteImageFromFolder] error: nil];
+                    result.currentUser.isVisible = self.isVisible;
                     [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringUsersForUpdateWithObjectUser:result.currentUser]];
                 }];
             }

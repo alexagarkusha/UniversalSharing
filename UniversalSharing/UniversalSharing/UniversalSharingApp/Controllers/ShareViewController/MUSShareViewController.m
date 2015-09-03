@@ -333,8 +333,10 @@
             weakSelf.shareButtonOutlet.enabled = YES;
             if (!error) {
                 [self showAlertWithMessage : titleCongratulatoryAlert];
+                self.post = nil;
             } else {
                 [self showErrorAlertWithError : error];
+                self.post = nil;
             }
         }];
     
