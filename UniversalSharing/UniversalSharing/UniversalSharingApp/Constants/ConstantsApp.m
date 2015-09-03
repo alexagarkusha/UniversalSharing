@@ -89,6 +89,8 @@ NSString *const musAppButton_ImageName_UnknownUser = @"UnknownUser.jpg";
 NSString *const musApp_PostsViewController_NavigationBar_Title = @"Shared Posts";
 NSString *const musApp_PostsViewController_AllShareReasons = @"All share reasons";
 NSString *const musApp_PostsViewController_AllSocialNetworks = @"All social networks";
+NSInteger const musApp_DropDownMenu_Height = 40;
+
 
 #pragma mark - MUSPostCell
 
@@ -100,7 +102,7 @@ NSString *const musAppImage_Name_TwitterIconImage = @"TWimage.jpeg";
 
 NSString *const musAppFilter_Title_Shared = @"Shared";
 NSString *const musAppFilter_Title_Offline = @"Offline";
-NSString *const musAppFilter_Title_Error = @"Error";
+NSString *const musAppFilter_Title_Error = @"Failed";
 NSInteger const musAppPostsVC_HeightOfPostCell = 100;
 NSString *const musApp_ActionSheet_Title_ChooseAction = @"Choose action";
 NSInteger const musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithoutUserPhotos = 8;

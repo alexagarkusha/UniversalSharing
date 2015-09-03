@@ -14,16 +14,12 @@
     switch (currentReasonType) {
         case Connect:
             return [self greenColor];
-            
-            //return [UIColor greenColor];
             break;
         case ErrorConnection:
             return [self orangeColor];
-            //return [UIColor orangeColor];
             break;
         case Offline:
             return [self redColor];
-            //return [UIColor redColor];
             break;
         default:
             break;

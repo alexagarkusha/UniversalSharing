@@ -176,7 +176,7 @@
 #pragma mark - MUSGalleryViewOfPhotosDelegate
 
 - (void) arrayOfPhotos:(NSArray *)arrayOfPhotos {
-    [self.delegate arrayOfImagesOfUser: arrayOfPhotos];
+    [self.delegate editArrayOfPicturesInPost: arrayOfPhotos];
     self.numberOfImages = arrayOfPhotos.count;
 }
 

@@ -125,6 +125,7 @@ FOUNDATION_EXPORT NSString *const musAppButton_ImageName_UnknownUser;
 FOUNDATION_EXPORT NSString *const musApp_PostsViewController_NavigationBar_Title;
 FOUNDATION_EXPORT NSString *const musApp_PostsViewController_AllShareReasons;
 FOUNDATION_EXPORT NSString *const musApp_PostsViewController_AllSocialNetworks;
+FOUNDATION_EXPORT NSInteger const musApp_DropDownMenu_Height;
 
 #pragma mark - MUSPostCell
 

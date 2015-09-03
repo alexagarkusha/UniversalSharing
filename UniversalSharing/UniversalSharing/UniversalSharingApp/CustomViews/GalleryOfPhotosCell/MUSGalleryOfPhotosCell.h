@@ -10,8 +10,16 @@
 #import "MUSSocialNetworkLibraryHeader.h"
 
 @protocol MUSGalleryOfPhotosCellDelegate <NSObject>
-- (void) arrayOfImagesOfUser : (NSArray*) arrayOfImages;
-@optional
+/*!
+ @method
+ @abstract edit array of pictures in post
+ @param edited array of pictures
+ */
+- (void) editArrayOfPicturesInPost : (NSArray*) arrayOfImages;
+/*!
+ @method
+ @abstract show MUSDetailPostViewController for add photo to gallery from camera or album
+ */
 - (void) showImagePicker;
 @end
 

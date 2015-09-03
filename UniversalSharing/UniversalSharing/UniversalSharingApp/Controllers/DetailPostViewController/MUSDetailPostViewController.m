@@ -21,18 +21,41 @@
 #import "MUSDatabaseRequestStringsHelper.h"
 
 @interface MUSDetailPostViewController () <UITableViewDataSource, UITableViewDelegate, MUSPostDescriptionCellDelegate, MUSGalleryOfPhotosCellDelegate, MUSPostLocationCellDelegate,  UIActionSheetDelegate, UIAlertViewDelegate>
-
+/*!
+ @abstract flag of table view. User selects - table view is editable or not.
+ */
 @property (nonatomic, assign) BOOL isEditableTableView;
+/*!
+ @abstract tableview frame size of the detail post
+*/
 @property (nonatomic, assign) CGRect tableViewFrame;
-@property (nonatomic, assign) DetailPostVC_CellType detailPostVC_CellType;
-@property (nonatomic, strong) NSMutableArray *arrayOfUsersPictures;
-@property (nonatomic, strong) NSString *placeName;
+/*!
+ @abstract array of pictures in current post
+ */
+@property (nonatomic, strong) NSMutableArray *arrayOfPicturesInPost;
+/*!
+ @abstract description of the current post
+ */
 @property (nonatomic, strong) NSString *postDescription;
+/*!
+ @abstract place of the current post
+ */
 @property (nonatomic, strong) Place *postPlace;
+/*!
+ @abstract social network of the current post
+ */
 @property (nonatomic, strong) SocialNetwork *currentSocialNetwork;
+
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
+
 @property (nonatomic, strong) UIBarButtonItem *actionBarButton;
+/*!
+ @abstract user of the current post
+ */
 @property (nonatomic, strong) User *currentUser;
+/*!
+ @abstract table view of detail post
+ */
 @property (nonatomic, strong) UITableView *tableView;
 
 @end
@@ -75,7 +98,10 @@
 }
 
 #pragma mark initiation UITableView
-
+/*!
+ @method
+ @abstract initiation Table view
+ */
 - (void) initiationTableView {
     self.tableView = ({
         CGSize screenSize = [UIScreen mainScreen].bounds.size;
@@ -90,7 +116,10 @@
 }
 
 #pragma mark initiation UINavigationBar
-
+/*!
+ @method
+ @abstract initiation Navigation Bar
+ */
 - (void) initiationNavigationBar {
     ReasonType currentReasonType = self.currentPost.reason;
     if (currentReasonType == Offline || currentReasonType == ErrorConnection) {
@@ -102,22 +131,29 @@
 }
 
 #pragma mark initiation CurrentSocialNetwork
-
+/*!
+ @method
+ @abstract initiation Current social network
+ */
 - (void) initiationCurrentSocialNetwork {
     self.currentSocialNetwork = [SocialNetwork sharedManagerWithType:self.currentPost.networkType];
 }
 
 #pragma mark initiation current postDescription, arrayOfUsersPictures, postLocation
-
+/*!
+ @method
+ @abstract initiation post description, array of pictures and location of the current post
+ */
 - (void) initiationPostDescriptionArrayOfPicturesAndPostLocation {
-    self.arrayOfUsersPictures = [[NSMutableArray alloc] init];
+    self.arrayOfPicturesInPost = [[NSMutableArray alloc] init];
     if (![[self.currentPost.arrayImagesUrl firstObject] isEqualToString: @""]) {
         for (int i = 0; i < self.currentPost.arrayImagesUrl.count; i++) {
             UIImage *currentImage = [[UIImage alloc] init];
             currentImage = [currentImage loadImageFromDataBase: [self.currentPost.arrayImagesUrl objectAtIndex: i]];
-            [self.arrayOfUsersPictures addObject: currentImage];
+            [self.arrayOfPicturesInPost addObject: currentImage];
         }
     }
+    
     self.postDescription = self.currentPost.postDescription;
     
     if (self.currentPost.place.longitude.length > 0 && self.currentPost.place.latitude.length > 0) {
@@ -126,7 +162,10 @@
 }
 
 #pragma mark  initiation Activity Indicator
-
+/*!
+ @method
+ @abstract initiation activity indicator
+ */
 - (void) initiationActivityIndicator {
     self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.activityIndicator.center=self.view.center;
@@ -135,14 +174,20 @@
 }
 
 #pragma mark  start Activity Indicator Animating
-
+/*!
+ @method
+ @abstract start activity indicator animating
+ */
 - (void) startActivityIndicatorAnimating {
     [self.activityIndicator startAnimating];
     self.actionBarButton.enabled = NO;
 }
 
 #pragma mark  stop Activity Indicator Animating
-
+/*!
+ @method
+ @abstract stop activity indicator animating
+ */
 - (void) stopActivityIndicatorAnimating {
     [self.activityIndicator stopAnimating];
     self.actionBarButton.enabled = YES;
@@ -150,7 +195,10 @@
 
 
 #pragma mark UIActionSheet
-
+/*!
+ @method
+ @abstract show Action sheet with buttons : Share post, Edit post and Cancel
+ */
 - (void) showActionSheet {
     UIActionSheet* sheet = [[UIActionSheet alloc] init];
     sheet.title = titleActionSheet;
@@ -166,7 +214,7 @@
 - (void) actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if ( buttonIndex != 0 ) {
         if (buttonIndex == 1) {
-            [self sentPost];
+            [self sendPost];
         } else {
             self.isEditableTableView = YES;
             [self.tableView reloadData];
@@ -175,14 +223,17 @@
 }
 
 #pragma mark SentPost
-
-- (void) sentPost {
+/*!
+ @method
+ @abstract send post to social network
+ */
+- (void) sendPost {
     if (!_currentSocialNetwork.isVisible || !_currentSocialNetwork) {
         [self showAlertWithMessage: musAppError_Logged_Into_Social_Networks];
         return;
     }
-    [self updatePost: self.currentPost];
     [self startActivityIndicatorAnimating];
+    [self updatePost: self.currentPost];
     __weak MUSDetailPostViewController *weakSelf = self;
     [_currentSocialNetwork sharePost: self.currentPost withComplition:^(id result, NSError *error) {
         if (!error) {
@@ -201,7 +252,10 @@
 }
 
 #pragma mark BackToThePostsViewController
-
+/*!
+ @method
+ @abstract back to the posts view controller
+ */
 - (void) backToThePostsViewController {
     // back to the Posts ViewController. If user did some changes in post - show alert. And then update post.
     if (self.isEditableTableView) {
@@ -215,16 +269,16 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (!self.postPlace && !self.isEditableTableView) {
-        return 3;
+        return 3; //Gallery of photos cell, comments and likes cell, post description cell
     } else {
-        return 4;
+        return 4; //Gallery of photos cell, comments and likes cell, post description cell, post location cell
     }
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    self.detailPostVC_CellType = indexPath.row;
-    switch (self.detailPostVC_CellType) {
+    DetailPostVC_CellType detailPostVC_CellType = indexPath.row;
+    switch (detailPostVC_CellType) {
         case GalleryOfPhotosCellType: {
             MUSGalleryOfPhotosCell *cell = [tableView dequeueReusableCellWithIdentifier:[MUSGalleryOfPhotosCell cellID]];
             if(!cell) {
@@ -232,7 +286,7 @@
             }            
             cell.delegate = self;
             cell.isEditableCell = self.isEditableTableView;
-            [cell configurationGalleryOfPhotosCellByArrayOfImages : self.arrayOfUsersPictures
+            [cell configurationGalleryOfPhotosCellByArrayOfImages : self.arrayOfPicturesInPost
                                                 andDateCreatePost : self.currentPost.dateCreate
                                                  withReasonOfPost : self.currentPost.reason
                                      andWithSocialNetworkIconName : self.currentSocialNetwork.icon
@@ -283,10 +337,10 @@
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    self.detailPostVC_CellType = indexPath.row;
-    switch (self.detailPostVC_CellType) {
+    DetailPostVC_CellType  detailPostVC_CellType = indexPath.row;
+    switch (detailPostVC_CellType) {
         case GalleryOfPhotosCellType:
-            return [MUSGalleryOfPhotosCell heightForGalleryOfPhotosCell: self.arrayOfUsersPictures.count];
+            return [MUSGalleryOfPhotosCell heightForGalleryOfPhotosCell: self.arrayOfPicturesInPost.count];
             break;
         case CommentsAndLikesCellType:
             return [MUSCommentsAndLikesCell heightForCommentsAndLikesCell];;
@@ -340,24 +394,28 @@
 - (void) beginEditingPostDescription:(NSIndexPath *)currentIndexPath {
     [self performSelector:@selector(scrollToCell:) withObject: currentIndexPath afterDelay:0.5f];
 }
-
+/*!
+ @method
+ @abstract scroll table view to the current cell
+ @param current index path of cell
+ */
 -(void) scrollToCell:(NSIndexPath*) path {
     [_tableView scrollToRowAtIndexPath:path atScrollPosition : UITableViewScrollPositionNone animated:YES];
 }
 
 #pragma mark - MUSGalleryOfPhotosCellDelegate
 
-- (void) arrayOfImagesOfUser: (NSArray *)arrayOfImages {
+- (void) editArrayOfPicturesInPost: (NSArray *)arrayOfImages {
     if (!arrayOfImages.firstObject) {
-        [self.arrayOfUsersPictures removeAllObjects];
+        [self.arrayOfPicturesInPost removeAllObjects];
         [self.tableView reloadData];
         return;
     }
-    self.arrayOfUsersPictures = [NSMutableArray arrayWithArray: arrayOfImages];
+    self.arrayOfPicturesInPost = [NSMutableArray arrayWithArray: arrayOfImages];
 }
 
 - (void) showImagePicker {
-    if ([self.arrayOfUsersPictures count] == countOfAllowedPics) {
+    if ([self.arrayOfPicturesInPost count] == countOfAllowedPics) {
         [self showAlertWithMessage : musAppAlertTitle_NO_Pics_Anymore];
         return;
     }
@@ -365,7 +423,7 @@
     [[MUSPhotoManager sharedManager] photoShowFromViewController:self withComplition:^(id result, NSError *error) {
         if(!error) {
             ImageToPost *imageToPost = result;
-            [weakSelf.arrayOfUsersPictures addObject: imageToPost.image];
+            [weakSelf.arrayOfPicturesInPost addObject: imageToPost.image];
             [weakSelf.tableView reloadData];
         } else {
             [weakSelf showErrorAlertWithError : error];
@@ -376,7 +434,11 @@
 
 
 #pragma mark - Keyboard Show/Hide
-
+/*!
+ @method
+ @abstract scroll table view to the current cell
+ @param current index path of cell
+ */
 -(void) keyboardShow:(NSNotification*) notification {
     
     CGRect initialFrame = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
@@ -456,9 +518,9 @@
     
     NSMutableArray *arrayOfImagesToPost = [[NSMutableArray alloc] init];
     
-    for (int i = 0; i < self.arrayOfUsersPictures.count; i++) {
+    for (int i = 0; i < self.arrayOfPicturesInPost.count; i++) {
         ImageToPost *imageToPost = [[ImageToPost alloc] init];
-        imageToPost.image = [self.arrayOfUsersPictures objectAtIndex: i];
+        imageToPost.image = [self.arrayOfPicturesInPost objectAtIndex: i];
         imageToPost.quality = 0.8f;
         imageToPost.imageType = JPEG;
         [arrayOfImagesToPost addObject: imageToPost];
