@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet    UIButton   *changeLocationButtonOutlet;
 @property (weak, nonatomic) IBOutlet    UILabel    *placeNameLabel;
 @property (weak, nonatomic) IBOutlet    UIView     *addLocationView;
+@property (weak, nonatomic) IBOutlet UILabel *addLocationLabel;
 
 @property (nonatomic, strong) id<MKAnnotation> lastAnnotation;
 
@@ -54,13 +55,18 @@
 
 #pragma mark - height for PostLocationCell
 
-+ (CGFloat) heightForPostLocationCell {
-    return musAppDetailPostVC_HeightOfPostLocationCell;
++ (CGFloat) heightForPostLocationCell : (Place*) place andIsEditableCell : (BOOL) isEditableCell  {
+    if (!place && !isEditableCell) {
+        return 0;
+    } else {
+        return musAppDetailPostVC_HeightOfPostLocationCell;
+    }
 }
 
 #pragma mark - configuration PostLocationCell
 
 - (void) configurationPostLocationCellByPostPlace: (Place *) currentPlace {
+    self.addLocationLabel.text = @"Add location to your Post";
     [self checkChangeLocationButtonStatus];
     if (currentPlace) {
         [self initialMapViewForCurrentPlace: currentPlace];

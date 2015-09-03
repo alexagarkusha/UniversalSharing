@@ -32,7 +32,7 @@
 
 + (NSString*) cellID;
 + (instancetype) galleryOfPhotosCell;
-+ (CGFloat) heightForGalleryOfPhotosCell : (NSInteger) countOfImages;
++ (CGFloat) heightForGalleryOfPhotosCell : (NSInteger) countOfImages andIsEditableCell : (BOOL) isEditableCell;
 
 
 - (void) configurationGalleryOfPhotosCellByArrayOfImages: (NSMutableArray*) arrayOfImages andDateCreatePost:(NSString *)postDateCreate withReasonOfPost : (ReasonType) reasonOfPost andWithSocialNetworkIconName:(NSString *)socialNetworkIconName andUser: (User*)user;

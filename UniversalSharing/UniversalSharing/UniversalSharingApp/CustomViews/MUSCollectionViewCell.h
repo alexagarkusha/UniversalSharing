@@ -9,14 +9,21 @@
 #import <UIKit/UIKit.h>
 
 @protocol MUSCollectionViewCellDelegate <NSObject>
+@optional
 - (void) deletePhoto : (NSIndexPath*) currentInadexPath;
+- (void) addPhotoToCollection;
 @end
 
 @interface MUSCollectionViewCell : UICollectionViewCell
 
 + (NSString*) customCellID;
 + (instancetype) musCollectionViewCell;
-- (void) configurationCellWithPhoto: (UIImage*) photoImageView;
+//- (void) configurationCellWithPhoto: (UIImage*) photoImageView;
+//- (void) configurationCellWithoutPhoto;
+//- (void) configurationNotEditableCell: (UIImage*) photoImageView;
+
+- (void) configurationCellWithPhoto:(UIImage *) photoImageView andEditableState : (BOOL) isEditable;
+
 
 @property (assign, nonatomic) id <MUSCollectionViewCellDelegate> delegate;
 @property (strong, nonatomic) NSIndexPath *indexPath;

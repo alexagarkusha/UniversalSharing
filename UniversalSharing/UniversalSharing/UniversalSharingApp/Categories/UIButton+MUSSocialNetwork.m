@@ -90,6 +90,6 @@
     [UIView setAnimationDuration: 0.4f];
     self.transform = CGAffineTransformMakeScale(1,1);
     [UIView commitAnimations];
-
 }
+
 @end

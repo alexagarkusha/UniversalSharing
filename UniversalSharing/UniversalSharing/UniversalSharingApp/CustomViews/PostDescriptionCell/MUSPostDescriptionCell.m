@@ -43,7 +43,10 @@
 
 #pragma mark - height for PostDescriptionCell
 
-+ (CGFloat) heightForPostDescriptionCell : (NSString*) postDescription {
++ (CGFloat) heightForPostDescriptionCell : (NSString*) postDescription andIsEditableCell : (BOOL) isEditableCell {
+    if (!postDescription.length > 0 && !isEditableCell) {
+        return 0;
+    }
     UITextView *calculationView = [[UITextView alloc] init];
     NSDictionary *options = @{ NSFontAttributeName: [UIFont
                             fontWithName : musApp_PostDescriptionCell_TextView_Font_Name

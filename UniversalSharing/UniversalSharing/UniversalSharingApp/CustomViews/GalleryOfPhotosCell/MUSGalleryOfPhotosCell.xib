@@ -51,51 +51,23 @@
                         <nil key="highlightedColor"/>
                         <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bQE-pg-2i5">
-                        <rect key="frame" x="292" y="8" width="20" height="20"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="20" id="IKs-p2-Tbv"/>
-                            <constraint firstAttribute="height" constant="20" id="YjS-QM-RET"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I6K-rJ-8JI">
-                        <rect key="frame" x="277" y="57" width="35" height="35"/>
-                        <color key="backgroundColor" red="1" green="0.98607067339999999" blue="0.94532415430000005" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="35" id="JtI-zY-Ibn"/>
-                            <constraint firstAttribute="width" constant="35" id="vuo-1M-xDf"/>
-                        </constraints>
-                        <connections>
-                            <action selector="addPhotoTouch:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="TUB-oH-kiv"/>
-                        </connections>
-                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="h1E-fQ-zZP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="3I6-M7-ATO"/>
                     <constraint firstItem="h1E-fQ-zZP" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="6XS-GG-10N"/>
                     <constraint firstItem="y4j-P6-qcN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="8jW-F9-bvh"/>
-                    <constraint firstItem="I6K-rJ-8JI" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="BP6-cr-Xbz"/>
                     <constraint firstItem="e88-Ky-GeW" firstAttribute="top" secondItem="XKx-fB-tTp" secondAttribute="bottom" constant="8" id="Bw7-oU-XYb"/>
                     <constraint firstAttribute="trailing" secondItem="y4j-P6-qcN" secondAttribute="trailing" id="LaH-9I-BAH"/>
-                    <constraint firstItem="bQE-pg-2i5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="LqA-TG-eNe"/>
                     <constraint firstItem="e88-Ky-GeW" firstAttribute="leading" secondItem="h1E-fQ-zZP" secondAttribute="trailing" constant="8" id="Pod-Tt-Vqx"/>
-                    <constraint firstItem="bQE-pg-2i5" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="QuY-ma-3IB"/>
                     <constraint firstItem="XKx-fB-tTp" firstAttribute="leading" secondItem="h1E-fQ-zZP" secondAttribute="trailing" constant="8" id="Vb7-mt-FbZ"/>
                     <constraint firstItem="y4j-P6-qcN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Y5p-Wl-OfK"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="I6K-rJ-8JI" secondAttribute="bottom" constant="49" id="h0m-fB-XBP"/>
                     <constraint firstAttribute="bottomMargin" secondItem="e88-Ky-GeW" secondAttribute="bottom" constant="1" id="vEn-la-oQQ"/>
                 </constraints>
             </tableViewCellContentView>
-            <color key="backgroundColor" red="1" green="1" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
-                <outlet property="addButtonButtomConstraint" destination="h0m-fB-XBP" id="crm-DN-uUw"/>
-                <outlet property="addPhotoButtonOutlet" destination="I6K-rJ-8JI" id="oJJ-Zy-1xY"/>
                 <outlet property="dateOfPostLabel" destination="e88-Ky-GeW" id="9Ur-0X-ePc"/>
                 <outlet property="galleryViewOfPhotos" destination="y4j-P6-qcN" id="6e6-rS-H7F"/>
-                <outlet property="reasonOfPostLabel" destination="bQE-pg-2i5" id="N7f-hW-Z6z"/>
                 <outlet property="userPhotoImageView" destination="h1E-fQ-zZP" id="EMU-gE-XaI"/>
                 <outlet property="usernameLabel" destination="XKx-fB-tTp" id="Olx-Vs-qT8"/>
             </connections>

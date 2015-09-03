@@ -21,7 +21,6 @@
 
 @interface MUSGalleryOfPhotosCell () <MUSGalleryViewOfPhotosDelegate>
 
-- (IBAction)addPhotoTouch:(id)sender;
 
 @property (weak, nonatomic)     IBOutlet    NSLayoutConstraint *addButtonButtomConstraint;
 @property (weak, nonatomic)     IBOutlet    MUSGalleryViewOfPhotos *galleryViewOfPhotos;
@@ -29,7 +28,6 @@
 @property (weak, nonatomic)     IBOutlet    UIImageView *userPhotoImageView;
 @property (weak, nonatomic)     IBOutlet    UILabel *usernameLabel;
 @property (weak, nonatomic)     IBOutlet    UILabel *dateOfPostLabel;
-@property (weak, nonatomic)     IBOutlet    UILabel *reasonOfPostLabel;
 
 @property (assign, nonatomic)   BOOL        isEditableGallery;
 @property (assign, nonatomic)   NSInteger   numberOfImages;
@@ -42,7 +40,6 @@
     // Initialization code
     //self.galleryViewOfPhotos = [[MUSGalleryViewOfPhotos alloc] init];
     [self.addPhotoButtonOutlet editableButton];
-    self.backgroundColor = YELLOW_COLOR_Slightly;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -63,13 +60,22 @@
     return nibArray[0];
 }
 
-+ (CGFloat) heightForGalleryOfPhotosCell : (NSInteger) countOfImages {
++ (CGFloat) heightForGalleryOfPhotosCell : (NSInteger) countOfImages andIsEditableCell : (BOOL) isEditableCell {
     CGFloat heightOfRow;
-    if (countOfImages > 0) {
+    if (!isEditableCell && countOfImages == 0) {
+        return heightOfRow = musAppDetailPostVC_HeightOfGalleryOfPhotosCell_WithoutPhotos;
+    } else {
+        return heightOfRow = musAppDetailPostVC_HeightOfGalleryOfPhotosCell_WithPhotos;
+    }
+    
+    
+    /*
+    if (countOfImages > 0 || isEditableCell) {
         return heightOfRow = musAppDetailPostVC_HeightOfGalleryOfPhotosCell_WithPhotos;
     } else {
         return heightOfRow = musAppDetailPostVC_HeightOfGalleryOfPhotosCell_WithoutPhotos;
     }
+     */
 }
 
 - (void) configurationGalleryOfPhotosCellByArrayOfImages: (NSMutableArray*) arrayOfImages andDateCreatePost:(NSString *)postDateCreate withReasonOfPost : (ReasonType) reasonOfPost andWithSocialNetworkIconName:(NSString *)socialNetworkIconName andUser: (User*)user {
@@ -86,7 +92,6 @@
     [self initiationUserNameLabel: user];
     [self initiationUserDateOfPostLabel: postDateCreate];
     [self initiationUserPhotoImageView: socialNetworkIconName];
-    [self initiationReasonOfPostLabelColor: reasonOfPost];
 }
 
 #pragma mark initiation HeightOfRow
@@ -102,14 +107,14 @@
 #pragma mark initiation GalleryViewOfPhotos
 
 - (void) initiationGalleryViewOfPhotos : (NSMutableArray*) arrayWithImages {
-    if (arrayWithImages.count > 0) {
-        self.galleryViewOfPhotos.hidden = NO;
-    } else {
+    
+    if (!self.isEditableCell && arrayWithImages.count == 0) {
         self.galleryViewOfPhotos.hidden = YES;
+    } else {
+        self.galleryViewOfPhotos.hidden = NO;
     }
     
         self.galleryViewOfPhotos.delegate = self;
-        self.galleryViewOfPhotos.collectionView.backgroundColor = YELLOW_COLOR_Slightly;
         self.galleryViewOfPhotos.arrayOfPhotos = [NSMutableArray arrayWithArray : arrayWithImages];
         [self.galleryViewOfPhotos isVisiblePageControl : YES];
         [self.galleryViewOfPhotos.collectionView reloadData];
@@ -118,7 +123,7 @@
 #pragma mark initiation UserNameLabel
 
 - (void) initiationUserNameLabel : (User*) user {
-    if (self.numberOfImages > 0) {
+    if (self.numberOfImages > 0 || self.isEditableCell) {
         self.usernameLabel.textColor = [UIColor whiteColor];
         self.usernameLabel.shadowColor = [UIColor blackColor];
         self.dateOfPostLabel.textColor = [UIColor whiteColor];
@@ -129,7 +134,6 @@
         self.dateOfPostLabel.textColor = [UIColor blackColor];
         self.dateOfPostLabel.shadowColor = [UIColor whiteColor];
     }
-    
     self.usernameLabel.text = [NSString stringWithFormat: @"%@ %@", user.lastName, user.firstName];
     [self.usernameLabel sizeToFit];
 }
@@ -146,19 +150,6 @@
 - (void) initiationUserPhotoImageView : (NSString*) socialNetworkIconName {
     [self.userPhotoImageView loadImageFromDataBase: socialNetworkIconName];
     [self.userPhotoImageView cornerRadius: CGRectGetHeight(self.userPhotoImageView.frame) / 2 andBorderWidth: 2.0 withBorderColor: [UIColor whiteColor]];
-}
-
-#pragma mark initiation ReasonOfPostLabel
-
-- (void) initiationReasonOfPostLabelColor : (ReasonType) reasonOfPost {
-    [self.reasonOfPostLabel cornerRadius: CGRectGetHeight(self.reasonOfPostLabel.frame) / 2];
-    self.reasonOfPostLabel.backgroundColor = [UIColor reasonColorForPost: reasonOfPost];
-}
-
-#pragma mark - UIButton
-
-- (IBAction)addPhotoTouch:(id)sender {
-    [self.delegate showImagePicker];
 }
 
 #pragma mark - check GalleryOfPhotosStatus
@@ -180,6 +171,9 @@
     self.numberOfImages = arrayOfPhotos.count;
 }
 
+- (void) addPhotoToPost {
+    [self.delegate showImagePicker];
+}
 
 
 @end

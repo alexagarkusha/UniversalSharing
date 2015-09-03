@@ -16,8 +16,12 @@
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sXw-27-Q3F">
                         <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                     </imageView>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GM4-eg-Xvo">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GM4-eg-Xvo">
                         <rect key="frame" x="50" y="0.0" width="50" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="50" id="R9b-37-Hlw"/>
+                            <constraint firstAttribute="width" constant="50" id="rBQ-F1-eVX"/>
+                        </constraints>
                         <state key="normal">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
@@ -25,40 +29,34 @@
                             <action selector="deletePhoto:" destination="gTV-IL-0wX" eventType="touchUpInside" id="e4H-QP-r0k"/>
                         </connections>
                     </button>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="z9c-fJ-P1x">
-                        <rect key="frame" x="68" y="4" width="28" height="28"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D0V-Yc-YqK">
+                        <rect key="frame" x="-20" y="10" width="140" height="80"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="28" id="Ekq-OC-0CU"/>
-                            <constraint firstAttribute="width" constant="28" id="Y9o-5g-rcW"/>
+                            <constraint firstAttribute="height" constant="80" id="71j-X4-VNc"/>
+                            <constraint firstAttribute="width" constant="140" id="Nqi-9O-gCr"/>
                         </constraints>
-                    </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6hk-qn-3lr">
-                        <rect key="frame" x="72" y="8" width="20" height="20"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="20" id="8kM-uz-apt"/>
-                            <constraint firstAttribute="height" constant="20" id="yFO-RK-pOE"/>
-                        </constraints>
-                    </imageView>
+                        <state key="normal">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="addPhotoToCollectionTouch:" destination="gTV-IL-0wX" eventType="touchUpInside" id="mnz-8S-aft"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <constraints>
-                <constraint firstItem="6hk-qn-3lr" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="1ii-2u-cED"/>
-                <constraint firstItem="z9c-fJ-P1x" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="4" id="J26-Mh-B0M"/>
-                <constraint firstItem="GM4-eg-Xvo" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="50" id="NHe-4B-c4f"/>
+                <constraint firstItem="GM4-eg-Xvo" firstAttribute="trailing" secondItem="sXw-27-Q3F" secondAttribute="trailing" id="EUd-29-5Xz"/>
+                <constraint firstItem="D0V-Yc-YqK" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="Mbb-IC-l4f"/>
                 <constraint firstAttribute="trailing" secondItem="sXw-27-Q3F" secondAttribute="trailing" id="Ux9-Nu-CTX"/>
                 <constraint firstItem="sXw-27-Q3F" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Wk9-8E-8wS"/>
-                <constraint firstAttribute="trailing" secondItem="GM4-eg-Xvo" secondAttribute="trailing" id="XPd-ye-sBS"/>
-                <constraint firstAttribute="trailing" secondItem="6hk-qn-3lr" secondAttribute="trailing" constant="8" id="aoD-9H-dLf"/>
-                <constraint firstAttribute="trailing" secondItem="z9c-fJ-P1x" secondAttribute="trailing" constant="4" id="d4T-7r-HJC"/>
-                <constraint firstAttribute="bottom" secondItem="GM4-eg-Xvo" secondAttribute="bottom" constant="50" id="goC-8H-A9n"/>
-                <constraint firstItem="GM4-eg-Xvo" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="peB-t1-ZRC"/>
+                <constraint firstItem="GM4-eg-Xvo" firstAttribute="top" secondItem="sXw-27-Q3F" secondAttribute="top" id="a2i-TT-aM5"/>
+                <constraint firstAttribute="centerX" secondItem="D0V-Yc-YqK" secondAttribute="centerX" id="th8-iW-2Rs"/>
                 <constraint firstAttribute="bottom" secondItem="sXw-27-Q3F" secondAttribute="bottom" id="wLS-nU-5LE"/>
                 <constraint firstItem="sXw-27-Q3F" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="yZ7-8r-fYC"/>
             </constraints>
             <connections>
-                <outlet property="deleteIconBackgroungImageView" destination="z9c-fJ-P1x" id="RhC-Qr-ME1"/>
-                <outlet property="deleteIconImageView" destination="6hk-qn-3lr" id="cQ0-cy-enq"/>
+                <outlet property="addPhotoToCollectionOutlet" destination="D0V-Yc-YqK" id="Fd6-YI-wOK"/>
                 <outlet property="deletePhotoButtonOutlet" destination="GM4-eg-Xvo" id="C7m-17-NmC"/>
                 <outlet property="photoImageViewCell" destination="sXw-27-Q3F" id="Ckj-nI-pqb"/>
             </connections>
