@@ -27,7 +27,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *numberOfLikes;
 @property (weak, nonatomic) IBOutlet UILabel *reasonOfPost;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint* postDescriptionLeftConstraint;
-@property (weak, nonatomic) IBOutlet UIImageView *backGroundImageView;
 
 
 @end
@@ -37,13 +36,12 @@
 - (void)awakeFromNib {
     // Initialization code
     self.numberOfImagesInPost.hidden = YES;
-    self.backgroundColor = YELLOW_COLOR_Slightly;
+    self.backgroundColor = [UIColor whiteColor];
     [self.iconOfSocialNetwork roundImageView];
     [self.reasonOfPost cornerRadius: CGRectGetHeight(self.reasonOfPost.frame) / 2];
     [self.numberOfImagesInPost cornerRadius: CGRectGetHeight(self.numberOfImagesInPost.frame) / 2];
     [self.numberOfComments sizeToFit];
     [self.numberOfLikes sizeToFit];
-    [self initiationBackgroundImageView];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -75,7 +73,8 @@
     self.iconOfSocialNetwork.image = [self iconOfSocialNetworkForPost : currentPost];
     self.numberOfLikes.text = [NSString stringWithFormat: @"%ld", (long)currentPost.likesCount];
     self.commentImage.image = [UIImage imageNamed: musAppImage_Name_Comment];
-    self.reasonOfPost.backgroundColor = [UIColor reasonColorForPost: currentPost.reason];
+    //self.reasonOfPost.backgroundColor = [UIColor reasonColorForPost: currentPost.reason];
+    self.reasonOfPost.text = [self reasonTypeInString: currentPost.reason];
     self.likeImage.image = [UIImage imageNamed: musAppImage_Name_Like];
 }
 
@@ -103,6 +102,7 @@
     }
 }
 
+
 - (UIImage*) iconOfSocialNetworkForPost : (Post*) currentPost {
     switch (currentPost.networkType) {
         case Facebook:
@@ -120,11 +120,23 @@
     return nil;
 }
 
-#pragma mark initiation PostDescriptionTextView
-
-- (void) initiationBackgroundImageView {
-    self.backGroundImageView.backgroundColor = YELLOW_COLOR_MidLight;
-    [self.backGroundImageView cornerRadius: 30.0 andBorderWidth: 2.0 withBorderColor: YELLOW_COLOR_UpperMid];
+- (NSString*) reasonTypeInString : (ReasonType) reasonType {
+    switch (reasonType) {
+        case Connect:
+            return musAppFilter_Title_Shared;
+            break;
+        case ErrorConnection:
+            return musAppFilter_Title_Error;
+            break;
+        case Offline:
+            return musAppFilter_Title_Offline;
+            break;
+        default:
+            break;
+    }
+    return nil;
 }
+
+
 
 @end

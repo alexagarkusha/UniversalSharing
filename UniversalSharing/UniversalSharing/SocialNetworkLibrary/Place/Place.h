@@ -31,17 +31,19 @@
  @abstract name of the city. Like 'Berlin'
  */
 @property (nonatomic, strong) NSString *city;
-
+/*!
+ @abstract longitude of the place. Like '+32.049343'
+ */
+@property (nonatomic, strong) NSString *longitude;
+/*!
+ @abstract latitude of the place. Like '+48.049343'
+ */
+@property (nonatomic, strong) NSString *latitude;
 /*!
  @abstract return an instance of the Place.
  @param dictionary takes dictionary from social network.
  @param networkType takes the type of social network (like Facebook, Twitters, Vkontakte)
  */
-
-@property (nonatomic, strong) NSString *longitude;
-@property (nonatomic, strong) NSString *latitude;
-//@property (nonatomic, strong) NSString *placeName;
-
 + (Place*) createFromDictionary: (NSDictionary*) dictionary andNetworkType : (NetworkType) networkType;
 
 

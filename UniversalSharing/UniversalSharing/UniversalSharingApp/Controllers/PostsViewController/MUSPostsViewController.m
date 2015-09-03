@@ -17,17 +17,41 @@
 #import "MUSDatabaseRequestStringsHelper.h"
 
 @interface MUSPostsViewController () <DOPDropDownMenuDataSource, DOPDropDownMenuDelegate, UITableViewDataSource, UITableViewDelegate>
-
+/*!
+ @abstract array of posts. Getting an array of posts from the database
+ */
 @property (nonatomic, strong) NSMutableArray *arrayPosts;
+/*!
+ @abstract array of users. Getting an array of users from the database
+ */
 @property (nonatomic, strong) NSArray *arrayOfUsers;
-
+/*!
+ @abstract array of share reasons.
+ */
 @property (nonatomic, strong) NSArray *arrayOfShareReason;
+/*!
+ @abstract array of active social networks.
+ */
 @property (nonatomic, strong) NSMutableArray *arrayOfActiveSocialNetwork;
+/*!
+ @abstract custom drop down menu for filtering posts by network type or by reason type.
+ */
 @property (nonatomic, strong) DOPDropDownMenu *menu;
+/*!
+ @abstract table view for presenting array of posts.
+ */
 @property (nonatomic, strong) UITableView *tableView;
+/*!
+ @abstract type of column in custom drop down menu for filtering posts.
+ */
 @property (nonatomic, assign) FilterInColumnType columnType;
-
+/*!
+ @abstract predicate Network Type.
+ */
 @property (nonatomic, assign) NSInteger predicateNetworkType;
+/*!
+ @abstract predicate Reason Type.
+ */
 @property (nonatomic, assign) NSInteger predicateReason;
 
 @end
@@ -46,6 +70,7 @@
 #warning "Twice?"
     [self initiationArrayOfActiveSocialNetwork];
     [self obtainPosts];
+    // Notification for updating likes and comments in posts.
     [[NSNotificationCenter defaultCenter] addObserver : self
                                              selector : @selector(obtainPosts)
                                                  name : MUSNotificationPostsInfoWereUpDated
@@ -65,14 +90,15 @@
 #pragma mark initiation DOPDropDownMenu 
 
 /*!
- Initiation DropDownMenu - filters for posts.
+ @method
+ @abstract Initiation DropDownMenu - filters for posts.
  */
 
 - (void) initiationDropDownMenu {
     [super viewDidLoad];
     [self initiationArrayOfActiveSocialNetwork];
     [self initiationArrayOfShareReason];
-    self.menu = [[DOPDropDownMenu alloc] initWithOrigin:CGPointMake(0, [UIApplication sharedApplication].statusBarFrame.size.height + self.navigationController.navigationBar.frame.size.height) andHeight: 40];
+    self.menu = [[DOPDropDownMenu alloc] initWithOrigin:CGPointMake(0, [UIApplication sharedApplication].statusBarFrame.size.height + self.navigationController.navigationBar.frame.size.height) andHeight: musApp_DropDownMenu_Height];
     self.menu.dataSource = self;
     self.menu.delegate = self;
     [self.view addSubview : self.menu];
@@ -80,7 +106,8 @@
 
 #pragma mark initiation UITableView
 /*!
- Initiation Table view - a table that contains an array of posts.
+ @method
+ @abstract Initiation Table view - a table that contains an array of posts.
  */
 
 - (void) initiationTableView {
@@ -97,7 +124,8 @@
 
 #pragma mark initiation ArrayOfShareReason
 /*!
- Initiation Array of share reason - it is needed for "reason filter" of DropDownMenu .
+ @method
+ @abstract Initiation Array of share reason - it is needed for "reason filter" of DropDownMenu .
  */
 - (void) initiationArrayOfShareReason {
     self.arrayOfShareReason = [[NSArray alloc] initWithObjects: musApp_PostsViewController_AllShareReasons, musAppFilter_Title_Shared, musAppFilter_Title_Offline, musAppFilter_Title_Error,  nil];
@@ -105,7 +133,8 @@
 
 #pragma mark initiation ArrayOfPostsType
 /*!
- Initiation Array of share reason - it is needed for "network filter" of DropDownMenu .
+ @method
+ @abstract Initiation Array of share reason - it is needed for "network filter" of DropDownMenu .
  */
 
 - (void) initiationArrayOfActiveSocialNetwork {
@@ -245,7 +274,11 @@
 }
 
 #pragma mark - ReasonFromMenuTitle
-
+/*!
+ @method
+ @abstract return a Reason type of the drop down menu title.
+ @param string takes title of the drop down menu.
+*/
 - (NSInteger) reasonFromTitle : (NSString*) title {
     if ([title isEqual: musAppFilter_Title_Error]) {
         return ErrorConnection;
@@ -257,7 +290,11 @@
 }
 
 #pragma mark - NetworkTypeFromMenuTitle
-
+/*!
+ @method
+ @abstract return a Network type of the drop down menu title.
+ @param string takes title of the drop down menu.
+*/
 - (NSInteger) networkTypeFromTitle : (NSString*) title {
     if ([title isEqual: musVKName]) {
         return VKontakt;
@@ -269,7 +306,8 @@
 }
 
 /*!
- Obtain posts from Data Base.
+ @method
+ @abstract Obtain posts from Data Base.
  */
 - (void) obtainPosts {
     self.arrayPosts = [[NSMutableArray alloc] initWithArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper createStringForPostWithReason: self.predicateReason andNetworkType: self.predicateNetworkType]]];
