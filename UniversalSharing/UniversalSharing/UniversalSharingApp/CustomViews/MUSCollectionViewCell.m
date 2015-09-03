@@ -43,6 +43,8 @@
 }
 
 - (void) configurationCellWithPhoto: (UIImage*) photoImageView {
+    self.photoImageViewCell.alpha = 1;
+     self.deleteIconImageView.alpha = 1;
     self.photoImageViewCell.image = photoImageView;
 }
 

@@ -94,8 +94,7 @@
 @property (strong, nonatomic)               UIBezierPath *exclusivePath;
 @property (strong, nonatomic)               UITextView *messageTextView;
 @property (assign, nonatomic)               CGRect messageTextViewFrame;
-
-
+@property (strong, nonatomic)               UIActivityIndicatorView *activityIndicator ;
 
 @end
 
@@ -105,6 +104,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
 #warning "Must be remove observe"
     [[NSNotificationCenter defaultCenter] addObserver : self
                                              selector : @selector(keyboardWillShow:)
@@ -186,11 +186,14 @@
     if (!_currentSocialNetwork) {
         _currentSocialNetwork = [SocialManager currentSocialNetwork];
     }
-    
+    self.activityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+    self.activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+
     [self addButtonOnTextView];
     [self initiationMessageTextView];
     self.galeryView.delegate = self;
     self.shareButtonOutlet.enabled = NO;
+    //self.shareButtonOutlet
     self.toolBarLayoutConstraineOrigin = self.toolBarLayoutConstraint.constant;
     if ([self obtainSizeScreen] <= 480) {
         self.GaleryViewLayoutConstraineOrigin = self.galeryViewLayoutConstraint.constant;
@@ -311,6 +314,9 @@
         [self showAlertWithMessage: musAppError_Logged_Into_Social_Networks];
         return;
     }
+    [self.shareButtonOutlet setCustomView:self.activityIndicator];
+    [self.activityIndicator startAnimating];
+   
         if(!self.post) {
             self.post = [[Post alloc] init];
         }
@@ -330,7 +336,15 @@
         self.post.dateCreate = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970]];
         __weak MUSShareViewController *weakSelf = self;
         [_currentSocialNetwork sharePost:self.post withComplition:^(id result, NSError *error) {
+            //////////
+            [self.activityIndicator stopAnimating];
+            [weakSelf.shareButtonOutlet setCustomView:nil];
+            [weakSelf.shareButtonOutlet setTitle:@"Share"];
+            //////////////
             weakSelf.shareButtonOutlet.enabled = YES;
+            if (result == nil && error == nil) {
+                return;
+            }
             if (!error) {
                 [self showAlertWithMessage : titleCongratulatoryAlert];
                 self.post = nil;

@@ -274,6 +274,8 @@ static FacebookNetwork *model = nil;
              if ([error code] != 8){
                  [self saveOrUpdatePost: post withReason: ErrorConnection];
                  self.copyComplition (nil, [self errorFacebook]);
+             } else {
+             self.copyComplition (nil, nil);
              }
          }
      }];

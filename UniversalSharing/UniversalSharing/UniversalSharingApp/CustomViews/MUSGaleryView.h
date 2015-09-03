@@ -10,14 +10,13 @@
 #import "ImageToPost.h"
 
 
-
 @protocol MUSGaleryViewDelegate <NSObject>
 @required
 - (void)changeSharePhotoButtonColorAndShareButtonState: (BOOL) isPhotos;
 @end
 
 
-@interface MUSGaleryView : UIView
+@interface MUSGaleryView : UIView 
 
 @property (nonatomic, assign) id <MUSGaleryViewDelegate> delegate;
 
