@@ -26,7 +26,7 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
  @abstract index for erasing a chosen picture
  */
 @property (assign, nonatomic)  NSIndexPath * indexForDeletePicture;
-@property (assign, nonatomic)  BOOL flag;
+
 @end
 
 @implementation MUSGaleryView
@@ -101,9 +101,8 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
         cell.indexPath = indexPath;
         //NSLog(@"INDEXPATH %@", indexPath);
     ImageToPost *image;
-    if (self.flag) {
+    if ([self.arrayWithChosenImages count] == indexPath.row) {
         image = self.arrayWithChosenImages[indexPath.row - 1];
-        self.flag = NO;
     } else {
         image = self.arrayWithChosenImages[indexPath.row];
     }
@@ -119,7 +118,7 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
 -(void)swipeToDeleteLayout:(LSSwipeToDeleteCollectionViewLayout *)layout didDeleteCellAtIndexPath:(NSIndexPath *)indexPath {
 
         [self.arrayWithChosenImages removeObjectAtIndex: indexPath.row];
-    self.flag = YES;
+    
         if ([self.arrayWithChosenImages count] == 0) {
             //self.collectionView.backgroundColor = [UIColor whiteColor];
             self.arrayWithChosenImages = nil;
