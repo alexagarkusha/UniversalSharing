@@ -15,9 +15,8 @@
 
 - (IBAction)deletePhoto:(id)sender;
 
-@property (weak, nonatomic) IBOutlet UIButton *deletePhotoButtonOutlet;
+//@property (weak, nonatomic) IBOutlet UIButton *deletePhotoButtonOutlet;
 @property (strong, nonatomic) MUSAddPhotoButton *addPhotoButton;
-
 
 @end
 @implementation MUSCollectionViewCell
@@ -41,6 +40,7 @@
 
 - (void) configurationCellWithPhoto:(UIImage *)photoImageView andEditableState: (BOOL)isEditable {
     [self.addPhotoButton removeFromSuperview];
+    [self.deletePhotoButtonOutlet setImage:[UIImage imageNamed: @"Button_Delete.png"] forState:UIControlStateNormal];
     if (!photoImageView && isEditable) {
         [self hideDeleteButton];
         self.photoImageViewCell.hidden = YES;

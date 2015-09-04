@@ -26,7 +26,7 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
  @abstract index for erasing a chosen picture
  */
 @property (assign, nonatomic)  NSIndexPath * indexForDeletePicture;
-
+@property (assign, nonatomic) BOOL flag;
 @end
 
 @implementation MUSGaleryView
@@ -74,11 +74,15 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
 //    [self.collectionView setPagingEnabled:YES];
 //    [self.collectionView setScrollEnabled:YES];
     [self.collectionView setCollectionViewLayout:flowLayout];
+    
     [self becomeFirstResponder];
 
     ////////////////////////////////////////////////////////////////////////////
     //[self.collectionView setAlwaysBounceVertical:YES];
     LSSwipeToDeleteCollectionViewLayout *layout = (LSSwipeToDeleteCollectionViewLayout *)self.collectionView.collectionViewLayout;
+//    LSSwipeToDeleteCollectionViewLayout *l = [LSSwipeToDeleteCollectionViewLayout new];
+//    l.deletionVelocityTresholdValue = 0.0f;
+//    l.deletionDistanceTresholdValue= 20.0f;
     [layout setSwipeToDeleteDelegate:self];
    
 }
@@ -96,13 +100,20 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
     MUSCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[MUSCollectionViewCell customCellID] forIndexPath:indexPath];
+    if (self.flag && [self.arrayWithChosenImages count] < 3) {
+        cell.photoImageViewCell.image  = nil;
+        [cell.deletePhotoButtonOutlet setImage:nil forState:UIControlStateNormal];//setBackgroundColor:[UIColor blackColor]];
+        return cell;
+    }
         cell.delegate = self;
         cell.indexPath = indexPath;
         //NSLog(@"INDEXPATH %@", indexPath);
     ImageToPost *image;
     if ([self.arrayWithChosenImages count] == indexPath.row) {
         image = self.arrayWithChosenImages[indexPath.row - 1];
+        //return cell;
     } else {
         image = self.arrayWithChosenImages[indexPath.row];
     }
@@ -115,10 +126,26 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
     return CGSizeMake(self.collectionView.contentSize.height, self.collectionView.contentSize.height);
 }
 
+-(void)swipeToDeleteLayout:(LSSwipeToDeleteCollectionViewLayout *)layout didEndAnimationWithCellAtIndexPath:(NSIndexPath *)indexPath didDeleteCell:(BOOL)didDelete {
+    
+    
+}
+//-(BOOL)swipeToDeleteLayout:(LSSwipeToDeleteCollectionViewLayout *)layout canDeleteCellAtIndexPath:(NSIndexPath *)indexPath{
+//    
+//    return NO;
+//}
+
 -(void)swipeToDeleteLayout:(LSSwipeToDeleteCollectionViewLayout *)layout didDeleteCellAtIndexPath:(NSIndexPath *)indexPath {
 
         [self.arrayWithChosenImages removeObjectAtIndex: indexPath.row];
-    
+    NSLog(@"lllll");
+    self.flag = YES;
+//    NSIndexPath* newIndexPath = [NSIndexPath indexPathForRow:indexPath.row+1 inSection:indexPath.section];
+// MUSCollectionViewCell *cell1 = (MUSCollectionViewCell*)[self.collectionView cellForItemAtIndexPath:indexPath];
+//     MUSCollectionViewCell *cell = (MUSCollectionViewCell*)[self.collectionView cellForItemAtIndexPath:newIndexPath];
+//    //[cell.photoImageViewCell setBackgroundColor:[UIColor clearColor]];
+//    cell = nil;
+//    cell1= nil;
         if ([self.arrayWithChosenImages count] == 0) {
             //self.collectionView.backgroundColor = [UIColor whiteColor];
             self.arrayWithChosenImages = nil;
@@ -195,6 +222,7 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
 #pragma mark - passChosenImageForCollection
 
 - (void) passChosenImageForCollection :(ImageToPost*) imageForPost {
+    self.flag = NO;/////////////////////////////////////////////////////////////////////////////////////////
     if (!self.arrayWithChosenImages) {
         self.arrayWithChosenImages = [[NSMutableArray alloc] init];
     }
