@@ -74,8 +74,8 @@
 
 //<<<<<<< HEAD
 - (void) configurationCellWithPhoto:(UIImage *)photoImageView andEditableState: (BOOL)isEditable {
-    self.photoImageViewCell.alpha = 1;
-    self.deleteIconImageView.alpha = 1;
+    //self.photoImageViewCell.alpha = 1;
+    //self.deleteIconImageView.alpha = 1;
     
     if (!photoImageView && isEditable) {
         [self hideDeleteButton];

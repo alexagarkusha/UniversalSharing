@@ -14,7 +14,7 @@
 
 static NSString *LSCollectionViewCellIdentifier = @"Cell";
 
-@interface MUSGaleryView()<UICollectionViewDelegate, UICollectionViewDataSource, UIGestureRecognizerDelegate, UIAlertViewDelegate, MUSCollectionViewCellDelegate, UICollectionViewDelegateFlowLayout, LSSwipeToDeleteCollectionViewLayoutDelegate>
+@interface MUSGaleryView()<UICollectionViewDelegate, UICollectionViewDataSource, UIGestureRecognizerDelegate, UIAlertViewDelegate, MUSCollectionViewCellDelegate, LSSwipeToDeleteCollectionViewLayoutDelegate>
 
 //===
 @property (strong, nonatomic)  UIView *view;
@@ -26,7 +26,7 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
  @abstract index for erasing a chosen picture
  */
 @property (assign, nonatomic)  NSIndexPath * indexForDeletePicture;
-
+@property (assign, nonatomic)  BOOL flag;
 @end
 
 @implementation MUSGaleryView
@@ -69,7 +69,7 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
     [flowLayout setMinimumInteritemSpacing:0];
     [flowLayout setMinimumLineSpacing:0];
     [flowLayout setSectionInset:UIEdgeInsetsMake(0, 0, 0, 0)];
-    [flowLayout setItemSize:self.collectionView.bounds.size];
+    [flowLayout setItemSize:CGSizeMake(self.collectionView.contentSize.height, self.collectionView.contentSize.height)];
     //flowLayout.in
 //    [self.collectionView setPagingEnabled:YES];
 //    [self.collectionView setScrollEnabled:YES];
@@ -99,10 +99,16 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
     MUSCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[MUSCollectionViewCell customCellID] forIndexPath:indexPath];
         cell.delegate = self;
         cell.indexPath = indexPath;
-        NSLog(@"INDEXPATH %@", indexPath);
-        ImageToPost *image = self.arrayWithChosenImages[indexPath.row];
+        //NSLog(@"INDEXPATH %@", indexPath);
+    ImageToPost *image;
+    if (self.flag) {
+        image = self.arrayWithChosenImages[indexPath.row - 1];
+        self.flag = NO;
+    } else {
+        image = self.arrayWithChosenImages[indexPath.row];
+    }
         //cell.isEditable = self.isEditableCollectionView;
-        [cell configurationCellWithPhoto: image.image];
+    [cell configurationCellWithPhoto:image.image andEditableState:YES];
     return  cell;
 }
 
@@ -113,9 +119,9 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
 -(void)swipeToDeleteLayout:(LSSwipeToDeleteCollectionViewLayout *)layout didDeleteCellAtIndexPath:(NSIndexPath *)indexPath {
 
         [self.arrayWithChosenImages removeObjectAtIndex: indexPath.row];
-    
+    self.flag = YES;
         if ([self.arrayWithChosenImages count] == 0) {
-            self.collectionView.backgroundColor = [UIColor whiteColor];
+            //self.collectionView.backgroundColor = [UIColor whiteColor];
             self.arrayWithChosenImages = nil;
             [self.delegate changeSharePhotoButtonColorAndShareButtonState : NO];
             return;
@@ -195,10 +201,10 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
     }
     [self.arrayWithChosenImages addObject: imageForPost];
     
-    NSLog(@"Array with Images = %@", self.arrayWithChosenImages);
+    //NSLog(@"Array with Images = %@", self.arrayWithChosenImages);
     
     if ([self.arrayWithChosenImages count] == 1) {
-        self.collectionView.backgroundColor = YELLOW_COLOR_Slightly;
+        //self.collectionView.backgroundColor = YELLOW_COLOR_Slightly;
         [self.delegate changeSharePhotoButtonColorAndShareButtonState : YES];
     }
     self.isEditableCollectionView = NO;
