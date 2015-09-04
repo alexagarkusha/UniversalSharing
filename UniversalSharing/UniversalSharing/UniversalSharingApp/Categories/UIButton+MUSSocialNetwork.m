@@ -19,6 +19,7 @@
         //self.buttonType = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         self.frame = CGRectMake(13.0, 13.0, 75.0, 75.0);//while so
         self.backgroundColor = [UIColor lightGrayColor];
+        [self buttonAnimationStart];
         [NSTimer scheduledTimerWithTimeInterval : 9.0f
                                          target : self
                                        selector : @selector(buttonAnimationStart)

@@ -82,6 +82,7 @@
 		97C4ACCD1B997B9C008B93B3 /* Button_Delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 97C4ACCC1B997B9C008B93B3 /* Button_Delete.png */; };
 		97C4ACCF1B997DD4008B93B3 /* Button_Change.png in Resources */ = {isa = PBXBuildFile; fileRef = 97C4ACCE1B997DD4008B93B3 /* Button_Change.png */; };
 		97C4ACD31B997E3D008B93B3 /* MUSChangeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C4ACD21B997E3D008B93B3 /* MUSChangeButton.m */; };
+		97C4ACD71B99ABDE008B93B3 /* MUSAddPhotoButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C4ACD61B99ABDE008B93B3 /* MUSAddPhotoButton.m */; };
 		97C63BD91B7246B6006E99C6 /* NSError+MUSError.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C63BD81B7246B6006E99C6 /* NSError+MUSError.m */; };
 		97C74ADE1B7DDEF4004DC863 /* UnknownUser.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 97C74ADD1B7DDEF4004DC863 /* UnknownUser.jpg */; };
 		97C7D79F1B73889B004DC83D /* MUSSocialNetworkLibraryConstantsForParseObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C7D79E1B73889B004DC83D /* MUSSocialNetworkLibraryConstantsForParseObjects.m */; };
@@ -243,6 +244,8 @@
 		97C4ACCE1B997DD4008B93B3 /* Button_Change.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Button_Change.png; sourceTree = "<group>"; };
 		97C4ACD11B997E3D008B93B3 /* MUSChangeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUSChangeButton.h; path = UniversalSharing/UniversalSharingApp/CustomViews/CustomButtons/ChangeButton/MUSChangeButton.h; sourceTree = SOURCE_ROOT; };
 		97C4ACD21B997E3D008B93B3 /* MUSChangeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUSChangeButton.m; path = UniversalSharing/UniversalSharingApp/CustomViews/CustomButtons/ChangeButton/MUSChangeButton.m; sourceTree = SOURCE_ROOT; };
+		97C4ACD51B99ABDE008B93B3 /* MUSAddPhotoButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUSAddPhotoButton.h; path = UniversalSharing/UniversalSharingApp/CustomViews/CustomButtons/AddPhotoButton/MUSAddPhotoButton.h; sourceTree = SOURCE_ROOT; };
+		97C4ACD61B99ABDE008B93B3 /* MUSAddPhotoButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUSAddPhotoButton.m; path = UniversalSharing/UniversalSharingApp/CustomViews/CustomButtons/AddPhotoButton/MUSAddPhotoButton.m; sourceTree = SOURCE_ROOT; };
 		97C63BD71B7246B6006E99C6 /* NSError+MUSError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSError+MUSError.h"; path = "UniversalSharing/SocialNetworkLibrary/Categories/NSError+MUSError.h"; sourceTree = SOURCE_ROOT; };
 		97C63BD81B7246B6006E99C6 /* NSError+MUSError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSError+MUSError.m"; path = "UniversalSharing/SocialNetworkLibrary/Categories/NSError+MUSError.m"; sourceTree = SOURCE_ROOT; };
 		97C74ADD1B7DDEF4004DC863 /* UnknownUser.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = UnknownUser.jpg; sourceTree = "<group>"; };
@@ -925,6 +928,7 @@
 		97C4ACC51B9973E2008B93B3 /* Custom Buttons */ = {
 			isa = PBXGroup;
 			children = (
+				97C4ACD41B99ABA1008B93B3 /* AddPhotoButton */,
 				97C4ACD01B997E0E008B93B3 /* ChangeButton */,
 				97C4ACC61B997406008B93B3 /* DeleteButton */,
 			);
@@ -948,6 +952,15 @@
 				97C4ACD21B997E3D008B93B3 /* MUSChangeButton.m */,
 			);
 			name = ChangeButton;
+			sourceTree = "<group>";
+		};
+		97C4ACD41B99ABA1008B93B3 /* AddPhotoButton */ = {
+			isa = PBXGroup;
+			children = (
+				97C4ACD51B99ABDE008B93B3 /* MUSAddPhotoButton.h */,
+				97C4ACD61B99ABDE008B93B3 /* MUSAddPhotoButton.m */,
+			);
+			name = AddPhotoButton;
 			sourceTree = "<group>";
 		};
 		97C63BD61B724617006E99C6 /* Categories */ = {
@@ -1273,6 +1286,7 @@
 				187FC52A1B65222D00A3916C /* User.m in Sources */,
 				18BB29BB1B67E3F000B498AC /* MUSTopUserProfileCell.m in Sources */,
 				97C8A9DE1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.m in Sources */,
+				97C4ACD71B99ABDE008B93B3 /* MUSAddPhotoButton.m in Sources */,
 				306ED75C1B6FA3170014D975 /* MUSLocationTableViewController.m in Sources */,
 				30DBFD8B1B677A9A002F83D0 /* TwitterNetwork.m in Sources */,
 				18BB29AD1B67E3F000B498AC /* AppDelegate.m in Sources */,

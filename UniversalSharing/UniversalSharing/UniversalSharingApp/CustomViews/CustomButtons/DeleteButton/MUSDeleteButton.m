@@ -33,7 +33,7 @@
      deleteIconImage = UIGraphicsGetImageFromCurrentImageContext();
      UIGraphicsEndImageContext();
      
-     [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+     //[self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 
      //self.deletePhotoButtonOutlet.hidden = YES;
      self.layer.masksToBounds = YES;

@@ -10,13 +10,13 @@
 #import "UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.h"
 #import "ConstantsApp.h"
 #import "UIButton+MUSAddPhotoButton.h"
+#import "MUSAddPhotoButton.h"
 
 @interface MUSCollectionViewCell()
 
 - (IBAction)deletePhoto:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIButton *deletePhotoButtonOutlet;
-@property (weak, nonatomic) IBOutlet UIButton *addPhotoToCollectionOutlet;
 
 @end
 @implementation MUSCollectionViewCell
@@ -54,10 +54,6 @@
 //    [self.deletePhotoButtonOutlet.imageView cornerRadius: 5.0f andBorderWidth: 1.0f withBorderColor:[UIColor darkGrayColor]];
 //    [self.deletePhotoButtonOutlet.imageView setContentMode : UIViewContentModeScaleAspectFit];
     /////////// END ////////////////
-    
-    
-    [self.addPhotoToCollectionOutlet addPhotoButton];
-    self.addPhotoToCollectionOutlet.hidden = YES;
 }
 
 - (NSString *)reuseIdentifier{
@@ -81,17 +77,29 @@
     if (!photoImageView && isEditable) {
         [self hideDeleteButton];
         self.photoImageViewCell.hidden = YES;
-        self.addPhotoToCollectionOutlet.hidden = NO;
+        [self showAddPhotoButton];
+        //self.addPhotoToCollectionOutlet.hidden = NO;
     } else if (photoImageView && isEditable) {
         [self showDeleteButton];
         self.photoImageViewCell.hidden = NO;
-        self.addPhotoToCollectionOutlet.hidden = YES;
+        //[self showAddPhotoButton];
+        //self.addPhotoToCollectionOutlet.hidden = YES;
         self.photoImageViewCell.image = photoImageView;
     } else {
         [self hideDeleteButton];
         self.photoImageViewCell.image = photoImageView;
     }
 }
+
+- (void) showAddPhotoButton {
+   
+    MUSAddPhotoButton *addPhotoButton = [[MUSAddPhotoButton alloc] initWithFrame: CGRectMake( 50, 20, self.frame.size.width - 100, self.frame.size.height - 70)];
+    [self addSubview: addPhotoButton];
+    [addPhotoButton addTarget:self
+               action:@selector(addPhotoToCollectionTouch:)forControlEvents:UIControlEventTouchUpInside];
+
+}
+
 
 - (void) hideDeleteButton {
     self.deletePhotoButtonOutlet.hidden = YES;

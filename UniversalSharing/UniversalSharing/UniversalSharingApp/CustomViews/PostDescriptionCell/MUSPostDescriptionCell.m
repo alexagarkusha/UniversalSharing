@@ -81,7 +81,6 @@
 - (void) checkPostDescriptionStatus {
     if (!self.isEditableCell) {
         self.changeButtonOutlet.hidden = YES;
-        self.postDescriptionTextView.editable = NO;
         self.postDescriptionTextView.scrollEnabled = NO;
     } else {
         self.changeButtonOutlet.hidden = NO;
@@ -120,7 +119,8 @@
     } else {
         [self.delegate saveChangesInPostDescription: textView.text];
     }
-    //self.postDescriptionTextView.editable = NO;
+    [self.postDescriptionTextView setEditable: NO];
+    //self.postDescriptionTextView.selectable = NO;
     //self.postDescriptionTextView.scrollEnabled = NO;
 }
 
@@ -142,18 +142,20 @@
                                   initWithString : text
                                       attributes : options];
     [self.postDescriptionTextView setAttributedText : attrString];
-    /*
+    
     if (self.isEditableCell) {
-        UIBezierPath *rectanglePath = [UIBezierPath bezierPathWithRect:CGRectMake(self.frame.size.width - 25, 0, 30, 30)];
+        UIBezierPath *rectanglePath = [UIBezierPath bezierPathWithRect:CGRectMake(self.frame.size.width - 30, 0, 30, 30)];
         [[self.postDescriptionTextView textContainer] setExclusionPaths:@[rectanglePath]];
     }
-     */
+    
 }
 
 
 - (IBAction)changeButtonTouch:(id)sender {
-    //self.postDescriptionTextView.editable = YES;
+    self.postDescriptionTextView.editable = YES;
     //self.postDescriptionTextView.scrollEnabled = YES;
+    //self.postDescriptionTextView.selectable = YES;
+    
     self.postDescriptionTextView.autocorrectionType = UITextAutocorrectionTypeNo;
     [self.postDescriptionTextView becomeFirstResponder];
     [self.delegate beginEditingPostDescription: self.currentIndexPath];
