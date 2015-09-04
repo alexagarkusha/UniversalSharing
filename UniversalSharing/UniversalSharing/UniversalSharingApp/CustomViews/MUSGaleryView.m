@@ -10,6 +10,7 @@
 #import "MUSCollectionViewCell.h"
 #import "ConstantsApp.h"
 #import <LSSwipeToDeleteCollectionViewLayout.h>
+#import "LSFadingSwipeToDeleteCollectionViewLayout.h"
 
 static NSString *LSCollectionViewCellIdentifier = @"Cell";
 
@@ -61,26 +62,32 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
     NSString *cellIdentifier = [MUSCollectionViewCell customCellID];
     [self.collectionView registerNib:[UINib nibWithNibName: cellIdentifier bundle: nil] forCellWithReuseIdentifier: cellIdentifier];
     self.collectionView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-    
+    //[self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:LSCollectionViewCellIdentifier];
     /////////////////////////////////////////////////////////////////////// implement flowLayout
-    LSSwipeToDeleteCollectionViewLayout *flowLayout = [[LSSwipeToDeleteCollectionViewLayout alloc] init];
+    LSFadingSwipeToDeleteCollectionViewLayout *flowLayout = [[LSFadingSwipeToDeleteCollectionViewLayout alloc] init];
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
     [flowLayout setMinimumInteritemSpacing:0];
     [flowLayout setMinimumLineSpacing:0];
     [flowLayout setSectionInset:UIEdgeInsetsMake(0, 0, 0, 0)];
     [flowLayout setItemSize:self.collectionView.bounds.size];
     //flowLayout.in
-    [self.collectionView setPagingEnabled:YES];
-    [self.collectionView setScrollEnabled:YES];
+//    [self.collectionView setPagingEnabled:YES];
+//    [self.collectionView setScrollEnabled:YES];
     [self.collectionView setCollectionViewLayout:flowLayout];
-    
+    [self becomeFirstResponder];
+
     ////////////////////////////////////////////////////////////////////////////
-    [self.collectionView setAlwaysBounceVertical:YES];
+    //[self.collectionView setAlwaysBounceVertical:YES];
     LSSwipeToDeleteCollectionViewLayout *layout = (LSSwipeToDeleteCollectionViewLayout *)self.collectionView.collectionViewLayout;
     [layout setSwipeToDeleteDelegate:self];
    
 }
 
+- (BOOL)canBecomeFirstResponder
+{
+    return YES;
+    
+}
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -113,18 +120,19 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
             [self.delegate changeSharePhotoButtonColorAndShareButtonState : NO];
             return;
         }
+    //[self.collectionView reloadData];
 }
--(void)swipeToDeleteLayout:(LSSwipeToDeleteCollectionViewLayout *)layout cellDidTranslateWithOffset:(UIOffset)offset {
-    MUSCollectionViewCell *cell = (MUSCollectionViewCell*)[self.collectionView cellForItemAtIndexPath:self.indexForDeletePicture];
-    cell.photoImageViewCell.alpha = 1 - offset.vertical / -75;
-    
-}
-
-
--(void)swipeToDeleteLayout:(LSSwipeToDeleteCollectionViewLayout *)layout willBeginDraggingCellAtIndexPath:(NSIndexPath *)indexPath {
-    self.indexForDeletePicture = indexPath;
-    
-}
+//-(void)swipeToDeleteLayout:(LSSwipeToDeleteCollectionViewLayout *)layout cellDidTranslateWithOffset:(UIOffset)offset {
+//    MUSCollectionViewCell *cell = (MUSCollectionViewCell*)[self.collectionView cellForItemAtIndexPath:self.indexForDeletePicture];
+//    cell.photoImageViewCell.alpha = 1 - offset.vertical / -75;
+//    
+//}
+//
+//
+//-(void)swipeToDeleteLayout:(LSSwipeToDeleteCollectionViewLayout *)layout willBeginDraggingCellAtIndexPath:(NSIndexPath *)indexPath {
+//    self.indexForDeletePicture = indexPath;
+//    
+//}
 
 -(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
     return 10.0f;
