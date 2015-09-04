@@ -8,6 +8,7 @@
 
 #import "MUSAddPhotoButton.h"
 #import "ConstantsApp.h"
+#import "UIButton+CornerRadiusButton.h"
 
 @implementation MUSAddPhotoButton
 
@@ -19,17 +20,11 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.frame = frame;
-        [self addPhotobuttonAnimationStart];
-        //[[UIButton appearance] setTintColor:[UIColor colorWithRed:151/255.0f green:202/255.0f blue:86/255.0f alpha:1.0]];
-
-        
-        //[self setTintColor:[UIColor blueColor]];
+        [UIView commitAnimations];
         self.layer.masksToBounds = YES;
+        [self cornerRadius: self.frame.size.height / 2];
         [self setImage:[UIImage imageNamed: musAppButton_ImageName_AddPhoto] forState:UIControlStateNormal];
         [self.imageView setContentMode : UIViewContentModeScaleAspectFit];
-
-        self.backgroundColor = [UIColor whiteColor];
         [NSTimer scheduledTimerWithTimeInterval : 4.0f
                                          target : self
                                        selector : @selector(addPhotobuttonAnimationStart)

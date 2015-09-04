@@ -95,7 +95,7 @@ static TwitterNetwork *model = nil;
 }
 
 - (void) startTimerForUpdatePosts {
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:30.0f
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:600.0f
                                                   target:self
                                                 selector:@selector(updatePost)
                                                 userInfo:nil

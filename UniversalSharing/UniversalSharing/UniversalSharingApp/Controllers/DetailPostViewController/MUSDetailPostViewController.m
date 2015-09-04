@@ -48,7 +48,7 @@
 
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 
-@property (nonatomic, strong) UIBarButtonItem *actionBarButton;
+@property (nonatomic, strong) UIBarButtonItem *shareButton;
 /*!
  @abstract user of the current post
  */
@@ -61,6 +61,8 @@
  @abstract number of rows in Detail Table View
  */
 @property (nonatomic, assign) NSInteger numberOfRowsInTable;
+
+@property (nonatomic, assign) BOOL isChangedPost;
 
 @end
 
@@ -126,25 +128,12 @@
  */
 - (void) initiationNavigationBar {
     if (self.isEditableTableView) {
-        
+        self.shareButton = [[UIBarButtonItem alloc] initWithTitle : musAppButtonTitle_Share style:2 target:self action: @selector(sendPost)];
+        self.navigationItem.rightBarButtonItem = self.shareButton;
     }
-    
-    
-    
-    ///////////////////////////// ????????????? /////////////////////////////////
-#warning DELETE ACTION SHEET
-    /*
-    ReasonType currentReasonType = self.currentPost.reason;
-    if (currentReasonType == Offline || currentReasonType == ErrorConnection) {
-        self.actionBarButton = [[UIBarButtonItem alloc] initWithTitle : musAppButtonTitle_Action style:2 target:self action: @selector(showActionSheet)];
-        self.navigationItem.rightBarButtonItem = self.actionBarButton;
-    }
-    */
-    ///////////////////////////// ????????????? /////////////////////////////////
-
-    
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle: musAppButtonTitle_Back style:2 target:self action: @selector(backToThePostsViewController)];
     self.navigationItem.leftBarButtonItem = backButton;
+    self.title = self.currentSocialNetwork.name;
 }
 
 #pragma mark initiation CurrentSocialNetwork
@@ -189,7 +178,7 @@
  */
 - (void) initiationActivityIndicator {
     self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    self.activityIndicator.center=self.view.center;
+    //self.activityIndicator.center = self.view.center;
     self.activityIndicator.hidesWhenStopped = YES;
     [self.view addSubview:self.activityIndicator];
 }
@@ -200,8 +189,10 @@
  @abstract start activity indicator animating
  */
 - (void) startActivityIndicatorAnimating {
+    self.activityIndicator.color = [UIColor blueColor];
+    [self.shareButton setCustomView : self.activityIndicator];
     [self.activityIndicator startAnimating];
-    self.actionBarButton.enabled = NO;
+    self.shareButton.enabled = NO;
 }
 
 #pragma mark  stop Activity Indicator Animating
@@ -211,46 +202,9 @@
  */
 - (void) stopActivityIndicatorAnimating {
     [self.activityIndicator stopAnimating];
-    self.actionBarButton.enabled = YES;
+    [self.shareButton setCustomView : nil];
+    self.shareButton.enabled = YES;
 }
-
-
-
-///////////////////////////// ????????????? /////////////////////////////////
-#warning DELETE ACTION SHEET
-
-#pragma mark UIActionSheet
-/*!
- @method
- @abstract show Action sheet with buttons : Share post, Edit post and Cancel
- */
-/*
-- (void) showActionSheet {
-    UIActionSheet* sheet = [[UIActionSheet alloc] init];
-    sheet.title = titleActionSheet;
-    sheet.delegate = self;
-    sheet.cancelButtonIndex = [sheet addButtonWithTitle:musAppButtonTitle_Cancel];
-    NSArray *arrayButtons = [[NSArray alloc] initWithObjects: musAppButtonTitle_Share, musAppButtonTitle_Edit, nil];
-    for (int i = 0; i < arrayButtons.count; i++) {
-        [sheet addButtonWithTitle: [arrayButtons objectAtIndex: i]];
-    }
-    [sheet showInView:self.view];
-}
-
-- (void) actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if ( buttonIndex != 0 ) {
-        if (buttonIndex == 1) {
-            [self sendPost];
-        } else {
-            self.isEditableTableView = YES;
-            [self.tableView reloadData];
-        }
-    }
-}
-*/
-///////////////////////////// ????????????? /////////////////////////////////
-
-
 
 #pragma mark SentPost
 /*!
@@ -288,7 +242,7 @@
  */
 - (void) backToThePostsViewController {
     // back to the Posts ViewController. If user did some changes in post - show alert. And then update post.
-    if (self.isEditableTableView) {
+    if (self.isChangedPost) {
         [self showUpdateAlert];
     } else {
         [self.navigationController popViewControllerAnimated:YES];
@@ -407,6 +361,7 @@
              */
             if (result) {
                 weakSelf.postPlace = result;
+                weakSelf.isChangedPost = YES;
                 [weakSelf.tableView reloadData];
             }
         };
@@ -417,6 +372,7 @@
 
 - (void) saveChangesInPostDescription:(NSString *)postDescription {
     self.postDescription = postDescription;
+    self.isChangedPost = YES;
     [self.tableView reloadData];
 }
 
@@ -453,6 +409,7 @@
         if(!error) {
             ImageToPost *imageToPost = result;
             [weakSelf.arrayOfPicturesInPost addObject: imageToPost.image];
+            weakSelf.isChangedPost = YES;
             [weakSelf.tableView reloadData];
         } else {
             [weakSelf showErrorAlertWithError : error];
@@ -473,7 +430,7 @@
     CGRect initialFrame = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     CGRect convertedFrame = [self.view convertRect:initialFrame fromView:nil];
     CGRect tvFrame = _tableView.frame;
-    tvFrame.size.height = convertedFrame.origin.y - self.tabBarController.tabBar.frame.size.height - 16;
+    tvFrame.size.height = convertedFrame.origin.y - self.tabBarController.tabBar.frame.size.height - 14;
     _tableView.frame = tvFrame;
     
 }
