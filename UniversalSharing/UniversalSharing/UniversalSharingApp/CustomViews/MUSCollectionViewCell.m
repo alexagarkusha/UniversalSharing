@@ -9,24 +9,54 @@
 #import "MUSCollectionViewCell.h"
 #import "UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.h"
 #import "ConstantsApp.h"
+#import "UIButton+MUSAddPhotoButton.h"
+
 @interface MUSCollectionViewCell()
 
 - (IBAction)deletePhoto:(id)sender;
 
-@property (weak, nonatomic) IBOutlet UIImageView *deleteIconBackgroungImageView;
-@property (weak, nonatomic) IBOutlet UIImageView *deleteIconImageView;
 @property (weak, nonatomic) IBOutlet UIButton *deletePhotoButtonOutlet;
+@property (weak, nonatomic) IBOutlet UIButton *addPhotoToCollectionOutlet;
 
 @end
 @implementation MUSCollectionViewCell
 
 - (void)awakeFromNib {
     // Initialization code
-    self.deleteIconImageView.image = [UIImage imageNamed: @"btn-close@2x.png"];
-    [self.deleteIconBackgroungImageView cornerRadius: 5.0f andBorderWidth: 1.0f withBorderColor:[UIColor darkGrayColor]];
-    self.deleteIconBackgroungImageView.backgroundColor = [UIColor grayColor];
-    self.deleteIconBackgroungImageView.alpha = 0.6f;
-    [self.photoImageViewCell cornerRadius: 5.0f andBorderWidth: 2.0 withBorderColor: YELLOW_COLOR_Light];
+    
+    
+#warning need to do custom button
+/////////// Start ////////////////
+    UIImage *deleteIconImage = [UIImage imageNamed: @"btn-close@2x.png"];
+    
+    float width = deleteIconImage.size.width + 20; // new width
+    float height = deleteIconImage.size.height + 20; // new height
+    
+    CGRect rect = CGRectMake(0, 0, width, height);
+
+    UIGraphicsBeginImageContext(rect.size);
+    rect.origin.y = 2;
+    rect.origin.x = 2;
+    rect.size.height = height - 4;
+    rect.size.width = width - 4;
+    [deleteIconImage drawInRect: rect];
+    deleteIconImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    //self.deletePhotoButtonOutlet.hidden = YES;
+    self.deletePhotoButtonOutlet.layer.masksToBounds = YES;
+    self.deletePhotoButtonOutlet.tintColor = [UIColor whiteColor];
+    
+    [self.deletePhotoButtonOutlet setImage: deleteIconImage forState:UIControlStateNormal];
+    self.deletePhotoButtonOutlet.imageEdgeInsets = UIEdgeInsetsMake(3, self.deletePhotoButtonOutlet.frame.size.height / 2, self.deletePhotoButtonOutlet.frame.size.height / 2, 3);
+    self.deletePhotoButtonOutlet.imageView.backgroundColor = [UIColor grayColor];
+    self.deletePhotoButtonOutlet.imageView.alpha = 0.6f;
+    [self.deletePhotoButtonOutlet.imageView cornerRadius: 5.0f andBorderWidth: 1.0f withBorderColor:[UIColor darkGrayColor]];
+    [self.deletePhotoButtonOutlet.imageView setContentMode : UIViewContentModeScaleAspectFit];
+    [self.addPhotoToCollectionOutlet addPhotoButton];
+    /////////// END ////////////////
+    
+    self.addPhotoToCollectionOutlet.hidden = YES;
 }
 
 - (NSString *)reuseIdentifier{
@@ -42,17 +72,52 @@
     return nibArray[0];
 }
 
-- (void) configurationCellWithPhoto: (UIImage*) photoImageView {
+//<<<<<<< HEAD
+- (void) configurationCellWithPhoto:(UIImage *)photoImageView andEditableState: (BOOL)isEditable {
     self.photoImageViewCell.alpha = 1;
-     self.deleteIconImageView.alpha = 1;
-    self.photoImageViewCell.image = photoImageView;
+    self.deleteIconImageView.alpha = 1;
+    
+    if (!photoImageView && isEditable) {
+        [self hideDeleteButton];
+        self.photoImageViewCell.hidden = YES;
+        self.addPhotoToCollectionOutlet.hidden = NO;
+    } else if (photoImageView && isEditable) {
+        [self showDeleteButton];
+        self.photoImageViewCell.hidden = NO;
+        self.addPhotoToCollectionOutlet.hidden = YES;
+        self.photoImageViewCell.image = photoImageView;
+    } else {
+        [self hideDeleteButton];
+        self.photoImageViewCell.image = photoImageView;
+    }
 }
 
-- (IBAction)deletePhoto:(id)sender {
-//    if (self.isEditable) {
-        [self.delegate deletePhoto: self.indexPath];
-//    }
+- (void) hideDeleteButton {
+    self.deletePhotoButtonOutlet.hidden = YES;
 }
+
+- (void) showDeleteButton {
+    self.deletePhotoButtonOutlet.hidden = NO;
+//=======
+//- (void) configurationCellWithPhoto: (UIImage*) photoImageView {
+//    self.photoImageViewCell.alpha = 1;
+//     self.deleteIconImageView.alpha = 1;
+//    self.photoImageViewCell.image = photoImageView;
+//>>>>>>> d7110c7994ff5a4e92ad4ce34f8737fdb345df2e
+}
+
+
+- (IBAction)deletePhoto:(id)sender {
+    [self.delegate deletePhoto: self.indexPath];
+}
+
+
+- (IBAction)addPhotoToCollectionTouch:(id)sender {
+    [self.delegate addPhotoToCollection];
+}
+
+
+
 
 
 /*

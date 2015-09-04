@@ -8,6 +8,8 @@
 
 #import "MUSCommentsAndLikesCell.h"
 #import "ConstantsApp.h"
+#import "NSString+ReasonTypeInString.h"
+#import "UILabel+CornerRadiusLabel.h"
 
 @interface MUSCommentsAndLikesCell ()
 
@@ -15,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *numberOfLikesLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *commentImageView;
 @property (weak, nonatomic) IBOutlet UILabel *numberOfCommentsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *reasonPostLabel;
 
 @end
 
@@ -23,6 +26,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    [self.reasonPostLabel cornerRadius: CGRectGetHeight(self.reasonPostLabel.frame) / 2];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -57,7 +61,11 @@
     self.commentImageView.image = [UIImage imageNamed: musAppImage_Name_Comment];
     self.numberOfLikesLabel.text = [NSString stringWithFormat:@"%ld", (long)currentPost.likesCount];
     self.numberOfCommentsLabel.text = [NSString stringWithFormat:@"%ld", (long)currentPost.commentsCount];
+    self.reasonPostLabel.text = [NSString reasonTypeInString: currentPost.reason];
 }
+
+
+
 
 
 @end

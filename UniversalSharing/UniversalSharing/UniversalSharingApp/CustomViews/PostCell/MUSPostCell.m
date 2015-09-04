@@ -14,6 +14,8 @@
 #import "UIImageView+MUSLoadImageFromDataBase.h"
 #import "UIColor+ReasonColorForPost.h"
 #import "UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.h"
+#import "UIImage+IconOfSocialNetwork.h"
+#import "NSString+ReasonTypeInString.h"
 
 @interface MUSPostCell ()
 
@@ -70,11 +72,11 @@
     [self configurateFirstImageOfPost: currentPost];
     self.postDescription.text = currentPost.postDescription;
     self.numberOfComments.text = [NSString stringWithFormat: @"%ld", (long)currentPost.commentsCount];
-    self.iconOfSocialNetwork.image = [self iconOfSocialNetworkForPost : currentPost];
+    self.iconOfSocialNetwork.image = [UIImage iconOfSocialNetworkForPost: currentPost];
     self.numberOfLikes.text = [NSString stringWithFormat: @"%ld", (long)currentPost.likesCount];
     self.commentImage.image = [UIImage imageNamed: musAppImage_Name_Comment];
     //self.reasonOfPost.backgroundColor = [UIColor reasonColorForPost: currentPost.reason];
-    self.reasonOfPost.text = [self reasonTypeInString: currentPost.reason];
+    self.reasonOfPost.text = [NSString reasonTypeInString: currentPost.reason];
     self.likeImage.image = [UIImage imageNamed: musAppImage_Name_Like];
 }
 
@@ -101,42 +103,6 @@
         self.postDescriptionLeftConstraint.constant = musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithUserPhotos;
     }
 }
-
-
-- (UIImage*) iconOfSocialNetworkForPost : (Post*) currentPost {
-    switch (currentPost.networkType) {
-        case Facebook:
-            return [UIImage imageNamed: musAppImage_Name_FBIconImage];
-            break;
-        case VKontakt:
-            return [UIImage imageNamed: musAppImage_Name_VKIconImage];
-            break;
-        case Twitters:
-            return [UIImage imageNamed: musAppImage_Name_TwitterIconImage];
-            break;
-        case AllNetworks:
-            break;
-    }
-    return nil;
-}
-
-- (NSString*) reasonTypeInString : (ReasonType) reasonType {
-    switch (reasonType) {
-        case Connect:
-            return musAppFilter_Title_Shared;
-            break;
-        case ErrorConnection:
-            return musAppFilter_Title_Error;
-            break;
-        case Offline:
-            return musAppFilter_Title_Offline;
-            break;
-        default:
-            break;
-    }
-    return nil;
-}
-
 
 
 @end

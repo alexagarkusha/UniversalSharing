@@ -57,6 +57,10 @@
  @abstract table view of detail post
  */
 @property (nonatomic, strong) UITableView *tableView;
+/*!
+ @abstract number of rows in Detail Table View
+ */
+@property (nonatomic, assign) NSInteger numberOfRowsInTable;
 
 @end
 
@@ -65,9 +69,9 @@
 
 - (void)viewDidLoad {
     // Do any additional setup after loading the view.
+    [self initiationPostDescriptionArrayOfPicturesAndPostLocation];
     [self initiationTableView];
     [self initiationCurrentSocialNetwork];
-    [self initiationPostDescriptionArrayOfPicturesAndPostLocation];
     [self initiationNavigationBar];
     [self initiationActivityIndicator];
     
@@ -112,7 +116,7 @@
         [self.view addSubview:tableView];
         tableView;
     });
-    self.isEditableTableView = NO;
+    //self.isEditableTableView = NO;
 }
 
 #pragma mark initiation UINavigationBar
@@ -121,11 +125,24 @@
  @abstract initiation Navigation Bar
  */
 - (void) initiationNavigationBar {
+    if (self.isEditableTableView) {
+        
+    }
+    
+    
+    
+    ///////////////////////////// ????????????? /////////////////////////////////
+#warning DELETE ACTION SHEET
+    /*
     ReasonType currentReasonType = self.currentPost.reason;
     if (currentReasonType == Offline || currentReasonType == ErrorConnection) {
         self.actionBarButton = [[UIBarButtonItem alloc] initWithTitle : musAppButtonTitle_Action style:2 target:self action: @selector(showActionSheet)];
         self.navigationItem.rightBarButtonItem = self.actionBarButton;
     }
+    */
+    ///////////////////////////// ????????????? /////////////////////////////////
+
+    
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle: musAppButtonTitle_Back style:2 target:self action: @selector(backToThePostsViewController)];
     self.navigationItem.leftBarButtonItem = backButton;
 }
@@ -158,6 +175,10 @@
     
     if (self.currentPost.place.longitude.length > 0 && self.currentPost.place.latitude.length > 0) {
         self.postPlace = self.currentPost.place;
+    }
+    
+    if (self.currentPost.reason != Connect) {
+        self.isEditableTableView = YES;
     }
 }
 
@@ -194,11 +215,16 @@
 }
 
 
+
+///////////////////////////// ????????????? /////////////////////////////////
+#warning DELETE ACTION SHEET
+
 #pragma mark UIActionSheet
 /*!
  @method
  @abstract show Action sheet with buttons : Share post, Edit post and Cancel
  */
+/*
 - (void) showActionSheet {
     UIActionSheet* sheet = [[UIActionSheet alloc] init];
     sheet.title = titleActionSheet;
@@ -221,6 +247,10 @@
         }
     }
 }
+*/
+///////////////////////////// ????????????? /////////////////////////////////
+
+
 
 #pragma mark SentPost
 /*!
@@ -268,11 +298,7 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (!self.postPlace && !self.isEditableTableView) {
-        return 3; //Gallery of photos cell, comments and likes cell, post description cell
-    } else {
-        return 4; //Gallery of photos cell, comments and likes cell, post description cell, post location cell
-    }
+    return musAppDetailPostVC_NumberOfRows;
 }
 
 
@@ -340,22 +366,25 @@
     DetailPostVC_CellType  detailPostVC_CellType = indexPath.row;
     switch (detailPostVC_CellType) {
         case GalleryOfPhotosCellType:
-            return [MUSGalleryOfPhotosCell heightForGalleryOfPhotosCell: self.arrayOfPicturesInPost.count];
+            return [MUSGalleryOfPhotosCell heightForGalleryOfPhotosCell: self.arrayOfPicturesInPost.count andIsEditableCell : self.isEditableTableView];
             break;
         case CommentsAndLikesCellType:
             return [MUSCommentsAndLikesCell heightForCommentsAndLikesCell];;
             break;
         case PostDescriptionCellType:
         {
-            CGFloat heightOfPostDescriptionRow = [MUSPostDescriptionCell heightForPostDescriptionCell: self.postDescription];
+            CGFloat heightOfPostDescriptionRow = [MUSPostDescriptionCell heightForPostDescriptionCell: self.postDescription andIsEditableCell: self.isEditableTableView];
+            //[MUSPostDescriptionCell heightForPostDescriptionCell: self.postDescription];
             if (heightOfPostDescriptionRow < 100 && self.isEditableTableView) {
                 heightOfPostDescriptionRow = 100;
             }
+            NSLog(@"POST DESCRIPTION CELL HEIGHT = %f", heightOfPostDescriptionRow);
             return heightOfPostDescriptionRow;
             break;
         }
         default:
-            return [MUSPostLocationCell heightForPostLocationCell];
+            
+            return [MUSPostLocationCell heightForPostLocationCell: self.postPlace andIsEditableCell: self.isEditableTableView];
             break;
     }
 }

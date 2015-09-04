@@ -84,11 +84,11 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Offline" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XnW-XA-7nO">
-                        <rect key="frame" x="267" y="3" width="40" height="20"/>
+                        <rect key="frame" x="262" y="3" width="45" height="20"/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="H84-Zx-qOi"/>
-                            <constraint firstAttribute="width" constant="40" id="rW7-OI-dIU"/>
+                            <constraint firstAttribute="width" constant="45" id="rW7-OI-dIU"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>

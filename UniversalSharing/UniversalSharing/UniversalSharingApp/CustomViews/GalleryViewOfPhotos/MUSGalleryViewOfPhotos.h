@@ -12,6 +12,7 @@
 
 @protocol MUSGalleryViewOfPhotosDelegate <NSObject>
 - (void) arrayOfPhotos : (NSArray*) arrayOfPhotos;
+- (void) addPhotoToPost;
 @end
 
 @interface MUSGalleryViewOfPhotos : UIView

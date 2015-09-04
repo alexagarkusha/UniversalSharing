@@ -100,7 +100,8 @@ NSString *const musAppImage_Name_VKIconImage = @"VKimage.png";
 NSString *const musAppImage_Name_FBIconImage = @"FBimage.jpg";
 NSString *const musAppImage_Name_TwitterIconImage = @"TWimage.jpeg";
 
-NSString *const musAppFilter_Title_Shared = @"Shared";
+
+NSString *const musAppFilter_Title_Shared = @"Success";
 NSString *const musAppFilter_Title_Offline = @"Offline";
 NSString *const musAppFilter_Title_Error = @"Failed";
 NSInteger const musAppPostsVC_HeightOfPostCell = 100;
@@ -115,6 +116,7 @@ NSString *const musApp_GalleryOfPhotos_NibName = @"MUSGalleryViewOfPhotos";
 #pragma mark - MUSGalleryOfPhotosCell
 
 NSString *const musAppButton_ImageName_ButtonAdd = @"Button_Add.png";
+NSString *const musAppButton_ImageName_AddPhoto = @"Button_addPhoto.png";
 NSInteger const musApp_GalleryOfPhotosCell_addButton_ButtomConstraint_WithoutPhotos = -4;
 NSInteger const musApp_GalleryOfPhotosCell_addButton_ButtomConstraint_WithPhotos = 50;
 
@@ -131,11 +133,12 @@ NSInteger const musApp_PostDescriptionCell_TextView_Font_Size = 17;
 
 #pragma mark - MUSDetailPostViewController
 
-NSInteger const musAppDetailPostVC_HeightOfCommentsAndLikesCell = 40;
+NSInteger const musAppDetailPostVC_HeightOfCommentsAndLikesCell = 36;
 NSInteger const musAppDetailPostVC_HeightOfPostLocationCell = 200;
 NSInteger const musAppDetailPostVC_HeightOfGalleryOfPhotosCell_WithoutPhotos = 70;
 NSInteger const musAppDetailPostVC_HeightOfGalleryOfPhotosCell_WithPhotos = 150;
 NSString *const musAppDetailPostVC_UpdatePostAlert = @"Do you want to update your Post?";
+NSInteger const musAppDetailPostVC_NumberOfRows = 4;
 
 
 
