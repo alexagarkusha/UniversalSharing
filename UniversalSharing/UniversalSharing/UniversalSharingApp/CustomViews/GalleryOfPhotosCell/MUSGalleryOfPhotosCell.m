@@ -11,7 +11,6 @@
 #import "ConstantsApp.h"
 #import "UIImageView+MUSLoadImageFromDataBase.h"
 #import "UIImageView+RoundImage.h"
-#import "UIButton+MUSEditableButton.h"
 #import "MUSPhotoManager.h"
 #import "MUSGalleryViewOfPhotos.h"
 #import "UILabel+CornerRadiusLabel.h"
@@ -22,9 +21,7 @@
 @interface MUSGalleryOfPhotosCell () <MUSGalleryViewOfPhotosDelegate>
 
 
-@property (weak, nonatomic)     IBOutlet    NSLayoutConstraint *addButtonButtomConstraint;
 @property (weak, nonatomic)     IBOutlet    MUSGalleryViewOfPhotos *galleryViewOfPhotos;
-@property (weak, nonatomic)     IBOutlet    UIButton *addPhotoButtonOutlet;
 @property (weak, nonatomic)     IBOutlet    UIImageView *userPhotoImageView;
 @property (weak, nonatomic)     IBOutlet    UILabel *usernameLabel;
 @property (weak, nonatomic)     IBOutlet    UILabel *dateOfPostLabel;
@@ -39,7 +36,6 @@
 - (void)awakeFromNib {
     // Initialization code
     //self.galleryViewOfPhotos = [[MUSGalleryViewOfPhotos alloc] init];
-    [self.addPhotoButtonOutlet editableButton];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -88,20 +84,9 @@
     }
     self.numberOfImages = arrayOfImages.count;
 
-    [self initiationAddButton];
     [self initiationUserNameLabel: user];
     [self initiationUserDateOfPostLabel: postDateCreate];
     [self initiationUserPhotoImageView: socialNetworkIconName];
-}
-
-#pragma mark initiation HeightOfRow
-
-- (void) initiationAddButton {
-    if (self.numberOfImages > 0) {
-        self.addButtonButtomConstraint.constant = musApp_GalleryOfPhotosCell_addButton_ButtomConstraint_WithPhotos;
-    } else {
-        self.addButtonButtomConstraint.constant = musApp_GalleryOfPhotosCell_addButton_ButtomConstraint_WithoutPhotos;
-    }
 }
 
 #pragma mark initiation GalleryViewOfPhotos
@@ -156,10 +141,8 @@
 
 - (void) checkGalleryOfPhotosStatus {
     if (!self.isEditableCell) {
-        self.addPhotoButtonOutlet.hidden = YES;
         self.galleryViewOfPhotos.isEditableGallery = NO;
     } else {
-        self.addPhotoButtonOutlet.hidden = NO;
         self.galleryViewOfPhotos.isEditableGallery = YES;
     }
 }

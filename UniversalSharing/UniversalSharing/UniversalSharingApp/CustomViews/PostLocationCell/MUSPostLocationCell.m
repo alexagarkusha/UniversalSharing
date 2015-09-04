@@ -10,7 +10,6 @@
 #import <MapKit/MapKit.h>
 #import "MUSAnnotation.h"
 #import "ConstantsApp.h"
-#import "UIButton+MUSEditableButton.h"
 
 @interface MUSPostLocationCell () <MKMapViewDelegate>
 
@@ -20,7 +19,7 @@
 @property (weak, nonatomic) IBOutlet    UIButton   *changeLocationButtonOutlet;
 @property (weak, nonatomic) IBOutlet    UILabel    *placeNameLabel;
 @property (weak, nonatomic) IBOutlet    UIView     *addLocationView;
-@property (weak, nonatomic) IBOutlet UILabel *addLocationLabel;
+@property (weak, nonatomic) IBOutlet    UILabel     *addLocationLabel;
 
 @property (nonatomic, strong) id<MKAnnotation> lastAnnotation;
 
@@ -31,7 +30,6 @@
 - (void)awakeFromNib {
     // Initialization code
     self.placeNameLabel.hidden = YES;
-    [self.changeLocationButtonOutlet editableButton];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
