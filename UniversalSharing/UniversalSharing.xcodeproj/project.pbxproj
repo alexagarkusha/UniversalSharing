@@ -34,6 +34,7 @@
 		18BB29C31B67E3F000B498AC /* MUSLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB29AA1B67E3F000B498AC /* MUSLocationManager.m */; };
 		303CAC7D1B860A2F00B48D72 /* NSString+MUSPathToDocumentsdirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = 303CAC7C1B860A2F00B48D72 /* NSString+MUSPathToDocumentsdirectory.m */; };
 		303CAC821B8F0B8600B48D72 /* MUSDatabaseRequestStringsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 303CAC811B8F0B8600B48D72 /* MUSDatabaseRequestStringsHelper.m */; };
+		303CAC881B998FB400B48D72 /* LSFadingSwipeToDeleteCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 303CAC871B998FB400B48D72 /* LSFadingSwipeToDeleteCollectionViewLayout.m */; };
 		30416A191B7355BC000CB2C2 /* UIButton+MUSSocialNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 30416A181B7355BC000CB2C2 /* UIButton+MUSSocialNetwork.m */; };
 		30416A241B73A49B000CB2C2 /* MUSGaleryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30416A231B73A49B000CB2C2 /* MUSGaleryView.m */; };
 		30416A261B73A4AC000CB2C2 /* MUSGaleryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30416A251B73A4AC000CB2C2 /* MUSGaleryView.xib */; };
@@ -159,6 +160,8 @@
 		303CAC7C1B860A2F00B48D72 /* NSString+MUSPathToDocumentsdirectory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MUSPathToDocumentsdirectory.m"; sourceTree = "<group>"; };
 		303CAC801B8F0B8600B48D72 /* MUSDatabaseRequestStringsHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSDatabaseRequestStringsHelper.h; sourceTree = "<group>"; };
 		303CAC811B8F0B8600B48D72 /* MUSDatabaseRequestStringsHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSDatabaseRequestStringsHelper.m; sourceTree = "<group>"; };
+		303CAC861B998FB400B48D72 /* LSFadingSwipeToDeleteCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSFadingSwipeToDeleteCollectionViewLayout.h; sourceTree = "<group>"; };
+		303CAC871B998FB400B48D72 /* LSFadingSwipeToDeleteCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSFadingSwipeToDeleteCollectionViewLayout.m; sourceTree = "<group>"; };
 		30416A171B7355BC000CB2C2 /* UIButton+MUSSocialNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+MUSSocialNetwork.h"; sourceTree = "<group>"; };
 		30416A181B7355BC000CB2C2 /* UIButton+MUSSocialNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+MUSSocialNetwork.m"; sourceTree = "<group>"; };
 		30416A221B73A49B000CB2C2 /* MUSGaleryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSGaleryView.h; sourceTree = "<group>"; };
@@ -620,6 +623,16 @@
 			name = DatabaseRequestStringsHelper;
 			sourceTree = "<group>";
 		};
+		303CAC851B998F7B00B48D72 /* LSFadingSwipeToDeleteCollectionViewLayout */ = {
+			isa = PBXGroup;
+			children = (
+				303CAC861B998FB400B48D72 /* LSFadingSwipeToDeleteCollectionViewLayout.h */,
+				303CAC871B998FB400B48D72 /* LSFadingSwipeToDeleteCollectionViewLayout.m */,
+			);
+			name = LSFadingSwipeToDeleteCollectionViewLayout;
+			path = ../../SocialNetworkLibrary/User;
+			sourceTree = "<group>";
+		};
 		30416A131B735328000CB2C2 /* UiButton+MUSSocialNetwork */ = {
 			isa = PBXGroup;
 			children = (
@@ -632,6 +645,7 @@
 		30416A1F1B73A28D000CB2C2 /* GalleryView */ = {
 			isa = PBXGroup;
 			children = (
+				303CAC851B998F7B00B48D72 /* LSFadingSwipeToDeleteCollectionViewLayout */,
 				30416A221B73A49B000CB2C2 /* MUSGaleryView.h */,
 				30416A231B73A49B000CB2C2 /* MUSGaleryView.m */,
 				30416A251B73A4AC000CB2C2 /* MUSGaleryView.xib */,
@@ -1213,6 +1227,7 @@
 				18BB29B71B67E3F000B498AC /* MUSShareViewController.m in Sources */,
 				18BB29B41B67E3F000B498AC /* UIImageView+RoundImage.m in Sources */,
 				303CAC7D1B860A2F00B48D72 /* NSString+MUSPathToDocumentsdirectory.m in Sources */,
+				303CAC881B998FB400B48D72 /* LSFadingSwipeToDeleteCollectionViewLayout.m in Sources */,
 				30416A2A1B73AF49000CB2C2 /* MUSCollectionViewCell.m in Sources */,
 				97C49E8B1B836AFD005241CE /* MUSPostLocationCell.m in Sources */,
 				97D1C43F1B81D0A200009BCF /* MUSPostCell.m in Sources */,
