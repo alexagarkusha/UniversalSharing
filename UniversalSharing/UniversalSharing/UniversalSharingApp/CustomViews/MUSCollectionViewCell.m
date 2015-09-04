@@ -16,7 +16,6 @@
 
 - (IBAction)deletePhoto:(id)sender;
 
-@property (weak, nonatomic) IBOutlet UIButton *deletePhotoButtonOutlet;
 
 @end
 @implementation MUSCollectionViewCell
@@ -41,11 +40,10 @@
     return nibArray[0];
 }
 
-//<<<<<<< HEAD
 - (void) configurationCellWithPhoto:(UIImage *)photoImageView andEditableState: (BOOL)isEditable {
     //self.photoImageViewCell.alpha = 1;
     //self.deleteIconImageView.alpha = 1;
-    
+    [self.deletePhotoButtonOutlet setImage:[UIImage imageNamed: @"Button_Delete.png"] forState:UIControlStateNormal];
     if (!photoImageView && isEditable) {
         [self hideDeleteButton];
         self.photoImageViewCell.hidden = YES;

@@ -31,5 +31,6 @@
 
 
 @property (weak, nonatomic) IBOutlet UIImageView *photoImageViewCell;
+@property (weak, nonatomic) IBOutlet UIButton *deletePhotoButtonOutlet;
 
 @end
