@@ -8,9 +8,11 @@
 
 #import "MUSPostDescriptionCell.h"
 #import "ConstantsApp.h"
+#import "MUSChangeButton.h"
 
 @interface MUSPostDescriptionCell () <UITextViewDelegate>
 
+@property (weak, nonatomic) IBOutlet MUSChangeButton *changeButtonOutlet;
 @property (nonatomic, assign) NetworkType currentNetworkType;
 
 @end
@@ -21,7 +23,9 @@
 - (void)awakeFromNib {
     // Initialization code
     self.postDescriptionTextView.delegate = self;
-}
+    //self.postDescriptionTextView.editable = NO;
+    //self.postDescriptionTextView.scrollEnabled = NO;
+    }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
@@ -62,7 +66,7 @@
 #pragma mark - configuration PostDescriptionCell
 
 - (void) configurationPostDescriptionCell: (NSString*) postDescription andNetworkType: (NetworkType) networkType {
-    [self checkPostDescriptionTextViewStatus];
+    [self checkPostDescriptionStatus];
     self.currentNetworkType = networkType;
     if (![postDescription isEqualToString: changePlaceholderWhenStartEditing] && ![postDescription isEqualToString: kPlaceholderText]) {
         [self initialParametersOfTextInTextView: postDescription];
@@ -74,13 +78,13 @@
 
 #pragma mark - Check PostDescriptionTextView status
 
-- (void) checkPostDescriptionTextViewStatus {
+- (void) checkPostDescriptionStatus {
     if (!self.isEditableCell) {
+        self.changeButtonOutlet.hidden = YES;
         self.postDescriptionTextView.editable = NO;
         self.postDescriptionTextView.scrollEnabled = NO;
     } else {
-        self.postDescriptionTextView.editable = YES;
-        self.postDescriptionTextView.scrollEnabled = YES;
+        self.changeButtonOutlet.hidden = NO;
     }
 }
 
@@ -92,11 +96,11 @@
         textView.textColor = [UIColor blackColor];
         textView.tag = 1;
     }
-    [self.delegate beginEditingPostDescription: self.currentIndexPath];    
     return YES;
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    
     if( [text rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet]].location == NSNotFound ) {
         if (self.currentNetworkType != Twitters) {
             return textView.text.length + (text.length - range.length) <= countOfAllowedLettersInTextView;
@@ -109,12 +113,15 @@
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
+    
     if([textView.text length] == 0) {
         [self initialPostDescriptionTextView];
         [self.delegate saveChangesInPostDescription: textView.text];
     } else {
         [self.delegate saveChangesInPostDescription: textView.text];
     }
+    //self.postDescriptionTextView.editable = NO;
+    //self.postDescriptionTextView.scrollEnabled = NO;
 }
 
 #pragma mark initiation PostDescriptionTextView
@@ -129,11 +136,27 @@
 
 - (void) initialParametersOfTextInTextView : (NSString*) text {
     NSDictionary *options = @{ NSFontAttributeName: [UIFont
-                                fontWithName : musApp_PostDescriptionCell_TextView_Font_Name
-                                        size : musApp_PostDescriptionCell_TextView_Font_Size]};
-    NSAttributedString* attrString = [[NSAttributedString alloc] initWithString : text
-                                                                     attributes : options];
+                fontWithName : musApp_PostDescriptionCell_TextView_Font_Name
+                        size : musApp_PostDescriptionCell_TextView_Font_Size]};
+    NSAttributedString* attrString = [[NSAttributedString alloc]
+                                  initWithString : text
+                                      attributes : options];
     [self.postDescriptionTextView setAttributedText : attrString];
+    /*
+    if (self.isEditableCell) {
+        UIBezierPath *rectanglePath = [UIBezierPath bezierPathWithRect:CGRectMake(self.frame.size.width - 25, 0, 30, 30)];
+        [[self.postDescriptionTextView textContainer] setExclusionPaths:@[rectanglePath]];
+    }
+     */
+}
+
+
+- (IBAction)changeButtonTouch:(id)sender {
+    //self.postDescriptionTextView.editable = YES;
+    //self.postDescriptionTextView.scrollEnabled = YES;
+    self.postDescriptionTextView.autocorrectionType = UITextAutocorrectionTypeNo;
+    [self.postDescriptionTextView becomeFirstResponder];
+    [self.delegate beginEditingPostDescription: self.currentIndexPath];
 }
 
 @end
