@@ -59,8 +59,6 @@
 		97C2953F1B9826AB001B21FF /* Like.png in Resources */ = {isa = PBXBuildFile; fileRef = 97C2953E1B9826AB001B21FF /* Like.png */; };
 		97C295471B985528001B21FF /* UIImage+IconOfSocialNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C295461B985528001B21FF /* UIImage+IconOfSocialNetwork.m */; };
 		97C2954B1B985ADA001B21FF /* NSString+ReasonTypeInString.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C2954A1B985ADA001B21FF /* NSString+ReasonTypeInString.m */; };
-		97C295531B98645F001B21FF /* Button_addPhoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 97C295521B98645F001B21FF /* Button_addPhoto.png */; };
-		97C2955A1B986635001B21FF /* UIButton+MUSAddPhotoButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C295591B986635001B21FF /* UIButton+MUSAddPhotoButton.m */; };
 		97C350541B8490C7002C6D8E /* Button_Add.png in Resources */ = {isa = PBXBuildFile; fileRef = 97C350531B8490C7002C6D8E /* Button_Add.png */; };
 		97C3505E1B84AA50002C6D8E /* MUSGalleryViewOfPhotos.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C3505D1B84AA50002C6D8E /* MUSGalleryViewOfPhotos.m */; };
 		97C350611B84AAF6002C6D8E /* MUSGalleryViewOfPhotos.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97C350601B84AAF6002C6D8E /* MUSGalleryViewOfPhotos.xib */; };
@@ -84,6 +82,7 @@
 		97C4ACCF1B997DD4008B93B3 /* Button_Change.png in Resources */ = {isa = PBXBuildFile; fileRef = 97C4ACCE1B997DD4008B93B3 /* Button_Change.png */; };
 		97C4ACD31B997E3D008B93B3 /* MUSChangeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C4ACD21B997E3D008B93B3 /* MUSChangeButton.m */; };
 		97C4ACD71B99ABDE008B93B3 /* MUSAddPhotoButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C4ACD61B99ABDE008B93B3 /* MUSAddPhotoButton.m */; };
+		97C4ACD91B99BF99008B93B3 /* Button_addPhoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 97C4ACD81B99BF99008B93B3 /* Button_addPhoto.png */; };
 		97C63BD91B7246B6006E99C6 /* NSError+MUSError.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C63BD81B7246B6006E99C6 /* NSError+MUSError.m */; };
 		97C74ADE1B7DDEF4004DC863 /* UnknownUser.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 97C74ADD1B7DDEF4004DC863 /* UnknownUser.jpg */; };
 		97C7D79F1B73889B004DC83D /* MUSSocialNetworkLibraryConstantsForParseObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C7D79E1B73889B004DC83D /* MUSSocialNetworkLibraryConstantsForParseObjects.m */; };
@@ -212,9 +211,6 @@
 		97C295461B985528001B21FF /* UIImage+IconOfSocialNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+IconOfSocialNetwork.m"; path = "UniversalSharing/UniversalSharingApp/Categories/UIImage+IconOfSocialNetwork/UIImage+IconOfSocialNetwork.m"; sourceTree = SOURCE_ROOT; };
 		97C295491B985ADA001B21FF /* NSString+ReasonTypeInString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+ReasonTypeInString.h"; path = "UniversalSharing/UniversalSharingApp/Categories/NSString+ReasonTypeInString/NSString+ReasonTypeInString.h"; sourceTree = SOURCE_ROOT; };
 		97C2954A1B985ADA001B21FF /* NSString+ReasonTypeInString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+ReasonTypeInString.m"; path = "UniversalSharing/UniversalSharingApp/Categories/NSString+ReasonTypeInString/NSString+ReasonTypeInString.m"; sourceTree = SOURCE_ROOT; };
-		97C295521B98645F001B21FF /* Button_addPhoto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Button_addPhoto.png; sourceTree = "<group>"; };
-		97C295581B986635001B21FF /* UIButton+MUSAddPhotoButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIButton+MUSAddPhotoButton.h"; path = "UniversalSharing/UniversalSharingApp/Categories/UIButton+MUSAddPhotoButton/UIButton+MUSAddPhotoButton.h"; sourceTree = SOURCE_ROOT; };
-		97C295591B986635001B21FF /* UIButton+MUSAddPhotoButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIButton+MUSAddPhotoButton.m"; path = "UniversalSharing/UniversalSharingApp/Categories/UIButton+MUSAddPhotoButton/UIButton+MUSAddPhotoButton.m"; sourceTree = SOURCE_ROOT; };
 		97C350531B8490C7002C6D8E /* Button_Add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Button_Add.png; sourceTree = "<group>"; };
 		97C3505C1B84AA50002C6D8E /* MUSGalleryViewOfPhotos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUSGalleryViewOfPhotos.h; path = GalleryViewOfPhotos/MUSGalleryViewOfPhotos.h; sourceTree = "<group>"; };
 		97C3505D1B84AA50002C6D8E /* MUSGalleryViewOfPhotos.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUSGalleryViewOfPhotos.m; path = GalleryViewOfPhotos/MUSGalleryViewOfPhotos.m; sourceTree = "<group>"; };
@@ -249,6 +245,7 @@
 		97C4ACD21B997E3D008B93B3 /* MUSChangeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUSChangeButton.m; path = UniversalSharing/UniversalSharingApp/CustomViews/CustomButtons/ChangeButton/MUSChangeButton.m; sourceTree = SOURCE_ROOT; };
 		97C4ACD51B99ABDE008B93B3 /* MUSAddPhotoButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUSAddPhotoButton.h; path = UniversalSharing/UniversalSharingApp/CustomViews/CustomButtons/AddPhotoButton/MUSAddPhotoButton.h; sourceTree = SOURCE_ROOT; };
 		97C4ACD61B99ABDE008B93B3 /* MUSAddPhotoButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUSAddPhotoButton.m; path = UniversalSharing/UniversalSharingApp/CustomViews/CustomButtons/AddPhotoButton/MUSAddPhotoButton.m; sourceTree = SOURCE_ROOT; };
+		97C4ACD81B99BF99008B93B3 /* Button_addPhoto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Button_addPhoto.png; sourceTree = "<group>"; };
 		97C63BD71B7246B6006E99C6 /* NSError+MUSError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSError+MUSError.h"; path = "UniversalSharing/SocialNetworkLibrary/Categories/NSError+MUSError.h"; sourceTree = SOURCE_ROOT; };
 		97C63BD81B7246B6006E99C6 /* NSError+MUSError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSError+MUSError.m"; path = "UniversalSharing/SocialNetworkLibrary/Categories/NSError+MUSError.m"; sourceTree = SOURCE_ROOT; };
 		97C74ADD1B7DDEF4004DC863 /* UnknownUser.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = UnknownUser.jpg; sourceTree = "<group>"; };
@@ -431,7 +428,7 @@
 				97D1C4411B81DB5D00009BCF /* Comment.png */,
 				97C350531B8490C7002C6D8E /* Button_Add.png */,
 				97CB10DC1B9086D30061F851 /* btn-close@2x.png */,
-				97C295521B98645F001B21FF /* Button_addPhoto.png */,
+				97C4ACD81B99BF99008B93B3 /* Button_addPhoto.png */,
 				97C4ACCC1B997B9C008B93B3 /* Button_Delete.png */,
 				97C4ACCE1B997DD4008B93B3 /* Button_Change.png */,
 				18B505471B726FAF00679F9D /* Info.plist */,
@@ -454,7 +451,6 @@
 			children = (
 				979164A51B8C5FE000DFCE64 /* NSString+DateStringFromUNIXTimestamp */,
 				97C295481B985A6A001B21FF /* NSString+ReasonTypeInString */,
-				97C295541B986571001B21FF /* UIButton+MUSAddPhotoButton */,
 				18BB297C1B67E3F000B498AC /* UIButton+CornerRadiusButton */,
 				30416A131B735328000CB2C2 /* UiButton+MUSSocialNetwork */,
 				97BD0B5C1B8F4D1F00BFD4AF /* UIColor+ReasonColorForPost */,
@@ -829,16 +825,6 @@
 			path = "UIButton+CornerRadiusButton";
 			sourceTree = "<group>";
 		};
-		97C295541B986571001B21FF /* UIButton+MUSAddPhotoButton */ = {
-			isa = PBXGroup;
-			children = (
-				97C295581B986635001B21FF /* UIButton+MUSAddPhotoButton.h */,
-				97C295591B986635001B21FF /* UIButton+MUSAddPhotoButton.m */,
-			);
-			name = "UIButton+MUSAddPhotoButton";
-			path = "UIButton+CornerRadiusButton";
-			sourceTree = "<group>";
-		};
 		97C3505F1B84AA5A002C6D8E /* GalleryViewOfPhotos */ = {
 			isa = PBXGroup;
 			children = (
@@ -1201,6 +1187,7 @@
 				18BB29C01B67E3F000B498AC /* Images.xcassets in Resources */,
 				97C4ACCD1B997B9C008B93B3 /* Button_Delete.png in Resources */,
 				18BB29BA1B67E3F000B498AC /* MUSAccountTableViewCell.xib in Resources */,
+				97C4ACD91B99BF99008B93B3 /* Button_addPhoto.png in Resources */,
 				97C74ADE1B7DDEF4004DC863 /* UnknownUser.jpg in Resources */,
 				97C8A9DF1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.xib in Resources */,
 				30DBFDA11B6BAA3F002F83D0 /* FBimage.jpg in Resources */,
@@ -1212,7 +1199,6 @@
 				97C49E861B835B64005241CE /* MUSPostDescriptionCell.xib in Resources */,
 				18BB29BC1B67E3F000B498AC /* MUSTopUserProfileCell.xib in Resources */,
 				97C350611B84AAF6002C6D8E /* MUSGalleryViewOfPhotos.xib in Resources */,
-				97C295531B98645F001B21FF /* Button_addPhoto.png in Resources */,
 				30416A2B1B73AF49000CB2C2 /* MUSCollectionViewCell.xib in Resources */,
 				18BB29AF1B67E3F000B498AC /* Main.storyboard in Resources */,
 			);
@@ -1293,7 +1279,6 @@
 				97D1C44C1B81ED7F00009BCF /* DOPDropDownMenu.m in Sources */,
 				973D67AE1B69114C00A20D00 /* Post.m in Sources */,
 				30DBFD9F1B6B7A1A002F83D0 /* CacheImage.m in Sources */,
-				97C2955A1B986635001B21FF /* UIButton+MUSAddPhotoButton.m in Sources */,
 				97C63BD91B7246B6006E99C6 /* NSError+MUSError.m in Sources */,
 				97C460CF1B68B6AD00C010DE /* MUSPhotoManager.m in Sources */,
 				187FC52A1B65222D00A3916C /* User.m in Sources */,

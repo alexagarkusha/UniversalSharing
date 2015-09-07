@@ -87,8 +87,8 @@ NSString *const musAppButton_ImageName_UnknownUser = @"UnknownUser.jpg";
 #pragma mark - MUSPostsViewController
 
 NSString *const musApp_PostsViewController_NavigationBar_Title = @"Shared Posts";
-NSString *const musApp_PostsViewController_AllShareReasons = @"All share reasons";
-NSString *const musApp_PostsViewController_AllSocialNetworks = @"All social networks";
+NSString *const musApp_PostsViewController_AllShareReasons = @"All reasons";
+NSString *const musApp_PostsViewController_AllSocialNetworks = @"All networks";
 NSInteger const musApp_DropDownMenu_Height = 40;
 
 

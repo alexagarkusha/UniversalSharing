@@ -158,6 +158,7 @@
     
     self.postDescriptionTextView.autocorrectionType = UITextAutocorrectionTypeNo;
     [self.postDescriptionTextView becomeFirstResponder];
+    self.postDescriptionTextView.selectedRange = NSMakeRange([self.postDescriptionTextView.text length], 0);
     [self.delegate beginEditingPostDescription: self.currentIndexPath];
 }
 
