@@ -505,7 +505,7 @@
     MUSLocationTableViewController *vc = [MUSLocationTableViewController new];
     if ([[segue identifier] isEqualToString:goToLocationViewControllerSegueIdentifier]) {
         vc = [segue destinationViewController];
-        [vc setCurrentUser:_currentSocialNetwork];
+        [vc currentUser:_currentSocialNetwork];
         self.galeryView.isEditableCollectionView = NO;
         [self.galeryView.collectionView reloadData];
         

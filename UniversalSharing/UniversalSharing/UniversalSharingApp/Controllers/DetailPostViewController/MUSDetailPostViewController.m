@@ -416,7 +416,7 @@
     MUSLocationTableViewController *locationTableViewController = [MUSLocationTableViewController new];
     if ([[segue identifier] isEqualToString:goToLocationViewControllerSegueIdentifier]) {
         locationTableViewController = [segue destinationViewController];
-        [locationTableViewController setCurrentUser:_currentSocialNetwork];
+        [locationTableViewController currentUser:_currentSocialNetwork];
         __weak MUSDetailPostViewController *weakSelf = self;
         locationTableViewController.placeComplition = ^(Place* result, NSError *error) {
             /*
