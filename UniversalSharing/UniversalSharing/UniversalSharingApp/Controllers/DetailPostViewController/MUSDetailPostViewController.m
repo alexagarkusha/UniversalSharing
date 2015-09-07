@@ -166,7 +166,7 @@
 
 
 - (void) showPhotosOnCollectionView :(NSNotification *)notification{
-    NSArray  *theArray = [[notification userInfo] objectForKey:@"arrayOfPhotos"];
+    //NSArray  *theArray = [[notification userInfo] objectForKey:@"arrayOfPhotos"];
     [self performSegueWithIdentifier: @"goToDitailPostCollectionViewController" sender:nil];
 
 }
