@@ -15,4 +15,8 @@
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *subtitle;
 
+- (id) initWithTitle: (NSString *) newTitle andLocation: (CLLocationCoordinate2D) location;
+//- (MKAnnotationView*) annotationView;
+- (MKPinAnnotationView*) annotationPinView;
+
 @end
