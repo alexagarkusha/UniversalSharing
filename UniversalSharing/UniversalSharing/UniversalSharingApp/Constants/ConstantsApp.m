@@ -112,6 +112,7 @@ NSInteger const musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithUserPhot
 #pragma mark - MUSGalleryViewOfPhotos
 
 NSString *const musApp_GalleryOfPhotos_NibName = @"MUSGalleryViewOfPhotos";
+NSString *const notificationShowImagesInCollectionView = @"notificationShowImagesInCollectionView";
 
 #pragma mark - MUSGalleryOfPhotosCell
 

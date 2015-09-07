@@ -145,6 +145,7 @@ FOUNDATION_EXPORT NSInteger const musApp_PostCell_PostDescriptionLabel_LeftConst
 #pragma mark - MUSGalleryViewOfPhotos
 
 FOUNDATION_EXPORT NSString *const musApp_GalleryOfPhotos_NibName;
+FOUNDATION_EXPORT NSString *const notificationShowImagesInCollectionView;
 
 #pragma mark - MUSGalleryOfPhotosCell
 

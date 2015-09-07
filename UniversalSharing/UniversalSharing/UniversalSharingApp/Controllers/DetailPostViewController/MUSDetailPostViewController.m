@@ -19,6 +19,9 @@
 #import "NSString+MUSPathToDocumentsdirectory.h"
 #import "UIImage+LoadImageFromDataBase.h"
 #import "MUSDatabaseRequestStringsHelper.h"
+#import "MUSDitailPostCollectionViewController.h"
+#import "MUSGalleryViewOfPhotos.h"
+
 
 @interface MUSDetailPostViewController () <UITableViewDataSource, UITableViewDelegate, MUSPostDescriptionCellDelegate, MUSGalleryOfPhotosCellDelegate, MUSPostLocationCellDelegate,  UIActionSheetDelegate, UIAlertViewDelegate>
 /*!
@@ -48,7 +51,7 @@
 
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 
-@property (nonatomic, strong) UIBarButtonItem *shareButton;
+@property (nonatomic, strong) UIBarButtonItem *actionBarButton;
 /*!
  @abstract user of the current post
  */
@@ -62,15 +65,15 @@
  */
 @property (nonatomic, assign) NSInteger numberOfRowsInTable;
 
-@property (nonatomic, assign) BOOL isChangedPost;
-
 @end
 
 
 @implementation MUSDetailPostViewController
 
 - (void)viewDidLoad {
-    // Do any additional setup after loading the view.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showPhotosOnCollectionView :) name:notificationShowImagesInCollectionView object:nil];
+    ////////////////////////////////////////////////////////////////////////////
+       // Do any additional setup after loading the view.
     [self initiationPostDescriptionArrayOfPicturesAndPostLocation];
     [self initiationTableView];
     [self initiationCurrentSocialNetwork];
@@ -128,12 +131,26 @@
  */
 - (void) initiationNavigationBar {
     if (self.isEditableTableView) {
-        self.shareButton = [[UIBarButtonItem alloc] initWithTitle : musAppButtonTitle_Share style:2 target:self action: @selector(sendPost)];
-        self.navigationItem.rightBarButtonItem = self.shareButton;
+        
     }
+    
+    
+    
+    
+    ///////////////////////////// ????????????? /////////////////////////////////
+#warning DELETE ACTION SHEET
+    /*
+    ReasonType currentReasonType = self.currentPost.reason;
+    if (currentReasonType == Offline || currentReasonType == ErrorConnection) {
+        self.actionBarButton = [[UIBarButtonItem alloc] initWithTitle : musAppButtonTitle_Action style:2 target:self action: @selector(showActionSheet)];
+        self.navigationItem.rightBarButtonItem = self.actionBarButton;
+    }
+    */
+    ///////////////////////////// ????????????? /////////////////////////////////
+
+    
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle: musAppButtonTitle_Back style:2 target:self action: @selector(backToThePostsViewController)];
     self.navigationItem.leftBarButtonItem = backButton;
-    self.title = self.currentSocialNetwork.name;
 }
 
 #pragma mark initiation CurrentSocialNetwork
@@ -145,6 +162,13 @@
     self.currentSocialNetwork = [SocialNetwork sharedManagerWithType:self.currentPost.networkType];
 }
 
+
+
+- (void) showPhotosOnCollectionView :(NSNotification *)notification{
+    NSArray  *theArray = [[notification userInfo] objectForKey:@"arrayOfPhotos"];
+    [self performSegueWithIdentifier: @"goToDitailPostCollectionViewController" sender:nil];
+
+}
 #pragma mark initiation current postDescription, arrayOfUsersPictures, postLocation
 /*!
  @method
@@ -178,7 +202,7 @@
  */
 - (void) initiationActivityIndicator {
     self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    //self.activityIndicator.center = self.view.center;
+    self.activityIndicator.center=self.view.center;
     self.activityIndicator.hidesWhenStopped = YES;
     [self.view addSubview:self.activityIndicator];
 }
@@ -189,10 +213,8 @@
  @abstract start activity indicator animating
  */
 - (void) startActivityIndicatorAnimating {
-    self.activityIndicator.color = [UIColor blueColor];
-    [self.shareButton setCustomView : self.activityIndicator];
     [self.activityIndicator startAnimating];
-    self.shareButton.enabled = NO;
+    self.actionBarButton.enabled = NO;
 }
 
 #pragma mark  stop Activity Indicator Animating
@@ -202,9 +224,46 @@
  */
 - (void) stopActivityIndicatorAnimating {
     [self.activityIndicator stopAnimating];
-    [self.shareButton setCustomView : nil];
-    self.shareButton.enabled = YES;
+    self.actionBarButton.enabled = YES;
 }
+
+
+
+///////////////////////////// ????????????? /////////////////////////////////
+#warning DELETE ACTION SHEET
+
+#pragma mark UIActionSheet
+/*!
+ @method
+ @abstract show Action sheet with buttons : Share post, Edit post and Cancel
+ */
+/*
+- (void) showActionSheet {
+    UIActionSheet* sheet = [[UIActionSheet alloc] init];
+    sheet.title = titleActionSheet;
+    sheet.delegate = self;
+    sheet.cancelButtonIndex = [sheet addButtonWithTitle:musAppButtonTitle_Cancel];
+    NSArray *arrayButtons = [[NSArray alloc] initWithObjects: musAppButtonTitle_Share, musAppButtonTitle_Edit, nil];
+    for (int i = 0; i < arrayButtons.count; i++) {
+        [sheet addButtonWithTitle: [arrayButtons objectAtIndex: i]];
+    }
+    [sheet showInView:self.view];
+}
+
+- (void) actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if ( buttonIndex != 0 ) {
+        if (buttonIndex == 1) {
+            [self sendPost];
+        } else {
+            self.isEditableTableView = YES;
+            [self.tableView reloadData];
+        }
+    }
+}
+*/
+///////////////////////////// ????????????? /////////////////////////////////
+
+
 
 #pragma mark SentPost
 /*!
@@ -242,7 +301,7 @@
  */
 - (void) backToThePostsViewController {
     // back to the Posts ViewController. If user did some changes in post - show alert. And then update post.
-    if (self.isChangedPost) {
+    if (self.isEditableTableView) {
         [self showUpdateAlert];
     } else {
         [self.navigationController popViewControllerAnimated:YES];
@@ -257,6 +316,7 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     DetailPostVC_CellType detailPostVC_CellType = indexPath.row;
     switch (detailPostVC_CellType) {
         case GalleryOfPhotosCellType: {
@@ -265,6 +325,7 @@
                 cell = [MUSGalleryOfPhotosCell galleryOfPhotosCell];
             }            
             cell.delegate = self;
+           
             cell.isEditableCell = self.isEditableTableView;
             [cell configurationGalleryOfPhotosCellByArrayOfImages : self.arrayOfPicturesInPost
                                                 andDateCreatePost : self.currentPost.dateCreate
@@ -314,6 +375,7 @@
     }
 }
 
+
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -361,18 +423,23 @@
              */
             if (result) {
                 weakSelf.postPlace = result;
-                weakSelf.isChangedPost = YES;
                 [weakSelf.tableView reloadData];
             }
         };
-    }
+    } else if ([[segue identifier]isEqualToString : @"goToDitailPostCollectionViewController"]) {
+                   MUSDitailPostCollectionViewController *vc = [MUSDitailPostCollectionViewController new];
+
+        vc = [segue destinationViewController];
+        //[vc setNetwork:self.arrayWithNetworksObj[self.selectedIndexPath.row]];
+        }
+    
 }
+
 
 #pragma mark - MUSPostDescriptionCellDelegate
 
 - (void) saveChangesInPostDescription:(NSString *)postDescription {
     self.postDescription = postDescription;
-    self.isChangedPost = YES;
     [self.tableView reloadData];
 }
 
@@ -409,7 +476,6 @@
         if(!error) {
             ImageToPost *imageToPost = result;
             [weakSelf.arrayOfPicturesInPost addObject: imageToPost.image];
-            weakSelf.isChangedPost = YES;
             [weakSelf.tableView reloadData];
         } else {
             [weakSelf showErrorAlertWithError : error];
@@ -430,7 +496,7 @@
     CGRect initialFrame = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     CGRect convertedFrame = [self.view convertRect:initialFrame fromView:nil];
     CGRect tvFrame = _tableView.frame;
-    tvFrame.size.height = convertedFrame.origin.y - self.tabBarController.tabBar.frame.size.height - 14;
+    tvFrame.size.height = convertedFrame.origin.y - self.tabBarController.tabBar.frame.size.height - 16;
     _tableView.frame = tvFrame;
     
 }
@@ -546,6 +612,9 @@
     [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringLocationsForUpdateWithObjectPost: self.currentPost]];
 }
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 
 
