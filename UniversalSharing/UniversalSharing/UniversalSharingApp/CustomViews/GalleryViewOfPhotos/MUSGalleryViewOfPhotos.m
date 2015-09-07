@@ -10,7 +10,6 @@
 #import "ConstantsApp.h"
 #import "MUSCollectionViewCell.h"
 
-
 @interface MUSGalleryViewOfPhotos () <UICollectionViewDataSource, UICollectionViewDelegate, MUSCollectionViewCellDelegate>
 
 @property (assign, nonatomic)  NSInteger indexForDeletePicture;
@@ -68,7 +67,7 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"indexPAth = %d", indexPath.row);
+   // NSLog(@"indexPAth = %d", indexPath.row);
     
     MUSCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier: [MUSCollectionViewCell customCellID] forIndexPath : indexPath];
     cell.delegate = self;
@@ -96,6 +95,10 @@
     [self.collectionView scrollToItemAtIndexPath:lastIndexPath atScrollPosition:(UICollectionViewScrollPositionRight) animated:YES];
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSDictionary *theInfo = [NSDictionary dictionaryWithObjectsAndKeys:self.arrayOfPhotos,@"arrayOfPhotos", nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:notificationShowImagesInCollectionView object:nil userInfo:theInfo];
+}
 
 
 #pragma mark - UIScrollViewDelegate

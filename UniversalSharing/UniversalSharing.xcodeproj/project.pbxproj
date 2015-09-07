@@ -42,6 +42,7 @@
 		30416A641B79DDD4000CB2C2 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 30416A631B79DDD4000CB2C2 /* libsqlite3.dylib */; };
 		30416A6A1B81D0E0000CB2C2 /* DataBaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 30416A691B81D0E0000CB2C2 /* DataBaseManager.m */; };
 		306ED75C1B6FA3170014D975 /* MUSLocationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 306ED75B1B6FA3170014D975 /* MUSLocationTableViewController.m */; };
+		30A8B56E1B99EB60006C9AFE /* MUSDitailPostCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A8B56D1B99EB60006C9AFE /* MUSDitailPostCollectionViewController.m */; };
 		30DBFD8B1B677A9A002F83D0 /* TwitterNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD8A1B677A9A002F83D0 /* TwitterNetwork.m */; };
 		30DBFD8F1B677AD7002F83D0 /* VKNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD8E1B677AD7002F83D0 /* VKNetwork.m */; };
 		30DBFD931B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD921B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.m */; };
@@ -180,6 +181,8 @@
 		30416A691B81D0E0000CB2C2 /* DataBaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataBaseManager.m; sourceTree = "<group>"; };
 		306ED75A1B6FA3170014D975 /* MUSLocationTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSLocationTableViewController.h; sourceTree = "<group>"; };
 		306ED75B1B6FA3170014D975 /* MUSLocationTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSLocationTableViewController.m; sourceTree = "<group>"; };
+		30A8B56C1B99EB60006C9AFE /* MUSDitailPostCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSDitailPostCollectionViewController.h; sourceTree = "<group>"; };
+		30A8B56D1B99EB60006C9AFE /* MUSDitailPostCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSDitailPostCollectionViewController.m; sourceTree = "<group>"; };
 		30DBFD891B677A9A002F83D0 /* TwitterNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterNetwork.h; sourceTree = "<group>"; };
 		30DBFD8A1B677A9A002F83D0 /* TwitterNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterNetwork.m; sourceTree = "<group>"; };
 		30DBFD8D1B677AD7002F83D0 /* VKNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VKNetwork.h; sourceTree = "<group>"; };
@@ -506,6 +509,7 @@
 		18BB298B1B67E3F000B498AC /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				30A8B56B1B99EAFF006C9AFE /* DitailPostCollectionView */,
 				306ED7591B6FA2DB0014D975 /* LocationTableViewController */,
 				18BB298C1B67E3F000B498AC /* AccountsViewController */,
 				18BB298F1B67E3F000B498AC /* PostsViewController */,
@@ -683,6 +687,15 @@
 				306ED75B1B6FA3170014D975 /* MUSLocationTableViewController.m */,
 			);
 			name = LocationTableViewController;
+			sourceTree = "<group>";
+		};
+		30A8B56B1B99EAFF006C9AFE /* DitailPostCollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				30A8B56C1B99EB60006C9AFE /* MUSDitailPostCollectionViewController.h */,
+				30A8B56D1B99EB60006C9AFE /* MUSDitailPostCollectionViewController.m */,
+			);
+			name = DitailPostCollectionView;
 			sourceTree = "<group>";
 		};
 		30DBFD881B677A9A002F83D0 /* TwitterNetwork */ = {
@@ -1308,6 +1321,7 @@
 				303CAC7D1B860A2F00B48D72 /* NSString+MUSPathToDocumentsdirectory.m in Sources */,
 				303CAC881B998FB400B48D72 /* LSFadingSwipeToDeleteCollectionViewLayout.m in Sources */,
 				30416A2A1B73AF49000CB2C2 /* MUSCollectionViewCell.m in Sources */,
+				30A8B56E1B99EB60006C9AFE /* MUSDitailPostCollectionViewController.m in Sources */,
 				97C49E8B1B836AFD005241CE /* MUSPostLocationCell.m in Sources */,
 				97D1C43F1B81D0A200009BCF /* MUSPostCell.m in Sources */,
 				18BB29B91B67E3F000B498AC /* MUSAccountTableViewCell.m in Sources */,

@@ -19,6 +19,9 @@
 #import "NSString+MUSPathToDocumentsdirectory.h"
 #import "UIImage+LoadImageFromDataBase.h"
 #import "MUSDatabaseRequestStringsHelper.h"
+#import "MUSDitailPostCollectionViewController.h"
+#import "MUSGalleryViewOfPhotos.h"
+
 
 @interface MUSDetailPostViewController () <UITableViewDataSource, UITableViewDelegate, MUSPostDescriptionCellDelegate, MUSGalleryOfPhotosCellDelegate, MUSPostLocationCellDelegate,  UIActionSheetDelegate, UIAlertViewDelegate>
 /*!
@@ -68,7 +71,9 @@
 @implementation MUSDetailPostViewController
 
 - (void)viewDidLoad {
-    // Do any additional setup after loading the view.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showPhotosOnCollectionView :) name:notificationShowImagesInCollectionView object:nil];
+    ////////////////////////////////////////////////////////////////////////////
+       // Do any additional setup after loading the view.
     [self initiationPostDescriptionArrayOfPicturesAndPostLocation];
     [self initiationTableView];
     [self initiationCurrentSocialNetwork];
@@ -131,6 +136,7 @@
     
     
     
+    
     ///////////////////////////// ????????????? /////////////////////////////////
 #warning DELETE ACTION SHEET
     /*
@@ -156,6 +162,13 @@
     self.currentSocialNetwork = [SocialNetwork sharedManagerWithType:self.currentPost.networkType];
 }
 
+
+
+- (void) showPhotosOnCollectionView :(NSNotification *)notification{
+    NSArray  *theArray = [[notification userInfo] objectForKey:@"arrayOfPhotos"];
+    [self performSegueWithIdentifier: @"goToDitailPostCollectionViewController" sender:nil];
+
+}
 #pragma mark initiation current postDescription, arrayOfUsersPictures, postLocation
 /*!
  @method
@@ -303,6 +316,7 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     DetailPostVC_CellType detailPostVC_CellType = indexPath.row;
     switch (detailPostVC_CellType) {
         case GalleryOfPhotosCellType: {
@@ -311,6 +325,7 @@
                 cell = [MUSGalleryOfPhotosCell galleryOfPhotosCell];
             }            
             cell.delegate = self;
+           
             cell.isEditableCell = self.isEditableTableView;
             [cell configurationGalleryOfPhotosCellByArrayOfImages : self.arrayOfPicturesInPost
                                                 andDateCreatePost : self.currentPost.dateCreate
@@ -359,6 +374,7 @@
         }
     }
 }
+
 
 #pragma mark - UITableViewDelegate
 
@@ -410,8 +426,15 @@
                 [weakSelf.tableView reloadData];
             }
         };
-    }
+    } else if ([[segue identifier]isEqualToString : @"goToDitailPostCollectionViewController"]) {
+                   MUSDitailPostCollectionViewController *vc = [MUSDitailPostCollectionViewController new];
+
+        vc = [segue destinationViewController];
+        //[vc setNetwork:self.arrayWithNetworksObj[self.selectedIndexPath.row]];
+        }
+    
 }
+
 
 #pragma mark - MUSPostDescriptionCellDelegate
 
@@ -589,6 +612,9 @@
     [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringLocationsForUpdateWithObjectPost: self.currentPost]];
 }
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 
 

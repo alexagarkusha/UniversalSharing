@@ -104,7 +104,8 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
     MUSCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[MUSCollectionViewCell customCellID] forIndexPath:indexPath];
     if (self.flag && [self.arrayWithChosenImages count] < 3) {
         cell.photoImageViewCell.image  = nil;
-        [cell.deletePhotoButtonOutlet setImage:nil forState:UIControlStateNormal];//setBackgroundColor:[UIColor blackColor]];
+        cell.deletePhotoButtonOutlet.hidden = YES;
+        //[cell.deletePhotoButtonOutlet setImage:nil forState:UIControlStateNormal];//setBackgroundColor:[UIColor blackColor]];
         return cell;
     }
         cell.delegate = self;
@@ -140,12 +141,6 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
         [self.arrayWithChosenImages removeObjectAtIndex: indexPath.row];
     NSLog(@"lllll");
     self.flag = YES;
-//    NSIndexPath* newIndexPath = [NSIndexPath indexPathForRow:indexPath.row+1 inSection:indexPath.section];
-// MUSCollectionViewCell *cell1 = (MUSCollectionViewCell*)[self.collectionView cellForItemAtIndexPath:indexPath];
-//     MUSCollectionViewCell *cell = (MUSCollectionViewCell*)[self.collectionView cellForItemAtIndexPath:newIndexPath];
-//    //[cell.photoImageViewCell setBackgroundColor:[UIColor clearColor]];
-//    cell = nil;
-//    cell1= nil;
         if ([self.arrayWithChosenImages count] == 0) {
             //self.collectionView.backgroundColor = [UIColor whiteColor];
             self.arrayWithChosenImages = nil;
