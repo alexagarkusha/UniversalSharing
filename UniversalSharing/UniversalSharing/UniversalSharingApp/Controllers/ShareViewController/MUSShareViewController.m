@@ -13,7 +13,7 @@
 #import "MUSPhotoManager.h"
 #import "MUSLocationManager.h"
 #import "MUSCollectionViewCell.h"
-#import "MUSLocationTableViewController.h"
+#import "MUSLocationViewController.h"
 #import "Place.h"
 #import "UIButton+MUSSocialNetwork.h"
 #import "MUSGaleryView.h"
@@ -502,7 +502,7 @@
 #pragma mark - prepareForSegue
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    MUSLocationTableViewController *vc = [MUSLocationTableViewController new];
+    MUSLocationViewController *vc = [MUSLocationViewController new];
     if ([[segue identifier] isEqualToString:goToLocationViewControllerSegueIdentifier]) {
         vc = [segue destinationViewController];
         [vc currentUser:_currentSocialNetwork];

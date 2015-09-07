@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -44,8 +44,8 @@
                         <gestureRecognizers/>
                     </view>
                     <connections>
-                        <segue destination="Wg0-6x-xhW" kind="show" identifier="Location" id="Zpk-wC-Emq"/>
                         <segue destination="AHh-oo-GgQ" kind="show" identifier="goToDitailPostCollectionViewController" id="1Ga-tU-xEG"/>
+                        <segue destination="57R-w2-ySy" kind="show" identifier="Location" id="IAC-iQ-XMw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ra9-yG-8AE" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -390,7 +390,7 @@
                         <outlet property="sharePhotoButton" destination="5Z1-vA-aVX" id="JrQ-sz-gSe"/>
                         <outlet property="shareToolBar" destination="xwB-dx-Bb3" id="sw4-sM-akm"/>
                         <outlet property="toolBarLayoutConstraint" destination="AEN-V0-A19" id="U7t-rt-nZT"/>
-                        <segue destination="Wg0-6x-xhW" kind="show" identifier="Location" id="kha-pS-nBS"/>
+                        <segue destination="57R-w2-ySy" kind="show" identifier="Location" id="GpK-3N-ETI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
@@ -402,6 +402,82 @@
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1419" y="178"/>
+        </scene>
+        <!--Location View Controller-->
+        <scene sceneID="9dF-Vv-LOw">
+            <objects>
+                <viewController id="57R-w2-ySy" customClass="MUSLocationViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="fd7-xy-Ntv"/>
+                        <viewControllerLayoutGuide type="bottom" id="0Np-tT-SEC"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="uFn-9S-XED">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="SaV-6C-DDY">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LocationCell" id="xbe-0B-kMB">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xbe-0B-kMB" id="lPl-aR-E3P">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="57R-w2-ySy" id="dQ7-Uh-gix"/>
+                                    <outlet property="delegate" destination="57R-w2-ySy" id="AKp-gB-MGW"/>
+                                </connections>
+                            </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mpg-wF-a9d" customClass="MUSCustomMapView">
+                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                                <subviews>
+                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="YHd-WZ-eaz">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="Mpg-wF-a9d" id="0GN-mt-ls5"/>
+                                        </connections>
+                                    </mapView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="YHd-WZ-eaz" secondAttribute="trailing" id="NBu-ak-hf1"/>
+                                    <constraint firstItem="YHd-WZ-eaz" firstAttribute="leading" secondItem="Mpg-wF-a9d" secondAttribute="leading" id="UZR-IG-5FM"/>
+                                    <constraint firstItem="YHd-WZ-eaz" firstAttribute="top" secondItem="Mpg-wF-a9d" secondAttribute="top" id="XgY-xP-B2d"/>
+                                    <constraint firstAttribute="bottom" secondItem="YHd-WZ-eaz" secondAttribute="bottom" id="j8R-YQ-fI5"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="mapView" destination="YHd-WZ-eaz" id="KBY-JX-eZE"/>
+                                </connections>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Mpg-wF-a9d" firstAttribute="leading" secondItem="uFn-9S-XED" secondAttribute="leading" id="1TE-Cl-1ri"/>
+                            <constraint firstAttribute="trailing" secondItem="Mpg-wF-a9d" secondAttribute="trailing" id="4eJ-ch-wYV"/>
+                            <constraint firstItem="Mpg-wF-a9d" firstAttribute="top" secondItem="fd7-xy-Ntv" secondAttribute="bottom" id="OfN-dw-no3"/>
+                            <constraint firstItem="0Np-tT-SEC" firstAttribute="top" secondItem="Mpg-wF-a9d" secondAttribute="bottom" id="ZGK-o3-xFY"/>
+                            <constraint firstAttribute="trailing" secondItem="SaV-6C-DDY" secondAttribute="trailing" id="a1M-2q-vWt"/>
+                            <constraint firstItem="SaV-6C-DDY" firstAttribute="top" secondItem="uFn-9S-XED" secondAttribute="top" id="cGo-vj-gxU"/>
+                            <constraint firstAttribute="bottom" secondItem="SaV-6C-DDY" secondAttribute="bottom" id="m6B-fz-StW"/>
+                            <constraint firstItem="SaV-6C-DDY" firstAttribute="leading" secondItem="uFn-9S-XED" secondAttribute="leading" id="wbt-ha-6fa"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="customMapView" destination="Mpg-wF-a9d" id="qA4-vf-Zpn"/>
+                        <outlet property="leftConstraintCustomMapView" destination="UZR-IG-5FM" id="G5h-55-ov3"/>
+                        <outlet property="leftConstraintTableView" destination="wbt-ha-6fa" id="dHB-bh-WIn"/>
+                        <outlet property="rightConstraintCustomMapView" destination="4eJ-ch-wYV" id="Cze-tG-Lck"/>
+                        <outlet property="rightConstraintTavbleView" destination="a1M-2q-vWt" id="QSU-0h-LAZ"/>
+                        <outlet property="tableView" destination="SaV-6C-DDY" id="mKr-Yu-JX0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aEs-8f-FMB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2118" y="178"/>
         </scene>
         <!--User Location -->
         <scene sceneID="kb6-lF-UVy">
@@ -436,7 +512,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s8n-hd-1ig" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2118" y="178"/>
+            <point key="canvasLocation" x="2522" y="908"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
@@ -464,6 +540,6 @@
         <image name="second" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Zpk-wC-Emq"/>
+        <segue reference="IAC-iQ-XMw"/>
     </inferredMetricsTieBreakers>
 </document>

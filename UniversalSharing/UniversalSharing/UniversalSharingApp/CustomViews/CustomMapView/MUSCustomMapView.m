@@ -41,7 +41,7 @@
 - (void) initiationMapView : (NSArray*) arrayOfPlaces withDistance : (CGFloat) distance {
     [self.mapView removeAnnotations: self.mapView.annotations];
 
-    self.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
+    //self.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
     
     Place *firstPlace = [arrayOfPlaces firstObject];
     CLLocationCoordinate2D currentCityLocation = CLLocationCoordinate2DMake([firstPlace.latitude floatValue], [firstPlace.longitude floatValue]);

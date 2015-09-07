@@ -13,7 +13,7 @@
 #import "MUSPostLocationCell.h"
 #import "ConstantsApp.h"
 #import "MUSPhotoManager.h"
-#import "MUSLocationTableViewController.h"
+#import "MUSLocationViewController.h"
 #import <CoreLocation/CoreLocation.h>
 #import "DataBaseManager.h"
 #import "NSString+MUSPathToDocumentsdirectory.h"
@@ -413,7 +413,7 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    MUSLocationTableViewController *locationTableViewController = [MUSLocationTableViewController new];
+    MUSLocationViewController *locationTableViewController = [MUSLocationViewController new];
     if ([[segue identifier] isEqualToString:goToLocationViewControllerSegueIdentifier]) {
         locationTableViewController = [segue destinationViewController];
         [locationTableViewController currentUser:_currentSocialNetwork];
