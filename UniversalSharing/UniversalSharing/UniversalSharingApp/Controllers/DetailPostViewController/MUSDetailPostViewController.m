@@ -19,7 +19,7 @@
 #import "NSString+MUSPathToDocumentsdirectory.h"
 #import "UIImage+LoadImageFromDataBase.h"
 #import "MUSDatabaseRequestStringsHelper.h"
-#import "MUSDitailPostCollectionViewController.h"
+#import "MUSDetailPostCollectionViewController.h"
 #import "MUSGalleryViewOfPhotos.h"
 
 
@@ -409,12 +409,14 @@
 #pragma mark - MUSPostLocationCellDelegate
 
 - (void) changeLocationForPost {
+    //[self performSegueWithIdentifier:@"go" sender:nil];
+
     [self performSegueWithIdentifier: goToLocationViewControllerSegueIdentifier sender:nil];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    MUSLocationViewController *locationTableViewController = [MUSLocationViewController new];
     if ([[segue identifier] isEqualToString:goToLocationViewControllerSegueIdentifier]) {
+        MUSLocationViewController *locationTableViewController = [MUSLocationViewController new];
         locationTableViewController = [segue destinationViewController];
         [locationTableViewController currentUser:_currentSocialNetwork];
         __weak MUSDetailPostViewController *weakSelf = self;
@@ -428,10 +430,10 @@
             }
         };
     } else if ([[segue identifier]isEqualToString : @"goToDitailPostCollectionViewController"]) {
-                   MUSDitailPostCollectionViewController *vc = [MUSDitailPostCollectionViewController new];
-
-        vc = [segue destinationViewController];
-        //[vc setNetwork:self.arrayWithNetworksObj[self.selectedIndexPath.row]];
+                   MUSDetailPostCollectionViewController *vc = [MUSDetailPostCollectionViewController new];
+         vc = [segue destinationViewController];
+        [vc setObjectsWithArray:self.arrayOfPicturesInPost andCurrentSocialNetwork:_currentSocialNetwork];
+        
         }
     
 }
