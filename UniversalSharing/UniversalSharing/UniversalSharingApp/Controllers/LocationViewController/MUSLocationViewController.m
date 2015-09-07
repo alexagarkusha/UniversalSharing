@@ -39,11 +39,14 @@
 
 //@property (strong, nonatomic) MUSCustomMapView *musCustomMapView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftConstraintTableView;
+#warning RENAME PROPERTY
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightConstraintTavbleView;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightConstraintCustomMapView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftConstraintCustomMapView;
 @property (weak, nonatomic) IBOutlet MUSCustomMapView *customMapView;
+
+@property (assign, nonatomic) BOOL isOpenTableView;
 
 @end
 
@@ -67,6 +70,11 @@
     [self userCurrentLocation];
 }
 
+- (void) viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:YES];
+    [self closeTableViewWithPlaces];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -77,33 +85,49 @@
 }
 
 - (void) initiationNavigationBar {
-    UIBarButtonItem *choosePlaceButton = [[UIBarButtonItem alloc] initWithTitle: @"Choose place" style:2 target:self action: @selector(choosePlace)];
+    UIBarButtonItem *choosePlaceButton = [[UIBarButtonItem alloc] initWithTitle: @"Choose place" style:2 target:self action: @selector(showCloseTable)];
     self.navigationItem.rightBarButtonItem = choosePlaceButton;
 }
 
-- (void) choosePlace {
+- (void) showCloseTable {
+    if (!self.isOpenTableView) {
+        [self showTableViewWithPlaces];
+        self.isOpenTableView = YES;
+    } else {
+        [self closeTableViewWithPlaces];
+        self.isOpenTableView = NO;
+    }
+}
+
+- (void) showTableViewWithPlaces {
     self.leftConstraintTableView.constant =  self.view.frame.size.width / 3;
     self.rightConstraintTavbleView.constant = - (self.view.frame.size.width / 3) * 2;
-
+    
     self.leftConstraintCustomMapView.constant = - (self.view.frame.size.width / 3);
     self.rightConstraintCustomMapView.constant = (self.view.frame.size.width / 3) * 2;
     
-    
-    
-    //self.rightConstraintCustomMapView.constant = - ([UIScreen mainScreen].bounds.size.width / 3) * 2;
-    //self.leftConstraintTableView.constant = [UIScreen mainScreen].bounds.size.width;
-
-    
-    
-    
-    [UIView animateWithDuration: 0.3  animations:^{
+    [UIView animateWithDuration: 0.4  animations:^{
         [self.view layoutIfNeeded];
-        //[self.galeryView.collectionView reloadData];
         [self.view setNeedsLayout];
     }];
     [UIView commitAnimations];
-
 }
+
+- (void) closeTableViewWithPlaces {
+    self.leftConstraintTableView.constant =  self.view.frame.size.width;
+    self.rightConstraintTavbleView.constant = - self.view.frame.size.width;
+    
+    self.leftConstraintCustomMapView.constant = 0;
+    self.rightConstraintCustomMapView.constant = 0;
+    
+    [UIView animateWithDuration: 0.4  animations:^{
+        [self.view layoutIfNeeded];
+        [self.view setNeedsLayout];
+    }];
+    [UIView commitAnimations];
+}
+
+
 
 
 #pragma mark - userCurrentLocation

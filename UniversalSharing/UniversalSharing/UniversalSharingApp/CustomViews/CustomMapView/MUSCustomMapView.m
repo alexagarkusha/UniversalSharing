@@ -43,20 +43,68 @@
 
     //self.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
     
+    self.mapView.delegate = self;
+    
     Place *firstPlace = [arrayOfPlaces firstObject];
     CLLocationCoordinate2D currentCityLocation = CLLocationCoordinate2DMake([firstPlace.latitude floatValue], [firstPlace.longitude floatValue]);
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(currentCityLocation, distance * 2, distance * 2);
     
     NSMutableArray *arrayOfAnnotations = [[NSMutableArray alloc] init];
     for (int i = 0; i < arrayOfPlaces.count; i++) {
-        MUSAnnotation *pin = [[MUSAnnotation alloc] init];
+        //MUSAnnotation *pin = [[MUSAnnotation alloc] init];
+        
+        
+        
+        
+        
         Place *currentPlace = [arrayOfPlaces objectAtIndex: i];
-        pin.coordinate = CLLocationCoordinate2DMake([currentPlace.latitude floatValue], [currentPlace.longitude floatValue]);
-        pin.title = currentPlace.fullName;
+        MUSAnnotation *pin = [[MUSAnnotation alloc] initWithTitle: currentPlace.fullName andLocation: CLLocationCoordinate2DMake([currentPlace.latitude floatValue], [currentPlace.longitude floatValue])];
+        
+        
+        
+        //pin.coordinate = CLLocationCoordinate2DMake([currentPlace.latitude floatValue], [currentPlace.longitude floatValue]);
+        //pin.title = currentPlace.fullName;
         [arrayOfAnnotations addObject: pin];
     }
     [self.mapView addAnnotations : arrayOfAnnotations];
     [self.mapView setRegion : region animated:YES];
+
+}
+
+
+
+
+/*
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
+    
+    if ([annotation isKindOfClass:[MUSAnnotation class]]) {
+        MUSAnnotation *newAnnotaton = (MUSAnnotation*) annotation;
+        MKAnnotationView *annotationView = [mapView dequeueReusableAnnotationViewWithIdentifier: @"MUSAnnotation"];
+        if (annotationView) {
+            annotationView.annotation = annotation;
+        } else {
+            annotationView = newAnnotaton.annotationView;
+        }
+        return annotationView;
+    } else {
+        return nil;
+    }
+}
+*/
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
+    
+    if ([annotation isKindOfClass:[MUSAnnotation class]]) {
+        MUSAnnotation *newAnnotaton = (MUSAnnotation*) annotation;
+        MKPinAnnotationView *annotationView = (MKPinAnnotationView*) [mapView dequeueReusableAnnotationViewWithIdentifier: @"MUSAnnotation"];
+        if (annotationView) {
+            annotationView.annotation = annotation;
+        } else {
+            annotationView = [newAnnotaton annotationPinView];
+        }
+        return annotationView;
+    } else {
+        return nil;
+    }
 }
 
 
