@@ -63,15 +63,6 @@
     } else {
         return heightOfRow = musAppDetailPostVC_HeightOfGalleryOfPhotosCell_WithPhotos;
     }
-    
-    
-    /*
-    if (countOfImages > 0 || isEditableCell) {
-        return heightOfRow = musAppDetailPostVC_HeightOfGalleryOfPhotosCell_WithPhotos;
-    } else {
-        return heightOfRow = musAppDetailPostVC_HeightOfGalleryOfPhotosCell_WithoutPhotos;
-    }
-     */
 }
 
 - (void) configurationGalleryOfPhotosCellByArrayOfImages: (NSMutableArray*) arrayOfImages andDateCreatePost:(NSString *)postDateCreate withReasonOfPost : (ReasonType) reasonOfPost andWithSocialNetworkIconName:(NSString *)socialNetworkIconName andUser: (User*)user {
@@ -79,7 +70,17 @@
     [self checkGalleryOfPhotosStatus];
     [self initiationGalleryViewOfPhotos : arrayOfImages];
     
-    if (arrayOfImages.count > self.numberOfImages && self.numberOfImages >= 1) {
+    
+    NSLog(@"arrayOfImages = %d", arrayOfImages.count);
+    NSLog(@"numberOfImages = %d", self.numberOfImages);
+    
+    
+    //    if ((arrayOfImages.count > self.numberOfImages && (self.numberOfImages >= 1 || (arrayOfImages.count == self.numberOfImages + 1 && arrayOfImages.count > 1))) {
+    //        [self.galleryViewOfPhotos scrollCollectionViewToLastPhoto];
+    //    }
+
+    
+    if ((self.numberOfImages != 0 || (arrayOfImages.count == 1 && !self.numberOfImages)) && self.isEditableCell) {
         [self.galleryViewOfPhotos scrollCollectionViewToLastPhoto];
     }
     self.numberOfImages = arrayOfImages.count;
@@ -151,7 +152,7 @@
 
 - (void) arrayOfPhotos:(NSArray *)arrayOfPhotos {
     [self.delegate editArrayOfPicturesInPost: arrayOfPhotos];
-    self.numberOfImages = arrayOfPhotos.count;
+    self.numberOfImages = arrayOfPhotos.count + 1;
 }
 
 - (void) addPhotoToPost {

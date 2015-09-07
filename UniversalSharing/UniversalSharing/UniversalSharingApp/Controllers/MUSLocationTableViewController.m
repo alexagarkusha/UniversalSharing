@@ -10,6 +10,7 @@
 #import "Place.h"
 #import "ConstantsApp.h"
 #import "MUSLocationManager.h"
+#import "MUSCustomMapView.h"
 
 @interface MUSLocationTableViewController () <UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate>
 /*!
@@ -30,21 +31,34 @@
 
 /////////////////////////////////////////////////
 @property (strong, nonatomic) Location *currentLocation;
+
+
+@property (strong, nonatomic) MUSCustomMapView *musCustomMapView;
+
 @end
 
 @implementation MUSLocationTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self initiationMapView];
 }
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.stringDistance = distanceEqual1000;
+    self.stringDistance = distanceEqual100;
     [self userCurrentLocation];
 }
 
-- (void) setCurrentUser:(SocialNetwork*)socialNetwork {
+- (void) initiationMapView {
+    self.musCustomMapView = [[[NSBundle mainBundle] loadNibNamed: [MUSCustomMapView viewID] owner:self options:nil] objectAtIndex:0];
+    [self.view insertSubview: self.musCustomMapView aboveSubview: self.tableView];
+    //[self.view addSubview: self.musCustomMapView];
+    //[self.view insertSubview: self.musCustomMapView atIndex: 0];
+}
+
+
+- (void) currentUser:(SocialNetwork*)socialNetwork {
     self.currentSocialNetwork = socialNetwork;
 }
 
@@ -71,7 +85,9 @@
             [_currentSocialNetwork obtainArrayOfPlaces:self.currentLocation withComplition:^(NSMutableArray *places, NSError *error) {
                 weakSelf.arrayLocations = places;
                 [weakSelf.tableView reloadData];
-            }];            }
+                [weakSelf.musCustomMapView initiationMapView: places withDistance: [weakSelf.stringDistance integerValue]];
+            }];
+        }
     }];
 }
 
@@ -123,7 +139,8 @@
  @param sender
  */
 - (IBAction)chooseDistance:(id)sender {
-    [self alertChooseDistanceShow];
+    //[self alertChooseDistanceShow];
+    
 }
 
 - (void) alertChooseDistanceShow {
@@ -154,4 +171,11 @@
      */
     [self userCurrentLocation];
 }
+
+
+
+
+
+
+
 @end
