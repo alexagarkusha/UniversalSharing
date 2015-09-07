@@ -9,7 +9,7 @@
 #import "MUSCollectionViewCell.h"
 #import "UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.h"
 #import "ConstantsApp.h"
-#import "UIButton+MUSAddPhotoButton.h"
+//#import "UIButton+MUSAddPhotoButton.h"
 #import "MUSAddPhotoButton.h"
 
 @interface MUSCollectionViewCell()

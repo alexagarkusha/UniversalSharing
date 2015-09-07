@@ -71,7 +71,7 @@
 @implementation MUSDetailPostViewController
 
 - (void)viewDidLoad {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showPhotosOnCollectionView :) name:notificationShowImagesInCollectionView object:nil];
+    
     ////////////////////////////////////////////////////////////////////////////
        // Do any additional setup after loading the view.
     [self initiationPostDescriptionArrayOfPicturesAndPostLocation];
@@ -85,6 +85,7 @@
 }
 
 - (void) viewWillAppear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showPhotosOnCollectionView :) name:notificationShowImagesInCollectionView object:nil];
     [super viewWillAppear : YES];
     [[NSNotificationCenter defaultCenter] addObserver : self
                                              selector : @selector(keyboardShow:)
