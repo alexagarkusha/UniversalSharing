@@ -60,6 +60,10 @@
 - (void) sharePost : (Post*) post withComplition : (Complition) block {
 }
 
+- (void) updatePost {
+    
+}
+
 - (void) setIsVisible:(BOOL)isVisible {
     
     _isVisible = isVisible;

@@ -84,6 +84,11 @@
     
     self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForUsersWithNetworkType: self.currentSocialNetwork.networkType]] firstObject];
     self.tableViewFrame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height);
+    
+    ///////////////////////////////////////////////////////////////////////////////////////
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:refreshControl];
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -97,6 +102,12 @@
                                              selector : @selector(keyboardWillHide:)
                                                  name : UIKeyboardWillHideNotification
                                                object : nil];
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    [[NSNotificationCenter defaultCenter] addObserver : self
+                                             selector : @selector(obtainPosts)
+                                                 name : MUSNotificationPostsInfoWereUpDated
+                                               object : nil];
+/////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 - (void) viewDidDisappear:(BOOL)animated {
@@ -109,6 +120,19 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)refresh:(UIRefreshControl *)refreshControl {/////////////////////////////////////////////////////////////////////////
+    
+    [self.currentSocialNetwork updatePost];    
+    [refreshControl endRefreshing];
+    
+}
+
+- (void) obtainPosts {
+    NSArray *thePost = [[NSMutableArray alloc] initWithArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper createStringForPostWithPostId: self.currentPost.postID]]];
+    self.currentPost = [thePost firstObject];
+    [self.tableView reloadData];
+    
+}
 #pragma mark initiation UITableView
 /*!
  @method

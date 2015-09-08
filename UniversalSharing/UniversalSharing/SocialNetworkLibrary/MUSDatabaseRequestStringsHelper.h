@@ -15,6 +15,7 @@
 
 + (NSString*) createStringForPostWithReason :(ReasonType) reason andNetworkType :(NetworkType) networkType;
 + (NSString*) createStringForPostWithUserId :(NSString*) userId;
++ (NSString*) createStringForPostWithPostId :(NSString*) PostId;
 + (NSString*) createStringForAllPosts;
 + (NSString*) createStringUsersForUpdateWithObjectUser :(User*) user;
 + (NSString*) createStringPostsForUpdateWithObjectPost :(Post*) post;

@@ -17,6 +17,8 @@
 #import "MUSDatabaseRequestStringsHelper.h"
 
 @interface MUSPostsViewController () <DOPDropDownMenuDataSource, DOPDropDownMenuDelegate, UITableViewDataSource, UITableViewDelegate>
+
+@property (nonatomic, strong) NSMutableArray *arrayOfLoginSocialNetworks;
 /*!
  @abstract array of posts. Getting an array of posts from the database
  */
@@ -54,6 +56,7 @@
  */
 @property (nonatomic, assign) NSInteger predicateReason;
 
+@property (strong, nonatomic) UIRefreshControl *refreshControl ;
 @end
 
 @implementation MUSPostsViewController
@@ -63,6 +66,10 @@
     [self initiationDropDownMenu];
     [self initiationTableView];
     self.title = musApp_PostsViewController_NavigationBar_Title;
+    ///////////////////////////////////////////////////////////////////////////////////////
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:refreshControl];
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -87,6 +94,15 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)refresh:(UIRefreshControl *)refreshControl {/////////////////////////////////////////////////////////////////////////
+    
+    [self.arrayOfLoginSocialNetworks enumerateObjectsUsingBlock:^(SocialNetwork *socialNetwork, NSUInteger idx, BOOL *stop) {
+        [socialNetwork updatePost];
+    }];
+    _refreshControl = refreshControl;
+    [refreshControl endRefreshing];
+
+}
 #pragma mark initiation DOPDropDownMenu 
 
 /*!
@@ -140,6 +156,7 @@
 - (void) initiationArrayOfActiveSocialNetwork {
     
     self.arrayOfActiveSocialNetwork = [[NSMutableArray alloc] init];
+     self.arrayOfLoginSocialNetworks = [[NSMutableArray alloc] init];
     [self.arrayOfActiveSocialNetwork addObject: musApp_PostsViewController_AllSocialNetworks];
     self.arrayOfUsers = [[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForAllUsers]];
     NSMutableArray *arrayWithNetworks = [[NSMutableArray alloc] init];
@@ -151,6 +168,7 @@
     [[[SocialManager sharedManager] networks: arrayWithNetworks] enumerateObjectsUsingBlock:^(SocialNetwork *socialNetwork, NSUInteger index, BOOL *stop) {
         if (socialNetwork.isLogin) {
             [weakSelf.arrayOfActiveSocialNetwork addObject : socialNetwork.name];
+            [weakSelf.arrayOfLoginSocialNetworks addObject:socialNetwork];
         }
         
     }];
@@ -178,6 +196,18 @@
 }
 
 #pragma mark - UITableViewDelegate
+
+//- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {//////////////////////////////////////////////////////////////
+//    //NSLog(@"Will begin dragging");
+//    if ([scrollView.panGestureRecognizer translationInView:scrollView].y > 0) {
+//        
+//    }
+//}
+
+
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//    NSLog(@"Did Scroll");
+//}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [MUSPostCell heightForPostCell];
@@ -312,6 +342,7 @@
 - (void) obtainPosts {
     self.arrayPosts = [[NSMutableArray alloc] initWithArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper createStringForPostWithReason: self.predicateReason andNetworkType: self.predicateNetworkType]]];
     [self.tableView reloadData];
+   
 }
 
 @end
