@@ -7,6 +7,9 @@
 //
 
 #import "MUSDetailPostCollectionViewController.h"
+#import "UIImageView+RoundImage.h"
+#import "UIImageView+MUSLoadImageFromDataBase.h"
+
 
 @interface MUSDetailPostCollectionViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
 @property (strong, nonatomic) NSArray *arrayOfPics;
@@ -21,32 +24,25 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Register cell classes
+    //////////////////////////////////////////////////
+    CGRect rect = CGRectMake(0, 0, 34, 34);
+    UIView *view = [[UIView alloc] initWithFrame:rect];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:rect];
+    [imageView loadImageFromDataBase: _currentSocialNetwork.icon];
+    [imageView roundImageView];
+    [view addSubview:imageView];
+   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:view];
+    ///////////////////////////////////////////////////////////////////////////
     [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
     
     // Do any additional setup after loading the view.
 }
 
 
-
 - (void) setObjectsWithArray :(NSArray*) arrayOfPics andCurrentSocialNetwork :(id)currentSocialNetwork {
     self.arrayOfPics = arrayOfPics;
     self.currentSocialNetwork = currentSocialNetwork;    
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 #pragma mark <UICollectionViewDataSource>
 
@@ -60,13 +56,14 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
-     UIImageView *imgView = (UIImageView *)[cell viewWithTag:100];
     cell.backgroundView = [[UIImageView alloc] initWithImage:self.arrayOfPics[indexPath.row]];
-    //[cell addSubView:self.arrayOfPics[indexPath.row]];
-    
+    self.navigationItem.title = [NSString stringWithFormat:@"%ld from %lu",(long)indexPath.row + 1, (unsigned long)[self.arrayOfPics count]];
+    //self.collectionView nu
     return cell;
 }
 
-
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return CGSizeMake(self.view.frame.size.width, self.view.frame.size.height -100);
+}
 
 @end
