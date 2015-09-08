@@ -9,12 +9,12 @@
 #import "MUSCollectionViewCell.h"
 #import "UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.h"
 #import "ConstantsApp.h"
-//#import "UIButton+MUSAddPhotoButton.h"
 #import "MUSAddPhotoButton.h"
 
 @interface MUSCollectionViewCell()
 
 - (IBAction)deletePhoto:(id)sender;
+@property (strong, nonatomic) MUSAddPhotoButton *addPhotoButton;
 
 
 @end
@@ -22,9 +22,6 @@
 
 - (void)awakeFromNib {
     // Initialization code
-    
-    
-#warning need to do custom button
 }
 
 - (NSString *)reuseIdentifier{
@@ -41,20 +38,16 @@
 }
 
 - (void) configurationCellWithPhoto:(UIImage *)photoImageView andEditableState: (BOOL)isEditable {
-    //self.photoImageViewCell.alpha = 1;
-    //self.deleteIconImageView.alpha = 1;
-    
+    [self.addPhotoButton removeFromSuperview];
     //[self.deletePhotoButtonOutlet setImage:[UIImage imageNamed: @"Button_Delete.png"] forState:UIControlStateNormal];
+    
     if (!photoImageView && isEditable) {
         [self hideDeleteButton];
         self.photoImageViewCell.hidden = YES;
         [self showAddPhotoButton];
-        //self.addPhotoToCollectionOutlet.hidden = NO;
     } else if (photoImageView && isEditable) {
         [self showDeleteButton];
         self.photoImageViewCell.hidden = NO;
-        //[self showAddPhotoButton];
-        //self.addPhotoToCollectionOutlet.hidden = YES;
         self.photoImageViewCell.image = photoImageView;
     } else {
         [self hideDeleteButton];
@@ -64,9 +57,9 @@
 
 - (void) showAddPhotoButton {
    
-    MUSAddPhotoButton *addPhotoButton = [[MUSAddPhotoButton alloc] initWithFrame: CGRectMake( 50, 20, self.frame.size.width - 100, self.frame.size.height - 70)];
-    [self addSubview: addPhotoButton];
-    [addPhotoButton addTarget:self
+    self.addPhotoButton = [[MUSAddPhotoButton alloc] initWithFrame: CGRectMake( 50, 20, self.frame.size.width - 100, self.frame.size.height - 70)];
+    [self addSubview: self.addPhotoButton];
+    [self.addPhotoButton addTarget:self
                action:@selector(addPhotoToCollectionTouch:)forControlEvents:UIControlEventTouchUpInside];
 
 }
@@ -86,7 +79,7 @@
 }
 
 
-- (IBAction)addPhotoToCollectionTouch:(id)sender {
+- (void)addPhotoToCollectionTouch:(id)sender {
     [self.delegate addPhotoToCollection];
 }
 

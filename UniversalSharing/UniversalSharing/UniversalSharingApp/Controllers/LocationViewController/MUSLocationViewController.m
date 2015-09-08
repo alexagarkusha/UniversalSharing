@@ -102,10 +102,11 @@
 - (void) showTableViewWithPlaces {
     self.leftConstraintTableView.constant =  self.view.frame.size.width / 3;
     self.rightConstraintTavbleView.constant = - (self.view.frame.size.width / 3) * 2;
-    
+    NSLog(@"Table left = %f, right = %f", self.leftConstraintTableView.constant, self.rightConstraintTavbleView.constant);
     self.leftConstraintCustomMapView.constant = - (self.view.frame.size.width / 3);
     self.rightConstraintCustomMapView.constant = (self.view.frame.size.width / 3) * 2;
-    
+    NSLog(@"MAP left = %f, right = %f", self.leftConstraintTableView.constant, self.rightConstraintTavbleView.constant);
+
     [UIView animateWithDuration: 0.4  animations:^{
         [self.view layoutIfNeeded];
         [self.view setNeedsLayout];
