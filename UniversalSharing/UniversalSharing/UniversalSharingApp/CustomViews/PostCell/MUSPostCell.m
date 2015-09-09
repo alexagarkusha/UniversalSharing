@@ -29,6 +29,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *numberOfLikes;
 @property (weak, nonatomic) IBOutlet UILabel *reasonOfPost;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint* postDescriptionLeftConstraint;
+@property (weak, nonatomic) IBOutlet UIView *viewCheckMark;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *widthConstrain;
+@property (weak, nonatomic) IBOutlet UIButton *buttonCheckMark;
 
 
 @end
@@ -68,7 +71,7 @@
     return musAppPostsVC_HeightOfPostCell;
 }
 
-- (void) configurationPostCell: (Post*) currentPost {
+- (void) configurationPostCell: (Post*) currentPost andFlagEditing: (BOOL) flagEdit{
     [self configurateFirstImageOfPost: currentPost];
     self.postDescription.text = currentPost.postDescription;
     self.numberOfComments.text = [NSString stringWithFormat: @"%ld", (long)currentPost.commentsCount];
@@ -78,6 +81,15 @@
     //self.reasonOfPost.backgroundColor = [UIColor reasonColorForPost: currentPost.reason];
     self.reasonOfPost.text = [NSString reasonTypeInString: currentPost.reason];
     self.likeImage.image = [UIImage imageNamed: musAppImage_Name_Like];
+    [self.buttonCheckMark setBackgroundImage:[UIImage imageNamed: @"checkMark.jpeg"] forState:UIControlStateNormal];
+    //self.buttonCheckMark.tag = 1;
+    if(flagEdit){
+        self.widthConstrain.constant = 50.0f;
+     //[self.buttonCheckMark setImage:[UIImage imageNamed: @"checkMark.jpeg"] forState:UIControlStateNormal];
+    }
+    else{
+        self.widthConstrain.constant = 0.0f;}
+    //[self.buttonCheckMark setImage:nil forState:UIControlStateNormal];
 }
 
 - (void) configurateFirstImageOfPost : (Post*) currentPost {
@@ -103,6 +115,17 @@
         self.postDescriptionLeftConstraint.constant = musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithUserPhotos;
     }
 }
+- (IBAction)buttonCheckMarkTapped:(id)sender {
+    [self.delegate addIndexToIndexSetWithCell:self];
+    if ([sender tag] == 0) {
+        [self.buttonCheckMark setBackgroundImage:[UIImage imageNamed: @"checkMarkTaken.jpeg"] forState:UIControlStateNormal];
+        self.buttonCheckMark.tag = 1;
+    } else {
+        [self.buttonCheckMark setBackgroundImage:[UIImage imageNamed: @"checkMark.jpeg"] forState:UIControlStateNormal];
+        self.buttonCheckMark.tag = 0;
+    }
+}
+
 
 
 @end

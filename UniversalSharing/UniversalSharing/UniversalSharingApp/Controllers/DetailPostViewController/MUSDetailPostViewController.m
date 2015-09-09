@@ -20,7 +20,7 @@
 #import "UIImage+LoadImageFromDataBase.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 #import "MUSDetailPostCollectionViewController.h"
-#import "MUSGalleryViewOfPhotos.h"
+//#import "MUSGalleryViewOfPhotos.h"
 
 
 @interface MUSDetailPostViewController () <UITableViewDataSource, UITableViewDelegate, MUSPostDescriptionCellDelegate, MUSGalleryOfPhotosCellDelegate, MUSPostLocationCellDelegate,  UIActionSheetDelegate, UIAlertViewDelegate>
@@ -92,7 +92,9 @@
 }
 
 - (void) viewWillAppear:(BOOL)animated {
+    //////////////////////////////////////////////////////////////////////////////////////
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showPhotosOnCollectionView :) name:notificationShowImagesInCollectionView object:nil];
+    ///////////////////////////////////////////////////////////////////////////////////////////
     [super viewWillAppear : YES];
     [[NSNotificationCenter defaultCenter] addObserver : self
                                              selector : @selector(keyboardShow:)
