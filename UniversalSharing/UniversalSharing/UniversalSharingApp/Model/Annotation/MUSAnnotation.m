@@ -10,11 +10,12 @@
 
 @implementation MUSAnnotation
 
-- (id) initWithTitle: (NSString *) newTitle andLocation: (CLLocationCoordinate2D) location {
+- (id) initWithTitle: (NSString *) newTitle location: (CLLocationCoordinate2D) location andIndex:(NSInteger) currentIndex {
     self = [super init];
     if (self) {
         _title = newTitle;
         _coordinate = location;
+        _index = currentIndex;
     }
     return self;
 }
@@ -37,18 +38,19 @@
 */
  
 - (MKPinAnnotationView*) annotationPinView {
-    UIButton * disclosureButton = [UIButton buttonWithType:UIButtonTypeContactAdd];
-    [disclosureButton addTarget:self action:@selector(presentMoreInfo) forControlEvents:UIControlEventTouchUpInside];
+    //UIButton * disclosureButton = [UIButton buttonWithType:UIButtonTypeContactAdd];
+//    UIButton *addPlaceButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    addPlaceButton.frame = CGRectMake(0, 0, 15, 15);
+//    addPlaceButton.backgroundColor = [UIColor blackColor];
+//    
+//    [addPlaceButton addTarget:self action:@selector(choosePlace) forControlEvents:UIControlEventTouchUpInside];
     
     MKPinAnnotationView *annotationPinView = [[MKPinAnnotationView alloc] initWithAnnotation: self reuseIdentifier: NSStringFromClass([self class])];
     annotationPinView.canShowCallout = YES;
     annotationPinView.enabled = YES;
-    annotationPinView.rightCalloutAccessoryView = disclosureButton;
+//    annotationPinView.rightCalloutAccessoryView = addPlaceButton;
     return annotationPinView;
 }
 
-- (void) presentMoreInfo {
-    NSLog(@"Click annotation");
-}
 
 @end

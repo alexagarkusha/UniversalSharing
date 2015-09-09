@@ -7,14 +7,24 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MUSSocialNetworkLibraryHeader.h"
+
+@protocol MUSCustomMapViewDelegate <NSObject>
+@optional
+- (void) reloadCustomMapView : (NSInteger) newDistance;
+- (void) selectedPlaceForPostByIndex : (NSInteger) index;
+@end
+
+
 
 @interface MUSCustomMapView : UIView
 
 + (NSString*) viewID;
 
-- (void) initiationMapView : (NSArray*) arrayOfPlaces withDistance : (CGFloat) distance;
+- (void) initiationMapView : (NSArray*) arrayOfPlaces withDistance : (CGFloat) distance andNetworkType : (NetworkType) networkType;
 
 
+@property (assign, nonatomic) id <MUSCustomMapViewDelegate> delegate;
 @property (nonatomic, strong) NSArray *arrayOfPlaces;
 
 @end

@@ -14,8 +14,10 @@
 @property (nonatomic) CLLocationCoordinate2D coordinate;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *subtitle;
+@property (nonatomic, assign) NSInteger index;
 
-- (id) initWithTitle: (NSString *) newTitle andLocation: (CLLocationCoordinate2D) location;
+
+- (id) initWithTitle: (NSString *) newTitle location: (CLLocationCoordinate2D) location andIndex : (NSInteger) currentIndex;
 //- (MKAnnotationView*) annotationView;
 - (MKPinAnnotationView*) annotationPinView;
 
