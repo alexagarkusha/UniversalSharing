@@ -41,7 +41,6 @@
 		30416A2B1B73AF49000CB2C2 /* MUSCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30416A291B73AF49000CB2C2 /* MUSCollectionViewCell.xib */; };
 		30416A641B79DDD4000CB2C2 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 30416A631B79DDD4000CB2C2 /* libsqlite3.dylib */; };
 		30416A6A1B81D0E0000CB2C2 /* DataBaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 30416A691B81D0E0000CB2C2 /* DataBaseManager.m */; };
-		306ED75C1B6FA3170014D975 /* MUSLocationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 306ED75B1B6FA3170014D975 /* MUSLocationTableViewController.m */; };
 		307611ED1B9DC1F80051C2AD /* MUSDetailPostCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 307611EC1B9DC1F80051C2AD /* MUSDetailPostCollectionViewController.m */; };
 		30DBFD8B1B677A9A002F83D0 /* TwitterNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD8A1B677A9A002F83D0 /* TwitterNetwork.m */; };
 		30DBFD8F1B677AD7002F83D0 /* VKNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD8E1B677AD7002F83D0 /* VKNetwork.m */; };
@@ -180,8 +179,6 @@
 		30416A631B79DDD4000CB2C2 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		30416A681B81D0E0000CB2C2 /* DataBaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataBaseManager.h; sourceTree = "<group>"; };
 		30416A691B81D0E0000CB2C2 /* DataBaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataBaseManager.m; sourceTree = "<group>"; };
-		306ED75A1B6FA3170014D975 /* MUSLocationTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSLocationTableViewController.h; sourceTree = "<group>"; };
-		306ED75B1B6FA3170014D975 /* MUSLocationTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSLocationTableViewController.m; sourceTree = "<group>"; };
 		307611EB1B9DC1F80051C2AD /* MUSDetailPostCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSDetailPostCollectionViewController.h; sourceTree = "<group>"; };
 		307611EC1B9DC1F80051C2AD /* MUSDetailPostCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSDetailPostCollectionViewController.m; sourceTree = "<group>"; };
 		30DBFD891B677A9A002F83D0 /* TwitterNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterNetwork.h; sourceTree = "<group>"; };
@@ -513,7 +510,6 @@
 			children = (
 				30A8B56B1B99EAFF006C9AFE /* DitailPostCollectionView */,
 				97C2A7C61B9DA5D1007FF8CA /* LocationViewController */,
-				306ED7591B6FA2DB0014D975 /* LocationTableViewController */,
 				18BB298C1B67E3F000B498AC /* AccountsViewController */,
 				18BB298F1B67E3F000B498AC /* PostsViewController */,
 				97C49E721B832108005241CE /* DetailPostViewController */,
@@ -682,15 +678,6 @@
 				30416A691B81D0E0000CB2C2 /* DataBaseManager.m */,
 			);
 			name = DataBaseManager;
-			sourceTree = "<group>";
-		};
-		306ED7591B6FA2DB0014D975 /* LocationTableViewController */ = {
-			isa = PBXGroup;
-			children = (
-				306ED75A1B6FA3170014D975 /* MUSLocationTableViewController.h */,
-				306ED75B1B6FA3170014D975 /* MUSLocationTableViewController.m */,
-			);
-			name = LocationTableViewController;
 			sourceTree = "<group>";
 		};
 		30A8B56B1B99EAFF006C9AFE /* DitailPostCollectionView */ = {
@@ -1311,7 +1298,6 @@
 				18BB29BB1B67E3F000B498AC /* MUSTopUserProfileCell.m in Sources */,
 				97C8A9DE1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.m in Sources */,
 				97C4ACD71B99ABDE008B93B3 /* MUSAddPhotoButton.m in Sources */,
-				306ED75C1B6FA3170014D975 /* MUSLocationTableViewController.m in Sources */,
 				30DBFD8B1B677A9A002F83D0 /* TwitterNetwork.m in Sources */,
 				18BB29AD1B67E3F000B498AC /* AppDelegate.m in Sources */,
 				97C4ACC91B997512008B93B3 /* MUSDeleteButton.m in Sources */,
