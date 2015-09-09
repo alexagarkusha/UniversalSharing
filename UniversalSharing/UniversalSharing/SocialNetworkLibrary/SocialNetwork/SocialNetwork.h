@@ -111,7 +111,7 @@
 //- (void) updatePostDataBaseWithReason :(ReasonType) reason andPost :(Post*) post;
 - (void) saveOrUpdatePost : (Post*) post withReason : (ReasonType) reason;
 
-
+- (void) updatePost;
 
 - (NSError*) errorConnection;
 @end

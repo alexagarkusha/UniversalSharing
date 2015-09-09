@@ -46,6 +46,10 @@
     return [NSString stringWithFormat:@"SELECT * FROM %@ WHERE userId = \"%@\" ",@"Posts",userId];
 }
 
++ (NSString*) createStringForPostWithPostId :(NSString*) PostId {
+    return [NSString stringWithFormat:@"SELECT * FROM %@ WHERE postId = \"%@\" ",@"Posts",PostId];
+}
+
 + (NSString*) createStringForAllPosts {
     return [NSString stringWithFormat:@"SELECT * FROM %@ ORDER BY dateCreate DESC",@"Posts"];
 }
