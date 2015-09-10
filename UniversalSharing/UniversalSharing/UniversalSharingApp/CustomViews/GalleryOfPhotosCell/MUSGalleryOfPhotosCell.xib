@@ -17,10 +17,38 @@
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y4j-P6-qcN" customClass="MUSGalleryViewOfPhotos">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="150"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="KzE-Mj-i8E">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="150"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="gq0-Q8-g0z">
+                                    <size key="itemSize" width="320" height="150"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <connections>
+                                    <outlet property="dataSource" destination="y4j-P6-qcN" id="Sd0-6H-ygH"/>
+                                    <outlet property="delegate" destination="y4j-P6-qcN" id="IOM-8c-EUR"/>
+                                </connections>
+                            </collectionView>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="maL-aF-zrA">
+                                <rect key="frame" x="268" y="113" width="39" height="37"/>
+                            </pageControl>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="maL-aF-zrA" secondAttribute="bottom" id="Bgv-VR-u88"/>
+                            <constraint firstAttribute="trailing" secondItem="maL-aF-zrA" secondAttribute="trailing" constant="13" id="H9l-F1-iNf"/>
+                            <constraint firstItem="KzE-Mj-i8E" firstAttribute="top" secondItem="y4j-P6-qcN" secondAttribute="top" id="aR4-QC-YxX"/>
+                            <constraint firstAttribute="trailing" secondItem="KzE-Mj-i8E" secondAttribute="trailing" id="dOu-VE-zlL"/>
                             <constraint firstAttribute="height" constant="150" id="lzQ-yl-fMl"/>
+                            <constraint firstItem="KzE-Mj-i8E" firstAttribute="leading" secondItem="y4j-P6-qcN" secondAttribute="leading" id="rMu-AC-lXG"/>
+                            <constraint firstAttribute="bottom" secondItem="KzE-Mj-i8E" secondAttribute="bottom" id="wDB-r9-XS7"/>
                         </constraints>
+                        <connections>
+                            <outlet property="collectionView" destination="KzE-Mj-i8E" id="HfL-mK-PF5"/>
+                            <outlet property="photoPageControl" destination="maL-aF-zrA" id="spG-BE-bUT"/>
+                        </connections>
                     </view>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="h1E-fQ-zZP">
                         <rect key="frame" x="8" y="91" width="50" height="50"/>

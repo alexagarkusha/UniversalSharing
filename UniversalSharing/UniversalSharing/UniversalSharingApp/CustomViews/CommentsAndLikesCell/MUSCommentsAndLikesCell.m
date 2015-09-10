@@ -10,6 +10,7 @@
 #import "ConstantsApp.h"
 #import "NSString+ReasonTypeInString.h"
 #import "UILabel+CornerRadiusLabel.h"
+#import "UIColor+ReasonColorForPost.h"
 
 @interface MUSCommentsAndLikesCell ()
 
@@ -62,6 +63,7 @@
     self.numberOfLikesLabel.text = [NSString stringWithFormat:@"%ld", (long)currentPost.likesCount];
     self.numberOfCommentsLabel.text = [NSString stringWithFormat:@"%ld", (long)currentPost.commentsCount];
     self.reasonPostLabel.text = [NSString reasonTypeInString: currentPost.reason];
+    self.reasonPostLabel.backgroundColor = [UIColor reasonColorForPost: currentPost.reason];
 }
 
 

@@ -21,36 +21,18 @@
 
 @implementation MUSGalleryViewOfPhotos
 
--(id) initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        self.view = [self loadViewFromNib];
-        [self addSubview : self.view];
-    }
-    return self;
++ (NSString*) viewID {
+    return NSStringFromClass([self class]);
 }
 
-- (id) initWithCoder:(NSCoder *)aDecoder {
-    self = [super initWithCoder: aDecoder];
-    if (self) {
-        self.view = [self loadViewFromNib];
-        [self addSubview : self.view];
-    }
-    return self;
-}
 
--(UIView*)loadViewFromNib {
-    NSArray *nibObjects = [[NSBundle mainBundle]loadNibNamed: @"MUSGalleryViewOfPhotos" owner:self options:nil];
-    return [nibObjects firstObject];
-}
-
-- (void) awakeFromNib {
+- (void) initiationGalleryViewOfPhotos {
     NSString *cellIdentifier = [MUSCollectionViewCell customCellID];
     [self.collectionView registerNib:[UINib nibWithNibName: cellIdentifier bundle: nil] forCellWithReuseIdentifier: cellIdentifier];
-    self.collectionView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    //self.collectionView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     self.arrayOfPhotos = [[NSMutableArray alloc] init];
     self.photoPageControl.hidden = YES;
+
 }
 
 #pragma mark UICollectionViewDataSource

@@ -93,7 +93,7 @@
 #pragma mark initiation GalleryViewOfPhotos
 
 - (void) initiationGalleryViewOfPhotos : (NSMutableArray*) arrayWithImages {
-    
+    [self.galleryViewOfPhotos initiationGalleryViewOfPhotos];
     if (!self.isEditableCell && arrayWithImages.count == 0) {
         self.galleryViewOfPhotos.hidden = YES;
     } else {
