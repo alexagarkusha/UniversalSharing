@@ -481,8 +481,8 @@
 #pragma mark - error alert with error and alert with message
 #warning "Same methods :("
 - (void) showErrorAlertWithError : (NSError*) error {
-    UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle : Error
-                                                         message : [error localizedFailureReason]
+    UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle : @"NO INTERNET CONNECTION"//Error
+                                                         message : @"You can resend this post from shared posts"//[error localizedFailureReason]
                                                         delegate : nil
                                                cancelButtonTitle : musAppButtonTitle_OK
                                                otherButtonTitles : nil];

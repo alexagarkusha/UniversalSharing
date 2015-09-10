@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -14,7 +14,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BKP-gh-Wex">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BKP-gh-Wex">
                         <rect key="frame" x="0.0" y="25" width="0.0" height="50"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sKG-VH-C3Z">
@@ -31,13 +31,13 @@
                             <constraint firstAttribute="width" id="yE4-sG-WXL"/>
                         </constraints>
                     </view>
-                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3YO-6w-Lb7">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3YO-6w-Lb7">
                         <rect key="frame" x="8" y="0.0" width="312" height="100"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lob-KA-c90">
                                 <rect key="frame" x="3" y="21" width="42" height="42"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="slgdkfjnkjnkfdsjhfjsdbfjshbdjfbsjdfbjsdbfjsbdjfsjdfbjsdbfjsdb" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9a0-JS-qNj">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="slgdkfjnkjnkfdsjhfjsdbfjshbdjfbsjdfbjsdbfjsbdjfsjdfbjsdbfjsdb" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9a0-JS-qNj">
                                 <rect key="frame" x="53" y="23" width="245" height="40"/>
                                 <fontDescription key="fontDescription" name="TimesNewRomanPSMT" family="Times New Roman" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -83,6 +83,12 @@
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                         </subviews>
+                        <constraints>
+                            <constraint firstItem="9a0-JS-qNj" firstAttribute="leading" secondItem="3YO-6w-Lb7" secondAttribute="leading" constant="53" id="67G-R8-jCD"/>
+                            <constraint firstAttribute="trailing" secondItem="9a0-JS-qNj" secondAttribute="trailing" constant="14" id="7ja-G3-T3O"/>
+                            <constraint firstItem="9a0-JS-qNj" firstAttribute="top" secondItem="3YO-6w-Lb7" secondAttribute="top" constant="23" id="JiJ-kV-73t"/>
+                            <constraint firstAttribute="bottom" secondItem="9a0-JS-qNj" secondAttribute="bottom" constant="37" id="OyR-iM-4SI"/>
+                        </constraints>
                     </view>
                 </subviews>
                 <constraints>
@@ -116,6 +122,7 @@
                 <outlet property="numberOfImagesInPost" destination="bfI-Lf-Bqn" id="D77-vg-LmM"/>
                 <outlet property="numberOfLikes" destination="SQp-lL-rDz" id="cqc-iX-ki7"/>
                 <outlet property="postDescription" destination="9a0-JS-qNj" id="nh3-RZ-UDl"/>
+                <outlet property="postDescriptionLeftConstraint" destination="67G-R8-jCD" id="5R4-l9-c5s"/>
                 <outlet property="reasonOfPost" destination="XnW-XA-7nO" id="fQ3-P5-kHR"/>
                 <outlet property="viewCheckMark" destination="BKP-gh-Wex" id="hsh-ts-c3Z"/>
                 <outlet property="widthConstrain" destination="yE4-sG-WXL" id="dQN-2P-pkQ"/>
