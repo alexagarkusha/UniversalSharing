@@ -72,7 +72,6 @@
     [super viewWillAppear:animated];
     [self checkInternetConnection];
     //[self.tableView setUserInteractionEnabled:YES];
-    
 }
 
 /*!
