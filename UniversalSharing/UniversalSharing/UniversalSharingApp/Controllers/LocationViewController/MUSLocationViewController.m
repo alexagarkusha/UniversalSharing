@@ -67,7 +67,7 @@
 }
 
 - (void) viewWillAppear:(BOOL)animated {
-    self.stringDistance = distanceEqual100;
+    self.stringDistance = distanceEqual1000;
     [self userCurrentLocation];
 }
 
@@ -86,7 +86,7 @@
 }
 
 - (void) initiationNavigationBar {
-    UIBarButtonItem *choosePlaceButton = [[UIBarButtonItem alloc] initWithTitle: @"Choose place" style:2 target:self action: @selector(showCloseTable)];
+    UIBarButtonItem *choosePlaceButton = [[UIBarButtonItem alloc] initWithTitle: @"Choose place" style: 1 target:self action: @selector(showCloseTable)];
     self.navigationItem.rightBarButtonItem = choosePlaceButton;
 }
 
@@ -119,6 +119,7 @@
         [self.view setNeedsLayout];
     }];
     [UIView commitAnimations];
+    self.customMapView.mapView.scrollEnabled = NO;
     self.isOpenTableView = YES;
 }
 
@@ -135,6 +136,7 @@
         [self.view setNeedsLayout];
     }];
     [UIView commitAnimations];
+    self.customMapView.mapView.scrollEnabled = YES;
     self.isOpenTableView = NO;
 }
 
@@ -271,13 +273,6 @@
 }
 
 #pragma mark - MUSCustomMapViewDelegate
-
-- (void) reloadCustomMapView:(NSInteger) newDistance {
-    if (newDistance > [self.stringDistance integerValue] * 3 && newDistance < [distanceEqual25000 integerValue]) {
-        self.stringDistance = [NSString stringWithFormat: @"%d", newDistance];
-        [self userCurrentLocation];
-    }
-}
 
 - (void) selectedPlaceForPostByIndex:(NSInteger)index {
     [self obtainPlaceForPost: index];

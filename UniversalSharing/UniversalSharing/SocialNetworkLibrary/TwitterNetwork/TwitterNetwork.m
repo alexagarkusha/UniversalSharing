@@ -519,7 +519,7 @@ static TwitterNetwork *model = nil;
  @abstract returnув Twitter network error
  */
 - (NSError*) errorTwitter {
-    return [NSError errorWithMessage: musFacebookError andCodeError: musFacebookErrorCode];
+    return [NSError errorWithMessage: musTwitterError andCodeError: musTwitterErrorCode];
 }
 
 @end
