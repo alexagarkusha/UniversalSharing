@@ -66,6 +66,7 @@ FOUNDATION_EXPORT NSInteger const musApp_TextView_CountOfAllowedLetters_ForTwitt
 FOUNDATION_EXPORT NSString *const musAppError_With_Domain_Universal_Sharing;
 FOUNDATION_EXPORT NSString *const musAppError_Internet_Connection;
 FOUNDATION_EXPORT NSString *const musAppError_Logged_Into_Social_Networks;
+FOUNDATION_EXPORT NSString *const musAppError_Internet_Connection_Location;
 
 
 #pragma mark - MUSPhotoManager

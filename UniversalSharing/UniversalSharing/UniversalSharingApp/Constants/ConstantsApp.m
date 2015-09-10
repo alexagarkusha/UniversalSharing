@@ -40,6 +40,7 @@ NSInteger const musApp_TextView_CountOfAllowedLetters_ForTwitter = 140;
 NSString *const musAppError_With_Domain_Universal_Sharing = @"Universal Sharing application";
 NSString *const musAppError_Internet_Connection = @"Please check your internet connection or try again later";
 NSString *const musAppError_Logged_Into_Social_Networks = @"You are not logged into any of social networks";
+NSString *const musAppError_Internet_Connection_Location = @"Could not find any locations. Check the Internet connection settings";
 
 #pragma mark - MUSPhotoManager
 
