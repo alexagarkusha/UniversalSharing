@@ -62,8 +62,6 @@
 @property (strong, nonatomic) UIToolbar *toolBar ;
 @property (assign, nonatomic) BOOL flagSellectAll;
 @property (strong, nonatomic) NSMutableIndexSet *mutableIndexSet ;
-
-//@property (weak, nonatomic) IBOutlet UITabBarItem *tabBar;
 @property (strong, nonatomic) UIRefreshControl *refreshControl ;
 @end
 
@@ -75,15 +73,15 @@
     [self initiationTableView];
     self.title = musApp_PostsViewController_NavigationBar_Title;
     ///////////////////////////////////////////////////////////////////////////////////////
-    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
-    [self.tableView addSubview:refreshControl];
+    [self initiationRefreshControl];
     ///////////////////////////////////////////////////////////////////////////////////////////////
     [self.navigationItem.leftBarButtonItem setEnabled:NO];
     [self.navigationItem.leftBarButtonItem setTintColor: [UIColor clearColor]];
     /////////////////////////////////////////////////////////////////////////////////////////////////////
-   self.mutableIndexSet = [[NSMutableIndexSet alloc] init];
-
+    self.mutableIndexSet = [[NSMutableIndexSet alloc] init];
+    ///////////////////////////////////////////////////////////////////////////////////
+    [self initiationToolBarForRemove];
+    
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -108,16 +106,29 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)refresh:(UIRefreshControl *)refreshControl {/////////////////////////////////////////////////////////////////////////
-    
-    [self.arrayOfLoginSocialNetworks enumerateObjectsUsingBlock:^(SocialNetwork *socialNetwork, NSUInteger idx, BOOL *stop) {
-        [socialNetwork updatePost];
-    }];
-    _refreshControl = refreshControl;
-    [refreshControl endRefreshing];
-
+- (void) initiationRefreshControl {
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:refreshControl];
 }
-#pragma mark initiation DOPDropDownMenu 
+
+- (void) initiationToolBarForRemove {
+    _toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height -  50, self.view.frame.size.width, 50)];
+    _toolBar.barStyle = UIBarStyleDefault;
+    
+    UIBarButtonItem *flexibleSpace =  [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    
+    UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(toolbarButtonDeleteTapped:)];
+    
+    NSArray *toolbarItems = [NSArray arrayWithObjects:flexibleSpace, barButton, flexibleSpace,nil];
+    
+    [_toolBar setItems:toolbarItems animated:NO];
+    //_toolBar.alpha = 0.5f;
+    //_toolBar.userInteractionEnabled = NO;
+    [_toolBar setHidden:YES];
+    [self.view addSubview:_toolBar];
+}
+#pragma mark initiation DOPDropDownMenu
 
 /*!
  @method
@@ -170,7 +181,7 @@
 - (void) initiationArrayOfActiveSocialNetwork {
     
     self.arrayOfActiveSocialNetwork = [[NSMutableArray alloc] init];
-     self.arrayOfLoginSocialNetworks = [[NSMutableArray alloc] init];
+    self.arrayOfLoginSocialNetworks = [[NSMutableArray alloc] init];
     [self.arrayOfActiveSocialNetwork addObject: musApp_PostsViewController_AllSocialNetworks];
     self.arrayOfUsers = [[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForAllUsers]];
     NSMutableArray *arrayWithNetworks = [[NSMutableArray alloc] init];
@@ -195,7 +206,6 @@
     return self.arrayPosts.count;
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     /*!
      XIB
@@ -206,7 +216,7 @@
     }
     cell.delegate = self;
     cell.selectionStyle = UITableViewCellSelectionStyleNone; // disable the cell selection highlighting
-    [cell configurationPostCell: [self.arrayPosts objectAtIndex: indexPath.row] andFlagEditing: self.editing];
+    [cell configurationPostCell: [self.arrayPosts objectAtIndex: indexPath.row] andFlagEditing: self.editing andFlagSellectAll :self.flagSellectAll];
     return cell;
 }
 
@@ -230,84 +240,65 @@
     [self performSegueWithIdentifier: goToDetailPostViewControllerSegueIdentifier sender:[self.arrayPosts objectAtIndex: indexPath.row]];
 }
 
-- (IBAction)buttonEditTapped:(id)sender {/////////////////////////////////////////////////////////////////////////////////////////
-    
-
+- (IBAction)buttonEditTapped:(id)sender {
     if(self.editing) {
-            [super setEditing:NO animated:NO];
-            //[self.tableView setEditing:NO animated:NO];
-            //[self.navigationItem.rightBarButtonItem setTitle:editButtonTitle];
-            [self.editButton setTitle:editButtonTitle];
+        [super setEditing:NO animated:NO];
+        [self.editButton setTitle:editButtonTitle];
         self.menu.alpha = 1.0f;
         self.menu.userInteractionEnabled = YES;
-            _toolBar = nil;
         [self.navigationItem.leftBarButtonItem setEnabled:NO];
         [self.navigationItem.leftBarButtonItem setTintColor: [UIColor clearColor]];
-
-            [self.tabBarController.tabBar setHidden:NO];
-        
-
-         [self.tableView reloadData];
-            return;
-    //        [self.tableView reloadData];
-    
-        } else {
-            [super setEditing:YES animated:YES];
-            //[self.tableView setEditing:YES animated:YES];
-            [self.editButton setTitle:doneButtonTitle];
-            [self.navigationItem.leftBarButtonItem setEnabled:YES];
-
-            [self.navigationItem.leftBarButtonItem setTintColor: nil];
-             [self.tableView reloadData];
-        }
-    self.menu.alpha = 0.5f;
-    self.menu.userInteractionEnabled = NO;
-    
-    [self.tabBarController.tabBar setHidden:YES];
-    
-    
-    _toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height -  50, self.view.frame.size.width, 50)];
-    _toolBar.barStyle = UIBarStyleDefault;
-  
-    UIBarButtonItem *flexibleSpace =  [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    
-    UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(toolbarButtonDeleteTapped:)];
-    
-    NSArray *toolbarItems = [NSArray arrayWithObjects:flexibleSpace, barButton, flexibleSpace,nil];
-    
-    [_toolBar setItems:toolbarItems animated:NO];
-    [self.view addSubview:_toolBar];
-    /////////////////////////////////////////////////////////////////////////////////////////////
+        [_toolBar setHidden:YES];
+        [self.tabBarController.tabBar setHidden:NO];
+         self.flagSellectAll = NO;
+    } else {
+        [super setEditing:YES animated:YES];
+        [self.editButton setTitle:doneButtonTitle];
+        [self.navigationItem.leftBarButtonItem setEnabled:YES];
+        [self.navigationItem.leftBarButtonItem setTintColor: nil];
+        self.menu.alpha = 0.5f;
+        self.menu.userInteractionEnabled = NO;
+        [self.tabBarController.tabBar setHidden:YES];
+        [_toolBar setHidden:NO];
+    }
     [self.tableView reloadData];
 }
 
 - (void) addIndexToIndexSetWithCell:(MUSPostCell*)cell {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-   
-    [self.mutableIndexSet enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
-         NSLog(@"before %d",[[NSNumber numberWithInteger:index] integerValue]);
-        if ([[NSNumber numberWithInteger:index] integerValue] == indexPath.row ) {
-            [self.mutableIndexSet removeIndex:index];
-             NSLog(@"after %d",[[NSNumber numberWithInteger:index] integerValue]);
+    for (int i = 0; i < self.mutableIndexSet.count; i++) {
+        if ([[NSNumber numberWithInteger:i] integerValue] == indexPath.row ) {
+            [self.mutableIndexSet removeIndex:indexPath.row];
+            return;
         }
-    }];
+    }
     [self.mutableIndexSet addIndex:indexPath.row];
-    
-    
 }
-- (IBAction)buttonSelectAllTapped:(id)sender {
+
+- (IBAction) buttonSelectAllTapped:(id)sender {
     self.flagSellectAll = YES;
+    [self.arrayPosts enumerateObjectsUsingBlock:^(id obj, NSUInteger index, BOOL *stop) {
+        [self.mutableIndexSet addIndex:index];
+    }];
     [self.tableView reloadData];
 }
 
 - (void) toolbarButtonDeleteTapped :(id) sender {
+    [self.mutableIndexSet enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
+        [[DataBaseManager sharedManager] deletePostByPrimaryKey: [self.arrayPosts objectAtIndex:[[NSNumber numberWithInteger:index] integerValue]]];
+    }];
     
-    
-    
+    for (NSInteger i = [self.mutableIndexSet count] - 1; i >= 0; i--) {
+        [self.arrayPosts removeObjectAtIndex:[[NSNumber numberWithInteger:i] integerValue]];
+    }
+    [self.mutableIndexSet removeAllIndexes];
+    [self.tableView reloadData];
 }
+
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
     return UITableViewCellEditingStyleNone;
 }
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     MUSDetailPostViewController *detailPostViewController = [[MUSDetailPostViewController alloc] init];
     if ([[segue identifier] isEqualToString:goToDetailPostViewControllerSegueIdentifier]) {
@@ -331,7 +322,7 @@
             numberOfRowsInColumn = self.arrayOfActiveSocialNetwork.count;
             break;
         case ByShareReason:
-             numberOfRowsInColumn = self.arrayOfShareReason.count;
+            numberOfRowsInColumn = self.arrayOfShareReason.count;
             break;
         default:
             break;
@@ -388,7 +379,7 @@
  @method
  @abstract return a Reason type of the drop down menu title.
  @param string takes title of the drop down menu.
-*/
+ */
 - (NSInteger) reasonFromTitle : (NSString*) title {
     if ([title isEqual: musAppFilter_Title_Error]) {
         return ErrorConnection;
@@ -404,7 +395,7 @@
  @method
  @abstract return a Network type of the drop down menu title.
  @param string takes title of the drop down menu.
-*/
+ */
 - (NSInteger) networkTypeFromTitle : (NSString*) title {
     if ([title isEqual: musVKName]) {
         return VKontakt;
@@ -422,7 +413,16 @@
 - (void) obtainPosts {
     self.arrayPosts = [[NSMutableArray alloc] initWithArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper createStringForPostWithReason: self.predicateReason andNetworkType: self.predicateNetworkType]]];
     [self.tableView reloadData];
-   
+    
 }
 
+- (void)refresh:(UIRefreshControl *)refreshControl {
+    
+    [self.arrayOfLoginSocialNetworks enumerateObjectsUsingBlock:^(SocialNetwork *socialNetwork, NSUInteger idx, BOOL *stop) {
+        [socialNetwork updatePost];
+    }];
+    _refreshControl = refreshControl;
+    [refreshControl endRefreshing];
+    
+}
 @end

@@ -8,13 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "Post.h"
+
 @protocol MUSPostCellDelegate <NSObject>
 @required
 - (void) addIndexToIndexSetWithCell :(id) cell ;
 @end
-
-
-
 
 @interface MUSPostCell : UITableViewCell
 @property (nonatomic, assign) id <MUSPostCellDelegate> delegate;
@@ -23,6 +21,6 @@
 + (instancetype) postCell;
 + (CGFloat) heightForPostCell;
 
-- (void) configurationPostCell: (Post*) currentPost andFlagEditing:(BOOL) flagEdit;
+- (void) configurationPostCell: (Post*) currentPost andFlagEditing:(BOOL) flagEdit andFlagSellectAll :(BOOL) flagSellectAll;
 
 @end
