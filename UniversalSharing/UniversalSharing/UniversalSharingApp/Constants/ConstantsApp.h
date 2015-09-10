@@ -175,5 +175,9 @@ FOUNDATION_EXPORT NSInteger const musAppDetailPostVC_HeightOfGalleryOfPhotosCell
 FOUNDATION_EXPORT NSString *const musAppDetailPostVC_UpdatePostAlert;
 FOUNDATION_EXPORT NSInteger const musAppDetailPostVC_NumberOfRows;
 
+#pragma mark - MUSCustomMapView
+
+FOUNDATION_EXPORT NSInteger const musAppCustomMapView_maxZoomDistance;
+
 
 @end

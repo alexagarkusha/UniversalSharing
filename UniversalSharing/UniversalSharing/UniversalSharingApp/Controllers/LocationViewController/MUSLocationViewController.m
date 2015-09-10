@@ -50,7 +50,9 @@
 
 @property (strong, nonatomic) UITapGestureRecognizer *tapGestureRecognizer;
 
-@property (nonatomic, strong) UIPanGestureRecognizer *panGesture;
+@property (strong, nonatomic) UIPanGestureRecognizer *panGesture;
+
+@property (strong, nonatomic) NSIndexPath* chosenPlaceIndexPath;
 
 @end
 
@@ -67,7 +69,7 @@
 }
 
 - (void) viewWillAppear:(BOOL)animated {
-    self.stringDistance = distanceEqual100;
+    self.stringDistance = distanceEqual1000;
     [self userCurrentLocation];
 }
 
@@ -86,7 +88,7 @@
 }
 
 - (void) initiationNavigationBar {
-    UIBarButtonItem *choosePlaceButton = [[UIBarButtonItem alloc] initWithTitle: @"Choose place" style:2 target:self action: @selector(showCloseTable)];
+    UIBarButtonItem *choosePlaceButton = [[UIBarButtonItem alloc] initWithTitle: @"Choose place" style: 1 target:self action: @selector(showCloseTable)];
     self.navigationItem.rightBarButtonItem = choosePlaceButton;
 }
 
@@ -119,6 +121,7 @@
         [self.view setNeedsLayout];
     }];
     [UIView commitAnimations];
+    self.customMapView.mapView.scrollEnabled = NO;
     self.isOpenTableView = YES;
 }
 
@@ -135,6 +138,7 @@
         [self.view setNeedsLayout];
     }];
     [UIView commitAnimations];
+    self.customMapView.mapView.scrollEnabled = YES;
     self.isOpenTableView = NO;
 }
 
@@ -218,12 +222,18 @@
     /*!
      get object Place and show name of that on tableviewcell
      */
-    Place *place = self.arrayLocations[indexPath.row];
-    cell.textLabel.text = place.fullName;
-    //cell.textLabel.text = [NSString stringWithFormat: @"%d) %@", indexPath.row, place.fullName];
+    Place *currentPlace = self.arrayLocations[indexPath.row];
+    
+    if ([self.place.placeID isEqualToString: currentPlace.placeID]) {
+        cell.textLabel.textColor = [UIColor lightGrayColor];
+        self.chosenPlaceIndexPath = indexPath;
+    } else {
+        cell.textLabel.textColor = [UIColor blackColor];
+    }
+    cell.textLabel.text = currentPlace.fullName;
     cell.textLabel.numberOfLines = 0;
     cell.textLabel.font = [UIFont systemFontOfSize: 16.0];
-
+  
     return cell;
 }
 
@@ -233,7 +243,10 @@
     /*!
      get chosen object Place and send to shareViewController via block, leave this controller
      */
-    [self obtainPlaceForPost: indexPath.row];
+    
+    if (self.chosenPlaceIndexPath.row != indexPath.row) {
+        [self obtainPlaceForPost: indexPath.row];
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -264,20 +277,22 @@
 
 
 - (void) obtainPlaceForPost : (NSInteger) currentIndex {
-    Place *place = [self.arrayLocations objectAtIndex: currentIndex];
-    self.placeComplition(place, nil);
-    [self.navigationController popViewControllerAnimated:YES];
+    Place *chosenPlace = [self.arrayLocations objectAtIndex: currentIndex];
+    self.placeComplition(chosenPlace, nil);
+    [self.navigationController popViewControllerAnimated : YES];
     self.navigationController.navigationBar.translucent = YES;
+
+    
+    
+    NSLog(@"Place name = %@ index = %d", chosenPlace.fullName, currentIndex);
+
+    
+    //self.placeComplition(place, nil);
+    //[self.navigationController popViewControllerAnimated : YES];
+    //self.navigationController.navigationBar.translucent = YES;
 }
 
 #pragma mark - MUSCustomMapViewDelegate
-
-- (void) reloadCustomMapView:(NSInteger) newDistance {
-    if (newDistance > [self.stringDistance integerValue] * 3 && newDistance < [distanceEqual25000 integerValue]) {
-        self.stringDistance = [NSString stringWithFormat: @"%d", newDistance];
-        [self userCurrentLocation];
-    }
-}
 
 - (void) selectedPlaceForPostByIndex:(NSInteger)index {
     [self obtainPlaceForPost: index];

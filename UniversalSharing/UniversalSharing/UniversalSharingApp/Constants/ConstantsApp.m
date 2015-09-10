@@ -141,6 +141,9 @@ NSInteger const musAppDetailPostVC_HeightOfGalleryOfPhotosCell_WithPhotos = 150;
 NSString *const musAppDetailPostVC_UpdatePostAlert = @"Do you want to update your Post?";
 NSInteger const musAppDetailPostVC_NumberOfRows = 4;
 
+#pragma mark - MUSCustomMapView
+
+NSInteger const musAppCustomMapView_maxZoomDistance = 150000;
 
 
 @end
