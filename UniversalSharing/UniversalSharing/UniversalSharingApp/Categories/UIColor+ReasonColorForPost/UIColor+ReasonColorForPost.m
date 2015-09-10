@@ -16,10 +16,10 @@
             return [self greenColor];
             break;
         case ErrorConnection:
-            return [self orangeColor];
+            return [self redColor];
             break;
         case Offline:
-            return [self redColor];
+            return [self grayColor];
             break;
         default:
             break;

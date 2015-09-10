@@ -25,8 +25,11 @@
 @property (nonatomic, strong) NSMutableArray *arrayOfPhotos; //Array of images
 @property (nonatomic, assign) BOOL isEditableGallery;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-@property (strong, nonatomic) IBOutlet UIView *view;
+//@property (strong, nonatomic) IBOutlet UIView *view;
 
++ (NSString*) viewID;
+
+- (void) initiationGalleryViewOfPhotos;
 - (void) isVisiblePageControl : (BOOL) isVisible;
 - (void) scrollCollectionViewToLastPhoto;
 

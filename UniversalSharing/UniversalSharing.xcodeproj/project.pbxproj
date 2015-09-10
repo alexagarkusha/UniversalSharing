@@ -64,7 +64,6 @@
 		97C2A7C91B9DA61B007FF8CA /* MUSLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C2A7C81B9DA61B007FF8CA /* MUSLocationViewController.m */; };
 		97C350541B8490C7002C6D8E /* Button_Add.png in Resources */ = {isa = PBXBuildFile; fileRef = 97C350531B8490C7002C6D8E /* Button_Add.png */; };
 		97C3505E1B84AA50002C6D8E /* MUSGalleryViewOfPhotos.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C3505D1B84AA50002C6D8E /* MUSGalleryViewOfPhotos.m */; };
-		97C350611B84AAF6002C6D8E /* MUSGalleryViewOfPhotos.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97C350601B84AAF6002C6D8E /* MUSGalleryViewOfPhotos.xib */; };
 		97C460CF1B68B6AD00C010DE /* MUSPhotoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C460CE1B68B6AD00C010DE /* MUSPhotoManager.m */; };
 		97C460D11B68B74B00C010DE /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C460D01B68B74B00C010DE /* CoreLocation.framework */; };
 		97C460D31B68B77100C010DE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C460D21B68B77100C010DE /* CoreGraphics.framework */; };
@@ -221,7 +220,6 @@
 		97C350531B8490C7002C6D8E /* Button_Add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Button_Add.png; sourceTree = "<group>"; };
 		97C3505C1B84AA50002C6D8E /* MUSGalleryViewOfPhotos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUSGalleryViewOfPhotos.h; path = GalleryViewOfPhotos/MUSGalleryViewOfPhotos.h; sourceTree = "<group>"; };
 		97C3505D1B84AA50002C6D8E /* MUSGalleryViewOfPhotos.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUSGalleryViewOfPhotos.m; path = GalleryViewOfPhotos/MUSGalleryViewOfPhotos.m; sourceTree = "<group>"; };
-		97C350601B84AAF6002C6D8E /* MUSGalleryViewOfPhotos.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MUSGalleryViewOfPhotos.xib; path = GalleryViewOfPhotos/MUSGalleryViewOfPhotos.xib; sourceTree = "<group>"; };
 		97C460CD1B68B6AD00C010DE /* MUSPhotoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUSPhotoManager.h; path = UniversalSharing/UniversalSharingApp/Managers/PhotoManager/MUSPhotoManager.h; sourceTree = SOURCE_ROOT; };
 		97C460CE1B68B6AD00C010DE /* MUSPhotoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUSPhotoManager.m; path = UniversalSharing/UniversalSharingApp/Managers/PhotoManager/MUSPhotoManager.m; sourceTree = SOURCE_ROOT; };
 		97C460D01B68B74B00C010DE /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -849,7 +847,6 @@
 			children = (
 				97C3505C1B84AA50002C6D8E /* MUSGalleryViewOfPhotos.h */,
 				97C3505D1B84AA50002C6D8E /* MUSGalleryViewOfPhotos.m */,
-				97C350601B84AAF6002C6D8E /* MUSGalleryViewOfPhotos.xib */,
 			);
 			name = GalleryViewOfPhotos;
 			sourceTree = "<group>";
@@ -1218,7 +1215,6 @@
 				97C2953F1B9826AB001B21FF /* Like.png in Resources */,
 				97C49E861B835B64005241CE /* MUSPostDescriptionCell.xib in Resources */,
 				18BB29BC1B67E3F000B498AC /* MUSTopUserProfileCell.xib in Resources */,
-				97C350611B84AAF6002C6D8E /* MUSGalleryViewOfPhotos.xib in Resources */,
 				30416A2B1B73AF49000CB2C2 /* MUSCollectionViewCell.xib in Resources */,
 				307611F91BA17B1D0051C2AD /* checkMarkTaken.jpeg in Resources */,
 				18BB29AF1B67E3F000B498AC /* Main.storyboard in Resources */,
