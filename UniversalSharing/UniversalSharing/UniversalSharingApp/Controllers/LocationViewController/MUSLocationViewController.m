@@ -50,7 +50,9 @@
 
 @property (strong, nonatomic) UITapGestureRecognizer *tapGestureRecognizer;
 
-@property (nonatomic, strong) UIPanGestureRecognizer *panGesture;
+@property (strong, nonatomic) UIPanGestureRecognizer *panGesture;
+
+@property (strong, nonatomic) NSIndexPath* chosenPlaceIndexPath;
 
 @end
 
@@ -220,12 +222,18 @@
     /*!
      get object Place and show name of that on tableviewcell
      */
-    Place *place = self.arrayLocations[indexPath.row];
-    cell.textLabel.text = place.fullName;
-    //cell.textLabel.text = [NSString stringWithFormat: @"%d) %@", indexPath.row, place.fullName];
+    Place *currentPlace = self.arrayLocations[indexPath.row];
+    
+    if ([self.place.placeID isEqualToString: currentPlace.placeID]) {
+        cell.textLabel.textColor = [UIColor lightGrayColor];
+        self.chosenPlaceIndexPath = indexPath;
+    } else {
+        cell.textLabel.textColor = [UIColor blackColor];
+    }
+    cell.textLabel.text = currentPlace.fullName;
     cell.textLabel.numberOfLines = 0;
     cell.textLabel.font = [UIFont systemFontOfSize: 16.0];
-
+  
     return cell;
 }
 
@@ -235,7 +243,10 @@
     /*!
      get chosen object Place and send to shareViewController via block, leave this controller
      */
-    [self obtainPlaceForPost: indexPath.row];
+    
+    if (self.chosenPlaceIndexPath.row != indexPath.row) {
+        [self obtainPlaceForPost: indexPath.row];
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -266,10 +277,19 @@
 
 
 - (void) obtainPlaceForPost : (NSInteger) currentIndex {
-    Place *place = [self.arrayLocations objectAtIndex: currentIndex];
-    self.placeComplition(place, nil);
-    [self.navigationController popViewControllerAnimated:YES];
+    Place *chosenPlace = [self.arrayLocations objectAtIndex: currentIndex];
+    self.placeComplition(chosenPlace, nil);
+    [self.navigationController popViewControllerAnimated : YES];
     self.navigationController.navigationBar.translucent = YES;
+
+    
+    
+    NSLog(@"Place name = %@ index = %d", chosenPlace.fullName, currentIndex);
+
+    
+    //self.placeComplition(place, nil);
+    //[self.navigationController popViewControllerAnimated : YES];
+    //self.navigationController.navigationBar.translucent = YES;
 }
 
 #pragma mark - MUSCustomMapViewDelegate

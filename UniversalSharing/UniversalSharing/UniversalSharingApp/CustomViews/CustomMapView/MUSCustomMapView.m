@@ -51,6 +51,7 @@
         [self.mapView setRegion : region animated:YES];
     }
     NSMutableArray *arrayOfAnnotations = [[NSMutableArray alloc] init];
+    
     for (int i = 0; i < arrayOfPlaces.count; i++) {
         Place *currentPlace = [arrayOfPlaces objectAtIndex: i];
         MUSAnnotation *pin = [[MUSAnnotation alloc] initWithTitle: currentPlace.fullName location: CLLocationCoordinate2DMake([currentPlace.latitude floatValue], [currentPlace.longitude floatValue]) andIndex : i];
@@ -106,9 +107,11 @@
         MKPinAnnotationView *annotationView = (MKPinAnnotationView*) [mapView dequeueReusableAnnotationViewWithIdentifier: @"MUSAnnotation"];
         if (annotationView) {
             annotationView.annotation = annotation;
+            annotationView.rightCalloutAccessoryView = [self addPlaceButtonWithIndex:newAnnotaton.index];
         } else {
             annotationView = [newAnnotaton annotationPinView];
             annotationView.rightCalloutAccessoryView = [self addPlaceButtonWithIndex:newAnnotaton.index];
+            //NSLog(@"NAME PLACE = %@ INDEX = %d", newAnnotaton.title, newAnnotaton.index);
         }
         return annotationView;
     } else {

@@ -16,7 +16,11 @@
  @abstract return object Place from arrayLocations
  */
 @property (copy, nonatomic) Complition placeComplition;
-
+/*!
+ @property
+ @abstract set current place, if the user chose before
+ */
+@property (strong, nonatomic) Place* place;
 /*!
  @method
  @abstract set current user in order to get array places

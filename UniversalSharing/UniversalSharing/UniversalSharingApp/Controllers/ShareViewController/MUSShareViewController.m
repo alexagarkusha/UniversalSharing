@@ -508,6 +508,8 @@
         [vc currentUser:_currentSocialNetwork];
         self.galeryView.isEditableCollectionView = NO;
         [self.galeryView.collectionView reloadData];
+        [vc setPlace: self.place];
+
         
         __weak MUSShareViewController *weakSelf = self;
         vc.placeComplition = ^(Place* result, NSError *error) {
@@ -516,7 +518,13 @@
              */
             if (result) {
                 weakSelf.place = result;
-                [self.shareLocationButton setTintColor: [UIColor redColor]];
+                NSString *title = result.fullName;
+                if (result.fullName.length > 18) {
+                    title = [result.fullName substringToIndex: 18];
+                    title = [title stringByAppendingString : @"..."];
+                }
+
+                [self.shareLocationButton setTitle: title];
             }
         };
     }

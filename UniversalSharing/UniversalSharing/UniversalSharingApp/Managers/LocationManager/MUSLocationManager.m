@@ -67,7 +67,7 @@
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
-    NSLog(@"%@", [locations lastObject]);
+    //NSLog(@"%@", [locations lastObject]);
     if (locations) {
         [self stopAndGetCurrentLocation];
     }
