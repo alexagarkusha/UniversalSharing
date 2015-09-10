@@ -20,8 +20,21 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Posts" image="first" id="acW-dT-cKf"/>
-                    <navigationItem key="navigationItem" id="pJr-Hq-3rU"/>
+                    <navigationItem key="navigationItem" id="pJr-Hq-3rU">
+                        <barButtonItem key="leftBarButtonItem" title="Select All" id="JHp-eg-J2H">
+                            <connections>
+                                <action selector="buttonSelectAllTapped:" destination="9pv-A4-QxB" id="j7h-S0-d74"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="XU0-9N-dqn">
+                            <connections>
+                                <action selector="buttonEditTapped:" destination="9pv-A4-QxB" id="VsL-36-aMm"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="editButton" destination="XU0-9N-dqn" id="edK-f1-BJu"/>
+                        <outlet property="selectAllButton" destination="JHp-eg-J2H" id="l1r-RW-J7e"/>
                         <segue destination="rW8-Fp-nEm" kind="show" identifier="DetailPostViewController" id="mhy-BG-aNn"/>
                     </connections>
                 </viewController>
@@ -267,15 +280,8 @@
                             <constraint firstItem="4DR-Db-4eE" firstAttribute="top" secondItem="4bO-Y4-7MJ" secondAttribute="top" id="iLK-DN-GeA"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Networks" id="CXT-1l-WE6">
-                        <barButtonItem key="leftBarButtonItem" title="Edit" id="yGE-qs-s5D">
-                            <connections>
-                                <action selector="btnEditTapped:" destination="sDs-sX-TUf" id="epq-iw-tRH"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Networks" id="CXT-1l-WE6"/>
                     <connections>
-                        <outlet property="btnEditOutlet" destination="yGE-qs-s5D" id="MsF-jc-JQQ"/>
                         <outlet property="buttonUseAnywayOutlet" destination="s3b-v5-BFs" id="a6f-oy-Ho9"/>
                         <outlet property="errorView" destination="4DR-Db-4eE" id="acr-xg-AAm"/>
                         <outlet property="tableView" destination="ICe-7s-J4T" id="Dua-2r-x8s"/>
