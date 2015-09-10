@@ -13,7 +13,7 @@
 + (UIColor*) reasonColorForPost : (ReasonType) currentReasonType {
     switch (currentReasonType) {
         case Connect:
-            return [self greenColor];
+            return [self colorWithRed: 75.0/255.0 green: 208.0/255.0 blue: 100.0/255.0 alpha: 1.0];
             break;
         case ErrorConnection:
             return [self redColor];
