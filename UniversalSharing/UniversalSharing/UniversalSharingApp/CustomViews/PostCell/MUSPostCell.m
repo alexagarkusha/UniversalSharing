@@ -79,7 +79,7 @@
     self.iconOfSocialNetwork.image = [UIImage iconOfSocialNetworkForPost: currentPost];
     self.numberOfLikes.text = [NSString stringWithFormat: @"%ld", (long)currentPost.likesCount];
     self.commentImage.image = [UIImage imageNamed: musAppImage_Name_Comment];
-    //self.reasonOfPost.backgroundColor = [UIColor reasonColorForPost: currentPost.reason];
+    self.reasonOfPost.backgroundColor = [UIColor reasonColorForPost: currentPost.reason];
     self.reasonOfPost.text = [NSString reasonTypeInString: currentPost.reason];
     self.likeImage.image = [UIImage imageNamed: musAppImage_Name_Like];
     
