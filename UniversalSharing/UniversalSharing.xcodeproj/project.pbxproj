@@ -42,8 +42,8 @@
 		30416A641B79DDD4000CB2C2 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 30416A631B79DDD4000CB2C2 /* libsqlite3.dylib */; };
 		30416A6A1B81D0E0000CB2C2 /* DataBaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 30416A691B81D0E0000CB2C2 /* DataBaseManager.m */; };
 		307611ED1B9DC1F80051C2AD /* MUSDetailPostCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 307611EC1B9DC1F80051C2AD /* MUSDetailPostCollectionViewController.m */; };
-		307611F11BA074250051C2AD /* checkMark.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 307611F01BA074250051C2AD /* checkMark.jpeg */; };
-		307611F91BA17B1D0051C2AD /* checkMarkTaken.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 307611F81BA17B1D0051C2AD /* checkMarkTaken.jpeg */; };
+		307611F11BA074250051C2AD /* checkMarkTaken.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 307611F01BA074250051C2AD /* checkMarkTaken.jpeg */; };
+		307611F91BA17B1D0051C2AD /* checkMark.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 307611F81BA17B1D0051C2AD /* checkMark.jpeg */; };
 		30DBFD8B1B677A9A002F83D0 /* TwitterNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD8A1B677A9A002F83D0 /* TwitterNetwork.m */; };
 		30DBFD8F1B677AD7002F83D0 /* VKNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD8E1B677AD7002F83D0 /* VKNetwork.m */; };
 		30DBFD931B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD921B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.m */; };
@@ -182,8 +182,8 @@
 		30416A691B81D0E0000CB2C2 /* DataBaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataBaseManager.m; sourceTree = "<group>"; };
 		307611EB1B9DC1F80051C2AD /* MUSDetailPostCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSDetailPostCollectionViewController.h; sourceTree = "<group>"; };
 		307611EC1B9DC1F80051C2AD /* MUSDetailPostCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSDetailPostCollectionViewController.m; sourceTree = "<group>"; };
-		307611F01BA074250051C2AD /* checkMark.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = checkMark.jpeg; sourceTree = "<group>"; };
-		307611F81BA17B1D0051C2AD /* checkMarkTaken.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = checkMarkTaken.jpeg; sourceTree = "<group>"; };
+		307611F01BA074250051C2AD /* checkMarkTaken.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = checkMarkTaken.jpeg; sourceTree = "<group>"; };
+		307611F81BA17B1D0051C2AD /* checkMark.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = checkMark.jpeg; sourceTree = "<group>"; };
 		30DBFD891B677A9A002F83D0 /* TwitterNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterNetwork.h; sourceTree = "<group>"; };
 		30DBFD8A1B677A9A002F83D0 /* TwitterNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterNetwork.m; sourceTree = "<group>"; };
 		30DBFD8D1B677AD7002F83D0 /* VKNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VKNetwork.h; sourceTree = "<group>"; };
@@ -436,8 +436,8 @@
 				97C4ACD81B99BF99008B93B3 /* Button_addPhoto.png */,
 				97C4ACCC1B997B9C008B93B3 /* Button_Delete.png */,
 				97C4ACCE1B997DD4008B93B3 /* Button_Change.png */,
-				307611F01BA074250051C2AD /* checkMark.jpeg */,
-				307611F81BA17B1D0051C2AD /* checkMarkTaken.jpeg */,
+				307611F01BA074250051C2AD /* checkMarkTaken.jpeg */,
+				307611F81BA17B1D0051C2AD /* checkMark.jpeg */,
 				18B505471B726FAF00679F9D /* Info.plist */,
 				18BB29A61B67E3F000B498AC /* main.m */,
 			);
@@ -1198,7 +1198,7 @@
 				18BB29BE1B67E3F000B498AC /* MUSUserProfileCell.xib in Resources */,
 				97C49E801B835130005241CE /* MUSCommentsAndLikesCell.xib in Resources */,
 				30DBFDA51B6BAA52002F83D0 /* VKimage.png in Resources */,
-				307611F11BA074250051C2AD /* checkMark.jpeg in Resources */,
+				307611F11BA074250051C2AD /* checkMarkTaken.jpeg in Resources */,
 				18BB29AE1B67E3F000B498AC /* LaunchScreen.xib in Resources */,
 				97CB10DD1B9086D30061F851 /* btn-close@2x.png in Resources */,
 				18BB29C01B67E3F000B498AC /* Images.xcassets in Resources */,
@@ -1216,7 +1216,7 @@
 				97C49E861B835B64005241CE /* MUSPostDescriptionCell.xib in Resources */,
 				18BB29BC1B67E3F000B498AC /* MUSTopUserProfileCell.xib in Resources */,
 				30416A2B1B73AF49000CB2C2 /* MUSCollectionViewCell.xib in Resources */,
-				307611F91BA17B1D0051C2AD /* checkMarkTaken.jpeg in Resources */,
+				307611F91BA17B1D0051C2AD /* checkMark.jpeg in Resources */,
 				18BB29AF1B67E3F000B498AC /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

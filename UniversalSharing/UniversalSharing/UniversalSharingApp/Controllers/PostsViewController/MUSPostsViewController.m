@@ -60,7 +60,6 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editButton;
 @property (strong, nonatomic) UIToolbar *toolBar ;
-@property (assign, nonatomic) BOOL flagSellectAll;
 @property (strong, nonatomic) NSMutableIndexSet *mutableIndexSet ;
 @property (strong, nonatomic) UIRefreshControl *refreshControl ;
 @end
@@ -216,7 +215,8 @@
     }
     cell.delegate = self;
     cell.selectionStyle = UITableViewCellSelectionStyleNone; // disable the cell selection highlighting
-    [cell configurationPostCell: [self.arrayPosts objectAtIndex: indexPath.row] andFlagEditing: self.editing andFlagSellectAll :self.flagSellectAll];
+    
+    [cell configurationPostCell: [self.arrayPosts objectAtIndex: indexPath.row] andFlagEditing: self.editing andFlagForDelete :[self.mutableIndexSet containsIndex:indexPath.row]];
     return cell;
 }
 
@@ -250,7 +250,7 @@
         [self.navigationItem.leftBarButtonItem setTintColor: [UIColor clearColor]];
         [_toolBar setHidden:YES];
         [self.tabBarController.tabBar setHidden:NO];
-         self.flagSellectAll = NO;
+        
     } else {
         [super setEditing:YES animated:YES];
         [self.editButton setTitle:doneButtonTitle];
@@ -264,19 +264,17 @@
     [self.tableView reloadData];
 }
 
+
 - (void) addIndexToIndexSetWithCell:(MUSPostCell*)cell {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    for (int i = 0; i < self.mutableIndexSet.count; i++) {
-        if ([[NSNumber numberWithInteger:i] integerValue] == indexPath.row ) {
-            [self.mutableIndexSet removeIndex:indexPath.row];
-            return;
-        }
+    if ([self.mutableIndexSet containsIndex:indexPath.row]) {
+        [self.mutableIndexSet removeIndex:indexPath.row];
+        return;
     }
     [self.mutableIndexSet addIndex:indexPath.row];
 }
 
 - (IBAction) buttonSelectAllTapped:(id)sender {
-    self.flagSellectAll = YES;
     [self.arrayPosts enumerateObjectsUsingBlock:^(id obj, NSUInteger index, BOOL *stop) {
         [self.mutableIndexSet addIndex:index];
     }];
