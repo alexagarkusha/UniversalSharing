@@ -11,6 +11,7 @@
 #import "ConstantsApp.h"
 #import "MUSLocationManager.h"
 #import "MUSCustomMapView.h"
+#import "ReachabilityManager.h"
 
 @interface MUSLocationViewController () <UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate, MUSCustomMapViewDelegate>
 /*!
@@ -69,8 +70,13 @@
 }
 
 - (void) viewWillAppear:(BOOL)animated {
-    self.stringDistance = distanceEqual1000;
-    [self userCurrentLocation];
+    self.stringDistance = distanceEqual25000;
+    if (![self obtainCurrentConnection]) {
+        UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle: musAppError_With_Domain_Universal_Sharing message:musAppError_Internet_Connection_Location delegate:self cancelButtonTitle: musAppButtonTitle_Cancel otherButtonTitles: nil];
+        [errorAlert show];
+    } else {
+        [self userCurrentLocation];
+    }
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
@@ -81,6 +87,15 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (BOOL) obtainCurrentConnection {
+    BOOL isReachable = [ReachabilityManager isReachable];
+    BOOL isReachableViaWiFi = [ReachabilityManager isReachableViaWiFi];
+    if (!isReachableViaWiFi && !isReachable){
+        return NO;
+    }
+    return YES;
 }
 
 - (void) currentUser:(SocialNetwork*)socialNetwork {
@@ -196,7 +211,7 @@
             [_currentSocialNetwork obtainArrayOfPlaces:self.currentLocation withComplition:^(NSMutableArray *places, NSError *error) {
                 if (!error) {
                     weakSelf.arrayLocations = places;
-                    [weakSelf.customMapView initiationMapView: places withDistance: [weakSelf.stringDistance integerValue] andNetworkType: weakSelf.currentSocialNetwork.networkType];
+                    [weakSelf.customMapView initiationMapView: places withDistance: [distanceEqual1000 integerValue] andNetworkType: weakSelf.currentSocialNetwork.networkType];
                     [weakSelf.tableView reloadData];
                     weakSelf.customMapView.delegate = weakSelf.self;
                 } else {

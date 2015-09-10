@@ -119,7 +119,8 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
-    if (!_currentSocialNetwork || !_currentSocialNetwork.isVisible) {
+    
+    if (!_currentSocialNetwork || !_currentSocialNetwork.isVisible || !_currentSocialNetwork.isLogin) {
         _currentSocialNetwork = [SocialManager currentSocialNetwork];
         [self.changeSocialNetworkButton initiationSocialNetworkButtonForSocialNetwork: [SocialManager currentSocialNetwork]];
     }
@@ -161,7 +162,12 @@
 }
 
 - (IBAction)btnShareLocationTapped:(id)sender {
-    [self userCurrentLocation];
+    if (!_currentSocialNetwork || !_currentSocialNetwork.isLogin || !_currentSocialNetwork.isVisible) {
+        [self showAlertWithMessage: musAppError_Logged_Into_Social_Networks];
+        return;
+    } else {
+        [self userCurrentLocation];
+    }
 }
 
 - (IBAction)btnSharePhotoTapped:(id)sender {
@@ -309,7 +315,7 @@
 #pragma mark - Share Post to Social network
 
 - (IBAction)shareToSocialNetwork:(id)sender {
-    if (!_currentSocialNetwork.isVisible || !_currentSocialNetwork) {
+    if (!_currentSocialNetwork.isVisible || !_currentSocialNetwork || !_currentSocialNetwork.isLogin) {
         [self showAlertWithMessage: musAppError_Logged_Into_Social_Networks];
         return;
     }
@@ -402,18 +408,8 @@
 }
 
 - (void) endEditingMessageTextView {
-    //[UIView animateWithDuration:1.0 animations:^(void){
     [self.messageTextView resignFirstResponder];
-    //} completion:^(BOOL finished) {
-    //Do something
-    //}];
-    
-    
-    
-    
-    //[self.messageTextView resignFirstResponder];
     self.mainGestureRecognizer.enabled = NO;
-    //[self performSelector:@selector(keyboardWillHide:)];
 }
 
 #pragma mark - UIActionSheet
@@ -490,7 +486,7 @@
 }
 
 - (void) showAlertWithMessage : (NSString*) message {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle : musErrorWithDomainUniversalSharing
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle : musAppError_With_Domain_Universal_Sharing
                                                     message : message
                                                    delegate : self
                                           cancelButtonTitle : musAppButtonTitle_OK
