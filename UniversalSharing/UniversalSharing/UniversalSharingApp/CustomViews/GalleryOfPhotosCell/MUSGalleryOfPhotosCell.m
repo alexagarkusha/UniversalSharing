@@ -70,21 +70,11 @@
     [self checkGalleryOfPhotosStatus];
     [self initiationGalleryViewOfPhotos : arrayOfImages];
     
-    
-    NSLog(@"arrayOfImages = %d", arrayOfImages.count);
-    NSLog(@"numberOfImages = %d", self.numberOfImages);
-    
-    
-    //    if ((arrayOfImages.count > self.numberOfImages && (self.numberOfImages >= 1 || (arrayOfImages.count == self.numberOfImages + 1 && arrayOfImages.count > 1))) {
-    //        [self.galleryViewOfPhotos scrollCollectionViewToLastPhoto];
-    //    }
-
-    
-    if ((self.numberOfImages != 0 || (arrayOfImages.count == 1 && !self.numberOfImages)) && self.isEditableCell) {
+    if (self.numberOfImages == arrayOfImages.count && self.isEditableCell) {
         [self.galleryViewOfPhotos scrollCollectionViewToLastPhoto];
     }
-    self.numberOfImages = arrayOfImages.count;
-
+    self.numberOfImages = arrayOfImages.count + 1;
+    
     [self initiationUserNameLabel: user];
     [self initiationUserDateOfPostLabel: postDateCreate];
     [self initiationUserPhotoImageView: socialNetworkIconName];
@@ -151,8 +141,8 @@
 #pragma mark - MUSGalleryViewOfPhotosDelegate
 
 - (void) arrayOfPhotos:(NSArray *)arrayOfPhotos {
-    [self.delegate editArrayOfPicturesInPost: arrayOfPhotos];
     self.numberOfImages = arrayOfPhotos.count + 1;
+    [self.delegate editArrayOfPicturesInPost: arrayOfPhotos];
 }
 
 - (void) addPhotoToPost {

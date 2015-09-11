@@ -445,9 +445,11 @@
 - (void) editArrayOfPicturesInPost: (NSArray *)arrayOfImages {
     if (!arrayOfImages.firstObject) {
         [self.arrayOfPicturesInPost removeAllObjects];
+        self.isChangedPost = YES;
         [self.tableView reloadData];
         return;
     }
+    self.isChangedPost = YES;
     self.arrayOfPicturesInPost = [NSMutableArray arrayWithArray: arrayOfImages];
 }
 
