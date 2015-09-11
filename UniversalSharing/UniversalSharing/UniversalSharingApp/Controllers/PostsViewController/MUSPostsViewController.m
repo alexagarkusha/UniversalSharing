@@ -60,7 +60,6 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editButton;
 @property (strong, nonatomic) UIToolbar *toolBar ;
-@property (assign, nonatomic) BOOL flagSellectAll;
 @property (strong, nonatomic) NSMutableIndexSet *mutableIndexSet ;
 @property (strong, nonatomic) UIRefreshControl *refreshControl ;
 @end
@@ -113,7 +112,7 @@
 }
 
 - (void) initiationToolBarForRemove {
-    _toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height -  50, self.view.frame.size.width, 50)];
+    _toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height - 50, self.view.frame.size.width, 50)];
     _toolBar.barStyle = UIBarStyleDefault;
     
     UIBarButtonItem *flexibleSpace =  [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
@@ -216,7 +215,8 @@
     }
     cell.delegate = self;
     cell.selectionStyle = UITableViewCellSelectionStyleNone; // disable the cell selection highlighting
-    [cell configurationPostCell: [self.arrayPosts objectAtIndex: indexPath.row] andFlagEditing: self.editing andFlagSellectAll :self.flagSellectAll];
+    
+    [cell configurationPostCell: [self.arrayPosts objectAtIndex: indexPath.row] andFlagEditing: self.editing andFlagForDelete :[self.mutableIndexSet containsIndex:indexPath.row]];
     return cell;
 }
 
@@ -250,7 +250,8 @@
         [self.navigationItem.leftBarButtonItem setTintColor: [UIColor clearColor]];
         [_toolBar setHidden:YES];
         [self.tabBarController.tabBar setHidden:NO];
-         self.flagSellectAll = NO;
+        [self.mutableIndexSet removeAllIndexes];
+        
     } else {
         [super setEditing:YES animated:YES];
         [self.editButton setTitle:doneButtonTitle];
@@ -264,19 +265,17 @@
     [self.tableView reloadData];
 }
 
+
 - (void) addIndexToIndexSetWithCell:(MUSPostCell*)cell {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    for (int i = 0; i < self.mutableIndexSet.count; i++) {
-        if ([[NSNumber numberWithInteger:i] integerValue] == indexPath.row ) {
-            [self.mutableIndexSet removeIndex:indexPath.row];
-            return;
-        }
+    if ([self.mutableIndexSet containsIndex:indexPath.row]) {
+        [self.mutableIndexSet removeIndex:indexPath.row];
+        return;
     }
     [self.mutableIndexSet addIndex:indexPath.row];
 }
 
 - (IBAction) buttonSelectAllTapped:(id)sender {
-    self.flagSellectAll = YES;
     [self.arrayPosts enumerateObjectsUsingBlock:^(id obj, NSUInteger index, BOOL *stop) {
         [self.mutableIndexSet addIndex:index];
     }];
@@ -285,12 +284,9 @@
 
 - (void) toolbarButtonDeleteTapped :(id) sender {
     [self.mutableIndexSet enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
-        [[DataBaseManager sharedManager] deletePostByPrimaryKey: [self.arrayPosts objectAtIndex:[[NSNumber numberWithInteger:index] integerValue]]];
+        [[DataBaseManager sharedManager] deletePostByPrimaryKey: self.arrayPosts[index]];
     }];
-    
-    for (NSInteger i = [self.mutableIndexSet count] - 1; i >= 0; i--) {
-        [self.arrayPosts removeObjectAtIndex:[[NSNumber numberWithInteger:i] integerValue]];
-    }
+    self.arrayPosts = [[NSMutableArray alloc] initWithArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper createStringForPostWithReason: self.predicateReason andNetworkType: self.predicateNetworkType]]];
     [self.mutableIndexSet removeAllIndexes];
     [self.tableView reloadData];
 }

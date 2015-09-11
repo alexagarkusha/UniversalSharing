@@ -16,11 +16,12 @@
 
 @interface MUSPostCell : UITableViewCell
 @property (nonatomic, assign) id <MUSPostCellDelegate> delegate;
+//@property (weak, nonatomic) IBOutlet UIButton *buttonCheckMark;
 
 + (NSString*) cellID;
 + (instancetype) postCell;
 + (CGFloat) heightForPostCell;
 
-- (void) configurationPostCell: (Post*) currentPost andFlagEditing:(BOOL) flagEdit andFlagSellectAll :(BOOL) flagSellectAll;
+- (void) configurationPostCell: (Post*) currentPost andFlagEditing:(BOOL) flagEdit andFlagForDelete :(BOOL) flagForDelete;
 
 @end
