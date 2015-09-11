@@ -13,15 +13,17 @@
 @protocol MUSCustomMapViewDelegate <NSObject>
 @optional
 - (void) selectedPlaceForPostByIndex : (NSInteger) index;
+- (void) deletePlaceForPostByIndex : (NSInteger) index;
 @end
 
 @interface MUSCustomMapView : UIView
 
-+ (NSString*) viewID;
-- (void) initiationMapView : (NSArray*) arrayOfPlaces withDistance : (CGFloat) distance andNetworkType : (NetworkType) networkType;
+- (void) initiationMapViewWithPlaces : (NSArray*) arrayOfPlaces;
 
 @property (assign, nonatomic) id <MUSCustomMapViewDelegate> delegate;
 @property (nonatomic, strong) NSArray *arrayOfPlaces;
+
+
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
 @end

@@ -519,8 +519,10 @@
                     title = [result.fullName substringToIndex: 18];
                     title = [title stringByAppendingString : @"..."];
                 }
-
-                [self.shareLocationButton setTitle: title];
+                [weakSelf.shareLocationButton setTitle: title];
+            } else if (!result && !error) {
+                weakSelf.place = nil;
+                [weakSelf.shareLocationButton setTitle: @"Share Location"];
             }
         };
     }

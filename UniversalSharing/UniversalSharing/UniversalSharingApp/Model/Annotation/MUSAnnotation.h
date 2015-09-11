@@ -15,9 +15,10 @@
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *subtitle;
 @property (nonatomic, assign) NSInteger index;
+@property (nonatomic, assign) BOOL isChosen;
 
 
-- (id) initWithTitle: (NSString *) newTitle location: (CLLocationCoordinate2D) location andIndex : (NSInteger) currentIndex;
+- (id) initWithTitle: (NSString *) newTitle location: (CLLocationCoordinate2D) location index : (NSInteger) currentIndex andStatus : (BOOL) isChosenPlace;
 //- (MKAnnotationView*) annotationView;
 - (MKPinAnnotationView*) annotationPinView;
 

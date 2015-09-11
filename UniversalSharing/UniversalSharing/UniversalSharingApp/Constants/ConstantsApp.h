@@ -179,6 +179,6 @@ FOUNDATION_EXPORT NSInteger const musAppDetailPostVC_NumberOfRows;
 #pragma mark - MUSCustomMapView
 
 FOUNDATION_EXPORT NSInteger const musAppCustomMapView_maxZoomDistance;
-
+FOUNDATION_EXPORT NSString *const musAppButton_ImageName_ButtonDeleteLocation;
 
 @end

@@ -39,6 +39,8 @@
  @abstract latitude of the place. Like '+48.049343'
  */
 @property (nonatomic, strong) NSString *latitude;
+
+@property (nonatomic, assign) BOOL isChosen;
 /*!
  @abstract return an instance of the Place.
  @param dictionary takes dictionary from social network.
