@@ -10,12 +10,13 @@
 
 @implementation MUSAnnotation
 
-- (id) initWithTitle: (NSString *) newTitle location: (CLLocationCoordinate2D) location andIndex:(NSInteger) currentIndex {
+- (id) initWithTitle: (NSString *) newTitle location: (CLLocationCoordinate2D) location index:(NSInteger) currentIndex andStatus : (BOOL) isChosenPlace {
     self = [super init];
     if (self) {
         _title = newTitle;
         _coordinate = location;
         _index = currentIndex;
+        _isChosen = isChosenPlace;
     }
     return self;
 }

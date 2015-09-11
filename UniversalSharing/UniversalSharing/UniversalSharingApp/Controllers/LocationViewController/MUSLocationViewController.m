@@ -18,7 +18,7 @@
  @property
  @abstract initialization by Place objects via block from socialnetwork(facebook or twitter or VK)
  */
-@property (strong, nonatomic) NSArray *arrayLocations;
+@property (strong, nonatomic) NSMutableArray *arrayLocations;
 /*!
  @property
  @abstract initialization by socialnetwork(facebook or twitter or VK) getting from ShareViewController
@@ -33,27 +33,27 @@
 /////////////////////////////////////////////////
 @property (strong, nonatomic) Location *currentLocation;
 
-
-
-
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-//@property (strong, nonatomic) MUSCustomMapView *musCustomMapView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftConstraintTableView;
 #warning RENAME PROPERTY
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightConstraintTavbleView;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightConstraintCustomMapView;
+
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftConstraintCustomMapView;
+
 @property (weak, nonatomic) IBOutlet MUSCustomMapView *customMapView;
 
 @property (assign, nonatomic) BOOL isOpenTableView;
 
 @property (strong, nonatomic) UITapGestureRecognizer *tapGestureRecognizer;
 
-@property (strong, nonatomic) UIPanGestureRecognizer *panGesture;
+@property (strong, nonatomic) UIPanGestureRecognizer *panGestureRecognizer;
 
 @property (strong, nonatomic) NSIndexPath* chosenPlaceIndexPath;
+
+@property (assign, nonatomic) BOOL isChosenPlace;
 
 @end
 
@@ -63,9 +63,11 @@
     [super viewDidLoad];
     [self initiationNavigationBar];
     [self initiationPanGestureRecognizer];
+    
     self.leftConstraintTableView.constant =  self.view.frame.size.width;
     self.rightConstraintTavbleView.constant = - self.view.frame.size.width;
     self.tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget : self action : @selector(tapOnMapView:)];
+    self.arrayLocations = [[NSMutableArray alloc] init];
     // Do any additional setup after loading the view.
 }
 
@@ -108,10 +110,10 @@
 }
 
 - (void) initiationPanGestureRecognizer {
-    self.panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(moveTableView:)];
-    self.panGesture.maximumNumberOfTouches = 1;
-    self.panGesture.minimumNumberOfTouches = 1;
-    [self.view addGestureRecognizer:self.panGesture];
+    self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(moveTableView:)];
+    self.panGestureRecognizer.maximumNumberOfTouches = 1;
+    self.panGestureRecognizer.minimumNumberOfTouches = 1;
+    [self.view addGestureRecognizer:self.panGestureRecognizer];
     [self.view bringSubviewToFront: self.navigationController.navigationBar];
 }
 
@@ -210,8 +212,31 @@
             
             [_currentSocialNetwork obtainArrayOfPlaces:self.currentLocation withComplition:^(NSMutableArray *places, NSError *error) {
                 if (!error) {
-                    weakSelf.arrayLocations = places;
-                    [weakSelf.customMapView initiationMapView: places withDistance: [distanceEqual1000 integerValue] andNetworkType: weakSelf.currentSocialNetwork.networkType];
+                    //////////////////////////////////////////////////////////////
+                    if (weakSelf.place) {
+                        //weakSelf.isChosenPlace = YES;
+                        weakSelf.place.isChosen = YES;
+                        [weakSelf.arrayLocations addObject: weakSelf.place];
+                        [weakSelf.arrayLocations addObjectsFromArray: places];
+                        NSMutableArray *uniqueArray = [NSMutableArray array];
+                        NSMutableSet *names = [NSMutableSet set];
+                        for (id obj in weakSelf.arrayLocations) {
+                            NSString *destinationName = [obj valueForKey: @"fullName"];
+                            //NSString *destinationName = [obj destinationname];
+                            if (![names containsObject:destinationName]) {
+                                [uniqueArray addObject:obj];
+                                [names addObject:destinationName];
+                            }
+                        }
+                        
+                        [weakSelf.arrayLocations removeAllObjects];
+                        [weakSelf.arrayLocations addObjectsFromArray: uniqueArray];
+                    } else {
+                        [weakSelf.arrayLocations addObjectsFromArray: places];
+                    }
+                    //////////////////////////////////////////////////////////////
+                    //[weakSelf.customMapView initiationMapView: places withDistance: [distanceEqual1000 integerValue] andNetworkType: weakSelf.currentSocialNetwork.networkType];
+                    [weakSelf.customMapView initiationMapViewWithPlaces: weakSelf.arrayLocations];
                     [weakSelf.tableView reloadData];
                     weakSelf.customMapView.delegate = weakSelf.self;
                 } else {
@@ -311,6 +336,20 @@
 
 - (void) selectedPlaceForPostByIndex:(NSInteger)index {
     [self obtainPlaceForPost: index];
+}
+
+- (void) deletePlaceForPostByIndex:(NSInteger)index {
+    Place *currentPlace = [self.arrayLocations objectAtIndex: index];
+    currentPlace.isChosen = NO;
+    [self.arrayLocations replaceObjectAtIndex: index withObject: currentPlace];
+    [self.customMapView initiationMapViewWithPlaces: self.arrayLocations];
+    self.place = nil;
+    //self.placeComplition(nil, nil);
+    //[self.navigationController popViewControllerAnimated : YES];
+    //self.navigationController.navigationBar.translucent = YES;
+
+    
+    NSLog(@"Delete place = %@", currentPlace.fullName);
 }
 
 #pragma mark - UIAlertView

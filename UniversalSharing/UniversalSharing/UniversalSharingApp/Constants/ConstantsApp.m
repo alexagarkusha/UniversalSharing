@@ -144,7 +144,8 @@ NSInteger const musAppDetailPostVC_NumberOfRows = 4;
 
 #pragma mark - MUSCustomMapView
 
-NSInteger const musAppCustomMapView_maxZoomDistance = 150000;
+NSInteger const musAppCustomMapView_maxZoomDistance = 450000;
+NSString *const musAppButton_ImageName_ButtonDeleteLocation = @"Button_Delete_Location.png";
 
 
 @end

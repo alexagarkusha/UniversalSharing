@@ -90,6 +90,7 @@
 		97C7D79F1B73889B004DC83D /* MUSSocialNetworkLibraryConstantsForParseObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C7D79E1B73889B004DC83D /* MUSSocialNetworkLibraryConstantsForParseObjects.m */; };
 		97C8A9DE1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C8A9DC1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.m */; };
 		97C8A9DF1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97C8A9DD1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.xib */; };
+		97C9A2E61BA2BBEF00D0C478 /* Button_Delete_Location.png in Resources */ = {isa = PBXBuildFile; fileRef = 97C9A2E51BA2BBEF00D0C478 /* Button_Delete_Location.png */; };
 		97CA63CA1B6F66D300F9F0C1 /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CA63C91B6F66D300F9F0C1 /* Place.m */; };
 		97CA63CF1B6F737A00F9F0C1 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CA63CE1B6F737A00F9F0C1 /* Location.m */; };
 		97CB10DB1B904D7B0061F851 /* UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CB10DA1B904D7B0061F851 /* UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.m */; };
@@ -259,6 +260,7 @@
 		97C8A9DB1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUSDetailPostCollectionViewCell.h; path = DetailPostCollectionViewCell/MUSDetailPostCollectionViewCell.h; sourceTree = "<group>"; };
 		97C8A9DC1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUSDetailPostCollectionViewCell.m; path = DetailPostCollectionViewCell/MUSDetailPostCollectionViewCell.m; sourceTree = "<group>"; };
 		97C8A9DD1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MUSDetailPostCollectionViewCell.xib; path = DetailPostCollectionViewCell/MUSDetailPostCollectionViewCell.xib; sourceTree = "<group>"; };
+		97C9A2E51BA2BBEF00D0C478 /* Button_Delete_Location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Button_Delete_Location.png; sourceTree = "<group>"; };
 		97CA63C81B6F66D300F9F0C1 /* Place.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Place.h; path = UniversalSharing/SocialNetworkLibrary/Place/Place.h; sourceTree = SOURCE_ROOT; };
 		97CA63C91B6F66D300F9F0C1 /* Place.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Place.m; path = UniversalSharing/SocialNetworkLibrary/Place/Place.m; sourceTree = SOURCE_ROOT; };
 		97CA63CD1B6F737A00F9F0C1 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Location.h; path = UniversalSharing/SocialNetworkLibrary/Location/Location.h; sourceTree = SOURCE_ROOT; };
@@ -435,6 +437,7 @@
 				97CB10DC1B9086D30061F851 /* btn-close@2x.png */,
 				97C4ACD81B99BF99008B93B3 /* Button_addPhoto.png */,
 				97C4ACCC1B997B9C008B93B3 /* Button_Delete.png */,
+				97C9A2E51BA2BBEF00D0C478 /* Button_Delete_Location.png */,
 				97C4ACCE1B997DD4008B93B3 /* Button_Change.png */,
 				307611F01BA074250051C2AD /* checkMarkTaken.jpeg */,
 				307611F81BA17B1D0051C2AD /* checkMark.jpeg */,
@@ -1218,6 +1221,7 @@
 				30416A2B1B73AF49000CB2C2 /* MUSCollectionViewCell.xib in Resources */,
 				307611F91BA17B1D0051C2AD /* checkMark.jpeg in Resources */,
 				18BB29AF1B67E3F000B498AC /* Main.storyboard in Resources */,
+				97C9A2E61BA2BBEF00D0C478 /* Button_Delete_Location.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
