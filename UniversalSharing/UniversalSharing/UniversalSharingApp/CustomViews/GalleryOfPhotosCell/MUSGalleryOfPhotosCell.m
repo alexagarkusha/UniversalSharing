@@ -69,13 +69,21 @@
     
     [self checkGalleryOfPhotosStatus];
     [self initiationGalleryViewOfPhotos : arrayOfImages];
+    [self initiationUserNameLabel: user];
+
     
+#warning IT IS NOT Correctly
+    /*
+    if (arrayOfImages.count > self.numberOfImages && self.isEditableCell && arrayOfImages.count != 1 && self.numberOfImages != 0) {
+        [self.galleryViewOfPhotos scrollCollectionViewToLastPhoto];
+    }
+    self.numberOfImages = arrayOfImages.count;
+     */
     if (self.numberOfImages == arrayOfImages.count && self.isEditableCell) {
         [self.galleryViewOfPhotos scrollCollectionViewToLastPhoto];
     }
     self.numberOfImages = arrayOfImages.count + 1;
     
-    [self initiationUserNameLabel: user];
     [self initiationUserDateOfPostLabel: postDateCreate];
     [self initiationUserPhotoImageView: socialNetworkIconName];
 }

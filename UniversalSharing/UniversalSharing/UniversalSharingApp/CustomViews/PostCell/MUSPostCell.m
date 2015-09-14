@@ -128,6 +128,7 @@
         }
     }
     
+    
     if (!self.firstImageOfPost.image) {
         self.firstImageOfPost.hidden = YES;
         self.numberOfImagesInPost.hidden = YES;
@@ -136,6 +137,7 @@
         self.firstImageOfPost.hidden = NO;
         self.postDescriptionLeftConstraint.constant = musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithUserPhotos;
     }
+     
 }
 
 - (IBAction)buttonCheckMarkTapped:(id)sender {

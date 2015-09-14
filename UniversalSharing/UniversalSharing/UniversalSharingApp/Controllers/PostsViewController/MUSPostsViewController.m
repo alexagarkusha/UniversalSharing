@@ -205,6 +205,14 @@
     return self.arrayPosts.count;
 }
 
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    MUSPostCell *postCell = (MUSPostCell*) cell;
+    [postCell configurationPostCell: [self.arrayPosts objectAtIndex: indexPath.row] andFlagEditing: self.editing andFlagForDelete :[self.mutableIndexSet containsIndex:indexPath.row]];
+
+}
+
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     /*!
      XIB
@@ -216,7 +224,7 @@
     cell.delegate = self;
     cell.selectionStyle = UITableViewCellSelectionStyleNone; // disable the cell selection highlighting
     
-    [cell configurationPostCell: [self.arrayPosts objectAtIndex: indexPath.row] andFlagEditing: self.editing andFlagForDelete :[self.mutableIndexSet containsIndex:indexPath.row]];
+    //[cell configurationPostCell: [self.arrayPosts objectAtIndex: indexPath.row] andFlagEditing: self.editing andFlagForDelete :[self.mutableIndexSet containsIndex:indexPath.row]];
     return cell;
 }
 
