@@ -69,23 +69,21 @@
     
     [self checkGalleryOfPhotosStatus];
     [self initiationGalleryViewOfPhotos : arrayOfImages];
-    
-    
-    NSLog(@"arrayOfImages = %d", arrayOfImages.count);
-    NSLog(@"numberOfImages = %d", self.numberOfImages);
-    
-    
-    //    if ((arrayOfImages.count > self.numberOfImages && (self.numberOfImages >= 1 || (arrayOfImages.count == self.numberOfImages + 1 && arrayOfImages.count > 1))) {
-    //        [self.galleryViewOfPhotos scrollCollectionViewToLastPhoto];
-    //    }
+    [self initiationUserNameLabel: user andNumberOfImages: arrayOfImages.count];
 
     
-    if ((self.numberOfImages != 0 || (arrayOfImages.count == 1 && !self.numberOfImages)) && self.isEditableCell) {
+#warning IT IS NOT Correctly
+    /*
+    if (arrayOfImages.count > self.numberOfImages && self.isEditableCell && arrayOfImages.count != 1 && self.numberOfImages != 0) {
         [self.galleryViewOfPhotos scrollCollectionViewToLastPhoto];
     }
     self.numberOfImages = arrayOfImages.count;
-
-    [self initiationUserNameLabel: user];
+     */
+    if (self.numberOfImages == arrayOfImages.count && self.isEditableCell) {
+        [self.galleryViewOfPhotos scrollCollectionViewToLastPhoto];
+    }
+    self.numberOfImages = arrayOfImages.count + 1;
+    
     [self initiationUserDateOfPostLabel: postDateCreate];
     [self initiationUserPhotoImageView: socialNetworkIconName];
 }
@@ -108,8 +106,8 @@
 
 #pragma mark initiation UserNameLabel
 
-- (void) initiationUserNameLabel : (User*) user {
-    if (self.numberOfImages > 0 || self.isEditableCell) {
+- (void) initiationUserNameLabel : (User*) user andNumberOfImages : (NSInteger) numberOfImages {
+    if (numberOfImages > 0 || self.isEditableCell) {
         self.usernameLabel.textColor = [UIColor whiteColor];
         self.usernameLabel.shadowColor = [UIColor blackColor];
         self.dateOfPostLabel.textColor = [UIColor whiteColor];
@@ -151,8 +149,8 @@
 #pragma mark - MUSGalleryViewOfPhotosDelegate
 
 - (void) arrayOfPhotos:(NSArray *)arrayOfPhotos {
-    [self.delegate editArrayOfPicturesInPost: arrayOfPhotos];
     self.numberOfImages = arrayOfPhotos.count + 1;
+    [self.delegate editArrayOfPicturesInPost: arrayOfPhotos];
 }
 
 - (void) addPhotoToPost {

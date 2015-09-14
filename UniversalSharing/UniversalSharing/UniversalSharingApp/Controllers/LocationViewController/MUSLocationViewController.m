@@ -12,8 +12,9 @@
 #import "MUSLocationManager.h"
 #import "MUSCustomMapView.h"
 #import "ReachabilityManager.h"
+#import "MUSLocationCell.h"
 
-@interface MUSLocationViewController () <UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate, MUSCustomMapViewDelegate>
+@interface MUSLocationViewController () <UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate, MUSCustomMapViewDelegate, MUSLocationCellDelegate>
 /*!
  @property
  @abstract initialization by Place objects via block from socialnetwork(facebook or twitter or VK)
@@ -55,6 +56,8 @@
 
 @property (assign, nonatomic) BOOL isChosenPlace;
 
+@property (assign, nonatomic) CGFloat tableViewWidth;
+
 @end
 
 @implementation MUSLocationViewController
@@ -63,9 +66,10 @@
     [super viewDidLoad];
     [self initiationNavigationBar];
     [self initiationPanGestureRecognizer];
+    self.tableViewWidth = (self.view.frame.size.width / 3) * 2;
     
     self.leftConstraintTableView.constant =  self.view.frame.size.width;
-    self.rightConstraintTavbleView.constant = - self.view.frame.size.width;
+    self.rightConstraintTavbleView.constant = - self.tableViewWidth;
     self.tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget : self action : @selector(tapOnMapView:)];
     self.arrayLocations = [[NSMutableArray alloc] init];
     // Do any additional setup after loading the view.
@@ -107,6 +111,9 @@
 - (void) initiationNavigationBar {
     UIBarButtonItem *choosePlaceButton = [[UIBarButtonItem alloc] initWithTitle: @"Choose place" style: 1 target:self action: @selector(showCloseTable)];
     self.navigationItem.rightBarButtonItem = choosePlaceButton;
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle: musAppButtonTitle_Back style: 1 target:self action: @selector(bactToShareViewController)];
+    self.navigationItem.rightBarButtonItem = choosePlaceButton;
+    self.navigationItem.leftBarButtonItem = backButton;
 }
 
 - (void) initiationPanGestureRecognizer {
@@ -125,11 +132,20 @@
     }
 }
 
+- (void) bactToShareViewController {
+    if (!self.place) {
+        self.placeComplition(nil, nil);
+    }
+        [self.navigationController popViewControllerAnimated : YES];
+        self.navigationController.navigationBar.translucent = YES;
+}
+
+
 - (void) showTableViewWithPlaces {
     self.leftConstraintTableView.constant =  self.view.frame.size.width / 3;
     self.rightConstraintTavbleView.constant = 0;
-    self.leftConstraintCustomMapView.constant = - (self.view.frame.size.width / 3) * 2;
-    self.rightConstraintCustomMapView.constant = (self.view.frame.size.width / 3) * 2;
+    self.leftConstraintCustomMapView.constant = - self.tableViewWidth;
+    self.rightConstraintCustomMapView.constant = self.tableViewWidth;
     
     [self.customMapView addGestureRecognizer : self.tapGestureRecognizer];
     
@@ -144,7 +160,7 @@
 
 - (void) closeTableViewWithPlaces {
     self.leftConstraintTableView.constant =  self.view.frame.size.width;
-    self.rightConstraintTavbleView.constant = - (self.view.frame.size.width / 3) * 2;
+    self.rightConstraintTavbleView.constant = - self.tableViewWidth;
     
     self.leftConstraintCustomMapView.constant = 0;
     self.rightConstraintCustomMapView.constant = 0;
@@ -212,30 +228,16 @@
             
             [_currentSocialNetwork obtainArrayOfPlaces:self.currentLocation withComplition:^(NSMutableArray *places, NSError *error) {
                 if (!error) {
-                    //////////////////////////////////////////////////////////////
                     if (weakSelf.place) {
-                        //weakSelf.isChosenPlace = YES;
                         weakSelf.place.isChosen = YES;
                         [weakSelf.arrayLocations addObject: weakSelf.place];
                         [weakSelf.arrayLocations addObjectsFromArray: places];
-                        NSMutableArray *uniqueArray = [NSMutableArray array];
-                        NSMutableSet *names = [NSMutableSet set];
-                        for (id obj in weakSelf.arrayLocations) {
-                            NSString *destinationName = [obj valueForKey: @"fullName"];
-                            //NSString *destinationName = [obj destinationname];
-                            if (![names containsObject:destinationName]) {
-                                [uniqueArray addObject:obj];
-                                [names addObject:destinationName];
-                            }
-                        }
-                        
+                        NSArray *uniqueArrayWithPlaces = [self uniqueArrayWithPlaces:self.arrayLocations];
                         [weakSelf.arrayLocations removeAllObjects];
-                        [weakSelf.arrayLocations addObjectsFromArray: uniqueArray];
+                        [weakSelf.arrayLocations addObjectsFromArray: uniqueArrayWithPlaces];
                     } else {
                         [weakSelf.arrayLocations addObjectsFromArray: places];
                     }
-                    //////////////////////////////////////////////////////////////
-                    //[weakSelf.customMapView initiationMapView: places withDistance: [distanceEqual1000 integerValue] andNetworkType: weakSelf.currentSocialNetwork.networkType];
                     [weakSelf.customMapView initiationMapViewWithPlaces: weakSelf.arrayLocations];
                     [weakSelf.tableView reloadData];
                     weakSelf.customMapView.delegate = weakSelf.self;
@@ -247,33 +249,48 @@
     }];
 }
 
+- (NSArray*) uniqueArrayWithPlaces : (NSMutableArray*) arrayLocations {
+    NSMutableArray *uniqueArray = [NSMutableArray array];
+    NSMutableSet *names = [NSMutableSet set];
+    for (id obj in arrayLocations) {
+        NSString *destinationName = [obj valueForKey: @"fullName"];
+        if (![names containsObject:destinationName]) {
+            [uniqueArray addObject:obj];
+            [names addObject:destinationName];
+        }
+    }
+    return uniqueArray;
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.arrayLocations count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"LocationCell"];
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: @"LocationCell"];
-    }
-    /*!
-     get object Place and show name of that on tableviewcell
-     */
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    MUSLocationCell *locationCell = (MUSLocationCell *) cell;
     Place *currentPlace = self.arrayLocations[indexPath.row];
-    
-    if ([self.place.placeID isEqualToString: currentPlace.placeID]) {
-        cell.textLabel.textColor = [UIColor lightGrayColor];
+    if (currentPlace.isChosen) {
         self.chosenPlaceIndexPath = indexPath;
-    } else {
-        cell.textLabel.textColor = [UIColor blackColor];
     }
-    cell.textLabel.text = currentPlace.fullName;
-    cell.textLabel.numberOfLines = 0;
-    cell.textLabel.font = [UIFont systemFontOfSize: 16.0];
-  
+    [locationCell configurationLocationCell: currentPlace];
+
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    MUSLocationCell *cell = [tableView dequeueReusableCellWithIdentifier:[MUSLocationCell reuseIdentifier]];
+    if(!cell) {
+        cell = [MUSLocationCell locationCell];
+    }
+    cell.delegate = self;
+    /*
+    Place *currentPlace = self.arrayLocations[indexPath.row];
+    if (currentPlace.isChosen) {
+        self.chosenPlaceIndexPath = indexPath;
+    }
+    [cell configurationLocationCell: currentPlace];
+     */
     return cell;
 }
 
@@ -284,7 +301,7 @@
      get chosen object Place and send to shareViewController via block, leave this controller
      */
     
-    if (self.chosenPlaceIndexPath.row != indexPath.row) {
+    if (self.chosenPlaceIndexPath.row != indexPath.row || !self.chosenPlaceIndexPath) {
         [self obtainPlaceForPost: indexPath.row];
     }
 }
@@ -292,44 +309,24 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([self.arrayLocations firstObject]) {
         Place *currentPlace = [self.arrayLocations objectAtIndex: indexPath.row];
-        
-        CGFloat height = [self findHeightForText: currentPlace.fullName havingWidth: (self.view.frame.size.width / 3) * 2 - 24 andFont: [UIFont systemFontOfSize: 16.0]];
+        CGFloat height = [MUSLocationCell heightForLocationCell: currentPlace];
         return height;
     }
     return 38;
 }
-
-- (CGFloat)findHeightForText:(NSString *)text havingWidth:(CGFloat)widthValue andFont:(UIFont *)font
-{
-    CGFloat result = font.pointSize;
-    if (text)
-    {
-        CGSize size;
-        CGRect frame = [text boundingRectWithSize:CGSizeMake(widthValue, 999)
-                                          options:NSStringDrawingUsesLineFragmentOrigin
-                                       attributes:@{NSFontAttributeName:font}
-                                          context:nil];
-        size = CGSizeMake(frame.size.width, frame.size.height);
-        result = MAX(size.height, result); //At least one row
-    }
-    return result + 20;
-}
-
 
 - (void) obtainPlaceForPost : (NSInteger) currentIndex {
     Place *chosenPlace = [self.arrayLocations objectAtIndex: currentIndex];
     self.placeComplition(chosenPlace, nil);
     [self.navigationController popViewControllerAnimated : YES];
     self.navigationController.navigationBar.translucent = YES;
+}
 
-    
-    
-    NSLog(@"Place name = %@ index = %d", chosenPlace.fullName, currentIndex);
+#pragma mark - MUSLocationCellDelegate
 
-    
-    //self.placeComplition(place, nil);
-    //[self.navigationController popViewControllerAnimated : YES];
-    //self.navigationController.navigationBar.translucent = YES;
+- (void) deleteChosenPlaceFromTableViewAndMap {
+    [self changeStatusForChosenPlace];
+    [self.customMapView deleteChosenPlaceFromMap];
 }
 
 #pragma mark - MUSCustomMapViewDelegate
@@ -338,19 +335,26 @@
     [self obtainPlaceForPost: index];
 }
 
-- (void) deletePlaceForPostByIndex:(NSInteger)index {
-    Place *currentPlace = [self.arrayLocations objectAtIndex: index];
-    currentPlace.isChosen = NO;
-    [self.arrayLocations replaceObjectAtIndex: index withObject: currentPlace];
-    [self.customMapView initiationMapViewWithPlaces: self.arrayLocations];
-    self.place = nil;
-    //self.placeComplition(nil, nil);
-    //[self.navigationController popViewControllerAnimated : YES];
-    //self.navigationController.navigationBar.translucent = YES;
-
-    
-    NSLog(@"Delete place = %@", currentPlace.fullName);
+- (void) deleteChosenPlaceFromTableView {
+    [self changeStatusForChosenPlace];
 }
+
+#pragma mark - changeStatusForChosenPlace
+
+- (void) changeStatusForChosenPlace {
+    Place *currentPlace;
+    for (Place *place in self.arrayLocations) {
+        if (place.isChosen) {
+            currentPlace = place;
+            currentPlace.isChosen = NO;
+            self.place = nil;
+        }
+    }
+    [self.arrayLocations replaceObjectAtIndex: self.chosenPlaceIndexPath.row withObject: currentPlace];
+    self.chosenPlaceIndexPath = nil;
+    [self.tableView reloadData];
+}
+
 
 #pragma mark - UIAlertView
 
@@ -362,8 +366,5 @@
                                                otherButtonTitles : nil];
     [errorAlert show];
 }
-
-
-
 
 @end

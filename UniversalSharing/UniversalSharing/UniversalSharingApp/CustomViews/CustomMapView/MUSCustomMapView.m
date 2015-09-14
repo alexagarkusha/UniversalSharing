@@ -12,12 +12,9 @@
 #import "ConstantsApp.h"
 #import "UIButton+CornerRadiusButton.h"
 
-
-
 @interface MUSCustomMapView () <MKMapViewDelegate>
 
 @property (assign, nonatomic) CLLocationCoordinate2D firstLocationCoordinate;
-@property (assign, nonatomic) CGFloat maxDistance;
 @property (assign, nonatomic) MKMapRect mapViewWithAllAnnotationsRect;
 @property (assign, nonatomic) MKMapRect mapViewRect;
 @property (strong, nonatomic) NSMutableArray *arrayOfAnnotations;
@@ -41,7 +38,6 @@
     
     for (int i = 0; i < arrayOfPlaces.count; i++) {
         Place *currentPlace = [arrayOfPlaces objectAtIndex: i];
-        NSLog(@"place name = %@", currentPlace.fullName);
         CLLocationCoordinate2D currentLocationCoordinate = CLLocationCoordinate2DMake([currentPlace.latitude floatValue], [currentPlace.longitude floatValue]);
         
         MUSAnnotation *pin = [[MUSAnnotation alloc]
@@ -81,7 +77,7 @@
 }
 
 - (MKMapRect) newMapViewRect : (MKMapView *) mapView withDistance : (CGFloat) distance {
-   return MKMapRectMake(mapView.visibleMapRect.origin.x - distance * 2, mapView.visibleMapRect.origin.y - distance * 2, mapView.visibleMapRect.size.width + distance * 4, mapView.visibleMapRect.size.height + distance * 4);
+   return MKMapRectMake(mapView.visibleMapRect.origin.x - distance, mapView.visibleMapRect.origin.y - distance, mapView.visibleMapRect.size.width + distance * 2, mapView.visibleMapRect.size.height + distance * 2);
 }
 
 - (void) zoomOutMapView : (MKMapView*) mapView andNewDistance : (CGFloat) distance {
@@ -119,7 +115,7 @@
         
         if (newAnnotaton.isChosen) {
             annotationView.pinColor = MKPinAnnotationColorGreen;
-            annotationView.rightCalloutAccessoryView = [self deletePlaceButtonWithIndex:newAnnotaton.index];
+            annotationView.rightCalloutAccessoryView = [self deletePlaceButton];
         } else {
             annotationView.pinColor = MKPinAnnotationColorRed;
             annotationView.rightCalloutAccessoryView = [self addPlaceButtonWithIndex:newAnnotaton.index];
@@ -134,14 +130,19 @@
     [self.delegate selectedPlaceForPostByIndex: sender.tag];
 }
 
-- (void) deletePlace : (UIButton*) sender {
-    [self.mapView removeAnnotation: [self.arrayOfAnnotations objectAtIndex: sender.tag]];
-    
-    
-    MUSAnnotation *pin = [self.arrayOfAnnotations objectAtIndex: sender.tag];
-    pin.isChosen = NO;
-    [self.mapView addAnnotation: pin];
-    //[self.delegate deletePlaceForPostByIndex: sender.tag];
+- (void) deleteChosenPlace {
+    [self deleteChosenPlaceFromMap];
+    [self.delegate deleteChosenPlaceFromTableView];
+}
+
+- (void) deleteChosenPlaceFromMap {
+    for (MUSAnnotation *annotation in self.arrayOfAnnotations) {
+        if (annotation.isChosen) {
+            [self.mapView removeAnnotation: [self.arrayOfAnnotations objectAtIndex: annotation.index]];
+            annotation.isChosen = NO;
+            [self.mapView addAnnotation: annotation];
+        }
+    }
 }
 
 // Add button to annotation
@@ -157,14 +158,12 @@
 }
 
 
-- (UIButton*) deletePlaceButtonWithIndex : (NSInteger) currentIndex {
+- (UIButton*) deletePlaceButton {
     UIButton *deletePlaceButton = [UIButton buttonWithType:UIButtonTypeCustom];
     deletePlaceButton.frame = CGRectMake(0, 0, 35, 35);
     [deletePlaceButton cornerRadius: deletePlaceButton.frame.size.height / 2];
-    //deletePlaceButton.backgroundColor = [UIColor redColor];
     [deletePlaceButton setImage: [UIImage imageNamed: musAppButton_ImageName_ButtonDeleteLocation] forState:UIControlStateNormal];
-    [deletePlaceButton setTag: currentIndex];
-    [deletePlaceButton addTarget:self action:@selector(deletePlace:) forControlEvents:UIControlEventTouchUpInside];
+    [deletePlaceButton addTarget:self action:@selector(deleteChosenPlace) forControlEvents:UIControlEventTouchUpInside];
     return deletePlaceButton;
 }
 

@@ -11,19 +11,22 @@
 #import <MapKit/MapKit.h>
 
 @protocol MUSCustomMapViewDelegate <NSObject>
+
 @optional
+
 - (void) selectedPlaceForPostByIndex : (NSInteger) index;
-- (void) deletePlaceForPostByIndex : (NSInteger) index;
+- (void) deleteChosenPlaceFromTableView;
+
 @end
+
 
 @interface MUSCustomMapView : UIView
 
 - (void) initiationMapViewWithPlaces : (NSArray*) arrayOfPlaces;
+- (void) deleteChosenPlaceFromMap;
 
 @property (assign, nonatomic) id <MUSCustomMapViewDelegate> delegate;
 @property (nonatomic, strong) NSArray *arrayOfPlaces;
-
-
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
 @end

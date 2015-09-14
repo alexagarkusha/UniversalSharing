@@ -439,9 +439,14 @@
         /*
          after a user chose new network we change current social network
          */
+        NetworkType oldNetworkType = _currentSocialNetwork.networkType;
         _currentSocialNetwork = [self.socialNetworkAccountsArray objectAtIndex: buttonIndex - 1];
-        [self.shareLocationButton setTintColor: [UIColor blackColor]];
-        //self.placeID = @"";
+        if (oldNetworkType != _currentSocialNetwork.networkType) {
+            [self.shareLocationButton setTintColor: [UIColor blackColor]];
+            self.place = nil;
+            [self.shareLocationButton setTitle: @"Share Location"];
+        }
+        
         [self.changeSocialNetworkButton initiationSocialNetworkButtonForSocialNetwork:_currentSocialNetwork];
     }
 }
