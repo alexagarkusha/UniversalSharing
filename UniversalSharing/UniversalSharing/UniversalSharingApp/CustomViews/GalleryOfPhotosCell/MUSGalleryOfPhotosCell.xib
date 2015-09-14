@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -50,54 +49,16 @@
                             <outlet property="photoPageControl" destination="maL-aF-zrA" id="spG-BE-bUT"/>
                         </connections>
                     </view>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="h1E-fQ-zZP">
-                        <rect key="frame" x="8" y="91" width="50" height="50"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="50" id="3Zs-Mo-W6G"/>
-                            <constraint firstAttribute="width" constant="50" id="eIT-wM-zdR"/>
-                        </constraints>
-                    </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="XKx-fB-tTp">
-                        <rect key="frame" x="66" y="90" width="126" height="21"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="21" id="XH1-QH-Adk"/>
-                            <constraint firstAttribute="width" constant="126" id="sdq-1c-b3i"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="15"/>
-                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                        <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="e88-Ky-GeW">
-                        <rect key="frame" x="66" y="119" width="126" height="21"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="21" id="0ow-UK-PAo"/>
-                            <constraint firstAttribute="width" constant="126" id="cNQ-Pn-cbl"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="TimesNewRomanPS-BoldItalicMT" family="Times New Roman" pointSize="17"/>
-                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                        <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="h1E-fQ-zZP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="3I6-M7-ATO"/>
-                    <constraint firstItem="h1E-fQ-zZP" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="6XS-GG-10N"/>
                     <constraint firstItem="y4j-P6-qcN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="8jW-F9-bvh"/>
-                    <constraint firstItem="e88-Ky-GeW" firstAttribute="top" secondItem="XKx-fB-tTp" secondAttribute="bottom" constant="8" id="Bw7-oU-XYb"/>
                     <constraint firstAttribute="trailing" secondItem="y4j-P6-qcN" secondAttribute="trailing" id="LaH-9I-BAH"/>
-                    <constraint firstItem="e88-Ky-GeW" firstAttribute="leading" secondItem="h1E-fQ-zZP" secondAttribute="trailing" constant="8" id="Pod-Tt-Vqx"/>
-                    <constraint firstItem="XKx-fB-tTp" firstAttribute="leading" secondItem="h1E-fQ-zZP" secondAttribute="trailing" constant="8" id="Vb7-mt-FbZ"/>
                     <constraint firstItem="y4j-P6-qcN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Y5p-Wl-OfK"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="e88-Ky-GeW" secondAttribute="bottom" constant="1" id="vEn-la-oQQ"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
-                <outlet property="dateOfPostLabel" destination="e88-Ky-GeW" id="9Ur-0X-ePc"/>
                 <outlet property="galleryViewOfPhotos" destination="y4j-P6-qcN" id="6e6-rS-H7F"/>
-                <outlet property="userPhotoImageView" destination="h1E-fQ-zZP" id="EMU-gE-XaI"/>
-                <outlet property="usernameLabel" destination="XKx-fB-tTp" id="Olx-Vs-qT8"/>
             </connections>
         </tableViewCell>
     </objects>

@@ -11,17 +11,23 @@
 #import "NSString+ReasonTypeInString.h"
 #import "UILabel+CornerRadiusLabel.h"
 #import "UIColor+ReasonColorForPost.h"
+#import "NSString+DateStringFromUNIXTimestamp.h"
+#import "UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.h"
+#import "UIImageView+MUSLoadImageFromDataBase.h"
+
 
 @interface MUSCommentsAndLikesCell ()
 
-@property (weak, nonatomic) IBOutlet UIImageView *likeImageView;
-@property (weak, nonatomic) IBOutlet UILabel *numberOfLikesLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *commentImageView;
-@property (weak, nonatomic) IBOutlet UILabel *numberOfCommentsLabel;
-@property (weak, nonatomic) IBOutlet UILabel *reasonPostLabel;
+@property (weak, nonatomic)     IBOutlet    UIImageView *likeImageView;
+@property (weak, nonatomic)     IBOutlet    UILabel *numberOfLikesLabel;
+@property (weak, nonatomic)     IBOutlet    UIImageView *commentImageView;
+@property (weak, nonatomic)     IBOutlet    UILabel *numberOfCommentsLabel;
+@property (weak, nonatomic)     IBOutlet    UILabel *reasonPostLabel;
+@property (weak, nonatomic)     IBOutlet    UIImageView *userPhotoImageView;
+@property (weak, nonatomic)     IBOutlet    UILabel *usernameLabel;
+@property (weak, nonatomic)     IBOutlet    UILabel *dateOfPostLabel;
 
 @end
-
 
 @implementation MUSCommentsAndLikesCell
 
@@ -57,17 +63,56 @@
 
 #pragma mark - configuration CommentsAndLikesCellByPost
 
-- (void) configurationCommentsAndLikesCellByPost:(Post *)currentPost {
+// NEED Current USER, socialNetworkIconName
+
+
+- (void) configurationCommentsAndLikesCellByPost: (Post*) currentPost socialNetworkIconName : (NSString*) socialNetworkIconName andUser : (User*) user {
     self.likeImageView.image = [UIImage imageNamed: musAppImage_Name_Like];
     self.commentImageView.image = [UIImage imageNamed: musAppImage_Name_Comment];
+    [self initiationCommentsLabel: currentPost];
+    [self initiationReasonLabel: currentPost];
+    [self initiationUserNameLabel: user];
+    [self initiationUserDateOfPostLabel: currentPost.dateCreate];
+    [self initiationUserPhotoImageView: socialNetworkIconName];
+}
+
+#pragma mark initiation Comments Label
+
+- (void) initiationCommentsLabel : (Post*) currentPost {
     self.numberOfLikesLabel.text = [NSString stringWithFormat:@"%ld", (long)currentPost.likesCount];
     self.numberOfCommentsLabel.text = [NSString stringWithFormat:@"%ld", (long)currentPost.commentsCount];
+}
+
+#pragma mark initiation Reason Label
+
+- (void) initiationReasonLabel : (Post*) currentPost {
     self.reasonPostLabel.text = [NSString reasonTypeInString: currentPost.reason];
     self.reasonPostLabel.backgroundColor = [UIColor reasonColorForPost: currentPost.reason];
 }
 
+#pragma mark initiation UserNameLabel
 
+- (void) initiationUserNameLabel : (User*) user{
+        self.usernameLabel.textColor = [UIColor blackColor];
+        //self.usernameLabel.shadowColor = [UIColor whiteColor];
+        self.dateOfPostLabel.textColor = [UIColor blackColor];
+        //self.dateOfPostLabel.shadowColor = [UIColor whiteColor];
+    self.usernameLabel.text = [NSString stringWithFormat: @"%@ %@", user.lastName, user.firstName];
+    [self.usernameLabel sizeToFit];
+}
 
+#pragma mark initiation UserDateOfPostLabel
 
+- (void) initiationUserDateOfPostLabel : (NSString*) dateOfPostCreate {
+    self.dateOfPostLabel.text = [NSString dateStringFromUNIXTimestamp: [dateOfPostCreate integerValue]];
+    [self.dateOfPostLabel sizeToFit];
+}
+
+#pragma mark initiation UserPhotoImageView
+
+- (void) initiationUserPhotoImageView : (NSString*) socialNetworkIconName {
+    [self.userPhotoImageView loadImageFromDataBase: socialNetworkIconName];
+    [self.userPhotoImageView cornerRadius: CGRectGetHeight(self.userPhotoImageView.frame) / 2 andBorderWidth: 1.5 withBorderColor: [UIColor blackColor]];
+}
 
 @end

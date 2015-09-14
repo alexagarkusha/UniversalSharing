@@ -15,6 +15,6 @@
 + (instancetype) commentsAndLikesCell;
 + (CGFloat) heightForCommentsAndLikesCell;
 
-- (void) configurationCommentsAndLikesCellByPost: (Post*) currentPost;
+- (void) configurationCommentsAndLikesCellByPost: (Post*) currentPost socialNetworkIconName : (NSString*) socialNetworkIconName andUser : (User*) user;
 
 @end
