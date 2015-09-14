@@ -396,7 +396,7 @@
             if (heightOfPostDescriptionRow < 100 && self.isEditableTableView) {
                 heightOfPostDescriptionRow = 100;
             }
-            NSLog(@"POST DESCRIPTION CELL HEIGHT = %f", heightOfPostDescriptionRow);
+           // NSLog(@"POST DESCRIPTION CELL HEIGHT = %f", heightOfPostDescriptionRow);
             return heightOfPostDescriptionRow;
             break;
         }
