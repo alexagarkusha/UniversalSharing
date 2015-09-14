@@ -68,7 +68,7 @@
 - (void) configurationPostDescriptionCell: (NSString*) postDescription andNetworkType: (NetworkType) networkType {
     [self checkPostDescriptionStatus];
     self.currentNetworkType = networkType;
-    if (![postDescription isEqualToString: changePlaceholderWhenStartEditing] && ![postDescription isEqualToString: kPlaceholderText] && self.isEditableCell) {
+    if (![postDescription isEqualToString: changePlaceholderWhenStartEditing] && ![postDescription isEqualToString: kPlaceholderText]) {
         [self initialParametersOfTextInTextView: postDescription];
         self.postDescriptionTextView.tag = 1;
     } else {

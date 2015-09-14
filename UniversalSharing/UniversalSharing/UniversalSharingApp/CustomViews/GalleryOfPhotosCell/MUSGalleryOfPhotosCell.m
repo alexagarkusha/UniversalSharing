@@ -69,7 +69,7 @@
     
     [self checkGalleryOfPhotosStatus];
     [self initiationGalleryViewOfPhotos : arrayOfImages];
-    [self initiationUserNameLabel: user];
+    [self initiationUserNameLabel: user andNumberOfImages: arrayOfImages.count];
 
     
 #warning IT IS NOT Correctly
@@ -106,8 +106,8 @@
 
 #pragma mark initiation UserNameLabel
 
-- (void) initiationUserNameLabel : (User*) user {
-    if (self.numberOfImages > 0 || self.isEditableCell) {
+- (void) initiationUserNameLabel : (User*) user andNumberOfImages : (NSInteger) numberOfImages {
+    if (numberOfImages > 0 || self.isEditableCell) {
         self.usernameLabel.textColor = [UIColor whiteColor];
         self.usernameLabel.shadowColor = [UIColor blackColor];
         self.dateOfPostLabel.textColor = [UIColor whiteColor];

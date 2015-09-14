@@ -263,12 +263,13 @@
         if (!error) {
             [self showAlertWithMessage : titleCongratulatoryAlert];
             weakSelf.isEditableTableView = NO;
+            weakSelf.isChangedPost = NO;
             [weakSelf stopActivityIndicatorAnimating];
             self.navigationItem.rightBarButtonItem = nil;
             [weakSelf.tableView reloadData];
         } else {
             [self showErrorAlertWithError : error];
-            weakSelf.isEditableTableView = NO;
+            weakSelf.isEditableTableView = YES;
             [weakSelf stopActivityIndicatorAnimating];
             [weakSelf.tableView reloadData];
         }

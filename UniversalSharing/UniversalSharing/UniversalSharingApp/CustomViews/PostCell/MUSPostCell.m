@@ -73,7 +73,7 @@
 }
 
 - (void) configurationPostCell: (Post*) currentPost andFlagEditing: (BOOL) flagEdit andFlagForDelete :(BOOL) flagForDelete{
-    [self configurateFirstImageOfPost: currentPost];
+    
     self.postDescription.text = currentPost.postDescription;
     self.numberOfComments.text = [NSString stringWithFormat: @"%ld", (long)currentPost.commentsCount];
     self.iconOfSocialNetwork.image = [UIImage iconOfSocialNetworkForPost: currentPost];
@@ -100,6 +100,9 @@
         
     }
     
+    [self configurateFirstImageOfPost: currentPost];
+
+    
     //    if (flagSellectAll && flagEdit) {
     //        [self.buttonCheckMark setBackgroundImage:[UIImage imageNamed: @"checkMarkTaken.jpeg"] forState:UIControlStateNormal];
     //        self.buttonCheckMark.tag = 1;
@@ -120,24 +123,19 @@
     self.firstImageOfPost.image = nil;
     if (![[currentPost.arrayImagesUrl firstObject] isEqualToString: @""] || ![currentPost.arrayImagesUrl firstObject]) {
         [self.firstImageOfPost loadImageFromDataBase: [currentPost.arrayImagesUrl firstObject]];
+        self.firstImageOfPost.hidden = NO;
+        self.postDescriptionLeftConstraint.constant = musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithUserPhotos;
         if (currentPost.arrayImagesUrl.count == 1) {
             self.numberOfImagesInPost.hidden = YES;
         } else {
             self.numberOfImagesInPost.hidden = NO;
             self.numberOfImagesInPost.text = [NSString stringWithFormat: @"%lu", (unsigned long)currentPost.arrayImagesUrl.count];
         }
-    }
-    
-    
-    if (!self.firstImageOfPost.image) {
+    } else {
         self.firstImageOfPost.hidden = YES;
         self.numberOfImagesInPost.hidden = YES;
         self.postDescriptionLeftConstraint.constant = musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithoutUserPhotos;
-    } else {
-        self.firstImageOfPost.hidden = NO;
-        self.postDescriptionLeftConstraint.constant = musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithUserPhotos;
     }
-     
 }
 
 - (IBAction)buttonCheckMarkTapped:(id)sender {
