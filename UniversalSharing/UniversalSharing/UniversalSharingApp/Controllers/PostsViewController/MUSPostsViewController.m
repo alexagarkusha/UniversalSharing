@@ -106,9 +106,9 @@
 }
 
 - (void) initiationRefreshControl {
-    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
-    [self.tableView addSubview:refreshControl];
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview: self.refreshControl];
 }
 
 - (void) initiationToolBarForRemove {
@@ -192,7 +192,7 @@
     [[[SocialManager sharedManager] networks: arrayWithNetworks] enumerateObjectsUsingBlock:^(SocialNetwork *socialNetwork, NSUInteger index, BOOL *stop) {
         if (socialNetwork.isLogin) {
             [weakSelf.arrayOfActiveSocialNetwork addObject : socialNetwork.name];
-            [weakSelf.arrayOfLoginSocialNetworks addObject:socialNetwork];
+            [weakSelf.arrayOfLoginSocialNetworks addObject : socialNetwork];
         }
         
     }];
@@ -223,8 +223,6 @@
     }
     cell.delegate = self;
     cell.selectionStyle = UITableViewCellSelectionStyleNone; // disable the cell selection highlighting
-    
-    //[cell configurationPostCell: [self.arrayPosts objectAtIndex: indexPath.row] andFlagEditing: self.editing andFlagForDelete :[self.mutableIndexSet containsIndex:indexPath.row]];
     return cell;
 }
 
@@ -420,12 +418,14 @@
     
 }
 
+
+
 - (void)refresh:(UIRefreshControl *)refreshControl {
     
     [self.arrayOfLoginSocialNetworks enumerateObjectsUsingBlock:^(SocialNetwork *socialNetwork, NSUInteger idx, BOOL *stop) {
         [socialNetwork updatePost];
     }];
-    _refreshControl = refreshControl;
+    //_refreshControl = refreshControl;
     [refreshControl endRefreshing];
     
 }
