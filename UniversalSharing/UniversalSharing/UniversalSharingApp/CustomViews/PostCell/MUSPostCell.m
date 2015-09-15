@@ -20,18 +20,29 @@
 @interface MUSPostCell ()
 
 @property (weak, nonatomic) IBOutlet UIImageView *firstImageOfPost;
+
 @property (weak, nonatomic) IBOutlet UILabel *numberOfImagesInPost;
+
 @property (weak, nonatomic) IBOutlet UILabel *postDescription;
+
 @property (weak, nonatomic) IBOutlet UIImageView *iconOfSocialNetwork;
+
 @property (weak, nonatomic) IBOutlet UIImageView *commentImage;
+
 @property (weak, nonatomic) IBOutlet UILabel *numberOfComments;
+
 @property (weak, nonatomic) IBOutlet UIImageView *likeImage;
+
 @property (weak, nonatomic) IBOutlet UILabel *numberOfLikes;
+
 @property (weak, nonatomic) IBOutlet UILabel *reasonOfPost;
+
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint* postDescriptionLeftConstraint;
-//===
+
 @property (weak, nonatomic) IBOutlet UIView *viewCheckMark;
+
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *widthConstrain;
+
 @property (weak, nonatomic) IBOutlet UIButton *buttonCheckMark;
 
 
@@ -120,7 +131,7 @@
 - (void) configurateFirstImageOfPost : (Post*) currentPost {
     [self.firstImageOfPost cornerRadius: 10.0 andBorderWidth: 0.0 withBorderColor: nil];
     
-    self.firstImageOfPost.image = nil;
+    //self.firstImageOfPost.image = nil;
     if (![[currentPost.arrayImagesUrl firstObject] isEqualToString: @""] || ![currentPost.arrayImagesUrl firstObject]) {
         [self.firstImageOfPost loadImageFromDataBase: [currentPost.arrayImagesUrl firstObject]];
         self.firstImageOfPost.hidden = NO;

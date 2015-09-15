@@ -226,6 +226,10 @@
     return cell;
 }
 
+
+
+
+
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -245,6 +249,35 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self performSegueWithIdentifier: goToDetailPostViewControllerSegueIdentifier sender:[self.arrayPosts objectAtIndex: indexPath.row]];
 }
+
+- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView didHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+    MUSPostCell *cell = (MUSPostCell *)[tableView cellForRowAtIndexPath:indexPath];
+    [self setCellColor: [UIColor colorWithRed:230.0/255.0 green:230.0/255.0 blue:230.0/255.0 alpha: 1.0] ForCell: cell];
+}
+
+- (void)tableView:(UITableView *)tableView didUnhighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+    MUSPostCell *cell = (MUSPostCell *)[tableView cellForRowAtIndexPath:indexPath];
+    [self setCellColor: [UIColor whiteColor] ForCell: cell];
+}
+
+- (void) setCellColor: (UIColor *) color ForCell: (UITableViewCell *) cell {
+    //cell.contentView.backgroundColor = color;
+    cell.contentView.backgroundColor = [UIColor whiteColor];
+    
+    [UIView animateWithDuration: 0.3 animations:^{
+        
+        cell.contentView.backgroundColor = color;
+        
+    }];
+    cell.backgroundColor = color;
+}
+
+
+
 
 - (IBAction)buttonEditTapped:(id)sender {
     if(self.editing) {

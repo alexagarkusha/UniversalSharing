@@ -57,7 +57,7 @@
 
 - (void) showAddPhotoButton {
    
-    self.addPhotoButton = [[MUSAddPhotoButton alloc] initWithFrame: CGRectMake( 50, 20, self.frame.size.width - 100, self.frame.size.height - 70)];
+    self.addPhotoButton = [[MUSAddPhotoButton alloc] initWithFrame: CGRectMake( 50, 20, self.frame.size.width - 100, self.frame.size.height - 40)];
     [self addSubview: self.addPhotoButton];
     [self.addPhotoButton addTarget:self
                action:@selector(addPhotoToCollectionTouch:)forControlEvents:UIControlEventTouchUpInside];
