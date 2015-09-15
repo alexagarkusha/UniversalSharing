@@ -45,6 +45,7 @@
 		307611ED1B9DC1F80051C2AD /* MUSDetailPostCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 307611EC1B9DC1F80051C2AD /* MUSDetailPostCollectionViewController.m */; };
 		307611F11BA074250051C2AD /* checkMarkTaken.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 307611F01BA074250051C2AD /* checkMarkTaken.jpeg */; };
 		307611F91BA17B1D0051C2AD /* checkMark.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 307611F81BA17B1D0051C2AD /* checkMark.jpeg */; };
+		30D73BFD1BA715A2001B2FE8 /* MUSImageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30D73BFC1BA715A2001B2FE8 /* MUSImageScrollView.m */; };
 		30DBFD8B1B677A9A002F83D0 /* TwitterNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD8A1B677A9A002F83D0 /* TwitterNetwork.m */; };
 		30DBFD8F1B677AD7002F83D0 /* VKNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD8E1B677AD7002F83D0 /* VKNetwork.m */; };
 		30DBFD931B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD921B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.m */; };
@@ -190,6 +191,8 @@
 		307611EC1B9DC1F80051C2AD /* MUSDetailPostCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSDetailPostCollectionViewController.m; sourceTree = "<group>"; };
 		307611F01BA074250051C2AD /* checkMarkTaken.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = checkMarkTaken.jpeg; sourceTree = "<group>"; };
 		307611F81BA17B1D0051C2AD /* checkMark.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = checkMark.jpeg; sourceTree = "<group>"; };
+		30D73BFB1BA715A2001B2FE8 /* MUSImageScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSImageScrollView.h; sourceTree = "<group>"; };
+		30D73BFC1BA715A2001B2FE8 /* MUSImageScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSImageScrollView.m; sourceTree = "<group>"; };
 		30DBFD891B677A9A002F83D0 /* TwitterNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterNetwork.h; sourceTree = "<group>"; };
 		30DBFD8A1B677A9A002F83D0 /* TwitterNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterNetwork.m; sourceTree = "<group>"; };
 		30DBFD8D1B677AD7002F83D0 /* VKNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VKNetwork.h; sourceTree = "<group>"; };
@@ -573,6 +576,7 @@
 		18BB29961B67E3F000B498AC /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				30D73BFA1BA71546001B2FE8 /* ImageScrollView */,
 				300444351BA6B3BC00BC5342 /* CollectionViewCellForDetailView */,
 				97C49E7A1B835095005241CE /* CustomViews_For_DetailPostViewController */,
 				97C2A7BF1B9D7AE2007FF8CA /* CustomMapView */,
@@ -713,6 +717,15 @@
 				307611EC1B9DC1F80051C2AD /* MUSDetailPostCollectionViewController.m */,
 			);
 			name = DitailPostCollectionView;
+			sourceTree = "<group>";
+		};
+		30D73BFA1BA71546001B2FE8 /* ImageScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				30D73BFB1BA715A2001B2FE8 /* MUSImageScrollView.h */,
+				30D73BFC1BA715A2001B2FE8 /* MUSImageScrollView.m */,
+			);
+			name = ImageScrollView;
 			sourceTree = "<group>";
 		};
 		30DBFD881B677A9A002F83D0 /* TwitterNetwork */ = {
@@ -1376,6 +1389,7 @@
 				187FC5261B65222D00A3916C /* FacebookNetwork.m in Sources */,
 				307611ED1B9DC1F80051C2AD /* MUSDetailPostCollectionViewController.m in Sources */,
 				30416A241B73A49B000CB2C2 /* MUSGaleryView.m in Sources */,
+				30D73BFD1BA715A2001B2FE8 /* MUSImageScrollView.m in Sources */,
 				97C2954B1B985ADA001B21FF /* NSString+ReasonTypeInString.m in Sources */,
 				979164B41B8CADDA00DFCE64 /* UIImage+LoadImageFromDataBase.m in Sources */,
 				97CA63CA1B6F66D300F9F0C1 /* Place.m in Sources */,

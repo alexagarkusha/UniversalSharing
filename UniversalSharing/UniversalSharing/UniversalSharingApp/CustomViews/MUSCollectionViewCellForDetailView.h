@@ -7,11 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MUSImageScrollView.h"
 
-@interface MUSCollectionViewCellForDetailView : UICollectionViewCell<UIScrollViewDelegate>
+@interface MUSCollectionViewCellForDetailView : UICollectionViewCell
 
-@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-
-- (void)setImageContext:(UIImage *)imageContext;
+@property (weak, nonatomic) IBOutlet MUSImageScrollView *scrollView;
 
 @end
