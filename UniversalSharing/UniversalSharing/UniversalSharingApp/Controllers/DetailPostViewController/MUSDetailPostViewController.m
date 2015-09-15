@@ -296,6 +296,47 @@
     return musAppDetailPostVC_NumberOfRows;
 }
 
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    DetailPostVC_CellType detailPostVC_CellType = indexPath.row;
+    
+    switch (detailPostVC_CellType) {
+        case GalleryOfPhotosCellType: {
+            MUSGalleryOfPhotosCell *galleryOfPhotosCell = (MUSGalleryOfPhotosCell*) cell;
+            galleryOfPhotosCell.delegate = self;
+            galleryOfPhotosCell.isEditableCell = self.isEditableTableView;
+            [galleryOfPhotosCell configurationGalleryOfPhotosCellByArrayOfImages : self.arrayOfPicturesInPost];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            break;
+        }
+        case CommentsAndLikesCellType: {
+            MUSCommentsAndLikesCell *commentsAndLikesCell = (MUSCommentsAndLikesCell*) cell;
+            [commentsAndLikesCell configurationCommentsAndLikesCellByPost:self.currentPost socialNetworkIconName:self.currentSocialNetwork.icon andUser: self.currentUser];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            break;
+        }
+        case PostDescriptionCellType: {
+            MUSPostDescriptionCell *postDescriptionCell = (MUSPostDescriptionCell*) cell;
+            postDescriptionCell.delegate = self;
+            postDescriptionCell.isEditableCell = self.isEditableTableView;
+            postDescriptionCell.currentIndexPath = indexPath;
+            [postDescriptionCell configurationPostDescriptionCell: self.postDescription andNetworkType: self.currentSocialNetwork.networkType];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            break;
+        }
+        default: {
+            MUSPostLocationCell *postLocationCell = (MUSPostLocationCell*) cell;
+            postLocationCell.isEditableCell = self.isEditableTableView;
+            postLocationCell.delegate = self;
+            postLocationCell.isEditableCell = self.isEditableTableView;
+            [postLocationCell configurationPostLocationCellByPostPlace: self.postPlace];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            break;
+        }
+    }
+
+}
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -306,15 +347,6 @@
             if(!cell) {
                 cell = [MUSGalleryOfPhotosCell galleryOfPhotosCell];
             }            
-            cell.delegate = self;
-           
-            cell.isEditableCell = self.isEditableTableView;
-            [cell configurationGalleryOfPhotosCellByArrayOfImages : self.arrayOfPicturesInPost
-                                                andDateCreatePost : self.currentPost.dateCreate
-                                                 withReasonOfPost : self.currentPost.reason
-                                     andWithSocialNetworkIconName : self.currentSocialNetwork.icon
-                                                          andUser : self.currentUser];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
             break;
         }
@@ -323,8 +355,6 @@
             if(!cell) {
                 cell = [MUSCommentsAndLikesCell commentsAndLikesCell];
             }
-            [cell configurationCommentsAndLikesCellByPost: self.currentPost];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
             break;
         }
@@ -333,11 +363,6 @@
             if(!cell) {
                 cell = [MUSPostDescriptionCell postDescriptionCell];
             }
-            cell.delegate = self;
-            cell.isEditableCell = self.isEditableTableView;
-            cell.currentIndexPath = indexPath;
-            [cell configurationPostDescriptionCell: self.postDescription andNetworkType: self.currentSocialNetwork.networkType];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
             break;
         }
@@ -346,11 +371,6 @@
             if(!cell) {
                 cell = [MUSPostLocationCell postLocationCell];
             }
-            cell.isEditableCell = self.isEditableTableView;
-            cell.delegate = self;
-            cell.isEditableCell = self.isEditableTableView;
-            [cell configurationPostLocationCellByPostPlace: self.postPlace];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
             break;
         }
@@ -400,6 +420,7 @@
         MUSLocationViewController *locationTableViewController = [MUSLocationViewController new];
         locationTableViewController = [segue destinationViewController];
         [locationTableViewController currentUser:_currentSocialNetwork];
+        locationTableViewController.place = self.postPlace;
         __weak MUSDetailPostViewController *weakSelf = self;
         locationTableViewController.placeComplition = ^(Place* result, NSError *error) {
             /*

@@ -9,24 +9,14 @@
 #import "MUSGalleryOfPhotosCell.h"
 #import "MUSCollectionViewCell.h"
 #import "ConstantsApp.h"
-#import "UIImageView+MUSLoadImageFromDataBase.h"
-#import "UIImageView+RoundImage.h"
-#import "MUSPhotoManager.h"
 #import "MUSGalleryViewOfPhotos.h"
-#import "UILabel+CornerRadiusLabel.h"
-#import "NSString+DateStringFromUNIXTimestamp.h"
-#import "UIColor+ReasonColorForPost.h"
-#import "UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.h"
 
 @interface MUSGalleryOfPhotosCell () <MUSGalleryViewOfPhotosDelegate>
 
-
 @property (weak, nonatomic)     IBOutlet    MUSGalleryViewOfPhotos *galleryViewOfPhotos;
-@property (weak, nonatomic)     IBOutlet    UIImageView *userPhotoImageView;
-@property (weak, nonatomic)     IBOutlet    UILabel *usernameLabel;
-@property (weak, nonatomic)     IBOutlet    UILabel *dateOfPostLabel;
 
 @property (assign, nonatomic)   BOOL        isEditableGallery;
+
 @property (assign, nonatomic)   NSInteger   numberOfImages;
 
 @end
@@ -59,19 +49,16 @@
 + (CGFloat) heightForGalleryOfPhotosCell : (NSInteger) countOfImages andIsEditableCell : (BOOL) isEditableCell {
     CGFloat heightOfRow;
     if (!isEditableCell && countOfImages == 0) {
-        return heightOfRow = musAppDetailPostVC_HeightOfGalleryOfPhotosCell_WithoutPhotos;
+        return heightOfRow = 0;
     } else {
         return heightOfRow = musAppDetailPostVC_HeightOfGalleryOfPhotosCell_WithPhotos;
     }
 }
 
-- (void) configurationGalleryOfPhotosCellByArrayOfImages: (NSMutableArray*) arrayOfImages andDateCreatePost:(NSString *)postDateCreate withReasonOfPost : (ReasonType) reasonOfPost andWithSocialNetworkIconName:(NSString *)socialNetworkIconName andUser: (User*)user {
+- (void) configurationGalleryOfPhotosCellByArrayOfImages: (NSMutableArray*) arrayOfImages {
     
     [self checkGalleryOfPhotosStatus];
-    [self initiationGalleryViewOfPhotos : arrayOfImages];
-    [self initiationUserNameLabel: user andNumberOfImages: arrayOfImages.count];
-
-    
+    [self initiationGalleryViewOfPhotos : arrayOfImages];    
 #warning IT IS NOT Correctly
     /*
     if (arrayOfImages.count > self.numberOfImages && self.isEditableCell && arrayOfImages.count != 1 && self.numberOfImages != 0) {
@@ -83,9 +70,6 @@
         [self.galleryViewOfPhotos scrollCollectionViewToLastPhoto];
     }
     self.numberOfImages = arrayOfImages.count + 1;
-    
-    [self initiationUserDateOfPostLabel: postDateCreate];
-    [self initiationUserPhotoImageView: socialNetworkIconName];
 }
 
 #pragma mark initiation GalleryViewOfPhotos
@@ -104,37 +88,6 @@
         [self.galleryViewOfPhotos.collectionView reloadData];
  }
 
-#pragma mark initiation UserNameLabel
-
-- (void) initiationUserNameLabel : (User*) user andNumberOfImages : (NSInteger) numberOfImages {
-    if (numberOfImages > 0 || self.isEditableCell) {
-        self.usernameLabel.textColor = [UIColor whiteColor];
-        self.usernameLabel.shadowColor = [UIColor blackColor];
-        self.dateOfPostLabel.textColor = [UIColor whiteColor];
-        self.dateOfPostLabel.shadowColor = [UIColor blackColor];
-    } else {
-        self.usernameLabel.textColor = [UIColor blackColor];
-        self.usernameLabel.shadowColor = [UIColor whiteColor];
-        self.dateOfPostLabel.textColor = [UIColor blackColor];
-        self.dateOfPostLabel.shadowColor = [UIColor whiteColor];
-    }
-    self.usernameLabel.text = [NSString stringWithFormat: @"%@ %@", user.lastName, user.firstName];
-    [self.usernameLabel sizeToFit];
-}
-
-#pragma mark initiation UserDateOfPostLabel
-
-- (void) initiationUserDateOfPostLabel : (NSString*) dateOfPostCreate {
-    self.dateOfPostLabel.text = [NSString dateStringFromUNIXTimestamp: [dateOfPostCreate integerValue]];
-    [self.dateOfPostLabel sizeToFit];
-}
-
-#pragma mark initiation UserPhotoImageView
-
-- (void) initiationUserPhotoImageView : (NSString*) socialNetworkIconName {
-    [self.userPhotoImageView loadImageFromDataBase: socialNetworkIconName];
-    [self.userPhotoImageView cornerRadius: CGRectGetHeight(self.userPhotoImageView.frame) / 2 andBorderWidth: 2.0 withBorderColor: [UIColor whiteColor]];
-}
 
 #pragma mark - check GalleryOfPhotosStatus
 

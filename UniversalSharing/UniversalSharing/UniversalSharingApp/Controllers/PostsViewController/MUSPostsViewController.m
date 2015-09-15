@@ -106,9 +106,9 @@
 }
 
 - (void) initiationRefreshControl {
-    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
-    [self.tableView addSubview:refreshControl];
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview: self.refreshControl];
 }
 
 - (void) initiationToolBarForRemove {
@@ -192,7 +192,7 @@
     [[[SocialManager sharedManager] networks: arrayWithNetworks] enumerateObjectsUsingBlock:^(SocialNetwork *socialNetwork, NSUInteger index, BOOL *stop) {
         if (socialNetwork.isLogin) {
             [weakSelf.arrayOfActiveSocialNetwork addObject : socialNetwork.name];
-            [weakSelf.arrayOfLoginSocialNetworks addObject:socialNetwork];
+            [weakSelf.arrayOfLoginSocialNetworks addObject : socialNetwork];
         }
         
     }];
@@ -223,10 +223,12 @@
     }
     cell.delegate = self;
     cell.selectionStyle = UITableViewCellSelectionStyleNone; // disable the cell selection highlighting
-    
-    //[cell configurationPostCell: [self.arrayPosts objectAtIndex: indexPath.row] andFlagEditing: self.editing andFlagForDelete :[self.mutableIndexSet containsIndex:indexPath.row]];
     return cell;
 }
+
+
+
+
 
 #pragma mark - UITableViewDelegate
 
@@ -247,6 +249,35 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self performSegueWithIdentifier: goToDetailPostViewControllerSegueIdentifier sender:[self.arrayPosts objectAtIndex: indexPath.row]];
 }
+
+- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView didHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+    MUSPostCell *cell = (MUSPostCell *)[tableView cellForRowAtIndexPath:indexPath];
+    [self setCellColor: [UIColor colorWithRed:230.0/255.0 green:230.0/255.0 blue:230.0/255.0 alpha: 1.0] ForCell: cell];
+}
+
+- (void)tableView:(UITableView *)tableView didUnhighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+    MUSPostCell *cell = (MUSPostCell *)[tableView cellForRowAtIndexPath:indexPath];
+    [self setCellColor: [UIColor whiteColor] ForCell: cell];
+}
+
+- (void) setCellColor: (UIColor *) color ForCell: (UITableViewCell *) cell {
+    //cell.contentView.backgroundColor = color;
+    cell.contentView.backgroundColor = [UIColor whiteColor];
+    
+    [UIView animateWithDuration: 0.3 animations:^{
+        
+        cell.contentView.backgroundColor = color;
+        
+    }];
+    cell.backgroundColor = color;
+}
+
+
+
 
 - (IBAction)buttonEditTapped:(id)sender {
     if(self.editing) {
@@ -420,12 +451,14 @@
     
 }
 
+
+
 - (void)refresh:(UIRefreshControl *)refreshControl {
     
     [self.arrayOfLoginSocialNetworks enumerateObjectsUsingBlock:^(SocialNetwork *socialNetwork, NSUInteger idx, BOOL *stop) {
         [socialNetwork updatePost];
     }];
-    _refreshControl = refreshControl;
+    //_refreshControl = refreshControl;
     [refreshControl endRefreshing];
     
 }

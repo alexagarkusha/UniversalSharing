@@ -135,7 +135,7 @@ NSInteger const musApp_PostDescriptionCell_TextView_Font_Size = 17;
 
 #pragma mark - MUSDetailPostViewController
 
-NSInteger const musAppDetailPostVC_HeightOfCommentsAndLikesCell = 36;
+NSInteger const musAppDetailPostVC_HeightOfCommentsAndLikesCell = 95;
 NSInteger const musAppDetailPostVC_HeightOfPostLocationCell = 200;
 NSInteger const musAppDetailPostVC_HeightOfGalleryOfPhotosCell_WithoutPhotos = 70;
 NSInteger const musAppDetailPostVC_HeightOfGalleryOfPhotosCell_WithPhotos = 150;
