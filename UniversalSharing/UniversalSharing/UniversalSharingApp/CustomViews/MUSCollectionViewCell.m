@@ -61,7 +61,6 @@
     [self addSubview: self.addPhotoButton];
     [self.addPhotoButton addTarget:self
                action:@selector(addPhotoToCollectionTouch:)forControlEvents:UIControlEventTouchUpInside];
-
 }
 
 

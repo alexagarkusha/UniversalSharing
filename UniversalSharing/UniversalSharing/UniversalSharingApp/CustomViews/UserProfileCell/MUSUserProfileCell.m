@@ -41,9 +41,22 @@
     return nibArray[0];
 }
 
++ (CGFloat) heightForGeneralUserInfoWithCurrentPropertyOfUser : (NSString*) userProperty {
+    if (userProperty.length > 0) {
+        return 50;
+    } else {
+        return 0;
+    }
+}
+
+
 - (void) configurationGeneralUserInfoTableViewCellWithUser: (User*) currentUser andCurrentProperty : (NSString*) userProperty {
     
-    self.userPropertyLabel.text = userProperty;
+    //self.userPropertyLabel.text = [userProperty uppercaseString];
+   
+    self.userPropertyLabel.text = [userProperty stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:[[userProperty substringToIndex:1] uppercaseString]];
+    
+    
     NSString *userPropertyInfoString = [currentUser valueForKey:userProperty];
     
     if ([userProperty isEqualToString:@"dateOfBirth"]) {
@@ -59,8 +72,5 @@
     [self.userPropertyLabel sizeToFit];
     [self.userPropertyInfoLabel sizeToFit];
 }
-
-
-
 
 @end

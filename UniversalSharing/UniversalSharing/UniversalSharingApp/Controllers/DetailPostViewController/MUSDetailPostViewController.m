@@ -105,10 +105,12 @@
                                                  name : UIKeyboardWillHideNotification
                                                object : nil];
     ///////////////////////////////////////////////////////////////////////////////////////////
-    [[NSNotificationCenter defaultCenter] addObserver : self
-                                             selector : @selector(obtainPosts)
-                                                 name : MUSNotificationPostsInfoWereUpDated
-                                               object : nil];
+    if (!self.isEditableTableView) {
+        [[NSNotificationCenter defaultCenter] addObserver : self
+                                                 selector : @selector(obtainPosts)
+                                                     name : MUSNotificationPostsInfoWereUpDated
+                                                   object : nil];
+    }
 /////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
@@ -129,12 +131,18 @@
     
 }
 
+
 - (void) obtainPosts {
+    //NSLog(@"post Id OLD = %@", self.currentPost.postID);
+    //NSLog(@"post description OLD = %@", self.currentPost.postDescription);
     NSArray *thePost = [[NSMutableArray alloc] initWithArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper createStringForPostWithPostId: self.currentPost.postID]]];
     self.currentPost = [thePost firstObject];
     [self.tableView reloadData];
-    
+    //NSLog(@"post Id NEW = %@", self.currentPost.postID);
+    //NSLog(@"post description NEW = %@", self.currentPost.postDescription);
 }
+
+ 
 #pragma mark initiation UITableView
 /*!
  @method

@@ -21,13 +21,13 @@
                             <outlet property="delegate" destination="KGk-i7-Jjw" id="5n2-gI-OKN"/>
                         </connections>
                     </mapView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Place name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="s2W-iQ-k2g">
-                        <rect key="frame" x="8" y="120" width="212" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s2W-iQ-k2g">
+                        <rect key="frame" x="8" y="101" width="290" height="40"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="21" id="hDe-O1-JUR"/>
-                            <constraint firstAttribute="width" constant="212" id="wCb-hk-Llr"/>
+                            <constraint firstAttribute="height" constant="40" id="hDe-O1-JUR"/>
+                            <constraint firstAttribute="width" constant="290" id="wCb-hk-Llr"/>
                         </constraints>
-                        <fontDescription key="fontDescription" name="TimesNewRomanPS-BoldItalicMT" family="Times New Roman" pointSize="20"/>
+                        <fontDescription key="fontDescription" name="TimesNewRomanPS-BoldItalicMT" family="Times New Roman" pointSize="16"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>

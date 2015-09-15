@@ -93,7 +93,8 @@
     if (indexPath.row == 0) {
         return 80;
     }
-    return 50;
+    NSString *valueOfUserPropertyInfo = [self.socialNetwork.currentUser valueForKey: [self.userPropertyArray objectAtIndex: indexPath.row]];
+    return [MUSUserProfileCell heightForGeneralUserInfoWithCurrentPropertyOfUser:valueOfUserPropertyInfo];
 }
 
 @end

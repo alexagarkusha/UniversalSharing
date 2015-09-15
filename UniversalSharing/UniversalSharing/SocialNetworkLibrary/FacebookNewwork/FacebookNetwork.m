@@ -268,6 +268,7 @@ static FacebookNetwork *model = nil;
      startWithCompletionHandler:
      ^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
          if (!error) {
+             post.postID = [result objectForKey: @"id" ];
              self.copyComplition (musPostSuccess, nil);
              [self saveOrUpdatePost: post withReason: Connect];
          } else {
@@ -301,16 +302,21 @@ static FacebookNetwork *model = nil;
     for (int i = 0; i < post.arrayImages.count; i++) {
         ImageToPost *imageToPost = [post.arrayImages objectAtIndex: i];
         params[musFacebookParameter_Picture] = imageToPost.image;
-        FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc] initWithGraphPath: musFacebookGraphPath_Me_Photos
-                                                                       parameters: params
-                                                                       HTTPMethod: musPOST];
-        //counterOfImages ++;
+        FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]
+                                      initWithGraphPath: musFacebookGraphPath_Me_Photos
+                                             parameters: params
+                                             HTTPMethod: musPOST];
+        
+        post.postID = @"";
+        
         [connection addRequest: request
              completionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
                  counterOfImages ++;
+                 post.postID = [post.postID stringByAppendingString:[result objectForKey:@"id"]];
                  if (counterOfImages == copyPostImagesArray.count) {
                      if (!error) {
-                         post.postID = [result objectForKey:@"post_id"];
+                         //NSLog(@"%@", post.postID);
+                         //post.postID = [result objectForKey:@"id"];
                          self.copyComplition (musPostSuccess, nil);
                          [self saveOrUpdatePost: post withReason: Connect];
                      } else {
@@ -318,6 +324,7 @@ static FacebookNetwork *model = nil;
                          self.copyComplition (nil, [self errorFacebook]);
                      }
                  }
+                 post.postID = [post.postID stringByAppendingString: @","];
              }];
     }
     [connection start];
@@ -330,56 +337,107 @@ static FacebookNetwork *model = nil;
     FBSDKGraphRequestConnection *connection = [[FBSDKGraphRequestConnection alloc] init];
 
     [posts enumerateObjectsUsingBlock:^(Post *post, NSUInteger index, BOOL *stop) {
- 
-        [self obtainCountOfLikesFromPost:post andConnection:connection];
-        [self obtainCountOfCommentsFromPost:post andConnection:connection];
+        
+        NSArray *arrayOfIdPost = [post.postID componentsSeparatedByString: @","];
+
+        [self obtainNumberOfLikesForArrayOfPostId: arrayOfIdPost andConnection : connection withComplition:^(id result, NSError *error) {
+            if (!error) {
+                if (post.likesCount == [result integerValue]) {
+                    return;
+                }
+                post.likesCount = [result integerValue];
+                [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost : post]];
+            }
+        }];
+        
+        [self obtainNumberOfCommentsForArrayOfPostId: arrayOfIdPost andConnection : connection withComplition:^(id result, NSError *error) {
+            if (!error) {
+                if (post.commentsCount == [result integerValue]) {
+                    return;
+                }
+                post.commentsCount = [result integerValue];
+                [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost:post]];
+            }
+        }];
     }];
     if (posts.count) {
         connection.delegate = self;
         [connection start];
     }
-    
-    
-
 }
 
-- (void) obtainCountOfLikesFromPost :(Post*) post andConnection:(FBSDKGraphRequestConnection*)connection {
-       NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:post.postID,@"ObjectId",@"true",@"summary",nil];
-    NSString *stringPath = [NSString stringWithFormat:@"/%@/likes",post.postID];
+
+- (void) obtainNumberOfLikesForArrayOfPostId : (NSArray*) arrayOfIdPost andConnection:(FBSDKGraphRequestConnection*)connection withComplition : (Complition) block {
+    __block int numberOfLikes;
+    __block int sumOfLikes = 0;
+    __block int counterOfLikes = 0;
+    __block long numberOfIds = arrayOfIdPost.count;
+    
+    for (int i = 0; i < arrayOfIdPost.count; i++) {
+        [self obtainCountOfLikesFromPost: [arrayOfIdPost objectAtIndex: i] andConnection:connection withComplition:^(id result, NSError *error) {
+            counterOfLikes++;
+            numberOfLikes = [result intValue];
+            sumOfLikes += numberOfLikes;
+            if (counterOfLikes == numberOfIds) {
+                if (!error) {
+                    block ([NSNumber numberWithInt: sumOfLikes], nil);
+                }
+            }
+        }];
+    }
+}
+
+- (void) obtainNumberOfCommentsForArrayOfPostId : (NSArray*) arrayOfIdPost andConnection:(FBSDKGraphRequestConnection*)connection withComplition : (Complition) block {
+    
+    __block int numberOfComments;
+    __block int sumOfComments = 0;
+    __block int counterOfComments = 0;
+    __block long numberOfIds = arrayOfIdPost.count;
+    
+    for (int i = 0; i < arrayOfIdPost.count; i++) {
+        [self obtainCountOfCommentsFromPost: [arrayOfIdPost objectAtIndex: i] andConnection:connection withComplition:^(id result, NSError *error) {
+            counterOfComments ++;
+            numberOfComments = [result intValue];
+            sumOfComments += numberOfComments;
+            if (counterOfComments == numberOfIds) {
+                if (!error) {
+                    block ([NSNumber numberWithInt: sumOfComments], nil);
+                }
+            }
+        }];
+    }
+}
+
+- (void) obtainCountOfLikesFromPost :(NSString*) postID andConnection:(FBSDKGraphRequestConnection*)connection withComplition : (Complition) block {
+    NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys: postID,@"ObjectId",@"true",@"summary",nil];
+    NSString *stringPath = [NSString stringWithFormat:@"/%@/likes",postID];
     FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]initWithGraphPath: stringPath
                                                                   parameters: params
                                                                   HTTPMethod: musGET];
     [connection addRequest:request
          completionHandler:^(FBSDKGraphRequestConnection *innerConnection, NSDictionary *result, NSError *error) {
+            
+             block ([[result objectForKey:@"summary"]objectForKey:@"total_count"], nil);
              
-             if (post.likesCount == [[[result objectForKey:@"summary"]objectForKey:@"total_count"] integerValue]) {
-                 return;
-             }
-             post.likesCount = [[[result objectForKey:@"summary"]objectForKey:@"total_count"] integerValue];
-             [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost:post]];
          }];
     
 }
 - (void)requestConnectionDidFinishLoading:(FBSDKGraphRequestConnection *)connection {
-    
     [[NSNotificationCenter defaultCenter] postNotificationName:MUSNotificationPostsInfoWereUpDated object:nil];
     
 }
 
-- (void) obtainCountOfCommentsFromPost :(Post*) post andConnection:(FBSDKGraphRequestConnection*)connection{
-    NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:post.postID,@"ObjectId",@"true",@"summary",nil];
-    NSString *stringPath = [NSString stringWithFormat:@"/%@/comments",post.postID];
+- (void) obtainCountOfCommentsFromPost :(NSString*) postID andConnection:(FBSDKGraphRequestConnection*)connection withComplition : (Complition) block {
+    NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys: postID,@"ObjectId",@"true",@"summary",nil];
+    NSString *stringPath = [NSString stringWithFormat:@"/%@/comments", postID];
     FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]initWithGraphPath: stringPath
                                                                    parameters: params
                                                                    HTTPMethod: musGET];
     [connection addRequest:request
          completionHandler:^(FBSDKGraphRequestConnection *innerConnection, NSDictionary *result, NSError *error) {
+
+            block ([[result objectForKey:@"summary"]objectForKey:@"total_count"], nil);
              
-             if (post.commentsCount == [[[result objectForKey:@"summary"]objectForKey:@"total_count"] integerValue]) {
-                 return;
-             }
-             post.commentsCount = [[[result objectForKey:@"summary"]objectForKey:@"total_count"] integerValue];
-             [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost:post]];
          }];
 }
 
