@@ -87,20 +87,20 @@
                                     <rect key="frame" x="0.0" y="0.0" width="185" height="188"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SLu-rc-99n">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="190"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gnP-ik-Dm6">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="190"/>
-                                                </imageView>
-                                            </subviews>
+                                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SLu-rc-99n" customClass="MUSImageScrollView">
+                                            <rect key="frame" x="0.0" y="0.0" width="185" height="188"/>
                                         </scrollView>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="SLu-rc-99n" secondAttribute="trailing" id="0Ir-4e-GsB"/>
+                                    <constraint firstItem="SLu-rc-99n" firstAttribute="leading" secondItem="X8x-2S-Htg" secondAttribute="leading" id="3Al-oP-Bii"/>
+                                    <constraint firstAttribute="bottom" secondItem="SLu-rc-99n" secondAttribute="bottom" id="Iir-Lh-e2h"/>
+                                    <constraint firstItem="SLu-rc-99n" firstAttribute="top" secondItem="X8x-2S-Htg" secondAttribute="top" id="nvl-4e-GJG"/>
+                                </constraints>
                                 <connections>
-                                    <outlet property="imageView" destination="gnP-ik-Dm6" id="jtp-YV-CPf"/>
-                                    <outlet property="scrollView" destination="SLu-rc-99n" id="7qe-rb-IbD"/>
+                                    <outlet property="scrollView" destination="SLu-rc-99n" id="OwR-EE-pLR"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
