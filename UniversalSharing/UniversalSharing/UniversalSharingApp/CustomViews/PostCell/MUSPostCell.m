@@ -45,6 +45,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *buttonCheckMark;
 
+@property (weak, nonatomic) IBOutlet UILabel *labelUpdatingPost;
 
 @end
 
@@ -59,6 +60,7 @@
     [self.numberOfImagesInPost cornerRadius: CGRectGetHeight(self.numberOfImagesInPost.frame) / 2];
     [self.numberOfComments sizeToFit];
     [self.numberOfLikes sizeToFit];
+    self.labelUpdatingPost.hidden = YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -83,21 +85,54 @@
     return musAppPostsVC_HeightOfPostCell;
 }
 
+- (void) configurationUpdatingPostCell: (Post*) currentPost {
+    [self configurateCommentsImageAndLabel: currentPost];
+    [self configurateLikesImageAndLabel: currentPost];
+    [self configuratePostDescriptionForPost: currentPost];
+    [self configurateIconOfSocialNetworkForPost: currentPost];
+    self.labelUpdatingPost.hidden = NO;
+}
+
+
 - (void) configurationPostCell: (Post*) currentPost andFlagEditing: (BOOL) flagEdit andFlagForDelete :(BOOL) flagForDelete{
-    
-    self.postDescription.text = currentPost.postDescription;
-    self.numberOfComments.text = [NSString stringWithFormat: @"%ld", (long)currentPost.commentsCount];
-    self.iconOfSocialNetwork.image = [UIImage iconOfSocialNetworkForPost: currentPost];
-    self.numberOfLikes.text = [NSString stringWithFormat: @"%ld", (long)currentPost.likesCount];
+    self.labelUpdatingPost.hidden = YES;
+    [self configurateCommentsImageAndLabel: currentPost];
+    [self configurateLikesImageAndLabel: currentPost];
+    [self configurateReasonOfPost: currentPost];
+    [self configuratePostDescriptionForPost: currentPost];
+    [self configurateIconOfSocialNetworkForPost: currentPost];
+    [self configurateEditableCell: flagEdit andIsCellDelete: flagForDelete];
+    [self configurateFirstImageOfPost: currentPost];
+}
+
+- (void) configurateCommentsImageAndLabel : (Post*) post {
     self.commentImage.image = [UIImage imageNamed: musAppImage_Name_Comment];
-    self.reasonOfPost.backgroundColor = [UIColor reasonColorForPost: currentPost.reason];
-    self.reasonOfPost.text = [NSString reasonTypeInString: currentPost.reason];
+    self.numberOfComments.text = [NSString stringWithFormat: @"%ld", (long) post.commentsCount];
+}
+
+- (void) configurateLikesImageAndLabel : (Post*) post {
     self.likeImage.image = [UIImage imageNamed: musAppImage_Name_Like];
-    
-    if (flagEdit) {
+    self.numberOfLikes.text = [NSString stringWithFormat: @"%ld", (long)post.likesCount];
+}
+
+- (void) configurateReasonOfPost : (Post*) post {
+    self.reasonOfPost.backgroundColor = [UIColor reasonColorForPost: post.reason];
+    self.reasonOfPost.text = [NSString reasonTypeInString: post.reason];
+}
+
+- (void) configuratePostDescriptionForPost: (Post*) post {
+    self.postDescription.text = post.postDescription;
+}
+
+- (void) configurateIconOfSocialNetworkForPost: (Post*) post {
+    self.iconOfSocialNetwork.image = [UIImage iconOfSocialNetworkForPost: post];
+}
+
+- (void) configurateEditableCell : (BOOL) isCellEditable andIsCellDelete : (BOOL) isCellDelete {
+    if (isCellEditable) {
         self.widthConstrain.constant = 50.0f;
         
-        if (flagForDelete) {
+        if (isCellDelete) {
             [self.buttonCheckMark setBackgroundImage:[UIImage imageNamed: @"checkMarkTaken.jpeg"] forState:UIControlStateNormal];
             self.buttonCheckMark.tag = 1;
         }else {
@@ -110,23 +145,8 @@
         [self.buttonCheckMark setBackgroundImage:nil forState:UIControlStateNormal];
         
     }
-    
-    [self configurateFirstImageOfPost: currentPost];
-
-    
-    //    if (flagSellectAll && flagEdit) {
-    //        [self.buttonCheckMark setBackgroundImage:[UIImage imageNamed: @"checkMarkTaken.jpeg"] forState:UIControlStateNormal];
-    //        self.buttonCheckMark.tag = 1;
-    //        self.widthConstrain.constant = 50.0f;
-    //    } else if(!flagSellectAll && flagEdit){
-    //        [self.buttonCheckMark setBackgroundImage:[UIImage imageNamed: @"checkMark.jpeg"] forState:UIControlStateNormal];
-    //        self.buttonCheckMark.tag = 0;
-    //        self.widthConstrain.constant = 50.0f;
-    //    } else {
-    //        self.widthConstrain.constant = 0.0f;
-    //        [self.buttonCheckMark setBackgroundImage:nil forState:UIControlStateNormal];
-    //    }
 }
+
 
 - (void) configurateFirstImageOfPost : (Post*) currentPost {
     [self.firstImageOfPost cornerRadius: 10.0 andBorderWidth: 0.0 withBorderColor: nil];

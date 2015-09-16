@@ -216,6 +216,7 @@ static FacebookNetwork *model = nil;
     if (![self obtainCurrentConnection]){
         [self saveOrUpdatePost: post withReason: Offline];
         block(nil,[self errorConnection]);
+        [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
         return;
     }
      self.copyComplition = block;
@@ -271,12 +272,15 @@ static FacebookNetwork *model = nil;
              post.postID = [result objectForKey: @"id" ];
              self.copyComplition (musPostSuccess, nil);
              [self saveOrUpdatePost: post withReason: Connect];
+             [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
          } else {
              if ([error code] != 8){
                  [self saveOrUpdatePost: post withReason: ErrorConnection];
                  self.copyComplition (nil, [self errorFacebook]);
+                 [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
              } else {
              self.copyComplition (nil, nil);
+             [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
              }
          }
      }];
@@ -312,20 +316,22 @@ static FacebookNetwork *model = nil;
         [connection addRequest: request
              completionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
                  counterOfImages ++;
-                 post.postID = [post.postID stringByAppendingString:[result objectForKey:@"id"]];
-                 if (counterOfImages == copyPostImagesArray.count) {
-                     if (!error) {
-                         //NSLog(@"%@", post.postID);
-                         //post.postID = [result objectForKey:@"id"];
+                 if (!error) {
+                     post.postID = [post.postID stringByAppendingString:[result objectForKey:@"id"]];
+                     if (counterOfImages == copyPostImagesArray.count) {
                          self.copyComplition (musPostSuccess, nil);
                          [self saveOrUpdatePost: post withReason: Connect];
-                     } else {
+                         [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
+                     }
+                     post.postID = [post.postID stringByAppendingString: @","];
+                 } else {
+                     if (counterOfImages == copyPostImagesArray.count) {
                          [self saveOrUpdatePost: post withReason: ErrorConnection];
                          self.copyComplition (nil, [self errorFacebook]);
+                         [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
                      }
                  }
-                 post.postID = [post.postID stringByAppendingString: @","];
-             }];
+        }];
     }
     [connection start];
 }
@@ -448,6 +454,12 @@ static FacebookNetwork *model = nil;
 - (NSError*) errorFacebook {
     return [NSError errorWithMessage: musFacebookError andCodeError: musFacebookErrorCode];
 }
+
+
+
+
+
+
 
 
 @end

@@ -22,6 +22,7 @@
 + (instancetype) postCell;
 + (CGFloat) heightForPostCell;
 
+- (void) configurationUpdatingPostCell: (Post*) currentPost;
 - (void) configurationPostCell: (Post*) currentPost andFlagEditing:(BOOL) flagEdit andFlagForDelete :(BOOL) flagForDelete;
 
 @end

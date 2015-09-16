@@ -319,8 +319,10 @@ static TwitterNetwork *model = nil;
     if (![self obtainCurrentConnection]){
         [self saveOrUpdatePost: post withReason: Offline];
         block(nil,[self errorConnection]);
+        [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
         return;
     }
+    
     self.copyComplition = block;
     if ([post.arrayImages count] > 0) {
         [self postImagesToTwitter: post];
@@ -365,15 +367,17 @@ static TwitterNetwork *model = nil;
                                 //[self errorTwitter];
                                 self.copyComplition (nil, [self errorTwitter]);
                                 [self saveOrUpdatePost: post withReason: ErrorConnection];
+                                [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
                                 return;
                             }
                             post.postID = [[jsonData objectForKey:@"id"]stringValue];
-
                             self.copyComplition (musPostSuccess, nil);
                             [self saveOrUpdatePost: post withReason: Connect];
+                            [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
                         }else{
                             self.copyComplition (nil, [self errorTwitter]);
                             [self saveOrUpdatePost: post withReason: ErrorConnection];
+                            [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
                         }
                     }];
 }
@@ -414,6 +418,7 @@ static TwitterNetwork *model = nil;
             if (error) {
                 self.copyComplition (nil, [self errorTwitter]);
                 [self saveOrUpdatePost: post withReason: ErrorConnection];
+                [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
                 return;
             }
             [client sendTwitterRequest : request
@@ -428,21 +433,26 @@ static TwitterNetwork *model = nil;
                                      if (jsonError) {
                                          self.copyComplition (nil, [self errorTwitter]);
                                          [self saveOrUpdatePost: post withReason: ErrorConnection];
+                                         [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
                                      return;
                                      }
                                     post.postID = [[jsonData objectForKey:@"id"] stringValue];
                                     self.copyComplition (musPostSuccess, nil);
                                     [self saveOrUpdatePost: post withReason: Connect];
+                                    [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
                                 } else {
                                     NSError *connectionError = [NSError errorWithMessage: musErrorConnection
                                                                             andCodeError: musErrorConnectionCode];
                                     self.copyComplition (nil, connectionError);
                                     [self saveOrUpdatePost: post withReason: ErrorConnection];
+                                    [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
                                     return;
                                 }
                             }];
         } else {
             self.copyComplition (nil, error);
+            [self saveOrUpdatePost: post withReason: ErrorConnection];
+            [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
         }
     }];
 }
@@ -455,15 +465,21 @@ static TwitterNetwork *model = nil;
 - (void) mediaIdsForTwitter : (Post*) post withComplition : (Complition) block {
     NSMutableArray *mediaIdsArray = [[NSMutableArray alloc] init];
     __weak NSMutableArray *array = mediaIdsArray;
+    __block int numberOfIds = post.arrayImages.count;
+    __block int counterOfIds = 0;
+
     for (int i = 0; i < post.arrayImages.count; i++) {
         [self mediaIDForTwitter : [post.arrayImages objectAtIndex: i] withComplition:^(id result, NSError *error) {
+            counterOfIds ++;
             if (!error) {
                 [array addObject: result];
-                if ([array count] == post.arrayImages.count) {
+            }
+            if (counterOfIds == numberOfIds) {
+                if (!error) {
                     block (mediaIdsArray, nil);
+                } else {
+                    block (nil, [self errorTwitter]);
                 }
-            } else {
-                block (nil, [self errorTwitter]);
             }
         }];
     }
@@ -509,7 +525,7 @@ static TwitterNetwork *model = nil;
                         } else {
                             NSError *connectionError = [NSError errorWithMessage : musErrorConnection
                                                                     andCodeError : musErrorConnectionCode];
-                            self.copyComplition (nil, connectionError);
+                            block (nil, connectionError);
                             return;
                         }
                     }];

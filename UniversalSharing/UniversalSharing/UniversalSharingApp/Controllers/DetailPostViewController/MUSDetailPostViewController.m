@@ -105,12 +105,10 @@
                                                  name : UIKeyboardWillHideNotification
                                                object : nil];
     ///////////////////////////////////////////////////////////////////////////////////////////
-    if (!self.isEditableTableView) {
-        [[NSNotificationCenter defaultCenter] addObserver : self
+    [[NSNotificationCenter defaultCenter] addObserver : self
                                                  selector : @selector(obtainPosts)
                                                      name : MUSNotificationPostsInfoWereUpDated
                                                    object : nil];
-    }
 /////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
@@ -135,9 +133,11 @@
 - (void) obtainPosts {
     //NSLog(@"post Id OLD = %@", self.currentPost.postID);
     //NSLog(@"post description OLD = %@", self.currentPost.postDescription);
-    NSArray *thePost = [[NSMutableArray alloc] initWithArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper createStringForPostWithPostId: self.currentPost.postID]]];
-    self.currentPost = [thePost firstObject];
-    [self.tableView reloadData];
+    if (!self.isEditableTableView) {
+        NSArray *thePost = [[NSMutableArray alloc] initWithArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper createStringForPostWithPostId: self.currentPost.postID]]];
+        self.currentPost = [thePost firstObject];
+        [self.tableView reloadData];
+    }
     //NSLog(@"post Id NEW = %@", self.currentPost.postID);
     //NSLog(@"post description NEW = %@", self.currentPost.postDescription);
 }
@@ -260,6 +260,10 @@
  @abstract send post to social network
  */
 - (void) sendPost {
+    
+    
+    [self.delegate updatePostByPrimaryKey: [NSString stringWithFormat: @"%d", self.currentPost.primaryKey]];
+    
     if (!_currentSocialNetwork.isVisible || !_currentSocialNetwork) {
         [self showAlertWithMessage: musAppError_Logged_Into_Social_Networks];
         return;

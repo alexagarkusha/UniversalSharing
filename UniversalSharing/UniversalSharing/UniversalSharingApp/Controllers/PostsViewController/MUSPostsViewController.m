@@ -16,7 +16,7 @@
 #import "MUSDetailPostViewController.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 
-@interface MUSPostsViewController () <DOPDropDownMenuDataSource, DOPDropDownMenuDelegate, UITableViewDataSource, UITableViewDelegate, MUSPostCellDelegate>
+@interface MUSPostsViewController () <DOPDropDownMenuDataSource, DOPDropDownMenuDelegate, UITableViewDataSource, UITableViewDelegate, MUSPostCellDelegate, MUSDetailPostViewControllerDelegate>
 
 @property (nonatomic, strong) NSMutableArray *arrayOfLoginSocialNetworks;
 /*!
@@ -62,6 +62,9 @@
 @property (strong, nonatomic) UIToolbar *toolBar ;
 @property (strong, nonatomic) NSMutableIndexSet *mutableIndexSet ;
 @property (strong, nonatomic) UIRefreshControl *refreshControl ;
+@property (strong, nonatomic) NSMutableSet *setWithUniquePrimaryKeysOfPost;
+//@property (strong, nonatomic) MUSDetailPostViewController *detailPostViewController;
+
 @end
 
 @implementation MUSPostsViewController
@@ -70,17 +73,23 @@
     // Do any additional setup after loading the view.
     [self initiationDropDownMenu];
     [self initiationTableView];
-    self.title = musApp_PostsViewController_NavigationBar_Title;
-    ///////////////////////////////////////////////////////////////////////////////////////
     [self initiationRefreshControl];
-    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    self.setWithUniquePrimaryKeysOfPost = [[NSMutableSet alloc] init];
+    self.title = musApp_PostsViewController_NavigationBar_Title;
+    //self.detailPostViewController = [[MUSDetailPostViewController alloc] init];
+    //self.detailPostViewController.delegate = self;
     [self.navigationItem.leftBarButtonItem setEnabled:NO];
     [self.navigationItem.leftBarButtonItem setTintColor: [UIColor clearColor]];
-    /////////////////////////////////////////////////////////////////////////////////////////////////////
+
     self.mutableIndexSet = [[NSMutableIndexSet alloc] init];
-    ///////////////////////////////////////////////////////////////////////////////////
+
     [self initiationToolBarForRemove];
     
+    [[NSNotificationCenter defaultCenter] addObserver : self
+                                             selector : @selector(stopUpdatingPostInTableView:)
+                                                 name : MUSNotificationStopUpdatingPost
+                                               object : nil];
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -97,7 +106,7 @@
 
 - (void) viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear: YES];
-    [[NSNotificationCenter defaultCenter]removeObserver:self];
+    //[[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -208,7 +217,19 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     MUSPostCell *postCell = (MUSPostCell*) cell;
-    [postCell configurationPostCell: [self.arrayPosts objectAtIndex: indexPath.row] andFlagEditing: self.editing andFlagForDelete :[self.mutableIndexSet containsIndex:indexPath.row]];
+    Post *post = [self.arrayPosts objectAtIndex: indexPath.row];
+    
+    
+    if (![self.setWithUniquePrimaryKeysOfPost containsObject: [NSString stringWithFormat: @"%d", post.primaryKey]]) {
+        [postCell configurationPostCell : post
+                         andFlagEditing : self.editing
+                       andFlagForDelete : [self.mutableIndexSet containsIndex : indexPath.row]];
+        //cell.contentView.backgroundColor = [UIColor whiteColor];
+    } else {
+        [postCell configurationUpdatingPostCell: post];
+        //cell.contentView.backgroundColor = [UIColor grayColor];
+    }
+    
 
 }
 
@@ -247,11 +268,24 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self performSegueWithIdentifier: goToDetailPostViewControllerSegueIdentifier sender:[self.arrayPosts objectAtIndex: indexPath.row]];
+    Post *post = [self.arrayPosts objectAtIndex: indexPath.row];
+    
+    if (![self.setWithUniquePrimaryKeysOfPost containsObject: [NSString stringWithFormat: @"%d", post.primaryKey]]) {
+        [self performSegueWithIdentifier: goToDetailPostViewControllerSegueIdentifier sender: post];
+    } else {
+        //MUSPostCell *cell = (MUSPostCell*) [self.tableView cellForRowAtIndexPath: indexPath];
+        //cell.contentView.backgroundColor = [UIColor grayColor];
+        return;
+    }
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
+    Post *post = [self.arrayPosts objectAtIndex: indexPath.row];
+    if (![self.setWithUniquePrimaryKeysOfPost containsObject: [NSString stringWithFormat: @"%d", post.primaryKey]]) {
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -335,9 +369,10 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    MUSDetailPostViewController *detailPostViewController = [[MUSDetailPostViewController alloc] init];
+
     if ([[segue identifier] isEqualToString:goToDetailPostViewControllerSegueIdentifier]) {
-        detailPostViewController = [segue destinationViewController];
+       MUSDetailPostViewController * detailPostViewController = (MUSDetailPostViewController*)[segue destinationViewController];
+         detailPostViewController.delegate = self;
         [detailPostViewController setCurrentPost: sender];
     }
 }
@@ -462,4 +497,19 @@
     [refreshControl endRefreshing];
     
 }
+
+- (void) stopUpdatingPostInTableView: (NSNotification*) notification {
+    //NSLog(@"%@", self.setWithUniquePrimaryKeysOfPost);
+    //NSLog(@"OBJECT = %@", [NSString stringWithFormat: @"%d", [notification.object integerValue]]);
+    [self.setWithUniquePrimaryKeysOfPost removeObject: [NSString stringWithFormat: @"%d", [notification.object integerValue]]];
+    //NSLog(@"%@", self.setWithUniquePrimaryKeysOfPost);
+    //NSLog(@"UPDATING");
+    [self obtainPosts];
+}
+
+- (void) updatePostByPrimaryKey:(NSString *)primaryKey {
+    //NSLog(@"UPDATE !!!!!!!!!!!!!!");
+    [self.setWithUniquePrimaryKeysOfPost addObject: primaryKey];
+}
+
 @end

@@ -146,10 +146,13 @@
     }
 }
 
-
-
-
 - (NSError*) errorConnection {
-    return [NSError errorWithMessage: @"ErrorConnection" andCodeError: 1009];
+    return [NSError errorWithMessage: musErrorConnection andCodeError: musErrorConnectionCode];
 }
+
+
+- (void) stopUpdatingPostWithObject : (id) object {
+    [[NSNotificationCenter defaultCenter] postNotificationName:MUSNotificationStopUpdatingPost object: object];
+}
+
 @end
