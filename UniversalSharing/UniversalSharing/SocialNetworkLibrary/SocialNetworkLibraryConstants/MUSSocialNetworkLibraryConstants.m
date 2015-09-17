@@ -108,6 +108,11 @@ NSString *const musPOST = @"POST";
 NSString *const musPostSuccess = @"Your post has been sent";
 NSString *const musErrorWithDomainUniversalSharing = @"Universal Sharing library";
 NSString *const MUSNotificationPostsInfoWereUpDated = @"MUSNotificationPostsInfoWereUpDated";
+NSString *const MUSNotificationStartUpdatingPost = @"MUSNotificationStartUpdatingPost";
+NSString *const MUSNotificationStopUpdatingPost = @"MUSNotificationStopUpdatingPost";
+
+
+
 
 #pragma mark Error Constants
 

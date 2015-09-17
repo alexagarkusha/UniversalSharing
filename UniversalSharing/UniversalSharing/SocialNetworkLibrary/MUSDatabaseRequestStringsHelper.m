@@ -115,10 +115,11 @@
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"networkType = \"%d\", "];
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"dateCreate = \"%@\", "];
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"reson = \"%d\", "];
-    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"userId = \"%@\" "];
+    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"userId = \"%@\", "];
+    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"postId = \"%@\" "];
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"WHERE id = \"%d\""];
     
-    NSString *finalStringPostsForUpdate = [NSString stringWithFormat:stringPostsForUpdate, post.locationId, post.postDescription, [post convertArrayImagesUrlToString], post.likesCount, post.commentsCount, post.networkType, post.dateCreate, post.reason, post.userId, post.primaryKey];
+    NSString *finalStringPostsForUpdate = [NSString stringWithFormat:stringPostsForUpdate, post.locationId, post.postDescription, [post convertArrayImagesUrlToString], post.likesCount, post.commentsCount, post.networkType, post.dateCreate, post.reason, post.userId, post.postID, post.primaryKey];
     
     return finalStringPostsForUpdate;
 }

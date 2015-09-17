@@ -114,4 +114,9 @@
 - (void) updatePost;
 
 - (NSError*) errorConnection;
+
+- (void) stopUpdatingPostWithObject : (id) object;
+
+
+
 @end

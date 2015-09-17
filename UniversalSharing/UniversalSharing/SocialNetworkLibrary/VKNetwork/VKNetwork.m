@@ -324,6 +324,7 @@ static VKNetwork *model = nil;
     if (![self obtainCurrentConnection]){
         [self saveOrUpdatePost: post withReason: Offline];
         block(nil,[self errorConnection]);
+        [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
         return;
     }
     self.copyComplition = block;
@@ -356,9 +357,11 @@ static VKNetwork *model = nil;
         self.copyComplition (musPostSuccess, nil);
         post.postID = [[response.json objectForKey:@"post_id"] stringValue];
         [self saveOrUpdatePost: post withReason: Connect];
+        [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
     } errorBlock: ^(NSError *error) {
         self.copyComplition (nil, [self errorVkontakte]);
         [self saveOrUpdatePost: post withReason: ErrorConnection];
+        [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
     }];
     
 }
@@ -369,6 +372,9 @@ static VKNetwork *model = nil;
  */
 
 - (void) postImagesToVK : (Post*) post {
+    __block numberOfImagesInPost = [post.arrayImages count];
+    __block counterOfImages = 0;
+    
     NSInteger userId = [self.currentUser.clientID integerValue];
     NSMutableArray *requestArray = [[NSMutableArray alloc] init]; //array of requests to add pictures in the social network
     
@@ -410,11 +416,19 @@ static VKNetwork *model = nil;
             self.copyComplition (musPostSuccess, nil);
             post.postID = [[response.json objectForKey:@"post_id"] stringValue];///////////////////////////////////////////
             [self saveOrUpdatePost: post withReason: Connect];
+            [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
         } errorBlock: ^(NSError *error) {
+            self.copyComplition (nil, [self errorVkontakte]);
             [self saveOrUpdatePost: post withReason: ErrorConnection];
+            [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
         }];
     } errorBlock: ^(NSError *error) {
-        self.copyComplition (nil, [self errorVkontakte]);
+        counterOfImages++;
+        if (counterOfImages == numberOfImagesInPost) {
+            self.copyComplition (nil, [self errorVkontakte]);
+            [self saveOrUpdatePost: post withReason: ErrorConnection];
+            [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
+        }
     }];
 }
 

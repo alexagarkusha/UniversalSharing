@@ -107,9 +107,9 @@
                                                object : nil];
     ///////////////////////////////////////////////////////////////////////////////////////////
     [[NSNotificationCenter defaultCenter] addObserver : self
-                                             selector : @selector(obtainPosts)
-                                                 name : MUSNotificationPostsInfoWereUpDated
-                                               object : nil];
+                                                 selector : @selector(obtainPosts)
+                                                     name : MUSNotificationPostsInfoWereUpDated
+                                                   object : nil];
 /////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
@@ -130,12 +130,20 @@
     
 }
 
+
 - (void) obtainPosts {
-    NSArray *thePost = [[NSMutableArray alloc] initWithArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper createStringForPostWithPostId: self.currentPost.postID]]];
-    self.currentPost = [thePost firstObject];
-    [self.tableView reloadData];
-    
+    //NSLog(@"post Id OLD = %@", self.currentPost.postID);
+    //NSLog(@"post description OLD = %@", self.currentPost.postDescription);
+    if (!self.isEditableTableView) {
+        NSArray *thePost = [[NSMutableArray alloc] initWithArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper createStringForPostWithPostId: self.currentPost.postID]]];
+        self.currentPost = [thePost firstObject];
+        [self.tableView reloadData];
+    }
+    //NSLog(@"post Id NEW = %@", self.currentPost.postID);
+    //NSLog(@"post description NEW = %@", self.currentPost.postDescription);
 }
+
+ 
 #pragma mark initiation UITableView
 /*!
  @method
@@ -253,6 +261,10 @@
  @abstract send post to social network
  */
 - (void) sendPost {
+    
+    
+    [self.delegate updatePostByPrimaryKey: [NSString stringWithFormat: @"%d", self.currentPost.primaryKey]];
+    
     if (!_currentSocialNetwork.isVisible || !_currentSocialNetwork) {
         [self showAlertWithMessage: musAppError_Logged_Into_Social_Networks];
         return;
