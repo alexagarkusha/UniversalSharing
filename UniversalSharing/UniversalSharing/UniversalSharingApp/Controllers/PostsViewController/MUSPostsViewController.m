@@ -247,6 +247,9 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.editing) {
+        return;
+    }
     [self performSegueWithIdentifier: goToDetailPostViewControllerSegueIdentifier sender:[self.arrayPosts objectAtIndex: indexPath.row]];
 }
 
@@ -275,9 +278,6 @@
     }];
     cell.backgroundColor = color;
 }
-
-
-
 
 - (IBAction)buttonEditTapped:(id)sender {
     if(self.editing) {

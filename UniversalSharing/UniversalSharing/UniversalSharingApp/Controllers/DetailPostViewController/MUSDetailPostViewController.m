@@ -67,6 +67,7 @@
 
 @property (nonatomic, assign) BOOL isChangedPost;
 
+@property (nonatomic, assign) NSInteger indexPicTapped;
 @end
 
 
@@ -180,7 +181,7 @@
 
 
 - (void) showPhotosOnCollectionView :(NSNotification *)notification{
-    //NSArray  *theArray = [[notification userInfo] objectForKey:@"arrayOfPhotos"];
+     _indexPicTapped = [[[notification userInfo] objectForKey:@"index"] integerValue];
     [self performSegueWithIdentifier: @"goToDitailPostCollectionViewController" sender:nil];
 
 }
@@ -435,7 +436,7 @@
     } else if ([[segue identifier]isEqualToString : @"goToDitailPostCollectionViewController"]) {
                    MUSDetailPostCollectionViewController *vc = [MUSDetailPostCollectionViewController new];
          vc = [segue destinationViewController];
-        [vc setObjectsWithArray:self.arrayOfPicturesInPost andCurrentSocialNetwork:_currentSocialNetwork];
+        [vc setObjectsWithArray:self.arrayOfPicturesInPost andCurrentSocialNetwork:_currentSocialNetwork andIndexPicTapped:self.indexPicTapped];
         
         }
     

@@ -57,8 +57,8 @@
                         <gestureRecognizers/>
                     </view>
                     <connections>
-                        <segue destination="AHh-oo-GgQ" kind="show" identifier="goToDitailPostCollectionViewController" id="1Ga-tU-xEG"/>
                         <segue destination="57R-w2-ySy" kind="show" identifier="Location" id="IAC-iQ-XMw"/>
+                        <segue destination="Mqx-YE-PKH" kind="show" identifier="goToDitailPostCollectionViewController" id="2bR-Rr-0pP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ra9-yG-8AE" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -66,53 +66,92 @@
             <point key="canvasLocation" x="2118" y="-554"/>
         </scene>
         <!--Detail Post Collection View Controller-->
-        <scene sceneID="hBP-0q-K9h">
+        <scene sceneID="p3B-0X-d4a">
             <objects>
-                <collectionViewController id="AHh-oo-GgQ" customClass="MUSDetailPostCollectionViewController" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" id="L8u-Q0-H22">
+                <viewController id="Mqx-YE-PKH" customClass="MUSDetailPostCollectionViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="N7w-GC-hmE"/>
+                        <viewControllerLayoutGuide type="bottom" id="hlG-8R-qpw"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Rue-AB-c1p">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="Mhx-PW-Mgk">
-                            <size key="itemSize" width="185" height="188"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        </collectionViewFlowLayout>
-                        <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="detailCell" id="X8x-2S-Htg" customClass="MUSCollectionViewCellForDetailView">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="185" height="188"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SLu-rc-99n" customClass="MUSImageScrollView">
-                                            <rect key="frame" x="0.0" y="0.0" width="185" height="188"/>
-                                        </scrollView>
-                                    </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </view>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="SLu-rc-99n" secondAttribute="trailing" id="0Ir-4e-GsB"/>
-                                    <constraint firstItem="SLu-rc-99n" firstAttribute="leading" secondItem="X8x-2S-Htg" secondAttribute="leading" id="3Al-oP-Bii"/>
-                                    <constraint firstAttribute="bottom" secondItem="SLu-rc-99n" secondAttribute="bottom" id="Iir-Lh-e2h"/>
-                                    <constraint firstItem="SLu-rc-99n" firstAttribute="top" secondItem="X8x-2S-Htg" secondAttribute="top" id="nvl-4e-GJG"/>
-                                </constraints>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="aRM-TH-eEy">
+                                <rect key="frame" x="0.0" y="44" width="600" height="556"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="8eg-Hm-iGk">
+                                    <size key="itemSize" width="173" height="148"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="detailCell" id="MFw-yk-j5C" customClass="MUSCollectionViewCellForDetailView">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="173" height="148"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Epg-4E-pX1" customClass="MUSImageScrollView">
+                                                    <rect key="frame" x="0.0" y="0.0" width="173" height="148"/>
+                                                </scrollView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="Epg-4E-pX1" secondAttribute="trailing" id="KZK-Y3-ftP"/>
+                                            <constraint firstAttribute="bottom" secondItem="Epg-4E-pX1" secondAttribute="bottom" id="P1H-Ns-359"/>
+                                            <constraint firstItem="Epg-4E-pX1" firstAttribute="leading" secondItem="MFw-yk-j5C" secondAttribute="leading" id="f8j-1y-pkY"/>
+                                            <constraint firstItem="Epg-4E-pX1" firstAttribute="top" secondItem="MFw-yk-j5C" secondAttribute="top" id="nbX-Kb-Ixp"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="scrollView" destination="Epg-4E-pX1" id="SWS-jA-mXA"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
                                 <connections>
-                                    <outlet property="scrollView" destination="SLu-rc-99n" id="OwR-EE-pLR"/>
+                                    <outlet property="dataSource" destination="Mqx-YE-PKH" id="vGG-ou-n4e"/>
+                                    <outlet property="delegate" destination="Mqx-YE-PKH" id="MZt-Ug-5Fo"/>
                                 </connections>
-                            </collectionViewCell>
-                        </cells>
-                        <connections>
-                            <outlet property="dataSource" destination="AHh-oo-GgQ" id="ie5-6K-kve"/>
-                            <outlet property="delegate" destination="AHh-oo-GgQ" id="6qz-3t-R7K"/>
-                        </connections>
-                    </collectionView>
-                </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="XXx-QP-MFU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                            </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8gF-Sd-Dyq" customClass="MUSTopBarForDetailCollectionView">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="TDr-T4-KgW"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="hlG-8R-qpw" firstAttribute="top" secondItem="aRM-TH-eEy" secondAttribute="bottom" id="C0F-xs-28f"/>
+                            <constraint firstAttribute="trailing" secondItem="aRM-TH-eEy" secondAttribute="trailing" id="KVm-E4-9bk"/>
+                            <constraint firstItem="8gF-Sd-Dyq" firstAttribute="top" secondItem="Rue-AB-c1p" secondAttribute="top" id="L8I-oO-Af8"/>
+                            <constraint firstItem="8gF-Sd-Dyq" firstAttribute="leading" secondItem="Rue-AB-c1p" secondAttribute="leading" id="aMd-x8-oEZ"/>
+                            <constraint firstAttribute="trailing" secondItem="8gF-Sd-Dyq" secondAttribute="trailing" id="co0-KW-4hX"/>
+                            <constraint firstItem="aRM-TH-eEy" firstAttribute="top" secondItem="N7w-GC-hmE" secondAttribute="bottom" constant="44" id="dXV-Wg-u3s"/>
+                            <constraint firstItem="hlG-8R-qpw" firstAttribute="top" secondItem="aRM-TH-eEy" secondAttribute="bottom" id="gK1-DM-8Ah"/>
+                            <constraint firstItem="aRM-TH-eEy" firstAttribute="leading" secondItem="Rue-AB-c1p" secondAttribute="leading" id="mnq-Fs-gZA"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="gK1-DM-8Ah"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="collectionView" destination="aRM-TH-eEy" id="8Yt-Cf-xBN"/>
+                        <outlet property="topBar" destination="8gF-Sd-Dyq" id="PRq-TX-pIf"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Es2-ga-dXL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2832" y="-554"/>
+            <point key="canvasLocation" x="2798" y="-554"/>
         </scene>
         <!--User Detail View Controller-->
         <scene sceneID="fxm-RW-Vlp">
@@ -406,6 +445,7 @@
                         <outlet property="shareToolBar" destination="xwB-dx-Bb3" id="sw4-sM-akm"/>
                         <outlet property="toolBarLayoutConstraint" destination="AEN-V0-A19" id="U7t-rt-nZT"/>
                         <segue destination="57R-w2-ySy" kind="show" identifier="Location" id="GpK-3N-ETI"/>
+                        <segue destination="KUy-YI-Bua" kind="show" identifier="goToShowImages" id="izg-6D-Z3K"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
@@ -416,7 +456,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1419" y="178"/>
+            <point key="canvasLocation" x="1438" y="304"/>
         </scene>
         <!--Location View Controller-->
         <scene sceneID="9dF-Vv-LOw">
@@ -492,7 +532,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aEs-8f-FMB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2118" y="178"/>
+            <point key="canvasLocation" x="2138" y="310"/>
         </scene>
         <!--User Location -->
         <scene sceneID="kb6-lF-UVy">
@@ -527,7 +567,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s8n-hd-1ig" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2522" y="908"/>
+            <point key="canvasLocation" x="2342" y="1368"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
@@ -549,12 +589,364 @@
             </objects>
             <point key="canvasLocation" x="0.0" y="0.0"/>
         </scene>
+        <!--Detail Post Collection View Controller-->
+        <scene sceneID="Hbl-Kh-Nkl">
+            <objects>
+                <viewController id="KUy-YI-Bua" customClass="MUSDetailPostCollectionViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jp7-d6-Nae"/>
+                        <viewControllerLayoutGuide type="bottom" id="0TF-BA-bp7"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ABN-Re-M8R">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="KRJ-os-ZVg">
+                                <rect key="frame" x="0.0" y="44" width="600" height="556"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="axj-3j-JEa">
+                                    <size key="itemSize" width="173" height="148"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="detailCell" id="EOl-JO-3Du" customClass="MUSCollectionViewCellForDetailView">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="173" height="148"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XwK-ge-IQ0" customClass="MUSImageScrollView">
+                                                    <rect key="frame" x="0.0" y="0.0" width="173" height="148"/>
+                                                </scrollView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="XwK-ge-IQ0" firstAttribute="top" secondItem="EOl-JO-3Du" secondAttribute="top" id="2VO-o7-qe8"/>
+                                            <constraint firstItem="XwK-ge-IQ0" firstAttribute="leading" secondItem="EOl-JO-3Du" secondAttribute="leading" id="VVV-cY-XNI"/>
+                                            <constraint firstAttribute="bottom" secondItem="XwK-ge-IQ0" secondAttribute="bottom" id="XP8-iR-Au9"/>
+                                            <constraint firstAttribute="trailing" secondItem="XwK-ge-IQ0" secondAttribute="trailing" id="b2L-8w-0ww"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="scrollView" destination="XwK-ge-IQ0" id="Cb6-8h-Bed"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="KUy-YI-Bua" id="9bm-Kq-Tfc"/>
+                                    <outlet property="delegate" destination="KUy-YI-Bua" id="U4w-KZ-Ke3"/>
+                                </connections>
+                            </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Za-s3-uqk" customClass="MUSTopBarForDetailCollectionView">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="hNS-s6-4No"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="0TF-BA-bp7" firstAttribute="top" secondItem="KRJ-os-ZVg" secondAttribute="bottom" id="22e-MA-IQg"/>
+                            <constraint firstItem="6Za-s3-uqk" firstAttribute="leading" secondItem="ABN-Re-M8R" secondAttribute="leading" id="L5G-Pw-SNB"/>
+                            <constraint firstItem="KRJ-os-ZVg" firstAttribute="top" secondItem="jp7-d6-Nae" secondAttribute="bottom" constant="44" id="V2b-QP-qhx"/>
+                            <constraint firstItem="6Za-s3-uqk" firstAttribute="top" secondItem="ABN-Re-M8R" secondAttribute="top" id="Vuh-Y9-2UL"/>
+                            <constraint firstItem="0TF-BA-bp7" firstAttribute="top" secondItem="KRJ-os-ZVg" secondAttribute="bottom" id="Y51-xq-ACH"/>
+                            <constraint firstItem="KRJ-os-ZVg" firstAttribute="leading" secondItem="ABN-Re-M8R" secondAttribute="leading" id="e96-p0-mr8"/>
+                            <constraint firstAttribute="trailing" secondItem="KRJ-os-ZVg" secondAttribute="trailing" id="pgN-Ju-9FH"/>
+                            <constraint firstAttribute="trailing" secondItem="6Za-s3-uqk" secondAttribute="trailing" id="yEM-MC-K0g"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Y51-xq-ACH"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="collectionView" destination="KRJ-os-ZVg" id="j00-Nj-5ah"/>
+                        <outlet property="topBar" destination="6Za-s3-uqk" id="EWB-Mt-Pw5"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2Su-ur-5Fk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2798" y="-554"/>
+        </scene>
+        <!--Detail Post Collection View Controller-->
+        <scene sceneID="HOK-sM-bOp">
+            <objects>
+                <viewController id="qXw-2F-BNJ" customClass="MUSDetailPostCollectionViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="3Lm-hv-UUM"/>
+                        <viewControllerLayoutGuide type="bottom" id="iTQ-O9-XAD"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="X7Q-TM-Uyw">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="cN8-6h-gz6">
+                                <rect key="frame" x="0.0" y="44" width="600" height="556"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="m2r-DH-1uO">
+                                    <size key="itemSize" width="173" height="148"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="detailCell" id="16I-N0-MAp" customClass="MUSCollectionViewCellForDetailView">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="173" height="148"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KDG-k4-411" customClass="MUSImageScrollView">
+                                                    <rect key="frame" x="0.0" y="0.0" width="173" height="148"/>
+                                                </scrollView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="KDG-k4-411" firstAttribute="top" secondItem="16I-N0-MAp" secondAttribute="top" id="Ape-3v-vuO"/>
+                                            <constraint firstAttribute="trailing" secondItem="KDG-k4-411" secondAttribute="trailing" id="JPk-No-URe"/>
+                                            <constraint firstAttribute="bottom" secondItem="KDG-k4-411" secondAttribute="bottom" id="YOP-z5-0rS"/>
+                                            <constraint firstItem="KDG-k4-411" firstAttribute="leading" secondItem="16I-N0-MAp" secondAttribute="leading" id="txR-tW-c7K"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="scrollView" destination="KDG-k4-411" id="E2Z-8I-cv6"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="qXw-2F-BNJ" id="FWq-gz-U2Q"/>
+                                    <outlet property="delegate" destination="qXw-2F-BNJ" id="dTO-de-d0h"/>
+                                </connections>
+                            </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TQe-cP-wkx" customClass="MUSTopBarForDetailCollectionView">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="29f-0T-gVl"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="cN8-6h-gz6" firstAttribute="leading" secondItem="X7Q-TM-Uyw" secondAttribute="leading" id="9oX-gR-zeE"/>
+                            <constraint firstItem="iTQ-O9-XAD" firstAttribute="top" secondItem="cN8-6h-gz6" secondAttribute="bottom" id="BLx-Tb-ImR"/>
+                            <constraint firstItem="cN8-6h-gz6" firstAttribute="top" secondItem="3Lm-hv-UUM" secondAttribute="bottom" constant="44" id="D7Z-bl-aqP"/>
+                            <constraint firstAttribute="trailing" secondItem="cN8-6h-gz6" secondAttribute="trailing" id="IfC-LF-Etp"/>
+                            <constraint firstAttribute="trailing" secondItem="TQe-cP-wkx" secondAttribute="trailing" id="U85-VU-BxX"/>
+                            <constraint firstItem="TQe-cP-wkx" firstAttribute="leading" secondItem="X7Q-TM-Uyw" secondAttribute="leading" id="b0q-5R-0ct"/>
+                            <constraint firstItem="iTQ-O9-XAD" firstAttribute="top" secondItem="cN8-6h-gz6" secondAttribute="bottom" id="bAN-hw-mkb"/>
+                            <constraint firstItem="TQe-cP-wkx" firstAttribute="top" secondItem="X7Q-TM-Uyw" secondAttribute="top" id="cff-gY-aXk"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="bAN-hw-mkb"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="collectionView" destination="cN8-6h-gz6" id="jKO-uj-vzx"/>
+                        <outlet property="topBar" destination="TQe-cP-wkx" id="wk3-j7-wFq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oQv-E9-PUx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2798" y="-554"/>
+        </scene>
+        <!--Detail Post Collection View Controller-->
+        <scene sceneID="Z2m-V8-mop">
+            <objects>
+                <viewController id="p42-Y6-8pB" customClass="MUSDetailPostCollectionViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="BcX-V5-M0b"/>
+                        <viewControllerLayoutGuide type="bottom" id="85A-MT-XDE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Q4w-Uf-oxJ">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="PIF-Bx-kJ0">
+                                <rect key="frame" x="0.0" y="44" width="600" height="556"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="Odw-xB-4WK">
+                                    <size key="itemSize" width="173" height="148"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="detailCell" id="AeU-FX-gF4" customClass="MUSCollectionViewCellForDetailView">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="173" height="148"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O7m-GF-72f" customClass="MUSImageScrollView">
+                                                    <rect key="frame" x="0.0" y="0.0" width="173" height="148"/>
+                                                </scrollView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="O7m-GF-72f" firstAttribute="top" secondItem="AeU-FX-gF4" secondAttribute="top" id="6cp-Kh-IYp"/>
+                                            <constraint firstAttribute="trailing" secondItem="O7m-GF-72f" secondAttribute="trailing" id="SKM-hG-Rke"/>
+                                            <constraint firstAttribute="bottom" secondItem="O7m-GF-72f" secondAttribute="bottom" id="iaT-em-pNI"/>
+                                            <constraint firstItem="O7m-GF-72f" firstAttribute="leading" secondItem="AeU-FX-gF4" secondAttribute="leading" id="sHv-4W-wna"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="scrollView" destination="O7m-GF-72f" id="27Q-zX-hgS"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="p42-Y6-8pB" id="CO9-bN-isC"/>
+                                    <outlet property="delegate" destination="p42-Y6-8pB" id="b5e-Wq-l8s"/>
+                                </connections>
+                            </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1wx-w3-aGr" customClass="MUSTopBarForDetailCollectionView">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="9h3-fV-QTC"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="1wx-w3-aGr" secondAttribute="trailing" id="4MU-Ys-hiN"/>
+                            <constraint firstItem="PIF-Bx-kJ0" firstAttribute="top" secondItem="BcX-V5-M0b" secondAttribute="bottom" constant="44" id="8xs-po-7tk"/>
+                            <constraint firstItem="1wx-w3-aGr" firstAttribute="top" secondItem="Q4w-Uf-oxJ" secondAttribute="top" id="C7E-2l-vV9"/>
+                            <constraint firstItem="85A-MT-XDE" firstAttribute="top" secondItem="PIF-Bx-kJ0" secondAttribute="bottom" id="Hko-BK-FJx"/>
+                            <constraint firstItem="85A-MT-XDE" firstAttribute="top" secondItem="PIF-Bx-kJ0" secondAttribute="bottom" id="KzA-Eh-ayY"/>
+                            <constraint firstItem="PIF-Bx-kJ0" firstAttribute="leading" secondItem="Q4w-Uf-oxJ" secondAttribute="leading" id="XWk-Yi-iSu"/>
+                            <constraint firstItem="1wx-w3-aGr" firstAttribute="leading" secondItem="Q4w-Uf-oxJ" secondAttribute="leading" id="iNY-Nx-WUf"/>
+                            <constraint firstAttribute="trailing" secondItem="PIF-Bx-kJ0" secondAttribute="trailing" id="lgq-pL-ItR"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Hko-BK-FJx"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="collectionView" destination="PIF-Bx-kJ0" id="W09-mX-OJ2"/>
+                        <outlet property="topBar" destination="1wx-w3-aGr" id="H29-tm-PeQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aRc-gb-KH0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2798" y="-554"/>
+        </scene>
+        <!--Detail Post Collection View Controller-->
+        <scene sceneID="YRu-oZ-3px">
+            <objects>
+                <viewController id="aot-Ie-OsO" customClass="MUSDetailPostCollectionViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="mQP-6I-br3"/>
+                        <viewControllerLayoutGuide type="bottom" id="B8t-R5-wIe"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="j0C-94-ZII">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="6Op-nC-UUq">
+                                <rect key="frame" x="0.0" y="44" width="600" height="556"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="Cms-ci-Srd">
+                                    <size key="itemSize" width="173" height="148"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="detailCell" id="nrN-v1-Y5c" customClass="MUSCollectionViewCellForDetailView">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="173" height="148"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LUr-66-94o" customClass="MUSImageScrollView">
+                                                    <rect key="frame" x="0.0" y="0.0" width="173" height="148"/>
+                                                </scrollView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="LUr-66-94o" secondAttribute="bottom" id="HCI-fD-qJQ"/>
+                                            <constraint firstItem="LUr-66-94o" firstAttribute="leading" secondItem="nrN-v1-Y5c" secondAttribute="leading" id="KqV-v1-7Ye"/>
+                                            <constraint firstItem="LUr-66-94o" firstAttribute="top" secondItem="nrN-v1-Y5c" secondAttribute="top" id="Yw6-OD-Dtx"/>
+                                            <constraint firstAttribute="trailing" secondItem="LUr-66-94o" secondAttribute="trailing" id="zqz-pm-WkN"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="scrollView" destination="LUr-66-94o" id="ntm-WB-hce"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="aot-Ie-OsO" id="6s4-Kt-4O7"/>
+                                    <outlet property="delegate" destination="aot-Ie-OsO" id="Avo-03-Isl"/>
+                                </connections>
+                            </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q1L-aQ-m9h" customClass="MUSTopBarForDetailCollectionView">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="y2d-df-3Oy"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="B8t-R5-wIe" firstAttribute="top" secondItem="6Op-nC-UUq" secondAttribute="bottom" id="AHg-yf-NKp"/>
+                            <constraint firstItem="6Op-nC-UUq" firstAttribute="top" secondItem="mQP-6I-br3" secondAttribute="bottom" constant="44" id="BYy-AV-LMo"/>
+                            <constraint firstAttribute="trailing" secondItem="q1L-aQ-m9h" secondAttribute="trailing" id="Jyg-bz-7KC"/>
+                            <constraint firstItem="6Op-nC-UUq" firstAttribute="leading" secondItem="j0C-94-ZII" secondAttribute="leading" id="M6W-WL-nCq"/>
+                            <constraint firstItem="B8t-R5-wIe" firstAttribute="top" secondItem="6Op-nC-UUq" secondAttribute="bottom" id="PTU-HK-f6L"/>
+                            <constraint firstAttribute="trailing" secondItem="6Op-nC-UUq" secondAttribute="trailing" id="Usb-vq-EsI"/>
+                            <constraint firstItem="q1L-aQ-m9h" firstAttribute="top" secondItem="j0C-94-ZII" secondAttribute="top" id="VJh-C2-rcC"/>
+                            <constraint firstItem="q1L-aQ-m9h" firstAttribute="leading" secondItem="j0C-94-ZII" secondAttribute="leading" id="hkZ-V1-oCe"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="PTU-HK-f6L"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="collectionView" destination="6Op-nC-UUq" id="1Gd-Si-Kwt"/>
+                        <outlet property="topBar" destination="q1L-aQ-m9h" id="H2p-hd-aeT"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gPK-KN-px1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2798" y="-554"/>
+        </scene>
     </scenes>
     <resources>
         <image name="first" width="30" height="30"/>
         <image name="second" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="IAC-iQ-XMw"/>
+        <segue reference="GpK-3N-ETI"/>
     </inferredMetricsTieBreakers>
 </document>

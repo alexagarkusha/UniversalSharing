@@ -21,6 +21,7 @@
 #import <CoreText/CoreText.h>
 //////////////////////////////////////////////
 #import "DataBaseManager.h"
+#import "MUSDetailPostCollectionViewController.h"
 
 @interface MUSShareViewController () <UITextViewDelegate, UIActionSheetDelegate, UIAlertViewDelegate, UINavigationControllerDelegate, UIToolbarDelegate, MUSGaleryViewDelegate>
 
@@ -95,6 +96,9 @@
 @property (assign, nonatomic)               CGRect messageTextViewFrame;
 @property (strong, nonatomic)               UIActivityIndicatorView *activityIndicator ;
 
+
+@property (strong, nonatomic)               NSArray *arrayPicsForDetailCollectionView;
+@property (assign, nonatomic)               NSInteger indexPicTapped;
 @end
 
 @implementation MUSShareViewController
@@ -503,8 +507,9 @@
 #pragma mark - prepareForSegue
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    MUSLocationViewController *vc = [MUSLocationViewController new];
+    
     if ([[segue identifier] isEqualToString:goToLocationViewControllerSegueIdentifier]) {
+        MUSLocationViewController *vc = [MUSLocationViewController new];
         vc = [segue destinationViewController];
         [vc currentUser:_currentSocialNetwork];
         self.galeryView.isEditableCollectionView = NO;
@@ -530,6 +535,10 @@
                 [weakSelf.shareLocationButton setTitle: @"Share Location"];
             }
         };
+    } else {//goToShowImages
+        MUSDetailPostCollectionViewController *vc = [MUSDetailPostCollectionViewController new];
+        vc = [segue destinationViewController];
+        [vc setObjectsWithArray:self.arrayPicsForDetailCollectionView andCurrentSocialNetwork:_currentSocialNetwork andIndexPicTapped:self.indexPicTapped];
     }
 }
 
@@ -548,7 +557,12 @@
     }
 }
 
-
+- (void) showImagesOnOtherVcWithArray:(NSArray *)arrayPics andIndexPicTapped:(NSInteger)indexPicTapped {
+    self.arrayPicsForDetailCollectionView = arrayPics;
+    self.indexPicTapped = indexPicTapped;
+     [self performSegueWithIdentifier: @"goToShowImages" sender:nil];
+    
+}
 
 @end
 

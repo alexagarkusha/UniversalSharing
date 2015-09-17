@@ -12,7 +12,8 @@
 
 @protocol MUSGaleryViewDelegate <NSObject>
 @required
-- (void)changeSharePhotoButtonColorAndShareButtonState: (BOOL) isPhotos;
+- (void) changeSharePhotoButtonColorAndShareButtonState: (BOOL) isPhotos;
+- (void) showImagesOnOtherVcWithArray :(NSArray*) arrayPics andIndexPicTapped :(NSInteger) indexPicTapped;
 @end
 
 
