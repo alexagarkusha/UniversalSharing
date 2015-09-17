@@ -7,20 +7,15 @@
 //
 
 #import "MUSDetailPostCollectionViewController.h"
-//#import "UIImageView+RoundImage.h"
-//#import "UIImageView+MUSLoadImageFromDataBase.h"
 #import "MUSCollectionViewCellForDetailView.h"
 #import "MUSTopBarForDetailCollectionView.h"
-//#import "UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.h"
-
-//#import "MUSImageScrollView.h"
 
 @interface MUSDetailPostCollectionViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (strong, nonatomic) NSArray *arrayOfPics;
 @property (strong, nonatomic) SocialNetwork *currentSocialNetwork;
 @property (assign, nonatomic) NSInteger indexPicTapped;
-//==
+//===
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet MUSTopBarForDetailCollectionView *topBar;
 
@@ -30,21 +25,14 @@
 
 static NSString * const reuseIdentifier = @"Cell";
 
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    ///////////////////////////////////////////////////////
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapOnCollectionView:)];
     [self.collectionView addGestureRecognizer:tap];
-    
-    /////////////////////////////////////////////////
-    //[self createRoundViewWithImageUser];
     [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    
     [_topBar.buttonBack addTarget:self
-                            action:@selector(backButton:)
-                  forControlEvents:UIControlEventTouchUpInside];
+                           action:@selector(backButton:)
+                 forControlEvents:UIControlEventTouchUpInside];
     [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long) _indexPicTapped + 1, (unsigned long)[self.arrayOfPics count]]];
     [_topBar initializeImageView:_currentSocialNetwork.icon];
 }
@@ -53,23 +41,23 @@ static NSString * const reuseIdentifier = @"Cell";
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     [self.tabBarController.tabBar setHidden:YES];
-    //[self.collectionView reloadData];
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-  [self.navigationController setNavigationBarHidden:NO animated:NO];
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
     [self.tabBarController.tabBar setHidden:NO];
-
+    
 }
 
 -(void) didTapOnCollectionView:(UIGestureRecognizer*) recognizer {
-    [_topBar hidePropirtiesWithAnimation];
+    [_topBar hidePropertiesWithAnimation];
 }
 
 - (void) backButton:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
+
 - (void) setObjectsWithArray :(NSArray*) arrayOfPics andCurrentSocialNetwork :(id)currentSocialNetwork andIndexPicTapped:(NSInteger)indexPicTapped {
     self.indexPicTapped = indexPicTapped;
     self.arrayOfPics = arrayOfPics;
@@ -81,7 +69,7 @@ static NSString * const reuseIdentifier = @"Cell";
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     CGSize boundsSize = [[UIScreen mainScreen] bounds].size;
     [self.collectionView setContentOffset:CGPointMake((boundsSize.width *(float)_indexPicTapped), 0)];
-
+    
     return 1;
 }
 
@@ -95,38 +83,9 @@ static NSString * const reuseIdentifier = @"Cell";
     return cell;
 }
 
-
-
-
 - (BOOL)prefersStatusBarHidden {
     return YES;
 }
-
-//- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-//{
-//   // MUSCollectionViewCellForDetailView *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
-//    
-//    
-////    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
-////
-//////    _shouldHideStatusBar = (_shouldHideStatusBar)? NO: YES;
-//////    [self setNeedsStatusBarAppearanceUpdate];
-//////    [self.tabBarController.tabBar setHidden:YES];
-//////    [self.navigationController setNavigationBarHidden:YES animated:NO];
-//////    UIView *navbar = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 150)];
-//////    navbar.backgroundColor = [UIColor blackColor];
-////    //do something like background color, title, etc you self
-////    //[self.view addSubview:navbar];
-////    //[self.tabBarController.tabBarController setHidden:YES];
-//////[self.navigationController.navigationBar setBarStyle:UIBarStyleBlackOpaque];
-////    //[self.navigationController.navigationBar setBackgroundColor:[UIColor blackColor]];
-////    //self.view.backgroundColor = [UIColor blackColor];
-//////    UIColor *colour = [[UIColor alloc]initWithRed:57.0/255.0 green:156.0/255.0 blue:52.0/255.0 alpha:1.0];
-//////    self.view.backgroundColor = colour;
-////    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
-////    cell.backgroundColor = [UIColor blackColor];
-////    NSLog(@"touched cell %@ at indexPath %@", cell, indexPath);
-//}
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     CGRect visibleRect = (CGRect){.origin = self.collectionView.contentOffset, .size = self.collectionView.bounds.size};

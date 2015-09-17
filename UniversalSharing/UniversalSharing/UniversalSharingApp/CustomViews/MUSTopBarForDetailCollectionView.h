@@ -14,5 +14,6 @@
 //===
 - (void) initializeLableCountImages:(NSString *)stringLableCountImages;
 - (void) initializeImageView:(NSString *)stringPathImage;
-- (void) hidePropirtiesWithAnimation;
+- (void) hidePropertiesWithAnimation;
+
 @end

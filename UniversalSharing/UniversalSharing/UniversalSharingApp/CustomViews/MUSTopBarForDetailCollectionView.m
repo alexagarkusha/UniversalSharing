@@ -70,7 +70,7 @@
     [self.imageView cornerRadius: CGRectGetHeight(self.imageView.frame) / 2 andBorderWidth: 1.5 withBorderColor: [UIColor whiteColor]];
 }
 
-- (void) hidePropirtiesWithAnimation {
+- (void) hidePropertiesWithAnimation {
     if (!_hideProperties) {
     
             _labelConstrain.constant -= _view.frame.size.height;
