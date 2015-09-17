@@ -30,7 +30,7 @@
 @property (nonatomic, assign) BOOL isEditableTableView;
 /*!
  @abstract tableview frame size of the detail post
-*/
+ */
 @property (nonatomic, assign) CGRect tableViewFrame;
 /*!
  @abstract array of pictures in current post
@@ -67,6 +67,7 @@
 
 @property (nonatomic, assign) BOOL isChangedPost;
 
+@property (nonatomic, assign) NSInteger indexPicTapped;
 @end
 
 
@@ -75,7 +76,7 @@
 - (void)viewDidLoad {
     
     ////////////////////////////////////////////////////////////////////////////
-       // Do any additional setup after loading the view.
+    // Do any additional setup after loading the view.
     [self initiationPostDescriptionArrayOfPicturesAndPostLocation];
     [self initiationTableView];
     [self initiationCurrentSocialNetwork];
@@ -106,10 +107,10 @@
                                                object : nil];
     ///////////////////////////////////////////////////////////////////////////////////////////
     [[NSNotificationCenter defaultCenter] addObserver : self
-                                                 selector : @selector(obtainPosts)
-                                                     name : MUSNotificationPostsInfoWereUpDated
-                                                   object : nil];
-/////////////////////////////////////////////////////////////////////////////////////////////////
+                                             selector : @selector(obtainPosts)
+                                                 name : MUSNotificationPostsInfoWereUpDated
+                                               object : nil];
+    /////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 - (void) viewDidDisappear:(BOOL)animated {
@@ -124,7 +125,7 @@
 
 - (void)refresh:(UIRefreshControl *)refreshControl {/////////////////////////////////////////////////////////////////////////
     
-    [self.currentSocialNetwork updatePost];    
+    [self.currentSocialNetwork updatePost];
     [refreshControl endRefreshing];
     
 }
@@ -142,7 +143,7 @@
     //NSLog(@"post description NEW = %@", self.currentPost.postDescription);
 }
 
- 
+
 #pragma mark initiation UITableView
 /*!
  @method
@@ -188,9 +189,9 @@
 
 
 - (void) showPhotosOnCollectionView :(NSNotification *)notification{
-    //NSArray  *theArray = [[notification userInfo] objectForKey:@"arrayOfPhotos"];
+    _indexPicTapped = [[[notification userInfo] objectForKey:@"index"] integerValue];
     [self performSegueWithIdentifier: @"goToDitailPostCollectionViewController" sender:nil];
-
+    
 }
 #pragma mark initiation current postDescription, arrayOfUsersPictures, postLocation
 /*!
@@ -346,7 +347,7 @@
             break;
         }
     }
-
+    
 }
 
 
@@ -358,7 +359,7 @@
             MUSGalleryOfPhotosCell *cell = [tableView dequeueReusableCellWithIdentifier:[MUSGalleryOfPhotosCell cellID]];
             if(!cell) {
                 cell = [MUSGalleryOfPhotosCell galleryOfPhotosCell];
-            }            
+            }
             return cell;
             break;
         }
@@ -408,7 +409,7 @@
             if (heightOfPostDescriptionRow < 100 && self.isEditableTableView) {
                 heightOfPostDescriptionRow = 100;
             }
-           // NSLog(@"POST DESCRIPTION CELL HEIGHT = %f", heightOfPostDescriptionRow);
+            // NSLog(@"POST DESCRIPTION CELL HEIGHT = %f", heightOfPostDescriptionRow);
             return heightOfPostDescriptionRow;
             break;
         }
@@ -423,7 +424,7 @@
 
 - (void) changeLocationForPost {
     //[self performSegueWithIdentifier:@"go" sender:nil];
-
+    
     [self performSegueWithIdentifier: goToLocationViewControllerSegueIdentifier sender:nil];
 }
 
@@ -445,11 +446,11 @@
             }
         };
     } else if ([[segue identifier]isEqualToString : @"goToDitailPostCollectionViewController"]) {
-                   MUSDetailPostCollectionViewController *vc = [MUSDetailPostCollectionViewController new];
-         vc = [segue destinationViewController];
-        [vc setObjectsWithArray:self.arrayOfPicturesInPost andCurrentSocialNetwork:_currentSocialNetwork];
+        MUSDetailPostCollectionViewController *vc = [MUSDetailPostCollectionViewController new];
+        vc = [segue destinationViewController];
+        [vc setObjectsWithArray:self.arrayOfPicturesInPost andCurrentSocialNetwork:_currentSocialNetwork andIndexPicTapped:self.indexPicTapped];
         
-        }
+    }
     
 }
 

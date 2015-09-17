@@ -63,8 +63,7 @@
 @property (strong, nonatomic) UIBarButtonItem *barButtonDeletePost;
 @property (strong, nonatomic) NSMutableIndexSet *mutableIndexSet ;
 @property (strong, nonatomic) UIRefreshControl *refreshControl ;
-@property (strong, nonatomic) NSMutableSet *setWithUniquePrimaryKeysOfPost;
-//@property (strong, nonatomic) MUSDetailPostViewController *detailPostViewController;
+@property (strong, nonatomic) NSMutableSet *setWithUniquePrimaryKeysOfPost ;
 
 @end
 
@@ -79,19 +78,21 @@
 
     self.setWithUniquePrimaryKeysOfPost = [[NSMutableSet alloc] init];
     self.title = musApp_PostsViewController_NavigationBar_Title;
-    //self.detailPostViewController = [[MUSDetailPostViewController alloc] init];
-    //self.detailPostViewController.delegate = self;
+    ///////////////////////////////////////////////////////////////////////////////////////
+//    [self initiationRefreshControl];
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     [self.navigationItem.leftBarButtonItem setEnabled:NO];
     [self.navigationItem.leftBarButtonItem setTintColor: [UIColor clearColor]];
-
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
     self.mutableIndexSet = [[NSMutableIndexSet alloc] init];
-
+    ///////////////////////////////////////////////////////////////////////////////////
     [self initiationToolBarForRemove];
     
     [[NSNotificationCenter defaultCenter] addObserver : self
                                              selector : @selector(stopUpdatingPostInTableView:)
                                                  name : MUSNotificationStopUpdatingPost
                                                object : nil];
+
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -310,7 +311,6 @@
     return UITableViewCellEditingStyleNone;
 }
 
-
 - (IBAction)buttonEditTapped:(id)sender {
     if(self.editing) {
         [self notEditingTableView];
@@ -426,10 +426,11 @@
 
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-
+    //MUSDetailPostViewController *detailPostViewController = [[MUSDetailPostViewController alloc] init];
     if ([[segue identifier] isEqualToString:goToDetailPostViewControllerSegueIdentifier]) {
-       MUSDetailPostViewController * detailPostViewController = (MUSDetailPostViewController*)[segue destinationViewController];
-         detailPostViewController.delegate = self;
+        MUSDetailPostViewController * detailPostViewController = (MUSDetailPostViewController*)[segue destinationViewController];
+        detailPostViewController.delegate = self;
+        detailPostViewController = [segue destinationViewController];
         [detailPostViewController setCurrentPost: sender];
     }
 }
@@ -581,6 +582,5 @@
         }
     }
 }
-
 
 @end

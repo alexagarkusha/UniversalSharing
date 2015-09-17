@@ -79,7 +79,8 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     //NSDictionary *theInfo = [NSDictionary dictionaryWithObjectsAndKeys:self.arrayOfPhotos,@"arrayOfPhotos", nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:notificationShowImagesInCollectionView object:nil];// userInfo:theInfo];
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithLong:indexPath.row] forKey:@"index"];
+    [[NSNotificationCenter defaultCenter] postNotificationName:notificationShowImagesInCollectionView object:nil userInfo:userInfo];
 }
 
 

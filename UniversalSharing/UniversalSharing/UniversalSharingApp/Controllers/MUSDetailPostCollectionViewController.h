@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "SocialNetwork.h"
 
-@interface MUSDetailPostCollectionViewController : UICollectionViewController
+@interface MUSDetailPostCollectionViewController : UIViewController
 
-- (void) setObjectsWithArray :(NSArray*) arrayOfPics andCurrentSocialNetwork :(id)currentSocialNetwork;
+- (void) setObjectsWithArray :(NSArray*) arrayOfPics andCurrentSocialNetwork :(id)currentSocialNetwork andIndexPicTapped :(NSInteger) indexPicTapped;
 
 @end
