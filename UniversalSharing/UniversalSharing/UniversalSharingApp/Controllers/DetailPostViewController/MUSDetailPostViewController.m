@@ -20,10 +20,11 @@
 #import "UIImage+LoadImageFromDataBase.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 #import "MUSDetailPostCollectionViewController.h"
+#import "SSARefreshControl.h"
 //#import "MUSGalleryViewOfPhotos.h"
 
 
-@interface MUSDetailPostViewController () <UITableViewDataSource, UITableViewDelegate, MUSPostDescriptionCellDelegate, MUSGalleryOfPhotosCellDelegate, MUSPostLocationCellDelegate,  UIActionSheetDelegate, UIAlertViewDelegate>
+@interface MUSDetailPostViewController () <UITableViewDataSource, UITableViewDelegate, MUSPostDescriptionCellDelegate, MUSGalleryOfPhotosCellDelegate, MUSPostLocationCellDelegate,  UIActionSheetDelegate, UIAlertViewDelegate, SSARefreshControlDelegate>
 /*!
  @abstract flag of table view. User selects - table view is editable or not.
  */
@@ -68,35 +69,31 @@
 @property (nonatomic, assign) BOOL isChangedPost;
 
 @property (nonatomic, assign) NSInteger indexPicTapped;
+
+@property (nonatomic, strong) SSARefreshControl *refreshControl;
+
 @end
 
 
 @implementation MUSDetailPostViewController
 
 - (void)viewDidLoad {
-    
-    ////////////////////////////////////////////////////////////////////////////
     // Do any additional setup after loading the view.
     [self initiationPostDescriptionArrayOfPicturesAndPostLocation];
     [self initiationTableView];
     [self initiationCurrentSocialNetwork];
     [self initiationNavigationBar];
     [self initiationActivityIndicator];
+    [self initiationSSARefreshControl];
     
     self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForUsersWithNetworkType: self.currentSocialNetwork.networkType]] firstObject];
     self.tableViewFrame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height);
-    
-    ///////////////////////////////////////////////////////////////////////////////////////
-    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
-    [self.tableView addSubview:refreshControl];
 }
 
 - (void) viewWillAppear:(BOOL)animated {
-    //////////////////////////////////////////////////////////////////////////////////////
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showPhotosOnCollectionView :) name:notificationShowImagesInCollectionView object:nil];
-    ///////////////////////////////////////////////////////////////////////////////////////////
     [super viewWillAppear : YES];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showPhotosOnCollectionView :) name:notificationShowImagesInCollectionView object:nil];
+
     [[NSNotificationCenter defaultCenter] addObserver : self
                                              selector : @selector(keyboardShow:)
                                                  name : UIKeyboardWillShowNotification
@@ -105,12 +102,11 @@
                                              selector : @selector(keyboardWillHide:)
                                                  name : UIKeyboardWillHideNotification
                                                object : nil];
-    ///////////////////////////////////////////////////////////////////////////////////////////
+
     [[NSNotificationCenter defaultCenter] addObserver : self
                                              selector : @selector(obtainPosts)
                                                  name : MUSNotificationPostsInfoWereUpDated
                                                object : nil];
-    /////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 - (void) viewDidDisappear:(BOOL)animated {
@@ -123,24 +119,13 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)refresh:(UIRefreshControl *)refreshControl {/////////////////////////////////////////////////////////////////////////
-    
-    [self.currentSocialNetwork updatePost];
-    [refreshControl endRefreshing];
-    
-}
-
 
 - (void) obtainPosts {
-    //NSLog(@"post Id OLD = %@", self.currentPost.postID);
-    //NSLog(@"post description OLD = %@", self.currentPost.postDescription);
     if (!self.isEditableTableView) {
         NSArray *thePost = [[NSMutableArray alloc] initWithArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper createStringForPostWithPostId: self.currentPost.postID]]];
         self.currentPost = [thePost firstObject];
         [self.tableView reloadData];
     }
-    //NSLog(@"post Id NEW = %@", self.currentPost.postID);
-    //NSLog(@"post description NEW = %@", self.currentPost.postDescription);
 }
 
 
@@ -229,6 +214,13 @@
     //self.activityIndicator.center=self.view.center;
     self.activityIndicator.hidesWhenStopped = YES;
     [self.view addSubview:self.activityIndicator];
+}
+
+#pragma mark - initiation SSARefreshControl
+
+- (void) initiationSSARefreshControl {
+    self.refreshControl = [[SSARefreshControl alloc] initWithScrollView:self.tableView andRefreshViewLayerType:SSARefreshViewLayerTypeOnScrollView];
+    self.refreshControl.delegate = self;
 }
 
 #pragma mark  start Activity Indicator Animating
@@ -638,6 +630,21 @@
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
+#pragma mark - SSARefreshControlDelegate
+
+- (void) beganRefreshing {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        sleep(1.5);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.currentSocialNetwork updatePost];
+            [self.refreshControl endRefreshing];
+        });
+        
+    });
+}
+
+
 
 
 

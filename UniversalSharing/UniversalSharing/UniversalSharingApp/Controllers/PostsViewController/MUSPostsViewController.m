@@ -15,8 +15,9 @@
 #import "DataBaseManager.h"
 #import "MUSDetailPostViewController.h"
 #import "MUSDatabaseRequestStringsHelper.h"
+#import "SSARefreshControl.h"
 
-@interface MUSPostsViewController () <DOPDropDownMenuDataSource, DOPDropDownMenuDelegate, UITableViewDataSource, UITableViewDelegate, MUSDetailPostViewControllerDelegate, UIActionSheetDelegate, UIGestureRecognizerDelegate, MUSPostCellDelegate>
+@interface MUSPostsViewController () <DOPDropDownMenuDataSource, DOPDropDownMenuDelegate, UITableViewDataSource, UITableViewDelegate, MUSDetailPostViewControllerDelegate, UIActionSheetDelegate, UIGestureRecognizerDelegate, MUSPostCellDelegate, SSARefreshControlDelegate>
 
 @property (nonatomic, strong) NSMutableArray *arrayOfLoginSocialNetworks;
 /*!
@@ -62,8 +63,9 @@
 @property (strong, nonatomic) UIToolbar *toolBar ;
 @property (strong, nonatomic) UIBarButtonItem *barButtonDeletePost;
 @property (strong, nonatomic) NSMutableIndexSet *mutableIndexSet ;
-@property (strong, nonatomic) UIRefreshControl *refreshControl ;
+@property (nonatomic, strong) SSARefreshControl *refreshControl;
 @property (strong, nonatomic) NSMutableSet *setWithUniquePrimaryKeysOfPost ;
+@property (strong, nonatomic) UILongPressGestureRecognizer *longPressGestureRecognizer;
 
 @end
 
@@ -73,33 +75,25 @@
     // Do any additional setup after loading the view.
     [self initiationDropDownMenu];
     [self initiationTableView];
-    [self initiationRefreshControl];
+    [self initiationSSARefreshControl];
     [self initiationLongPressGestureRecognizer];
 
     self.setWithUniquePrimaryKeysOfPost = [[NSMutableSet alloc] init];
     self.title = musApp_PostsViewController_NavigationBar_Title;
-    ///////////////////////////////////////////////////////////////////////////////////////
-//    [self initiationRefreshControl];
-    ///////////////////////////////////////////////////////////////////////////////////////////////
     [self.navigationItem.leftBarButtonItem setEnabled:NO];
     [self.navigationItem.leftBarButtonItem setTintColor: [UIColor clearColor]];
-    /////////////////////////////////////////////////////////////////////////////////////////////////////
     self.mutableIndexSet = [[NSMutableIndexSet alloc] init];
-    ///////////////////////////////////////////////////////////////////////////////////
     [self initiationToolBarForRemove];
-    
+    [self.refreshControl beginRefreshing];
     [[NSNotificationCenter defaultCenter] addObserver : self
                                              selector : @selector(stopUpdatingPostInTableView:)
                                                  name : MUSNotificationStopUpdatingPost
                                                object : nil];
-
 }
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear : YES];
-#warning "Twice?"
     [self initiationArrayOfActiveSocialNetwork];
-    [self obtainPosts];
     // Notification for updating likes and comments in posts.
     [[NSNotificationCenter defaultCenter] addObserver : self
                                              selector : @selector(obtainPosts)
@@ -107,9 +101,13 @@
                                                object : nil];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+}
+
+
 - (void) viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear: YES];
-    //[[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -117,20 +115,23 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void) initiationRefreshControl {
-    self.refreshControl = [[UIRefreshControl alloc] init];
-    [self.refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
-    [self.tableView addSubview: self.refreshControl];
-    
+#pragma mark - initiation SSARefreshControl
+
+- (void) initiationSSARefreshControl {
+    self.refreshControl = [[SSARefreshControl alloc] initWithScrollView:self.tableView andRefreshViewLayerType:SSARefreshViewLayerTypeOnScrollView];
+    self.refreshControl.circleViewColor = [UIColor lightGrayColor];
+    self.refreshControl.delegate = self;
 }
 
+#pragma mark - initiation LongPressGestureRecognizer
+
 - (void) initiationLongPressGestureRecognizer {
-    UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc]
+    self.longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc]
                                  initWithTarget:self
                                          action:@selector(handleLongPress:)];
-    longPressGestureRecognizer.minimumPressDuration = 2.0; //seconds
-    longPressGestureRecognizer.delegate = self;
-    [self.tableView addGestureRecognizer:longPressGestureRecognizer];
+    self.longPressGestureRecognizer.minimumPressDuration = 0.5; //seconds
+    self.longPressGestureRecognizer.delegate = self;
+    [self.tableView addGestureRecognizer: self.longPressGestureRecognizer];
 }
 
 
@@ -141,13 +142,10 @@
     UIBarButtonItem *flexibleSpace =  [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
     self.barButtonDeletePost = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(toolbarButtonDeleteTapped:)];
-    
     NSArray *toolbarItems = [NSArray arrayWithObjects:flexibleSpace, self.barButtonDeletePost, flexibleSpace,nil];
     
     [_toolBar setItems:toolbarItems animated:NO];
     self.barButtonDeletePost.enabled = NO;
-    //_toolBar.alpha = 0.5f;
-    //_toolBar.userInteractionEnabled = NO;
     [_toolBar setHidden:YES];
     [self.view addSubview:_toolBar];
 }
@@ -242,6 +240,7 @@
     } else {
         [postCell configurationUpdatingPostCell: post];
     }
+    [self setCellColor: [UIColor whiteColor] ForCell: cell];
 }
 
 
@@ -288,7 +287,6 @@
 
 - (void)tableView:(UITableView *)tableView didHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
     if (!self.editing && self.tableView.contentOffset.y >= 0) {
-    //self.tableView.contentOffset.y
         MUSPostCell *cell = (MUSPostCell *)[tableView cellForRowAtIndexPath:indexPath];
         [self setCellColor: [UIColor colorWithRed:230.0/255.0 green:230.0/255.0 blue:230.0/255.0 alpha: 1.0] ForCell: cell];
     }
@@ -325,8 +323,8 @@
     [self.editButton setTitle:editButtonTitle];
     self.menu.alpha = 1.0f;
     self.menu.userInteractionEnabled = YES;
-    //self.refreshControl.hidden = NO;
-    [self.tableView addSubview: self.refreshControl];
+    self.refreshControl.circleViewColor = nil;
+    [self.tableView addGestureRecognizer: self.longPressGestureRecognizer];
     [self.navigationItem.leftBarButtonItem setEnabled:NO];
     [self.navigationItem.leftBarButtonItem setTintColor: [UIColor clearColor]];
     [_toolBar setHidden:YES];
@@ -341,8 +339,9 @@
     [self.navigationItem.leftBarButtonItem setTintColor: nil];
     self.menu.alpha = 0.5f;
     self.menu.userInteractionEnabled = NO;
-    [self.refreshControl removeFromSuperview];
-    //self.refreshControl.hidden = YES;
+    self.refreshControl.circleViewColor = [UIColor whiteColor];
+    [self.tableView removeGestureRecognizer: self.longPressGestureRecognizer];
+    [self.menu dismiss];
     [self.tabBarController.tabBar setHidden:YES];
     [_toolBar setHidden:NO];
 }
@@ -354,9 +353,6 @@
 }
 
 - (void) addIndexToIndexSet :(NSIndexPath*) indexPath {
-    
-    
-    
     if ([self.mutableIndexSet containsIndex:indexPath.row]) {
         [self.mutableIndexSet removeIndex:indexPath.row];
         [self.selectAllButton setTitle: @"Select All"];
@@ -540,16 +536,9 @@
  */
 - (void) obtainPosts {
     self.arrayPosts = [[NSMutableArray alloc] initWithArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper createStringForPostWithReason: self.predicateReason andNetworkType: self.predicateNetworkType]]];
+    [self.refreshControl endRefreshing];
     [self.tableView reloadData];
     
-}
-
-- (void)refresh:(UIRefreshControl *)refreshControl {
-    [self.arrayOfLoginSocialNetworks enumerateObjectsUsingBlock:^(SocialNetwork *socialNetwork, NSUInteger idx, BOOL *stop) {
-        [socialNetwork updatePost];
-    }];
-
-    [refreshControl endRefreshing];
 }
 
 - (void) stopUpdatingPostInTableView: (NSNotification*) notification {
@@ -561,26 +550,42 @@
     [self.setWithUniquePrimaryKeysOfPost addObject: primaryKey];
 }
 
-
 - (void)handleLongPress:(UILongPressGestureRecognizer *)gestureRecognizer
 {
-    if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        CGPoint p = [gestureRecognizer locationInView: self.tableView];
-        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:p];
-        if (indexPath == nil) {
-        } else {
-            MUSPostCell *cell = (MUSPostCell *) [self.tableView cellForRowAtIndexPath:indexPath];
-            if (cell.isHighlighted) {
-                [self.mutableIndexSet addIndex: indexPath.row];
-                self.barButtonDeletePost.enabled = YES;
-                if (!self.editing) {
+    if (!self.editing) {
+        if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
+            CGPoint p = [gestureRecognizer locationInView: self.tableView];
+            NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:p];
+            if (indexPath != nil) {
+                MUSPostCell *cell = (MUSPostCell *) [self.tableView cellForRowAtIndexPath:indexPath];
+                if (cell.isHighlighted) {
+                    [self.mutableIndexSet addIndex: indexPath.row];
+                    self.barButtonDeletePost.enabled = YES;
                     [self editingTableView];
+                    [self.tableView reloadData];
+                    [self setCellColor: [UIColor whiteColor] ForCell: cell];
                 }
-                [self.tableView reloadData];
-                [self setCellColor: [UIColor whiteColor] ForCell: cell];
             }
         }
     }
+}
+
+#pragma mark - SSARefreshControlDelegate
+
+- (void) beganRefreshing {
+    if (!self.isEditing) {
+        [self.arrayOfLoginSocialNetworks enumerateObjectsUsingBlock:^(SocialNetwork *socialNetwork, NSUInteger idx, BOOL *stop) {
+            [socialNetwork updatePost];
+        }];
+    } else {
+        [self.refreshControl endRefreshing];
+    }
+}
+
+#pragma mark - dealloc
+
+- (void) dealloc {
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
 @end
