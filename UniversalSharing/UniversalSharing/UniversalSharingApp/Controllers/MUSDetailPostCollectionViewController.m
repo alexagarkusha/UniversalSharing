@@ -9,16 +9,26 @@
 #import "MUSDetailPostCollectionViewController.h"
 #import "MUSCollectionViewCellForDetailView.h"
 #import "MUSTopBarForDetailCollectionView.h"
+#import "MUSToolBarForDetailCollectionView.h"
+#import "UIImage+LoadImageFromDataBase.h"
+#import "DataBaseManager.h"
+#import "MUSDatabaseRequestStringsHelper.h"
 
 @interface MUSDetailPostCollectionViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
 
-@property (strong, nonatomic) NSArray *arrayOfPics;
+@property (strong, nonatomic) NSMutableArray *arrayOfPics;
 @property (strong, nonatomic) SocialNetwork *currentSocialNetwork;
 @property (assign, nonatomic) NSInteger indexPicTapped;
+@property (assign, nonatomic) BOOL hideBars;
+@property (assign, nonatomic) NSInteger indexDeletedPic;
+@property (strong, nonatomic) Post *currentPost;
+
 //===
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet MUSTopBarForDetailCollectionView *topBar;
-
+@property (weak, nonatomic) IBOutlet MUSToolBarForDetailCollectionView *toolBar;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topBarConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *toolBarConstraint;
 @end
 
 @implementation MUSDetailPostCollectionViewController
@@ -27,6 +37,9 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _hideBars = NO;
+    //_toolBar.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+    //_toolBar.alpha= 0.5;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapOnCollectionView:)];
     [self.collectionView addGestureRecognizer:tap];
     [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
@@ -35,6 +48,8 @@ static NSString * const reuseIdentifier = @"Cell";
                  forControlEvents:UIControlEventTouchUpInside];
     [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long) _indexPicTapped + 1, (unsigned long)[self.arrayOfPics count]]];
     [_topBar initializeImageView:_currentSocialNetwork.icon];
+    
+    [_toolBar.buttonToolBar setAction:@selector(trashButton:)];
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -51,14 +66,87 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 
 -(void) didTapOnCollectionView:(UIGestureRecognizer*) recognizer {
-    [_topBar hidePropertiesWithAnimation];
+    //[_topBar hidePropertiesWithAnimation];
+    
+    if (!_hideBars) {
+        
+        _topBarConstraint.constant -= _topBar.frame.size.height;
+        _toolBarConstraint.constant -= _toolBar.frame.size.height;
+        
+        
+        [UIView animateWithDuration: 0.4  animations:^{
+            [self.view layoutIfNeeded];
+            [self.view setNeedsLayout];
+        }];
+        [UIView commitAnimations];
+        
+    } else  {
+        _topBarConstraint.constant += _topBar.frame.size.height;
+        _toolBarConstraint.constant += _toolBar.frame.size.height;
+        
+        [UIView animateWithDuration: 0.4  animations:^{
+            [self.view layoutIfNeeded];
+            [self.view setNeedsLayout];
+        }];
+        [UIView commitAnimations];
+        
+    }
+    
+    _hideBars = (_hideBars)? NO : YES;
 }
 
 - (void) backButton:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void) setObjectsWithArray :(NSArray*) arrayOfPics andCurrentSocialNetwork :(id)currentSocialNetwork andIndexPicTapped:(NSInteger)indexPicTapped {
+- (void) trashButton:(id)sender {
+    
+    if (_arrayOfPics.count && _currentPost && _currentPost.reason != Connect ) {
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        CGRect visibleRect = (CGRect){.origin = self.collectionView.contentOffset, .size = self.collectionView.bounds.size};
+        CGPoint visiblePoint = CGPointMake(CGRectGetMidX(visibleRect), CGRectGetMidY(visibleRect));
+        NSIndexPath *visibleIndexPath = [self.collectionView indexPathForItemAtPoint:visiblePoint];
+        [_arrayOfPics removeObjectAtIndex:visibleIndexPath.row];
+        
+        if (_arrayOfPics.count) {
+            [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long)visibleIndexPath.row + 1, (unsigned long)[self.arrayOfPics count]]];
+        } else {
+            
+            [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long) 0, (unsigned long)[self.arrayOfPics count]]];
+        }
+               [_collectionView reloadData];
+        //if (_currentPost && _currentPost.reason != Connect) {
+            [_currentPost.arrayImagesUrl removeObjectAtIndex:visibleIndexPath.row];
+            [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost: self.currentPost]];
+            
+       // }
+        
+    } else {
+        
+        
+    }
+    
+}
+- (void) setObjectsWithPost :(Post*) currentPost andCurrentSocialNetwork :(id)currentSocialNetwork andIndexPicTapped :(NSInteger) indexPicTapped {
+    self.indexPicTapped = indexPicTapped;
+    self.currentPost = currentPost;
+    self.currentSocialNetwork = currentSocialNetwork;
+    if(!self.arrayOfPics)
+        self.arrayOfPics = [[NSMutableArray alloc] init];
+    else
+        [self.arrayOfPics removeAllObjects];
+    
+    if (![[self.currentPost.arrayImagesUrl firstObject] isEqualToString: @""]) {
+        for (int i = 0; i < self.currentPost.arrayImagesUrl.count; i++) {
+            UIImage *currentImage = [[UIImage alloc] init];
+            currentImage = [currentImage loadImageFromDataBase: [self.currentPost.arrayImagesUrl objectAtIndex: i]];
+            [self.arrayOfPics addObject: currentImage];
+        }
+    }
+    
+    
+}
+- (void) setObjectsWithArray :(NSMutableArray*) arrayOfPics andCurrentSocialNetwork :(id)currentSocialNetwork andIndexPicTapped:(NSInteger)indexPicTapped {
     self.indexPicTapped = indexPicTapped;
     self.arrayOfPics = arrayOfPics;
     self.currentSocialNetwork = currentSocialNetwork;
@@ -92,10 +180,11 @@ static NSString * const reuseIdentifier = @"Cell";
     CGPoint visiblePoint = CGPointMake(CGRectGetMidX(visibleRect), CGRectGetMidY(visibleRect));
     NSIndexPath *visibleIndexPath = [self.collectionView indexPathForItemAtPoint:visiblePoint];
     [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long)visibleIndexPath.row + 1, (unsigned long)[self.arrayOfPics count]]];
+    _indexDeletedPic = visibleIndexPath.row;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(self.view.frame.size.width , self.view.frame.size.height - 100);
+    return CGSizeMake([[UIScreen mainScreen] bounds].size.width,[[UIScreen mainScreen] bounds].size.height);
 }
 
 @end

@@ -91,6 +91,24 @@
 }
 
 - (void) viewWillAppear:(BOOL)animated {
+//<<<<<<< HEAD
+//=======
+//    
+//    if(!self.arrayOfPicturesInPost)
+//    self.arrayOfPicturesInPost = [[NSMutableArray alloc] init];
+//    
+//    if (![[self.currentPost.arrayImagesUrl firstObject] isEqualToString: @""]) {
+//        for (int i = 0; i < self.currentPost.arrayImagesUrl.count; i++) {
+//            UIImage *currentImage = [[UIImage alloc] init];
+//            currentImage = [currentImage loadImageFromDataBase: [self.currentPost.arrayImagesUrl objectAtIndex: i]];
+//            [self.arrayOfPicturesInPost addObject: currentImage];
+//        }
+//    }
+    [self.tableView reloadData];
+//    //////////////////////////////////////////////////////////////////////////////////////
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showPhotosOnCollectionView :) name:notificationShowImagesInCollectionView object:nil];
+//    ///////////////////////////////////////////////////////////////////////////////////////////
+//>>>>>>> 59c27d2e235006e94c041e6db59c669e0bbb0f67
     [super viewWillAppear : YES];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showPhotosOnCollectionView :) name:notificationShowImagesInCollectionView object:nil];
 
@@ -183,7 +201,7 @@
  @method
  @abstract initiation post description, array of pictures and location of the current post
  */
-- (void) initiationPostDescriptionArrayOfPicturesAndPostLocation {
+- (void) initiationPostDescriptionArrayOfPicturesAndPostLocation {////////////////////////////////////////////////////////////////
     self.arrayOfPicturesInPost = [[NSMutableArray alloc] init];
     if (![[self.currentPost.arrayImagesUrl firstObject] isEqualToString: @""]) {
         for (int i = 0; i < self.currentPost.arrayImagesUrl.count; i++) {
@@ -255,7 +273,7 @@
 - (void) sendPost {
     
     
-    [self.delegate updatePostByPrimaryKey: [NSString stringWithFormat: @"%d", self.currentPost.primaryKey]];
+    [self.delegate updatePostByPrimaryKey: [NSString stringWithFormat: @"%ld", (long)self.currentPost.primaryKey]];
     
     if (!_currentSocialNetwork.isVisible || !_currentSocialNetwork) {
         [self showAlertWithMessage: musAppError_Logged_Into_Social_Networks];
@@ -440,7 +458,8 @@
     } else if ([[segue identifier]isEqualToString : @"goToDitailPostCollectionViewController"]) {
         MUSDetailPostCollectionViewController *vc = [MUSDetailPostCollectionViewController new];
         vc = [segue destinationViewController];
-        [vc setObjectsWithArray:self.arrayOfPicturesInPost andCurrentSocialNetwork:_currentSocialNetwork andIndexPicTapped:self.indexPicTapped];
+        [vc setObjectsWithPost:self.currentPost andCurrentSocialNetwork:_currentSocialNetwork andIndexPicTapped:self.indexPicTapped];
+//        [vc setObjectsWithArray:self.arrayOfPicturesInPost andCurrentSocialNetwork:_currentSocialNetwork andIndexPicTapped:self.indexPicTapped];
         
     }
     
