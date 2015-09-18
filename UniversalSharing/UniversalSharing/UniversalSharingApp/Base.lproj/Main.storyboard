@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -215,7 +215,7 @@
         <scene sceneID="k8x-xu-hJy">
             <objects>
                 <navigationController id="5g8-Gy-Hka" userLabel="Accounts Navigation Controller" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Accounts" id="1sb-re-uxj"/>
+                    <tabBarItem key="tabBarItem" tag="2" title="Accounts" id="1sb-re-uxj"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Pql-IC-asA">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -226,7 +226,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vep-GV-oBh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="0.0" y="1028"/>
+            <point key="canvasLocation" x="0.0" y="554"/>
         </scene>
         <!--Networks-->
         <scene sceneID="UOh-QH-Yk3">
@@ -360,7 +360,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pfw-Lm-nQR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="750" y="1028"/>
+            <point key="canvasLocation" x="718" y="1028"/>
         </scene>
         <!--Share-->
         <scene sceneID="pSi-e4-hGf">
@@ -383,7 +383,7 @@
         <scene sceneID="oCx-Wt-kSj">
             <objects>
                 <navigationController id="lcy-Yh-Ehw" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Posts" id="Dhy-Kr-C0b"/>
+                    <tabBarItem key="tabBarItem" tag="1" title="Posts" id="Dhy-Kr-C0b"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="guJ-ta-c7x">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -476,7 +476,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1438" y="304"/>
+            <point key="canvasLocation" x="1432" y="178"/>
         </scene>
         <!--Location View Controller-->
         <scene sceneID="9dF-Vv-LOw">
@@ -552,7 +552,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aEs-8f-FMB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2138" y="310"/>
+            <point key="canvasLocation" x="2118" y="178"/>
         </scene>
         <!--User Location -->
         <scene sceneID="kb6-lF-UVy">
@@ -601,13 +601,13 @@
                     </tabBar>
                     <connections>
                         <segue destination="lcy-Yh-Ehw" kind="relationship" relationship="viewControllers" id="tAS-M4-Klo"/>
-                        <segue destination="5g8-Gy-Hka" kind="relationship" relationship="viewControllers" id="wIZ-dN-gyb"/>
                         <segue destination="C4b-ze-bW1" kind="relationship" relationship="viewControllers" id="Iwk-j6-eFx"/>
+                        <segue destination="5g8-Gy-Hka" kind="relationship" relationship="viewControllers" id="wIZ-dN-gyb"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="0.0" y="0.0"/>
+            <point key="canvasLocation" x="0.0" y="-198"/>
         </scene>
     </scenes>
     <resources>
@@ -615,6 +615,6 @@
         <image name="second" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="IAC-iQ-XMw"/>
+        <segue reference="GpK-3N-ETI"/>
     </inferredMetricsTieBreakers>
 </document>

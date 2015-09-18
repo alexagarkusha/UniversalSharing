@@ -16,6 +16,7 @@
 #import "MUSDetailPostViewController.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 #import "SSARefreshControl.h"
+#import "ReachabilityManager.h"
 
 @interface MUSPostsViewController () <DOPDropDownMenuDataSource, DOPDropDownMenuDelegate, UITableViewDataSource, UITableViewDelegate, MUSDetailPostViewControllerDelegate, UIActionSheetDelegate, UIGestureRecognizerDelegate, MUSPostCellDelegate, SSARefreshControlDelegate>
 
@@ -84,7 +85,6 @@
     [self.navigationItem.leftBarButtonItem setTintColor: [UIColor clearColor]];
     self.mutableIndexSet = [[NSMutableIndexSet alloc] init];
     [self initiationToolBarForRemove];
-    [self.refreshControl beginRefreshing];
     [[NSNotificationCenter defaultCenter] addObserver : self
                                              selector : @selector(stopUpdatingPostInTableView:)
                                                  name : MUSNotificationStopUpdatingPost
@@ -122,6 +122,10 @@
     self.refreshControl = [[SSARefreshControl alloc] initWithScrollView:self.tableView andRefreshViewLayerType:SSARefreshViewLayerTypeOnScrollView];
     self.refreshControl.circleViewColor = [UIColor lightGrayColor];
     self.refreshControl.delegate = self;
+        
+    [self.refreshControl beginRefreshing];
+
+
 }
 
 #pragma mark - initiation LongPressGestureRecognizer
@@ -574,6 +578,12 @@
 #pragma mark - SSARefreshControlDelegate
 
 - (void) beganRefreshing {
+    if (![self obtainCurrentConnection]) {
+        [self.refreshControl endRefreshing];
+        [self obtainPosts];
+        return;
+    }
+    
     if (!self.isEditing) {
         [self.arrayOfLoginSocialNetworks enumerateObjectsUsingBlock:^(SocialNetwork *socialNetwork, NSUInteger idx, BOOL *stop) {
             [socialNetwork updatePost];
@@ -583,10 +593,24 @@
     }
 }
 
+#pragma mark - Check InternetConnection
+
+- (BOOL) obtainCurrentConnection {
+    BOOL isReachable = [ReachabilityManager isReachable];
+    BOOL isReachableViaWiFi = [ReachabilityManager isReachableViaWiFi];
+    
+    if (!isReachableViaWiFi && !isReachable){
+        return NO;
+    }
+    return YES;
+}
+
 #pragma mark - dealloc
 
 - (void) dealloc {
     [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
+
+
 
 @end
