@@ -440,7 +440,7 @@
     } else if ([[segue identifier]isEqualToString : @"goToDitailPostCollectionViewController"]) {
         MUSDetailPostCollectionViewController *vc = [MUSDetailPostCollectionViewController new];
         vc = [segue destinationViewController];
-        [vc setObjectsWithPost:self.currentPost andCurrentSocialNetwork:_currentSocialNetwork andIndexPicTapped:self.indexPicTapped];
+        [vc setObjectsWithPost:self.currentPostCopy andCurrentSocialNetwork:_currentSocialNetwork andIndexPicTapped:self.indexPicTapped];
 //        [vc setObjectsWithArray:self.arrayOfPicturesInPost andCurrentSocialNetwork:_currentSocialNetwork andIndexPicTapped:self.indexPicTapped];
         
     }
@@ -490,7 +490,7 @@
     [[MUSPhotoManager sharedManager] photoShowFromViewController:self withComplition:^(id result, NSError *error) {
         if(!error) {
             ImageToPost *imageToPost = result;
-            [weakSelf.currentPostCopy.arrayImages addObject: imageToPost.image];
+            [weakSelf.currentPostCopy.arrayImages addObject: imageToPost.image];//////////////////////////////////////////////////
             weakSelf.isChangedPost = YES;
             [weakSelf.tableView reloadData];
         } else {

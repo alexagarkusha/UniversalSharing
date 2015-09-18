@@ -9,9 +9,16 @@
 #import <UIKit/UIKit.h>
 #import "SocialNetwork.h"
 
+//@protocol MUSDetailPostCollectionViewControllerDelegate <NSObject>
+//@required
+//- (void) updateCollectionView;
+//@end
+
 @interface MUSDetailPostCollectionViewController : UIViewController
 
-- (void) setObjectsWithArray :(NSMutableArray*) arrayOfPics andCurrentSocialNetwork :(id)currentSocialNetwork andIndexPicTapped :(NSInteger) indexPicTapped;
+//@property (nonatomic, assign) id <MUSDetailPostCollectionViewControllerDelegate> delegateDetailPostCollectionViewController;
+//===
+//- (void) setObjectsWithArray :(NSMutableArray*) arrayOfPics andCurrentSocialNetwork :(id)currentSocialNetwork andIndexPicTapped :(NSInteger) indexPicTapped;
 - (void) setObjectsWithPost :(Post*) currentPost andCurrentSocialNetwork :(id)currentSocialNetwork andIndexPicTapped :(NSInteger) indexPicTapped;
 
 @end

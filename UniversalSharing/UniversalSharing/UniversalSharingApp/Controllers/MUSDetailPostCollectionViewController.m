@@ -13,6 +13,7 @@
 #import "UIImage+LoadImageFromDataBase.h"
 #import "DataBaseManager.h"
 #import "MUSDatabaseRequestStringsHelper.h"
+#import "ConstantsApp.h"
 
 @interface MUSDetailPostCollectionViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
 
@@ -98,6 +99,7 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 
 - (void) backButton:(id)sender {
+    [[NSNotificationCenter defaultCenter] postNotificationName:notificationUpdateCollection object:nil];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -110,32 +112,38 @@ static NSString * const reuseIdentifier = @"Cell";
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         
         [_arrayOfPics removeObjectAtIndex:visibleIndexPath.row];
-        [self.currentPost.arrayImages removeObjectAtIndex:visibleIndexPath.row];
+        if ([_currentPost.arrayImages[0] isKindOfClass:[ImageToPost class]]) {
+             [self.currentPost.arrayImages removeObjectAtIndex:visibleIndexPath.row];
+        }
+        if (_currentPost.arrayImagesUrl) {
+             [self.currentPost.arrayImagesUrl removeObjectAtIndex:visibleIndexPath.row];
+        }
+       
         if (_arrayOfPics.count) {
-            [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long)visibleIndexPath.row + 1, (unsigned long)[self.arrayOfPics count]]];
+            [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long)visibleIndexPath.row , (unsigned long)[self.arrayOfPics count]]];
         } else {
             
             [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long) 0, (unsigned long)[self.arrayOfPics count]]];
         }
                [_collectionView reloadData];
         //if (_currentPost && _currentPost.reason != Connect) {
-            [_currentPost.arrayImagesUrl removeObjectAtIndex:visibleIndexPath.row];
-            [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost: self.currentPost]];
-            
+//            [_currentPost.arrayImagesUrl removeObjectAtIndex:visibleIndexPath.row];
+//            [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost: self.currentPost]];
+        
        // }
         
-    } else if (_arrayOfPics.count){
-        [_arrayOfPics removeObjectAtIndex:visibleIndexPath.row];
-        [self.currentPost.arrayImages removeObjectAtIndex:visibleIndexPath.row];
-        
-        if (_arrayOfPics.count) {
-            [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long)visibleIndexPath.row, (unsigned long)[self.arrayOfPics count]]];
-        } else {
-            
-            [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long) 0, (unsigned long)[self.arrayOfPics count]]];
-        }
-        [_collectionView reloadData];
-        
+//    } else if (_arrayOfPics.count){
+//        [_arrayOfPics removeObjectAtIndex:visibleIndexPath.row];
+//        [self.currentPost.arrayImages removeObjectAtIndex:visibleIndexPath.row];
+//        
+//        if (_arrayOfPics.count) {
+//            [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long)visibleIndexPath.row, (unsigned long)[self.arrayOfPics count]]];
+//        } else {
+//            
+//            [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long) 0, (unsigned long)[self.arrayOfPics count]]];
+//        }
+//        [_collectionView reloadData];
+//        
     }
     
 }
@@ -146,16 +154,18 @@ static NSString * const reuseIdentifier = @"Cell";
     self.indexPicTapped = indexPicTapped;
     self.currentPost = currentPost;
     self.currentSocialNetwork = currentSocialNetwork;
-//    if(!self.arrayOfPics)
-//        self.arrayOfPics = [[NSMutableArray alloc] init];
-//    else
-//        [self.arrayOfPics removeAllObjects];
     if (currentPost.arrayImages) {
+        
+    
+    if ([currentPost.arrayImages[0] isKindOfClass:[ImageToPost class]]) {
         [currentPost.arrayImages enumerateObjectsUsingBlock:^(ImageToPost* image, NSUInteger idx, BOOL *stop) {
             [self.arrayOfPics addObject:image.image];
         }];
-        //self.arrayOfPics = currentPost.arrayImages;
-        return;
+        
+    }else {
+        self.arrayOfPics = currentPost.arrayImages;
+        
+    }
     }
     //else
 //    if (![[self.currentPost.arrayImagesUrl firstObject] isEqualToString: @""]) {
@@ -168,11 +178,11 @@ static NSString * const reuseIdentifier = @"Cell";
     
     
 }
-- (void) setObjectsWithArray :(NSMutableArray*) arrayOfPics andCurrentSocialNetwork :(id)currentSocialNetwork andIndexPicTapped:(NSInteger)indexPicTapped {
-    self.indexPicTapped = indexPicTapped;
-    self.arrayOfPics = arrayOfPics;
-    self.currentSocialNetwork = currentSocialNetwork;
-}
+//- (void) setObjectsWithArray :(NSMutableArray*) arrayOfPics andCurrentSocialNetwork :(id)currentSocialNetwork andIndexPicTapped:(NSInteger)indexPicTapped {
+//    self.indexPicTapped = indexPicTapped;
+//    self.arrayOfPics = arrayOfPics;
+//    self.currentSocialNetwork = currentSocialNetwork;
+//}
 
 #pragma mark <UICollectionViewDataSource>
 

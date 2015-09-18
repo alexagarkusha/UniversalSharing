@@ -96,8 +96,8 @@ FOUNDATION_EXPORT NSString *const hideButtonTitle;
 //#define YELLOW_COLOR_Light [UIColor colorWithRed: 255.0/255.0 green: 255.0/255.0 blue: 220.0/255.0 alpha: 1.0]
 //#define YELLOW_COLOR_MidLight [UIColor colorWithRed: 255.0/255.0 green: 255.0/255.0 blue: 190.0/255.0 alpha: 1.0]
 //#define YELLOW_COLOR_UpperMid [UIColor colorWithRed: 255.0/255.0 green: 255.0/255.0 blue: 100.0/255.0 alpha: 1.0]
-
 FOUNDATION_EXPORT NSString *const musAppButtonTitle_Cancel;
+FOUNDATION_EXPORT NSString *const notificationUpdateCollection;
 FOUNDATION_EXPORT NSString *const musAppButtonTitle_OK;
 FOUNDATION_EXPORT NSString *const musAppButtonTitle_Album;
 FOUNDATION_EXPORT NSString *const musAppButtonTitle_Camera;

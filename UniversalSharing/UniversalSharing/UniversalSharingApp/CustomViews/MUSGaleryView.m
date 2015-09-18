@@ -59,8 +59,10 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
 }
 
 - (void) awakeFromNib {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCollectionView) name:notificationUpdateCollection object:nil];
     NSString *cellIdentifier = [MUSCollectionViewCell customCellID];
     [self.collectionView registerNib:[UINib nibWithNibName: cellIdentifier bundle: nil] forCellWithReuseIdentifier: cellIdentifier];
+    
     self.collectionView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     //[self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:LSCollectionViewCellIdentifier];
     /////////////////////////////////////////////////////////////////////// implement flowLayout
@@ -74,7 +76,6 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
 //    [self.collectionView setPagingEnabled:YES];
 //    [self.collectionView setScrollEnabled:YES];
     [self.collectionView setCollectionViewLayout:flowLayout];
-    
     [self becomeFirstResponder];
 
     ////////////////////////////////////////////////////////////////////////////
@@ -287,4 +288,11 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
     self.indexForDeletePicture = currentInadexPath;
 }
 
+- (void) updateCollectionView {
+    [self.collectionView reloadData];
+    
+}
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 @end
