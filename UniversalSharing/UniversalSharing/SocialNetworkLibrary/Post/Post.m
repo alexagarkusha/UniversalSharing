@@ -19,4 +19,24 @@
     }
     return url;    
 }
+
+- (id)copy
+{
+    Post *copyPost = [Post new];
+    copyPost.postID = [self.postID copy];
+    copyPost.postDescription = [self.postDescription copy];
+    copyPost.arrayImages = [self.arrayImages copy];
+    copyPost.likesCount = self.likesCount;
+    copyPost.commentsCount = self.commentsCount;
+    copyPost.placeID = self.placeID;
+    copyPost.networkType = self.networkType;
+    copyPost.primaryKey = self.primaryKey;
+    copyPost.arrayImagesUrl = [self.arrayImagesUrl copy];
+    copyPost.userId = [self.userId copy];
+    copyPost.dateCreate = [self.dateCreate copy];
+    copyPost.reason = self.reason;
+    copyPost.locationId = [self.locationId copy];
+    copyPost.place = [self.place copy];
+    return copyPost;
+}
 @end

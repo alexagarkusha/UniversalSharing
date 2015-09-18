@@ -48,5 +48,7 @@
  */
 + (Place*) createFromDictionary: (NSDictionary*) dictionary andNetworkType : (NetworkType) networkType;
 
+- (id) copy;
+
 
 @end

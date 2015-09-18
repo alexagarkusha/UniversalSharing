@@ -99,6 +99,7 @@
                                              selector : @selector(obtainPosts)
                                                  name : MUSNotificationPostsInfoWereUpDated
                                                object : nil];
+    [self.tableView reloadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

@@ -24,7 +24,7 @@
 /*!
  @abstract array of Images to post (@class ImageToPost)
  */
-@property (nonatomic, strong) NSArray *arrayImages;
+@property (nonatomic, strong) NSMutableArray *arrayImages;
 /*!
  @abstract number of likes received after sending post
  */
@@ -54,5 +54,7 @@
 //===
 
 - (NSString*) convertArrayImagesUrlToString;
+
+- (id)copy;
 
 @end
