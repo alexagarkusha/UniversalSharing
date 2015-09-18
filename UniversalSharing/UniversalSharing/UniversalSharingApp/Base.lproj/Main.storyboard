@@ -78,7 +78,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="aRM-TH-eEy">
-                                <rect key="frame" x="0.0" y="44" width="600" height="556"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="8eg-Hm-iGk">
                                     <size key="itemSize" width="173" height="148"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -115,32 +115,33 @@
                                     <outlet property="delegate" destination="Mqx-YE-PKH" id="MZt-Ug-5Fo"/>
                                 </connections>
                             </collectionView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8gF-Sd-Dyq" customClass="MUSTopBarForDetailCollectionView">
+                            <view alpha="0.49999999999999961" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8gF-Sd-Dyq" customClass="MUSTopBarForDetailCollectionView">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="64" id="TDr-T4-KgW"/>
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="hlG-8R-qpw" firstAttribute="top" secondItem="aRM-TH-eEy" secondAttribute="bottom" id="C0F-xs-28f"/>
-                            <constraint firstAttribute="trailing" secondItem="aRM-TH-eEy" secondAttribute="trailing" id="KVm-E4-9bk"/>
                             <constraint firstItem="8gF-Sd-Dyq" firstAttribute="top" secondItem="Rue-AB-c1p" secondAttribute="top" id="L8I-oO-Af8"/>
+                            <constraint firstItem="hlG-8R-qpw" firstAttribute="top" secondItem="aRM-TH-eEy" secondAttribute="bottom" id="R4Z-Cd-Ug4"/>
                             <constraint firstItem="8gF-Sd-Dyq" firstAttribute="leading" secondItem="Rue-AB-c1p" secondAttribute="leading" id="aMd-x8-oEZ"/>
                             <constraint firstAttribute="trailing" secondItem="8gF-Sd-Dyq" secondAttribute="trailing" id="co0-KW-4hX"/>
-                            <constraint firstItem="aRM-TH-eEy" firstAttribute="top" secondItem="N7w-GC-hmE" secondAttribute="bottom" constant="44" id="dXV-Wg-u3s"/>
                             <constraint firstItem="hlG-8R-qpw" firstAttribute="top" secondItem="aRM-TH-eEy" secondAttribute="bottom" id="gK1-DM-8Ah"/>
-                            <constraint firstItem="aRM-TH-eEy" firstAttribute="leading" secondItem="Rue-AB-c1p" secondAttribute="leading" id="mnq-Fs-gZA"/>
+                            <constraint firstAttribute="trailing" secondItem="aRM-TH-eEy" secondAttribute="trailing" id="lhT-Og-3I1"/>
+                            <constraint firstItem="aRM-TH-eEy" firstAttribute="leading" secondItem="Rue-AB-c1p" secondAttribute="leading" id="ny6-nZ-u25"/>
+                            <constraint firstItem="aRM-TH-eEy" firstAttribute="top" secondItem="N7w-GC-hmE" secondAttribute="bottom" id="xyr-9q-Otf"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="C0F-xs-28f"/>
                                 <exclude reference="gK1-DM-8Ah"/>
                             </mask>
                         </variation>
                     </view>
-                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
@@ -602,7 +603,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="KRJ-os-ZVg">
-                                <rect key="frame" x="0.0" y="44" width="600" height="556"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="axj-3j-JEa">
                                     <size key="itemSize" width="173" height="148"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -639,7 +640,7 @@
                                     <outlet property="delegate" destination="KUy-YI-Bua" id="U4w-KZ-Ke3"/>
                                 </connections>
                             </collectionView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Za-s3-uqk" customClass="MUSTopBarForDetailCollectionView">
+                            <view alpha="0.49999999999999961" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Za-s3-uqk" customClass="MUSTopBarForDetailCollectionView">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -651,7 +652,7 @@
                         <constraints>
                             <constraint firstItem="0TF-BA-bp7" firstAttribute="top" secondItem="KRJ-os-ZVg" secondAttribute="bottom" id="22e-MA-IQg"/>
                             <constraint firstItem="6Za-s3-uqk" firstAttribute="leading" secondItem="ABN-Re-M8R" secondAttribute="leading" id="L5G-Pw-SNB"/>
-                            <constraint firstItem="KRJ-os-ZVg" firstAttribute="top" secondItem="jp7-d6-Nae" secondAttribute="bottom" constant="44" id="V2b-QP-qhx"/>
+                            <constraint firstItem="KRJ-os-ZVg" firstAttribute="top" secondItem="jp7-d6-Nae" secondAttribute="bottom" id="V2b-QP-qhx"/>
                             <constraint firstItem="6Za-s3-uqk" firstAttribute="top" secondItem="ABN-Re-M8R" secondAttribute="top" id="Vuh-Y9-2UL"/>
                             <constraint firstItem="0TF-BA-bp7" firstAttribute="top" secondItem="KRJ-os-ZVg" secondAttribute="bottom" id="Y51-xq-ACH"/>
                             <constraint firstItem="KRJ-os-ZVg" firstAttribute="leading" secondItem="ABN-Re-M8R" secondAttribute="leading" id="e96-p0-mr8"/>
@@ -689,9 +690,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TQe-cP-wkx" customClass="MUSTopBarForDetailCollectionView">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="29f-0T-gVl"/>
+                                </constraints>
+                            </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="cN8-6h-gz6">
-                                <rect key="frame" x="0.0" y="44" width="600" height="556"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="m2r-DH-1uO">
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="m2r-DH-1uO">
                                     <size key="itemSize" width="173" height="148"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -727,19 +735,12 @@
                                     <outlet property="delegate" destination="qXw-2F-BNJ" id="dTO-de-d0h"/>
                                 </connections>
                             </collectionView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TQe-cP-wkx" customClass="MUSTopBarForDetailCollectionView">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="64" id="29f-0T-gVl"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="cN8-6h-gz6" firstAttribute="leading" secondItem="X7Q-TM-Uyw" secondAttribute="leading" id="9oX-gR-zeE"/>
                             <constraint firstItem="iTQ-O9-XAD" firstAttribute="top" secondItem="cN8-6h-gz6" secondAttribute="bottom" id="BLx-Tb-ImR"/>
-                            <constraint firstItem="cN8-6h-gz6" firstAttribute="top" secondItem="3Lm-hv-UUM" secondAttribute="bottom" constant="44" id="D7Z-bl-aqP"/>
+                            <constraint firstItem="cN8-6h-gz6" firstAttribute="top" secondItem="3Lm-hv-UUM" secondAttribute="bottom" constant="64" id="D7Z-bl-aqP"/>
                             <constraint firstAttribute="trailing" secondItem="cN8-6h-gz6" secondAttribute="trailing" id="IfC-LF-Etp"/>
                             <constraint firstAttribute="trailing" secondItem="TQe-cP-wkx" secondAttribute="trailing" id="U85-VU-BxX"/>
                             <constraint firstItem="TQe-cP-wkx" firstAttribute="leading" secondItem="X7Q-TM-Uyw" secondAttribute="leading" id="b0q-5R-0ct"/>
@@ -840,7 +841,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
@@ -947,6 +948,6 @@
         <image name="second" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="GpK-3N-ETI"/>
+        <segue reference="IAC-iQ-XMw"/>
     </inferredMetricsTieBreakers>
 </document>
