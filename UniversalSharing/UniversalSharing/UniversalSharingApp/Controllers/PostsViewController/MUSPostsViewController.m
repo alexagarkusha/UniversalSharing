@@ -16,7 +16,7 @@
 #import "MUSDetailPostViewController.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 
-@interface MUSPostsViewController () <DOPDropDownMenuDataSource, DOPDropDownMenuDelegate, UITableViewDataSource, UITableViewDelegate, MUSPostCellDelegate>
+@interface MUSPostsViewController () <DOPDropDownMenuDataSource, DOPDropDownMenuDelegate, UITableViewDataSource, UITableViewDelegate, MUSDetailPostViewControllerDelegate, UIActionSheetDelegate, UIGestureRecognizerDelegate, MUSPostCellDelegate>
 
 @property (nonatomic, strong) NSMutableArray *arrayOfLoginSocialNetworks;
 /*!
@@ -60,8 +60,11 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editButton;
 @property (strong, nonatomic) UIToolbar *toolBar ;
+@property (strong, nonatomic) UIBarButtonItem *barButtonDeletePost;
 @property (strong, nonatomic) NSMutableIndexSet *mutableIndexSet ;
 @property (strong, nonatomic) UIRefreshControl *refreshControl ;
+@property (strong, nonatomic) NSMutableSet *setWithUniquePrimaryKeysOfPost ;
+
 @end
 
 @implementation MUSPostsViewController
@@ -70,9 +73,13 @@
     // Do any additional setup after loading the view.
     [self initiationDropDownMenu];
     [self initiationTableView];
+    [self initiationRefreshControl];
+    [self initiationLongPressGestureRecognizer];
+
+    self.setWithUniquePrimaryKeysOfPost = [[NSMutableSet alloc] init];
     self.title = musApp_PostsViewController_NavigationBar_Title;
     ///////////////////////////////////////////////////////////////////////////////////////
-    [self initiationRefreshControl];
+//    [self initiationRefreshControl];
     ///////////////////////////////////////////////////////////////////////////////////////////////
     [self.navigationItem.leftBarButtonItem setEnabled:NO];
     [self.navigationItem.leftBarButtonItem setTintColor: [UIColor clearColor]];
@@ -81,6 +88,11 @@
     ///////////////////////////////////////////////////////////////////////////////////
     [self initiationToolBarForRemove];
     
+    [[NSNotificationCenter defaultCenter] addObserver : self
+                                             selector : @selector(stopUpdatingPostInTableView:)
+                                                 name : MUSNotificationStopUpdatingPost
+                                               object : nil];
+
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -97,7 +109,7 @@
 
 - (void) viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear: YES];
-    [[NSNotificationCenter defaultCenter]removeObserver:self];
+    //[[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -109,7 +121,18 @@
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview: self.refreshControl];
+    
 }
+
+- (void) initiationLongPressGestureRecognizer {
+    UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc]
+                                 initWithTarget:self
+                                         action:@selector(handleLongPress:)];
+    longPressGestureRecognizer.minimumPressDuration = 2.0; //seconds
+    longPressGestureRecognizer.delegate = self;
+    [self.tableView addGestureRecognizer:longPressGestureRecognizer];
+}
+
 
 - (void) initiationToolBarForRemove {
     _toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height - 50, self.view.frame.size.width, 50)];
@@ -117,11 +140,12 @@
     
     UIBarButtonItem *flexibleSpace =  [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
-    UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(toolbarButtonDeleteTapped:)];
+    self.barButtonDeletePost = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(toolbarButtonDeleteTapped:)];
     
-    NSArray *toolbarItems = [NSArray arrayWithObjects:flexibleSpace, barButton, flexibleSpace,nil];
+    NSArray *toolbarItems = [NSArray arrayWithObjects:flexibleSpace, self.barButtonDeletePost, flexibleSpace,nil];
     
     [_toolBar setItems:toolbarItems animated:NO];
+    self.barButtonDeletePost.enabled = NO;
     //_toolBar.alpha = 0.5f;
     //_toolBar.userInteractionEnabled = NO;
     [_toolBar setHidden:YES];
@@ -208,8 +232,16 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     MUSPostCell *postCell = (MUSPostCell*) cell;
-    [postCell configurationPostCell: [self.arrayPosts objectAtIndex: indexPath.row] andFlagEditing: self.editing andFlagForDelete :[self.mutableIndexSet containsIndex:indexPath.row]];
-
+    Post *post = [self.arrayPosts objectAtIndex: indexPath.row];
+    
+    if (![self.setWithUniquePrimaryKeysOfPost containsObject: [NSString stringWithFormat: @"%ld", (long)post.primaryKey]]) {
+        
+        [postCell configurationPostCell : post
+                         andFlagEditing : self.editing
+                       andFlagForDelete : [self.mutableIndexSet containsIndex : indexPath.row]];
+    } else {
+        [postCell configurationUpdatingPostCell: post];
+    }
 }
 
 
@@ -226,102 +258,164 @@
     return cell;
 }
 
-
-
-
-
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [MUSPostCell heightForPostCell];
 }
 
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [[DataBaseManager sharedManager] deletePostByPrimaryKey: [self.arrayPosts objectAtIndex:indexPath.row]];
-    // Remove the row from data model
-    [self.arrayPosts removeObjectAtIndex:indexPath.row];
-    // Request table view to reload
-    [tableView reloadData];
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.editing) {
-        return;
+    Post *post = [self.arrayPosts objectAtIndex: indexPath.row];
+    if (![self.setWithUniquePrimaryKeysOfPost containsObject: [NSString stringWithFormat: @"%ld", (long)post.primaryKey]] && !self.editing) {
+        [self performSegueWithIdentifier: goToDetailPostViewControllerSegueIdentifier sender: post];
+    } else {
+        MUSPostCell *postCell = (MUSPostCell*) [self.tableView cellForRowAtIndexPath: indexPath];
+        [postCell checkIsSelectedPost];
+        [self addIndexToIndexSet: indexPath];
     }
-    [self performSegueWithIdentifier: goToDetailPostViewControllerSegueIdentifier sender:[self.arrayPosts objectAtIndex: indexPath.row]];
 }
+
+
 
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
+    Post *post = [self.arrayPosts objectAtIndex: indexPath.row];
+    if (![self.setWithUniquePrimaryKeysOfPost containsObject: [NSString stringWithFormat: @"%ld", (long)post.primaryKey]]) {
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
-    MUSPostCell *cell = (MUSPostCell *)[tableView cellForRowAtIndexPath:indexPath];
-    [self setCellColor: [UIColor colorWithRed:230.0/255.0 green:230.0/255.0 blue:230.0/255.0 alpha: 1.0] ForCell: cell];
+    if (!self.editing && self.tableView.contentOffset.y >= 0) {
+    //self.tableView.contentOffset.y
+        MUSPostCell *cell = (MUSPostCell *)[tableView cellForRowAtIndexPath:indexPath];
+        [self setCellColor: [UIColor colorWithRed:230.0/255.0 green:230.0/255.0 blue:230.0/255.0 alpha: 1.0] ForCell: cell];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didUnhighlightRowAtIndexPath:(NSIndexPath *)indexPath {
-    MUSPostCell *cell = (MUSPostCell *)[tableView cellForRowAtIndexPath:indexPath];
-    [self setCellColor: [UIColor whiteColor] ForCell: cell];
+    if (!self.editing) {
+        MUSPostCell *cell = (MUSPostCell *)[tableView cellForRowAtIndexPath:indexPath];
+        [self setCellColor: [UIColor whiteColor] ForCell: cell];
+    }
 }
 
 - (void) setCellColor: (UIColor *) color ForCell: (UITableViewCell *) cell {
-    //cell.contentView.backgroundColor = color;
-    cell.contentView.backgroundColor = [UIColor whiteColor];
-    
     [UIView animateWithDuration: 0.3 animations:^{
-        
         cell.contentView.backgroundColor = color;
-        
     }];
-    cell.backgroundColor = color;
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return UITableViewCellEditingStyleNone;
 }
 
 - (IBAction)buttonEditTapped:(id)sender {
     if(self.editing) {
-        [super setEditing:NO animated:NO];
-        [self.editButton setTitle:editButtonTitle];
-        self.menu.alpha = 1.0f;
-        self.menu.userInteractionEnabled = YES;
-        [self.navigationItem.leftBarButtonItem setEnabled:NO];
-        [self.navigationItem.leftBarButtonItem setTintColor: [UIColor clearColor]];
-        [_toolBar setHidden:YES];
-        [self.tabBarController.tabBar setHidden:NO];
-        [self.mutableIndexSet removeAllIndexes];
-        
+        [self notEditingTableView];
     } else {
-        [super setEditing:YES animated:YES];
-        [self.editButton setTitle:doneButtonTitle];
-        [self.navigationItem.leftBarButtonItem setEnabled:YES];
-        [self.navigationItem.leftBarButtonItem setTintColor: nil];
-        self.menu.alpha = 0.5f;
-        self.menu.userInteractionEnabled = NO;
-        [self.tabBarController.tabBar setHidden:YES];
-        [_toolBar setHidden:NO];
+        [self editingTableView];
     }
     [self.tableView reloadData];
+}
+
+- (void) notEditingTableView {
+    [super setEditing:NO animated:NO];
+    [self.editButton setTitle:editButtonTitle];
+    self.menu.alpha = 1.0f;
+    self.menu.userInteractionEnabled = YES;
+    //self.refreshControl.hidden = NO;
+    [self.tableView addSubview: self.refreshControl];
+    [self.navigationItem.leftBarButtonItem setEnabled:NO];
+    [self.navigationItem.leftBarButtonItem setTintColor: [UIColor clearColor]];
+    [_toolBar setHidden:YES];
+    [self.tabBarController.tabBar setHidden:NO];
+    [self.mutableIndexSet removeAllIndexes];
+}
+
+- (void) editingTableView {
+    [super setEditing:YES animated:YES];
+    [self.editButton setTitle:doneButtonTitle];
+    [self.navigationItem.leftBarButtonItem setEnabled:YES];
+    [self.navigationItem.leftBarButtonItem setTintColor: nil];
+    self.menu.alpha = 0.5f;
+    self.menu.userInteractionEnabled = NO;
+    [self.refreshControl removeFromSuperview];
+    //self.refreshControl.hidden = YES;
+    [self.tabBarController.tabBar setHidden:YES];
+    [_toolBar setHidden:NO];
 }
 
 
 - (void) addIndexToIndexSetWithCell:(MUSPostCell*)cell {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    [self addIndexToIndexSet: indexPath];
+}
+
+- (void) addIndexToIndexSet :(NSIndexPath*) indexPath {
+    
+    
+    
     if ([self.mutableIndexSet containsIndex:indexPath.row]) {
         [self.mutableIndexSet removeIndex:indexPath.row];
+        [self.selectAllButton setTitle: @"Select All"];
+        if (![self.mutableIndexSet count]) {
+            self.barButtonDeletePost.enabled = NO;
+        }
         return;
     }
     [self.mutableIndexSet addIndex:indexPath.row];
+    self.barButtonDeletePost.enabled = YES;
 }
 
 - (IBAction) buttonSelectAllTapped:(id)sender {
-    [self.arrayPosts enumerateObjectsUsingBlock:^(id obj, NSUInteger index, BOOL *stop) {
-        [self.mutableIndexSet addIndex:index];
-    }];
+    
+    if (![self.selectAllButton.title isEqualToString: @"Deselect All"]) {
+        [self.arrayPosts enumerateObjectsUsingBlock:^(id obj, NSUInteger index, BOOL *stop) {
+            [self.mutableIndexSet addIndex:index];
+        }];
+        self.barButtonDeletePost.enabled = YES;
+        [self.selectAllButton setTitle: @"Deselect All"];
+    } else {
+        [self.mutableIndexSet removeAllIndexes];
+        self.barButtonDeletePost.enabled = NO;
+        [self.selectAllButton setTitle: @"Select All"];
+    }
     [self.tableView reloadData];
 }
 
 - (void) toolbarButtonDeleteTapped :(id) sender {
+    if (![self.mutableIndexSet count]) {
+        return;
+    } else {
+        [self showActionSheetDeletePosts];
+    }
+}
+
+- (void) showActionSheetDeletePosts {
+    NSString *stringButtonDeletePostsFromDataBase;
+    if ([self.mutableIndexSet count] > 1) {
+        stringButtonDeletePostsFromDataBase = [NSString stringWithFormat:@"Delete %lu posts", (unsigned long)[self.mutableIndexSet count]];
+    } else {
+        stringButtonDeletePostsFromDataBase = [NSString stringWithFormat: @"Delete post"];
+    }
+    UIActionSheet *actionSheetDeletePosts = [[UIActionSheet alloc]
+                                             initWithTitle: nil
+                                             delegate: self
+                                             cancelButtonTitle: musAppButtonTitle_Cancel
+                                             destructiveButtonTitle: stringButtonDeletePostsFromDataBase
+                                             otherButtonTitles: nil];
+    [actionSheetDeletePosts showInView:self.view];
+}
+
+- (void) actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (!buttonIndex) {
+        [self deleteAllocatedPostsFromDataBase];
+    }
+}
+
+- (void) deleteAllocatedPostsFromDataBase {
     [self.mutableIndexSet enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
         [[DataBaseManager sharedManager] deletePostByPrimaryKey: self.arrayPosts[index]];
     }];
@@ -330,13 +424,12 @@
     [self.tableView reloadData];
 }
 
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return UITableViewCellEditingStyleNone;
-}
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    MUSDetailPostViewController *detailPostViewController = [[MUSDetailPostViewController alloc] init];
+    //MUSDetailPostViewController *detailPostViewController = [[MUSDetailPostViewController alloc] init];
     if ([[segue identifier] isEqualToString:goToDetailPostViewControllerSegueIdentifier]) {
+        MUSDetailPostViewController * detailPostViewController = (MUSDetailPostViewController*)[segue destinationViewController];
+        detailPostViewController.delegate = self;
         detailPostViewController = [segue destinationViewController];
         [detailPostViewController setCurrentPost: sender];
     }
@@ -451,15 +544,43 @@
     
 }
 
-
-
 - (void)refresh:(UIRefreshControl *)refreshControl {
-    
     [self.arrayOfLoginSocialNetworks enumerateObjectsUsingBlock:^(SocialNetwork *socialNetwork, NSUInteger idx, BOOL *stop) {
         [socialNetwork updatePost];
     }];
-    //_refreshControl = refreshControl;
+
     [refreshControl endRefreshing];
-    
 }
+
+- (void) stopUpdatingPostInTableView: (NSNotification*) notification {
+    [self.setWithUniquePrimaryKeysOfPost removeObject: [NSString stringWithFormat: @"%ld", (long)[notification.object integerValue]]];
+    [self obtainPosts];
+}
+
+- (void) updatePostByPrimaryKey:(NSString *)primaryKey {
+    [self.setWithUniquePrimaryKeysOfPost addObject: primaryKey];
+}
+
+
+- (void)handleLongPress:(UILongPressGestureRecognizer *)gestureRecognizer
+{
+    if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        CGPoint p = [gestureRecognizer locationInView: self.tableView];
+        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:p];
+        if (indexPath == nil) {
+        } else {
+            MUSPostCell *cell = (MUSPostCell *) [self.tableView cellForRowAtIndexPath:indexPath];
+            if (cell.isHighlighted) {
+                [self.mutableIndexSet addIndex: indexPath.row];
+                self.barButtonDeletePost.enabled = YES;
+                if (!self.editing) {
+                    [self editingTableView];
+                }
+                [self.tableView reloadData];
+                [self setCellColor: [UIColor whiteColor] ForCell: cell];
+            }
+        }
+    }
+}
+
 @end

@@ -61,6 +61,7 @@
     [self.numberOfComments sizeToFit];
     [self.numberOfLikes sizeToFit];
     self.labelUpdatingPost.hidden = YES;
+    [self initiationButtonCheckMark];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -131,22 +132,18 @@
 - (void) configurateEditableCell : (BOOL) isCellEditable andIsCellDelete : (BOOL) isCellDelete {
     if (isCellEditable) {
         self.widthConstrain.constant = 50.0f;
-        
+        self.buttonCheckMark.hidden = NO;
         if (isCellDelete) {
-            [self.buttonCheckMark setBackgroundImage:[UIImage imageNamed: @"checkMarkTaken.jpeg"] forState:UIControlStateNormal];
-            self.buttonCheckMark.tag = 1;
+            [self.buttonCheckMark setSelected: YES];
         }else {
-            [self.buttonCheckMark setBackgroundImage:[UIImage imageNamed: @"checkMark.jpeg"] forState:UIControlStateNormal];
-            self.buttonCheckMark.tag = 0;
+            [self.buttonCheckMark setSelected: NO];
         }
-        
     } else{
         self.widthConstrain.constant = 0.0f;
-        [self.buttonCheckMark setBackgroundImage:nil forState:UIControlStateNormal];
-        
+        self.buttonCheckMark.hidden = YES;
+        [self.buttonCheckMark setSelected: NO];
     }
 }
-
 
 - (void) configurateFirstImageOfPost : (Post*) currentPost {
     [self.firstImageOfPost cornerRadius: 10.0 andBorderWidth: 0.0 withBorderColor: nil];
@@ -169,15 +166,44 @@
     }
 }
 
+
+- (void) initiationButtonCheckMark {
+    [self.buttonCheckMark setBackgroundImage:[UIImage imageNamed: @"checkMarkTaken.jpeg"] forState:UIControlStateSelected];
+    [self.buttonCheckMark setBackgroundImage:[UIImage imageNamed: @"checkMark.jpeg"] forState:UIControlStateNormal];
+    self.buttonCheckMark.hidden = YES;
+}
+
+- (void) checkIsSelectedPost {
+    if ([self.buttonCheckMark isSelected])
+    {
+        [self.buttonCheckMark setSelected:NO];
+    }
+    else
+    {
+        [self.buttonCheckMark setSelected:YES];
+    }
+}
+
+
+/*
+ - (IBAction)buttonCheckMarkTapped:(id)sender {
+ [self.delegate addIndexToIndexSetWithCell:self];
+ if ([sender tag] == 0) {
+ [self.buttonCheckMark setBackgroundImage:[UIImage imageNamed: @"checkMarkTaken.jpeg"] forState:UIControlStateNormal];
+ self.buttonCheckMark.tag = 1;
+ } else {
+ [self.buttonCheckMark setBackgroundImage:[UIImage imageNamed: @"checkMark.jpeg"] forState:UIControlStateNormal];
+ self.buttonCheckMark.tag = 0;
+ }
+ }
+ 
+ */
+
+
+
 - (IBAction)buttonCheckMarkTapped:(id)sender {
     [self.delegate addIndexToIndexSetWithCell:self];
-    if ([sender tag] == 0) {
-        [self.buttonCheckMark setBackgroundImage:[UIImage imageNamed: @"checkMarkTaken.jpeg"] forState:UIControlStateNormal];
-        self.buttonCheckMark.tag = 1;
-    } else {
-        [self.buttonCheckMark setBackgroundImage:[UIImage imageNamed: @"checkMark.jpeg"] forState:UIControlStateNormal];
-        self.buttonCheckMark.tag = 0;
-    }
+    [self checkIsSelectedPost];
 }
 
 @end

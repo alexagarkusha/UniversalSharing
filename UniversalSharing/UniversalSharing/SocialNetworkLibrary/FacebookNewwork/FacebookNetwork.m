@@ -89,6 +89,7 @@ static FacebookNetwork *model = nil;
     }
 
 - (void) startTimerForUpdatePosts {
+    [self updatePost];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:600.0f
                                                   target:self
                                                 selector:@selector(updatePost)
