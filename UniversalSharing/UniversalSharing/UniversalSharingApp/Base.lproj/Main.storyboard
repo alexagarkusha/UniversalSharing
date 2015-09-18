@@ -466,6 +466,7 @@
                         <outlet property="shareToolBar" destination="xwB-dx-Bb3" id="sw4-sM-akm"/>
                         <outlet property="toolBarLayoutConstraint" destination="AEN-V0-A19" id="U7t-rt-nZT"/>
                         <segue destination="57R-w2-ySy" kind="show" identifier="Location" id="GpK-3N-ETI"/>
+                        <segue destination="Mqx-YE-PKH" kind="show" identifier="goToShowImages" id="ujR-wZ-DmO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
@@ -552,7 +553,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aEs-8f-FMB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2138" y="310"/>
+            <point key="canvasLocation" x="2302" y="330"/>
         </scene>
         <!--User Location -->
         <scene sceneID="kb6-lF-UVy">
@@ -616,5 +617,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="IAC-iQ-XMw"/>
+        <segue reference="ujR-wZ-DmO"/>
     </inferredMetricsTieBreakers>
 </document>

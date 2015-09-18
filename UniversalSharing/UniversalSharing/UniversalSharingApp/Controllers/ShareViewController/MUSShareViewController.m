@@ -326,23 +326,12 @@
     [self.shareButtonOutlet setCustomView:self.activityIndicator];
     [self.activityIndicator startAnimating];
    
-        if(!self.post) {
-            self.post = [[Post alloc] init];
-        }
-        self.shareButtonOutlet.enabled = NO;
-        self.post.place = self.place;
-        if (![self.messageTextView.text isEqualToString: kPlaceholderText]) {
-            self.post.postDescription = self.messageTextView.text;
-        } else {
-            self.post.postDescription = @"";
-        }
-        self.post.networkType = _currentSocialNetwork.networkType;
-        /*
-         get array with chosen images from MUSGaleryView
-         */
-        self.post.arrayImages = [self.galeryView obtainArrayWithChosenPics];
-        self.post.userId = _currentSocialNetwork.currentUser.clientID;//or something else
-        self.post.dateCreate = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970]];
+    /////////////////////////////////////////////////////////
+    [self createPost];
+    ///////////////////////////////////////////////////////
+    
+    
+    
         __weak MUSShareViewController *weakSelf = self;
         [_currentSocialNetwork sharePost:self.post withComplition:^(id result, NSError *error) {
             //////////
@@ -365,6 +354,26 @@
     
 }
 
+- (void) createPost {
+    if(!self.post) {
+        self.post = [[Post alloc] init];
+    }
+    self.shareButtonOutlet.enabled = NO;
+    self.post.place = self.place;
+    if (![self.messageTextView.text isEqualToString: kPlaceholderText]) {
+        self.post.postDescription = self.messageTextView.text;
+    } else {
+        self.post.postDescription = @"";
+    }
+    self.post.networkType = _currentSocialNetwork.networkType;
+    /*
+     get array with chosen images from MUSGaleryView
+     */
+    self.post.arrayImages = [self.galeryView obtainArrayWithChosenPics];
+    self.post.userId = _currentSocialNetwork.currentUser.clientID;//or something else
+    self.post.dateCreate = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970]];
+    
+}
 #pragma mark - UITextViewDelegate
 
 - (BOOL) textViewShouldBeginEditing:(UITextView *)textView {
@@ -538,7 +547,8 @@
     } else {//goToShowImages
         MUSDetailPostCollectionViewController *vc = [MUSDetailPostCollectionViewController new];
         vc = [segue destinationViewController];
-        [vc setObjectsWithArray:self.arrayPicsForDetailCollectionView andCurrentSocialNetwork:_currentSocialNetwork andIndexPicTapped:self.indexPicTapped];
+        [vc setObjectsWithPost:self.post andCurrentSocialNetwork:_currentSocialNetwork andIndexPicTapped:self.indexPicTapped];
+        //[vc setObjectsWithArray:self.arrayPicsForDetailCollectionView andCurrentSocialNetwork:_currentSocialNetwork andIndexPicTapped:self.indexPicTapped];
     }
 }
 
@@ -560,6 +570,8 @@
 - (void) showImagesOnOtherVcWithArray:(NSArray *)arrayPics andIndexPicTapped:(NSInteger)indexPicTapped {
     self.arrayPicsForDetailCollectionView = arrayPics;
     self.indexPicTapped = indexPicTapped;
+    [self createPost];
+    //self.post.arrayImages = arrayPics;
      [self performSegueWithIdentifier: @"goToShowImages" sender:nil];
     
 }

@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface MUSToolBarForDetailCollectionView : UIView
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *buttonToolBar;
+@property (weak, nonatomic) IBOutlet UIButton *buttonToolBar;
 
 @end
