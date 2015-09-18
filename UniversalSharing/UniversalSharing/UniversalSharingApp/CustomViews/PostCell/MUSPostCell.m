@@ -131,7 +131,8 @@
 
 - (void) configurateEditableCell : (BOOL) isCellEditable andIsCellDelete : (BOOL) isCellDelete {
     if (isCellEditable) {
-        self.widthConstrain.constant = 50.0f;
+        //self.widthConstrain.constant = 50.0f;
+        [self changeButtonCheckMarkConstraintWithAnimation: 50.0f];
         self.buttonCheckMark.hidden = NO;
         if (isCellDelete) {
             [self.buttonCheckMark setSelected: YES];
@@ -139,16 +140,26 @@
             [self.buttonCheckMark setSelected: NO];
         }
     } else{
-        self.widthConstrain.constant = 0.0f;
+        //self.widthConstrain.constant = 0.0f;
+        [self changeButtonCheckMarkConstraintWithAnimation: 0.0f];
         self.buttonCheckMark.hidden = YES;
         [self.buttonCheckMark setSelected: NO];
     }
 }
 
+- (void) changeButtonCheckMarkConstraintWithAnimation : (CGFloat) newLeftConstraint {
+    self.widthConstrain.constant = newLeftConstraint;
+    [UIView animateWithDuration: 0.4  animations:^{
+        [self layoutIfNeeded];
+        [self setNeedsLayout];
+    }];
+    [UIView commitAnimations];
+}
+
+
 - (void) configurateFirstImageOfPost : (Post*) currentPost {
     [self.firstImageOfPost cornerRadius: 10.0 andBorderWidth: 0.0 withBorderColor: nil];
     
-    //self.firstImageOfPost.image = nil;
     if (![[currentPost.arrayImagesUrl firstObject] isEqualToString: @""] || ![currentPost.arrayImagesUrl firstObject]) {
         [self.firstImageOfPost loadImageFromDataBase: [currentPost.arrayImagesUrl firstObject]];
         self.firstImageOfPost.hidden = NO;
@@ -174,32 +185,12 @@
 }
 
 - (void) checkIsSelectedPost {
-    if ([self.buttonCheckMark isSelected])
-    {
+    if ([self.buttonCheckMark isSelected]) {
         [self.buttonCheckMark setSelected:NO];
-    }
-    else
-    {
+    } else {
         [self.buttonCheckMark setSelected:YES];
     }
 }
-
-
-/*
- - (IBAction)buttonCheckMarkTapped:(id)sender {
- [self.delegate addIndexToIndexSetWithCell:self];
- if ([sender tag] == 0) {
- [self.buttonCheckMark setBackgroundImage:[UIImage imageNamed: @"checkMarkTaken.jpeg"] forState:UIControlStateNormal];
- self.buttonCheckMark.tag = 1;
- } else {
- [self.buttonCheckMark setBackgroundImage:[UIImage imageNamed: @"checkMark.jpeg"] forState:UIControlStateNormal];
- self.buttonCheckMark.tag = 0;
- }
- }
- 
- */
-
-
 
 - (IBAction)buttonCheckMarkTapped:(id)sender {
     [self.delegate addIndexToIndexSetWithCell:self];

@@ -19,7 +19,7 @@
 @property (weak, nonatomic) IBOutlet    UIButton   *changeLocationButtonOutlet;
 @property (weak, nonatomic) IBOutlet    UILabel    *placeNameLabel;
 @property (weak, nonatomic) IBOutlet    UIView     *addLocationView;
-@property (weak, nonatomic) IBOutlet    UILabel     *addLocationLabel;
+@property (weak, nonatomic) IBOutlet    UILabel    *addLocationLabel;
 
 @property (nonatomic, strong) id<MKAnnotation> lastAnnotation;
 
