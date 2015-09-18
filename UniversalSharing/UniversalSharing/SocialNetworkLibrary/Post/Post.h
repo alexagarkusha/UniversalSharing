@@ -55,4 +55,6 @@
 
 - (NSString*) convertArrayImagesUrlToString;
 
+- (id)copy;
+
 @end

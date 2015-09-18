@@ -94,4 +94,17 @@
     return currentPlace;
 }
 
+- (id) copy {
+    Place *copyPlace = [Place new];
+    copyPlace.fullName = [self.fullName copy];
+    copyPlace.placeID = [self.placeID copy];
+    copyPlace.country = [self.country copy];
+    copyPlace.placeType = [self.placeType copy];
+    copyPlace.city = [self.city copy];
+    copyPlace.longitude = [self.longitude copy];
+    copyPlace.latitude = [self.latitude copy];
+    copyPlace.isChosen = self.isChosen;
+    return copyPlace;
+}
+
 @end

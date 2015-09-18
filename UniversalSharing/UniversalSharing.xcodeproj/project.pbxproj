@@ -102,6 +102,10 @@
 		97C9A2EC1BA2D52300D0C478 /* MUSLocationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97C9A2EA1BA2D52300D0C478 /* MUSLocationCell.xib */; };
 		97CA63CA1B6F66D300F9F0C1 /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CA63C91B6F66D300F9F0C1 /* Place.m */; };
 		97CA63CF1B6F737A00F9F0C1 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CA63CE1B6F737A00F9F0C1 /* Location.m */; };
+		97CAF5691BAC001F00F16F6B /* Ressources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 97CAF5621BAC001F00F16F6B /* Ressources.bundle */; };
+		97CAF56A1BAC001F00F16F6B /* SSACircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CAF5641BAC001F00F16F6B /* SSACircleView.m */; };
+		97CAF56B1BAC001F00F16F6B /* SSAPullToRefreshAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CAF5661BAC001F00F16F6B /* SSAPullToRefreshAnimator.m */; };
+		97CAF56C1BAC001F00F16F6B /* SSARefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CAF5681BAC001F00F16F6B /* SSARefreshControl.m */; };
 		97CB10DB1B904D7B0061F851 /* UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CB10DA1B904D7B0061F851 /* UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.m */; };
 		97CB10DD1B9086D30061F851 /* btn-close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 97CB10DC1B9086D30061F851 /* btn-close@2x.png */; };
 		97CCC9D81B749C2C00E0FAC6 /* ReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CCC9D71B749C2C00E0FAC6 /* ReachabilityManager.m */; };
@@ -288,6 +292,13 @@
 		97CA63C91B6F66D300F9F0C1 /* Place.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Place.m; path = UniversalSharing/SocialNetworkLibrary/Place/Place.m; sourceTree = SOURCE_ROOT; };
 		97CA63CD1B6F737A00F9F0C1 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Location.h; path = UniversalSharing/SocialNetworkLibrary/Location/Location.h; sourceTree = SOURCE_ROOT; };
 		97CA63CE1B6F737A00F9F0C1 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Location.m; path = UniversalSharing/SocialNetworkLibrary/Location/Location.m; sourceTree = SOURCE_ROOT; };
+		97CAF5621BAC001F00F16F6B /* Ressources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Ressources.bundle; sourceTree = "<group>"; };
+		97CAF5631BAC001F00F16F6B /* SSACircleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSACircleView.h; sourceTree = "<group>"; };
+		97CAF5641BAC001F00F16F6B /* SSACircleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSACircleView.m; sourceTree = "<group>"; };
+		97CAF5651BAC001F00F16F6B /* SSAPullToRefreshAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSAPullToRefreshAnimator.h; sourceTree = "<group>"; };
+		97CAF5661BAC001F00F16F6B /* SSAPullToRefreshAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSAPullToRefreshAnimator.m; sourceTree = "<group>"; };
+		97CAF5671BAC001F00F16F6B /* SSARefreshControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSARefreshControl.h; sourceTree = "<group>"; };
+		97CAF5681BAC001F00F16F6B /* SSARefreshControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSARefreshControl.m; sourceTree = "<group>"; };
 		97CB10D91B904D7B0061F851 /* UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.h"; path = "UniversalSharing/UniversalSharingApp/Categories/UIImageView+CornerRadiusBorderWidthAndBorderColorImageView/UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.h"; sourceTree = SOURCE_ROOT; };
 		97CB10DA1B904D7B0061F851 /* UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.m"; path = "UniversalSharing/UniversalSharingApp/Categories/UIImageView+CornerRadiusBorderWidthAndBorderColorImageView/UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.m"; sourceTree = SOURCE_ROOT; };
 		97CB10DC1B9086D30061F851 /* btn-close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-close@2x.png"; sourceTree = "<group>"; };
@@ -596,6 +607,7 @@
 				97C49E7A1B835095005241CE /* CustomViews_For_DetailPostViewController */,
 				97C2A7BF1B9D7AE2007FF8CA /* CustomMapView */,
 				97C3505F1B84AA5A002C6D8E /* GalleryViewOfPhotos */,
+				97CAF5611BAC001F00F16F6B /* SSAPullToRefresh */,
 				97D1C4491B81ECC100009BCF /* DOPDropDownMenu */,
 				97C4ACC51B9973E2008B93B3 /* Custom Buttons */,
 				97C9A2E71BA2D4A000D0C478 /* LocationCell */,
@@ -1097,6 +1109,20 @@
 			name = Location;
 			sourceTree = "<group>";
 		};
+		97CAF5611BAC001F00F16F6B /* SSAPullToRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				97CAF5621BAC001F00F16F6B /* Ressources.bundle */,
+				97CAF5631BAC001F00F16F6B /* SSACircleView.h */,
+				97CAF5641BAC001F00F16F6B /* SSACircleView.m */,
+				97CAF5651BAC001F00F16F6B /* SSAPullToRefreshAnimator.h */,
+				97CAF5661BAC001F00F16F6B /* SSAPullToRefreshAnimator.m */,
+				97CAF5671BAC001F00F16F6B /* SSARefreshControl.h */,
+				97CAF5681BAC001F00F16F6B /* SSARefreshControl.m */,
+			);
+			path = SSAPullToRefresh;
+			sourceTree = "<group>";
+		};
 		97CB10D81B904D060061F851 /* UIImageView+CornerRadiusBorderWidthAndBorderColorImageView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1277,6 +1303,7 @@
 				97D1C4441B81DB5D00009BCF /* Comment.png in Resources */,
 				18BB29BE1B67E3F000B498AC /* MUSUserProfileCell.xib in Resources */,
 				97C49E801B835130005241CE /* MUSCommentsAndLikesCell.xib in Resources */,
+				97CAF5691BAC001F00F16F6B /* Ressources.bundle in Resources */,
 				30DBFDA51B6BAA52002F83D0 /* VKimage.png in Resources */,
 				307611F11BA074250051C2AD /* checkMarkTaken.jpeg in Resources */,
 				18BB29AE1B67E3F000B498AC /* LaunchScreen.xib in Resources */,
@@ -1366,6 +1393,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				97CAF56A1BAC001F00F16F6B /* SSACircleView.m in Sources */,
 				18BB29C31B67E3F000B498AC /* MUSLocationManager.m in Sources */,
 				97D1C4501B82047200009BCF /* UILabel+CornerRadiusLabel.m in Sources */,
 				187FC5281B65222D00A3916C /* SocialNetwork.m in Sources */,
@@ -1391,6 +1419,7 @@
 				30DBFD8B1B677A9A002F83D0 /* TwitterNetwork.m in Sources */,
 				18BB29AD1B67E3F000B498AC /* AppDelegate.m in Sources */,
 				97C4ACC91B997512008B93B3 /* MUSDeleteButton.m in Sources */,
+				97CAF56C1BAC001F00F16F6B /* SSARefreshControl.m in Sources */,
 				97C2A7C91B9DA61B007FF8CA /* MUSLocationViewController.m in Sources */,
 				97C4ACD31B997E3D008B93B3 /* MUSChangeButton.m in Sources */,
 				30416A191B7355BC000CB2C2 /* UIButton+MUSSocialNetwork.m in Sources */,
@@ -1432,6 +1461,7 @@
 				30D73BFD1BA715A2001B2FE8 /* MUSImageScrollView.m in Sources */,
 				97C2954B1B985ADA001B21FF /* NSString+ReasonTypeInString.m in Sources */,
 				979164B41B8CADDA00DFCE64 /* UIImage+LoadImageFromDataBase.m in Sources */,
+				97CAF56B1BAC001F00F16F6B /* SSAPullToRefreshAnimator.m in Sources */,
 				97CA63CA1B6F66D300F9F0C1 /* Place.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

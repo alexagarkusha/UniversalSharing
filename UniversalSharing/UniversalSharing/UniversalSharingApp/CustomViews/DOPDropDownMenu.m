@@ -241,10 +241,12 @@
 
 - (void)backgroundTapped:(UITapGestureRecognizer *)paramSender
 {
-    [self animateIdicator:_indicators[_currentSelectedMenudIndex] background:_backGroundView tableView:_tableView title:_titles[_currentSelectedMenudIndex] forward:NO complecte:^{
-        _show = NO;
-    }];
-    [(CALayer *)self.bgLayers[_currentSelectedMenudIndex] setBackgroundColor:[UIColor whiteColor].CGColor];
+    if (_show == YES) {
+        [self animateIdicator:_indicators[_currentSelectedMenudIndex] background:_backGroundView tableView:_tableView title:_titles[_currentSelectedMenudIndex] forward:NO complecte:^{
+            _show = NO;
+        }];
+        [(CALayer *)self.bgLayers[_currentSelectedMenudIndex] setBackgroundColor:[UIColor whiteColor].CGColor];
+    }
 }
 
 #pragma mark - animation method
