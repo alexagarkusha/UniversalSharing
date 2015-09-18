@@ -21,6 +21,7 @@
 #import "MUSDatabaseRequestStringsHelper.h"
 #import "MUSDetailPostCollectionViewController.h"
 #import "SSARefreshControl.h"
+#import "ReachabilityManager.h"
 
 @interface MUSDetailPostViewController () <UITableViewDataSource, UITableViewDelegate, MUSPostDescriptionCellDelegate, MUSGalleryOfPhotosCellDelegate, MUSPostLocationCellDelegate,  UIActionSheetDelegate, UIAlertViewDelegate, SSARefreshControlDelegate>
 /*!
@@ -130,6 +131,7 @@
     if (!self.isEditableTableView) {
         NSArray *thePost = [[NSMutableArray alloc] initWithArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper createStringForPostWithPostId: self.currentPost.postID]]];
         self.currentPost = [thePost firstObject];
+        [self.refreshControl endRefreshing];
         [self.tableView reloadData];
     }
 }
@@ -639,18 +641,23 @@
 #pragma mark - SSARefreshControlDelegate
 
 - (void) beganRefreshing {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        sleep(1.5);
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.currentSocialNetwork updatePost];
-            [self.refreshControl endRefreshing];
-        });
-        
-    });
+    if (![self obtainCurrentConnection]) {
+        [self.refreshControl endRefreshing];
+        return;
+    }
+    [self.currentSocialNetwork updatePost];
 }
 
+#pragma mark - Check InternetConnection
 
-
-
+- (BOOL) obtainCurrentConnection {
+    BOOL isReachable = [ReachabilityManager isReachable];
+    BOOL isReachableViaWiFi = [ReachabilityManager isReachableViaWiFi];
+    
+    if (!isReachableViaWiFi && !isReachable){
+        return NO;
+    }
+    return YES;
+}
 
 @end
