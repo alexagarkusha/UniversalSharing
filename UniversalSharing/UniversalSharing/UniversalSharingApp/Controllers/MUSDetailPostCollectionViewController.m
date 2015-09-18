@@ -49,7 +49,9 @@ static NSString * const reuseIdentifier = @"Cell";
     [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long) _indexPicTapped + 1, (unsigned long)[self.arrayOfPics count]]];
     [_topBar initializeImageView:_currentSocialNetwork.icon];
     
-    [_toolBar.buttonToolBar setAction:@selector(trashButton:)];
+    [_toolBar.buttonToolBar addTarget:self
+                               action:@selector(trashButton:)
+                     forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -100,14 +102,15 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 
 - (void) trashButton:(id)sender {
+    CGRect visibleRect = (CGRect){.origin = self.collectionView.contentOffset, .size = self.collectionView.bounds.size};
+    CGPoint visiblePoint = CGPointMake(CGRectGetMidX(visibleRect), CGRectGetMidY(visibleRect));
+    NSIndexPath *visibleIndexPath = [self.collectionView indexPathForItemAtPoint:visiblePoint];
     
     if (_arrayOfPics.count && _currentPost && _currentPost.reason != Connect ) {
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        CGRect visibleRect = (CGRect){.origin = self.collectionView.contentOffset, .size = self.collectionView.bounds.size};
-        CGPoint visiblePoint = CGPointMake(CGRectGetMidX(visibleRect), CGRectGetMidY(visibleRect));
-        NSIndexPath *visibleIndexPath = [self.collectionView indexPathForItemAtPoint:visiblePoint];
-        [_arrayOfPics removeObjectAtIndex:visibleIndexPath.row];
         
+        [_arrayOfPics removeObjectAtIndex:visibleIndexPath.row];
+        [self.currentPost.arrayImages removeObjectAtIndex:visibleIndexPath.row];
         if (_arrayOfPics.count) {
             [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long)visibleIndexPath.row + 1, (unsigned long)[self.arrayOfPics count]]];
         } else {
@@ -121,28 +124,47 @@ static NSString * const reuseIdentifier = @"Cell";
             
        // }
         
-    } else {
+    } else if (_arrayOfPics.count){
+        [_arrayOfPics removeObjectAtIndex:visibleIndexPath.row];
+        [self.currentPost.arrayImages removeObjectAtIndex:visibleIndexPath.row];
         
+        if (_arrayOfPics.count) {
+            [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long)visibleIndexPath.row, (unsigned long)[self.arrayOfPics count]]];
+        } else {
+            
+            [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long) 0, (unsigned long)[self.arrayOfPics count]]];
+        }
+        [_collectionView reloadData];
         
     }
     
 }
 - (void) setObjectsWithPost :(Post*) currentPost andCurrentSocialNetwork :(id)currentSocialNetwork andIndexPicTapped :(NSInteger) indexPicTapped {
+    if (!self.arrayOfPics) {
+        self.arrayOfPics = [NSMutableArray new];
+    }
     self.indexPicTapped = indexPicTapped;
     self.currentPost = currentPost;
     self.currentSocialNetwork = currentSocialNetwork;
-    if(!self.arrayOfPics)
-        self.arrayOfPics = [[NSMutableArray alloc] init];
-    else
-        [self.arrayOfPics removeAllObjects];
-    
-    if (![[self.currentPost.arrayImagesUrl firstObject] isEqualToString: @""]) {
-        for (int i = 0; i < self.currentPost.arrayImagesUrl.count; i++) {
-            UIImage *currentImage = [[UIImage alloc] init];
-            currentImage = [currentImage loadImageFromDataBase: [self.currentPost.arrayImagesUrl objectAtIndex: i]];
-            [self.arrayOfPics addObject: currentImage];
-        }
+//    if(!self.arrayOfPics)
+//        self.arrayOfPics = [[NSMutableArray alloc] init];
+//    else
+//        [self.arrayOfPics removeAllObjects];
+    if (currentPost.arrayImages) {
+        [currentPost.arrayImages enumerateObjectsUsingBlock:^(ImageToPost* image, NSUInteger idx, BOOL *stop) {
+            [self.arrayOfPics addObject:image.image];
+        }];
+        //self.arrayOfPics = currentPost.arrayImages;
+        return;
     }
+    //else
+//    if (![[self.currentPost.arrayImagesUrl firstObject] isEqualToString: @""]) {
+//        for (int i = 0; i < self.currentPost.arrayImagesUrl.count; i++) {
+//            UIImage *currentImage = [[UIImage alloc] init];
+//            currentImage = [currentImage loadImageFromDataBase: [self.currentPost.arrayImagesUrl objectAtIndex: i]];
+//            [self.arrayOfPics addObject: currentImage];
+//        }
+//    }
     
     
 }

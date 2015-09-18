@@ -7,7 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MUSToolBarForDetailCollectionView">
             <connections>
-                <outlet property="buttonToolBar" destination="PlZ-5d-MAc" id="2dM-iW-PcI"/>
+                <outlet property="buttonToolBar" destination="VIX-jK-WLZ" id="tMN-Ni-Wxc"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -15,25 +15,22 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dmh-qc-Zqj">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
-                    <items>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="tNH-JD-eby"/>
-                        <barButtonItem systemItem="trash" id="PlZ-5d-MAc">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="bQo-OY-r38"/>
-                    </items>
-                </toolbar>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VIX-jK-WLZ">
+                    <rect key="frame" x="281.5" y="4" width="37" height="42"/>
+                    <state key="normal" backgroundImage="trash.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
             </subviews>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="dmh-qc-Zqj" secondAttribute="bottom" id="U9n-mA-bFf"/>
-                <constraint firstItem="dmh-qc-Zqj" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="YGH-5I-5Jd"/>
-                <constraint firstAttribute="trailing" secondItem="dmh-qc-Zqj" secondAttribute="trailing" id="kXS-Ir-Dqa"/>
-                <constraint firstItem="dmh-qc-Zqj" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="xHi-tL-SWg"/>
+                <constraint firstAttribute="centerY" secondItem="VIX-jK-WLZ" secondAttribute="centerY" id="8P2-Kz-IL0"/>
+                <constraint firstAttribute="centerX" secondItem="VIX-jK-WLZ" secondAttribute="centerX" id="BrR-Dj-DVi"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="360" y="43"/>
         </view>
     </objects>
+    <resources>
+        <image name="trash.png" width="37" height="42"/>
+    </resources>
 </document>
