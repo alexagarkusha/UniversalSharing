@@ -16,4 +16,6 @@
  */
 - (void)setNetwork:(id)socialNetwork;
 
+@property (assign, nonatomic) BOOL isLogoutButtonHide;
+
 @end

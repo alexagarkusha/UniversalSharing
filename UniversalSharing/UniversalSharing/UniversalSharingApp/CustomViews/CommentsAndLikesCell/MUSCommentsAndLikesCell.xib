@@ -99,6 +99,15 @@
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RU4-IM-HrN">
+                        <rect key="frame" x="8" y="8" width="50" height="50"/>
+                        <state key="normal">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="profileButtonTouch:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Tcg-oo-oI5"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="gLR-FE-shG" firstAttribute="top" secondItem="1pH-pU-sP8" secondAttribute="bottom" constant="7" id="0cd-sP-E0b"/>
@@ -130,6 +139,7 @@
             </tableViewCellContentView>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
+                <outlet property="buttonUserProfile" destination="RU4-IM-HrN" id="Ygx-dU-bAP"/>
                 <outlet property="commentImageView" destination="Mji-oC-1HX" id="Kdh-zp-g3C"/>
                 <outlet property="dateOfPostLabel" destination="RQG-ol-cCb" id="qsX-IA-yDP"/>
                 <outlet property="likeImageView" destination="1pH-pU-sP8" id="6Tw-zK-IUp"/>
