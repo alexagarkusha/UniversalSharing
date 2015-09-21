@@ -36,10 +36,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.logoutButton = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:2 target:self action: @selector(logoutFromSocialNetwork)];
-    self.navigationItem.rightBarButtonItem = self.logoutButton;
+    if (!self.isLogoutButtonHide) {
+        self.logoutButton = [[UIBarButtonItem alloc] initWithTitle: @"Logout" style: 1 target:self action: @selector(logoutFromSocialNetwork)];
+        self.navigationItem.rightBarButtonItem = self.logoutButton;
+    }
     self.userPropertyArray = @[@"profile", @"dateOfBirth", @"city", @"clientID"];
-    //[self.userTableView reloadData];
 }
 
 - (void)setNetwork:(id)socialNetwork {

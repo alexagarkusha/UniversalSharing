@@ -22,8 +22,9 @@
 #import "MUSDetailPostCollectionViewController.h"
 #import "SSARefreshControl.h"
 #import "ReachabilityManager.h"
+#import "MUSUserDetailViewController.h"
 
-@interface MUSDetailPostViewController () <UITableViewDataSource, UITableViewDelegate, MUSPostDescriptionCellDelegate, MUSGalleryOfPhotosCellDelegate, MUSPostLocationCellDelegate,  UIActionSheetDelegate, UIAlertViewDelegate, SSARefreshControlDelegate>
+@interface MUSDetailPostViewController () <UITableViewDataSource, UITableViewDelegate, MUSPostDescriptionCellDelegate, MUSGalleryOfPhotosCellDelegate, MUSPostLocationCellDelegate,  UIActionSheetDelegate, UIAlertViewDelegate, SSARefreshControlDelegate, MUSCommentsAndLikesCellDelegate>
 /*!
  @abstract flag of table view. User selects - table view is editable or not.
  */
@@ -322,6 +323,7 @@
         case CommentsAndLikesCellType: {
             MUSCommentsAndLikesCell *commentsAndLikesCell = (MUSCommentsAndLikesCell*) cell;
             [commentsAndLikesCell configurationCommentsAndLikesCellByPost:self.currentPost socialNetworkIconName:self.currentSocialNetwork.icon andUser: self.currentUser];
+            commentsAndLikesCell.delegate = self;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             break;
         }
@@ -445,6 +447,11 @@
         [vc setObjectsWithPost:self.currentPostCopy andCurrentSocialNetwork:_currentSocialNetwork andIndexPicTapped:self.indexPicTapped];
 //        [vc setObjectsWithArray:self.arrayOfPicturesInPost andCurrentSocialNetwork:_currentSocialNetwork andIndexPicTapped:self.indexPicTapped];
         
+    } else if ([[segue identifier]isEqualToString : goToUserDetailViewControllerSegueIdentifier]) {
+        MUSUserDetailViewController *userDetailViewController = [MUSUserDetailViewController new];
+        userDetailViewController = [segue destinationViewController];
+        userDetailViewController.isLogoutButtonHide = YES;
+        [userDetailViewController setNetwork: self.currentSocialNetwork];
     }
     
 }
@@ -658,6 +665,12 @@
         return NO;
     }
     return YES;
+}
+
+#pragma mark - MUSCommentsAndLikesCellDelegate 
+
+- (void) showUserProfile {
+    [self performSegueWithIdentifier: goToUserDetailViewControllerSegueIdentifier sender:nil];
 }
 
 @end
