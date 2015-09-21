@@ -354,6 +354,17 @@
                 [self showErrorAlertWithError : error];
                 self.post = nil;
             }
+            ////////////////////////////////////////////////////////////////////////////////////////////
+            [self.shareLocationButton setTintColor: [UIColor blackColor]];
+            self.place = nil;
+            [self.shareLocationButton setTitle: @"Share Location"];
+            [self initialParametersOfMessageTextView];
+            [self changeSharePhotoButtonColorAndShareButtonState:NO];
+            [self endEditingMessageTextView];
+            [self.galeryView clearCollectionAfterPosted];
+             self.shareButtonOutlet.enabled = NO;
+             
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         }];
     
 }

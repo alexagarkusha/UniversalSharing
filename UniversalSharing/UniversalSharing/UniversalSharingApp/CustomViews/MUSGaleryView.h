@@ -37,5 +37,5 @@
  */
 - (NSArray*) obtainArrayWithChosenPics;
 
-
+- (void) clearCollectionAfterPosted;
 @end
