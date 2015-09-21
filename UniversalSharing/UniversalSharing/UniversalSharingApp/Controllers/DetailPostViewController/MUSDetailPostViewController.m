@@ -54,8 +54,6 @@
  */
 @property (nonatomic, assign) NSInteger numberOfRowsInTable;
 
-@property (nonatomic, assign) BOOL isChangedPost;
-
 @property (nonatomic, assign) NSInteger indexPicTapped;
 
 @property (nonatomic, strong) SSARefreshControl *refreshControl;
@@ -81,24 +79,7 @@
 }
 
 - (void) viewWillAppear:(BOOL)animated {
-//<<<<<<< HEAD
-//=======
-//    
-//    if(!self.arrayOfPicturesInPost)
-//    self.arrayOfPicturesInPost = [[NSMutableArray alloc] init];
-//    
-//    if (![[self.currentPost.arrayImagesUrl firstObject] isEqualToString: @""]) {
-//        for (int i = 0; i < self.currentPost.arrayImagesUrl.count; i++) {
-//            UIImage *currentImage = [[UIImage alloc] init];
-//            currentImage = [currentImage loadImageFromDataBase: [self.currentPost.arrayImagesUrl objectAtIndex: i]];
-//            [self.arrayOfPicturesInPost addObject: currentImage];
-//        }
-//    }
     [self.tableView reloadData];
-//    //////////////////////////////////////////////////////////////////////////////////////
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showPhotosOnCollectionView :) name:notificationShowImagesInCollectionView object:nil];
-//    ///////////////////////////////////////////////////////////////////////////////////////////
-//>>>>>>> 59c27d2e235006e94c041e6db59c669e0bbb0f67
     [super viewWillAppear : YES];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showPhotosOnCollectionView :) name:notificationShowImagesInCollectionView object:nil];
 
@@ -184,7 +165,7 @@
 - (void) showPhotosOnCollectionView :(NSNotification *)notification{
     _indexPicTapped = [[[notification userInfo] objectForKey:@"index"] integerValue];
     [self performSegueWithIdentifier: @"goToDitailPostCollectionViewController" sender:nil];
-    
+
 }
 #pragma mark initiation current postDescription, arrayOfUsersPictures, postLocation
 /*!
@@ -192,20 +173,24 @@
  @abstract initiation post description, array of pictures and location of the current post
  */
 - (void) initiationCurrentPostCopy {
-    //self.currentPostCopy = [Post new];
     self.currentPostCopy = [self.currentPost copy];
-    self.currentPostCopy.arrayImages = [[NSMutableArray alloc] init];
+    self.currentPost.arrayImages = [[NSMutableArray alloc] init];
     if (![[self.currentPost.arrayImagesUrl firstObject] isEqualToString: @""]) {
         for (int i = 0; i < self.currentPost.arrayImagesUrl.count; i++) {
             UIImage *currentImage = [[UIImage alloc] init];
             currentImage = [currentImage loadImageFromDataBase: [self.currentPost.arrayImagesUrl objectAtIndex: i]];
-            [self.currentPostCopy.arrayImages addObject: currentImage];
+            [self.currentPost.arrayImages addObject: currentImage];
         }
     }
-    if (!self.currentPostCopy.place.longitude.length > 0 && !self.currentPost.place.latitude.length > 0) {
-        self.currentPostCopy.place = nil;
-    }
-
+    self.currentPostCopy.arrayImages = [[NSMutableArray alloc] initWithArray: self.currentPost.arrayImages];
+    
+    
+    
+//    if ((!self.currentPostCopy.place.longitude.length > 0 && !self.currentPost.place.latitude.length > 0) || ([self.currentPostCopy.place.longitude isEqualToString: @"(null)"] || [self.currentPostCopy.place.longitude isEqualToString: @"(null)"])) {
+//        self.currentPostCopy.place = nil;
+//        self.currentPost.place = nil;
+//    }
+//
     if (self.currentPostCopy.reason != Connect) {
         self.isEditableTableView = YES;
     }
@@ -259,14 +244,13 @@
  @abstract send post to social network
  */
 - (void) sendPost {
-    
-    
-    [self.delegate updatePostByPrimaryKey: [NSString stringWithFormat: @"%ld", (long)self.currentPost.primaryKey]];
-    
     if (!_currentSocialNetwork.isVisible || !_currentSocialNetwork) {
         [self showAlertWithMessage: musAppError_Logged_Into_Social_Networks];
         return;
     }
+    self.isEditableTableView = NO;
+    [self.tableView reloadData];
+    [self.delegate updatePostByPrimaryKey: [NSString stringWithFormat: @"%ld", (long)self.currentPost.primaryKey]];
     [self startActivityIndicatorAnimating];
     [self updatePost: self.currentPost];
     __weak MUSDetailPostViewController *weakSelf = self;
@@ -274,14 +258,15 @@
         if (!error) {
             [self showAlertWithMessage : titleCongratulatoryAlert];
             weakSelf.isEditableTableView = NO;
-            weakSelf.isChangedPost = NO;
             [weakSelf stopActivityIndicatorAnimating];
-            self.navigationItem.rightBarButtonItem = nil;
+            weakSelf.navigationItem.rightBarButtonItem = nil;
+            weakSelf.currentPost = [weakSelf.currentPostCopy copy];
             [weakSelf.tableView reloadData];
         } else {
-            [self showErrorAlertWithError : error];
+            [weakSelf showErrorAlertWithError : error];
             weakSelf.isEditableTableView = YES;
             [weakSelf stopActivityIndicatorAnimating];
+            weakSelf.currentPost = [weakSelf.currentPostCopy copy];
             [weakSelf.tableView reloadData];
         }
     }];
@@ -294,12 +279,33 @@
  */
 - (void) backToThePostsViewController {
     // back to the Posts ViewController. If user did some changes in post - show alert. And then update post.
-    if (self.isChangedPost) {
+    if (![self checkForChangesInTheArrayOfimagesInPost] || (self.currentPost.postDescription != self.currentPostCopy.postDescription) || (self.currentPost.place.placeID != self.currentPostCopy.place.placeID) ) {
         [self showUpdateAlert];
     } else {
         [self.navigationController popViewControllerAnimated:YES];
     }
+ }
+
+- (BOOL) checkForChangesInTheArrayOfimagesInPost {
+    BOOL isEqualArray = YES;
+    if (self.currentPost.arrayImages.count != self.currentPostCopy.arrayImages.count) {
+        return NO;
+    } else {
+        for (int i = 0; i < self.currentPostCopy.arrayImages.count; i ++) {
+            if ([self.currentPostCopy.arrayImages objectAtIndex: i] != [self.currentPost.   arrayImages objectAtIndex: i]) {
+                return NO;
+            } else {
+                isEqualArray = YES;
+            }
+        }
+    }
+    return isEqualArray;
 }
+
+
+
+
+
 
 #pragma mark - UITableViewDataSource
 
@@ -437,7 +443,6 @@
              */
             if (result) {
                 weakSelf.currentPostCopy.place = result;
-                weakSelf.isChangedPost = YES;
                 [weakSelf.tableView reloadData];
             }
         };
@@ -445,7 +450,6 @@
         MUSDetailPostCollectionViewController *vc = [MUSDetailPostCollectionViewController new];
         vc = [segue destinationViewController];
         [vc setObjectsWithPost:self.currentPostCopy andCurrentSocialNetwork:_currentSocialNetwork andIndexPicTapped:self.indexPicTapped];
-//        [vc setObjectsWithArray:self.arrayOfPicturesInPost andCurrentSocialNetwork:_currentSocialNetwork andIndexPicTapped:self.indexPicTapped];
         
     } else if ([[segue identifier]isEqualToString : goToUserDetailViewControllerSegueIdentifier]) {
         MUSUserDetailViewController *userDetailViewController = [MUSUserDetailViewController new];
@@ -461,7 +465,6 @@
 
 - (void) saveChangesInPostDescription:(NSString *)postDescription {
     self.currentPostCopy.postDescription = postDescription;
-    self.isChangedPost = YES;
     [self.tableView reloadData];
 }
 
@@ -482,11 +485,9 @@
 - (void) editArrayOfPicturesInPost: (NSArray *)arrayOfImages {
     if (!arrayOfImages.firstObject) {
         [self.currentPostCopy.arrayImages removeAllObjects];
-        self.isChangedPost = YES;
         [self.tableView reloadData];
         return;
     }
-    self.isChangedPost = YES;
     self.currentPostCopy.arrayImages = [NSMutableArray arrayWithArray: arrayOfImages];
 }
 
@@ -500,7 +501,6 @@
         if(!error) {
             ImageToPost *imageToPost = result;
             [weakSelf.currentPostCopy.arrayImages addObject: imageToPost.image];//////////////////////////////////////////////////
-            weakSelf.isChangedPost = YES;
             [weakSelf.tableView reloadData];
         } else {
             [weakSelf showErrorAlertWithError : error];
@@ -577,17 +577,12 @@
 #pragma mark UpdatePost
 
 - (void) updatePost : (Post*) postForUpdating {
-    
-    
     [self updateCurrentPost];
     [self deletePostImagesFromDocumentsFolder: self.currentPost];
     [self saveImageToDocumentsFolderAndFillArrayWithUrl : self.currentPost];
 }
 
 - (void) updateCurrentPost {
-    
-    
-    
     if (![self.currentPostCopy.postDescription isEqualToString: kPlaceholderText]) {
         self.currentPost.postDescription = self.currentPostCopy.postDescription;
     } else {

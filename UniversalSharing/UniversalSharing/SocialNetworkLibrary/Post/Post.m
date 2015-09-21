@@ -25,13 +25,13 @@
     Post *copyPost = [Post new];
     copyPost.postID = [self.postID copy];
     copyPost.postDescription = [self.postDescription copy];
-    copyPost.arrayImages = [self.arrayImages copy];
+    copyPost.arrayImages = [self.arrayImages mutableCopy];
     copyPost.likesCount = self.likesCount;
     copyPost.commentsCount = self.commentsCount;
     copyPost.placeID = self.placeID;
     copyPost.networkType = self.networkType;
     copyPost.primaryKey = self.primaryKey;
-    copyPost.arrayImagesUrl = [self.arrayImagesUrl copy];
+    copyPost.arrayImagesUrl = [self.arrayImagesUrl mutableCopy];
     copyPost.userId = [self.userId copy];
     copyPost.dateCreate = [self.dateCreate copy];
     copyPost.reason = self.reason;

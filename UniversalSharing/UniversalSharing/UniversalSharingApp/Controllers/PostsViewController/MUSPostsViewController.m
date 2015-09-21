@@ -76,7 +76,6 @@
     // Do any additional setup after loading the view.
     [self initiationDropDownMenu];
     [self initiationTableView];
-    [self initiationSSARefreshControl];
     [self initiationLongPressGestureRecognizer];
 
     self.setWithUniquePrimaryKeysOfPost = [[NSMutableSet alloc] init];
@@ -94,12 +93,13 @@
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear : YES];
     [self initiationArrayOfActiveSocialNetwork];
+    [self initiationSSARefreshControl];
     // Notification for updating likes and comments in posts.
     [[NSNotificationCenter defaultCenter] addObserver : self
                                              selector : @selector(obtainPosts)
                                                  name : MUSNotificationPostsInfoWereUpDated
                                                object : nil];
-    [self.tableView reloadData];
+    //[self.tableView reloadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

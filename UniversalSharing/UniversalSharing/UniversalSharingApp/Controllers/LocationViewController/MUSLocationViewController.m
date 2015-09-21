@@ -68,6 +68,10 @@
     [self initiationPanGestureRecognizer];
     self.tableViewWidth = (self.view.frame.size.width / 3) * 2;
     
+    if ((!self.place.longitude.length > 0 && !self.place.latitude.length > 0) || ([self.place.longitude isEqualToString: @"(null)"] && [self.place.longitude isEqualToString: @"(null)"])) {
+        self.place = nil;
+    }
+
     self.leftConstraintTableView.constant =  self.view.frame.size.width;
     self.rightConstraintTavbleView.constant = - self.tableViewWidth;
     self.tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget : self action : @selector(tapOnMapView:)];

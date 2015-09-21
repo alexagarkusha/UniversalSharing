@@ -32,7 +32,8 @@ NSString *const changePlaceholderWhenStartEditing = @"";
 //===
 NSInteger const countOfAllowedPics = 4;
 NSInteger const countOfAllowedLettersInTextView = 500;
-NSInteger const musApp_TextView_CountOfAllowedLetters_ForTwitter = 140;
+NSInteger const musApp_TextView_CountOfAllowedLetters_ForTwitter = 117;
+NSInteger const musApp_TextView_CountOfAllowedLetters_ForTwitterWithoutPhoto = 140;
 
 
 #pragma mark - Errors
