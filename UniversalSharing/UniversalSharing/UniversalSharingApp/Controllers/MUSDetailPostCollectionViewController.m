@@ -24,6 +24,10 @@
 @property (assign, nonatomic) NSInteger indexDeletedPic;
 @property (strong, nonatomic) Post *currentPost;
 
+///////////////////////////
+@property (strong, nonatomic) NSMutableArray *tmp;
+///////////////////////
+
 //===
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet MUSTopBarForDetailCollectionView *topBar;
@@ -112,15 +116,15 @@ static NSString * const reuseIdentifier = @"Cell";
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         
         [_arrayOfPics removeObjectAtIndex:visibleIndexPath.row];
-        if ([_currentPost.arrayImages[0] isKindOfClass:[ImageToPost class]]) {
+        if ([[_currentPost.arrayImages firstObject] isKindOfClass:[ImageToPost class]]) {
              [self.currentPost.arrayImages removeObjectAtIndex:visibleIndexPath.row];
         }
-        if (_currentPost.arrayImagesUrl) {
-             [self.currentPost.arrayImagesUrl removeObjectAtIndex:visibleIndexPath.row];
+        if (_tmp.count) {
+             [_tmp removeObjectAtIndex:visibleIndexPath.row];
         }
        
         if (_arrayOfPics.count) {
-            [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long)visibleIndexPath.row , (unsigned long)[self.arrayOfPics count]]];
+            [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long)visibleIndexPath.row + 1, (unsigned long)[self.arrayOfPics count]]];
         } else {
             
             [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long) 0, (unsigned long)[self.arrayOfPics count]]];
@@ -154,6 +158,7 @@ static NSString * const reuseIdentifier = @"Cell";
     self.indexPicTapped = indexPicTapped;
     self.currentPost = currentPost;
     self.currentSocialNetwork = currentSocialNetwork;
+    _tmp = [NSMutableArray arrayWithArray:self.currentPost.arrayImagesUrl];
     if (currentPost.arrayImages) {
         
     
