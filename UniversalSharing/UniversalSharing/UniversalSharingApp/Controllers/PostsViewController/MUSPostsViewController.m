@@ -308,6 +308,7 @@
     [UIView animateWithDuration: 0.3 animations:^{
         cell.contentView.backgroundColor = color;
     }];
+    [UIView commitAnimations];
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
