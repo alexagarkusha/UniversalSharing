@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Posts" image="archive_icon" id="acW-dT-cKf"/>
+                    <tabBarItem key="tabBarItem" title="Posts" image="first" id="acW-dT-cKf"/>
                     <navigationItem key="navigationItem" id="pJr-Hq-3rU">
                         <barButtonItem key="leftBarButtonItem" title="Select All" id="JHp-eg-J2H">
                             <connections>
@@ -215,7 +215,7 @@
         <scene sceneID="k8x-xu-hJy">
             <objects>
                 <navigationController id="5g8-Gy-Hka" userLabel="Accounts Navigation Controller" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Accounts" image="account_icon" id="1sb-re-uxj"/>
+                    <tabBarItem key="tabBarItem" tag="2" title="Accounts" id="1sb-re-uxj"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Pql-IC-asA">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -226,7 +226,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vep-GV-oBh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="0.0" y="1028"/>
+            <point key="canvasLocation" x="0.0" y="554"/>
         </scene>
         <!--Networks-->
         <scene sceneID="UOh-QH-Yk3">
@@ -360,7 +360,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pfw-Lm-nQR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="750" y="1028"/>
+            <point key="canvasLocation" x="718" y="1028"/>
         </scene>
         <!--Share-->
         <scene sceneID="pSi-e4-hGf">
@@ -383,7 +383,7 @@
         <scene sceneID="oCx-Wt-kSj">
             <objects>
                 <navigationController id="lcy-Yh-Ehw" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Posts" id="Dhy-Kr-C0b"/>
+                    <tabBarItem key="tabBarItem" tag="1" title="Posts" id="Dhy-Kr-C0b"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="guJ-ta-c7x">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -448,7 +448,7 @@
                             <outletCollection property="gestureRecognizers" destination="Q3Z-Zc-VoA" appends="YES" id="McJ-97-Hx9"/>
                         </connections>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Share" image="upload_icon" id="cPa-gy-q4n"/>
+                    <tabBarItem key="tabBarItem" title="Share" image="second" id="cPa-gy-q4n"/>
                     <navigationItem key="navigationItem" title="Share Post" id="oIA-lG-G83">
                         <barButtonItem key="rightBarButtonItem" title="Share" id="pvH-Dt-bbm">
                             <connections>
@@ -477,7 +477,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1438" y="304"/>
+            <point key="canvasLocation" x="1432" y="178"/>
         </scene>
         <!--Location View Controller-->
         <scene sceneID="9dF-Vv-LOw">
@@ -608,16 +608,15 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="0.0" y="0.0"/>
+            <point key="canvasLocation" x="0.0" y="-198"/>
         </scene>
     </scenes>
     <resources>
-        <image name="account_icon" width="31" height="31"/>
-        <image name="archive_icon" width="32" height="32"/>
-        <image name="upload_icon" width="32" height="32"/>
+        <image name="first" width="30" height="30"/>
+        <image name="second" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="GpK-3N-ETI"/>
+        <segue reference="IAC-iQ-XMw"/>
         <segue reference="ujR-wZ-DmO"/>
     </inferredMetricsTieBreakers>
 </document>
