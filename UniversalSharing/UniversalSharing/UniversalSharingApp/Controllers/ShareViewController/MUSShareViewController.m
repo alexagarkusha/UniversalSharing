@@ -99,6 +99,8 @@
 
 @property (strong, nonatomic)               NSArray *arrayPicsForDetailCollectionView;
 @property (assign, nonatomic)               NSInteger indexPicTapped;
+@property (assign, nonatomic)               BOOL fragForTextView;
+
 @end
 
 @implementation MUSShareViewController
@@ -123,7 +125,9 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
-    
+    if ((self.post && self.post.arrayImages.count) || self.fragForTextView ) {
+        self.shareButtonOutlet.enabled = YES;
+    }
     if (!_currentSocialNetwork || !_currentSocialNetwork.isVisible || !_currentSocialNetwork.isLogin) {
         _currentSocialNetwork = [SocialManager currentSocialNetwork];
         [self.changeSocialNetworkButton initiationSocialNetworkButtonForSocialNetwork: [SocialManager currentSocialNetwork]];
@@ -389,9 +393,11 @@
 - (void)textViewDidChange:(UITextView *)textView {
     if (textView.text.length > 0) {
         self.shareButtonOutlet.enabled = YES;
+        self.fragForTextView = YES;
     } else {
         if ([self.galeryView obtainArrayWithChosenPics].count < 1) {
             self.shareButtonOutlet.enabled = NO;
+            self.fragForTextView = NO;
         }
     }
 }

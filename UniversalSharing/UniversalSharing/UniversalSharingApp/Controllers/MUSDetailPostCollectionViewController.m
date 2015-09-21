@@ -123,8 +123,10 @@ static NSString * const reuseIdentifier = @"Cell";
              [_tmp removeObjectAtIndex:visibleIndexPath.row];
         }
        
-        if (_arrayOfPics.count) {
-            [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long)visibleIndexPath.row + 1, (unsigned long)[self.arrayOfPics count]]];
+        if (_arrayOfPics.count && visibleIndexPath.row != 0) {
+            [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long)visibleIndexPath.row , (unsigned long)[self.arrayOfPics count]]];
+        } else if (_arrayOfPics.count && visibleIndexPath.row == 0) {
+             [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long)visibleIndexPath.row + 1,(unsigned long)[self.arrayOfPics count]]];
         } else {
             
             [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long) 0, (unsigned long)[self.arrayOfPics count]]];
