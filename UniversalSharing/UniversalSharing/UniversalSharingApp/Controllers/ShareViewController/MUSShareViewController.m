@@ -362,6 +362,7 @@
             [self changeSharePhotoButtonColorAndShareButtonState:NO];
             [self endEditingMessageTextView];
             [self.galeryView clearCollectionAfterPosted];
+             self.shareButtonOutlet.enabled = NO;
              
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         }];
