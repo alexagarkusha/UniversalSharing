@@ -241,6 +241,11 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
     [self.collectionView reloadData];
 }
 
+- (void) clearCollectionAfterPosted {
+    [self.arrayWithChosenImages removeAllObjects];
+    [self.collectionView reloadData];
+}
+
 - (NSArray*) obtainArrayWithChosenPics {
     return self.arrayWithChosenImages;
 }
