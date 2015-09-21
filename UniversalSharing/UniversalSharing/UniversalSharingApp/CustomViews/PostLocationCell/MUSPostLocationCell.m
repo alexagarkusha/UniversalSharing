@@ -16,7 +16,7 @@
 - (IBAction)changeLocationButtonTouch:(id)sender;
 
 @property (weak, nonatomic) IBOutlet    MKMapView  *mapView;
-@property (weak, nonatomic) IBOutlet    UIButton   *changeLocationButtonOutlet;
+@property (weak, nonatomic) IBOutlet    UIButton   *changeLocationButton;
 @property (weak, nonatomic) IBOutlet    UILabel    *placeNameLabel;
 @property (weak, nonatomic) IBOutlet    UIView     *addLocationView;
 @property (weak, nonatomic) IBOutlet    UILabel    *addLocationLabel;
@@ -93,9 +93,9 @@
 
 - (void) checkChangeLocationButtonStatus {
     if (!self.isEditableCell) {
-        self.changeLocationButtonOutlet.hidden = YES;
+        self.changeLocationButton.hidden = YES;
     } else {
-        self.changeLocationButtonOutlet.hidden = NO;
+        self.changeLocationButton.hidden = NO;
     }
 }
 

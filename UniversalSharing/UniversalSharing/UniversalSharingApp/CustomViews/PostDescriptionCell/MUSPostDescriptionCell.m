@@ -12,8 +12,8 @@
 
 @interface MUSPostDescriptionCell () <UITextViewDelegate>
 
-@property (weak, nonatomic) IBOutlet MUSChangeButton *changeButtonOutlet;
-@property (nonatomic, assign) NetworkType currentNetworkType;
+@property (weak, nonatomic)     IBOutlet   MUSChangeButton    *changeButtonOutlet;
+@property (nonatomic, assign)              NetworkType        currentNetworkType;
 
 @end
 
@@ -23,8 +23,6 @@
 - (void)awakeFromNib {
     // Initialization code
     self.postDescriptionTextView.delegate = self;
-    //self.postDescriptionTextView.editable = NO;
-    //self.postDescriptionTextView.scrollEnabled = NO;
     }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -146,16 +144,11 @@
     if (self.isEditableCell) {
         UIBezierPath *rectanglePath = [UIBezierPath bezierPathWithRect:CGRectMake(self.frame.size.width - 30, 0, 30, 30)];
         [[self.postDescriptionTextView textContainer] setExclusionPaths:@[rectanglePath]];
-    }
-    
+    }    
 }
-
 
 - (IBAction)changeButtonTouch:(id)sender {
     self.postDescriptionTextView.editable = YES;
-    //self.postDescriptionTextView.scrollEnabled = YES;
-    //self.postDescriptionTextView.selectable = YES;
-    
     self.postDescriptionTextView.autocorrectionType = UITextAutocorrectionTypeNo;
     [self.postDescriptionTextView becomeFirstResponder];
     self.postDescriptionTextView.selectedRange = NSMakeRange([self.postDescriptionTextView.text length], 0);

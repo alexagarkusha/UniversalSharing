@@ -142,6 +142,8 @@ FOUNDATION_EXPORT NSInteger const musAppPostsVC_HeightOfPostCell;
 FOUNDATION_EXPORT NSString *const musApp_ActionSheet_Title_ChooseAction;
 FOUNDATION_EXPORT NSInteger const musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithoutUserPhotos;
 FOUNDATION_EXPORT NSInteger const musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithUserPhotos;
+FOUNDATION_EXPORT NSString *const musApp_PostCell_Image_Name_CheckMarkTaken;
+FOUNDATION_EXPORT NSString *const musApp_PostCell_Image_Name_CheckMark;
 
 #pragma mark - MUSGalleryViewOfPhotos
 
@@ -180,5 +182,6 @@ FOUNDATION_EXPORT NSInteger const musAppDetailPostVC_NumberOfRows;
 
 FOUNDATION_EXPORT NSInteger const musAppCustomMapView_maxZoomDistance;
 FOUNDATION_EXPORT NSString *const musAppButton_ImageName_ButtonDeleteLocation;
+FOUNDATION_EXPORT NSString *const musAppCustomMapView_PinAnnotationViewIdentifier;
 
 @end

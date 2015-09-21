@@ -16,7 +16,6 @@
 
 @property (assign, nonatomic) CLLocationCoordinate2D firstLocationCoordinate;
 @property (assign, nonatomic) MKMapRect mapViewWithAllAnnotationsRect;
-@property (assign, nonatomic) MKMapRect mapViewRect;
 @property (strong, nonatomic) NSMutableArray *arrayOfAnnotations;
 
 @end
@@ -106,7 +105,7 @@
     
     if ([annotation isKindOfClass:[MUSAnnotation class]]) {
         MUSAnnotation *newAnnotaton = (MUSAnnotation*) annotation;
-        MKPinAnnotationView *annotationView = (MKPinAnnotationView*) [mapView dequeueReusableAnnotationViewWithIdentifier: @"MUSAnnotation"];
+        MKPinAnnotationView *annotationView = (MKPinAnnotationView*) [mapView dequeueReusableAnnotationViewWithIdentifier: musAppCustomMapView_PinAnnotationViewIdentifier];
         if (annotationView) {
             annotationView.annotation = annotation;
         } else {
@@ -145,7 +144,7 @@
     }
 }
 
-// Add button to annotation
+// "Add Place" button for annotation
 
 - (UIButton*) addPlaceButtonWithIndex : (NSInteger) currentIndex {
     UIButton *addPlaceButton = [UIButton buttonWithType:UIButtonTypeSystem];
@@ -157,6 +156,7 @@
     return addPlaceButton;
 }
 
+// "Delete Place" button for annotation
 
 - (UIButton*) deletePlaceButton {
     UIButton *deletePlaceButton = [UIButton buttonWithType:UIButtonTypeCustom];

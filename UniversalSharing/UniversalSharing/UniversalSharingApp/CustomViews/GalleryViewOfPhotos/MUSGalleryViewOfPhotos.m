@@ -29,7 +29,6 @@
 - (void) initiationGalleryViewOfPhotos {
     NSString *cellIdentifier = [MUSCollectionViewCell customCellID];
     [self.collectionView registerNib:[UINib nibWithNibName: cellIdentifier bundle: nil] forCellWithReuseIdentifier: cellIdentifier];
-    //self.collectionView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     self.arrayOfPhotos = [[NSMutableArray alloc] init];
     self.photoPageControl.hidden = YES;
 
