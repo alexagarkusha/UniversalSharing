@@ -19,15 +19,14 @@
 
 @interface MUSCommentsAndLikesCell ()
 
-@property (weak, nonatomic)     IBOutlet    UIImageView *likeImageView;
-@property (weak, nonatomic)     IBOutlet    UILabel *numberOfLikesLabel;
+@property (weak, nonatomic)     IBOutlet    UIButton *showUserProfileButton;
 @property (weak, nonatomic)     IBOutlet    UIImageView *commentImageView;
+@property (weak, nonatomic)     IBOutlet    UIImageView *likeImageView;
+@property (weak, nonatomic)     IBOutlet    UILabel *dateOfPostLabel;
+@property (weak, nonatomic)     IBOutlet    UILabel *numberOfLikesLabel;
 @property (weak, nonatomic)     IBOutlet    UILabel *numberOfCommentsLabel;
 @property (weak, nonatomic)     IBOutlet    UILabel *reasonPostLabel;
-@property (weak, nonatomic)     IBOutlet    UIImageView *userPhotoImageView;
 @property (weak, nonatomic)     IBOutlet    UILabel *usernameLabel;
-@property (weak, nonatomic)     IBOutlet    UILabel *dateOfPostLabel;
-@property (weak, nonatomic)     IBOutlet    UIButton *buttonUserProfile;
 
 @end
 
@@ -96,9 +95,7 @@
 
 - (void) initiationUserNameLabel : (User*) user{
         self.usernameLabel.textColor = [UIColor blackColor];
-        //self.usernameLabel.shadowColor = [UIColor whiteColor];
         self.dateOfPostLabel.textColor = [UIColor blackColor];
-        //self.dateOfPostLabel.shadowColor = [UIColor whiteColor];
     self.usernameLabel.text = [NSString stringWithFormat: @"%@ %@", user.lastName, user.firstName];
     [self.usernameLabel sizeToFit];
 }
@@ -113,16 +110,16 @@
 #pragma mark initiation UserPhotoImageView
 
 - (void) initiationUserPhotoImageView : (NSString*) socialNetworkIconName {
-    [self.buttonUserProfile cornerRadius: CGRectGetHeight(self.buttonUserProfile.frame) / 2];
+    [self.showUserProfileButton cornerRadius: CGRectGetHeight(self.showUserProfileButton.frame) / 2];
     UIImage *profileImage = [[UIImage alloc] init];
     profileImage = [profileImage loadImageFromDataBase: socialNetworkIconName];
-    [self.buttonUserProfile setImage: profileImage forState:UIControlStateNormal];
-    [self.buttonUserProfile.imageView setContentMode:UIViewContentModeScaleAspectFill];
-    [self.buttonUserProfile.layer setBorderWidth: 1.0f];
-    [self.buttonUserProfile.layer setBorderColor: [UIColor darkGrayColor].CGColor];
+    [self.showUserProfileButton setImage: profileImage forState:UIControlStateNormal];
+    [self.showUserProfileButton.imageView setContentMode:UIViewContentModeScaleAspectFill];
+    [self.showUserProfileButton.layer setBorderWidth: 1.0f];
+    [self.showUserProfileButton.layer setBorderColor: [UIColor darkGrayColor].CGColor];
 }
 
-- (IBAction)profileButtonTouch:(id)sender {
+- (IBAction)showUserProfileButtonTouch:(id)sender {
     [self.delegate showUserProfile];
 }
 

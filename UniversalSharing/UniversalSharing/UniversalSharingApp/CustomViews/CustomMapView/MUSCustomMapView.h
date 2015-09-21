@@ -19,7 +19,6 @@
 
 @end
 
-
 @interface MUSCustomMapView : UIView
 
 - (void) initiationMapViewWithPlaces : (NSArray*) arrayOfPlaces;

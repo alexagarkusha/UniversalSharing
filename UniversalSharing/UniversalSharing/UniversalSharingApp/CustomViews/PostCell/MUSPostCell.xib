@@ -162,20 +162,20 @@
             </tableViewCellContentView>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
-                <outlet property="buttonCheckMark" destination="sKG-VH-C3Z" id="BGS-3T-qKH"/>
-                <outlet property="commentImage" destination="TUu-w5-YKo" id="to7-08-9gj"/>
-                <outlet property="firstImageOfPost" destination="lob-KA-c90" id="mc6-Di-uRF"/>
-                <outlet property="iconOfSocialNetwork" destination="lym-1x-GVE" id="wvx-fR-O9m"/>
-                <outlet property="labelUpdatingPost" destination="See-mu-tPy" id="wZI-1Z-VbD"/>
-                <outlet property="likeImage" destination="twD-vE-OAC" id="1vg-qV-Evy"/>
-                <outlet property="numberOfComments" destination="xWC-5X-yHe" id="fuO-9p-970"/>
-                <outlet property="numberOfImagesInPost" destination="bfI-Lf-Bqn" id="D77-vg-LmM"/>
-                <outlet property="numberOfLikes" destination="SQp-lL-rDz" id="cqc-iX-ki7"/>
-                <outlet property="postDescription" destination="9a0-JS-qNj" id="nh3-RZ-UDl"/>
-                <outlet property="postDescriptionLeftConstraint" destination="67G-R8-jCD" id="5R4-l9-c5s"/>
-                <outlet property="reasonOfPost" destination="XnW-XA-7nO" id="fQ3-P5-kHR"/>
-                <outlet property="viewCheckMark" destination="BKP-gh-Wex" id="hsh-ts-c3Z"/>
-                <outlet property="widthConstrain" destination="yE4-sG-WXL" id="dQN-2P-pkQ"/>
+                <outlet property="checkMarkButton" destination="sKG-VH-C3Z" id="7yM-N4-yca"/>
+                <outlet property="checkMarkView" destination="BKP-gh-Wex" id="Yju-WV-z9a"/>
+                <outlet property="commentImageView" destination="TUu-w5-YKo" id="ls3-5U-I7s"/>
+                <outlet property="firstImageOfPostImageView" destination="lob-KA-c90" id="TqT-U4-LFw"/>
+                <outlet property="iconOfSocialNetworkImageView" destination="lym-1x-GVE" id="UDe-br-sz3"/>
+                <outlet property="likeImageView" destination="twD-vE-OAC" id="9sE-cR-x7o"/>
+                <outlet property="numberOfCommentsLabel" destination="xWC-5X-yHe" id="kZC-J3-QH8"/>
+                <outlet property="numberOfImagesInPostLabel" destination="bfI-Lf-Bqn" id="dtX-AL-bMI"/>
+                <outlet property="numberOfLikesLabel" destination="SQp-lL-rDz" id="YGP-Kf-R2A"/>
+                <outlet property="postDescriptionLabel" destination="9a0-JS-qNj" id="p0c-7M-t6B"/>
+                <outlet property="postDescriptionLabelLeftConstraint" destination="67G-R8-jCD" id="sVK-mo-SqN"/>
+                <outlet property="reasonOfPostLabel" destination="XnW-XA-7nO" id="u2R-kA-fUO"/>
+                <outlet property="updatingPostLabel" destination="See-mu-tPy" id="edd-f9-qOd"/>
+                <outlet property="widthCheckMarkViewConstraint" destination="yE4-sG-WXL" id="oOe-MZ-QgT"/>
             </connections>
             <point key="canvasLocation" x="126" y="239"/>
         </tableViewCell>

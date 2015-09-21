@@ -19,33 +19,33 @@
 
 @interface MUSPostCell ()
 
-@property (weak, nonatomic) IBOutlet UIImageView *firstImageOfPost;
+@property (weak, nonatomic) IBOutlet UIImageView *firstImageOfPostImageView;
 
-@property (weak, nonatomic) IBOutlet UILabel *numberOfImagesInPost;
+@property (weak, nonatomic) IBOutlet UILabel *numberOfImagesInPostLabel;
 
-@property (weak, nonatomic) IBOutlet UILabel *postDescription;
+@property (weak, nonatomic) IBOutlet UILabel *postDescriptionLabel;
 
-@property (weak, nonatomic) IBOutlet UIImageView *iconOfSocialNetwork;
+@property (weak, nonatomic) IBOutlet UIImageView *iconOfSocialNetworkImageView;
 
-@property (weak, nonatomic) IBOutlet UIImageView *commentImage;
+@property (weak, nonatomic) IBOutlet UIImageView *commentImageView;
 
-@property (weak, nonatomic) IBOutlet UILabel *numberOfComments;
+@property (weak, nonatomic) IBOutlet UILabel *numberOfCommentsLabel;
 
-@property (weak, nonatomic) IBOutlet UIImageView *likeImage;
+@property (weak, nonatomic) IBOutlet UIImageView *likeImageView;
 
-@property (weak, nonatomic) IBOutlet UILabel *numberOfLikes;
+@property (weak, nonatomic) IBOutlet UILabel *numberOfLikesLabel;
 
-@property (weak, nonatomic) IBOutlet UILabel *reasonOfPost;
+@property (weak, nonatomic) IBOutlet UILabel *reasonOfPostLabel;
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint* postDescriptionLeftConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint* postDescriptionLabelLeftConstraint;
 
-@property (weak, nonatomic) IBOutlet UIView *viewCheckMark;
+@property (weak, nonatomic) IBOutlet UIView *checkMarkView;
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *widthConstrain;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *widthCheckMarkViewConstraint;
 
-@property (weak, nonatomic) IBOutlet UIButton *buttonCheckMark;
+@property (weak, nonatomic) IBOutlet UIButton *checkMarkButton;
 
-@property (weak, nonatomic) IBOutlet UILabel *labelUpdatingPost;
+@property (weak, nonatomic) IBOutlet UILabel *updatingPostLabel;
 
 @end
 
@@ -53,15 +53,15 @@
 
 - (void)awakeFromNib {
     // Initialization code
-    self.numberOfImagesInPost.hidden = YES;
+    self.numberOfImagesInPostLabel.hidden = YES;
     self.backgroundColor = [UIColor whiteColor];
-    [self.iconOfSocialNetwork roundImageView];
-    [self.reasonOfPost cornerRadius: CGRectGetHeight(self.reasonOfPost.frame) / 2];
-    [self.numberOfImagesInPost cornerRadius: CGRectGetHeight(self.numberOfImagesInPost.frame) / 2];
-    [self.numberOfComments sizeToFit];
-    [self.numberOfLikes sizeToFit];
-    self.labelUpdatingPost.hidden = YES;
-    [self initiationButtonCheckMark];
+    [self.iconOfSocialNetworkImageView roundImageView];
+    [self.reasonOfPostLabel cornerRadius: CGRectGetHeight(self.reasonOfPostLabel.frame) / 2];
+    [self.numberOfImagesInPostLabel cornerRadius: CGRectGetHeight(self.numberOfImagesInPostLabel.frame) / 2];
+    [self.numberOfCommentsLabel sizeToFit];
+    [self.numberOfLikesLabel sizeToFit];
+    self.updatingPostLabel.hidden = YES;
+    [self initiationCheckMarkButton];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -89,66 +89,66 @@
 - (void) configurationUpdatingPostCell: (Post*) currentPost {
     [self configurateCommentsImageAndLabel: currentPost];
     [self configurateLikesImageAndLabel: currentPost];
-    [self configuratePostDescriptionForPost: currentPost];
-    [self configurateIconOfSocialNetworkForPost: currentPost];
-    self.labelUpdatingPost.hidden = NO;
+    [self configuratepostDescriptionLabelForPost: currentPost];
+    [self configurateiconOfSocialNetworkImageViewForPost: currentPost];
+    self.updatingPostLabel.hidden = NO;
 }
 
 
 - (void) configurationPostCell: (Post*) currentPost andFlagEditing: (BOOL) flagEdit andFlagForDelete :(BOOL) flagForDelete{
-    self.labelUpdatingPost.hidden = YES;
+    self.updatingPostLabel.hidden = YES;
     [self configurateCommentsImageAndLabel: currentPost];
     [self configurateLikesImageAndLabel: currentPost];
-    [self configurateReasonOfPost: currentPost];
-    [self configuratePostDescriptionForPost: currentPost];
-    [self configurateIconOfSocialNetworkForPost: currentPost];
+    [self configuratereasonOfPostLabel: currentPost];
+    [self configuratepostDescriptionLabelForPost: currentPost];
+    [self configurateiconOfSocialNetworkImageViewForPost: currentPost];
     [self configurateEditableCell: flagEdit andIsCellDelete: flagForDelete];
     [self configurateFirstImageOfPost: currentPost];
 }
 
 - (void) configurateCommentsImageAndLabel : (Post*) post {
-    self.commentImage.image = [UIImage imageNamed: musAppImage_Name_Comment];
-    self.numberOfComments.text = [NSString stringWithFormat: @"%ld", (long) post.commentsCount];
+    self.commentImageView.image = [UIImage imageNamed: musAppImage_Name_Comment];
+    self.numberOfCommentsLabel.text = [NSString stringWithFormat: @"%ld", (long) post.commentsCount];
 }
 
 - (void) configurateLikesImageAndLabel : (Post*) post {
-    self.likeImage.image = [UIImage imageNamed: musAppImage_Name_Like];
-    self.numberOfLikes.text = [NSString stringWithFormat: @"%ld", (long)post.likesCount];
+    self.likeImageView.image = [UIImage imageNamed: musAppImage_Name_Like];
+    self.numberOfLikesLabel.text = [NSString stringWithFormat: @"%ld", (long)post.likesCount];
 }
 
-- (void) configurateReasonOfPost : (Post*) post {
-    self.reasonOfPost.backgroundColor = [UIColor reasonColorForPost: post.reason];
-    self.reasonOfPost.text = [NSString reasonTypeInString: post.reason];
+- (void) configuratereasonOfPostLabel : (Post*) post {
+    self.reasonOfPostLabel.backgroundColor = [UIColor reasonColorForPost: post.reason];
+    self.reasonOfPostLabel.text = [NSString reasonTypeInString: post.reason];
 }
 
-- (void) configuratePostDescriptionForPost: (Post*) post {
-    self.postDescription.text = post.postDescription;
+- (void) configuratepostDescriptionLabelForPost: (Post*) post {
+    self.postDescriptionLabel.text = post.postDescription;
 }
 
-- (void) configurateIconOfSocialNetworkForPost: (Post*) post {
-    self.iconOfSocialNetwork.image = [UIImage iconOfSocialNetworkForPost: post];
+- (void) configurateiconOfSocialNetworkImageViewForPost: (Post*) post {
+    self.iconOfSocialNetworkImageView.image = [UIImage iconOfSocialNetworkForPost: post];
 }
 
 - (void) configurateEditableCell : (BOOL) isCellEditable andIsCellDelete : (BOOL) isCellDelete {
     if (isCellEditable) {
         //self.widthConstrain.constant = 50.0f;
         [self changeButtonCheckMarkConstraintWithAnimation: 50.0f];
-        self.buttonCheckMark.hidden = NO;
+        self.checkMarkButton.hidden = NO;
         if (isCellDelete) {
-            [self.buttonCheckMark setSelected: YES];
+            [self.checkMarkButton setSelected: YES];
         }else {
-            [self.buttonCheckMark setSelected: NO];
+            [self.checkMarkButton setSelected: NO];
         }
     } else{
         //self.widthConstrain.constant = 0.0f;
         [self changeButtonCheckMarkConstraintWithAnimation: 0.0f];
-        self.buttonCheckMark.hidden = YES;
-        [self.buttonCheckMark setSelected: NO];
+        self.checkMarkButton.hidden = YES;
+        [self.checkMarkButton setSelected: NO];
     }
 }
 
 - (void) changeButtonCheckMarkConstraintWithAnimation : (CGFloat) newLeftConstraint {
-    self.widthConstrain.constant = newLeftConstraint;
+    self.widthCheckMarkViewConstraint.constant = newLeftConstraint;
     [UIView animateWithDuration: 0.4  animations:^{
         [self layoutIfNeeded];
         [self setNeedsLayout];
@@ -158,37 +158,37 @@
 
 
 - (void) configurateFirstImageOfPost : (Post*) currentPost {
-    [self.firstImageOfPost cornerRadius: 10.0 andBorderWidth: 0.0 withBorderColor: nil];
+    [self.firstImageOfPostImageView cornerRadius: 10.0 andBorderWidth: 0.0 withBorderColor: nil];
     
     if (![[currentPost.arrayImagesUrl firstObject] isEqualToString: @""] || ![currentPost.arrayImagesUrl firstObject]) {
-        [self.firstImageOfPost loadImageFromDataBase: [currentPost.arrayImagesUrl firstObject]];
-        self.firstImageOfPost.hidden = NO;
-        self.postDescriptionLeftConstraint.constant = musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithUserPhotos;
+        [self.firstImageOfPostImageView loadImageFromDataBase: [currentPost.arrayImagesUrl firstObject]];
+        self.firstImageOfPostImageView.hidden = NO;
+        self.postDescriptionLabelLeftConstraint.constant = musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithUserPhotos;
         if (currentPost.arrayImagesUrl.count == 1) {
-            self.numberOfImagesInPost.hidden = YES;
+            self.numberOfImagesInPostLabel.hidden = YES;
         } else {
-            self.numberOfImagesInPost.hidden = NO;
-            self.numberOfImagesInPost.text = [NSString stringWithFormat: @"%lu", (unsigned long)currentPost.arrayImagesUrl.count];
+            self.numberOfImagesInPostLabel.hidden = NO;
+            self.numberOfImagesInPostLabel.text = [NSString stringWithFormat: @"%lu", (unsigned long)currentPost.arrayImagesUrl.count];
         }
     } else {
-        self.firstImageOfPost.hidden = YES;
-        self.numberOfImagesInPost.hidden = YES;
-        self.postDescriptionLeftConstraint.constant = musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithoutUserPhotos;
+        self.firstImageOfPostImageView.hidden = YES;
+        self.numberOfImagesInPostLabel.hidden = YES;
+        self.postDescriptionLabelLeftConstraint.constant = musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithoutUserPhotos;
     }
 }
 
 
-- (void) initiationButtonCheckMark {
-    [self.buttonCheckMark setBackgroundImage:[UIImage imageNamed: @"checkMarkTaken.jpeg"] forState:UIControlStateSelected];
-    [self.buttonCheckMark setBackgroundImage:[UIImage imageNamed: @"checkMark.jpeg"] forState:UIControlStateNormal];
-    self.buttonCheckMark.hidden = YES;
+- (void) initiationCheckMarkButton {
+    [self.checkMarkButton setBackgroundImage:[UIImage imageNamed: musApp_PostCell_Image_Name_CheckMarkTaken] forState:UIControlStateSelected];
+    [self.checkMarkButton setBackgroundImage:[UIImage imageNamed: musApp_PostCell_Image_Name_CheckMark] forState:UIControlStateNormal];
+    self.checkMarkButton.hidden = YES;
 }
 
 - (void) checkIsSelectedPost {
-    if ([self.buttonCheckMark isSelected]) {
-        [self.buttonCheckMark setSelected:NO];
+    if ([self.checkMarkButton isSelected]) {
+        [self.checkMarkButton setSelected:NO];
     } else {
-        [self.buttonCheckMark setSelected:YES];
+        [self.checkMarkButton setSelected:YES];
     }
 }
 

@@ -109,6 +109,8 @@ NSInteger const musAppPostsVC_HeightOfPostCell = 100;
 NSString *const musApp_ActionSheet_Title_ChooseAction = @"Choose action";
 NSInteger const musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithoutUserPhotos = 8;
 NSInteger const musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithUserPhotos = 58;
+NSString *const musApp_PostCell_Image_Name_CheckMarkTaken = @"checkMarkTaken.jpeg";
+NSString *const musApp_PostCell_Image_Name_CheckMark = @"checkMark.jpeg";
 
 #pragma mark - MUSGalleryViewOfPhotos
 
@@ -146,6 +148,7 @@ NSInteger const musAppDetailPostVC_NumberOfRows = 4;
 
 NSInteger const musAppCustomMapView_maxZoomDistance = 450000;
 NSString *const musAppButton_ImageName_ButtonDeleteLocation = @"Button_Delete_Location.png";
+NSString *const musAppCustomMapView_PinAnnotationViewIdentifier = @"MUSAnnotation";
 
 
 @end

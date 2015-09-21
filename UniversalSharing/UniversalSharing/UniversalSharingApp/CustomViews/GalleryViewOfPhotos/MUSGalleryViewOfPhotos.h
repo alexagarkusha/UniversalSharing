@@ -8,10 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-
-//@protocol MUSShowPhotosDelegate <NSObject>
-//- (void) arrayOfPhotosShow : (NSArray*) arrayOfPhotos;
-//@end
 @protocol MUSGalleryViewOfPhotosDelegate <NSObject>
 - (void) arrayOfPhotos : (NSArray*) arrayOfPhotos;
 - (void) addPhotoToPost;
@@ -20,12 +16,10 @@
 @interface MUSGalleryViewOfPhotos : UIView
 
 @property (nonatomic, assign) id <MUSGalleryViewOfPhotosDelegate> delegate;
-//@property (nonatomic, assign) id <MUSShowPhotosDelegate> delegateShowPhotos;
 
 @property (nonatomic, strong) NSMutableArray *arrayOfPhotos; //Array of images
 @property (nonatomic, assign) BOOL isEditableGallery;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-//@property (strong, nonatomic) IBOutlet UIView *view;
 
 + (NSString*) viewID;
 

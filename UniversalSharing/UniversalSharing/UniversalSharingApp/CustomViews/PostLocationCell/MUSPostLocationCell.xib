@@ -83,7 +83,7 @@
             <connections>
                 <outlet property="addLocationLabel" destination="3cX-aj-nKp" id="iRJ-eD-nQg"/>
                 <outlet property="addLocationView" destination="Loz-Pa-Uz7" id="C4f-eu-5M9"/>
-                <outlet property="changeLocationButtonOutlet" destination="7hm-f2-P8D" id="soH-OM-PWA"/>
+                <outlet property="changeLocationButton" destination="7hm-f2-P8D" id="RqH-dg-OYp"/>
                 <outlet property="mapView" destination="0Bv-6Z-rPl" id="LzN-QT-4Cj"/>
                 <outlet property="placeNameLabel" destination="s2W-iQ-k2g" id="fxj-6j-Zec"/>
             </connections>
