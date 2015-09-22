@@ -27,6 +27,10 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
  */
 @property (assign, nonatomic)  NSIndexPath * indexForDeletePicture;
 @property (assign, nonatomic) BOOL flag;
+/////////////////////////////////////////////////
+@property (assign, nonatomic) BOOL flagForDelete;
+@property (assign, nonatomic) NSInteger count;
+//////////////////////////////////////////////////
 @end
 
 @implementation MUSGaleryView
@@ -85,7 +89,7 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
 //    l.deletionVelocityTresholdValue = 0.0f;
 //    l.deletionDistanceTresholdValue= 20.0f;
     [layout setSwipeToDeleteDelegate:self];
-   
+    _count = 0;
 }
 
 - (BOOL)canBecomeFirstResponder
@@ -103,9 +107,13 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     MUSCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[MUSCollectionViewCell customCellID] forIndexPath:indexPath];
-    if (self.flag && [self.arrayWithChosenImages count] < 3) {
+    if (_flagForDelete) {
+       // _count--;
+    }
+    if (self.flag && [self.arrayWithChosenImages count] < 3 && _flagForDelete) {
         cell.photoImageViewCell.image  = nil;
         cell.deletePhotoButtonOutlet.hidden = YES;
+         _flagForDelete = NO;
         //[cell.deletePhotoButtonOutlet setImage:nil forState:UIControlStateNormal];//setBackgroundColor:[UIColor blackColor]];
         return cell;
     }
@@ -121,6 +129,8 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
     }
         //cell.isEditable = self.isEditableCollectionView;
     [cell configurationCellWithPhoto:image.image andEditableState:YES];
+    _flagForDelete = NO;
+
     return  cell;
 }
 
@@ -138,16 +148,19 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
 //}
 
 -(void)swipeToDeleteLayout:(LSSwipeToDeleteCollectionViewLayout *)layout didDeleteCellAtIndexPath:(NSIndexPath *)indexPath {
-
+    _count++;
         [self.arrayWithChosenImages removeObjectAtIndex: indexPath.row];
     NSLog(@"lllll");
     self.flag = YES;
+    _flagForDelete = YES;
         if ([self.arrayWithChosenImages count] == 0) {
             //self.collectionView.backgroundColor = [UIColor whiteColor];
             self.arrayWithChosenImages = nil;
             [self.delegate changeSharePhotoButtonColorAndShareButtonState : NO];
+            _count = 0;
             return;
         }
+    
     //[self.collectionView reloadData];
 }
 //-(void)swipeToDeleteLayout:(LSSwipeToDeleteCollectionViewLayout *)layout cellDidTranslateWithOffset:(UIOffset)offset {
@@ -266,13 +279,26 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     switch (buttonIndex) {
         case YES:
-            [self.arrayWithChosenImages removeObjectAtIndex: self.indexForDeletePicture.row];
+            if ( self.indexForDeletePicture.row > self.arrayWithChosenImages.count - 1 && self.arrayWithChosenImages.count != 1) {
+                [self.arrayWithChosenImages removeObjectAtIndex: self.indexForDeletePicture.row - _count];
+                //_flagForDelete = NO;
+            } else if(self.arrayWithChosenImages.count == 1) {
+                [self.arrayWithChosenImages removeObjectAtIndex: 0];
+                 //_flagForDelete = NO;
 
+            }
+            
+            else {
+            [self.arrayWithChosenImages removeObjectAtIndex: self.indexForDeletePicture.row];
+                // _flagForDelete = NO;
+            }
+             _flagForDelete = NO;
             if ([self.arrayWithChosenImages count] == 0) {
                 self.collectionView.backgroundColor = [UIColor whiteColor];
                 self.arrayWithChosenImages = nil;
                 [self.collectionView reloadData];
                 [self.delegate changeSharePhotoButtonColorAndShareButtonState : NO];
+                _count = 0;
                 return;
             }
             [self.collectionView reloadData];
