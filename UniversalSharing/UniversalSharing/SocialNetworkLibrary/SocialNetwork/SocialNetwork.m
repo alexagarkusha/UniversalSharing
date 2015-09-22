@@ -132,10 +132,8 @@
 }
 
 - (void) updatePostDataBaseWithReason :(ReasonType) reason andPost :(Post*) post {
-    post.reason = reason;
-    //[[DataBaseManager sharedManager] editPost: post];
-    [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost:post]];
-    [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringLocationsForUpdateWithObjectPost:post]];
+    [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringLocationsForUpdateWithObjectPost: post]];
+    [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost: post]];
 }
 
 - (void) saveOrUpdatePost : (Post*) post withReason : (ReasonType) reason {

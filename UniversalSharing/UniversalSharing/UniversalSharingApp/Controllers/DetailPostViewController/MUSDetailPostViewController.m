@@ -173,6 +173,7 @@
  @abstract initiation post description, array of pictures and location of the current post
  */
 - (void) initiationCurrentPostCopy {
+    
     self.currentPostCopy = [self.currentPost copy];
     self.currentPost.arrayImages = [[NSMutableArray alloc] init];
     if (![[self.currentPost.arrayImagesUrl firstObject] isEqualToString: @""]) {
@@ -279,7 +280,7 @@
  */
 - (void) backToThePostsViewController {
     // back to the Posts ViewController. If user did some changes in post - show alert. And then update post.
-    if (![self checkForChangesInTheArrayOfimagesInPost] || (self.currentPost.postDescription != self.currentPostCopy.postDescription) || (self.currentPost.place.placeID != self.currentPostCopy.place.placeID) ) {
+    if ((![self checkForChangesInTheArrayOfimagesInPost] || (self.currentPost.postDescription != self.currentPostCopy.postDescription) || (self.currentPost.place.placeID != self.currentPostCopy.place.placeID)) && self.isEditableTableView ) {
         [self showUpdateAlert];
     } else {
         [self.navigationController popViewControllerAnimated:YES];
@@ -301,11 +302,6 @@
     }
     return isEqualArray;
 }
-
-
-
-
-
 
 #pragma mark - UITableViewDataSource
 
@@ -583,6 +579,8 @@
 }
 
 - (void) updateCurrentPost {
+    
+    
     if (![self.currentPostCopy.postDescription isEqualToString: kPlaceholderText]) {
         self.currentPost.postDescription = self.currentPostCopy.postDescription;
     } else {
@@ -590,7 +588,7 @@
     }
     
     if (self.currentPostCopy.place) {
-        self.currentPost.place = self.currentPostCopy.place;
+        self.currentPost.place = [self.currentPostCopy.place copy];
     }
     
     self.currentPost.arrayImages = [[NSMutableArray alloc] init];
@@ -632,8 +630,8 @@
 }
 
 - (void) updatePostInDataBase {
-    [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost: self.currentPost]];
     [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringLocationsForUpdateWithObjectPost: self.currentPost]];
+    [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost: self.currentPost]];
 }
 
 - (void)dealloc {

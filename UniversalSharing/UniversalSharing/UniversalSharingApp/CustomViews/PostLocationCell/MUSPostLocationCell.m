@@ -54,7 +54,7 @@
 #pragma mark - height for PostLocationCell
 
 + (CGFloat) heightForPostLocationCell : (Place*) place andIsEditableCell : (BOOL) isEditableCell  {
-    if (((!place.longitude.length > 0 && !place.latitude.length > 0) || ([place.longitude isEqualToString: @"(null)"] && [place.longitude isEqualToString: @"(null)"])) && !isEditableCell) {
+    if ((!place.placeID.length > 0 && [place.placeID isEqualToString: @"(null)"]) && !isEditableCell) {
         return 0;
     } else {
         return musAppDetailPostVC_HeightOfPostLocationCell;
@@ -76,7 +76,7 @@
 - (void) configurationPostLocationCellByPostPlace: (Place *) currentPlace {
     self.addLocationLabel.text = @"Add location to your Post";
     [self checkChangeLocationButtonStatus];
-    if ((currentPlace.longitude.length > 0 && currentPlace.latitude.length > 0) && (![currentPlace.longitude isEqualToString: @"(null)"] && ![currentPlace.longitude isEqualToString: @"(null)"])) {
+    if (currentPlace.placeID.length > 0 && ![currentPlace.placeID isEqualToString: @"(null)"]) {
         [self initialMapViewForCurrentPlace: currentPlace];
     }
 }

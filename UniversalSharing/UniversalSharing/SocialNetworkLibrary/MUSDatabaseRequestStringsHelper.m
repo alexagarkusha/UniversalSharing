@@ -118,8 +118,9 @@
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"userId = \"%@\", "];
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"postId = \"%@\" "];
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"WHERE id = \"%d\""];
-    
-    NSString *finalStringPostsForUpdate = [NSString stringWithFormat:stringPostsForUpdate, post.locationId, post.postDescription, [post convertArrayImagesUrlToString], post.likesCount, post.commentsCount, post.networkType, post.dateCreate, post.reason, post.userId, post.postID, post.primaryKey];
+    NSString *postDescription = [post.postDescription stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+
+    NSString *finalStringPostsForUpdate = [NSString stringWithFormat:stringPostsForUpdate, post.locationId, postDescription, [post convertArrayImagesUrlToString], post.likesCount, post.commentsCount, post.networkType, post.dateCreate, post.reason, post.userId, post.postID, post.primaryKey];
     
     return finalStringPostsForUpdate;
 }
@@ -146,7 +147,12 @@
     stringLocationsForUpdate = [stringLocationsForUpdate stringByAppendingString:@"placeName = \"%@\" "];
     stringLocationsForUpdate = [stringLocationsForUpdate stringByAppendingString:@"WHERE locationID = \"%@\""];
     
-    NSString *finalStringLocationsForUpdate = [NSString stringWithFormat:stringLocationsForUpdate, post.userId, post.place.placeID, post.place.longitude,post.place.latitude, post.place.fullName, post.locationId];
+    NSString *placeId = [post.place.placeID stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+    NSString *longitude = [post.place.longitude stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+    NSString *latitude = [post.place.latitude stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+    NSString *fullName = [post.place.fullName stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+    
+    NSString *finalStringLocationsForUpdate = [NSString stringWithFormat:stringLocationsForUpdate, post.userId, placeId, longitude, latitude, fullName, post.locationId];
     return finalStringLocationsForUpdate;
 }
 
