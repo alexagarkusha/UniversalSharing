@@ -16,7 +16,6 @@
 #import "MUSDetailPostViewController.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 #import "SSARefreshControl.h"
-#import "ReachabilityManager.h"
 
 @interface MUSPostsViewController () <DOPDropDownMenuDataSource, DOPDropDownMenuDelegate, UITableViewDataSource, UITableViewDelegate, MUSDetailPostViewControllerDelegate, UIActionSheetDelegate, UIGestureRecognizerDelegate, MUSPostCellDelegate, SSARefreshControlDelegate>
 
@@ -580,12 +579,12 @@
 #pragma mark - SSARefreshControlDelegate
 
 - (void) beganRefreshing {
-    /*
-    if (![self obtainCurrentConnection] || ![self.arrayPosts firstObject]) {
-        [self obtainPosts];
+    
+    if (!self.arrayOfLoginSocialNetworks.count || !self.arrayPosts.count) {
+        [self obtainArrayPosts];
         return;
     }
-    */
+    
     if (!self.isEditing) {
         [self.arrayOfLoginSocialNetworks enumerateObjectsUsingBlock:^(SocialNetwork *socialNetwork, NSUInteger idx, BOOL *stop) {
             [socialNetwork updatePost];
@@ -593,18 +592,6 @@
     } else {
         [self.refreshControl endRefreshing];
     }
-}
-
-#pragma mark - Check InternetConnection
-
-- (BOOL) obtainCurrentConnection {
-    BOOL isReachable = [ReachabilityManager isReachable];
-    BOOL isReachableViaWiFi = [ReachabilityManager isReachableViaWiFi];
-    
-    if (!isReachableViaWiFi && !isReachable){
-        return NO;
-    }
-    return YES;
 }
 
 #pragma mark - dealloc

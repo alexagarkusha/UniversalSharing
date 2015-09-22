@@ -282,8 +282,8 @@ static FacebookNetwork *model = nil;
                  self.copyComplition (nil, [self errorFacebook]);
                  [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
              } else {
-             self.copyComplition (nil, nil);
-             [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
+                 self.copyComplition (nil, nil);
+                 [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
              }
          }
      }];
