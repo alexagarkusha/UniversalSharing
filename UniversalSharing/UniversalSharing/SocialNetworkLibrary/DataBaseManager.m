@@ -196,7 +196,7 @@ static DataBaseManager *databaseManager;
             place.placeID = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 1)];
             place.longitude = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 2)];
             place.latitude = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 3)];
-            place.fullName = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 4)];
+            place.fullName = [[NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 4)] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         }
     }
     return place;
@@ -213,7 +213,7 @@ static DataBaseManager *databaseManager;
             Post *post = [Post new];
             post.primaryKey = sqlite3_column_int(statement, 0);
             post.locationId = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 1)];
-            post.postDescription = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 2)];
+            post.postDescription = [[NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 2)] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
             post.arrayImagesUrl = [[[NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 3)] componentsSeparatedByString: @", "]mutableCopy];
             post.likesCount = sqlite3_column_int(statement, 4);
             post.commentsCount = sqlite3_column_int(statement, 5);

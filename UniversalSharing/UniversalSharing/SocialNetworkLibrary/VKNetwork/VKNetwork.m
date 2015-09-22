@@ -176,10 +176,9 @@ static VKNetwork *model = nil;
 
 
 - (void) updatePost {
-    if (![self obtainCurrentConnection])
-        return;
     NSArray * posts = [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForPostWithReason:Connect andNetworkType:VKontakt]];
-    if (!posts.count) {
+    if (![self obtainCurrentConnection] || !posts.count) {
+        [self updatePostInfoNotification];
         return;
     }
     __block NSString *stringPostsWithUserIdAndPostId = @"";
@@ -517,6 +516,9 @@ static VKNetwork *model = nil;
     return [NSError errorWithMessage: musFacebookError andCodeError: musFacebookErrorCode];
 }
 
+- (void) updatePostInfoNotification {
+    [[NSNotificationCenter defaultCenter] postNotificationName:MUSNotificationPostsInfoWereUpDated object:nil];
+}
 
 
 @end

@@ -203,10 +203,12 @@ static TwitterNetwork *model = nil;
 }
 
 - (void) updatePost {
-    if (![self obtainCurrentConnection])
-        return;
     NSArray * posts = [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForPostWithReason:Connect andNetworkType:Twitters]];
-//    Post *post = posts[2];
+    if (![self obtainCurrentConnection] || !posts.count) {
+        [self updatePostInfoNotification];
+        return;
+    }
+    //    Post *post = posts[2];
 //    [self obtainCountOfLikesAndCommentsFromPost:post];
     [posts enumerateObjectsUsingBlock:^(Post *post, NSUInteger idx, BOOL *stop) {
         [self obtainCountOfLikesAndCommentsFromPost:post];
@@ -536,6 +538,10 @@ static TwitterNetwork *model = nil;
  */
 - (NSError*) errorTwitter {
     return [NSError errorWithMessage: musTwitterError andCodeError: musTwitterErrorCode];
+}
+
+- (void) updatePostInfoNotification {
+    [[NSNotificationCenter defaultCenter] postNotificationName:MUSNotificationPostsInfoWereUpDated object:nil];
 }
 
 @end

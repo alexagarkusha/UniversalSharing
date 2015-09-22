@@ -35,7 +35,7 @@ NSString *const musFacebookLoactionParameter_Distance = @"distance";
 
 NSString *const musFacebookKeyOfPlaceDictionary = @"data";
 
-NSString *const musFacebookError = @"Facebook error. Please retry againe.";
+NSString *const musFacebookError = @"Facebook error. Please retry again.";
 NSInteger const musFacebookErrorCode = 1300;
 
 
@@ -60,7 +60,7 @@ NSInteger const musVKDistanceEqual300 = 300;
 NSInteger const musVKDistanceEqual2400 = 2400;
 NSInteger const musVKDistanceEqual18000 = 18000;
 
-NSString *const musVKError = @"Vkontakte error. Please retry againe.";
+NSString *const musVKError = @"Vkontakte error. Please retry again.";
 NSInteger const musVKErrorCode = 1100;
 
 
@@ -81,7 +81,7 @@ NSString *const musTwitterTitle = @"Login Twitter";
 NSString *const musTwitterIconName = @"TWimage.jpeg";
 NSString *const musTwitterName = @"Twitter";
 
-NSString *const musTwitterError = @"Twitter error. Please retry againe.";
+NSString *const musTwitterError = @"Twitter error. Please retry again.";
 NSInteger const musTwitterErrorCode = 1200;
 
 NSString* const musTwitterLocationParameter_Latitude = @"lat";
