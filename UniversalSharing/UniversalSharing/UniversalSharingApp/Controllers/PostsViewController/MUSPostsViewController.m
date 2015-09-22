@@ -77,7 +77,8 @@
     [self initiationDropDownMenu];
     [self initiationTableView];
     [self initiationLongPressGestureRecognizer];
-
+    //[self obtainArrayPosts];
+    
     self.setWithUniquePrimaryKeysOfPost = [[NSMutableSet alloc] init];
     self.title = musApp_PostsViewController_NavigationBar_Title;
     [self.navigationItem.leftBarButtonItem setEnabled:NO];
@@ -93,12 +94,12 @@
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear : YES];
     [self initiationArrayOfActiveSocialNetwork];
-    [self initiationSSARefreshControl];
     // Notification for updating likes and comments in posts.
     [[NSNotificationCenter defaultCenter] addObserver : self
-                                             selector : @selector(obtainPosts)
+                                             selector : @selector(obtainArrayPosts)
                                                  name : MUSNotificationPostsInfoWereUpDated
                                                object : nil];
+    [self initiationSSARefreshControl];
     //[self.tableView reloadData];
 }
 
@@ -501,7 +502,7 @@
             break;
     }
     [self.arrayPosts removeAllObjects];
-    [self obtainPosts];
+    [self obtainArrayPosts];
 }
 
 #pragma mark - ReasonFromMenuTitle
@@ -540,7 +541,7 @@
  @method
  @abstract Obtain posts from Data Base.
  */
-- (void) obtainPosts {
+- (void) obtainArrayPosts {
     self.arrayPosts = [[NSMutableArray alloc] initWithArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper createStringForPostWithReason: self.predicateReason andNetworkType: self.predicateNetworkType]]];
     [self.refreshControl endRefreshing];
     [self.tableView reloadData];
@@ -549,7 +550,7 @@
 
 - (void) stopUpdatingPostInTableView: (NSNotification*) notification {
     [self.setWithUniquePrimaryKeysOfPost removeObject: [NSString stringWithFormat: @"%ld", (long)[notification.object integerValue]]];
-    [self obtainPosts];
+    [self obtainArrayPosts];
 }
 
 - (void) updatePostByPrimaryKey:(NSString *)primaryKey {
@@ -579,12 +580,12 @@
 #pragma mark - SSARefreshControlDelegate
 
 - (void) beganRefreshing {
-    if (![self obtainCurrentConnection]) {
-        [self.refreshControl endRefreshing];
+    /*
+    if (![self obtainCurrentConnection] || ![self.arrayPosts firstObject]) {
         [self obtainPosts];
         return;
     }
-    
+    */
     if (!self.isEditing) {
         [self.arrayOfLoginSocialNetworks enumerateObjectsUsingBlock:^(SocialNetwork *socialNetwork, NSUInteger idx, BOOL *stop) {
             [socialNetwork updatePost];

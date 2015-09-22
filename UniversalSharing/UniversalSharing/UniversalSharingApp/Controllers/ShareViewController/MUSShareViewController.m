@@ -384,7 +384,8 @@
     /*
      get array with chosen images from MUSGaleryView
      */
-    self.post.arrayImages = [self.galeryView obtainArrayWithChosenPics];
+    self.post.arrayImages = [[NSMutableArray alloc] initWithArray: [self.galeryView obtainArrayWithChosenPics]];
+    //self.post.arrayImages = [self.galeryView obtainArrayWithChosenPics];
     self.post.userId = _currentSocialNetwork.currentUser.clientID;//or something else
     self.post.dateCreate = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970]];
     

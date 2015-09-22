@@ -54,7 +54,7 @@
 #pragma mark - height for PostLocationCell
 
 + (CGFloat) heightForPostLocationCell : (Place*) place andIsEditableCell : (BOOL) isEditableCell  {
-    if ((!place.placeID.length > 0 && [place.placeID isEqualToString: @"(null)"]) && !isEditableCell) {
+    if ((!place.placeID.length > 0 || [place.placeID isEqualToString: @"(null)"]) && !isEditableCell) {
         return 0;
     } else {
         return musAppDetailPostVC_HeightOfPostLocationCell;

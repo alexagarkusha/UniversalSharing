@@ -268,6 +268,9 @@ static FacebookNetwork *model = nil;
                                        HTTPMethod: musPOST]
      startWithCompletionHandler:
      ^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+         
+         
+         
          if (!error) {
              post.postID = [result objectForKey: @"id" ];
              self.copyComplition (musPostSuccess, nil);
@@ -337,9 +340,12 @@ static FacebookNetwork *model = nil;
 }
 
 - (void) updatePost {
-    if (![self obtainCurrentConnection])
-        return;
     NSArray * posts = [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForPostWithReason:Connect andNetworkType:Facebook]];
+    if (![self obtainCurrentConnection] || !posts.count) {
+        [self updatePostInfoNotification];
+        return;
+    }
+    
     FBSDKGraphRequestConnection *connection = [[FBSDKGraphRequestConnection alloc] init];
 
     [posts enumerateObjectsUsingBlock:^(Post *post, NSUInteger index, BOOL *stop) {
@@ -429,8 +435,7 @@ static FacebookNetwork *model = nil;
     
 }
 - (void)requestConnectionDidFinishLoading:(FBSDKGraphRequestConnection *)connection {
-    [[NSNotificationCenter defaultCenter] postNotificationName:MUSNotificationPostsInfoWereUpDated object:nil];
-    
+    [self updatePostInfoNotification];
 }
 
 - (void) obtainCountOfCommentsFromPost :(NSString*) postID andConnection:(FBSDKGraphRequestConnection*)connection withComplition : (Complition) block {
@@ -456,7 +461,9 @@ static FacebookNetwork *model = nil;
 }
 
 
-
+- (void) updatePostInfoNotification {
+    [[NSNotificationCenter defaultCenter] postNotificationName:MUSNotificationPostsInfoWereUpDated object:nil];
+}
 
 
 

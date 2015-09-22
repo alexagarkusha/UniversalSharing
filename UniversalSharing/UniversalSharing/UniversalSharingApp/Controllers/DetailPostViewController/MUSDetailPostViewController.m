@@ -184,14 +184,6 @@
         }
     }
     self.currentPostCopy.arrayImages = [[NSMutableArray alloc] initWithArray: self.currentPost.arrayImages];
-    
-    
-    
-//    if ((!self.currentPostCopy.place.longitude.length > 0 && !self.currentPost.place.latitude.length > 0) || ([self.currentPostCopy.place.longitude isEqualToString: @"(null)"] || [self.currentPostCopy.place.longitude isEqualToString: @"(null)"])) {
-//        self.currentPostCopy.place = nil;
-//        self.currentPost.place = nil;
-//    }
-//
     if (self.currentPostCopy.reason != Connect) {
         self.isEditableTableView = YES;
     }
@@ -261,13 +253,11 @@
             weakSelf.isEditableTableView = NO;
             [weakSelf stopActivityIndicatorAnimating];
             weakSelf.navigationItem.rightBarButtonItem = nil;
-            weakSelf.currentPost = [weakSelf.currentPostCopy copy];
             [weakSelf.tableView reloadData];
         } else {
             [weakSelf showErrorAlertWithError : error];
             weakSelf.isEditableTableView = YES;
             [weakSelf stopActivityIndicatorAnimating];
-            weakSelf.currentPost = [weakSelf.currentPostCopy copy];
             [weakSelf.tableView reloadData];
         }
     }];
@@ -579,8 +569,6 @@
 }
 
 - (void) updateCurrentPost {
-    
-    
     if (![self.currentPostCopy.postDescription isEqualToString: kPlaceholderText]) {
         self.currentPost.postDescription = self.currentPostCopy.postDescription;
     } else {
