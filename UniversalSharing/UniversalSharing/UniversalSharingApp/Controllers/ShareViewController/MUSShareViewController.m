@@ -99,7 +99,7 @@
 
 @property (strong, nonatomic)               NSArray *arrayPicsForDetailCollectionView;
 @property (assign, nonatomic)               NSInteger indexPicTapped;
-@property (assign, nonatomic)               BOOL fragForTextView;
+//@property (assign, nonatomic)               BOOL fragForTextView;
 
 @end
 
@@ -125,7 +125,7 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
-    if ((self.post && self.post.arrayImages.count) || self.fragForTextView ) {
+    if (self.post && self.post.arrayImages.count) {
         self.shareButtonOutlet.enabled = YES;
     }
     if (!_currentSocialNetwork || !_currentSocialNetwork.isVisible || !_currentSocialNetwork.isLogin) {
@@ -327,14 +327,13 @@
         [self showAlertWithMessage: musAppError_Logged_Into_Social_Networks];
         return;
     }
-    //[self.messageTextView resignFirstResponder];
     [self.shareButtonOutlet setCustomView:self.activityIndicator];
     [self.activityIndicator startAnimating];
-   
-    [self createPost];
-    //self.messageTextView.text = @"";
-    [self initialParametersOfMessageTextView];
+    self.shareButtonOutlet.enabled = NO;
 
+    [self createPost];
+    [self initialParametersOfMessageTextView];
+    [self.messageTextView setSelectedRange:NSMakeRange(0, 0)];
         __weak MUSShareViewController *weakSelf = self;
         [_currentSocialNetwork sharePost:self.post withComplition:^(id result, NSError *error) {
             if (result == nil && error == nil) {
@@ -354,8 +353,7 @@
     
     [self.activityIndicator stopAnimating];
     [self.shareButtonOutlet setCustomView:nil];
-    [self.shareButtonOutlet setTitle:@"Share"];
-    self.shareButtonOutlet.enabled = NO;
+    [self.shareButtonOutlet setTitle: @"Share"];
     
     self.post = nil;
     self.place = nil;
@@ -364,7 +362,7 @@
     [self.shareLocationButton setTintColor: [UIColor blackColor]];
     [self.shareLocationButton setTitle: musAppButtonTitle_ShareLocation];
     [self changeSharePhotoButtonColorAndShareButtonState:NO];
-    //[self.galeryView clearCollectionAfterPosted];
+    [self.galeryView clearCollectionAfterPosted];
 }
 
 
@@ -374,7 +372,6 @@
     if(!self.post) {
         self.post = [[Post alloc] init];
     }
-    self.shareButtonOutlet.enabled = NO;
     self.post.place = self.place;
     if (![self.messageTextView.text isEqualToString: kPlaceholderText]) {
         self.post.postDescription = self.messageTextView.text;
@@ -406,34 +403,24 @@
 - (void)textViewDidChange:(UITextView *)textView {
     if (textView.text.length > 0) {
         self.shareButtonOutlet.enabled = YES;
-        self.fragForTextView = YES;
+        //self.fragForTextView = YES;
     } else {
         if ([self.galeryView obtainArrayWithChosenPics].count < 1) {
             self.shareButtonOutlet.enabled = NO;
-            self.fragForTextView = NO;
+            //self.fragForTextView = NO;
         }
     }
-    
-    
-    /*
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     if ([textView.text isEqualToString: kPlaceholderText] && textView.textColor == [UIColor lightGrayColor]) {
         textView.text = changePlaceholderWhenStartEditing;
         textView.textColor = [UIColor blackColor];
         textView.tag = 1;
-        self.fragForTextView = YES;
-    } else if (textView.text.length > 0) {
-        self.fragForTextView = YES;
-    } else {
-        if ([self.galeryView obtainArrayWithChosenPics].count < 1) {
-            self.shareButtonOutlet.enabled = NO;
-            self.fragForTextView = NO;
-        }
-     }
-     */
+        //self.fragForTextView = YES;
+    }
     
-}
-
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    
     if (_currentSocialNetwork.networkType != Twitters) {
         return textView.text.length + (text.length - range.length) <= countOfAllowedLettersInTextView;
     }
@@ -609,7 +596,10 @@
     [self createPost];
     //self.post.arrayImages = arrayPics;
      [self performSegueWithIdentifier: @"goToShowImages" sender:nil];
-    
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end
