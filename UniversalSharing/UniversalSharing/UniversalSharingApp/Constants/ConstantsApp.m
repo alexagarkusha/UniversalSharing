@@ -71,7 +71,7 @@ NSString *const musAppButtonTitle_Edit = @"Edit";
 NSString *const musAppButtonTitle_Share = @"Share";
 NSString *const musAppButtonTitle_Action = @"Action";
 NSString *const musAppButtonTitle_Back = @"Back";
-
+NSString *const musAppButtonTitle_ShareLocation =  @"Share Location";
 NSString *const Error = @"Error";
 
 #pragma mark - MUSGaleryView

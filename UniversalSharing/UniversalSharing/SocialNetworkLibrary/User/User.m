@@ -107,4 +107,35 @@
 }
 
 
+#pragma mark - GETTERS
+
+- (NSString *)username {
+    if (!_username || [_username isKindOfClass:[NSNull class]]) {
+        return @"";
+    }
+    return _username;
+}
+
+- (NSString *)dateOfBirth {
+    if (!_dateOfBirth || [_dateOfBirth isKindOfClass:[NSNull class]]) {
+        return @"";
+    }
+    return _dateOfBirth;
+}
+
+- (NSString *)firstName {
+    if (!_firstName || [_firstName isKindOfClass:[NSNull class]]) {
+        return @"";
+    }
+    return _firstName;
+}
+
+- (NSString *)lastName {
+    if (!_lastName || [_lastName isKindOfClass:[NSNull class]]) {
+        return @"";
+    }
+    return _lastName;
+}
+
+
 @end

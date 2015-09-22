@@ -327,47 +327,48 @@
         [self showAlertWithMessage: musAppError_Logged_Into_Social_Networks];
         return;
     }
+    //[self.messageTextView resignFirstResponder];
     [self.shareButtonOutlet setCustomView:self.activityIndicator];
     [self.activityIndicator startAnimating];
    
-    /////////////////////////////////////////////////////////
     [self createPost];
-    ///////////////////////////////////////////////////////
-    self.view.userInteractionEnabled = NO;
+    //self.messageTextView.text = @"";
+    [self initialParametersOfMessageTextView];
+
         __weak MUSShareViewController *weakSelf = self;
         [_currentSocialNetwork sharePost:self.post withComplition:^(id result, NSError *error) {
-            //////////
-            [self.activityIndicator stopAnimating];
-            [weakSelf.shareButtonOutlet setCustomView:nil];
-            [weakSelf.shareButtonOutlet setTitle:@"Share"];
-            //////////////
-            weakSelf.shareButtonOutlet.enabled = YES;
             if (result == nil && error == nil) {
+                [weakSelf refreshShareScreen];
                 return;
             }
             if (!error) {
-                [self showAlertWithMessage : titleCongratulatoryAlert];
-                self.post = nil;
+                [weakSelf showAlertWithMessage : titleCongratulatoryAlert];
             } else {
-                [self showErrorAlertWithError : error];
-                self.post = nil;
+                [weakSelf showErrorAlertWithError : error];
             }
-        
-            self.view.userInteractionEnabled = YES;
-
-            [self.shareLocationButton setTintColor: [UIColor blackColor]];
-            self.place = nil;
-            [self.shareLocationButton setTitle: @"Share Location"];
-            [self initialParametersOfMessageTextView];
-            [self changeSharePhotoButtonColorAndShareButtonState:NO];
-            [self endEditingMessageTextView];
-            [self.galeryView clearCollectionAfterPosted];
-             self.shareButtonOutlet.enabled = NO;
-             
-            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        }];
-    
+            [weakSelf refreshShareScreen];
+    }];
 }
+
+- (void) refreshShareScreen {
+    
+    [self.activityIndicator stopAnimating];
+    [self.shareButtonOutlet setCustomView:nil];
+    [self.shareButtonOutlet setTitle:@"Share"];
+    self.shareButtonOutlet.enabled = NO;
+    
+    self.post = nil;
+    self.place = nil;
+    
+    self.view.userInteractionEnabled = YES;
+    [self.shareLocationButton setTintColor: [UIColor blackColor]];
+    [self.shareLocationButton setTitle: musAppButtonTitle_ShareLocation];
+    [self changeSharePhotoButtonColorAndShareButtonState:NO];
+    //[self.galeryView clearCollectionAfterPosted];
+}
+
+
+
 
 - (void) createPost {
     if(!self.post) {
@@ -412,6 +413,24 @@
             self.fragForTextView = NO;
         }
     }
+    
+    
+    /*
+    if ([textView.text isEqualToString: kPlaceholderText] && textView.textColor == [UIColor lightGrayColor]) {
+        textView.text = changePlaceholderWhenStartEditing;
+        textView.textColor = [UIColor blackColor];
+        textView.tag = 1;
+        self.fragForTextView = YES;
+    } else if (textView.text.length > 0) {
+        self.fragForTextView = YES;
+    } else {
+        if ([self.galeryView obtainArrayWithChosenPics].count < 1) {
+            self.shareButtonOutlet.enabled = NO;
+            self.fragForTextView = NO;
+        }
+     }
+     */
+    
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
@@ -475,7 +494,7 @@
         if (oldNetworkType != _currentSocialNetwork.networkType) {
             [self.shareLocationButton setTintColor: [UIColor blackColor]];
             self.place = nil;
-            [self.shareLocationButton setTitle: @"Share Location"];
+            [self.shareLocationButton setTitle: musAppButtonTitle_ShareLocation];
         }
         
         [self.changeSocialNetworkButton initiationSocialNetworkButtonForSocialNetwork:_currentSocialNetwork];
@@ -515,7 +534,7 @@
 - (void) showErrorAlertWithError : (NSError*) error {
     UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle : @"NO INTERNET CONNECTION"//Error
                                                          message : @"You can resend this post from shared posts"//[error localizedFailureReason]
-                                                        delegate : nil
+                                                        delegate : self
                                                cancelButtonTitle : musAppButtonTitle_OK
                                                otherButtonTitles : nil];
     [errorAlert show];
@@ -559,7 +578,7 @@
                 [weakSelf.shareLocationButton setTitle: title];
             } else if (!result && !error) {
                 weakSelf.place = nil;
-                [weakSelf.shareLocationButton setTitle: @"Share Location"];
+                [weakSelf.shareLocationButton setTitle: musAppButtonTitle_ShareLocation];
             }
         };
     } else {//goToShowImages
@@ -575,7 +594,6 @@
 - (void)changeSharePhotoButtonColorAndShareButtonState: (BOOL) isPhotos {
     if (!isPhotos) {
         [self.sharePhotoButton setTintColor:[UIColor blackColor]];
-        
         if ([self.messageTextView.text isEqualToString:kPlaceholderText]) {
             self.shareButtonOutlet.enabled = NO;
         }

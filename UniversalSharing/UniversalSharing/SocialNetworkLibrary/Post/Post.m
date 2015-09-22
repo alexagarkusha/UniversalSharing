@@ -39,4 +39,16 @@
     copyPost.place = [self.place copy];
     return copyPost;
 }
+
+#pragma mark - GETTERS
+
+- (NSString *)postDescription {
+    if (!_postDescription || [_postDescription isKindOfClass:[NSNull class]]) {
+        return @"";
+    }
+    return _postDescription;
+}
+
+
+
 @end

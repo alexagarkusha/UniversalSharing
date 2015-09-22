@@ -106,6 +106,7 @@ FOUNDATION_EXPORT NSString *const musAppButtonTitle_Edit;
 FOUNDATION_EXPORT NSString *const musAppButtonTitle_Share;
 FOUNDATION_EXPORT NSString *const musAppButtonTitle_Action;
 FOUNDATION_EXPORT NSString *const musAppButtonTitle_Back;
+FOUNDATION_EXPORT NSString *const musAppButtonTitle_ShareLocation;
 FOUNDATION_EXPORT NSString *const Error;
 
 #pragma mark - MUSGaleryView
