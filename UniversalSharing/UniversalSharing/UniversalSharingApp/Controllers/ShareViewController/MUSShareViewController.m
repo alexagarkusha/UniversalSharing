@@ -333,9 +333,7 @@
     /////////////////////////////////////////////////////////
     [self createPost];
     ///////////////////////////////////////////////////////
-    
-    
-    
+    self.view.userInteractionEnabled = NO;
         __weak MUSShareViewController *weakSelf = self;
         [_currentSocialNetwork sharePost:self.post withComplition:^(id result, NSError *error) {
             //////////
@@ -354,7 +352,9 @@
                 [self showErrorAlertWithError : error];
                 self.post = nil;
             }
-            ////////////////////////////////////////////////////////////////////////////////////////////
+        
+            self.view.userInteractionEnabled = YES;
+
             [self.shareLocationButton setTintColor: [UIColor blackColor]];
             self.place = nil;
             [self.shareLocationButton setTitle: @"Share Location"];
