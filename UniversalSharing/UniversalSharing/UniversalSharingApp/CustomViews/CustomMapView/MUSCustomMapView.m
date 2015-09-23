@@ -148,7 +148,7 @@
 
 - (UIButton*) addPlaceButtonWithIndex : (NSInteger) currentIndex {
     UIButton *addPlaceButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    addPlaceButton.frame = CGRectMake(0, 0, 35, 35);
+    addPlaceButton.frame = CGRectMake(0, 0, 42, 42);
     [addPlaceButton cornerRadius: addPlaceButton.frame.size.height / 2];
     [addPlaceButton setImage: [UIImage imageNamed: musAppButton_ImageName_ButtonAdd] forState:UIControlStateNormal];
     [addPlaceButton setTag: currentIndex];
@@ -160,7 +160,7 @@
 
 - (UIButton*) deletePlaceButton {
     UIButton *deletePlaceButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    deletePlaceButton.frame = CGRectMake(0, 0, 35, 35);
+    deletePlaceButton.frame = CGRectMake(0, 0, 42, 42);
     [deletePlaceButton cornerRadius: deletePlaceButton.frame.size.height / 2];
     [deletePlaceButton setImage: [UIImage imageNamed: musAppButton_ImageName_ButtonDeleteLocation] forState:UIControlStateNormal];
     [deletePlaceButton addTarget:self action:@selector(deleteChosenPlace) forControlEvents:UIControlEventTouchUpInside];

@@ -429,7 +429,11 @@
             if (result) {
                 weakSelf.currentPostCopy.place = result;
                 [weakSelf.tableView reloadData];
+            } else if (!result && !error) {
+                weakSelf.currentPostCopy.place = nil;
+                [weakSelf.tableView reloadData];
             }
+
         };
     } else if ([[segue identifier]isEqualToString : @"goToDitailPostCollectionViewController"]) {
         MUSDetailPostCollectionViewController *vc = [MUSDetailPostCollectionViewController new];
@@ -573,11 +577,9 @@
     } else {
         self.currentPost.postDescription = @"";
     }
-    
-    if (self.currentPostCopy.place) {
-        self.currentPost.place = [self.currentPostCopy.place copy];
-    }
-    
+    //if (self.currentPostCopy.place) {
+    self.currentPost.place = [self.currentPostCopy.place copy];
+    //}
     self.currentPost.arrayImages = [[NSMutableArray alloc] init];
     
     for (int i = 0; i < self.currentPostCopy.arrayImages.count; i++) {
@@ -617,6 +619,8 @@
 }
 
 - (void) updatePostInDataBase {
+    
+    
     [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringLocationsForUpdateWithObjectPost: self.currentPost]];
     [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost: self.currentPost]];
 }

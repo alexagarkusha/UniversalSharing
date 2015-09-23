@@ -225,31 +225,35 @@ static TwitterNetwork *model = nil;
     NSError *clientError;
     
     NSURLRequest *request = [[[Twitter sharedInstance] APIClient] URLRequestWithMethod:@"GET" URL:statusesShowEndpoint parameters:params error:&clientError];
-    
+    __weak TwitterNetwork *weakSelf = self;
+
     if (request) {
         [[[Twitter sharedInstance] APIClient] sendTwitterRequest:request completion:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
             if (data) {
                 NSError *jsonError;
                 NSDictionary *arrayJson = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
                 if (!arrayJson.count) {
+                    [weakSelf updatePostInfoNotification];
                     return;
                 }
                 if (post.likesCount == [[arrayJson  objectForKey:@"favorite_count"] integerValue] &&  post.commentsCount == [[arrayJson  objectForKey:@"retweet_count"] integerValue] ) {
+                    [weakSelf updatePostInfoNotification];
                     return;
                 }
                 post.likesCount = [[arrayJson  objectForKey:@"favorite_count"] integerValue];
                 post.commentsCount = [[arrayJson objectForKey:@"retweet_count"] integerValue];
                 
                 [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost:post]];
-                [[NSNotificationCenter defaultCenter] postNotificationName:MUSNotificationPostsInfoWereUpDated object:nil];
-
+                [weakSelf updatePostInfoNotification];
             }
             else {
+                [weakSelf updatePostInfoNotification];
                 NSLog(@"Error: %@", connectionError);
             }
         }];
     }
     else {
+        [weakSelf updatePostInfoNotification];
         NSLog(@"Error: %@", clientError);
     }
 }
