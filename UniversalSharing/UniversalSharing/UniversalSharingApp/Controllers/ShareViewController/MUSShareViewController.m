@@ -19,7 +19,6 @@
 #import "MUSGaleryView.h"
 #import "ReachabilityManager.h"
 #import <CoreText/CoreText.h>
-//////////////////////////////////////////////
 #import "DataBaseManager.h"
 #import "MUSDetailPostCollectionViewController.h"
 
@@ -273,6 +272,13 @@
     self.messageTextView.tag = 0;
 }
 
+- (void) initialParametersOfMessageTextViewWhenStartingEditingText {
+    self.messageTextView.text = changePlaceholderWhenStartEditing;
+    self.messageTextView.textColor = [UIColor blackColor];
+    self.messageTextView.tag = 1;
+}
+
+
 #pragma mark - Keyboard Show/Hide
 
 - (void) keyboardWillShow: (NSNotification*) notification {
@@ -287,10 +293,10 @@
         galeryViewHeight = 60.0f;
         self.galeryViewLayoutConstraint.constant = galeryViewHeight;
     }
-    self.messageTextView.frame = CGRectMake(self.messageTextView.frame.origin.x,
-                                            self.messageTextView.frame.origin.y,
-                                            self.messageTextView.frame.size.width,
-                                            self.messageTextView.frame.size.height
+    self.messageTextView.frame = CGRectMake(self.messageTextViewFrame.origin.x,
+                                            self.messageTextViewFrame.origin.y,
+                                            self.messageTextViewFrame.size.width,
+                                            self.messageTextViewFrame.size.height
                                             - convertedFrame.size.height +
                                             self.tabBarController.tabBar.frame.size.height + self.galeryView.frame.size.height - galeryViewHeight);
     [UIView animateWithDuration: 0.3  animations:^{
@@ -383,7 +389,6 @@
      get array with chosen images from MUSGaleryView
      */
     self.post.arrayImages = [[NSMutableArray alloc] initWithArray: [self.galeryView obtainArrayWithChosenPics]];
-    //self.post.arrayImages = [self.galeryView obtainArrayWithChosenPics];
     self.post.userId = _currentSocialNetwork.currentUser.clientID;//or something else
     self.post.dateCreate = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970]];
     
@@ -391,52 +396,69 @@
 #pragma mark - UITextViewDelegate
 
 - (BOOL) textViewShouldBeginEditing:(UITextView *)textView {
-    if(textView.tag == 0) {
-        textView.text = changePlaceholderWhenStartEditing;
-        textView.textColor = [UIColor blackColor];
-        textView.tag = 1;
-    }
     self.mainGestureRecognizer.enabled = YES;
     return YES;
 }
 
 - (void)textViewDidChange:(UITextView *)textView {
     if (textView.text.length > 0) {
+        NSString *rawString = [textView text];
+        NSCharacterSet *whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+        NSString *trimmed = [rawString stringByTrimmingCharactersInSet:whitespace];
+        if ([trimmed length] == 0) {
+            self.shareButtonOutlet.enabled = NO;
+            [self initialParametersOfMessageTextView];
+            [self.messageTextView setSelectedRange:NSMakeRange(0, 0)];
+            return;
+        }
         self.shareButtonOutlet.enabled = YES;
-        //self.fragForTextView = YES;
     } else {
+        [self initialParametersOfMessageTextView];
+        [self.messageTextView setSelectedRange:NSMakeRange(0, 0)];
         if ([self.galeryView obtainArrayWithChosenPics].count < 1) {
             self.shareButtonOutlet.enabled = NO;
-            //self.fragForTextView = NO;
         }
     }
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-    if ([textView.text isEqualToString: kPlaceholderText] && textView.textColor == [UIColor lightGrayColor]) {
-        textView.text = changePlaceholderWhenStartEditing;
-        textView.textColor = [UIColor blackColor];
-        textView.tag = 1;
-        //self.fragForTextView = YES;
+    if (textView.tag == 0 && text.length > 0) {
+//        if([text isEqualToString:@"\n"] || [text isEqualToString: @" "]) {
+//            return 0;
+//        }
+        [self initialParametersOfMessageTextViewWhenStartingEditingText];
     }
-    
-    
     if (_currentSocialNetwork.networkType != Twitters) {
         return textView.text.length + (text.length - range.length) <= countOfAllowedLettersInTextView;
+    } else {
+        return textView.text.length + (text.length - range.length) <= musApp_TextView_CountOfAllowedLetters_ForTwitter;
     }
-    return textView.text.length + (text.length - range.length) <= musApp_TextView_CountOfAllowedLetters_ForTwitter;
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
-    if([textView.text length] == 0) {
+    if(textView.tag == 0) {
+        self.shareButtonOutlet.enabled = [self checkingNumberPhotos];
+    }  else if (textView.text.length == 0){
         [self initialParametersOfMessageTextView];
-        if ([self.galeryView obtainArrayWithChosenPics].count < 1) {
-            self.shareButtonOutlet.enabled = NO;
-        }
+        self.shareButtonOutlet.enabled = [self checkingNumberPhotos];
     } else {
         self.shareButtonOutlet.enabled = YES;
     }
 }
+
+- (void)textViewDidChangeSelection:(UITextView *)textView {
+    if ([textView.text isEqualToString: kPlaceholderText] && textView.textColor == [UIColor lightGrayColor]) {
+        [self.messageTextView setSelectedRange:NSMakeRange(0, 0)];
+    }
+}
+
+- (BOOL) checkingNumberPhotos {
+    if (![self.galeryView obtainArrayWithChosenPics].count) {
+        return NO;
+    }
+    return YES;
+}
+
 
 #pragma mark - UITapGestureRecognizer
 
@@ -542,16 +564,16 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
     if ([[segue identifier] isEqualToString:goToLocationViewControllerSegueIdentifier]) {
-        MUSLocationViewController *vc = [MUSLocationViewController new];
-        vc = [segue destinationViewController];
-        [vc currentUser:_currentSocialNetwork];
+        MUSLocationViewController *locationViewController = [MUSLocationViewController new];
+        locationViewController = [segue destinationViewController];
+        [locationViewController currentUser:_currentSocialNetwork];
         self.galeryView.isEditableCollectionView = NO;
         [self.galeryView.collectionView reloadData];
-        [vc setPlace: self.place];
+        [locationViewController setPlace: self.place];
 
         
         __weak MUSShareViewController *weakSelf = self;
-        vc.placeComplition = ^(Place* result, NSError *error) {
+        locationViewController.placeComplition = ^(Place* result, NSError *error) {
             /*
              back place object and we get id for network
              */

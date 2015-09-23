@@ -219,7 +219,9 @@ static TwitterNetwork *model = nil;
 
 - (void) obtainCountOfLikesAndCommentsFromPost :(Post*) post {
      //https://api.twitter.com/1.1/statuses/retweets/509457288717819904.json
-    NSString *statusesShowEndpoint = @"https://api.twitter.com/1.1/statuses/show.json";//[NSString stringWithFormat:@"https://api.twitter.com/1.1/statuses/retweets/%@.json",post.postID];
+    NSString *statusesShowEndpoint = musTwitterURL_Statuses_Show;
+    
+    //[NSString stringWithFormat:@"https://api.twitter.com/1.1/statuses/retweets/%@.json",post.postID];
     
     NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:post.postID,@"id",@"true",@"include_my_retweet",nil];//,@"100",@"count"
     NSError *clientError;
@@ -538,7 +540,7 @@ static TwitterNetwork *model = nil;
 }
 
 /*!
- @abstract returnув Twitter network error
+ @abstract returned Twitter network error
  */
 - (NSError*) errorTwitter {
     return [NSError errorWithMessage: musTwitterError andCodeError: musTwitterErrorCode];

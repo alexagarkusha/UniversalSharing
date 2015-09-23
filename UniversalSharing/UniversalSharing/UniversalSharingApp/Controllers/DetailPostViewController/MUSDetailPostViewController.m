@@ -59,6 +59,8 @@
 
 @property (nonatomic, strong) Post *currentPostCopy;
 
+@property (nonatomic, strong) NSIndexPath *postDescriptionCellIndexPath;
+
 @end
 
 
@@ -80,8 +82,10 @@
 - (void) viewWillAppear:(BOOL)animated {
     [self.tableView reloadData];
     [super viewWillAppear : YES];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showPhotosOnCollectionView :) name:notificationShowImagesInCollectionView object:nil];
-
+    [[NSNotificationCenter defaultCenter] addObserver : self
+                                             selector : @selector(showPhotosOnCollectionView :)
+                                                 name : notificationShowImagesInCollectionView
+                                               object : nil];
     [[NSNotificationCenter defaultCenter] addObserver : self
                                              selector : @selector(keyboardShow:)
                                                  name : UIKeyboardWillShowNotification
@@ -90,7 +94,6 @@
                                              selector : @selector(keyboardWillHide:)
                                                  name : UIKeyboardWillHideNotification
                                                object : nil];
-
     [[NSNotificationCenter defaultCenter] addObserver : self
                                              selector : @selector(obtainPosts)
                                                  name : MUSNotificationPostsInfoWereUpDated
@@ -269,7 +272,7 @@
  */
 - (void) backToThePostsViewController {
     // back to the Posts ViewController. If user did some changes in post - show alert. And then update post.
-    if ((![self checkForChangesInTheArrayOfimagesInPost] || (self.currentPost.postDescription != self.currentPostCopy.postDescription) || (self.currentPost.place.placeID != self.currentPostCopy.place.placeID)) && self.isEditableTableView ) {
+    if ((![self checkForChangesInTheArrayOfimagesInPost] || !([self.currentPost.postDescription isEqualToString: self.currentPostCopy.postDescription]) || (self.currentPost.place.placeID != self.currentPostCopy.place.placeID)) && self.isEditableTableView ) {
         [self showUpdateAlert];
     } else {
         [self.navigationController popViewControllerAnimated:YES];
@@ -454,11 +457,14 @@
 
 - (void) saveChangesInPostDescription:(NSString *)postDescription {
     self.currentPostCopy.postDescription = postDescription;
+}
+
+- (void) endEditingPostDescriptionAndReloadTableView {
     [self.tableView reloadData];
 }
 
 - (void) beginEditingPostDescription:(NSIndexPath *)currentIndexPath {
-    [self performSelector:@selector(scrollToCell:) withObject: currentIndexPath afterDelay:0.5f];
+    self.postDescriptionCellIndexPath = currentIndexPath;
 }
 /*!
  @method
@@ -466,7 +472,7 @@
  @param current index path of cell
  */
 -(void) scrollToCell:(NSIndexPath*) path {
-    [_tableView scrollToRowAtIndexPath:path atScrollPosition : UITableViewScrollPositionNone animated:YES];
+    [self.tableView scrollToRowAtIndexPath: path atScrollPosition : UITableViewScrollPositionNone animated:YES];
 }
 
 #pragma mark - MUSGalleryOfPhotosCellDelegate
@@ -506,13 +512,12 @@
  @param current index path of cell
  */
 -(void) keyboardShow:(NSNotification*) notification {
-    
     CGRect initialFrame = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     CGRect convertedFrame = [self.view convertRect:initialFrame fromView:nil];
-    CGRect tvFrame = _tableView.frame;
+    CGRect tvFrame = self.tableViewFrame;
     tvFrame.size.height = convertedFrame.origin.y - self.tabBarController.tabBar.frame.size.height - 14;
-    _tableView.frame = tvFrame;
-    
+    self.tableView.frame = tvFrame;
+    [self performSelector:@selector(scrollToCell:) withObject: self.postDescriptionCellIndexPath afterDelay:0.5f];
 }
 
 - (void) keyboardWillHide: (NSNotification*) notification {

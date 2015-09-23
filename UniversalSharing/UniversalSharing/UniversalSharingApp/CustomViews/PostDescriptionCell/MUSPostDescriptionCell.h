@@ -23,6 +23,9 @@
  */
 - (void) saveChangesInPostDescription : (NSString*) postDescription;
 
+- (void) endEditingPostDescriptionAndReloadTableView;
+
+
 @end
 
 @interface MUSPostDescriptionCell : UITableViewCell

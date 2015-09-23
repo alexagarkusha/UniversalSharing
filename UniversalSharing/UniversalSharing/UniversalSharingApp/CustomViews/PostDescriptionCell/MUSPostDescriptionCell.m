@@ -97,7 +97,6 @@
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-    
     if( [text rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet]].location == NSNotFound ) {
         if (self.currentNetworkType != Twitters) {
             return textView.text.length + (text.length - range.length) <= countOfAllowedLettersInTextView;
@@ -109,13 +108,19 @@
     return NO;
 }
 
+- (void) textViewDidChange:(UITextView *)textView {
+    [self.delegate saveChangesInPostDescription: textView.text];
+}
+
 - (void)textViewDidEndEditing:(UITextView *)textView {
     
     if([textView.text length] == 0) {
         [self initialPostDescriptionTextView];
-        [self.delegate saveChangesInPostDescription: textView.text];
+        //[self.delegate saveChangesInPostDescription: textView.text];
+        [self.delegate endEditingPostDescriptionAndReloadTableView];
     } else {
-        [self.delegate saveChangesInPostDescription: textView.text];
+        //[self.delegate saveChangesInPostDescription: textView.text];
+        [self.delegate endEditingPostDescriptionAndReloadTableView];
     }
     [self.postDescriptionTextView setEditable: NO];
     //self.postDescriptionTextView.selectable = NO;
@@ -150,9 +155,9 @@
 - (IBAction)changeButtonTouch:(id)sender {
     self.postDescriptionTextView.editable = YES;
     self.postDescriptionTextView.autocorrectionType = UITextAutocorrectionTypeNo;
+    [self.delegate beginEditingPostDescription: self.currentIndexPath];
     [self.postDescriptionTextView becomeFirstResponder];
     self.postDescriptionTextView.selectedRange = NSMakeRange([self.postDescriptionTextView.text length], 0);
-    [self.delegate beginEditingPostDescription: self.currentIndexPath];
 }
 
 @end

@@ -110,20 +110,21 @@ FOUNDATION_EXPORT NSString *const musTwitterName;
 FOUNDATION_EXPORT NSString *const musTwitterError;
 FOUNDATION_EXPORT NSInteger const musTwitterErrorCode;
 
-FOUNDATION_EXPORT NSString* const musTwitterLocationParameter_Latitude;
-FOUNDATION_EXPORT NSString* const musTwitterLocationParameter_Longituge;
+FOUNDATION_EXPORT NSString *const musTwitterLocationParameter_Latitude;
+FOUNDATION_EXPORT NSString *const musTwitterLocationParameter_Longituge;
 
-FOUNDATION_EXPORT NSString* const musTwitterURL_Users_Show;
-FOUNDATION_EXPORT NSString* const musTwitterURL_Geo_Search;
-FOUNDATION_EXPORT NSString* const musTwitterURL_Statuses_Update;
-FOUNDATION_EXPORT NSString* const musTwitterURL_Media_Upload;
+FOUNDATION_EXPORT NSString *const musTwitterURL_Statuses_Show;
+FOUNDATION_EXPORT NSString *const musTwitterURL_Users_Show;
+FOUNDATION_EXPORT NSString *const musTwitterURL_Geo_Search;
+FOUNDATION_EXPORT NSString *const musTwitterURL_Statuses_Update;
+FOUNDATION_EXPORT NSString *const musTwitterURL_Media_Upload;
 
-FOUNDATION_EXPORT NSString* const musTwitterParameter_Status;
-FOUNDATION_EXPORT NSString* const musTwitterParameter_PlaceID;
-FOUNDATION_EXPORT NSString* const musTwitterParameter_MediaID;
-FOUNDATION_EXPORT NSString* const musTwitterParameter_Media;
+FOUNDATION_EXPORT NSString *const musTwitterParameter_Status;
+FOUNDATION_EXPORT NSString *const musTwitterParameter_PlaceID;
+FOUNDATION_EXPORT NSString *const musTwitterParameter_MediaID;
+FOUNDATION_EXPORT NSString *const musTwitterParameter_Media;
 
-FOUNDATION_EXPORT NSString* const musTwitterJSONParameterForMediaID;
+FOUNDATION_EXPORT NSString *const musTwitterJSONParameterForMediaID;
 
 
 #pragma mark General Constants

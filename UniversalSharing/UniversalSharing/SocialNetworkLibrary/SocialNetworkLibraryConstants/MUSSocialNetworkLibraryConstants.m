@@ -87,6 +87,7 @@ NSInteger const musTwitterErrorCode = 1200;
 NSString* const musTwitterLocationParameter_Latitude = @"lat";
 NSString* const musTwitterLocationParameter_Longituge = @"long";
 
+NSString *const musTwitterURL_Statuses_Show = @"https://api.twitter.com/1.1/statuses/show.json";
 NSString *const musTwitterURL_Users_Show = @"https://api.twitter.com/1.1/users/show.json";
 NSString* const musTwitterURL_Geo_Search = @"https://api.twitter.com/1.1/geo/search.json";
 NSString* const musTwitterURL_Statuses_Update = @"https://api.twitter.com/1.1/statuses/update.json";
