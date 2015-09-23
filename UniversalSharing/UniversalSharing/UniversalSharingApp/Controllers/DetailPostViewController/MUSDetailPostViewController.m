@@ -21,7 +21,6 @@
 #import "MUSDatabaseRequestStringsHelper.h"
 #import "MUSDetailPostCollectionViewController.h"
 #import "SSARefreshControl.h"
-#import "ReachabilityManager.h"
 #import "MUSUserDetailViewController.h"
 
 @interface MUSDetailPostViewController () <UITableViewDataSource, UITableViewDelegate, MUSPostDescriptionCellDelegate, MUSGalleryOfPhotosCellDelegate, MUSPostLocationCellDelegate,  UIActionSheetDelegate, UIAlertViewDelegate, SSARefreshControlDelegate, MUSCommentsAndLikesCellDelegate>
@@ -629,23 +628,11 @@
 #pragma mark - SSARefreshControlDelegate
 
 - (void) beganRefreshing {
-    if (![self obtainCurrentConnection]) {
+    if (self.currentPost.reason != Connect) {
         [self.refreshControl endRefreshing];
         return;
     }
     [self.currentSocialNetwork updatePost];
-}
-
-#pragma mark - Check InternetConnection
-
-- (BOOL) obtainCurrentConnection {
-    BOOL isReachable = [ReachabilityManager isReachable];
-    BOOL isReachableViaWiFi = [ReachabilityManager isReachableViaWiFi];
-    
-    if (!isReachableViaWiFi && !isReachable){
-        return NO;
-    }
-    return YES;
 }
 
 #pragma mark - MUSCommentsAndLikesCellDelegate 

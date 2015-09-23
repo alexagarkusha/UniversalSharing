@@ -204,7 +204,7 @@ static TwitterNetwork *model = nil;
 
 - (void) updatePost {
     NSArray * posts = [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForPostWithReason:Connect andNetworkType:Twitters]];
-    if (![self obtainCurrentConnection] || !posts.count) {
+    if (![self obtainCurrentConnection] || !posts.count || (![self obtainCurrentConnection] && posts.count)) {
         [self updatePostInfoNotification];
         return;
     }

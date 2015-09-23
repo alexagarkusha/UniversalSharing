@@ -177,7 +177,7 @@ static VKNetwork *model = nil;
 
 - (void) updatePost {
     NSArray * posts = [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForPostWithReason:Connect andNetworkType:VKontakt]];
-    if (![self obtainCurrentConnection] || !posts.count) {
+    if (![self obtainCurrentConnection] || !posts.count  || (![self obtainCurrentConnection] && posts.count)) {
         [self updatePostInfoNotification];
         return;
     }
