@@ -184,6 +184,8 @@
             UIImage *image = [[UIImage alloc] init];
             image = [image loadImageFromDataBase: [self.currentPost.arrayImagesUrl objectAtIndex: i]];
             currentImageToPost.image = image;
+            currentImageToPost.imageType = JPEG;
+            currentImageToPost.quality = 1.0f;
             [self.currentPost.arrayImages addObject: currentImageToPost];
         }
     }
@@ -245,8 +247,7 @@
         [self showAlertWithMessage: musAppError_Logged_Into_Social_Networks];
         return;
     }
-    self.isEditableTableView = NO;
-    [self.tableView reloadData];
+    self.view.userInteractionEnabled = NO;
     [self.delegate updatePostByPrimaryKey: [NSString stringWithFormat: @"%ld", (long)self.currentPost.primaryKey]];
     [self startActivityIndicatorAnimating];
     [self updatePost: self.currentPost];
@@ -254,13 +255,14 @@
     [_currentSocialNetwork sharePost: self.currentPost withComplition:^(id result, NSError *error) {
         if (!error) {
             [self showAlertWithMessage : titleCongratulatoryAlert];
+            self.view.userInteractionEnabled = YES;
             weakSelf.isEditableTableView = NO;
             [weakSelf stopActivityIndicatorAnimating];
             weakSelf.navigationItem.rightBarButtonItem = nil;
             [weakSelf.tableView reloadData];
         } else {
             [weakSelf showErrorAlertWithError : error];
-            weakSelf.isEditableTableView = YES;
+            self.view.userInteractionEnabled = YES;
             [weakSelf stopActivityIndicatorAnimating];
             [weakSelf.tableView reloadData];
         }
@@ -274,6 +276,9 @@
  */
 - (void) backToThePostsViewController {
     // back to the Posts ViewController. If user did some changes in post - show alert. And then update post.
+    
+    
+    
     if ((![self checkForChangesInTheArrayOfimagesInPost] || !([self.currentPost.postDescription isEqualToString: self.currentPostCopy.postDescription]) || (self.currentPost.place.placeID != self.currentPostCopy.place.placeID)) && self.isEditableTableView ) {
         [self showUpdateAlert];
     } else {
@@ -399,11 +404,7 @@
             break;
         case PostDescriptionCellType:
         {
-            CGFloat heightOfPostDescriptionRow = [MUSPostDescriptionCell heightForPostDescriptionCell: self.currentPostCopy.postDescription andIsEditableCell: self.isEditableTableView];
-            if (heightOfPostDescriptionRow < 100 && self.isEditableTableView) {
-                heightOfPostDescriptionRow = 100;
-            }
-            return heightOfPostDescriptionRow;
+            return [MUSPostDescriptionCell heightForPostDescriptionCell: self.currentPostCopy.postDescription andIsEditableCell: self.isEditableTableView];;
             break;
         }
         default:
@@ -415,8 +416,6 @@
 #pragma mark - MUSPostLocationCellDelegate
 
 - (void) changeLocationForPost {
-    //[self performSegueWithIdentifier:@"go" sender:nil];
-    
     [self performSegueWithIdentifier: goToLocationViewControllerSegueIdentifier sender:nil];
 }
 
@@ -443,7 +442,7 @@
     } else if ([[segue identifier]isEqualToString : @"goToDitailPostCollectionViewController"]) {
         MUSDetailPostCollectionViewController *vc = [MUSDetailPostCollectionViewController new];
         vc = [segue destinationViewController];
-        [vc setObjectsWithPost:self.currentPostCopy andCurrentSocialNetwork:_currentSocialNetwork andIndexPicTapped:self.indexPicTapped];
+        [vc setObjectsWithPost: self.currentPostCopy andCurrentSocialNetwork: _currentSocialNetwork andIndexPicTapped: self.indexPicTapped];
         
     } else if ([[segue identifier]isEqualToString : goToUserDetailViewControllerSegueIdentifier]) {
         MUSUserDetailViewController *userDetailViewController = [MUSUserDetailViewController new];
@@ -458,6 +457,10 @@
 #pragma mark - MUSPostDescriptionCellDelegate
 
 - (void) saveChangesInPostDescription:(NSString *)postDescription {
+    if ([postDescription isEqualToString: kPlaceholderText]) {
+        self.currentPostCopy.postDescription = nil;
+        return;
+    }
     self.currentPostCopy.postDescription = postDescription;
 }
 
@@ -497,7 +500,7 @@
     [[MUSPhotoManager sharedManager] photoShowFromViewController:self withComplition:^(id result, NSError *error) {
         if(!error) {
             ImageToPost *imageToPost = result;
-            [weakSelf.currentPostCopy.arrayImages addObject: imageToPost];//////////////////////////////////////////////////
+            [weakSelf.currentPostCopy.arrayImages addObject: imageToPost];
             [weakSelf.tableView reloadData];
         } else {
             [weakSelf showErrorAlertWithError : error];
@@ -584,18 +587,8 @@
     } else {
         self.currentPost.postDescription = @"";
     }
-    //if (self.currentPostCopy.place) {
     self.currentPost.place = [self.currentPostCopy.place copy];
-    //}
-    self.currentPost.arrayImages = [[NSMutableArray alloc] init];
-    
-    for (int i = 0; i < self.currentPostCopy.arrayImages.count; i++) {
-        //ImageToPost *imageToPost = [[ImageToPost alloc] init];
-        ImageToPost *imageToPost = [self.currentPostCopy.arrayImages objectAtIndex: i];
-        imageToPost.quality = 1.0f;
-        imageToPost.imageType = JPEG;
-        [self.currentPost.arrayImages addObject: imageToPost];
-    }
+    self.currentPost.arrayImages = [self.currentPostCopy.arrayImages copy];
 }
 
 - (void) saveImageToDocumentsFolderAndFillArrayWithUrl :(Post*) post {
@@ -626,8 +619,6 @@
 }
 
 - (void) updatePostInDataBase {
-    
-    
     [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringLocationsForUpdateWithObjectPost: self.currentPost]];
     [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost: self.currentPost]];
 }

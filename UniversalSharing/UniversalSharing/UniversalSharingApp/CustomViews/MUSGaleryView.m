@@ -259,7 +259,7 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
     [self.collectionView reloadData];
 }
 
-- (NSArray*) obtainArrayWithChosenPics {
+- (NSMutableArray*) obtainArrayWithChosenPics {
     return self.arrayWithChosenImages;
 }
 

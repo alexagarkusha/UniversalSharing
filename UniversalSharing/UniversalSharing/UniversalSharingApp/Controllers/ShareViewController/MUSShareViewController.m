@@ -336,6 +336,7 @@
     [self.shareButtonOutlet setCustomView:self.activityIndicator];
     [self.activityIndicator startAnimating];
     self.shareButtonOutlet.enabled = NO;
+    self.view.userInteractionEnabled = NO;
 
     [self createPost];
     [self initialParametersOfMessageTextView];
@@ -388,7 +389,7 @@
     /*
      get array with chosen images from MUSGaleryView
      */
-    self.post.arrayImages = [self.galeryView obtainArrayWithChosenPics];
+    self.post.arrayImages = [[self.galeryView obtainArrayWithChosenPics] mutableCopy];
     //self.post.arrayImages = [[NSMutableArray alloc] initWithArray: [self.galeryView obtainArrayWithChosenPics]];
     self.post.userId = _currentSocialNetwork.currentUser.clientID;//or something else
     self.post.dateCreate = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970]];
