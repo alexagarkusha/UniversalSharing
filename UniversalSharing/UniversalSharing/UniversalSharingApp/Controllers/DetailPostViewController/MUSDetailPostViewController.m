@@ -180,9 +180,11 @@
     self.currentPost.arrayImages = [[NSMutableArray alloc] init];
     if (![[self.currentPost.arrayImagesUrl firstObject] isEqualToString: @""]) {
         for (int i = 0; i < self.currentPost.arrayImagesUrl.count; i++) {
-            UIImage *currentImage = [[UIImage alloc] init];
-            currentImage = [currentImage loadImageFromDataBase: [self.currentPost.arrayImagesUrl objectAtIndex: i]];
-            [self.currentPost.arrayImages addObject: currentImage];
+            ImageToPost *currentImageToPost = [[ImageToPost alloc] init];
+            UIImage *image = [[UIImage alloc] init];
+            image = [image loadImageFromDataBase: [self.currentPost.arrayImagesUrl objectAtIndex: i]];
+            currentImageToPost.image = image;
+            [self.currentPost.arrayImages addObject: currentImageToPost];
         }
     }
     self.currentPostCopy.arrayImages = [[NSMutableArray alloc] initWithArray: self.currentPost.arrayImages];
@@ -495,7 +497,7 @@
     [[MUSPhotoManager sharedManager] photoShowFromViewController:self withComplition:^(id result, NSError *error) {
         if(!error) {
             ImageToPost *imageToPost = result;
-            [weakSelf.currentPostCopy.arrayImages addObject: imageToPost.image];//////////////////////////////////////////////////
+            [weakSelf.currentPostCopy.arrayImages addObject: imageToPost];//////////////////////////////////////////////////
             [weakSelf.tableView reloadData];
         } else {
             [weakSelf showErrorAlertWithError : error];
@@ -588,8 +590,8 @@
     self.currentPost.arrayImages = [[NSMutableArray alloc] init];
     
     for (int i = 0; i < self.currentPostCopy.arrayImages.count; i++) {
-        ImageToPost *imageToPost = [[ImageToPost alloc] init];
-        imageToPost.image = [self.currentPostCopy.arrayImages objectAtIndex: i];
+        //ImageToPost *imageToPost = [[ImageToPost alloc] init];
+        ImageToPost *imageToPost = [self.currentPostCopy.arrayImages objectAtIndex: i];
         imageToPost.quality = 1.0f;
         imageToPost.imageType = JPEG;
         [self.currentPost.arrayImages addObject: imageToPost];

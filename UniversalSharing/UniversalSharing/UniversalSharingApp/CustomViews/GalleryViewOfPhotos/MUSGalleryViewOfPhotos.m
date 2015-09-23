@@ -7,6 +7,7 @@
 //
 
 #import "MUSGalleryViewOfPhotos.h"
+#import "MUSSocialNetworkLibraryHeader.h"
 #import "ConstantsApp.h"
 #import "MUSCollectionViewCell.h"
 
@@ -55,7 +56,8 @@
     cell.indexPath = indexPath;
     
     if (indexPath.row < self.arrayOfPhotos.count) {
-        [cell configurationCellWithPhoto: [self.arrayOfPhotos objectAtIndex: indexPath.row] andEditableState: self.isEditableGallery];
+        ImageToPost *imageToPost = [self.arrayOfPhotos objectAtIndex: indexPath.row];
+        [cell configurationCellWithPhoto: imageToPost.image andEditableState: self.isEditableGallery];
         return cell;
     }
     [cell configurationCellWithPhoto: nil andEditableState: self.isEditableGallery];
