@@ -277,6 +277,7 @@
     Place *currentPlace = self.arrayLocations[indexPath.row];
     if (currentPlace.isChosen) {
         self.chosenPlaceIndexPath = indexPath;
+         locationCell.selectionStyle = UITableViewCellSelectionStyleNone; // disable the cell selection
     }
     [locationCell configurationLocationCell: currentPlace];
 
@@ -288,13 +289,6 @@
         cell = [MUSLocationCell locationCell];
     }
     cell.delegate = self;
-    /*
-    Place *currentPlace = self.arrayLocations[indexPath.row];
-    if (currentPlace.isChosen) {
-        self.chosenPlaceIndexPath = indexPath;
-    }
-    [cell configurationLocationCell: currentPlace];
-     */
     return cell;
 }
 
@@ -311,12 +305,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([self.arrayLocations firstObject]) {
-        Place *currentPlace = [self.arrayLocations objectAtIndex: indexPath.row];
-        CGFloat height = [MUSLocationCell heightForLocationCell: currentPlace];
-        return height;
-    }
-    return 38;
+        return [MUSLocationCell heightForLocationCell: [self.arrayLocations objectAtIndex: indexPath.row]];
 }
 
 - (void) obtainPlaceForPost : (NSInteger) currentIndex {

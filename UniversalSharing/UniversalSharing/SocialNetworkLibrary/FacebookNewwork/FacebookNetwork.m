@@ -353,6 +353,7 @@ static FacebookNetwork *model = nil;
         NSArray *arrayOfIdPost = [post.postID componentsSeparatedByString: @","];
 
         [self obtainNumberOfLikesForArrayOfPostId: arrayOfIdPost andConnection : connection withComplition:^(id result, NSError *error) {
+            
             if (!error) {
                 if (post.likesCount == [result integerValue]) {
                     return;
@@ -363,6 +364,7 @@ static FacebookNetwork *model = nil;
         }];
         
         [self obtainNumberOfCommentsForArrayOfPostId: arrayOfIdPost andConnection : connection withComplition:^(id result, NSError *error) {
+            NSLog (@"result = %d", [result integerValue]);
             if (!error) {
                 if (post.commentsCount == [result integerValue]) {
                     return;
