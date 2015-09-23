@@ -189,6 +189,7 @@
                         <outlet property="toolBarConstraint" destination="R1o-HW-tEf" id="N1G-JT-AnL"/>
                         <outlet property="topBar" destination="8gF-Sd-Dyq" id="PRq-TX-pIf"/>
                         <outlet property="topBarConstraint" destination="L8I-oO-Af8" id="kHN-De-j3E"/>
+                        <segue destination="xqB-o5-zWK" kind="show" identifier="goToInfo" id="X1d-ia-zmN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Es2-ga-dXL" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -207,7 +208,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="isr-mg-OJ7">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="isr-mg-OJ7">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -604,7 +605,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="ujR-wZ-DmO"/>
-        <segue reference="JM6-Xs-4G9"/>
         <segue reference="GpK-3N-ETI"/>
+        <segue reference="X1d-ia-zmN"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -14,6 +14,7 @@
 #import "DataBaseManager.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 #import "ConstantsApp.h"
+#import "MUSUserDetailViewController.h"
 
 @interface MUSDetailPostCollectionViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
 
@@ -48,6 +49,9 @@ static NSString * const reuseIdentifier = @"Cell";
     [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
     [_topBar.buttonBack addTarget:self
                            action:@selector(backButton:)
+                 forControlEvents:UIControlEventTouchUpInside];
+    [_topBar.showUserProfileButton addTarget:self
+                           action:@selector(showUserProfile)
                  forControlEvents:UIControlEventTouchUpInside];
     [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long) _indexPicTapped + 1, (unsigned long)[self.arrayOfPics count]]];
     [_topBar initializeImageView:_currentSocialNetwork.icon];
@@ -94,6 +98,19 @@ static NSString * const reuseIdentifier = @"Cell";
 - (void) backButton:(id)sender {
     [[NSNotificationCenter defaultCenter] postNotificationName:notificationUpdateCollection object:nil];
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void) showUserProfile {
+    [self performSegueWithIdentifier: goToUserDetailViewControllerSegueIdentifier sender:nil];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([[segue identifier]isEqualToString : goToUserDetailViewControllerSegueIdentifier]) {
+        MUSUserDetailViewController *userDetailViewController = [MUSUserDetailViewController new];
+        userDetailViewController = [segue destinationViewController];
+        userDetailViewController.isLogoutButtonHide = YES;
+        [userDetailViewController setNetwork: self.currentSocialNetwork];
+    }
 }
 
 - (void) trashButton:(id)sender {
