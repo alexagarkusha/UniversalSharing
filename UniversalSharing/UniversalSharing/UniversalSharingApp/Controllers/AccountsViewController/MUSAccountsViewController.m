@@ -109,12 +109,12 @@
     BOOL isReachable = [ReachabilityManager isReachable];
     BOOL isReachableViaWiFi = [ReachabilityManager isReachableViaWiFi];
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //    if (!isReachableViaWiFi && !isReachable) {
-    //        self.errorView.hidden = NO;
-    //        //self.btnEditOutlet.enabled = NO;
-    //        [self.updateNetworkConnectionOutlet cornerRadius:CGRectGetHeight(self.updateNetworkConnectionOutlet.frame) / 2];
-    //        [self.buttonUseAnywayOutlet cornerRadius: CGRectGetHeight(self.buttonUseAnywayOutlet.frame) / 2];
-    //    } else {
+        if (!isReachableViaWiFi && !isReachable) {
+            self.errorView.hidden = NO;
+            //self.btnEditOutlet.enabled = NO;
+            [self.updateNetworkConnectionOutlet cornerRadius:CGRectGetHeight(self.updateNetworkConnectionOutlet.frame) / 2];
+            [self.buttonUseAnywayOutlet cornerRadius: CGRectGetHeight(self.buttonUseAnywayOutlet.frame) / 2];
+        } else {
     self.errorView.hidden = YES;
     //self.btnEditOutlet.enabled = YES;
     [self.tableView reloadData];
@@ -123,7 +123,7 @@
         [self.buttonArrayLogin removeAllObjects];
     [self.buttonArrayHidden removeAllObjects];
     [self.buttonArrayUnactive removeAllObjects];
-    //}
+    }
 }
 - (IBAction) buttonUseAnyWayTapped :(id)sender {
     self.errorView.hidden = YES;
