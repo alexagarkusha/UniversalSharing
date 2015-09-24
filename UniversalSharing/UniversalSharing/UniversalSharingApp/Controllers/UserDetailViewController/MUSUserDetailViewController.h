@@ -8,7 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol MUSUserDetailViewControllerDelegate <NSObject>
+
+- (void) changeArrays : (id) socialNetwork;
+
+@end
+
 @interface MUSUserDetailViewController: UIViewController
+@property (nonatomic, assign) id <MUSUserDetailViewControllerDelegate> delegate;
 /*!
  @method
  @abstract set current user in order to get info about current user

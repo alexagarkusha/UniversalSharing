@@ -8,11 +8,14 @@
 
 #import "SocialManager.h"
 #import "MUSSocialNetworkLibraryConstants.h"
-
+#import "DataBaseManager.h"
+#import "MUSDatabaseRequestStringsHelper.h"
 @interface SocialManager()
 
 @property (strong, nonatomic) NSArray *accountsArray;
-
+@property (strong, nonatomic) NSMutableArray *arrayLogin;
+@property (strong, nonatomic) NSMutableArray *arrayHidden;
+@property (strong, nonatomic) NSMutableArray *arrayUnactive;
 @end
 
 static SocialManager *model = nil;
@@ -61,5 +64,49 @@ static SocialManager *model = nil;
     }];
     return arrayWithNetworks;
 }
+
+- (void) obtainNetworksWithComplition :(ComplitionWithArrays) block {
+    NSMutableArray *arrayWithNetworks = [self networks:@[@(Twitters), @(VKontakt), @(Facebook)]];
+    self.arrayLogin = [NSMutableArray new];
+     self.arrayHidden = [NSMutableArray new];
+     self.arrayUnactive = [NSMutableArray new];
+    [arrayWithNetworks enumerateObjectsUsingBlock:^(SocialNetwork *network, NSUInteger idx, BOOL *stop) {
+        if (network.isLogin && network.isVisible){
+            [self.arrayLogin addObject:network];
+            
+        } else if (network.isLogin && !network.isVisible){
+            [self.arrayHidden addObject:network];
+
+        } else{
+            [self.arrayUnactive addObject:network];
+        }
+            }];
+    
+    //sort
+    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"currentUser.indexPosition" ascending:YES];
+    //[self.arrayLogin sortUsingDescriptors:[NSArray arrayWithObject:sorter]];
+    self.arrayLogin = [NSMutableArray arrayWithArray:[self.arrayLogin sortedArrayUsingDescriptors:[NSArray arrayWithObject:sorter]]];
+    self.arrayHidden = [NSMutableArray arrayWithArray:[self.arrayHidden sortedArrayUsingDescriptors:[NSArray arrayWithObject:sorter]]];
+    block(self.arrayLogin,self.arrayHidden,self.arrayUnactive,nil);
+}
+
+- (void) editNetworks {
+    [self.arrayLogin enumerateObjectsUsingBlock:^(SocialNetwork *network, NSUInteger index, BOOL *stop) {
+        if (network.currentUser.indexPosition != index) {
+        network.currentUser.indexPosition = index;
+            [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringUsersForUpdateWithObjectUser:network.currentUser]];
+        }
+    }];
+    
+    [self.arrayHidden enumerateObjectsUsingBlock:^(SocialNetwork *network, NSUInteger index, BOOL *stop) {
+        if (network.currentUser.indexPosition != index) {
+            network.currentUser.indexPosition = index;
+            [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringUsersForUpdateWithObjectUser:network.currentUser]];
+        }
+    }];
+    
+}
+
+
 
 @end

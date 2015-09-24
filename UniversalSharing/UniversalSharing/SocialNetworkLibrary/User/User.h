@@ -43,6 +43,8 @@
  @abstract type of Social network. (like Facebook, Twitters, Vkontakte)
  */
 @property (assign, nonatomic) NetworkType networkType;
+
+@property (assign, nonatomic) NSInteger indexPosition;
 /*!
  @abstract
  */

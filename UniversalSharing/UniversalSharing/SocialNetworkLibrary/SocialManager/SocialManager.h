@@ -29,6 +29,8 @@
 
 - (NSMutableArray*) networks :(NSArray*) arrayWithNetwork;
 
+- (void) obtainNetworksWithComplition :(ComplitionWithArrays) block;
+- (void) editNetworks;
 
 
 @end
