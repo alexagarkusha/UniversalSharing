@@ -124,7 +124,7 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
-    if (![self.galeryView obtainArrayWithChosenPics].count) {
+    if (![self.galeryView obtainArrayWithChosenPics].count && [self.messageTextView.text isEqualToString: kPlaceholderText] && self.messageTextView.textColor == [UIColor lightGrayColor]) {
         self.shareButtonOutlet.enabled = NO;
         [self.sharePhotoButton setTintColor:[UIColor blackColor]];
     }
