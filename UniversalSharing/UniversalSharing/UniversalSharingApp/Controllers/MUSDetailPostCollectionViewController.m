@@ -106,7 +106,9 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 
 - (void) showUserProfile {
-    [self performSegueWithIdentifier: goToUserDetailViewControllerSegueIdentifier sender:nil];
+    if (self.currentSocialNetwork.isLogin && self.currentSocialNetwork.isVisible) {
+        [self performSegueWithIdentifier: goToUserDetailViewControllerSegueIdentifier sender:nil];
+    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

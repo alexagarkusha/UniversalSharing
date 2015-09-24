@@ -10,6 +10,7 @@
 #import "UIImageView+MUSLoadImageFromDataBase.h"
 #import "UIImage+LoadImageFromDataBase.h"
 #import "UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.h"
+#import "ConstantsApp.h"
 
 @interface MUSTopBarForDetailCollectionView()
 
@@ -70,8 +71,15 @@
 
 - (void) initializeImageView:(NSString *)stringPathImage {
     UIImage *profileImage = [[UIImage alloc] init];
-    profileImage = [profileImage loadImageFromDataBase: stringPathImage];
-    [self.showUserProfileButton setImage: profileImage forState:UIControlStateNormal];
+    if (stringPathImage.length > 0) {
+        profileImage = [profileImage loadImageFromDataBase: stringPathImage];
+        [self.showUserProfileButton setImage: profileImage forState:UIControlStateNormal];
+    } else {
+        [self.showUserProfileButton setImage: [UIImage imageNamed:musAppButton_ImageName_UnknownUser]  forState:UIControlStateNormal];
+    }
+
+    
+    
 //    [self.imageView loadImageFromDataBase: stringPathImage];
 //    [self.imageView cornerRadius: CGRectGetHeight(self.imageView.frame) / 2 andBorderWidth: 1.5 withBorderColor: [UIColor whiteColor]];
 }
