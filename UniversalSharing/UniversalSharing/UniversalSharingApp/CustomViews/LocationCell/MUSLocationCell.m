@@ -12,9 +12,9 @@
 
 @interface MUSLocationCell ()
 
-@property (weak, nonatomic) IBOutlet UILabel *labelPlaceName;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *labelPlaceNameRightConstraint;
-@property (weak, nonatomic) IBOutlet UIButton *buttonOutletDeletePlaceFromPost;
+@property (weak, nonatomic) IBOutlet UILabel *placeNameLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *placeNameLabelRightConstraint;
+@property (weak, nonatomic) IBOutlet UIButton *deletePlaceFromPostButton;
 
 @end
 
@@ -47,9 +47,9 @@
 
 + (CGFloat) heightForLocationCell: (Place *) place {
     UIFont *font = [MUSLocationCell fontForCell];
-    CGFloat widthValue = ([UIScreen mainScreen].bounds.size.width / 3) * 2 - 20;
+    CGFloat widthValue = ([UIScreen mainScreen].bounds.size.width / 3) * 2 - musAppLocationCell_LeftConstraintOfLabel - musAppLocationCell_RightConstraintOfLabel;
     if (place.isChosen) {
-        widthValue -= 36;
+        widthValue -= musAppLocationCell_RightConstraintOfLabelWithDeletePlaceButton;
     }
         CGFloat result = font.pointSize;
         if (place.fullName)
@@ -59,10 +59,12 @@
                                         options : NSStringDrawingUsesLineFragmentOrigin
                                      attributes : @{NSFontAttributeName:font}
                                         context : nil];
+            //NSLog(@"width = %f, height =%f", frame.size.width, frame.size.height);
             size = CGSizeMake(frame.size.width, frame.size.height);
             result = MAX(size.height, result); //At least one row
         }
-    return result + 20;
+    result += musAppLocationCell_LeftConstraintOfLabel + musAppLocationCell_RightConstraintOfLabel;
+    return result;
 }
 
 + (UIFont*) fontForCell {
@@ -72,21 +74,21 @@
 
 - (void) configurationLocationCell: (Place*) currentPlace {
     if (currentPlace.isChosen) {
-        self.labelPlaceName.textColor = [UIColor lightGrayColor];
+        self.placeNameLabel.textColor = [UIColor lightGrayColor];
     } else {
-        self.labelPlaceName.textColor = [UIColor blackColor];
-        self.buttonOutletDeletePlaceFromPost.hidden = YES;
-        self.labelPlaceNameRightConstraint.constant = 0;
+        self.placeNameLabel.textColor = [UIColor blackColor];
+        self.deletePlaceFromPostButton.hidden = YES;
+        self.placeNameLabelRightConstraint.constant = 0;
     }
-    self.labelPlaceName.text = currentPlace.fullName;
-    self.labelPlaceName.numberOfLines = 0;
-    self.labelPlaceName.font = [MUSLocationCell fontForCell];
+    self.placeNameLabel.text = currentPlace.fullName;
+    self.placeNameLabel.numberOfLines = 0;
+    self.placeNameLabel.font = [MUSLocationCell fontForCell];
 }
 
 - (void) initiationButtonDeletePlaceFromPost {
-    [self.buttonOutletDeletePlaceFromPost cornerRadius: self.buttonOutletDeletePlaceFromPost.frame.size.height / 2];
-    [self.buttonOutletDeletePlaceFromPost setImage: [UIImage imageNamed: musAppButton_ImageName_ButtonDeleteLocation] forState:UIControlStateNormal];
-    [self.buttonOutletDeletePlaceFromPost addTarget:self action:@selector(deletePlaceFromPost:) forControlEvents:UIControlEventTouchUpInside];
+    [self.deletePlaceFromPostButton cornerRadius: self.deletePlaceFromPostButton.frame.size.height / 2];
+    [self.deletePlaceFromPostButton setImage: [UIImage imageNamed: musAppButton_ImageName_ButtonDeleteLocation] forState:UIControlStateNormal];
+    [self.deletePlaceFromPostButton addTarget:self action:@selector(deletePlaceFromPost:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void) deletePlaceFromPost : (UIButton*) sender {

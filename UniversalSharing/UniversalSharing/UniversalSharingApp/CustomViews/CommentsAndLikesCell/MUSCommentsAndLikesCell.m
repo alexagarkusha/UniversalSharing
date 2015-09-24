@@ -16,10 +16,10 @@
 #import "UIImageView+MUSLoadImageFromDataBase.h"
 #import "UIButton+CornerRadiusButton.h"
 #import "UIImage+LoadImageFromDataBase.h"
+#import "MUSUserProfileButton.h"
 
 @interface MUSCommentsAndLikesCell ()
-
-@property (weak, nonatomic)     IBOutlet    UIButton *showUserProfileButton;
+@property (weak, nonatomic)     IBOutlet    MUSUserProfileButton *showUserProfileButton;
 @property (weak, nonatomic)     IBOutlet    UIImageView *commentImageView;
 @property (weak, nonatomic)     IBOutlet    UIImageView *likeImageView;
 @property (weak, nonatomic)     IBOutlet    UILabel *dateOfPostLabel;
@@ -74,7 +74,7 @@
     [self initiationReasonLabel: currentPost];
     [self initiationUserNameLabel: user];
     [self initiationUserDateOfPostLabel: currentPost.dateCreate];
-    [self initiationUserPhotoImageView: socialNetworkIconName];
+    [self initiationUserProfileButton: socialNetworkIconName];
 }
 
 #pragma mark initiation Comments Label
@@ -109,14 +109,10 @@
 
 #pragma mark initiation UserPhotoImageView
 
-- (void) initiationUserPhotoImageView : (NSString*) socialNetworkIconName {
-    [self.showUserProfileButton cornerRadius: CGRectGetHeight(self.showUserProfileButton.frame) / 2];
+- (void) initiationUserProfileButton : (NSString*) socialNetworkIconName {
     UIImage *profileImage = [[UIImage alloc] init];
     profileImage = [profileImage loadImageFromDataBase: socialNetworkIconName];
     [self.showUserProfileButton setImage: profileImage forState:UIControlStateNormal];
-    [self.showUserProfileButton.imageView setContentMode:UIViewContentModeScaleAspectFill];
-    [self.showUserProfileButton.layer setBorderWidth: 1.0f];
-    [self.showUserProfileButton.layer setBorderColor: [UIColor darkGrayColor].CGColor];
 }
 
 - (IBAction)showUserProfileButtonTouch:(id)sender {

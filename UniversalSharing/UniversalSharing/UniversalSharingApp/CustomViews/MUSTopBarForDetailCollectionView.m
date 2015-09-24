@@ -8,15 +8,18 @@
 
 #import "MUSTopBarForDetailCollectionView.h"
 #import "UIImageView+MUSLoadImageFromDataBase.h"
+#import "UIImage+LoadImageFromDataBase.h"
 #import "UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.h"
 
 @interface MUSTopBarForDetailCollectionView()
 
 @property (weak, nonatomic)     IBOutlet    NSLayoutConstraint* buttonConstrain;
 @property (weak, nonatomic)     IBOutlet    NSLayoutConstraint* labelConstrain;
-@property (weak, nonatomic)     IBOutlet    NSLayoutConstraint* imageViewConstrain;
+//@property (weak, nonatomic)     IBOutlet    NSLayoutConstraint* imageViewConstrain;
+@property (weak, nonatomic)     IBOutlet    NSLayoutConstraint *showUserProfileButtonTopConstraint;
+
 @property (weak, nonatomic)     IBOutlet    UILabel *lableCountImages;
-@property (weak, nonatomic)     IBOutlet    UIImageView *imageView;
+//@property (weak, nonatomic)     IBOutlet    UIImageView *imageView;
 //===
 @property (assign, nonatomic) BOOL hideProperties;
 @property (strong, nonatomic) UIView *view;
@@ -66,16 +69,20 @@
 }
 
 - (void) initializeImageView:(NSString *)stringPathImage {
-    [self.imageView loadImageFromDataBase: stringPathImage];
-    [self.imageView cornerRadius: CGRectGetHeight(self.imageView.frame) / 2 andBorderWidth: 1.5 withBorderColor: [UIColor whiteColor]];
+    UIImage *profileImage = [[UIImage alloc] init];
+    profileImage = [profileImage loadImageFromDataBase: stringPathImage];
+    [self.showUserProfileButton setImage: profileImage forState:UIControlStateNormal];
+//    [self.imageView loadImageFromDataBase: stringPathImage];
+//    [self.imageView cornerRadius: CGRectGetHeight(self.imageView.frame) / 2 andBorderWidth: 1.5 withBorderColor: [UIColor whiteColor]];
 }
 
 - (void) hidePropertiesWithAnimation {
     if (!_hideProperties) {
     
             _labelConstrain.constant -= _view.frame.size.height;
-            _imageViewConstrain.constant -=  _view.frame.size.height;
-           _buttonConstrain.constant -= _view.frame.size.height;
+            //_imageViewConstrain.constant -=  _view.frame.size.height;
+            _showUserProfileButtonTopConstraint.constant -= _view.frame.size.height;
+            _buttonConstrain.constant -= _view.frame.size.height;
         
         [UIView animateWithDuration: 0.4  animations:^{
             [self.view layoutIfNeeded];
@@ -85,7 +92,8 @@
        
     } else  {
         _labelConstrain.constant += _view.frame.size.height;
-        _imageViewConstrain.constant +=  _view.frame.size.height;
+        //_imageViewConstrain.constant +=  _view.frame.size.height;
+        _showUserProfileButtonTopConstraint.constant += _view.frame.size.height;
         _buttonConstrain.constant += _view.frame.size.height;
        
         [UIView animateWithDuration: 0.4  animations:^{
@@ -99,6 +107,9 @@
     _hideProperties = (_hideProperties)? NO : YES;
 
     
+}
+- (IBAction)showUserProfileButtonTouch:(id)sender {
+
 }
 
 @end

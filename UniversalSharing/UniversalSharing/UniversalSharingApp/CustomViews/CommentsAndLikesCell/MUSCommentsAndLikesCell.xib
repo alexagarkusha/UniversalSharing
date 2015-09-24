@@ -92,7 +92,7 @@
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RU4-IM-HrN">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RU4-IM-HrN" customClass="MUSUserProfileButton">
                         <rect key="frame" x="8" y="8" width="50" height="50"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="50" id="2NH-Ae-QHg"/>
@@ -142,7 +142,7 @@
                 <outlet property="numberOfCommentsLabel" destination="xIa-Ks-g11" id="7Gc-VP-6lr"/>
                 <outlet property="numberOfLikesLabel" destination="kfe-2R-His" id="NIm-OZ-NxR"/>
                 <outlet property="reasonPostLabel" destination="bDt-lB-azL" id="qT5-9J-hNo"/>
-                <outlet property="showUserProfileButton" destination="RU4-IM-HrN" id="Sxm-fZ-Gft"/>
+                <outlet property="showUserProfileButton" destination="RU4-IM-HrN" id="8c6-58-Xfo"/>
                 <outlet property="usernameLabel" destination="wtK-Qm-ZuY" id="s2k-M1-gjo"/>
             </connections>
             <point key="canvasLocation" x="294" y="219.5"/>

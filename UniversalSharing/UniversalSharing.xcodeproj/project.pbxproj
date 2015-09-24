@@ -102,6 +102,7 @@
 		97C9A2EC1BA2D52300D0C478 /* MUSLocationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97C9A2EA1BA2D52300D0C478 /* MUSLocationCell.xib */; };
 		97CA63CA1B6F66D300F9F0C1 /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CA63C91B6F66D300F9F0C1 /* Place.m */; };
 		97CA63CF1B6F737A00F9F0C1 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CA63CE1B6F737A00F9F0C1 /* Location.m */; };
+		97CAEB6C1BB2D38700942259 /* MUSUserProfileButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CAEB6B1BB2D38700942259 /* MUSUserProfileButton.m */; };
 		97CAF5691BAC001F00F16F6B /* Ressources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 97CAF5621BAC001F00F16F6B /* Ressources.bundle */; };
 		97CAF56A1BAC001F00F16F6B /* SSACircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CAF5641BAC001F00F16F6B /* SSACircleView.m */; };
 		97CAF56B1BAC001F00F16F6B /* SSAPullToRefreshAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CAF5661BAC001F00F16F6B /* SSAPullToRefreshAnimator.m */; };
@@ -292,6 +293,8 @@
 		97CA63C91B6F66D300F9F0C1 /* Place.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Place.m; path = UniversalSharing/SocialNetworkLibrary/Place/Place.m; sourceTree = SOURCE_ROOT; };
 		97CA63CD1B6F737A00F9F0C1 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Location.h; path = UniversalSharing/SocialNetworkLibrary/Location/Location.h; sourceTree = SOURCE_ROOT; };
 		97CA63CE1B6F737A00F9F0C1 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Location.m; path = UniversalSharing/SocialNetworkLibrary/Location/Location.m; sourceTree = SOURCE_ROOT; };
+		97CAEB6A1BB2D38700942259 /* MUSUserProfileButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUSUserProfileButton.h; path = UniversalSharing/UniversalSharingApp/CustomViews/CustomButtons/UserProfileButton/MUSUserProfileButton.h; sourceTree = SOURCE_ROOT; };
+		97CAEB6B1BB2D38700942259 /* MUSUserProfileButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUSUserProfileButton.m; path = UniversalSharing/UniversalSharingApp/CustomViews/CustomButtons/UserProfileButton/MUSUserProfileButton.m; sourceTree = SOURCE_ROOT; };
 		97CAF5621BAC001F00F16F6B /* Ressources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Ressources.bundle; sourceTree = "<group>"; };
 		97CAF5631BAC001F00F16F6B /* SSACircleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSACircleView.h; sourceTree = "<group>"; };
 		97CAF5641BAC001F00F16F6B /* SSACircleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSACircleView.m; sourceTree = "<group>"; };
@@ -1028,6 +1031,7 @@
 				97C4ACD41B99ABA1008B93B3 /* AddPhotoButton */,
 				97C4ACD01B997E0E008B93B3 /* ChangeButton */,
 				97C4ACC61B997406008B93B3 /* DeleteButton */,
+				97CAEB691BB2D32700942259 /* UserProfileButton */,
 			);
 			name = "Custom Buttons";
 			path = UserProfileCell;
@@ -1107,6 +1111,15 @@
 				97CA63CE1B6F737A00F9F0C1 /* Location.m */,
 			);
 			name = Location;
+			sourceTree = "<group>";
+		};
+		97CAEB691BB2D32700942259 /* UserProfileButton */ = {
+			isa = PBXGroup;
+			children = (
+				97CAEB6A1BB2D38700942259 /* MUSUserProfileButton.h */,
+				97CAEB6B1BB2D38700942259 /* MUSUserProfileButton.m */,
+			);
+			name = UserProfileButton;
 			sourceTree = "<group>";
 		};
 		97CAF5611BAC001F00F16F6B /* SSAPullToRefresh */ = {
@@ -1451,6 +1464,7 @@
 				97B2B54A1B87B387009FAB12 /* UIImageView+MUSLoadImageFromDataBase.m in Sources */,
 				187FC5271B65222D00A3916C /* SocialManager.m in Sources */,
 				30C9DDB21BABFA7300F3266A /* MUSToolBarForDetailCollectionView.m in Sources */,
+				97CAEB6C1BB2D38700942259 /* MUSUserProfileButton.m in Sources */,
 				97CCC9D81B749C2C00E0FAC6 /* ReachabilityManager.m in Sources */,
 				97C49E851B835B64005241CE /* MUSPostDescriptionCell.m in Sources */,
 				18BB29C21B67E3F000B498AC /* main.m in Sources */,

@@ -106,6 +106,7 @@ FOUNDATION_EXPORT NSString *const musAppButtonTitle_Edit;
 FOUNDATION_EXPORT NSString *const musAppButtonTitle_Share;
 FOUNDATION_EXPORT NSString *const musAppButtonTitle_Action;
 FOUNDATION_EXPORT NSString *const musAppButtonTitle_Back;
+FOUNDATION_EXPORT NSString *const musAppButtonTitle_ShareLocation;
 FOUNDATION_EXPORT NSString *const Error;
 
 #pragma mark - MUSGaleryView
@@ -184,5 +185,11 @@ FOUNDATION_EXPORT NSInteger const musAppDetailPostVC_NumberOfRows;
 FOUNDATION_EXPORT NSInteger const musAppCustomMapView_maxZoomDistance;
 FOUNDATION_EXPORT NSString *const musAppButton_ImageName_ButtonDeleteLocation;
 FOUNDATION_EXPORT NSString *const musAppCustomMapView_PinAnnotationViewIdentifier;
+
+#pragma mark - MUSLocationCell
+
+FOUNDATION_EXPORT NSInteger const musAppLocationCell_LeftConstraintOfLabel;
+FOUNDATION_EXPORT NSInteger const musAppLocationCell_RightConstraintOfLabel;
+FOUNDATION_EXPORT NSInteger const musAppLocationCell_RightConstraintOfLabelWithDeletePlaceButton;
 
 @end

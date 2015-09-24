@@ -107,4 +107,34 @@
     return copyPlace;
 }
 
+#pragma mark - GETTERS
+
+- (NSString *)latitude {
+    if (!_latitude || [_latitude isKindOfClass:[NSNull class]]) {
+        return @"";
+    }
+    return _latitude;
+}
+
+- (NSString *)longitude {
+    if (!_longitude || [_longitude isKindOfClass:[NSNull class]]) {
+        return @"";
+    }
+    return _longitude;
+}
+
+- (NSString *)fullName {
+    if (!_fullName || [_fullName isKindOfClass:[NSNull class]]) {
+        return @"";
+    }
+    return _fullName;
+}
+
+- (NSString *)placeID {
+    if (!_placeID || [_placeID isKindOfClass:[NSNull class]]) {
+        return @"";
+    }
+    return _placeID;
+}
+
 @end

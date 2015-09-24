@@ -71,7 +71,7 @@ NSString *const musAppButtonTitle_Edit = @"Edit";
 NSString *const musAppButtonTitle_Share = @"Share";
 NSString *const musAppButtonTitle_Action = @"Action";
 NSString *const musAppButtonTitle_Back = @"Back";
-
+NSString *const musAppButtonTitle_ShareLocation =  @"Share Location";
 NSString *const Error = @"Error";
 
 #pragma mark - MUSGaleryView
@@ -150,6 +150,12 @@ NSInteger const musAppDetailPostVC_NumberOfRows = 4;
 NSInteger const musAppCustomMapView_maxZoomDistance = 450000;
 NSString *const musAppButton_ImageName_ButtonDeleteLocation = @"Button_Delete_Location.png";
 NSString *const musAppCustomMapView_PinAnnotationViewIdentifier = @"MUSAnnotation";
+
+#pragma mark - MUSLocationCell
+
+NSInteger const musAppLocationCell_LeftConstraintOfLabel = 13;
+NSInteger const musAppLocationCell_RightConstraintOfLabel = 13;
+NSInteger const musAppLocationCell_RightConstraintOfLabelWithDeletePlaceButton = 42;
 
 
 @end

@@ -208,7 +208,7 @@ static TwitterNetwork *model = nil;
 
 - (void) updatePost {
     NSArray * posts = [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForPostWithReason:Connect andNetworkType:Twitters]];
-    if (![self obtainCurrentConnection] || !posts.count) {
+    if (![self obtainCurrentConnection] || !posts.count || (![self obtainCurrentConnection] && posts.count)) {
         [self updatePostInfoNotification];
         return;
     }
@@ -223,37 +223,43 @@ static TwitterNetwork *model = nil;
 
 - (void) obtainCountOfLikesAndCommentsFromPost :(Post*) post {
      //https://api.twitter.com/1.1/statuses/retweets/509457288717819904.json
-    NSString *statusesShowEndpoint = @"https://api.twitter.com/1.1/statuses/show.json";//[NSString stringWithFormat:@"https://api.twitter.com/1.1/statuses/retweets/%@.json",post.postID];
+    NSString *statusesShowEndpoint = musTwitterURL_Statuses_Show;
+    
+    //[NSString stringWithFormat:@"https://api.twitter.com/1.1/statuses/retweets/%@.json",post.postID];
     
     NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:post.postID,@"id",@"true",@"include_my_retweet",nil];//,@"100",@"count"
     NSError *clientError;
     
     NSURLRequest *request = [[[Twitter sharedInstance] APIClient] URLRequestWithMethod:@"GET" URL:statusesShowEndpoint parameters:params error:&clientError];
-    
+    __weak TwitterNetwork *weakSelf = self;
+
     if (request) {
         [[[Twitter sharedInstance] APIClient] sendTwitterRequest:request completion:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
             if (data) {
                 NSError *jsonError;
                 NSDictionary *arrayJson = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
                 if (!arrayJson.count) {
+                    [weakSelf updatePostInfoNotification];
                     return;
                 }
                 if (post.likesCount == [[arrayJson  objectForKey:@"favorite_count"] integerValue] &&  post.commentsCount == [[arrayJson  objectForKey:@"retweet_count"] integerValue] ) {
+                    [weakSelf updatePostInfoNotification];
                     return;
                 }
                 post.likesCount = [[arrayJson  objectForKey:@"favorite_count"] integerValue];
                 post.commentsCount = [[arrayJson objectForKey:@"retweet_count"] integerValue];
                 
                 [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost:post]];
-                [[NSNotificationCenter defaultCenter] postNotificationName:MUSNotificationPostsInfoWereUpDated object:nil];
-
+                [weakSelf updatePostInfoNotification];
             }
             else {
+                [weakSelf updatePostInfoNotification];
                 NSLog(@"Error: %@", connectionError);
             }
         }];
     }
     else {
+        [weakSelf updatePostInfoNotification];
         NSLog(@"Error: %@", clientError);
     }
 }
@@ -538,7 +544,7 @@ static TwitterNetwork *model = nil;
 }
 
 /*!
- @abstract returnув Twitter network error
+ @abstract returned Twitter network error
  */
 - (NSError*) errorTwitter {
     return [NSError errorWithMessage: musTwitterError andCodeError: musTwitterErrorCode];

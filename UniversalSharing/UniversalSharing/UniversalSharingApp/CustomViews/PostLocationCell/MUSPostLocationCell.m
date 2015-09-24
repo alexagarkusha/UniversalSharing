@@ -76,6 +76,7 @@
 - (void) configurationPostLocationCellByPostPlace: (Place *) currentPlace {
     self.addLocationLabel.text = @"Add location to your Post";
     [self checkChangeLocationButtonStatus];
+    self.addLocationView.hidden = NO;
     if (currentPlace.placeID.length > 0 && ![currentPlace.placeID isEqualToString: @"(null)"]) {
         [self initialMapViewForCurrentPlace: currentPlace];
     }

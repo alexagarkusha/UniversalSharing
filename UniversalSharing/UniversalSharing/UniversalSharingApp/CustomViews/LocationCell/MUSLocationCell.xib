@@ -22,10 +22,10 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S6h-zd-ESZ">
-                        <rect key="frame" x="284" y="7" width="28" height="28"/>
+                        <rect key="frame" x="281" y="4" width="34" height="34"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="28" id="GX5-aO-1f5"/>
-                            <constraint firstAttribute="width" constant="28" id="Xng-xl-Mlx"/>
+                            <constraint firstAttribute="height" constant="34" id="GX5-aO-1f5"/>
+                            <constraint firstAttribute="width" constant="34" id="Xng-xl-Mlx"/>
                         </constraints>
                         <state key="normal">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -37,14 +37,14 @@
                     <constraint firstItem="qvu-0v-mM2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="EAz-Zo-paQ"/>
                     <constraint firstItem="qvu-0v-mM2" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="fG7-L5-ZkM"/>
                     <constraint firstAttribute="centerY" secondItem="S6h-zd-ESZ" secondAttribute="centerY" id="llv-h4-fnD"/>
-                    <constraint firstAttribute="trailing" secondItem="S6h-zd-ESZ" secondAttribute="trailing" constant="8" id="ovt-yB-bua"/>
+                    <constraint firstAttribute="trailing" secondItem="S6h-zd-ESZ" secondAttribute="trailing" constant="5" id="ovt-yB-bua"/>
                     <constraint firstAttribute="trailingMargin" secondItem="qvu-0v-mM2" secondAttribute="trailing" constant="36" id="vgd-lY-sXg"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="buttonOutletDeletePlaceFromPost" destination="S6h-zd-ESZ" id="nbg-hT-30H"/>
-                <outlet property="labelPlaceName" destination="qvu-0v-mM2" id="tLC-rQ-8To"/>
-                <outlet property="labelPlaceNameRightConstraint" destination="vgd-lY-sXg" id="pCF-qN-bFP"/>
+                <outlet property="deletePlaceFromPostButton" destination="S6h-zd-ESZ" id="317-G2-Fka"/>
+                <outlet property="placeNameLabel" destination="qvu-0v-mM2" id="JZE-nl-651"/>
+                <outlet property="placeNameLabelRightConstraint" destination="vgd-lY-sXg" id="NFI-9l-v9o"/>
             </connections>
         </tableViewCell>
     </objects>
