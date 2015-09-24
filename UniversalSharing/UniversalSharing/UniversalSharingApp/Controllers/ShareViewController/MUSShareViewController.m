@@ -596,8 +596,6 @@
     } else {//goToShowImages
         MUSDetailPostCollectionViewController *vc = [MUSDetailPostCollectionViewController new];
         vc = [segue destinationViewController];
-        //[vc setObjectsWithPost:self.post andCurrentSocialNetwork:_currentSocialNetwork andIndexPicTapped:self.indexPicTapped];
-        //[vc setObjectsWithArray:self.arrayPicsForDetailCollectionView andCurrentSocialNetwork:_currentSocialNetwork andIndexPicTapped:self.indexPicTapped];
         [vc setObjectsWithArrayOfPhotos: self.arrayPicsForDetailCollectionView withCurrentSocialNetwork: _currentSocialNetwork indexPicTapped:self.indexPicTapped andReasonTypeOfPost: AllReasons];
     }
 }

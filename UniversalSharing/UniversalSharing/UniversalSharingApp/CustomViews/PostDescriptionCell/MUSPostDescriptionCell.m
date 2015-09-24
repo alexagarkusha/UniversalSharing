@@ -175,7 +175,12 @@
     self.postDescriptionTextView.autocorrectionType = UITextAutocorrectionTypeNo;
     [self.delegate beginEditingPostDescription: self.currentIndexPath];
     [self.postDescriptionTextView becomeFirstResponder];
-    self.postDescriptionTextView.selectedRange = NSMakeRange([self.postDescriptionTextView.text length], 0);
+    
+    if (![self.postDescriptionTextView.text isEqualToString: kPlaceholderText]) {
+        self.postDescriptionTextView.selectedRange = NSMakeRange([self.postDescriptionTextView.text length], 0);
+    } else {
+        [self.postDescriptionTextView setSelectedRange:NSMakeRange(0, 0)];
+    }
 }
 
 @end
