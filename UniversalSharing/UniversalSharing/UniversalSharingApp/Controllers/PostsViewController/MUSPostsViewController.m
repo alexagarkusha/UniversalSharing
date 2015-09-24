@@ -340,6 +340,7 @@
 
 - (void) editingTableView {
     [super setEditing:YES animated:YES];
+    [self.selectAllButton setTitle: @"Select All"];
     [self.editButton setTitle:doneButtonTitle];
     [self.navigationItem.leftBarButtonItem setEnabled:YES];
     [self.navigationItem.leftBarButtonItem setTintColor: nil];
@@ -352,11 +353,13 @@
     [_toolBar setHidden:NO];
 }
 
+#pragma mark - MUSPostCellDelegate
 
 - (void) addIndexToIndexSetWithCell:(MUSPostCell*)cell {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     [self addIndexToIndexSet: indexPath];
 }
+
 
 - (void) addIndexToIndexSet :(NSIndexPath*) indexPath {
     if ([self.mutableIndexSet containsIndex:indexPath.row]) {
@@ -369,6 +372,9 @@
     }
     [self.mutableIndexSet addIndex:indexPath.row];
     self.barButtonDeletePost.enabled = YES;
+    if ([self.mutableIndexSet count] == [self.arrayPosts count]) {
+        [self.selectAllButton setTitle: @"Deselect All"];
+    }
 }
 
 - (IBAction) buttonSelectAllTapped:(id)sender {
@@ -423,6 +429,10 @@
     }];
     self.arrayPosts = [[NSMutableArray alloc] initWithArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper createStringForPostWithReason: self.predicateReason andNetworkType: self.predicateNetworkType]]];
     [self.mutableIndexSet removeAllIndexes];
+    self.editButton.enabled = [self isArrayOfPostsNotEmpty];
+    if (![self isArrayOfPostsNotEmpty]) {
+        [self notEditingTableView];
+    }
     [self.tableView reloadData];
 }
 
@@ -542,9 +552,18 @@
  */
 - (void) obtainArrayPosts {
     self.arrayPosts = [[NSMutableArray alloc] initWithArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper createStringForPostWithReason: self.predicateReason andNetworkType: self.predicateNetworkType]]];
+    self.editButton.enabled = [self isArrayOfPostsNotEmpty];
     [self.refreshControl endRefreshing];
     [self.tableView reloadData];
     
+}
+
+- (BOOL) isArrayOfPostsNotEmpty {
+    if (!self.arrayPosts.count) {
+        return NO;
+    } else {
+        return YES;
+    }
 }
 
 - (void) stopUpdatingPostInTableView: (NSNotification*) notification {

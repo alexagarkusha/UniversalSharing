@@ -237,7 +237,7 @@
 }
 
 
-#pragma mark SentPost
+#pragma mark SendPost
 /*!
  @method
  @abstract send post to social network
@@ -247,26 +247,41 @@
         [self showAlertWithMessage: musAppError_Logged_Into_Social_Networks];
         return;
     }
+    
     self.view.userInteractionEnabled = NO;
-    [self.delegate updatePostByPrimaryKey: [NSString stringWithFormat: @"%ld", (long)self.currentPost.primaryKey]];
     [self startActivityIndicatorAnimating];
     [self updatePost: self.currentPost];
-    __weak MUSDetailPostViewController *weakSelf = self;
-    [_currentSocialNetwork sharePost: self.currentPost withComplition:^(id result, NSError *error) {
-        if (!error) {
-            [self showAlertWithMessage : titleCongratulatoryAlert];
-            self.view.userInteractionEnabled = YES;
-            weakSelf.isEditableTableView = NO;
-            [weakSelf stopActivityIndicatorAnimating];
-            weakSelf.navigationItem.rightBarButtonItem = nil;
-            [weakSelf.tableView reloadData];
-        } else {
-            [weakSelf showErrorAlertWithError : error];
-            self.view.userInteractionEnabled = YES;
-            [weakSelf stopActivityIndicatorAnimating];
-            [weakSelf.tableView reloadData];
-        }
-    }];
+    
+    if (![self isPostEmpty]) {
+        [self.delegate updatePostByPrimaryKey: [NSString stringWithFormat: @"%ld", (long)self.currentPost.primaryKey]];
+        __weak MUSDetailPostViewController *weakSelf = self;
+        [_currentSocialNetwork sharePost: self.currentPost withComplition:^(id result, NSError *error) {
+            if (!error) {
+                [weakSelf showAlertWithMessage : titleCongratulatoryAlert];
+                weakSelf.view.userInteractionEnabled = YES;
+                weakSelf.isEditableTableView = NO;
+                [weakSelf stopActivityIndicatorAnimating];
+                weakSelf.navigationItem.rightBarButtonItem = nil;
+                [weakSelf.tableView reloadData];
+            } else {
+                [weakSelf showErrorAlertWithError : error];
+                weakSelf.view.userInteractionEnabled = YES;
+                [weakSelf stopActivityIndicatorAnimating];
+                [weakSelf.tableView reloadData];
+            }
+        }];
+    }
+}
+
+
+- (BOOL) isPostEmpty {
+    if ([self.currentPost.postDescription isEqualToString:@""] && !self.currentPost.arrayImagesUrl.count) {
+        [self showAlertWithMessage: musAppError_Empty_Post];
+        self.view.userInteractionEnabled = YES;
+        [self stopActivityIndicatorAnimating];
+        return YES;
+    }
+    return NO;
 }
 
 #pragma mark BackToThePostsViewController
@@ -540,7 +555,7 @@
 }
 
 - (void) showAlertWithMessage : (NSString*) message {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle : musErrorWithDomainUniversalSharing
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle : musAppError_With_Domain_Universal_Sharing
                                                     message : message
                                                    delegate : nil
                                           cancelButtonTitle : musAppButtonTitle_OK
@@ -549,7 +564,7 @@
 }
 
 - (void) showUpdateAlert  {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle : musErrorWithDomainUniversalSharing
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle : musAppError_With_Domain_Universal_Sharing
                                                     message : musAppDetailPostVC_UpdatePostAlert
                                                    delegate : self
                                           cancelButtonTitle : musAppButtonTitle_Cancel
