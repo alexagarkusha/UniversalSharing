@@ -337,12 +337,19 @@
     [self.shareButtonOutlet setCustomView:self.activityIndicator];
     [self.activityIndicator startAnimating];
     self.shareButtonOutlet.enabled = NO;
-    //self.view.userInteractionEnabled = NO;
+    self.view.userInteractionEnabled = NO;
     [self createPost];
         __weak MUSShareViewController *weakSelf = self;
         [_currentSocialNetwork sharePost:self.post withComplition:^(id result, NSError *error) {
             if (result == nil && error == nil) {
+                [weakSelf.activityIndicator stopAnimating];
+                [weakSelf.shareButtonOutlet setCustomView:nil];
+                [weakSelf.shareButtonOutlet setTitle: @"Share"];
+
+                
                 [weakSelf refreshShareScreen];
+                weakSelf.view.userInteractionEnabled = YES;
+
                 return;
             }
             if (!error) {
@@ -353,8 +360,10 @@
             [weakSelf.activityIndicator stopAnimating];
             [weakSelf.shareButtonOutlet setCustomView:nil];
             [weakSelf.shareButtonOutlet setTitle: @"Share"];
+            [weakSelf refreshShareScreen];
+            weakSelf.view.userInteractionEnabled = YES;
+
     }];
-    [self refreshShareScreen];
 }
 
 - (void) refreshShareScreen {
