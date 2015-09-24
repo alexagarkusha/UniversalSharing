@@ -184,11 +184,11 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSMutableArray *arrayWithImages = [NSMutableArray new];
-    [self.arrayWithChosenImages enumerateObjectsUsingBlock:^(ImageToPost* image, NSUInteger idx, BOOL *stop) {
-        [arrayWithImages addObject:image.image];
-    }];
-    [self.delegate showImagesOnOtherVcWithArray :arrayWithImages andIndexPicTapped :indexPath.row];
+//    NSMutableArray *arrayWithImages = [NSMutableArray new];
+//    [self.arrayWithChosenImages enumerateObjectsUsingBlock:^(ImageToPost* image, NSUInteger idx, BOOL *stop) {
+//        [arrayWithImages addObject:image.image];
+//    }];
+    [self.delegate showImagesOnOtherVcWithArray : self.arrayWithChosenImages andIndexPicTapped :indexPath.row];
 }
 
 

@@ -117,6 +117,8 @@
 		97D1C4441B81DB5D00009BCF /* Comment.png in Resources */ = {isa = PBXBuildFile; fileRef = 97D1C4411B81DB5D00009BCF /* Comment.png */; };
 		97D1C44C1B81ED7F00009BCF /* DOPDropDownMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D1C44B1B81ED7F00009BCF /* DOPDropDownMenu.m */; };
 		97D1C4501B82047200009BCF /* UILabel+CornerRadiusLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D1C44F1B82047200009BCF /* UILabel+CornerRadiusLabel.m */; };
+		97D7965A1BB3D3AB00F43178 /* MUSDetailPostPhotoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D796581BB3D3AB00F43178 /* MUSDetailPostPhotoCollectionViewCell.m */; };
+		97D7965B1BB3D3AB00F43178 /* MUSDetailPostPhotoCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97D796591BB3D3AB00F43178 /* MUSDetailPostPhotoCollectionViewCell.xib */; };
 		97D967CD1B6A14FF0060B2BC /* ImageToPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D967CC1B6A14FF0060B2BC /* ImageToPost.m */; };
 		FC79868BAD5DBAA5D3BB123C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 294811F54E6400CFBFD3EBDD /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -320,6 +322,9 @@
 		97D1C44E1B82047200009BCF /* UILabel+CornerRadiusLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UILabel+CornerRadiusLabel.h"; path = "UILabel+CornerRadiusLabel/UILabel+CornerRadiusLabel.h"; sourceTree = "<group>"; };
 		97D1C44F1B82047200009BCF /* UILabel+CornerRadiusLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UILabel+CornerRadiusLabel.m"; path = "UILabel+CornerRadiusLabel/UILabel+CornerRadiusLabel.m"; sourceTree = "<group>"; };
 		97D3C4BE1B958A4F0092776B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		97D796571BB3D3AB00F43178 /* MUSDetailPostPhotoCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUSDetailPostPhotoCollectionViewCell.h; path = DetailPostPhotoCollectionViewCell/MUSDetailPostPhotoCollectionViewCell.h; sourceTree = "<group>"; };
+		97D796581BB3D3AB00F43178 /* MUSDetailPostPhotoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUSDetailPostPhotoCollectionViewCell.m; path = DetailPostPhotoCollectionViewCell/MUSDetailPostPhotoCollectionViewCell.m; sourceTree = "<group>"; };
+		97D796591BB3D3AB00F43178 /* MUSDetailPostPhotoCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MUSDetailPostPhotoCollectionViewCell.xib; path = DetailPostPhotoCollectionViewCell/MUSDetailPostPhotoCollectionViewCell.xib; sourceTree = "<group>"; };
 		97D967CB1B6A14FF0060B2BC /* ImageToPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageToPost.h; path = UniversalSharing/SocialNetworkLibrary/ImageToPost/ImageToPost.h; sourceTree = SOURCE_ROOT; };
 		97D967CC1B6A14FF0060B2BC /* ImageToPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageToPost.m; path = UniversalSharing/SocialNetworkLibrary/ImageToPost/ImageToPost.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -616,6 +621,7 @@
 				97C9A2E71BA2D4A000D0C478 /* LocationCell */,
 				97D1C43B1B81D00800009BCF /* PostCell */,
 				30416A1F1B73A28D000CB2C2 /* GalleryView */,
+				97D796561BB3D31300F43178 /* DetailPostPhotoCollectionViewCell */,
 				97C8A9DA1B944B6600031CB0 /* DetailPostCollectionViewCell */,
 				30F334071B6F6855007C15D7 /* CollectionViewCell */,
 				18BB29971B67E3F000B498AC /* AccountCell */,
@@ -1207,6 +1213,16 @@
 			name = "UILabel+CornerRadiusLabel";
 			sourceTree = "<group>";
 		};
+		97D796561BB3D31300F43178 /* DetailPostPhotoCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				97D796571BB3D3AB00F43178 /* MUSDetailPostPhotoCollectionViewCell.h */,
+				97D796581BB3D3AB00F43178 /* MUSDetailPostPhotoCollectionViewCell.m */,
+				97D796591BB3D3AB00F43178 /* MUSDetailPostPhotoCollectionViewCell.xib */,
+			);
+			name = DetailPostPhotoCollectionViewCell;
+			sourceTree = "<group>";
+		};
 		97D967CA1B6A146E0060B2BC /* ImageToPost */ = {
 			isa = PBXGroup;
 			children = (
@@ -1324,6 +1340,7 @@
 				18BB29C01B67E3F000B498AC /* Images.xcassets in Resources */,
 				97C4ACCD1B997B9C008B93B3 /* Button_Delete.png in Resources */,
 				18BB29BA1B67E3F000B498AC /* MUSAccountTableViewCell.xib in Resources */,
+				97D7965B1BB3D3AB00F43178 /* MUSDetailPostPhotoCollectionViewCell.xib in Resources */,
 				97C4ACD91B99BF99008B93B3 /* Button_addPhoto.png in Resources */,
 				97C74ADE1B7DDEF4004DC863 /* UnknownUser.jpg in Resources */,
 				97C8A9DF1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.xib in Resources */,
@@ -1438,6 +1455,7 @@
 				30416A191B7355BC000CB2C2 /* UIButton+MUSSocialNetwork.m in Sources */,
 				97CA63CF1B6F737A00F9F0C1 /* Location.m in Sources */,
 				18BB29B81B67E3F000B498AC /* MUSUserDetailViewController.h.m in Sources */,
+				97D7965A1BB3D3AB00F43178 /* MUSDetailPostPhotoCollectionViewCell.m in Sources */,
 				97C49E711B832103005241CE /* MUSDetailPostViewController.m in Sources */,
 				18BB29B11B67E3F000B498AC /* UIButton+CornerRadiusButton.m in Sources */,
 				97D1C43A1B81CF5100009BCF /* MUSPostsViewController.m in Sources */,

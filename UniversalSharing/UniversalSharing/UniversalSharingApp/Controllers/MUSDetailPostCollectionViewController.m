@@ -16,6 +16,8 @@
 #import "ConstantsApp.h"
 #import "MUSUserDetailViewController.h"
 
+#import "MUSDetailPostPhotoCollectionViewCell.h"
+
 @interface MUSDetailPostCollectionViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (strong, nonatomic) NSMutableArray *arrayOfPics;
@@ -24,6 +26,8 @@
 @property (assign, nonatomic) BOOL hideBars;
 @property (assign, nonatomic) NSInteger indexDeletedPic;
 @property (strong, nonatomic) Post *currentPost;
+@property (assign, nonatomic) ReasonType currentReasonType;
+
 
 ///////////////////////////
 @property (strong, nonatomic) NSMutableArray *tmp;
@@ -43,10 +47,19 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tabBarController.tabBar.hidden = YES;
     _hideBars = NO;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapOnCollectionView:)];
     [self.collectionView addGestureRecognizer:tap];
+    
     [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
+//#warning New Cell
+//    NSString *cellIdentifier = [MUSDetailPostPhotoCollectionViewCell detailPostPhotoCellID];
+//    [self.collectionView registerNib:[UINib nibWithNibName: cellIdentifier bundle: nil] forCellWithReuseIdentifier: cellIdentifier];
+//#warning New Cell
+
+
+    
     [_topBar.buttonBack addTarget:self
                            action:@selector(backButton:)
                  forControlEvents:UIControlEventTouchUpInside];
@@ -117,7 +130,21 @@ static NSString * const reuseIdentifier = @"Cell";
     CGRect visibleRect = (CGRect){.origin = self.collectionView.contentOffset, .size = self.collectionView.bounds.size};
     CGPoint visiblePoint = CGPointMake(CGRectGetMidX(visibleRect), CGRectGetMidY(visibleRect));
     NSIndexPath *visibleIndexPath = [self.collectionView indexPathForItemAtPoint:visiblePoint];
+    if (_arrayOfPics.count && _currentReasonType != Connect) {
+        [_arrayOfPics removeObjectAtIndex: visibleIndexPath.row];
+        [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long)visibleIndexPath.row + 1,(unsigned long)[_arrayOfPics count]]];
+        if ([_arrayOfPics count] == 1) {
+            [_topBar initializeLableCountImages: [NSString stringWithFormat:@"1 from 1"]];
+        }
+        if ([_arrayOfPics count] == 0) {
+            [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long) 0, (unsigned long)[_arrayOfPics count]]];
+            [[NSNotificationCenter defaultCenter] postNotificationName:notificationUpdateCollection object:nil];
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        [_collectionView reloadData];
+    }
     
+    /*
     if (_arrayOfPics.count && _currentPost && _currentPost.reason != Connect ) {
         [_arrayOfPics removeObjectAtIndex:visibleIndexPath.row];
         if ([[_currentPost.arrayImages firstObject] isKindOfClass:[ImageToPost class]]) {
@@ -138,15 +165,30 @@ static NSString * const reuseIdentifier = @"Cell";
         }
         [_collectionView reloadData];
     }
+    */
 }
 
-- (void) setObjectsWithPost :(Post*) currentPost andCurrentSocialNetwork :(id)currentSocialNetwork andIndexPicTapped :(NSInteger) indexPicTapped {
-    if (!self.arrayOfPics) {
-        self.arrayOfPics = [NSMutableArray new];
-    }
+
+
+
+
+
+- (void) setObjectsWithArrayOfPhotos :(NSMutableArray*) arrayOfPhotos withCurrentSocialNetwork :(SocialNetwork*) currentSocialNetwork indexPicTapped :(NSInteger) indexPicTapped andReasonTypeOfPost : (ReasonType) reasonType {
+    self.arrayOfPics = arrayOfPhotos;
     self.indexPicTapped = indexPicTapped;
-    self.currentPost = currentPost;
     self.currentSocialNetwork = currentSocialNetwork;
+    self.currentReasonType = reasonType;
+}
+
+/*
+
+- (void) setObjectsWithPost :(Post*) currentPost andCurrentSocialNetwork :(id)currentSocialNetwork andIndexPicTapped :(NSInteger) indexPicTapped {
+    self.arrayOfPics = currentPost.arrayImages;
+    self.indexPicTapped = indexPicTapped;
+    self.currentSocialNetwork = currentSocialNetwork;
+    self.currentReasonType = currentPost.reason;
+    
+    ///////////////////////////////////////////////////////////////////////
     _tmp = [NSMutableArray arrayWithArray:self.currentPost.arrayImagesUrl];
     if (currentPost.arrayImages) {
         
@@ -161,6 +203,8 @@ static NSString * const reuseIdentifier = @"Cell";
         }
     }
 }
+*/
+
 
 #pragma mark <UICollectionViewDataSource>
 
@@ -174,9 +218,17 @@ static NSString * const reuseIdentifier = @"Cell";
     return [self.arrayOfPics count];
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:
+    (NSIndexPath *)indexPath {
+//#warning New Cell
+//    MUSDetailPostPhotoCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier: [MUSDetailPostPhotoCollectionViewCell detailPostPhotoCellID] forIndexPath:indexPath];
+//    ImageToPost *imageToPost = [self.arrayOfPics objectAtIndex: indexPath.row];
+//    [cell configurationCellWithPhoto: imageToPost.image];
+//#warning New Cell
+    //MUSCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier: [MUSCollectionViewCell customCellID] forIndexPath : indexPath];
     MUSCollectionViewCellForDetailView *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"detailCell" forIndexPath:indexPath];
-    [cell.scrollView displayImage:self.arrayOfPics[indexPath.row]];
+    ImageToPost *imageToPost = [self.arrayOfPics objectAtIndex: indexPath.row];
+    [cell.scrollView displayImage: imageToPost.image];
     return cell;
 }
 

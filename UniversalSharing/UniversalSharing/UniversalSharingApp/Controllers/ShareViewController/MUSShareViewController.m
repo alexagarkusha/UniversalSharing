@@ -96,7 +96,7 @@
 @property (strong, nonatomic)               UIActivityIndicatorView *activityIndicator ;
 
 
-@property (strong, nonatomic)               NSArray *arrayPicsForDetailCollectionView;
+@property (strong, nonatomic)               NSMutableArray *arrayPicsForDetailCollectionView;
 @property (assign, nonatomic)               NSInteger indexPicTapped;
 //@property (assign, nonatomic)               BOOL fragForTextView;
 
@@ -124,8 +124,9 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
-    if (self.post && self.post.arrayImages.count) {
-        self.shareButtonOutlet.enabled = YES;
+    if (![self.galeryView obtainArrayWithChosenPics].count) {
+        self.shareButtonOutlet.enabled = NO;
+        [self.sharePhotoButton setTintColor:[UIColor blackColor]];
     }
     if (!_currentSocialNetwork || !_currentSocialNetwork.isVisible || !_currentSocialNetwork.isLogin) {
         _currentSocialNetwork = [SocialManager currentSocialNetwork];
@@ -595,8 +596,9 @@
     } else {//goToShowImages
         MUSDetailPostCollectionViewController *vc = [MUSDetailPostCollectionViewController new];
         vc = [segue destinationViewController];
-        [vc setObjectsWithPost:self.post andCurrentSocialNetwork:_currentSocialNetwork andIndexPicTapped:self.indexPicTapped];
+        //[vc setObjectsWithPost:self.post andCurrentSocialNetwork:_currentSocialNetwork andIndexPicTapped:self.indexPicTapped];
         //[vc setObjectsWithArray:self.arrayPicsForDetailCollectionView andCurrentSocialNetwork:_currentSocialNetwork andIndexPicTapped:self.indexPicTapped];
+        [vc setObjectsWithArrayOfPhotos: self.arrayPicsForDetailCollectionView withCurrentSocialNetwork: _currentSocialNetwork indexPicTapped:self.indexPicTapped andReasonTypeOfPost: AllReasons];
     }
 }
 
@@ -614,12 +616,10 @@
     }
 }
 
-- (void) showImagesOnOtherVcWithArray:(NSArray *)arrayPics andIndexPicTapped:(NSInteger)indexPicTapped {
+- (void) showImagesOnOtherVcWithArray:(NSMutableArray *)arrayPics andIndexPicTapped:(NSInteger)indexPicTapped {
     self.arrayPicsForDetailCollectionView = arrayPics;
     self.indexPicTapped = indexPicTapped;
-    [self createPost];
-    //self.post.arrayImages = arrayPics;
-     [self performSegueWithIdentifier: @"goToShowImages" sender:nil];
+    [self performSegueWithIdentifier: @"goToShowImages" sender:nil];
 }
 
 - (void)dealloc {
