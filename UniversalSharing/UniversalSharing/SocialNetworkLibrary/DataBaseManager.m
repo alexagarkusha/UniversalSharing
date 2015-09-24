@@ -131,7 +131,8 @@ static DataBaseManager *databaseManager;
         sqlite3_bind_text(statement, 7, [[self checkExistedString: user.photoURL] UTF8String], -1, SQLITE_TRANSIENT);
         sqlite3_bind_int64(statement, 8, user.isVisible);
         sqlite3_bind_int64(statement, 9, user.isLogin);
-        sqlite3_bind_int64(statement, 10, user.networkType);
+        sqlite3_bind_int64(statement, 10, user.indexPosition);
+        sqlite3_bind_int64(statement, 11, user.networkType);
     }
     return statement;
 }
@@ -180,7 +181,8 @@ static DataBaseManager *databaseManager;
             user.photoURL = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 7)];
             user.isVisible = sqlite3_column_int(statement, 8);
             user.isLogin = sqlite3_column_int(statement, 9);
-            user.networkType = sqlite3_column_int(statement, 10);
+            user.indexPosition = sqlite3_column_int(statement, 10);
+            user.networkType = sqlite3_column_int(statement, 11);
             [arrayWithUsers addObject:user];
             
         }

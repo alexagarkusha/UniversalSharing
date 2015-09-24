@@ -54,7 +54,8 @@
 - (void) logoutFromSocialNetwork {
     [self.socialNetwork loginOut];
     [self.navigationController popViewControllerAnimated:YES];
-    self.navigationController.navigationBar.translucent = YES;
+     self.navigationController.navigationBar.translucent = YES;
+    [self.delegate changeArrays:self.socialNetwork];
     }
 
 #pragma mark - UITableViewDataSource

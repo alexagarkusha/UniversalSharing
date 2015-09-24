@@ -60,7 +60,8 @@ static VKNetwork *model = nil;
             self.icon = self.currentUser.photoURL;
             self.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
             self.isVisible = self.currentUser.isVisible;
-            
+            NSInteger indexPosition = self.currentUser.indexPosition;
+
             if ([self obtainCurrentConnection]){
                 
                 NSString *deleteImageFromFolder = self.currentUser.photoURL;
@@ -69,6 +70,7 @@ static VKNetwork *model = nil;
                     
                     [[NSFileManager defaultManager] removeItemAtPath: [deleteImageFromFolder obtainPathToDocumentsFolder:deleteImageFromFolder] error: nil];
                     result.currentUser.isVisible = self.isVisible;
+                    result.currentUser.indexPosition = indexPosition;
                     [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringUsersForUpdateWithObjectUser:result.currentUser]];
                 }];
             }
@@ -150,6 +152,7 @@ static VKNetwork *model = nil;
          
          
          weakSell.currentUser.photoURL = weakSell.icon;
+         //weakSell.currentUser.indexPosition = 0;
          //weakSell.icon = weakSell.currentUser.photoURL;////
          if (!weakSell.isLogin)
              [[DataBaseManager sharedManager] insertIntoTable:weakSell.currentUser];

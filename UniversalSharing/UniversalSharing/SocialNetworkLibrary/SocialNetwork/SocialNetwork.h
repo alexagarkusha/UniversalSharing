@@ -49,6 +49,8 @@
  */
 @property (assign, nonatomic) NetworkType networkType;
 
+//@property (assign, nonatomic) NSInteger indexPosition;
+
 
 /*!
  @abstract return object of SocialNetwork with the given type of social network
@@ -116,7 +118,6 @@
 - (NSError*) errorConnection;
 
 - (void) stopUpdatingPostWithObject : (id) object;
-
 
 
 @end
