@@ -16,8 +16,6 @@
 #import "ConstantsApp.h"
 #import "MUSUserDetailViewController.h"
 
-#import "MUSDetailPostPhotoCollectionViewCell.h"
-
 @interface MUSDetailPostCollectionViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (strong, nonatomic) NSMutableArray *arrayOfPics;
@@ -53,12 +51,6 @@ static NSString * const reuseIdentifier = @"Cell";
     [self.collectionView addGestureRecognizer:tap];
     
     [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
-//#warning New Cell
-//    NSString *cellIdentifier = [MUSDetailPostPhotoCollectionViewCell detailPostPhotoCellID];
-//    [self.collectionView registerNib:[UINib nibWithNibName: cellIdentifier bundle: nil] forCellWithReuseIdentifier: cellIdentifier];
-//#warning New Cell
-
-
     
     [_topBar.buttonBack addTarget:self
                            action:@selector(backButton:)
@@ -171,6 +163,12 @@ static NSString * const reuseIdentifier = @"Cell";
 
 
 
+- (void) setObjectsWithPost :(Post*) currentPost withCurrentSocialNetwork :(id)currentSocialNetwork andIndexPicTapped :(NSInteger) indexPicTapped {
+    self.arrayOfPics = currentPost.arrayImages;
+    self.indexPicTapped = indexPicTapped;
+    self.currentSocialNetwork = currentSocialNetwork;
+    self.currentReasonType = currentPost.reason;
+}
 
 
 - (void) setObjectsWithArrayOfPhotos :(NSMutableArray*) arrayOfPhotos withCurrentSocialNetwork :(SocialNetwork*) currentSocialNetwork indexPicTapped :(NSInteger) indexPicTapped andReasonTypeOfPost : (ReasonType) reasonType {
@@ -180,8 +178,8 @@ static NSString * const reuseIdentifier = @"Cell";
     self.currentReasonType = reasonType;
 }
 
-/*
 
+/*
 - (void) setObjectsWithPost :(Post*) currentPost andCurrentSocialNetwork :(id)currentSocialNetwork andIndexPicTapped :(NSInteger) indexPicTapped {
     self.arrayOfPics = currentPost.arrayImages;
     self.indexPicTapped = indexPicTapped;
@@ -220,12 +218,6 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:
     (NSIndexPath *)indexPath {
-//#warning New Cell
-//    MUSDetailPostPhotoCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier: [MUSDetailPostPhotoCollectionViewCell detailPostPhotoCellID] forIndexPath:indexPath];
-//    ImageToPost *imageToPost = [self.arrayOfPics objectAtIndex: indexPath.row];
-//    [cell configurationCellWithPhoto: imageToPost.image];
-//#warning New Cell
-    //MUSCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier: [MUSCollectionViewCell customCellID] forIndexPath : indexPath];
     MUSCollectionViewCellForDetailView *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"detailCell" forIndexPath:indexPath];
     ImageToPost *imageToPost = [self.arrayOfPics objectAtIndex: indexPath.row];
     [cell.scrollView displayImage: imageToPost.image];

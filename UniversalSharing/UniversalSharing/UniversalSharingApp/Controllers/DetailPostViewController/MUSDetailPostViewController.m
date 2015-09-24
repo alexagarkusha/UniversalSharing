@@ -442,9 +442,7 @@
     } else if ([[segue identifier]isEqualToString : @"goToDitailPostCollectionViewController"]) {
         MUSDetailPostCollectionViewController *vc = [MUSDetailPostCollectionViewController new];
         vc = [segue destinationViewController];
-        [vc setObjectsWithArrayOfPhotos: self.currentPostCopy.arrayImages withCurrentSocialNetwork:self.currentSocialNetwork indexPicTapped: self.indexPicTapped andReasonTypeOfPost: self.currentPostCopy.reason];
-        //[vc setObjectsWithPost: self.currentPostCopy andCurrentSocialNetwork: _currentSocialNetwork andIndexPicTapped: self.indexPicTapped];
-        
+        [vc setObjectsWithPost: self.currentPostCopy withCurrentSocialNetwork: self.currentSocialNetwork andIndexPicTapped: self.indexPicTapped];
     } else if ([[segue identifier]isEqualToString : goToUserDetailViewControllerSegueIdentifier]) {
         MUSUserDetailViewController *userDetailViewController = [MUSUserDetailViewController new];
         userDetailViewController = [segue destinationViewController];
