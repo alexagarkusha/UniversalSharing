@@ -423,6 +423,10 @@
     }];
     self.arrayPosts = [[NSMutableArray alloc] initWithArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper createStringForPostWithReason: self.predicateReason andNetworkType: self.predicateNetworkType]]];
     [self.mutableIndexSet removeAllIndexes];
+    self.editButton.enabled = [self isArrayOfPostsNotEmpty];
+    if (![self isArrayOfPostsNotEmpty]) {
+        [self notEditingTableView];
+    }
     [self.tableView reloadData];
 }
 
@@ -542,9 +546,18 @@
  */
 - (void) obtainArrayPosts {
     self.arrayPosts = [[NSMutableArray alloc] initWithArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper createStringForPostWithReason: self.predicateReason andNetworkType: self.predicateNetworkType]]];
+    self.editButton.enabled = [self isArrayOfPostsNotEmpty];
     [self.refreshControl endRefreshing];
     [self.tableView reloadData];
     
+}
+
+- (BOOL) isArrayOfPostsNotEmpty {
+    if (!self.arrayPosts.count) {
+        return NO;
+    } else {
+        return YES;
+    }
 }
 
 - (void) stopUpdatingPostInTableView: (NSNotification*) notification {

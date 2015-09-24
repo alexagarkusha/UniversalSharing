@@ -337,11 +337,8 @@
     [self.shareButtonOutlet setCustomView:self.activityIndicator];
     [self.activityIndicator startAnimating];
     self.shareButtonOutlet.enabled = NO;
-    self.view.userInteractionEnabled = NO;
-
+    //self.view.userInteractionEnabled = NO;
     [self createPost];
-    [self initialParametersOfMessageTextView];
-    [self.messageTextView setSelectedRange:NSMakeRange(0, 0)];
         __weak MUSShareViewController *weakSelf = self;
         [_currentSocialNetwork sharePost:self.post withComplition:^(id result, NSError *error) {
             if (result == nil && error == nil) {
@@ -353,20 +350,19 @@
             } else {
                 [weakSelf showErrorAlertWithError : error];
             }
-            [weakSelf refreshShareScreen];
+            [weakSelf.activityIndicator stopAnimating];
+            [weakSelf.shareButtonOutlet setCustomView:nil];
+            [weakSelf.shareButtonOutlet setTitle: @"Share"];
     }];
+    [self refreshShareScreen];
 }
 
 - (void) refreshShareScreen {
-    
-    [self.activityIndicator stopAnimating];
-    [self.shareButtonOutlet setCustomView:nil];
-    [self.shareButtonOutlet setTitle: @"Share"];
-    
+    [self initialParametersOfMessageTextView];
+    [self.messageTextView setSelectedRange:NSMakeRange(0, 0)];    
     self.post = nil;
     self.place = nil;
-    
-    self.view.userInteractionEnabled = YES;
+    //self.view.userInteractionEnabled = YES;
     [self.shareLocationButton setTintColor: [UIColor blackColor]];
     [self.shareLocationButton setTitle: musAppButtonTitle_ShareLocation];
     [self changeSharePhotoButtonColorAndShareButtonState:NO];
@@ -390,13 +386,7 @@
     /*
      get array with chosen images from MUSGaleryView
      */
-//<<<<<<< HEAD
-//    self.post.arrayImages =  [self.galeryView obtainArrayWithChosenPics];
-//    //self.post.arrayImages = [self.galeryView obtainArrayWithChosenPics];
-//=======
-//    self.post.arrayImages = [[self.galeryView obtainArrayWithChosenPics] mutableCopy];
-//    //self.post.arrayImages = [[NSMutableArray alloc] initWithArray: [self.galeryView obtainArrayWithChosenPics]];
-//>>>>>>> 4e553d05bd2d98259deadcb7b6685b9f6686101f
+    self.post.arrayImages = [[self.galeryView obtainArrayWithChosenPics] mutableCopy];
     self.post.userId = _currentSocialNetwork.currentUser.clientID;//or something else
     self.post.dateCreate = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970]];
     
@@ -551,7 +541,7 @@
 - (void) showErrorAlertWithError : (NSError*) error {
     UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle : @"NO INTERNET CONNECTION"//Error
                                                          message : @"You can resend this post from shared posts"//[error localizedFailureReason]
-                                                        delegate : self
+                                                        delegate : nil
                                                cancelButtonTitle : musAppButtonTitle_OK
                                                otherButtonTitles : nil];
     [errorAlert show];
@@ -560,7 +550,7 @@
 - (void) showAlertWithMessage : (NSString*) message {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle : musAppError_With_Domain_Universal_Sharing
                                                     message : message
-                                                   delegate : self
+                                                   delegate : nil
                                           cancelButtonTitle : musAppButtonTitle_OK
                                           otherButtonTitles : nil];
     [alert show];
