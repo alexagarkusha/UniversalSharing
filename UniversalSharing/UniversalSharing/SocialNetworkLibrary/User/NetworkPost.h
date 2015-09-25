@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "MUSSocialNetworkLibraryConstants.h"
 
 @interface NetworkPost : NSObject
 /*!
@@ -30,5 +31,7 @@
 @property (nonatomic, assign) ReasonType reason;
 
 @property (nonatomic, assign) NSInteger primaryKey;
+
++ (instancetype)create;
 
 @end

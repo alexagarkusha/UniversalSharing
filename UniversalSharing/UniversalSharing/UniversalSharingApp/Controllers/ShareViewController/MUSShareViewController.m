@@ -336,36 +336,49 @@
         [self showAlertWithMessage: musAppError_Logged_Into_Social_Networks];
         return;
     }
-    [self.shareButtonOutlet setCustomView:self.activityIndicator];
-    [self.activityIndicator startAnimating];
-    self.shareButtonOutlet.enabled = NO;
-    self.view.userInteractionEnabled = NO;
+//    [self.shareButtonOutlet setCustomView:self.activityIndicator];
+//    [self.activityIndicator startAnimating];
+//    self.shareButtonOutlet.enabled = NO;
+//    self.view.userInteractionEnabled = NO;
     [self createPost];
-        __weak MUSShareViewController *weakSelf = self;
-        [_currentSocialNetwork sharePost:self.post withComplition:^(id result, NSError *error) {
-            if (result == nil && error == nil) {
-                [weakSelf.activityIndicator stopAnimating];
-                [weakSelf.shareButtonOutlet setCustomView:nil];
-                [weakSelf.shareButtonOutlet setTitle: @"Share"];
-
-                
-                [weakSelf refreshShareScreen];
-                weakSelf.view.userInteractionEnabled = YES;
-
-                return;
-            }
-            if (!error) {
-                [weakSelf showAlertWithMessage : titleCongratulatoryAlert];
-            } else {
-                [weakSelf showErrorAlertWithError : error];
-            }
-            [weakSelf.activityIndicator stopAnimating];
-            [weakSelf.shareButtonOutlet setCustomView:nil];
-            [weakSelf.shareButtonOutlet setTitle: @"Share"];
-            [weakSelf refreshShareScreen];
-            weakSelf.view.userInteractionEnabled = YES;
-
+//        __weak MUSShareViewController *weakSelf = self;
+    
+    NSArray *array = [[NSArray alloc] initWithObjects: @(Twitters), @(VKontakt), @(Facebook), nil];
+    
+    [[MultySharingManager sharedManager] sharePost: self.post toSocialNetworks: array withComplition:^(id result, NSError *error) {
+        NSLog(@"RESULT %@", result);
+        NSLog(@"ERROR %@", error);
     }];
+    
+    
+    
+    
+    
+//    
+//    [_currentSocialNetwork sharePost:self.post withComplition:^(id result, NSError *error) {
+//            if (result == nil && error == nil) {
+//                [weakSelf.activityIndicator stopAnimating];
+//                [weakSelf.shareButtonOutlet setCustomView:nil];
+//                [weakSelf.shareButtonOutlet setTitle: @"Share"];
+//
+//                
+//                [weakSelf refreshShareScreen];
+//                weakSelf.view.userInteractionEnabled = YES;
+//
+//                return;
+//            }
+//            if (!error) {
+//                [weakSelf showAlertWithMessage : titleCongratulatoryAlert];
+//            } else {
+//                [weakSelf showErrorAlertWithError : error];
+//            }
+//            [weakSelf.activityIndicator stopAnimating];
+//            [weakSelf.shareButtonOutlet setCustomView:nil];
+//            [weakSelf.shareButtonOutlet setTitle: @"Share"];
+//            [weakSelf refreshShareScreen];
+//            weakSelf.view.userInteractionEnabled = YES;
+//
+//    }];
 }
 
 - (void) refreshShareScreen {

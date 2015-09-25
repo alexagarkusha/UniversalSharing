@@ -34,6 +34,7 @@
 
 #import "PostImagesManager.h"
 
+#import "MultySharingManager.h"
 
 
 #endif
