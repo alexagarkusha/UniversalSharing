@@ -13,7 +13,7 @@
 
 @interface MUSDatabaseRequestStringsHelper : NSObject
 
-+ (NSString*) createStringForPostWithReason :(ReasonType) reason andNetworkType :(NetworkType) networkType;
+//+ (NSString*) createStringForPostWithReason :(ReasonType) reason andNetworkType :(NetworkType) networkType;
 + (NSString*) createStringForPostWithUserId :(NSString*) userId;
 + (NSString*) createStringForPostWithPostId :(NSString*) PostId;
 + (NSString*) createStringForAllPosts;
@@ -25,9 +25,13 @@
 + (NSString*) createStringLocationsTable;
 + (NSString*) createStringPostsTable;
 ///////////////////////////////////////////////
+
 + (NSString*) createStringNetworkPostsTable;
 + (NSString*) createStringForSaveNetworkPostToTable;
 + (NSString*) createStringForNetworkPostToGetLastObject;
++ (NSString*) createStringForNetworkPostWithPrimaryKey :(NSInteger) primaryKey;
++ (NSString*) createStringForNetworkPostWithReason :(ReasonType) reason andNetworkType :(NetworkType) networkType;
++ (NSString*) createStringNetworkPostsForUpdateWithObjectPost :(NetworkPost*) networkPost;
 ///////////////////////////////////////////////////////
 
 + (NSString*) createStringForSavePostToTable;

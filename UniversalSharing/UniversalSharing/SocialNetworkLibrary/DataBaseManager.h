@@ -27,6 +27,6 @@
 - (NSMutableArray*)obtainPostsFromDataBaseWithRequestString : (NSString*) requestString;
 - (NSMutableArray*)obtainUsersFromDataBaseWithRequestString : (NSString*) requestString;
 ///////////////////////////////////////////////////////////////////////////
-- (NSMutableArray*)obtainNetworkPostsFromDataBaseWithRequestString : (NSString*) requestString;
+- (NSMutableArray*)obtainNetworkPostsFromDataBaseWithRequestStrings : (NSString*) requestString;
 - (NSInteger) saveNetworkPostToTableWithObject :(NetworkPost*) networkPost;
 @end
