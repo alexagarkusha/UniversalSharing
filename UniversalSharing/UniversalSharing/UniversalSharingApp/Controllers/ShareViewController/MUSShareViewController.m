@@ -203,7 +203,7 @@
     self.activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
 
     [self addButtonOnTextView];
-    [self initiationMessageTextView];
+    [self initiationMessageTextView]; //button for
     self.galeryView.delegate = self;
     self.shareButtonOutlet.enabled = NO;
     //self.shareButtonOutlet
@@ -243,7 +243,9 @@
     
     NSTextContainer *textContainer = [[NSTextContainer alloc] initWithSize: CGSizeMake (textSizeFrame.width, textSizeFrame.height)];
     
-    UIBezierPath *rectanglePath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, self.changeSocialNetworkButton.frame.size.width + self.changeSocialNetworkButton.frame.origin.x, self.changeSocialNetworkButton.frame.size.height + self.changeSocialNetworkButton.frame.origin.x)];
+//    UIBezierPath *rectanglePath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, self.changeSocialNetworkButton.frame.size.width + self.changeSocialNetworkButton.frame.origin.x, self.changeSocialNetworkButton.frame.size.height + self.changeSocialNetworkButton.frame.origin.x)];//for button
+    
+    UIBezierPath *rectanglePath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, 10, 0)];//without button
     
     textContainer.exclusionPaths = @[rectanglePath];
     
@@ -261,7 +263,7 @@
     
     self.messageTextViewFrame = CGRectMake(self.messageTextView.frame.origin.x, self.messageTextView.frame.origin.y, self.messageTextView.frame.size.width, self.messageTextView.frame.size.height);
     [self.view addSubview:self.messageTextView];
-    [self.messageTextView addSubview: self.changeSocialNetworkButton];
+    //[self.messageTextView addSubview: self.changeSocialNetworkButton];
 }
 
 - (void) initialParametersOfMessageTextView {

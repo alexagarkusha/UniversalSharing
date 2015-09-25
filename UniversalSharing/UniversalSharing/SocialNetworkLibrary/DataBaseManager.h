@@ -11,6 +11,7 @@
 #import "User.h"
 #import "Post.h"
 #import "Place.h"
+#import "NetworkPost.h"
 
 
 @interface DataBaseManager : NSObject 
@@ -25,5 +26,7 @@
 - (void) editObjectAtDataBaseWithRequestString : (NSString*) requestString;
 - (NSMutableArray*)obtainPostsFromDataBaseWithRequestString : (NSString*) requestString;
 - (NSMutableArray*)obtainUsersFromDataBaseWithRequestString : (NSString*) requestString;
-
+///////////////////////////////////////////////////////////////////////////
+- (NSMutableArray*)obtainNetworkPostsFromDataBaseWithRequestString : (NSString*) requestString;
+- (NSInteger) saveNetworkPostToTableWithObject :(NetworkPost*) networkPost;
 @end
