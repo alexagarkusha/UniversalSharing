@@ -14,6 +14,7 @@
 #import "DataBaseManager.h"
 #import "NSString+MUSPathToDocumentsdirectory.h"
 #import "MUSDatabaseRequestStringsHelper.h"
+#import "InternetConnectionManager.h"
 
 @interface VKNetwork () <VKSdkDelegate>
 @property (strong, nonatomic) UINavigationController *navigationController;
@@ -62,7 +63,7 @@ static VKNetwork *model = nil;
             self.isVisible = self.currentUser.isVisible;
             NSInteger indexPosition = self.currentUser.indexPosition;
 
-            if ([self obtainCurrentConnection]){
+            if ([[InternetConnectionManager manager] isInternetConnection]){
                 
                 NSString *deleteImageFromFolder = self.currentUser.photoURL;
                 
@@ -180,7 +181,7 @@ static VKNetwork *model = nil;
 
 - (void) updatePost {
     NSArray * posts = [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForPostWithReason:Connect andNetworkType:VKontakt]];
-    if (![self obtainCurrentConnection] || !posts.count  || (![self obtainCurrentConnection] && posts.count)) {
+    if (![[InternetConnectionManager manager] isInternetConnection] || !posts.count  || (![[InternetConnectionManager manager] isInternetConnection] && posts.count)) {
         [self updatePostInfoNotification];
         return;
     }
@@ -323,7 +324,7 @@ static VKNetwork *model = nil;
 #pragma mark - sharePostToNetwork
 
 - (void) sharePost : (Post*) post withComplition : (Complition) block {
-    if (![self obtainCurrentConnection]){
+    if (![[InternetConnectionManager manager] isInternetConnection]){
         [self saveOrUpdatePost: post withReason: Offline];
         block(nil,[self errorConnection]);
         [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
@@ -374,8 +375,8 @@ static VKNetwork *model = nil;
  */
 
 - (void) postImagesToVK : (Post*) post {
-    __block numberOfImagesInPost = [post.arrayImages count];
-    __block counterOfImages = 0;
+    __block int numberOfImagesInPost = [post.arrayImages count];
+    __block int counterOfImages = 0;
     
     NSInteger userId = [self.currentUser.clientID integerValue];
     NSMutableArray *requestArray = [[NSMutableArray alloc] init]; //array of requests to add pictures in the social network
