@@ -26,10 +26,23 @@
     return requestString;
 }
 
+//+ (NSString*) createStringForSavePostToTable {
+//    return [NSString stringWithFormat:@"INSERT INTO '%@'('%@','%@','%@','%@','%@','%@','%@','%@','%@','%@')VALUES(?,?,?,?,?,?,?,?,?,?)",@"Posts",@"locationID",@"postDescription",@"arrayImagesUrl",@"likesCount",@"commentsCount",@"networkType",@"dateCreate",@"reson",@"userId",@"postId"];
+//}
+/////////////////////////////////////////////////////////
+
 + (NSString*) createStringForSavePostToTable {
-    return [NSString stringWithFormat:@"INSERT INTO '%@'('%@','%@','%@','%@','%@','%@','%@','%@','%@','%@')VALUES(?,?,?,?,?,?,?,?,?,?)",@"Posts",@"locationID",@"postDescription",@"arrayImagesUrl",@"likesCount",@"commentsCount",@"networkType",@"dateCreate",@"reson",@"userId",@"postId"];
+    return [NSString stringWithFormat:@"INSERT INTO '%@'('%@','%@','%@')VALUES(?,?,?)",@"Posts",@"postDescription",@"arrayImagesUrl",@"networkPostsId"];
 }
 
++ (NSString*) createStringForSaveNetworkPostToTable {
+    return [NSString stringWithFormat:@"INSERT INTO '%@'('%@','%@','%@','%@','%@')VALUES(?,?,?,?,?)",@"NetworkPosts",@"likesCount",@"commentsCount",@"networkType",@"reson",@"postId"];
+}
+
++ (NSString*) createStringForNetworkPostToGetLastObject {
+    return [NSString stringWithFormat:@"SELECT * FROM %@ WHERE id = \"%@\" ",@"NetworkPosts",@"last_id"];//SELECT fields FROM table ORDER BY id DESC LIMIT 1;
+}
+/////////////////////////////////////////////////////////////////////////////////////////////
 + (NSString*) createStringForSaveLocationToTable {
     return [NSString stringWithFormat:@"INSERT INTO '%@'('%@','%@','%@','%@','%@','%@')VALUES(?,?,?,?,?,?)",@"Locations",@"placeID",@"longitude",@"latitude",@"placeName",@"locationID",@"userID"];
 }
@@ -185,21 +198,43 @@
     return stringLocationsTable;
 }
 
+//+ (NSString*) createStringPostsTable {
+//    NSString *stringPostsTable = @"CREATE TABLE IF NOT EXISTS Posts (";
+//    stringPostsTable = [stringPostsTable stringByAppendingString:@"id INTEGER PRIMARY KEY AUTOINCREMENT, "];
+//    stringPostsTable = [stringPostsTable stringByAppendingString:@"locationID TEXT, "];
+//    stringPostsTable = [stringPostsTable stringByAppendingString:@"postDescription TEXT, "];
+//    stringPostsTable = [stringPostsTable stringByAppendingString:@"arrayImagesUrl TEXT,"];
+//    stringPostsTable = [stringPostsTable stringByAppendingString:@"likesCount INTEGER, "];
+//    stringPostsTable = [stringPostsTable stringByAppendingString:@"commentsCount INTEGER, "];
+//    stringPostsTable = [stringPostsTable stringByAppendingString:@"networkType INTEGER, "];
+//    stringPostsTable = [stringPostsTable stringByAppendingString:@"dateCreate TEXT, "];
+//    stringPostsTable = [stringPostsTable stringByAppendingString:@"reson INTEGER, "];
+//    stringPostsTable = [stringPostsTable stringByAppendingString:@"userId TEXT, "];
+//    stringPostsTable = [stringPostsTable stringByAppendingString:@"postId TEXT)"];
+//
+//    return stringPostsTable;
+//}
+///////////////////////////////////////////////////////////////////////////////////////////////////// brandnew tables
 + (NSString*) createStringPostsTable {
     NSString *stringPostsTable = @"CREATE TABLE IF NOT EXISTS Posts (";
     stringPostsTable = [stringPostsTable stringByAppendingString:@"id INTEGER PRIMARY KEY AUTOINCREMENT, "];
-    stringPostsTable = [stringPostsTable stringByAppendingString:@"locationID TEXT, "];
+    //stringPostsTable = [stringPostsTable stringByAppendingString:@"locationID TEXT, "];// it will be needed later, perhaps
     stringPostsTable = [stringPostsTable stringByAppendingString:@"postDescription TEXT, "];
     stringPostsTable = [stringPostsTable stringByAppendingString:@"arrayImagesUrl TEXT,"];
-    stringPostsTable = [stringPostsTable stringByAppendingString:@"likesCount INTEGER, "];
-    stringPostsTable = [stringPostsTable stringByAppendingString:@"commentsCount INTEGER, "];
-    stringPostsTable = [stringPostsTable stringByAppendingString:@"networkType INTEGER, "];
-    stringPostsTable = [stringPostsTable stringByAppendingString:@"dateCreate TEXT, "];
-    stringPostsTable = [stringPostsTable stringByAppendingString:@"reson INTEGER, "];
-    stringPostsTable = [stringPostsTable stringByAppendingString:@"userId TEXT, "];
-    stringPostsTable = [stringPostsTable stringByAppendingString:@"postId TEXT)"];
-
+    stringPostsTable = [stringPostsTable stringByAppendingString:@"networkPostsId TEXT)"];
+    
     return stringPostsTable;
 }
 
++ (NSString*) createStringNetworkPostsTable {
+    NSString *stringNetworkPostsTable = @"CREATE TABLE IF NOT EXISTS NetworkPosts (";
+    stringNetworkPostsTable = [stringNetworkPostsTable stringByAppendingString:@"id INTEGER PRIMARY KEY AUTOINCREMENT, "];
+    stringNetworkPostsTable = [stringNetworkPostsTable stringByAppendingString:@"likesCount INTEGER, "];
+    stringNetworkPostsTable = [stringNetworkPostsTable stringByAppendingString:@"commentsCount INTEGER, "];
+    stringNetworkPostsTable = [stringNetworkPostsTable stringByAppendingString:@"networkType INTEGER, "];
+    stringNetworkPostsTable = [stringNetworkPostsTable stringByAppendingString:@"reson INTEGER, "];
+    stringNetworkPostsTable = [stringNetworkPostsTable stringByAppendingString:@"postId TEXT)"];
+    
+    return stringNetworkPostsTable;
+}
 @end

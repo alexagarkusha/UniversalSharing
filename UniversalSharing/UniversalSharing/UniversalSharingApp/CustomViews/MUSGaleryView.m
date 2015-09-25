@@ -107,9 +107,7 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     MUSCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[MUSCollectionViewCell customCellID] forIndexPath:indexPath];
-    if (_flagForDelete) {
-       // _count--;
-    }
+    
     if (self.flag && [self.arrayWithChosenImages count] < 3 && _flagForDelete) {
         cell.photoImageViewCell.image  = nil;
         cell.deletePhotoButtonOutlet.hidden = YES;
@@ -128,7 +126,11 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
         image = self.arrayWithChosenImages[indexPath.row];
     }
         //cell.isEditable = self.isEditableCollectionView;
+    if (indexPath.row == 0) {
+        [cell configurationCellWithPhoto:nil andEditableState:YES];
+    }else {
     [cell configurationCellWithPhoto:image.image andEditableState:YES];
+    }
     _flagForDelete = NO;
 
     return  cell;

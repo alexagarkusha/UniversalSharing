@@ -24,6 +24,12 @@
 + (NSString*) createStringUsersTable;
 + (NSString*) createStringLocationsTable;
 + (NSString*) createStringPostsTable;
+///////////////////////////////////////////////
++ (NSString*) createStringNetworkPostsTable;
++ (NSString*) createStringForSaveNetworkPostToTable;
++ (NSString*) createStringForNetworkPostToGetLastObject;
+///////////////////////////////////////////////////////
+
 + (NSString*) createStringForSavePostToTable;
 + (NSString*) createStringForSaveLocationToTable;
 + (NSString*) createStringForLocationId;
