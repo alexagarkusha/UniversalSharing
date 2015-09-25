@@ -43,7 +43,6 @@ static SocialManager *model = nil;
     if (filteredArray.count > 0) {
         currentSocialNetwork = (SocialNetwork*) [filteredArray firstObject];
     }
-    
     return currentSocialNetwork;
 }
 

@@ -15,6 +15,7 @@
 #import "DataBaseManager.h"
 #import "NSString+MUSPathToDocumentsdirectory.h"
 #import "MUSDatabaseRequestStringsHelper.h"
+#import "InternetConnectionManager.h"
 
 @interface TwitterNetwork () //<TWTRCoreOAuthSigning>
 
@@ -65,8 +66,7 @@ static TwitterNetwork *model = nil;
 
             //////////////////////////////////////////////////////////
             
-            if ([self obtainCurrentConnection]){
-                
+            if ([[InternetConnectionManager manager] isInternetConnection]){
                 
                 NSString *deleteImageFromFolder = self.currentUser.photoURL;
                 
@@ -208,7 +208,7 @@ static TwitterNetwork *model = nil;
 
 - (void) updatePost {
     NSArray * posts = [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForPostWithReason:Connect andNetworkType:Twitters]];
-    if (![self obtainCurrentConnection] || !posts.count || (![self obtainCurrentConnection] && posts.count)) {
+    if (![[InternetConnectionManager manager] isInternetConnection] || !posts.count || (![[InternetConnectionManager manager] isInternetConnection] && posts.count)) {
         [self updatePostInfoNotification];
         return;
     }
@@ -328,7 +328,7 @@ static TwitterNetwork *model = nil;
 #pragma mark - sharePostToNetwork
 
 - (void) sharePost:(Post *)post withComplition:(Complition)block {
-    if (![self obtainCurrentConnection]){
+    if (![[InternetConnectionManager manager] isInternetConnection]){
         [self saveOrUpdatePost: post withReason: Offline];
         block(nil,[self errorConnection]);
         [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];

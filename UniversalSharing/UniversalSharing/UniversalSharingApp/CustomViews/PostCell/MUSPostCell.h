@@ -9,21 +9,21 @@
 #import <UIKit/UIKit.h>
 #import "Post.h"
 
-@protocol MUSPostCellDelegate <NSObject>
-@required
-- (void) addIndexToIndexSetWithCell :(id) cell ;
-@end
+//@protocol MUSPostCellDelegate <NSObject>
+//@required
+//- (void) addIndexToIndexSetWithCell :(id) cell ;
+//@end
 
 @interface MUSPostCell : UITableViewCell
-@property (nonatomic, assign) id <MUSPostCellDelegate> delegate;
+//@property (nonatomic, assign) id <MUSPostCellDelegate> delegate;
 
 + (NSString*) cellID;
 + (instancetype) postCell;
 + (CGFloat) heightForPostCell;
 
 - (void) configurationUpdatingPostCell: (Post*) currentPost;
-- (void) configurationPostCell: (Post*) currentPost andFlagEditing:(BOOL) flagEdit andFlagForDelete :(BOOL) flagForDelete;
-- (void) checkIsSelectedPost;
+- (void) configurationPostCell: (Post*) currentPost;
+//- (void) checkIsSelectedPost;
 
 
 @end

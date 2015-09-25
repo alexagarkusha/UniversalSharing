@@ -15,6 +15,8 @@
 #import "DataBaseManager.h"
 #import "NSString+MUSPathToDocumentsdirectory.h"
 #import "MUSDatabaseRequestStringsHelper.h"
+#import "InternetConnectionManager.h"
+
 @interface FacebookNetwork()<FBSDKGraphRequestConnectionDelegate>
 
 @property (copy, nonatomic) Complition copyComplition;
@@ -60,7 +62,7 @@ static FacebookNetwork *model = nil;
             NSInteger indexPosition = self.currentUser.indexPosition;
             //////////////////////////////////////////////////////////
             
-            if ([self obtainCurrentConnection]){
+            if ([[InternetConnectionManager manager] isInternetConnection]){
                
                 NSString *deleteImageFromFolder = self.currentUser.photoURL;
                                
@@ -215,11 +217,12 @@ static FacebookNetwork *model = nil;
 #pragma mark - sharePost
 
 - (void) sharePost:(Post *)post withComplition:(Complition)block {
+    // Create object NETWORKPOST
     
-    if (![self obtainCurrentConnection]){
-        [self saveOrUpdatePost: post withReason: Offline];
+    
+    if (![[InternetConnectionManager manager] isInternetConnection]){
+        // Return Result - object NetworkPost with reason = offline, Error - internet Connection
         block(nil,[self errorConnection]);
-        [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
         return;
     }
      self.copyComplition = block;
@@ -344,7 +347,7 @@ static FacebookNetwork *model = nil;
 
 - (void) updatePost {
     NSArray * posts = [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForPostWithReason:Connect andNetworkType:Facebook]];
-    if (![self obtainCurrentConnection] || !posts.count  || (![self obtainCurrentConnection] && posts.count)) {
+    if (![[InternetConnectionManager manager] isInternetConnection] || !posts.count  || (![[InternetConnectionManager manager] isInternetConnection] && posts.count)) {
         [self updatePostInfoNotification];
         return;
     }
@@ -367,7 +370,7 @@ static FacebookNetwork *model = nil;
         }];
         
         [self obtainNumberOfCommentsForArrayOfPostId: arrayOfIdPost andConnection : connection withComplition:^(id result, NSError *error) {
-            NSLog (@"result = %d", [result integerValue]);
+            NSLog (@"result = %ld", (long)[result integerValue]);
             if (!error) {
                 if (post.commentsCount == [result integerValue]) {
                     return;

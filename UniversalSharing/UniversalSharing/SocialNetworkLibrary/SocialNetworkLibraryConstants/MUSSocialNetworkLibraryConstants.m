@@ -126,7 +126,7 @@ NSInteger const musErrorLocationPropertiesCode = 1011;
 NSString *const musErrorAccesDenied = @"Access denied!";
 NSInteger const musErrorAccesDeniedCode = 1020;
 
-NSString *const musErrorConnection = @"Error connection to social network. Please, retry again";
+NSString *const musErrorConnection = @"NO INTERNET CONNECTION. You can resend this post from shared posts";
 NSInteger const musErrorConnectionCode = 1030;
 
 #pragma mark DataBase Constants

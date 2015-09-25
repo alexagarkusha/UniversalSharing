@@ -32,5 +32,8 @@
 
 #import "User.h"
 
+#import "PostImagesManager.h"
+
+
 
 #endif

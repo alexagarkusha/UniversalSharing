@@ -611,25 +611,11 @@
     } else {
         [post.arrayImagesUrl removeAllObjects];
     }
-    [post.arrayImages enumerateObjectsUsingBlock:^(ImageToPost *image, NSUInteger index, BOOL *stop) {
-        NSData *data = UIImagePNGRepresentation(image.image);
-        //Get the docs directory
-        NSString *filePath = @"image";
-        filePath = [filePath stringByAppendingString:[NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970] * 1000]];
-        filePath = [filePath stringByAppendingString:@".png"];
-        [post.arrayImagesUrl addObject:filePath];
-        [data writeToFile:[filePath obtainPathToDocumentsFolder:filePath] atomically:YES]; //Write the file
-        
-    }];
+    post.arrayImagesUrl = [[PostImagesManager manager] saveImagesToDocumentsFolderAndGetArrayWithImagesUrls: post.arrayImages];
 }
 
 - (void) deletePostImagesFromDocumentsFolder : (Post*) post {
-    if (![[post.arrayImagesUrl firstObject] isEqualToString: @""] && post.arrayImagesUrl.count > 0) {
-        __block NSError *error;
-        [post.arrayImagesUrl enumerateObjectsUsingBlock:^(NSString *urlImage, NSUInteger idx, BOOL *stop) {
-            [[NSFileManager defaultManager] removeItemAtPath: [urlImage obtainPathToDocumentsFolder: urlImage] error: &error];
-        }];
-    }
+    [[PostImagesManager manager] removeAllImagesFromPostByArrayOfImagesUrls: post.arrayImagesUrl];
 }
 
 - (void) updatePostInDataBase {
