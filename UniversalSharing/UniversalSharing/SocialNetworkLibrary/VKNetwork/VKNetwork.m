@@ -181,15 +181,16 @@ static VKNetwork *model = nil;
 
 
 - (void) updatePost {
-    NSArray * posts = [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForPostWithReason:Connect andNetworkType:VKontakt]];
-    if (![[InternetConnectionManager manager] isInternetConnection] || !posts.count  || (![[InternetConnectionManager manager] isInternetConnection] && posts.count)) {
+    NSArray * networksPostsIDs = [[DataBaseManager sharedManager] obtainNetworkPostsFromDataBaseWithRequestStrings: [MUSDatabaseRequestStringsHelper createStringForNetworkPostWithReason: Connect andNetworkType: VKontakt]];
+    
+    if (![[InternetConnectionManager manager] isInternetConnection] || !networksPostsIDs.count  || (![[InternetConnectionManager manager] isInternetConnection] && networksPostsIDs.count)) {
         [self updatePostInfoNotification];
         return;
     }
     __block NSString *stringPostsWithUserIdAndPostId = @"";
-    [posts enumerateObjectsUsingBlock:^(Post *post, NSUInteger index, BOOL *stop) {
-        stringPostsWithUserIdAndPostId = [stringPostsWithUserIdAndPostId stringByAppendingString:[NSString stringWithFormat:@"%@_%@", post.userId, post.postID]];
-        if (posts.count != ++index) {
+    [networksPostsIDs enumerateObjectsUsingBlock:^(NetworkPost *networkPost, NSUInteger index, BOOL *stop) {
+        stringPostsWithUserIdAndPostId = [stringPostsWithUserIdAndPostId stringByAppendingString:[NSString stringWithFormat:@"%@_%@", [VKSdk getAccessToken].userId, networkPost.postID]];
+        if (networksPostsIDs.count != ++index) {
             stringPostsWithUserIdAndPostId = [stringPostsWithUserIdAndPostId stringByAppendingString:@","];
 
         }
@@ -202,19 +203,24 @@ static VKNetwork *model = nil;
         NSArray *arrayCount = response.json;
         //for (VKResponse * response in responses) {
         for (int i = 0; i < arrayCount.count;  i++) {
-         
-            Post *post = [Post new];
-            post.postID = [response.json[i] objectForKey:@"id"];
-            post.userId = [response.json[i] objectForKey:@"owner_id"];
-            post.commentsCount = [[[response.json[i] objectForKey:@"comments"] objectForKey:@"count"] integerValue];
-            post.likesCount = [[[response.json[i] objectForKey:@"likes"] objectForKey:@"count"] integerValue];
-            
-            [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPostForVK:post]];
+            NetworkPost *networkPost = [NetworkPost create];
+            networkPost.postID = [response.json[i] objectForKey:@"id"];
+            networkPost.reason = Connect;
+            networkPost.networkType = VKontakt;
+            networkPost.likesCount = [[[response.json[i] objectForKey:@"likes"] objectForKey:@"count"] integerValue];
+            networkPost.commentsCount = [[[response.json[i] objectForKey:@"comments"] objectForKey:@"count"] integerValue];
+//            
+//            Post *post = [Post new];
+//            post.postID = [response.json[i] objectForKey:@"id"];
+//            post.userId = [response.json[i] objectForKey:@"owner_id"];
+//            post.commentsCount = [[[response.json[i] objectForKey:@"comments"] objectForKey:@"count"] integerValue];
+//            post.likesCount = [[[response.json[i] objectForKey:@"likes"] objectForKey:@"count"] integerValue];
+            [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringNetworkPostForUpdateWithObjectNetworkPostForVK: networkPost]];
         }
         [[NSNotificationCenter defaultCenter] postNotificationName:MUSNotificationPostsInfoWereUpDated object:nil];
-        
     } errorBlock: ^(NSError *error) {
-        self.copyComplition (nil, [self errorVkontakte]);
+        //self.copyComplition (nil, [self errorVkontakte]);
+        [[NSNotificationCenter defaultCenter] postNotificationName:MUSNotificationPostsInfoWereUpDated object:nil];
     }];
 
 }

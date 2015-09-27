@@ -209,33 +209,35 @@ static TwitterNetwork *model = nil;
 
 - (void) updatePost {
 #warning NEED TO GET ARRAY OF NETWORKPOSTS AND THEN UPDATE;    
-    NSArray * posts = [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForPostWithReason:Connect andNetworkType:Twitters]];
+//    NSArray * posts = [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForPostWithReason:Connect andNetworkType:Twitters]];
+    NSArray * networksPostsIDs = [[DataBaseManager sharedManager] obtainNetworkPostsFromDataBaseWithRequestStrings: [MUSDatabaseRequestStringsHelper createStringForNetworkPostWithReason: Connect andNetworkType: Twitters]];
+
     
-    if (![[InternetConnectionManager manager] isInternetConnection] || !posts.count || (![[InternetConnectionManager manager] isInternetConnection] && posts.count)) {
+    if (![[InternetConnectionManager manager] isInternetConnection] || !networksPostsIDs.count || (![[InternetConnectionManager manager] isInternetConnection] && networksPostsIDs.count)) {
         [self updatePostInfoNotification];
         return;
     }
     //    Post *post = posts[2];
 //    [self obtainCountOfLikesAndCommentsFromPost:post];
-    [posts enumerateObjectsUsingBlock:^(Post *post, NSUInteger idx, BOOL *stop) {
-        [self obtainCountOfLikesAndCommentsFromPost:post];
+    [networksPostsIDs enumerateObjectsUsingBlock:^(NetworkPost *networkPost, NSUInteger idx, BOOL *stop) {
+        [self obtainCountOfLikesAndCommentsFromPost: networkPost];
     }];
     
     
 }
 
-- (void) obtainCountOfLikesAndCommentsFromPost :(Post*) post {
+- (void) obtainCountOfLikesAndCommentsFromPost :(NetworkPost*) networkPost{
      //https://api.twitter.com/1.1/statuses/retweets/509457288717819904.json
     NSString *statusesShowEndpoint = musTwitterURL_Statuses_Show;
-    
     //[NSString stringWithFormat:@"https://api.twitter.com/1.1/statuses/retweets/%@.json",post.postID];
     
-    NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:post.postID,@"id",@"true",@"include_my_retweet",nil];//,@"100",@"count"
+    NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:networkPost.postID,@"id",@"true",@"include_my_retweet",nil];//,@"100",@"count"
     NSError *clientError;
     
     NSURLRequest *request = [[[Twitter sharedInstance] APIClient] URLRequestWithMethod:@"GET" URL:statusesShowEndpoint parameters:params error:&clientError];
     __weak TwitterNetwork *weakSelf = self;
-
+    __block NetworkPost *networkPostCopy = networkPost;
+    
     if (request) {
         [[[Twitter sharedInstance] APIClient] sendTwitterRequest:request completion:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
             if (data) {
@@ -245,14 +247,17 @@ static TwitterNetwork *model = nil;
                     [weakSelf updatePostInfoNotification];
                     return;
                 }
-                if (post.likesCount == [[arrayJson  objectForKey:@"favorite_count"] integerValue] &&  post.commentsCount == [[arrayJson  objectForKey:@"retweet_count"] integerValue] ) {
+                if (networkPostCopy.likesCount == [[arrayJson  objectForKey:@"favorite_count"] integerValue] &&  networkPostCopy.commentsCount == [[arrayJson  objectForKey:@"retweet_count"] integerValue] ) {
                     [weakSelf updatePostInfoNotification];
                     return;
                 }
-                post.likesCount = [[arrayJson  objectForKey:@"favorite_count"] integerValue];
-                post.commentsCount = [[arrayJson objectForKey:@"retweet_count"] integerValue];
                 
-                [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost:post]];
+               networkPostCopy.likesCount = [[arrayJson  objectForKey:@"favorite_count"] integerValue];
+                //networkPostCopy.likesCount = [favoriteCount integerValue];
+                //networkPostCopy.likesCount = [arrayJson  objectForKey:@"favorite_count"];
+                networkPostCopy.commentsCount = [[arrayJson objectForKey:@"retweet_count"] integerValue];
+                [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringNetworkPostsForUpdateWithObjectPost : networkPostCopy]];
+//                [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost:post]];
                 [weakSelf updatePostInfoNotification];
             }
             else {
@@ -455,7 +460,7 @@ static TwitterNetwork *model = nil;
                                      }
                                     networkPostCopy.postID = [[jsonData objectForKey:@"id"] stringValue];
                                     networkPostCopy.reason = Connect;
-                                    self.copyComplition (musPostSuccess, nil);
+                                    self.copyComplition (networkPostCopy, nil);
                                 } else {
                                     NSError *connectionError = [NSError errorWithMessage: musErrorConnection
                                                                             andCodeError: musErrorConnectionCode];

@@ -282,11 +282,6 @@ static FacebookNetwork *model = nil;
                                        HTTPMethod: musPOST]
      startWithCompletionHandler:
      ^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
-        
-         
-         NSLog(@"jsjfjsdhf");
-         
-         
          if (!error) {
              networkPostCopy.reason = Connect;
              networkPostCopy.postID = [result objectForKey: @"id" ];
@@ -355,43 +350,44 @@ static FacebookNetwork *model = nil;
 
 - (void) updatePost {
 #warning NEED TO GET ARRAY OF NETWORKPOSTS AND THEN UPDATE;
-    NSArray * posts = [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForPostWithReason:Connect andNetworkType:Facebook]];
+    //NSArray * posts = [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForPostWithReason:Connect andNetworkType:Facebook]];
     
-    
-    if (![[InternetConnectionManager manager] isInternetConnection] || !posts.count  || (![[InternetConnectionManager manager] isInternetConnection] && posts.count)) {
+    NSArray * networksPostsIDs = [[DataBaseManager sharedManager] obtainNetworkPostsFromDataBaseWithRequestStrings: [MUSDatabaseRequestStringsHelper createStringForNetworkPostWithReason: Connect andNetworkType: Facebook]];
+                                  
+    if (![[InternetConnectionManager manager] isInternetConnection] || !networksPostsIDs.count  || (![[InternetConnectionManager manager] isInternetConnection] && networksPostsIDs.count)) {
         [self updatePostInfoNotification];
         return;
     }
     
     FBSDKGraphRequestConnection *connection = [[FBSDKGraphRequestConnection alloc] init];
 
-    [posts enumerateObjectsUsingBlock:^(Post *post, NSUInteger index, BOOL *stop) {
+    [networksPostsIDs enumerateObjectsUsingBlock:^(NetworkPost *networkPost, NSUInteger index, BOOL *stop) {
         
-        NSArray *arrayOfIdPost = [post.postID componentsSeparatedByString: @","];
+        NSArray *arrayOfIdPost = [networkPost.postID componentsSeparatedByString: @","];
 
         [self obtainNumberOfLikesForArrayOfPostId: arrayOfIdPost andConnection : connection withComplition:^(id result, NSError *error) {
             
             if (!error) {
-                if (post.likesCount == [result integerValue]) {
+                if (networkPost.likesCount == [result integerValue]) {
                     return;
                 }
-                post.likesCount = [result integerValue];
-                [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost : post]];
+                networkPost.likesCount = [result integerValue];
+                [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringNetworkPostsForUpdateWithObjectPost : networkPost]];
             }
         }];
         
         [self obtainNumberOfCommentsForArrayOfPostId: arrayOfIdPost andConnection : connection withComplition:^(id result, NSError *error) {
             NSLog (@"result = %ld", (long)[result integerValue]);
             if (!error) {
-                if (post.commentsCount == [result integerValue]) {
+                if (networkPost.commentsCount == [result integerValue]) {
                     return;
                 }
-                post.commentsCount = [result integerValue];
-                [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost:post]];
+                networkPost.commentsCount = [result integerValue];
+                [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringNetworkPostsForUpdateWithObjectPost : networkPost]];
             }
         }];
     }];
-    if (posts.count) {
+    if (networksPostsIDs.count) {
         connection.delegate = self;
         [connection start];
     }

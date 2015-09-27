@@ -15,6 +15,7 @@
 #import "MUSDetailPostViewController.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 #import "SSARefreshControl.h"
+#import "MUSReasonCommentsAndLikesCell.h"
 
 @interface MUSPostsViewController () <UITableViewDataSource, UITableViewDelegate, MUSDetailPostViewControllerDelegate, UIActionSheetDelegate, UIGestureRecognizerDelegate, SSARefreshControlDelegate>
 
@@ -86,6 +87,8 @@
                                                  name : MUSNotificationPostsInfoWereUpDated
                                                object : nil];
     [self initiationSSARefreshControl];
+    [self initiationArrayOfActiveSocialNetwork];
+
     //[self.tableView reloadData];
 }
 
@@ -142,25 +145,28 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     Post *post = [self.arrayPosts objectAtIndex: section];
-    
-    return 1;
-    //return self.arrayPosts.count;
+//    NSLog(@"array NetworkPosts = %@", post.arrayWithNetworkPosts);
+//    NSLog(@"array arrayWithNetworkPostsId = %@", post.arrayWithNetworkPostsId);
+    return post.arrayWithNetworkPosts.count + 1;
 }
 
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    MUSPostCell *postCell = (MUSPostCell*) cell;
     
     
     Post *post = [self.arrayPosts objectAtIndex: indexPath.section];
     
     if (indexPath.row == 0) {
+        MUSPostCell *postCell = (MUSPostCell*) cell;
         if (![self.setWithUniquePrimaryKeysOfPost containsObject: [NSString stringWithFormat: @"%ld", (long)post.primaryKey]]) {
             [postCell configurationPostCell : post];
         } else {
             [postCell configurationUpdatingPostCell: post];
         }
-        [self setCellColor: [UIColor whiteColor] ForCell: cell];
+        //[self setCellColor: [UIColor whiteColor] ForCell: cell];
+    } else {
+        MUSReasonCommentsAndLikesCell *reasonCommentsAndLikesCell = (MUSReasonCommentsAndLikesCell*) cell;
+        [reasonCommentsAndLikesCell configurationReasonCommentsAndLikesCell: [post.arrayWithNetworkPosts objectAtIndex: indexPath.row - 1]];
     }
 }
 
@@ -169,19 +175,32 @@
     /*!
      XIB
      */
-    MUSPostCell *cell = [tableView dequeueReusableCellWithIdentifier:[MUSPostCell cellID]];
-    if(!cell) {
-        cell = [MUSPostCell postCell];
+    if (indexPath.row == 0) {
+        MUSPostCell *cell = [tableView dequeueReusableCellWithIdentifier:[MUSPostCell cellID]];
+        if(!cell) {
+            cell = [MUSPostCell postCell];
+        }
+        //cell.delegate = self;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone; // disable the cell selection highlighting
+        return cell;
+    } else {
+        MUSReasonCommentsAndLikesCell *cell = [tableView dequeueReusableCellWithIdentifier:[MUSReasonCommentsAndLikesCell cellID]];
+        if(!cell) {
+            cell = [MUSReasonCommentsAndLikesCell reasonCommentsAndLikesCell];
+        }
+        //cell.delegate = self;
+        //cell.selectionStyle = UITableViewCellSelectionStyleNone; // disable the cell selection highlighting
+        return cell;
     }
-    //cell.delegate = self;
-    cell.selectionStyle = UITableViewCellSelectionStyleNone; // disable the cell selection highlighting
-    return cell;
 }
 
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [MUSPostCell heightForPostCell];
+    if (indexPath.row == 0) {
+        return [MUSPostCell heightForPostCell];
+    }
+    return [MUSReasonCommentsAndLikesCell heightForReasonCommentsAndLikesCell];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -198,39 +217,39 @@
 
 
 
-- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
-    Post *post = [self.arrayPosts objectAtIndex: indexPath.row];
-    if (![self.setWithUniquePrimaryKeysOfPost containsObject: [NSString stringWithFormat: @"%ld", (long)post.primaryKey]]) {
-        return YES;
-    } else {
-        return NO;
-    }
-}
-
-- (void)tableView:(UITableView *)tableView didHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.tableView.contentOffset.y >= 0) {
-        MUSPostCell *cell = (MUSPostCell *)[tableView cellForRowAtIndexPath:indexPath];
-        [self setCellColor: [UIColor colorWithRed:230.0/255.0 green:230.0/255.0 blue:230.0/255.0 alpha: 1.0] ForCell: cell];
-    }
-}
-
-- (void)tableView:(UITableView *)tableView didUnhighlightRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (!self.editing) {
-        MUSPostCell *cell = (MUSPostCell *)[tableView cellForRowAtIndexPath:indexPath];
-        [self setCellColor: [UIColor whiteColor] ForCell: cell];
-    }
-}
-
-- (void) setCellColor: (UIColor *) color ForCell: (UITableViewCell *) cell {
-    [UIView animateWithDuration: 0.3 animations:^{
-        cell.contentView.backgroundColor = color;
-    }];
-    [UIView commitAnimations];
-}
-
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return UITableViewCellEditingStyleNone;
-}
+//- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+//    Post *post = [self.arrayPosts objectAtIndex: indexPath.row];
+//    if (![self.setWithUniquePrimaryKeysOfPost containsObject: [NSString stringWithFormat: @"%ld", (long)post.primaryKey]]) {
+//        return YES;
+//    } else {
+//        return NO;
+//    }
+//}
+//
+//- (void)tableView:(UITableView *)tableView didHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+//    if (self.tableView.contentOffset.y >= 0) {
+//        MUSPostCell *cell = (MUSPostCell *)[tableView cellForRowAtIndexPath:indexPath];
+//        [self setCellColor: [UIColor colorWithRed:230.0/255.0 green:230.0/255.0 blue:230.0/255.0 alpha: 1.0] ForCell: cell];
+//    }
+//}
+//
+//- (void)tableView:(UITableView *)tableView didUnhighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+//    if (!self.editing) {
+//        MUSPostCell *cell = (MUSPostCell *)[tableView cellForRowAtIndexPath:indexPath];
+//        [self setCellColor: [UIColor whiteColor] ForCell: cell];
+//    }
+//}
+//
+//- (void) setCellColor: (UIColor *) color ForCell: (UITableViewCell *) cell {
+//    [UIView animateWithDuration: 0.3 animations:^{
+//        cell.contentView.backgroundColor = color;
+//    }];
+//    [UIView commitAnimations];
+//}
+//
+//- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
+//    return UITableViewCellEditingStyleNone;
+//}
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     //MUSDetailPostViewController *detailPostViewController = [[MUSDetailPostViewController alloc] init];
@@ -280,7 +299,8 @@
  @abstract Obtain posts from Data Base.
  */
 - (void) obtainArrayPosts {
-    self.arrayPosts = [[NSMutableArray alloc] initWithArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper createStringForPostWithReason: self.predicateReason andNetworkType: self.predicateNetworkType]]];
+    self.arrayPosts = [[NSMutableArray alloc] initWithArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper createStringForAllPosts]]];
+    
     self.editButton.enabled = [self isArrayOfPostsNotEmpty];
     [self.refreshControl endRefreshing];
     [self.tableView reloadData];
@@ -309,7 +329,7 @@
 
 - (void) beganRefreshing {
     
-    if (!self.arrayOfLoginSocialNetworks.count || !self.arrayPosts.count) {
+    if (!self.arrayPosts.count) {
         [self obtainArrayPosts];
         return;
     }
@@ -327,6 +347,26 @@
 
 - (void) dealloc {
     [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
+
+
+- (void) initiationArrayOfActiveSocialNetwork {
+
+    self.arrayOfLoginSocialNetworks = [[NSMutableArray alloc] init];
+    self.arrayOfUsers = [[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForAllUsers]];
+    NSMutableArray *arrayWithNetworks = [[NSMutableArray alloc] init];
+    for (int i = 0; i < self.arrayOfUsers.count; i++) {
+        User *currentUser = [self.arrayOfUsers objectAtIndex: i];
+        [arrayWithNetworks addObject: @(currentUser.networkType)];
+    }
+    __weak MUSPostsViewController *weakSelf = self;
+    [[[SocialManager sharedManager] networks: arrayWithNetworks] enumerateObjectsUsingBlock:^(SocialNetwork *socialNetwork, NSUInteger index, BOOL *stop) {
+        if (socialNetwork.isLogin) {
+            [weakSelf.arrayOfLoginSocialNetworks addObject : socialNetwork];
+        }
+
+    }];
+
 }
 
 

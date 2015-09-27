@@ -157,6 +157,11 @@ FOUNDATION_EXPORT NSInteger const musErrorConnectionCode;
 
 FOUNDATION_EXPORT NSString *const nameDataBase;
 
+#pragma mark Categories
+
+FOUNDATION_EXPORT NSString *const musReasonName_Shared;
+FOUNDATION_EXPORT NSString *const musReasonName_Offline;
+FOUNDATION_EXPORT NSString *const musReasonName_Error;
 
 
 

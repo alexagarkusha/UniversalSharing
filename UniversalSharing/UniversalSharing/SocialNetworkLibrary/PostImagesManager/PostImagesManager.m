@@ -26,6 +26,10 @@ static PostImagesManager *model = nil;
 }
 
 - (NSMutableArray*) saveImagesToDocumentsFolderAndGetArrayWithImagesUrls :(NSMutableArray*) arrayWithImages {
+    
+    
+    
+    
     NSMutableArray *arrayWithImagesUrls = [[NSMutableArray alloc] init];
     [arrayWithImages enumerateObjectsUsingBlock:^(ImageToPost *image, NSUInteger index, BOOL *stop) {
         NSData *data = UIImagePNGRepresentation(image.image);

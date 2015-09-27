@@ -343,7 +343,7 @@
     [self createPost];
 //        __weak MUSShareViewController *weakSelf = self;
     
-    NSArray *array = [[NSArray alloc] initWithObjects: @(Twitters), @(VKontakt), @(Facebook), nil];
+    NSArray *array = [[NSArray alloc] initWithObjects: @(Twitters), @(Facebook), nil];
     
     [[MultySharingManager sharedManager] sharePost: self.post toSocialNetworks: array withComplition:^(id result, NSError *error) {
         NSLog(@"RESULT %@", result);

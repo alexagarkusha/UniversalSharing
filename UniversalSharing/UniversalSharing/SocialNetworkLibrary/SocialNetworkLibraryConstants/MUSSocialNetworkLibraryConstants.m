@@ -11,7 +11,7 @@
 #pragma mark Facebook Constants
 
 NSString *const musFacebookTitle = @"Login Facebook";
-NSString *const musFacebookIconName = @"FBimage.jpg";
+NSString *const musFacebookIconName = @"FBimage.png";
 NSString *const musFacebookName = @"Facebook";
 
 NSString *const musFacebookPermission_Email = @"email";
@@ -78,7 +78,7 @@ NSString *const musTwitterConsumerKey = @"lUY36ubrBYXpYsZhJJvg8CYdf";
 
 
 NSString *const musTwitterTitle = @"Login Twitter";
-NSString *const musTwitterIconName = @"TWimage.jpeg";
+NSString *const musTwitterIconName = @"TWimage.png";
 NSString *const musTwitterName = @"Twitter";
 
 NSString *const musTwitterError = @"Twitter error. Please retry again.";
@@ -133,4 +133,8 @@ NSInteger const musErrorConnectionCode = 1030;
 
 NSString *const nameDataBase = @"UniversalSharing.sql";
 
+#pragma mark Categories
 
+NSString *const musReasonName_Shared = @"Success";
+NSString *const musReasonName_Offline = @"Offline";
+NSString *const musReasonName_Error = @"Failed";
