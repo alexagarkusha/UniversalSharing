@@ -21,6 +21,7 @@
 #import <CoreText/CoreText.h>
 #import "DataBaseManager.h"
 #import "MUSDetailPostCollectionViewController.h"
+#import "MUSPopUpForSharing.h"
 
 @interface MUSShareViewController () <UITextViewDelegate, UIActionSheetDelegate, UIAlertViewDelegate, UINavigationControllerDelegate, UIToolbarDelegate, MUSGaleryViewDelegate>
 
@@ -335,23 +336,42 @@
 #pragma mark - Share Post to Social network
 
 - (IBAction)shareToSocialNetwork:(id)sender {
-    if (!_currentSocialNetwork.isVisible || !_currentSocialNetwork || !_currentSocialNetwork.isLogin) {
-        [self showAlertWithMessage: musAppError_Logged_Into_Social_Networks];
-        return;
-    }
-//    [self.shareButtonOutlet setCustomView:self.activityIndicator];
-//    [self.activityIndicator startAnimating];
-//    self.shareButtonOutlet.enabled = NO;
-//    self.view.userInteractionEnabled = NO;
-    [self createPost];
-//        __weak MUSShareViewController *weakSelf = self;
+    MUSPopUpForSharing * popVC = [MUSPopUpForSharing new];
+    [self addChildViewController:popVC];
+//    popVC.view.layer.masksToBounds = YES;
+//    popVC.view.layer.cornerRadius = 25;
+//    popVC.view.layer.borderWidth = 5;
+//    popVC.view.layer.borderColor = [UIColor blackColor].CGColor;
+//    popVC.view.backgroundColor = [UIColor greenColor];
+    [self.view addSubview:popVC.view];
+    [popVC didMoveToParentViewController:self];
     
-    NSArray *array = [[NSArray alloc] initWithObjects: @(Twitters), @(Facebook), nil];
-    
-    [[MultySharingManager sharedManager] sharePost: self.post toSocialNetworks: array withComplition:^(id result, NSError *error) {
-        NSLog(@"RESULT %@", result);
-        NSLog(@"ERROR %@", error);
+    [UIView animateWithDuration:3 animations:^{
+        
+        popVC.view.frame = self.view.bounds;//CGRectMake(0, 100, 200, 200);//
+
+        
     }];
+
+    
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+//    if (!_currentSocialNetwork.isVisible || !_currentSocialNetwork || !_currentSocialNetwork.isLogin) {
+//        [self showAlertWithMessage: musAppError_Logged_Into_Social_Networks];
+//        return;
+//    }
+////    [self.shareButtonOutlet setCustomView:self.activityIndicator];
+////    [self.activityIndicator startAnimating];
+////    self.shareButtonOutlet.enabled = NO;
+////    self.view.userInteractionEnabled = NO;
+//    [self createPost];
+////        __weak MUSShareViewController *weakSelf = self;
+//    
+//    NSArray *array = [[NSArray alloc] initWithObjects: @(Twitters), @(Facebook), nil];
+//    
+//    [[MultySharingManager sharedManager] sharePost: self.post toSocialNetworks: array withComplition:^(id result, NSError *error) {
+//        NSLog(@"RESULT %@", result);
+//        NSLog(@"ERROR %@", error);
+//    }];
     
     
     

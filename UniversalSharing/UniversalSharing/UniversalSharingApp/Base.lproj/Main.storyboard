@@ -433,21 +433,16 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xwB-dx-Bb3">
                                 <rect key="frame" x="0.0" y="507" width="600" height="44"/>
                                 <items>
-                                    <barButtonItem title="Share Photo" id="5Z1-vA-aVX">
-                                        <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <action selector="btnSharePhotoTapped:" destination="8rJ-Kc-sve" id="82E-BD-5Gm"/>
-                                        </connections>
-                                    </barButtonItem>
                                     <barButtonItem systemItem="flexibleSpace" id="eNG-tv-c0s">
                                         <inset key="imageInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
                                     </barButtonItem>
-                                    <barButtonItem title="Share Location" id="kvU-Tv-8tp">
+                                    <barButtonItem title="Select your location" id="kvU-Tv-8tp">
                                         <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="btnShareLocationTapped:" destination="8rJ-Kc-sve" id="5N6-tq-HsN"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="P8j-yb-1Ip"/>
                                 </items>
                             </toolbar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O2b-Bf-7wZ" customClass="MUSGaleryView">
@@ -484,7 +479,6 @@
                         <outlet property="mainGestureRecognizer" destination="Q3Z-Zc-VoA" id="hSm-6a-V0c"/>
                         <outlet property="shareButtonOutlet" destination="pvH-Dt-bbm" id="uqW-1D-Imf"/>
                         <outlet property="shareLocationButton" destination="kvU-Tv-8tp" id="kE7-Jb-kzz"/>
-                        <outlet property="sharePhotoButton" destination="5Z1-vA-aVX" id="JrQ-sz-gSe"/>
                         <outlet property="shareToolBar" destination="xwB-dx-Bb3" id="sw4-sM-akm"/>
                         <outlet property="toolBarLayoutConstraint" destination="AEN-V0-A19" id="U7t-rt-nZT"/>
                         <segue destination="57R-w2-ySy" kind="show" identifier="Location" id="GpK-3N-ETI"/>
