@@ -108,7 +108,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(obtainPicFromPicker) name:notificationImagePickerForCollection object:nil];
 #warning "Must be remove observe"
     [[NSNotificationCenter defaultCenter] addObserver : self
                                              selector : @selector(keyboardWillShow:)
@@ -180,6 +180,9 @@
 
 - (IBAction)btnSharePhotoTapped:(id)sender {
     [self obtainChosenImage];
+}
+- (void) obtainPicFromPicker {
+   [self obtainChosenImage];
 }
 /*!
  @method

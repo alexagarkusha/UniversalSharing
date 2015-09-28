@@ -11,6 +11,8 @@
 #import "ConstantsApp.h"
 #import <LSSwipeToDeleteCollectionViewLayout.h>
 #import "LSFadingSwipeToDeleteCollectionViewLayout.h"
+#import "MUSAddPhotoButton.h"
+#import "MUSPhotoManager.h"
 
 static NSString *LSCollectionViewCellIdentifier = @"Cell";
 
@@ -31,6 +33,9 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
 @property (assign, nonatomic) BOOL flagForDelete;
 @property (assign, nonatomic) NSInteger count;
 //////////////////////////////////////////////////
+
+@property (strong, nonatomic) MUSAddPhotoButton *addPhotoButton;
+
 @end
 
 @implementation MUSGaleryView
@@ -98,9 +103,19 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
     
 }
 #pragma mark - UICollectionViewDataSource
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
+    return 2;
+}
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    //NSLog(@"COUNT ROW = %d", [self.arrayWithChosenImages count]);
+    if (section == 0) {
+        if ([self.arrayWithChosenImages count] < 4) {
+            return 1;
+        } else {
+            return 0;
+
+        }
+            }
     return  [self.arrayWithChosenImages count];
 }
 
@@ -126,8 +141,8 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
         image = self.arrayWithChosenImages[indexPath.row];
     }
         //cell.isEditable = self.isEditableCollectionView;
-    if (indexPath.row == 0) {
-        [cell configurationCellWithPhoto:nil andEditableState:YES];
+    if (indexPath.section == 0 && [self.arrayWithChosenImages count] != 4) {
+        [cell configurationCellForFirstSection];
     }else {
     [cell configurationCellWithPhoto:image.image andEditableState:YES];
     }
@@ -144,12 +159,15 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
     
     
 }
-//-(BOOL)swipeToDeleteLayout:(LSSwipeToDeleteCollectionViewLayout *)layout canDeleteCellAtIndexPath:(NSIndexPath *)indexPath{
-//    
-//    return NO;
-//}
+-(BOOL)swipeToDeleteLayout:(LSSwipeToDeleteCollectionViewLayout *)layout canDeleteCellAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 0) {
+        return NO;
+    }
+    return YES;
+}
 
 -(void)swipeToDeleteLayout:(LSSwipeToDeleteCollectionViewLayout *)layout didDeleteCellAtIndexPath:(NSIndexPath *)indexPath {
+    
     _count++;
         [self.arrayWithChosenImages removeObjectAtIndex: indexPath.row];
     NSLog(@"lllll");
@@ -328,4 +346,5 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
 @end

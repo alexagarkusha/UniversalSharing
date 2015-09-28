@@ -64,6 +64,7 @@ NSString *const showButtonTitle = @"Show";
 NSString *const hideButtonTitle = @"Hide";
 
 #pragma mark - General constants
+NSString *const notificationImagePickerForCollection = @"notificationImagePickerForCollection";
 NSString *const notificationUpdateCollection = @"notificationUpdateCollection";
 NSString *const musAppButtonTitle_Cancel = @"Cancel";
 NSString *const musAppButtonTitle_OK = @"Ok";

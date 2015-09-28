@@ -13,7 +13,7 @@
 
 @interface MUSDatabaseRequestStringsHelper : NSObject
 
-//+ (NSString*) createStringForPostWithReason :(ReasonType) reason andNetworkType :(NetworkType) networkType;
++ (NSString*) createStringForPostWithReason :(ReasonType) reason andNetworkType :(NetworkType) networkType;
 + (NSString*) createStringForPostWithUserId :(NSString*) userId;
 + (NSString*) createStringForPostWithPostId :(NSString*) PostId;
 + (NSString*) createStringForAllPosts;

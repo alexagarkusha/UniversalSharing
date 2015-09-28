@@ -108,6 +108,8 @@ FOUNDATION_EXPORT NSString *const musAppButtonTitle_Action;
 FOUNDATION_EXPORT NSString *const musAppButtonTitle_Back;
 FOUNDATION_EXPORT NSString *const musAppButtonTitle_ShareLocation;
 FOUNDATION_EXPORT NSString *const Error;
+FOUNDATION_EXPORT NSString *const notificationImagePickerForCollection;
+
 
 #pragma mark - MUSGaleryView
 
