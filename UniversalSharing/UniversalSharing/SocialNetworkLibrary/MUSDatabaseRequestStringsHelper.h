@@ -46,4 +46,7 @@
 + (NSString*) createStringForDeleteUserWithClientId :(NSString*) clientId;
 + (NSString*) createStringForDeletePostWithPrimaryKey :(NSInteger) primaryKey;
 + (NSString*) createStringForDeletePostWithUserId :(NSString*) userId;
+
++ (NSString*) createStringNetworkPostForUpdateWithObjectNetworkPostForVK :(NetworkPost*) networkPost;
+
 @end

@@ -16,6 +16,7 @@
 #import "NSString+MUSPathToDocumentsdirectory.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 #import "InternetConnectionManager.h"
+#import "NetworkPost.h"
 
 @interface FacebookNetwork()<FBSDKGraphRequestConnectionDelegate>
 
@@ -221,8 +222,11 @@ static FacebookNetwork *model = nil;
     
     
     if (![[InternetConnectionManager manager] isInternetConnection]){
+        NetworkPost *networkPost = [[NetworkPost alloc] init];
+        networkPost.networkType = Facebook;
+        networkPost.reason = Offline;
         // Return Result - object NetworkPost with reason = offline, Error - internet Connection
-        block(nil,[self errorConnection]);
+        block(networkPost,[self errorConnection]);
         return;
     }
      self.copyComplition = block;
@@ -262,6 +266,10 @@ static FacebookNetwork *model = nil;
  */
 
 - (void) postMessageToFB : (Post*) post {
+    NetworkPost *networkPost = [[NetworkPost alloc] init];
+    networkPost.networkType = Facebook;
+    __block NetworkPost *networkPostCopy = networkPost;
+    
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
     params[musFacebookParameter_Message] = post.postDescription;
     
@@ -274,22 +282,16 @@ static FacebookNetwork *model = nil;
                                        HTTPMethod: musPOST]
      startWithCompletionHandler:
      ^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
-         
-         
-         
          if (!error) {
-             post.postID = [result objectForKey: @"id" ];
-             self.copyComplition (musPostSuccess, nil);
-             [self saveOrUpdatePost: post withReason: Connect];
-             [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
+             networkPostCopy.reason = Connect;
+             networkPostCopy.postID = [result objectForKey: @"id" ];
+             self.copyComplition (networkPostCopy, nil);
          } else {
+             networkPostCopy.reason = ErrorConnection;
              if ([error code] != 8){
-                 [self saveOrUpdatePost: post withReason: ErrorConnection];
-                 self.copyComplition (nil, [self errorFacebook]);
-                 [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
+                 self.copyComplition (networkPostCopy, [self errorFacebook]);
              } else {
-                 self.copyComplition (nil, nil);
-                 [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
+                 self.copyComplition (networkPostCopy, [self errorFacebook]);
              }
          }
      }];
@@ -310,8 +312,12 @@ static FacebookNetwork *model = nil;
         params[musFacebookParameter_Place] = post.place.placeID;
     }
     
-    __weak NSArray *copyPostImagesArray = post.arrayImages;
+    __block int numberOfPostImagesArray = post.arrayImages.count;
     __block int counterOfImages = 0;
+    NetworkPost *networkPost = [NetworkPost create];
+    networkPost.networkType = Facebook;
+    __block NetworkPost *networkPostCopy = networkPost;
+
     for (int i = 0; i < post.arrayImages.count; i++) {
         ImageToPost *imageToPost = [post.arrayImages objectAtIndex: i];
         params[musFacebookParameter_Picture] = imageToPost.image;
@@ -319,25 +325,22 @@ static FacebookNetwork *model = nil;
                                       initWithGraphPath: musFacebookGraphPath_Me_Photos
                                              parameters: params
                                              HTTPMethod: musPOST];
-        
-        post.postID = @"";
-        
         [connection addRequest: request
              completionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
                  counterOfImages ++;
+                 
                  if (!error) {
-                     post.postID = [post.postID stringByAppendingString:[result objectForKey:@"id"]];
-                     if (counterOfImages == copyPostImagesArray.count) {
-                         self.copyComplition (musPostSuccess, nil);
-                         [self saveOrUpdatePost: post withReason: Connect];
-                         [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
+                     networkPostCopy.postID = [networkPostCopy.postID stringByAppendingString:[result objectForKey:@"id"]];
+                     
+                     if (counterOfImages == numberOfPostImagesArray) {
+                         networkPostCopy.reason = Connect;
+                         self.copyComplition (networkPostCopy, nil);
                      }
-                     post.postID = [post.postID stringByAppendingString: @","];
+                     networkPostCopy.postID = [networkPostCopy.postID stringByAppendingString: @","];
                  } else {
-                     if (counterOfImages == copyPostImagesArray.count) {
-                         [self saveOrUpdatePost: post withReason: ErrorConnection];
-                         self.copyComplition (nil, [self errorFacebook]);
-                         [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
+                     if (counterOfImages == numberOfPostImagesArray) {
+                         networkPostCopy.reason = ErrorConnection;
+                         self.copyComplition (networkPostCopy, [self errorFacebook]);
                      }
                  }
         }];
@@ -346,41 +349,45 @@ static FacebookNetwork *model = nil;
 }
 
 - (void) updatePost {
-    NSArray * posts = [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForPostWithReason:Connect andNetworkType:Facebook]];
-    if (![[InternetConnectionManager manager] isInternetConnection] || !posts.count  || (![[InternetConnectionManager manager] isInternetConnection] && posts.count)) {
+#warning NEED TO GET ARRAY OF NETWORKPOSTS AND THEN UPDATE;
+    //NSArray * posts = [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForPostWithReason:Connect andNetworkType:Facebook]];
+    
+    NSArray * networksPostsIDs = [[DataBaseManager sharedManager] obtainNetworkPostsFromDataBaseWithRequestStrings: [MUSDatabaseRequestStringsHelper createStringForNetworkPostWithReason: Connect andNetworkType: Facebook]];
+                                  
+    if (![[InternetConnectionManager manager] isInternetConnection] || !networksPostsIDs.count  || (![[InternetConnectionManager manager] isInternetConnection] && networksPostsIDs.count)) {
         [self updatePostInfoNotification];
         return;
     }
     
     FBSDKGraphRequestConnection *connection = [[FBSDKGraphRequestConnection alloc] init];
 
-    [posts enumerateObjectsUsingBlock:^(Post *post, NSUInteger index, BOOL *stop) {
+    [networksPostsIDs enumerateObjectsUsingBlock:^(NetworkPost *networkPost, NSUInteger index, BOOL *stop) {
         
-        NSArray *arrayOfIdPost = [post.postID componentsSeparatedByString: @","];
+        NSArray *arrayOfIdPost = [networkPost.postID componentsSeparatedByString: @","];
 
         [self obtainNumberOfLikesForArrayOfPostId: arrayOfIdPost andConnection : connection withComplition:^(id result, NSError *error) {
             
             if (!error) {
-                if (post.likesCount == [result integerValue]) {
+                if (networkPost.likesCount == [result integerValue]) {
                     return;
                 }
-                post.likesCount = [result integerValue];
-                [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost : post]];
+                networkPost.likesCount = [result integerValue];
+                [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringNetworkPostsForUpdateWithObjectPost : networkPost]];
             }
         }];
         
         [self obtainNumberOfCommentsForArrayOfPostId: arrayOfIdPost andConnection : connection withComplition:^(id result, NSError *error) {
             NSLog (@"result = %ld", (long)[result integerValue]);
             if (!error) {
-                if (post.commentsCount == [result integerValue]) {
+                if (networkPost.commentsCount == [result integerValue]) {
                     return;
                 }
-                post.commentsCount = [result integerValue];
-                [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost:post]];
+                networkPost.commentsCount = [result integerValue];
+                [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringNetworkPostsForUpdateWithObjectPost : networkPost]];
             }
         }];
     }];
-    if (posts.count) {
+    if (networksPostsIDs.count) {
         connection.delegate = self;
         [connection start];
     }
@@ -473,8 +480,60 @@ static FacebookNetwork *model = nil;
     [[NSNotificationCenter defaultCenter] postNotificationName:MUSNotificationPostsInfoWereUpDated object:nil];
 }
 
-
-
-
+/*
+-(void) postPhotosToAlbum:(Post *) post {
+    FBSDKGraphRequestConnection *connection = [[FBSDKGraphRequestConnection alloc] init];
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    params[musFacebookParameter_Message] = post.postDescription;
+    if (post.place.placeID)  {
+        params[musFacebookParameter_Place] = post.place.placeID;
+    }
+    
+    // __weak NSArray *copyPostImagesArray = post.arrayImages;
+    __block int numberOfPostImagesArray = post.arrayImages.count;
+    __block int counterOfImages = 0;
+    for (int i = 0; i < post.arrayImages.count; i++) {
+        ImageToPost *imageToPost = [post.arrayImages objectAtIndex: i];
+        params[musFacebookParameter_Picture] = imageToPost.image;
+        FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]
+                                      initWithGraphPath: musFacebookGraphPath_Me_Photos
+                                      parameters: params
+                                      HTTPMethod: musPOST];
+        
+        post.postID = @"";
+        
+        NetworkPost *networkPost = [NetworkPost create];
+        __block NetworkPost *networkPostCopy = networkPost;
+        
+        
+        
+        [connection addRequest: request
+             completionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+                 counterOfImages ++;
+                 
+                 if (!error) {
+                     post.postID = [post.postID stringByAppendingString:[result objectForKey:@"id"]];
+                     
+                     if (counterOfImages == numberOfPostImagesArray) {
+                         networkPost.reason = Connect;
+                         networkPost.postID = post.postID;
+                         
+                         self.copyComplition (musPostSuccess, nil);
+                         [self saveOrUpdatePost: post withReason: Connect];
+                         [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
+                     }
+                     post.postID = [post.postID stringByAppendingString: @","];
+                 } else {
+                     if (counterOfImages == numberOfPostImagesArray) {
+                         [self saveOrUpdatePost: post withReason: ErrorConnection];
+                         self.copyComplition (nil, [self errorFacebook]);
+                         [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
+                     }
+                 }
+             }];
+    }
+    [connection start];
+}
+*/
 
 @end

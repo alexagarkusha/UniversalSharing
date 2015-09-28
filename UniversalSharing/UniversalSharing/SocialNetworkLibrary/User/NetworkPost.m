@@ -10,4 +10,18 @@
 
 @implementation NetworkPost
 
++ (instancetype)create
+{
+    NetworkPost *networkPost = [[NetworkPost alloc] init];
+   
+    networkPost.postID = @"";
+    networkPost.likesCount = 0;
+    networkPost.commentsCount = 0;
+    networkPost.networkType = AllNetworks;
+    networkPost.reason = AllReasons;
+    networkPost.primaryKey = 0;
+    
+    return networkPost;
+}
+
 @end

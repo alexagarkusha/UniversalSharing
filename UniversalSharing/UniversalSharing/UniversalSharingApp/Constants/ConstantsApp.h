@@ -149,6 +149,10 @@ FOUNDATION_EXPORT NSInteger const musApp_PostCell_PostDescriptionLabel_LeftConst
 FOUNDATION_EXPORT NSString *const musApp_PostCell_Image_Name_CheckMarkTaken;
 FOUNDATION_EXPORT NSString *const musApp_PostCell_Image_Name_CheckMark;
 
+#pragma mark - MUSReasonCommentsAndLikesCell
+
+FOUNDATION_EXPORT NSInteger const musAppCommentsAndLikesCell_HeightOfRow;
+
 #pragma mark - MUSGalleryViewOfPhotos
 
 FOUNDATION_EXPORT NSString *const musApp_GalleryOfPhotos_NibName;

@@ -8,40 +8,40 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="111" id="KGk-i7-Jjw" customClass="MUSPostCell">
-            <rect key="frame" x="0.0" y="0.0" width="318" height="60"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="110" id="KGk-i7-Jjw" customClass="MUSPostCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="110"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Lnb-3R-X5o">
-                        <rect key="frame" x="12" y="5" width="36" height="36"/>
+                        <rect key="frame" x="12" y="5" width="66" height="66"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="36" id="SqP-pq-fMK"/>
-                            <constraint firstAttribute="width" constant="36" id="TPN-aN-AGH"/>
+                            <constraint firstAttribute="height" constant="66" id="SqP-pq-fMK"/>
+                            <constraint firstAttribute="width" constant="66" id="TPN-aN-AGH"/>
                         </constraints>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1e1-QQ-AH4">
-                        <rect key="frame" x="10" y="8" width="40" height="40"/>
+                        <rect key="frame" x="10" y="8" width="70" height="70"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="40" id="ZSx-Gv-4Ui"/>
-                            <constraint firstAttribute="width" constant="40" id="vxY-SO-9ER"/>
+                            <constraint firstAttribute="height" constant="70" id="ZSx-Gv-4Ui"/>
+                            <constraint firstAttribute="width" constant="70" id="vxY-SO-9ER"/>
                         </constraints>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lob-KA-c90">
-                        <rect key="frame" x="8" y="11" width="44" height="44"/>
+                        <rect key="frame" x="8" y="11" width="74" height="74"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="44" id="KKd-Tu-tKQ"/>
-                            <constraint firstAttribute="width" constant="44" id="yGn-nH-wqW"/>
+                            <constraint firstAttribute="height" constant="74" id="KKd-Tu-tKQ"/>
+                            <constraint firstAttribute="width" constant="74" id="yGn-nH-wqW"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="slgdkfjnkjnkfdsjhfjsdbfjshbdjfbsjdfbjsdbfjsbdjfsjdfbjsdbfjsdb" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9a0-JS-qNj">
-                        <rect key="frame" x="60" y="10" width="250" height="40"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="slgdkfjnkjnkfdsjhfjsdbfjshbdjfbsjdfbjsdbfjsbdjfsjdfbjsdbfjsdbkdfsdnfksndkfjnskdnfksj ksjdnvkkjsfdkjskd ksjdnkfksjd" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9a0-JS-qNj">
+                        <rect key="frame" x="90" y="10" width="220" height="75"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="40" id="Yef-cN-rKR"/>
+                            <constraint firstAttribute="height" constant="75" id="Yef-cN-rKR"/>
                         </constraints>
-                        <fontDescription key="fontDescription" name="TimesNewRomanPSMT" family="Times New Roman" pointSize="17"/>
+                        <fontDescription key="fontDescription" name="TimesNewRomanPSMT" family="Times New Roman" pointSize="16"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -49,16 +49,15 @@
                 <constraints>
                     <constraint firstItem="lob-KA-c90" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="2hr-mb-i22"/>
                     <constraint firstItem="9a0-JS-qNj" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="6TK-Rr-ha8"/>
-                    <constraint firstItem="9a0-JS-qNj" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="52" id="EV9-em-G3N"/>
+                    <constraint firstItem="9a0-JS-qNj" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="82" id="EV9-em-G3N"/>
                     <constraint firstItem="Lnb-3R-X5o" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="WrK-sX-evS"/>
                     <constraint firstItem="Lnb-3R-X5o" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="agg-bt-kG0"/>
                     <constraint firstItem="1e1-QQ-AH4" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="bgd-A3-G5f"/>
                     <constraint firstItem="1e1-QQ-AH4" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="fGn-4u-WHr"/>
-                    <constraint firstAttribute="trailing" secondItem="9a0-JS-qNj" secondAttribute="trailing" constant="8" id="mga-u3-cqG"/>
+                    <constraint firstAttribute="trailing" secondItem="9a0-JS-qNj" secondAttribute="trailing" constant="10" id="mga-u3-cqG"/>
                     <constraint firstItem="lob-KA-c90" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="zrF-RY-ngX"/>
                 </constraints>
             </tableViewCellContentView>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
                 <outlet property="firstImageOfPostImageView" destination="lob-KA-c90" id="TqT-U4-LFw"/>
                 <outlet property="postDescriptionLabel" destination="9a0-JS-qNj" id="p0c-7M-t6B"/>
@@ -66,7 +65,7 @@
                 <outlet property="secondImageOfPostImageView" destination="1e1-QQ-AH4" id="IfU-Or-vvz"/>
                 <outlet property="thirdImageOfPostImageView" destination="Lnb-3R-X5o" id="brk-MO-B0V"/>
             </connections>
-            <point key="canvasLocation" x="125" y="243.5"/>
+            <point key="canvasLocation" x="124" y="253"/>
         </tableViewCell>
     </objects>
 </document>

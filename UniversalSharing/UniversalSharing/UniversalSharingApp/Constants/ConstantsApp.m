@@ -102,19 +102,23 @@ NSInteger const musApp_DropDownMenu_Height = 40;
 NSString *const musAppImage_Name_Comment = @"Comment.png";
 NSString *const musAppImage_Name_Like = @"Like.png";
 NSString *const musAppImage_Name_VKIconImage = @"VKimage.png";
-NSString *const musAppImage_Name_FBIconImage = @"FBimage.jpg";
-NSString *const musAppImage_Name_TwitterIconImage = @"TWimage.jpeg";
+NSString *const musAppImage_Name_FBIconImage = @"FBimage.png";
+NSString *const musAppImage_Name_TwitterIconImage = @"TWimage.png";
 
 
 NSString *const musAppFilter_Title_Shared = @"Success";
 NSString *const musAppFilter_Title_Offline = @"Offline";
 NSString *const musAppFilter_Title_Error = @"Failed";
-NSInteger const musAppPostsVC_HeightOfPostCell = 60;
+NSInteger const musAppPostsVC_HeightOfPostCell = 110;
 NSString *const musApp_ActionSheet_Title_ChooseAction = @"Choose action";
 NSInteger const musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithoutUserPhotos = 8;
-NSInteger const musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithUserPhotos = 52;
+NSInteger const musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithUserPhotos = 82;
 NSString *const musApp_PostCell_Image_Name_CheckMarkTaken = @"checkMarkTaken.jpeg";
 NSString *const musApp_PostCell_Image_Name_CheckMark = @"checkMark.jpeg";
+
+#pragma mark - MUSReasonCommentsAndLikesCell
+
+NSInteger const musAppCommentsAndLikesCell_HeightOfRow = 31;
 
 #pragma mark - MUSGalleryViewOfPhotos
 

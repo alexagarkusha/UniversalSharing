@@ -32,4 +32,6 @@
 
 @property (nonatomic, assign) NSInteger primaryKey;
 
++ (instancetype)create;
+
 @end
