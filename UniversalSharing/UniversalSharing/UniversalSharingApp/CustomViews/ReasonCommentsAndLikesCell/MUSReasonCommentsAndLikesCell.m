@@ -10,6 +10,7 @@
 #import "ConstantsApp.h"
 #import "UIImage+IconOfSocialNetwork.h"
 #import "NSString+ReasonTypeInString.h"
+#import "UIImage+LikeIconOfSocialNetwork.h"
 
 
 @interface MUSReasonCommentsAndLikesCell ()
@@ -65,12 +66,12 @@
 }
 
 - (void) configurateCommentsImageAndLabel : (NetworkPost*) networkPost {
-    self.commentImageView.image = [UIImage imageNamed: musAppImage_Name_Comment];
+    self.commentImageView.image = [UIImage imageNamed: musAppImage_Name_CommentsImage];
     self.numberOfCommentsLabel.text = [NSString stringWithFormat: @"%ld", (long) networkPost.commentsCount];
 }
 
 - (void) configurateLikesImageAndLabel : (NetworkPost*) networkPost {
-    self.likeImageView.image = [UIImage imageNamed: musAppImage_Name_Like];
+    self.likeImageView.image = [UIImage likeIconOfSocialNetwork: networkPost.networkType];
     self.numberOfLikesLabel.text = [NSString stringWithFormat: @"%ld", (long)networkPost.likesCount];
 }
 

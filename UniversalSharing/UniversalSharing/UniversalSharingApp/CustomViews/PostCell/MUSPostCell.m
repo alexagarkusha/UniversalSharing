@@ -69,63 +69,62 @@
         [currentImageView cornerRadius: 0.0 andBorderWidth: 1.0 withBorderColor: [UIColor whiteColor]];
     }
     
-    [self.postDescriptionLabel sizeToFit];
     
     //self.customBackgroundView.backgroundColor = [UIColor blueColor];
-    self.layer.masksToBounds = YES;
-    
-    CGRect rect = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, self.frame.size.height - 1);
-
-    
-//    UIBezierPath *path = [UIBezierPath bezierPath];
-//    [path moveToPoint: CGPointMake(0, rect.size.height - 23)];
-//    [path addLineToPoint: CGPointMake(0, 0)];
-//    [path addLineToPoint: CGPointMake(rect.size.width, 0)];
-//    [path addLineToPoint: CGPointMake(rect.size.width, rect.size.height - 23)];
-//    [path addArcWithCenter: CGPointMake(rect.size.width - 60, 20)
-//                    radius: 90
-//                startAngle: DEGREES_TO_RADIANS(40)
-//                  endAngle: DEGREES_TO_RADIANS(90)
-//                 clockwise: YES];
-//    [path addLineToPoint: CGPointMake(60, rect.size.height)];
-//    [path addArcWithCenter: CGPointMake(60, 20)
-//                    radius: 89
-//                startAngle: DEGREES_TO_RADIANS(90)
-//                  endAngle: DEGREES_TO_RADIANS(140)
-//                 clockwise: YES];
-//    [path closePath];
-    
-    
-    //CGRect rect = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, self.frame.size.height - 1);
-    
-    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect: rect byRoundingCorners:(UIRectCornerBottomLeft) cornerRadii:CGSizeMake(20, 10)];
-
-    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
-    maskLayer.frame = rect;
-    maskLayer.path  = maskPath.CGPath;
-    maskLayer.shadowOffset = CGSizeMake(0, 4);
-    maskLayer.shadowRadius = 5.0;
-    maskLayer.shadowColor = [UIColor blackColor].CGColor;
-    maskLayer.shadowOpacity = 1.0;
-    self.layer.mask = maskLayer;
-
-    
-//    CAShapeLayer *shadowLayer = [[CAShapeLayer alloc] init];
-////    maskLayer.frame = rect;
-////    maskLayer.path  = maskPath.CGPath;
-//    shadowLayer.shadowOffset = CGSizeMake(0, 5);
-//    shadowLayer.shadowRadius = 5.0;
-//    shadowLayer.shadowColor = [UIColor blackColor].CGColor;
-//    shadowLayer.shadowOpacity = 1.0;
-//    [self.layer addSublayer: shadowLayer];
-    
-    CAShapeLayer *shape = [CAShapeLayer layer];
-    shape.frame = rect;
-    shape.path = maskPath.CGPath;
-    shape.lineWidth = 1.0f;
-    shape.strokeColor = [UIColor redColor].CGColor;
-    shape.fillColor = [UIColor clearColor].CGColor;
-    [self.layer addSublayer:shape];
+//    self.layer.masksToBounds = YES;
+//    
+//    CGRect rect = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, self.frame.size.height - 1);
+//
+//    
+////    UIBezierPath *path = [UIBezierPath bezierPath];
+////    [path moveToPoint: CGPointMake(0, rect.size.height - 23)];
+////    [path addLineToPoint: CGPointMake(0, 0)];
+////    [path addLineToPoint: CGPointMake(rect.size.width, 0)];
+////    [path addLineToPoint: CGPointMake(rect.size.width, rect.size.height - 23)];
+////    [path addArcWithCenter: CGPointMake(rect.size.width - 60, 20)
+////                    radius: 90
+////                startAngle: DEGREES_TO_RADIANS(40)
+////                  endAngle: DEGREES_TO_RADIANS(90)
+////                 clockwise: YES];
+////    [path addLineToPoint: CGPointMake(60, rect.size.height)];
+////    [path addArcWithCenter: CGPointMake(60, 20)
+////                    radius: 89
+////                startAngle: DEGREES_TO_RADIANS(90)
+////                  endAngle: DEGREES_TO_RADIANS(140)
+////                 clockwise: YES];
+////    [path closePath];
+//    
+//    
+//    //CGRect rect = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, self.frame.size.height - 1);
+//    
+//    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect: rect byRoundingCorners:(UIRectCornerBottomLeft) cornerRadii:CGSizeMake(20, 10)];
+//
+//    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+//    maskLayer.frame = rect;
+//    maskLayer.path  = maskPath.CGPath;
+//    maskLayer.shadowOffset = CGSizeMake(0, 4);
+//    maskLayer.shadowRadius = 5.0;
+//    maskLayer.shadowColor = [UIColor blackColor].CGColor;
+//    maskLayer.shadowOpacity = 1.0;
+//    self.layer.mask = maskLayer;
+//
+//    
+////    CAShapeLayer *shadowLayer = [[CAShapeLayer alloc] init];
+//////    maskLayer.frame = rect;
+//////    maskLayer.path  = maskPath.CGPath;
+////    shadowLayer.shadowOffset = CGSizeMake(0, 5);
+////    shadowLayer.shadowRadius = 5.0;
+////    shadowLayer.shadowColor = [UIColor blackColor].CGColor;
+////    shadowLayer.shadowOpacity = 1.0;
+////    [self.layer addSublayer: shadowLayer];
+//    
+//    CAShapeLayer *shape = [CAShapeLayer layer];
+//    shape.frame = rect;
+//    shape.path = maskPath.CGPath;
+//    shape.lineWidth = 1.0f;
+//    shape.strokeColor = [UIColor redColor].CGColor;
+//    shape.fillColor = [UIColor clearColor].CGColor;
+//    [self.layer addSublayer:shape];
 
 //    self.backgroundColor = [UIColor whiteColor];
     // Initialization code
@@ -189,6 +188,8 @@
 */
 - (void) configuratePostDescriptionLabelForPost: (Post*) post {
     self.postDescriptionLabel.text = post.postDescription;
+    [self.postDescriptionLabel sizeToFit];
+
 }
 /*
 - (void) configurateIconOfSocialNetworkImageViewForPost: (Post*) post {

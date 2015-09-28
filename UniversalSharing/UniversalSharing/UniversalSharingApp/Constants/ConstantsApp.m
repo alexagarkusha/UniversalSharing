@@ -99,11 +99,16 @@ NSInteger const musApp_DropDownMenu_Height = 40;
 
 #pragma mark - MUSPostCell
 
-NSString *const musAppImage_Name_Comment = @"Comment.png";
-NSString *const musAppImage_Name_Like = @"Like.png";
-NSString *const musAppImage_Name_VKIconImage = @"VKimage.png";
-NSString *const musAppImage_Name_FBIconImage = @"FBimage.png";
-NSString *const musAppImage_Name_TwitterIconImage = @"TWimage.png";
+//NSString *const musAppImage_Name_Comment = @"Comment.png";
+//NSString *const musAppImage_Name_Like = @"Like.png";
+NSString *const musAppImage_Name_VKIconImage = @"VK_icon.png";
+NSString *const musAppImage_Name_FBIconImage = @"Facebook_Icon.png";
+NSString *const musAppImage_Name_TwitterIconImage = @"Twitter_icon.png";
+
+NSString *const musAppImage_Name_VKLikeImage = @"VK_Likes.png";
+NSString *const musAppImage_Name_FBLikeImage = @"Facebook_Like.png";
+NSString *const musAppImage_Name_TwitterLikeImage = @"Twitter_Like.png";
+NSString *const musAppImage_Name_CommentsImage = @"Comments.png";
 
 
 NSString *const musAppFilter_Title_Shared = @"Success";

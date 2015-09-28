@@ -68,8 +68,8 @@
 
 
 - (void) configurationCommentsAndLikesCellByPost: (Post*) currentPost socialNetworkIconName : (NSString*) socialNetworkIconName andUser : (User*) user {
-    self.likeImageView.image = [UIImage imageNamed: musAppImage_Name_Like];
-    self.commentImageView.image = [UIImage imageNamed: musAppImage_Name_Comment];
+//    self.likeImageView.image = [UIImage imageNamed: musAppImage_Name_Like];
+//    self.commentImageView.image = [UIImage imageNamed: musAppImage_Name_Comment];
     [self initiationCommentsLabel: currentPost];
     [self initiationReasonLabel: currentPost];
     [self initiationUserNameLabel: user];
