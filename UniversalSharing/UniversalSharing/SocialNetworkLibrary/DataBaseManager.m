@@ -107,6 +107,7 @@ static DataBaseManager *databaseManager;
         
         sqlite3_bind_text(statement, 1, [[self checkExistedString: post.postDescription] UTF8String], -1, SQLITE_TRANSIENT);
         sqlite3_bind_text(statement, 2, [[self checkExistedString: [post convertArrayImagesUrlToString]] UTF8String], -1, SQLITE_TRANSIENT);
+        //change logic array to string
         sqlite3_bind_text(statement, 3, [[self checkExistedString: post.postID] UTF8String], -1, SQLITE_TRANSIENT);//networkPostsId
     }
     
@@ -271,7 +272,8 @@ static DataBaseManager *databaseManager;
 
 //check string with int post.arrayWithNetworkPostsId
 
-- (NSMutableArray*)obtainPostsFromDataBaseWithRequestString : (NSString*) requestString {    NSMutableArray *arrayWithPosts = [NSMutableArray new];
+- (NSMutableArray*)obtainPostsFromDataBaseWithRequestString : (NSString*) requestString {
+    NSMutableArray *arrayWithPosts = [NSMutableArray new];
     sqlite3_stmt *statement = nil;
     
     if(sqlite3_prepare_v2(_database, [requestString UTF8String], -1, &statement, nil) == SQLITE_OK) {

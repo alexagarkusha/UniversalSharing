@@ -23,7 +23,7 @@
 //- (void) configurationNotEditableCell: (UIImage*) photoImageView;
 
 - (void) configurationCellWithPhoto:(UIImage *) photoImageView andEditableState : (BOOL) isEditable;
-
+- (void) configurationCellForFirstSection;
 
 @property (assign, nonatomic) id <MUSCollectionViewCellDelegate> delegate;
 @property (strong, nonatomic) NSIndexPath *indexPath;
