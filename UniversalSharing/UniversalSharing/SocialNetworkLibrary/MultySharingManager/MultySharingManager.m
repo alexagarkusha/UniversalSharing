@@ -30,6 +30,7 @@ static MultySharingManager *model = nil;
 - (void) sharePost : (Post*) post toSocialNetworks : (NSArray*) arrayOfNetworksType withComplition : (Complition) block {
     NSMutableArray *arrayWithNetworks = [self arrayWithNetworks: arrayOfNetworksType];
 #warning Need to refactor this
+    
     if (!post.arrayWithNetworkPostsId.count) {
         post.arrayWithNetworkPostsId = [[NSMutableArray alloc] init];
     }

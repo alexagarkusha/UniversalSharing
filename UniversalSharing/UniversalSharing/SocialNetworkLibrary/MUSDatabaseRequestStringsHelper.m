@@ -279,7 +279,7 @@
 }
 
 + (NSString*) createStringNetworkPostForUpdateWithObjectNetworkPostForVK :(NetworkPost*) networkPost {
-    NSString *stringPostsForUpdate = @"UPDATE Posts set ";
+    NSString *stringPostsForUpdate = @"UPDATE NetworkPosts set ";
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"likesCount = \"%d\", "];
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"commentsCount = \"%d\" "];
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"WHERE networkType = \"%d\" AND postId = \"%@\""];

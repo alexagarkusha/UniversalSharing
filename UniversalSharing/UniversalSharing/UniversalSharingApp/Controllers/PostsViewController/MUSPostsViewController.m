@@ -127,7 +127,7 @@
 - (void) initiationTableView {
     self.tableView = ({
         CGSize screenSize = [UIScreen mainScreen].bounds.size;
-        UITableView *tableView = [[UITableView alloc] initWithFrame: CGRectMake(0,  [UIApplication sharedApplication].statusBarFrame.size.height + self.navigationController.navigationBar.frame.size.height, screenSize.width, screenSize.height - self.tabBarController.tabBar.frame.size.height)];
+        UITableView *tableView = [[UITableView alloc] initWithFrame: CGRectMake(0,  [UIApplication sharedApplication].statusBarFrame.size.height + self.navigationController.navigationBar.frame.size.height, screenSize.width, screenSize.height - self.tabBarController.tabBar.frame.size.height -[UIApplication sharedApplication].statusBarFrame.size.height - self.navigationController.navigationBar.frame.size.height)];
         tableView.dataSource = self;
         tableView.delegate = self;
         tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -204,7 +204,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    Post *post = [self.arrayPosts objectAtIndex: indexPath.row];
+    Post *post = [self.arrayPosts objectAtIndex: indexPath.section];
     if (![self.setWithUniquePrimaryKeysOfPost containsObject: [NSString stringWithFormat: @"%ld", (long)post.primaryKey]]) {
         [self performSegueWithIdentifier: goToDetailPostViewControllerSegueIdentifier sender: post];
     }

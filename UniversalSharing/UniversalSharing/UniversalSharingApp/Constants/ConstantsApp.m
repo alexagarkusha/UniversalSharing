@@ -109,10 +109,10 @@ NSString *const musAppImage_Name_TwitterIconImage = @"TWimage.png";
 NSString *const musAppFilter_Title_Shared = @"Success";
 NSString *const musAppFilter_Title_Offline = @"Offline";
 NSString *const musAppFilter_Title_Error = @"Failed";
-NSInteger const musAppPostsVC_HeightOfPostCell = 110;
+NSInteger const musAppPostsVC_HeightOfPostCell = 95;
 NSString *const musApp_ActionSheet_Title_ChooseAction = @"Choose action";
 NSInteger const musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithoutUserPhotos = 8;
-NSInteger const musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithUserPhotos = 82;
+NSInteger const musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithUserPhotos = 90;
 NSString *const musApp_PostCell_Image_Name_CheckMarkTaken = @"checkMarkTaken.jpeg";
 NSString *const musApp_PostCell_Image_Name_CheckMark = @"checkMark.jpeg";
 
