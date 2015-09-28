@@ -51,6 +51,9 @@
 		30C9DDB61BABFAD900F3266A /* MUSToolBarForDetailCollectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30C9DDB51BABFAD900F3266A /* MUSToolBarForDetailCollectionView.xib */; };
 		30C9DDB81BAC37B400F3266A /* trash.png in Resources */ = {isa = PBXBuildFile; fileRef = 30C9DDB71BAC37B400F3266A /* trash.png */; };
 		30C9DDBC1BB55C3100F3266A /* NetworkPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C9DDBB1BB55C3100F3266A /* NetworkPost.m */; };
+		30C9DDC11BB93E0500F3266A /* MUSPopUpForSharing.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C9DDBF1BB93E0500F3266A /* MUSPopUpForSharing.m */; };
+		30C9DDC21BB93E0500F3266A /* MUSPopUpForSharing.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30C9DDC01BB93E0500F3266A /* MUSPopUpForSharing.xib */; };
+		30C9DDC61BB95E8C00F3266A /* close6.png in Resources */ = {isa = PBXBuildFile; fileRef = 30C9DDC51BB95E8C00F3266A /* close6.png */; };
 		30D73BFD1BA715A2001B2FE8 /* MUSImageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30D73BFC1BA715A2001B2FE8 /* MUSImageScrollView.m */; };
 		30DBFD8B1B677A9A002F83D0 /* TwitterNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD8A1B677A9A002F83D0 /* TwitterNetwork.m */; };
 		30DBFD8F1B677AD7002F83D0 /* VKNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD8E1B677AD7002F83D0 /* VKNetwork.m */; };
@@ -228,6 +231,10 @@
 		30C9DDB71BAC37B400F3266A /* trash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trash.png; sourceTree = "<group>"; };
 		30C9DDBA1BB55C3100F3266A /* NetworkPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkPost.h; sourceTree = "<group>"; };
 		30C9DDBB1BB55C3100F3266A /* NetworkPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkPost.m; sourceTree = "<group>"; };
+		30C9DDBE1BB93E0500F3266A /* MUSPopUpForSharing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSPopUpForSharing.h; sourceTree = "<group>"; };
+		30C9DDBF1BB93E0500F3266A /* MUSPopUpForSharing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSPopUpForSharing.m; sourceTree = "<group>"; };
+		30C9DDC01BB93E0500F3266A /* MUSPopUpForSharing.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MUSPopUpForSharing.xib; sourceTree = "<group>"; };
+		30C9DDC51BB95E8C00F3266A /* close6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close6.png; sourceTree = "<group>"; };
 		30D73BFB1BA715A2001B2FE8 /* MUSImageScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSImageScrollView.h; sourceTree = "<group>"; };
 		30D73BFC1BA715A2001B2FE8 /* MUSImageScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSImageScrollView.m; sourceTree = "<group>"; };
 		30DBFD891B677A9A002F83D0 /* TwitterNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterNetwork.h; sourceTree = "<group>"; };
@@ -531,6 +538,7 @@
 				97C4ACCE1B997DD4008B93B3 /* Button_Change.png */,
 				307611F01BA074250051C2AD /* checkMarkTaken.jpeg */,
 				307611F81BA17B1D0051C2AD /* checkMark.jpeg */,
+				30C9DDC51BB95E8C00F3266A /* close6.png */,
 				30C9DDB71BAC37B400F3266A /* trash.png */,
 				18B505471B726FAF00679F9D /* Info.plist */,
 				18BB29A61B67E3F000B498AC /* main.m */,
@@ -657,6 +665,7 @@
 		18BB29961B67E3F000B498AC /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				30C9DDBD1BB93A6100F3266A /* PopUpForSharing */,
 				30C9DDAF1BABFA0B00F3266A /* ToolBarForDetailCollectionView */,
 				30C9DDA91BA9702100F3266A /* TopBarForDetailCollectionView */,
 				30D73BFA1BA71546001B2FE8 /* ImageScrollView */,
@@ -831,6 +840,16 @@
 				30C9DDBB1BB55C3100F3266A /* NetworkPost.m */,
 			);
 			name = NetworkPost;
+			sourceTree = "<group>";
+		};
+		30C9DDBD1BB93A6100F3266A /* PopUpForSharing */ = {
+			isa = PBXGroup;
+			children = (
+				30C9DDBE1BB93E0500F3266A /* MUSPopUpForSharing.h */,
+				30C9DDBF1BB93E0500F3266A /* MUSPopUpForSharing.m */,
+				30C9DDC01BB93E0500F3266A /* MUSPopUpForSharing.xib */,
+			);
+			name = PopUpForSharing;
 			sourceTree = "<group>";
 		};
 		30D73BFA1BA71546001B2FE8 /* ImageScrollView */ = {
@@ -1489,8 +1508,10 @@
 				97C2953F1B9826AB001B21FF /* Like.png in Resources */,
 				97C0A0FE1BB95EFA004E5F38 /* Twitter_icon.png in Resources */,
 				97C49E861B835B64005241CE /* MUSPostDescriptionCell.xib in Resources */,
+				30C9DDC61BB95E8C00F3266A /* close6.png in Resources */,
 				18BB29BC1B67E3F000B498AC /* MUSTopUserProfileCell.xib in Resources */,
 				30416A2B1B73AF49000CB2C2 /* MUSCollectionViewCell.xib in Resources */,
+				30C9DDC21BB93E0500F3266A /* MUSPopUpForSharing.xib in Resources */,
 				307611F91BA17B1D0051C2AD /* checkMark.jpeg in Resources */,
 				97C0A0FD1BB95EFA004E5F38 /* Facebook_Icon.png in Resources */,
 				18BB29AF1B67E3F000B498AC /* Main.storyboard in Resources */,
@@ -1622,6 +1643,7 @@
 				97CCC9DC1B74ABAE00E0FAC6 /* UIImage+ChangeScaleImage.m in Sources */,
 				303CAC821B8F0B8600B48D72 /* MUSDatabaseRequestStringsHelper.m in Sources */,
 				97C05FA01BB5494F00EF6079 /* InternetConnectionManager.m in Sources */,
+				30C9DDC11BB93E0500F3266A /* MUSPopUpForSharing.m in Sources */,
 				97B2B54A1B87B387009FAB12 /* UIImageView+MUSLoadImageFromDataBase.m in Sources */,
 				187FC5271B65222D00A3916C /* SocialManager.m in Sources */,
 				30C9DDB21BABFA7300F3266A /* MUSToolBarForDetailCollectionView.m in Sources */,
