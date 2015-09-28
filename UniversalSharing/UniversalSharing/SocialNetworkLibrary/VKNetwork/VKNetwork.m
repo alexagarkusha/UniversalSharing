@@ -183,6 +183,12 @@ static VKNetwork *model = nil;
 - (void) updatePost {
     NSArray * networksPostsIDs = [[DataBaseManager sharedManager] obtainNetworkPostsFromDataBaseWithRequestStrings: [MUSDatabaseRequestStringsHelper createStringForNetworkPostWithReason: Connect andNetworkType: VKontakt]];
     
+    NetworkPost *networkPost = [networksPostsIDs firstObject];
+    NSLog(@"postID = %@", networkPost.postID);
+    NSLog(@"networkType = %d", networkPost.networkType);
+    
+    
+    
     if (![[InternetConnectionManager manager] isInternetConnection] || !networksPostsIDs.count  || (![[InternetConnectionManager manager] isInternetConnection] && networksPostsIDs.count)) {
         [self updatePostInfoNotification];
         return;

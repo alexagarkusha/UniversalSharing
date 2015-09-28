@@ -3,13 +3,12 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="110" id="KGk-i7-Jjw" customClass="MUSPostCell">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="110"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="95" id="KGk-i7-Jjw" customClass="MUSPostCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="95"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -36,7 +35,7 @@
                             <constraint firstAttribute="width" constant="74" id="yGn-nH-wqW"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="slgdkfjnkjnkfdsjhfjsdbfjshbdjfbsjdfbjsdbfjsbdjfsjdfbjsdbfjsdbkdfsdnfksndkfjnskdnfksj ksjdnvkkjsfdkjskd ksjdnkfksjd" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9a0-JS-qNj">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="slgdkfjnkjnkfdsjhfjsdbfjshbdjfbsjdfbjsdbfjsbdjfsjdfbjsdbfjsd" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9a0-JS-qNj">
                         <rect key="frame" x="90" y="10" width="220" height="75"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="75" id="Yef-cN-rKR"/>
@@ -49,7 +48,7 @@
                 <constraints>
                     <constraint firstItem="lob-KA-c90" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="2hr-mb-i22"/>
                     <constraint firstItem="9a0-JS-qNj" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="6TK-Rr-ha8"/>
-                    <constraint firstItem="9a0-JS-qNj" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="82" id="EV9-em-G3N"/>
+                    <constraint firstItem="9a0-JS-qNj" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="90" id="7qD-9C-u9m"/>
                     <constraint firstItem="Lnb-3R-X5o" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="WrK-sX-evS"/>
                     <constraint firstItem="Lnb-3R-X5o" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="agg-bt-kG0"/>
                     <constraint firstItem="1e1-QQ-AH4" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="bgd-A3-G5f"/>
@@ -58,10 +57,11 @@
                     <constraint firstItem="lob-KA-c90" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="zrF-RY-ngX"/>
                 </constraints>
             </tableViewCellContentView>
+            <color key="backgroundColor" white="0.66666666666666663" alpha="0.17000000000000001" colorSpace="calibratedWhite"/>
             <connections>
                 <outlet property="firstImageOfPostImageView" destination="lob-KA-c90" id="TqT-U4-LFw"/>
                 <outlet property="postDescriptionLabel" destination="9a0-JS-qNj" id="p0c-7M-t6B"/>
-                <outlet property="postDescriptionLabelLeftConstraint" destination="EV9-em-G3N" id="NrP-0b-CKN"/>
+                <outlet property="postDescriptionLabelLeftConstraint" destination="7qD-9C-u9m" id="9Tf-yw-uCS"/>
                 <outlet property="secondImageOfPostImageView" destination="1e1-QQ-AH4" id="IfU-Or-vvz"/>
                 <outlet property="thirdImageOfPostImageView" destination="Lnb-3R-X5o" id="brk-MO-B0V"/>
             </connections>
