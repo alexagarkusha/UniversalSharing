@@ -163,7 +163,7 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
     if (indexPath.section == 0) {
         return NO;
     }
-    return YES;
+    return NO;//no swiping ((
 }
 
 -(void)swipeToDeleteLayout:(LSSwipeToDeleteCollectionViewLayout *)layout didDeleteCellAtIndexPath:(NSIndexPath *)indexPath {
