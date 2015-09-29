@@ -82,10 +82,10 @@
     [super viewDidLoad];
     [self obtanObjectsOfSocialNetworks];
     
-    self.buttonArrayLogin = [NSMutableArray new];
-    self.buttonArrayHidden = [NSMutableArray new];
-    self.buttonArrayUnactive = [NSMutableArray new];
-    self.arrayButtons = [[NSMutableArray alloc] initWithObjects:self.buttonArrayLogin, self.buttonArrayHidden, self.buttonArrayUnactive, nil];
+//    self.buttonArrayLogin = [NSMutableArray new];
+//    self.buttonArrayHidden = [NSMutableArray new];
+//    self.buttonArrayUnactive = [NSMutableArray new];
+    //self.arrayButtons = [[NSMutableArray alloc] initWithObjects:self.buttonArrayLogin, self.buttonArrayHidden, self.buttonArrayUnactive, nil];
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -109,21 +109,21 @@
     BOOL isReachable = [ReachabilityManager isReachable];
     BOOL isReachableViaWiFi = [ReachabilityManager isReachableViaWiFi];
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        if (!isReachableViaWiFi && !isReachable) {
-            self.errorView.hidden = NO;
-            //self.btnEditOutlet.enabled = NO;
-            [self.updateNetworkConnectionOutlet cornerRadius:CGRectGetHeight(self.updateNetworkConnectionOutlet.frame) / 2];
-            [self.buttonUseAnywayOutlet cornerRadius: CGRectGetHeight(self.buttonUseAnywayOutlet.frame) / 2];
-        } else {
+//        if (!isReachableViaWiFi && !isReachable) {
+//            self.errorView.hidden = NO;
+//            //self.btnEditOutlet.enabled = NO;
+//            [self.updateNetworkConnectionOutlet cornerRadius:CGRectGetHeight(self.updateNetworkConnectionOutlet.frame) / 2];
+//            [self.buttonUseAnywayOutlet cornerRadius: CGRectGetHeight(self.buttonUseAnywayOutlet.frame) / 2];
+//        } else {
     self.errorView.hidden = YES;
     //self.btnEditOutlet.enabled = YES;
     [self.tableView reloadData];
     //[self.arrayButtons removeAllObjects];
    //
-        [self.buttonArrayLogin removeAllObjects];
-    [self.buttonArrayHidden removeAllObjects];
-    [self.buttonArrayUnactive removeAllObjects];
-    }
+//        [self.buttonArrayLogin removeAllObjects];
+//    [self.buttonArrayHidden removeAllObjects];
+//    [self.buttonArrayUnactive removeAllObjects];
+    //}
 }
 - (IBAction) buttonUseAnyWayTapped :(id)sender {
     self.errorView.hidden = YES;
@@ -161,31 +161,31 @@
  @param without
  */
 - (void) obtanObjectsOfSocialNetworks {
-    //    NSArray *arrayWithNetworks = @[@(Twitters), @(VKontakt), @(Facebook)];
-    //    self.arrayWithNetworksObj = [[SocialManager sharedManager] networks : arrayWithNetworks];
-    [[SocialManager sharedManager] obtainNetworksWithComplition:^(id arrayLogin, id arrayHidden, id arrayUnactive, NSError *error) {
-        self.arrayLogin = arrayLogin;
-        self.arrayHidden = arrayHidden;
-        self.arrayUnactive = arrayUnactive;
-        
-    }];
+        NSArray *arrayWithNetworks = @[@(Twitters), @(VKontakt), @(Facebook)];
+        self.arrayWithNetworksObj = [[SocialManager sharedManager] networks : arrayWithNetworks];
+//    [[SocialManager sharedManager] obtainNetworksWithComplition:^(id arrayLogin, id arrayHidden, id arrayUnactive, NSError *error) {
+//        self.arrayLogin = arrayLogin;
+//        self.arrayHidden = arrayHidden;
+//        self.arrayUnactive = arrayUnactive;
+//        
+//    }];
     
 }
 
 #pragma mark UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 0) {
-        return [self.arrayLogin count];
-    } else if(section == 1){
-        return [self.arrayHidden count];
-    }else{
-        return [self.arrayUnactive count];
-    }
-    //return [self.arrayWithNetworksObj count];
+//    if (section == 0) {
+//        return [self.arrayLogin count];
+//    } else if(section == 1){
+//        return [self.arrayHidden count];
+//    }else{
+//        return [self.arrayUnactive count];
+//    }
+    return [self.arrayWithNetworksObj count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {//////////////////////////
@@ -193,27 +193,29 @@
      XIB
      */
     MUSAccountTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[MUSAccountTableViewCell cellID]];
-    SocialNetwork *socialNetwork;// = [self obtainCurrentSocialNetwork:indexPath];
+    SocialNetwork *socialNetwork = [self obtainCurrentSocialNetwork:indexPath];
     
     if(!cell) {
         cell = [MUSAccountTableViewCell accountTableViewCell];
     }
     
-    if (indexPath.section  == 0) {
-        socialNetwork = self.arrayLogin[indexPath.row];
-    } else  if (indexPath.section  == 1) {
-        socialNetwork = self.arrayHidden[indexPath.row];
-    } else{
-        socialNetwork = self.arrayUnactive[indexPath.row];
-    }
+//    if (indexPath.section  == 0) {
+//        socialNetwork = self.arrayLogin[indexPath.row];
+//    } else  if (indexPath.section  == 1) {
+//        socialNetwork = self.arrayHidden[indexPath.row];
+//    } else{
+//        socialNetwork = self.arrayUnactive[indexPath.row];
+//    }
     //if(!self.editing){
     //if (indexPath.section  == 0 || indexPath.section  == 1) {
-    __weak MUSAccountsViewController *weakSelf = self;
-    [cell setDelegate:self];
-    [cell addFirstButton:[self createButtonHideShow :indexPath :socialNetwork] withWidth:80.0 withTappedBlock:^(AFMSlidingCell *cell) {
-        [cell hideButtonViewAnimated:YES];
-        [weakSelf changeTitleButton:[weakSelf obtainIndexPath:cell]];
-    }];
+    ///////////////////////////////////////////////////////////////////////button delete
+//    __weak MUSAccountsViewController *weakSelf = self;
+//    [cell setDelegate:self];
+//    [cell addFirstButton:[self createButtonHideShow :indexPath :socialNetwork] withWidth:80.0 withTappedBlock:^(AFMSlidingCell *cell) {
+//        [cell hideButtonViewAnimated:YES];
+//        [weakSelf changeTitleButton:[weakSelf obtainIndexPath:cell]];
+//    }];
+    ///////////////////////////////////////////////////////////////////////////////////////////
     // }
     // }
     [cell configurateCellForNetwork:socialNetwork];
@@ -222,18 +224,18 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     self.selectedIndexPath = indexPath;
-    SocialNetwork *socialNetwork;// = [self obtainCurrentSocialNetwork:indexPath];
-    if (indexPath.section  == 0) {
-        socialNetwork = self.arrayLogin[indexPath.row];
-    } else  if (indexPath.section  == 1) {
-        socialNetwork = self.arrayHidden[indexPath.row];
-    } else{
-        socialNetwork = self.arrayUnactive[indexPath.row];
-    }
-    
-    if(!socialNetwork.isVisible){
-        return;
-    }
+    SocialNetwork *socialNetwork = [self obtainCurrentSocialNetwork:indexPath];
+//    if (indexPath.section  == 0) {
+//        socialNetwork = self.arrayLogin[indexPath.row];
+//    } else  if (indexPath.section  == 1) {
+//        socialNetwork = self.arrayHidden[indexPath.row];
+//    } else{
+//        socialNetwork = self.arrayUnactive[indexPath.row];
+//    }
+//    
+//    if(!socialNetwork.isVisible){
+//        return;
+//    }
     /*!
      when cell is tapped we check this social network is login and existed a currentuser object  if YES we go to ditailviewcontroller, else to do login than go to ditailviewcontroller
      */

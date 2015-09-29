@@ -11,7 +11,7 @@
 #pragma mark Facebook Constants
 
 NSString *const musFacebookTitle = @"Login Facebook";
-NSString *const musFacebookIconName = @"FBimage.png";
+NSString *const musFacebookIconName = @"Facebook_Icon.png";
 NSString *const musFacebookName = @"Facebook";
 
 NSString *const musFacebookPermission_Email = @"email";
@@ -44,7 +44,7 @@ NSInteger const musFacebookErrorCode = 1300;
 NSString *const musVKAppID = @"5004830";
 NSString *const musVKAllUserFields = @"first_name,last_name,photo_200_orig,id,birthday";
 NSString *const musVKTitle = @"Login VK";
-NSString *const musVKIconName = @"VKimage.png";
+NSString *const musVKIconName = @"VK_icon.png";
 NSString *const musVKName = @"VK";
 
 NSString *const musVKMethodPlacesSearch = @"places.search";
@@ -78,7 +78,7 @@ NSString *const musTwitterConsumerKey = @"lUY36ubrBYXpYsZhJJvg8CYdf";
 
 
 NSString *const musTwitterTitle = @"Login Twitter";
-NSString *const musTwitterIconName = @"TWimage.png";
+NSString *const musTwitterIconName = @"Twitter_icon.png";
 NSString *const musTwitterName = @"Twitter";
 
 NSString *const musTwitterError = @"Twitter error. Please retry again.";

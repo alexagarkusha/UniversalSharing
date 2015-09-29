@@ -57,7 +57,8 @@ static FacebookNetwork *model = nil;
 
             [self startTimerForUpdatePosts];
             self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForUsersWithNetworkType:self.networkType]]firstObject]; // obtainUsersWithNetworkType:self.networkType];
-            self.icon = self.currentUser.photoURL;
+            //self.icon = self.currentUser.photoURL;
+            self.icon = musFacebookIconName;
             self.title = [NSString stringWithFormat:@"%@ %@", self.currentUser.firstName, self.currentUser.lastName];
             self.isVisible = self.currentUser.isVisible;
             NSInteger indexPosition = self.currentUser.indexPosition;
@@ -149,11 +150,12 @@ static FacebookNetwork *model = nil;
         weakSell.currentUser = [User createFromDictionary:result andNetworkType : weakSell.networkType];
         weakSell.title = [NSString stringWithFormat:@"%@  %@", weakSell.currentUser.firstName, weakSell.currentUser.lastName];
         //dispatch_async(dispatch_get_main_queue(), ^{
-        weakSell.icon = [weakSell.currentUser.photoURL saveImageOfUserToDocumentsFolder:weakSell.currentUser.photoURL];
+        //weakSell.icon = [weakSell.currentUser.photoURL saveImageOfUserToDocumentsFolder:weakSell.currentUser.photoURL];
         //});
         
         
-        weakSell.currentUser.photoURL = weakSell.icon;
+//        weakSell.currentUser.photoURL = weakSell.icon;
+        weakSell.currentUser.photoURL = [weakSell.currentUser.photoURL saveImageOfUserToDocumentsFolder:weakSell.currentUser.photoURL];
         //weakSell.currentUser.indexPosition = 0;
         //weakSell.icon = weakSell.currentUser.photoURL;////
         if (!weakSell.isLogin) {

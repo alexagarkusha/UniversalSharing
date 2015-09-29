@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol MUSPopUpForSharingDelegate <NSObject>
+
+- (void) sharePosts : (NSMutableArray*) arrayChosenNetworksForPost;
+
+@end
+
 
 @interface MUSPopUpForSharing : UIViewController
+@property (nonatomic, assign) id <MUSPopUpForSharingDelegate> delegate;
 
 @end
