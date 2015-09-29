@@ -50,7 +50,8 @@
     NSData *data = [NSData dataWithContentsOfFile:[self obtainPathToDocumentsFolder:currentUser.photoURL]];
     self.self.userImageView.image = [UIImage imageWithData:data];
     //[self.userImageView loadImageFromUrl: [NSURL URLWithString: currentUser.photoURL]];
-    
+    //weakSell.icon = [weakSell.currentUser.photoURL saveImageOfUserToDocumentsFolder:weakSell.currentUser.photoURL];
+
     
 }
 

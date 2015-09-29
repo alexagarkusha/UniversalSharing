@@ -59,7 +59,8 @@ static VKNetwork *model = nil;
             [self startTimerForUpdatePosts];
             //[self updatePost];////////////////////////////////////////////////////////////
             self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForUsersWithNetworkType:self.networkType]]firstObject];
-            self.icon = self.currentUser.photoURL;
+            //self.icon = self.currentUser.photoURL;
+            self.icon = musVKIconName;
             self.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
             self.isVisible = self.currentUser.isVisible;
             NSInteger indexPosition = self.currentUser.indexPosition;
@@ -152,8 +153,8 @@ static VKNetwork *model = nil;
          //weakSell.icon = [weakSell.currentUser.photoURL saveImageOfUserToDocumentsFolder:weakSell.currentUser.photoURL];
          //});
          
-         
-         weakSell.currentUser.photoURL = weakSell.icon;
+         weakSell.currentUser.photoURL = [weakSell.currentUser.photoURL saveImageOfUserToDocumentsFolder:weakSell.currentUser.photoURL];
+         //weakSell.currentUser.photoURL = weakSell.icon;
          //weakSell.currentUser.indexPosition = 0;
          //weakSell.icon = weakSell.currentUser.photoURL;////
          if (!weakSell.isLogin)
