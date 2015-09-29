@@ -57,10 +57,8 @@
  */
 @property (nonatomic, assign) NSInteger predicateReason;
 
-
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllButton;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *editButton;
 @property (strong, nonatomic) NSMutableSet *setWithUniquePrimaryKeysOfPost ;
+
 @property (nonatomic, strong) SSARefreshControl *refreshControl;
 
 @end
@@ -71,6 +69,8 @@
     // Do any additional setup after loading the view.
     [self initiationTableView];
     self.setWithUniquePrimaryKeysOfPost = [[NSMutableSet alloc] init];
+    [self.navigationController.navigationBar setTintColor: BROWN_COLOR_MIDLightHIGHT];
+
     //[self obtainArrayPosts];
     self.title = musApp_PostsViewController_NavigationBar_Title;
     [[NSNotificationCenter defaultCenter] addObserver : self
@@ -81,12 +81,12 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear : YES];
+    [self initiationSSARefreshControl];
     // Notification for updating likes and comments in posts.
     [[NSNotificationCenter defaultCenter] addObserver : self
                                              selector : @selector(obtainArrayPosts)
                                                  name : MUSNotificationPostsInfoWereUpDated
                                                object : nil];
-    [self initiationSSARefreshControl];
     [self initiationArrayOfActiveSocialNetwork];
 
     //[self.tableView reloadData];
@@ -139,68 +139,56 @@
 
 #pragma mark - UITableViewDataSource
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 1;
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return self.arrayPosts.count;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    Post *post = [self.arrayPosts objectAtIndex: section];
-//    NSLog(@"array NetworkPosts = %@", post.arrayWithNetworkPosts);
-//    NSLog(@"array arrayWithNetworkPostsId = %@", post.arrayWithNetworkPostsId);
-    return post.arrayWithNetworkPosts.count + 1;
-}
-
-
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    
-    Post *post = [self.arrayPosts objectAtIndex: indexPath.section];
-    
-    if (indexPath.row == 0) {
-        MUSPostCell *postCell = (MUSPostCell*) cell;
-        if (![self.setWithUniquePrimaryKeysOfPost containsObject: [NSString stringWithFormat: @"%ld", (long)post.primaryKey]]) {
-            [postCell configurationPostCell : post];
-        } else {
-            [postCell configurationUpdatingPostCell: post];
-        }
-        //[self setCellColor: [UIColor whiteColor] ForCell: cell];
-    } else {
-        MUSReasonCommentsAndLikesCell *reasonCommentsAndLikesCell = (MUSReasonCommentsAndLikesCell*) cell;
-        [reasonCommentsAndLikesCell configurationReasonCommentsAndLikesCell: [post.arrayWithNetworkPosts objectAtIndex: indexPath.row - 1]];
-    }
+
+    MUSPostCell *postCell = (MUSPostCell*) cell;
+    //postCell.currentPost = post;
+
+    //if (![self.setWithUniquePrimaryKeysOfPost containsObject: [NSString stringWithFormat: @"%ld", (long)post.primaryKey]]) {
+    [postCell configurationPostCell : [self.arrayPosts objectAtIndex: indexPath.section]];
+//    } else {
+//        [postCell configurationUpdatingPostCell: post];
+//    }
 }
+
+//- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath {
+//    MUSPostCell *postCell = (MUSPostCell*) cell;
+//    [postCell configurateFirstImageOfPost: [self.arrayPosts objectAtIndex: indexPath.section]];
+//}
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     /*!
      XIB
      */
-    if (indexPath.row == 0) {
         MUSPostCell *cell = [tableView dequeueReusableCellWithIdentifier:[MUSPostCell cellID]];
         if(!cell) {
             cell = [MUSPostCell postCell];
         }
-        //cell.delegate = self;
+        Post *currentPost = [self.arrayPosts objectAtIndex: indexPath.section];
+        cell.arrayWithNetworkPosts = currentPost.arrayWithNetworkPosts;
         cell.selectionStyle = UITableViewCellSelectionStyleNone; // disable the cell selection highlighting
         return cell;
-    } else {
-        MUSReasonCommentsAndLikesCell *cell = [tableView dequeueReusableCellWithIdentifier:[MUSReasonCommentsAndLikesCell cellID]];
-        if(!cell) {
-            cell = [MUSReasonCommentsAndLikesCell reasonCommentsAndLikesCell];
-        }
-        //cell.delegate = self;
-        //cell.selectionStyle = UITableViewCellSelectionStyleNone; // disable the cell selection highlighting
-        return cell;
-    }
 }
 
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 0) {
-        return [MUSPostCell heightForPostCell];
-    }
-    return [MUSReasonCommentsAndLikesCell heightForReasonCommentsAndLikesCell];
+    Post *currentPost = [self.arrayPosts objectAtIndex: indexPath.section];
+    return [MUSPostCell heightForPostCell: currentPost];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 3;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -208,11 +196,6 @@
     if (![self.setWithUniquePrimaryKeysOfPost containsObject: [NSString stringWithFormat: @"%ld", (long)post.primaryKey]]) {
         [self performSegueWithIdentifier: goToDetailPostViewControllerSegueIdentifier sender: post];
     }
-//    } else {
-//        //MUSPostCell *postCell = (MUSPostCell*) [self.tableView cellForRowAtIndexPath: indexPath];
-//        //[postCell checkIsSelectedPost];
-//        //[self addIndexToIndexSet: indexPath];
-//    }
 }
 
 
@@ -300,11 +283,9 @@
  */
 - (void) obtainArrayPosts {
     self.arrayPosts = [[NSMutableArray alloc] initWithArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper createStringForAllPosts]]];
-    
-    self.editButton.enabled = [self isArrayOfPostsNotEmpty];
-    [self.refreshControl endRefreshing];
+
     [self.tableView reloadData];
-    
+    [self.refreshControl endRefreshing];
 }
 
 - (BOOL) isArrayOfPostsNotEmpty {

@@ -17,5 +17,6 @@
 
 - (void) configurationReasonCommentsAndLikesCell: (NetworkPost*) networkPost;
 
+//@property (weak, nonatomic) IBOutlet UIView *separatorView;
 
 @end

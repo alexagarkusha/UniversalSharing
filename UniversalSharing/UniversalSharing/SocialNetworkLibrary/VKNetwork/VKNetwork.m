@@ -70,11 +70,12 @@ static VKNetwork *model = nil;
                 NSString *deleteImageFromFolder = self.currentUser.photoURL;
                 
                 [self obtainInfoFromNetworkWithComplition:^(SocialNetwork* result, NSError *error) {
-                    
-                    [[NSFileManager defaultManager] removeItemAtPath: [deleteImageFromFolder obtainPathToDocumentsFolder:deleteImageFromFolder] error: nil];
-                    result.currentUser.isVisible = self.isVisible;
-                    result.currentUser.indexPosition = indexPosition;
-                    [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringUsersForUpdateWithObjectUser:result.currentUser]];
+                    if (!error) {
+                        [[NSFileManager defaultManager] removeItemAtPath: [deleteImageFromFolder obtainPathToDocumentsFolder:deleteImageFromFolder] error: nil];
+                        result.currentUser.isVisible = self.isVisible;
+                        result.currentUser.indexPosition = indexPosition;
+                        [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringUsersForUpdateWithObjectUser:result.currentUser]];
+                    }
                 }];
             }
         }
@@ -183,12 +184,6 @@ static VKNetwork *model = nil;
 
 - (void) updatePost {
     NSArray * networksPostsIDs = [[DataBaseManager sharedManager] obtainNetworkPostsFromDataBaseWithRequestStrings: [MUSDatabaseRequestStringsHelper createStringForNetworkPostWithReason: Connect andNetworkType: VKontakt]];
-    
-    NetworkPost *networkPost = [networksPostsIDs firstObject];
-    NSLog(@"postID = %@", networkPost.postID);
-    NSLog(@"networkType = %d", networkPost.networkType);
-    
-    
     
     if (![[InternetConnectionManager manager] isInternetConnection] || !networksPostsIDs.count  || (![[InternetConnectionManager manager] isInternetConnection] && networksPostsIDs.count)) {
         [self updatePostInfoNotification];
@@ -511,10 +506,12 @@ static VKNetwork *model = nil;
 
 - (void)vkSdkUserDeniedAccess:(VKError *)authorizationError
 {
+   /*
     self.isLogin = NO;
     self.isVisible = YES;
     NSError *error = [NSError errorWithMessage: musErrorAccesDenied andCodeError: musErrorAccesDeniedCode];
     self.copyComplition (nil, error);
+    */
 }
 
 

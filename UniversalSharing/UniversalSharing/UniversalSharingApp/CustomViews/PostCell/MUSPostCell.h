@@ -19,11 +19,12 @@
 
 + (NSString*) cellID;
 + (instancetype) postCell;
-+ (CGFloat) heightForPostCell;
++ (CGFloat) heightForPostCell : (Post*) post;
 
-- (void) configurationUpdatingPostCell: (Post*) currentPost;
+//- (void) configurationUpdatingPostCell: (Post*) currentPost;
 - (void) configurationPostCell: (Post*) currentPost;
-//- (void) checkIsSelectedPost;
+//- (void) configurateFirstImageOfPost : (Post*) currentPost;
 
+@property (nonatomic, strong) NSMutableArray *arrayWithNetworkPosts;
 
 @end

@@ -8,25 +8,13 @@
 
 #import "MUSCommentsAndLikesCell.h"
 #import "ConstantsApp.h"
-#import "NSString+ReasonTypeInString.h"
-#import "UILabel+CornerRadiusLabel.h"
-#import "UIColor+ReasonColorForPost.h"
-#import "NSString+DateStringFromUNIXTimestamp.h"
-#import "UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.h"
-#import "UIImageView+MUSLoadImageFromDataBase.h"
-#import "UIButton+CornerRadiusButton.h"
-#import "UIImage+LoadImageFromDataBase.h"
 #import "MUSUserProfileButton.h"
+#import "MUSReasonCommentsAndLikesCell.h"
 
 @interface MUSCommentsAndLikesCell ()
-@property (weak, nonatomic)     IBOutlet    MUSUserProfileButton *showUserProfileButton;
-@property (weak, nonatomic)     IBOutlet    UIImageView *commentImageView;
-@property (weak, nonatomic)     IBOutlet    UIImageView *likeImageView;
-@property (weak, nonatomic)     IBOutlet    UILabel *dateOfPostLabel;
-@property (weak, nonatomic)     IBOutlet    UILabel *numberOfLikesLabel;
-@property (weak, nonatomic)     IBOutlet    UILabel *numberOfCommentsLabel;
-@property (weak, nonatomic)     IBOutlet    UILabel *reasonPostLabel;
-@property (weak, nonatomic)     IBOutlet    UILabel *usernameLabel;
+
+@property (weak, nonatomic) IBOutlet UITableView *commentsAndLikesPostTableView;
+
 
 @end
 
@@ -34,7 +22,6 @@
 
 - (void)awakeFromNib {
     // Initialization code
-    [self.reasonPostLabel cornerRadius: CGRectGetHeight(self.reasonPostLabel.frame) / 2];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -58,65 +45,38 @@
 
 #pragma mark - height for CommentsAndLikesCell
 
-+ (CGFloat) heightForCommentsAndLikesCell {
-    return musAppDetailPostVC_HeightOfCommentsAndLikesCell;
++ (CGFloat) heightForCommentsAndLikesCell : (NSArray*) arrayWithNetworkPosts {
+    return [MUSReasonCommentsAndLikesCell heightForReasonCommentsAndLikesCell] * arrayWithNetworkPosts.count;
 }
 
 #pragma mark - configuration CommentsAndLikesCellByPost
 
-// NEED Current USER, socialNetworkIconName
-
-
-- (void) configurationCommentsAndLikesCellByPost: (Post*) currentPost socialNetworkIconName : (NSString*) socialNetworkIconName andUser : (User*) user {
-//    self.likeImageView.image = [UIImage imageNamed: musAppImage_Name_Like];
-//    self.commentImageView.image = [UIImage imageNamed: musAppImage_Name_Comment];
-    [self initiationCommentsLabel: currentPost];
-    [self initiationReasonLabel: currentPost];
-    [self initiationUserNameLabel: user];
-    [self initiationUserDateOfPostLabel: currentPost.dateCreate];
-    [self initiationUserProfileButton: socialNetworkIconName];
+- (void) configurationCommentsAndLikesCell {
+    [self.commentsAndLikesPostTableView reloadData];
 }
 
-#pragma mark initiation Comments Label
+#pragma mark - UITableViewDataSource
 
-- (void) initiationCommentsLabel : (Post*) currentPost {
-    self.numberOfLikesLabel.text = [NSString stringWithFormat:@"%ld", (long)currentPost.likesCount];
-    self.numberOfCommentsLabel.text = [NSString stringWithFormat:@"%ld", (long)currentPost.commentsCount];
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.arrayWithNetworkPosts.count;
 }
 
-#pragma mark initiation Reason Label
-
-- (void) initiationReasonLabel : (Post*) currentPost {
-    self.reasonPostLabel.text = [NSString reasonTypeInString: currentPost.reason];
-    self.reasonPostLabel.backgroundColor = [UIColor reasonColorForPost: currentPost.reason];
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    MUSReasonCommentsAndLikesCell *cell = [tableView dequeueReusableCellWithIdentifier:[MUSReasonCommentsAndLikesCell cellID]];
+    if(!cell) {
+        cell = [MUSReasonCommentsAndLikesCell reasonCommentsAndLikesCell];
+    }
+    return cell;
 }
 
-#pragma mark initiation UserNameLabel
-
-- (void) initiationUserNameLabel : (User*) user{
-        self.usernameLabel.textColor = [UIColor blackColor];
-        self.dateOfPostLabel.textColor = [UIColor blackColor];
-    self.usernameLabel.text = [NSString stringWithFormat: @"%@ %@", user.lastName, user.firstName];
-    [self.usernameLabel sizeToFit];
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    MUSReasonCommentsAndLikesCell *reasonCommentsAndLikesCell = (MUSReasonCommentsAndLikesCell*) cell;
+    [reasonCommentsAndLikesCell configurationReasonCommentsAndLikesCell: [self.arrayWithNetworkPosts objectAtIndex: indexPath.row]];
 }
 
-#pragma mark initiation UserDateOfPostLabel
-
-- (void) initiationUserDateOfPostLabel : (NSString*) dateOfPostCreate {
-    self.dateOfPostLabel.text = [NSString dateStringFromUNIXTimestamp: [dateOfPostCreate integerValue]];
-    [self.dateOfPostLabel sizeToFit];
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [MUSReasonCommentsAndLikesCell heightForReasonCommentsAndLikesCell];
 }
 
-#pragma mark initiation UserPhotoImageView
-
-- (void) initiationUserProfileButton : (NSString*) socialNetworkIconName {
-    UIImage *profileImage = [[UIImage alloc] init];
-    profileImage = [profileImage loadImageFromDataBase: socialNetworkIconName];
-    [self.showUserProfileButton setImage: profileImage forState:UIControlStateNormal];
-}
-
-- (IBAction)showUserProfileButtonTouch:(id)sender {
-    [self.delegate showUserProfile];
-}
 
 @end

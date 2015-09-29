@@ -37,6 +37,9 @@
     copyPost.reason = self.reason;
     copyPost.locationId = [self.locationId copy];
     copyPost.place = [self.place copy];
+    //copyPost.networkPost = [self.networkPost copy];
+    copyPost.arrayWithNetworkPosts = [self.arrayWithNetworkPosts mutableCopy];
+    copyPost.arrayWithNetworkPostsId = [self.arrayWithNetworkPostsId mutableCopy];
     return copyPost;
 }
 

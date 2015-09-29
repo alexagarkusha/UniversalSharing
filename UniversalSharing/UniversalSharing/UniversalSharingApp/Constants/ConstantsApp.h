@@ -29,9 +29,9 @@ typedef NS_ENUM(NSInteger, FilterInColumnType) {
 };
 
 typedef NS_ENUM(NSInteger, DetailPostVC_CellType) {
-    GalleryOfPhotosCellType,
-    CommentsAndLikesCellType,
+    //GalleryOfPhotosCellType,
     PostDescriptionCellType,
+    CommentsAndLikesCellType,
     PostLocationCellType,
 };
 
@@ -92,8 +92,13 @@ FOUNDATION_EXPORT NSString *const hideButtonTitle;
 
 #pragma mark - General constants
 
+#define BROWN_COLOR_Lightly [UIColor colorWithRed: 199.0/255.0 green: 176.0/255.0 blue: 163.0/255.0 alpha: 0.1]
 #define BROWN_COLOR_Light [UIColor colorWithRed: 199.0/255.0 green: 176.0/255.0 blue: 163.0/255.0 alpha: 0.25]
+#define BROWN_COLOR_LightMID [UIColor colorWithRed: 199.0/255.0 green: 176.0/255.0 blue: 163.0/255.0 alpha: 0.5]
+
 #define BROWN_COLOR_MIDLight [UIColor colorWithRed: 155.0/255.0 green: 101.0/255.0 blue: 79.0/255.0 alpha: 0.7]
+#define BROWN_COLOR_MIDLightHIGHT [UIColor colorWithRed: 155.0/255.0 green: 101.0/255.0 blue: 79.0/255.0 alpha: 1.0]
+
 
 //#define YELLOW_COLOR_Light [UIColor colorWithRed: 255.0/255.0 green: 255.0/255.0 blue: 220.0/255.0 alpha: 1.0]
 //#define YELLOW_COLOR_MidLight [UIColor colorWithRed: 255.0/255.0 green: 255.0/255.0 blue: 190.0/255.0 alpha: 1.0]
