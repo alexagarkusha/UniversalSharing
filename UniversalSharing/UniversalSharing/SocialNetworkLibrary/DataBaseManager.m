@@ -365,7 +365,7 @@ static DataBaseManager *databaseManager;
 
 - (void)deleteUserByClientId :(NSString*) clientId {
     [self deleteObjectFromDataDase:[MUSDatabaseRequestStringsHelper createStringForDeleteUserWithClientId:clientId]];
-    [self deletePostByUserId:clientId];
+    //[self deletePostByUserId:clientId];
     
 }
 

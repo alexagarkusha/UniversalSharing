@@ -66,7 +66,7 @@
 
 - (void) showAddPhotoButtonForFirstSection {
     
-    self.addPhotoButtonForFirstSection = [[MUSAddPhotoButton alloc] initWithFrame: CGRectMake( 0, 0, self.frame.size.width - 20 , self.frame.size.height)];
+    self.addPhotoButtonForFirstSection = [[MUSAddPhotoButton alloc] initWithFrame: CGRectMake( 5, 0, self.frame.size.width -20 , self.frame.size.height)];
     [self addSubview: self.addPhotoButtonForFirstSection];
     [self.addPhotoButtonForFirstSection addTarget:self
                             action:@selector(addPhotoToCollectionForFirstSection:)forControlEvents:UIControlEventTouchUpInside];

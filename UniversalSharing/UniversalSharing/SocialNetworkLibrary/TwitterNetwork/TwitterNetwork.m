@@ -176,7 +176,7 @@ static TwitterNetwork *model = nil;
              weakSell.currentUser = [User createFromDictionary:user andNetworkType : weakSell.networkType];
              weakSell.title = [NSString stringWithFormat:@"%@  %@", weakSell.currentUser.firstName, weakSell.currentUser.lastName];
              //dispatch_async(dispatch_get_main_queue(), ^{
-             weakSell.icon = [weakSell.currentUser.photoURL saveImageOfUserToDocumentsFolder:weakSell.currentUser.photoURL];
+             //weakSell.icon = [weakSell.currentUser.photoURL saveImageOfUserToDocumentsFolder:weakSell.currentUser.photoURL];
              //});
              
              
