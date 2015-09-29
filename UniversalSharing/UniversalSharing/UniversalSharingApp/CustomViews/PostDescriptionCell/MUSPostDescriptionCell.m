@@ -23,7 +23,8 @@
 - (void)awakeFromNib {
     // Initialization code
     self.postDescriptionTextView.delegate = self;
-    }
+    self.backgroundColor = BROWN_COLOR_Lightly;
+}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
@@ -45,8 +46,8 @@
 
 #pragma mark - height for PostDescriptionCell
 
-+ (CGFloat) heightForPostDescriptionCell : (NSString*) postDescription andIsEditableCell : (BOOL) isEditableCell {
-    if (!postDescription.length > 0 && !isEditableCell) {
++ (CGFloat) heightForPostDescriptionCell : (NSString*) postDescription {
+    if (!postDescription.length > 0) {
         return 0;
     }
     UITextView *calculationView = [[UITextView alloc] init];
@@ -58,9 +59,6 @@
     [calculationView setAttributedText : attrString];
     CGSize size = [calculationView sizeThatFits: CGSizeMake ([UIScreen mainScreen].bounds.size.width - musApp_PostDescriptionCell_TextView_LeftConstraint - musApp_PostDescriptionCell_TextView_RightConstraint, FLT_MAX)];
     CGFloat heightOfRow = size.height + musApp_PostDescriptionCell_TextView_BottomConstraint + musApp_PostDescriptionCell_TextView_TopConstraint;
-    if (heightOfRow < 100 && isEditableCell) {
-        return 100;
-    }
     return heightOfRow;
 }
 

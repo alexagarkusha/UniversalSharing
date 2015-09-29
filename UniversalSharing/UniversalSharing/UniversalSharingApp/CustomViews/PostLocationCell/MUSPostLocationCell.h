@@ -19,7 +19,7 @@
 
 + (NSString*) cellID;
 + (instancetype) postLocationCell;
-+ (CGFloat) heightForPostLocationCell: (Place*) place andIsEditableCell : (BOOL) isEditableCell;
++ (CGFloat) heightForPostLocationCell: (Place*) place;
 
 - (void) configurationPostLocationCellByPostPlace: (Place *) currentPlace;
 

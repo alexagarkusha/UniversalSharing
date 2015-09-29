@@ -10,6 +10,7 @@
 #import "MUSSocialNetworkLibraryHeader.h"
 #import "ReachabilityManager.h"
 #import "SocialManager.h"
+#import "ConstantsApp.h"
 
 
 @interface AppDelegate ()
@@ -24,13 +25,9 @@
     
     UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
     tabBarController.selectedViewController=[tabBarController.viewControllers objectAtIndex: 1];
-    
-    
-    
-    
-    
-    
-    
+    [[UITabBar appearance] setSelectedImageTintColor: BROWN_COLOR_MIDLightHIGHT];
+    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary  dictionaryWithObjectsAndKeys: [UIColor darkGrayColor], NSForegroundColorAttributeName, nil] forState:UIControlStateNormal];
+    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary  dictionaryWithObjectsAndKeys:BROWN_COLOR_MIDLight, NSForegroundColorAttributeName, nil] forState:UIControlStateSelected];
     
     return [[FBSDKApplicationDelegate sharedInstance] application:application
                                     didFinishLaunchingWithOptions:launchOptions];

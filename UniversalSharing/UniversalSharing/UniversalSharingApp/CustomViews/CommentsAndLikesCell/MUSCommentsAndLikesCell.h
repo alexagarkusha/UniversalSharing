@@ -9,22 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "MUSSocialNetworkLibraryHeader.h"
 
-@protocol MUSCommentsAndLikesCellDelegate <NSObject>
-/*!
- @method
- @abstract show MUSUserDetailViewController
- */
-- (void) showUserProfile;
-@end
-
 @interface MUSCommentsAndLikesCell : UITableViewCell
-
-@property (nonatomic, assign) id <MUSCommentsAndLikesCellDelegate> delegate;
 
 + (NSString*) cellID;
 + (instancetype) commentsAndLikesCell;
-+ (CGFloat) heightForCommentsAndLikesCell;
++ (CGFloat) heightForCommentsAndLikesCell : (NSArray*) arrayWithNetworkPosts;
 
-- (void) configurationCommentsAndLikesCellByPost: (Post*) currentPost socialNetworkIconName : (NSString*) socialNetworkIconName andUser : (User*) user;
+- (void) configurationCommentsAndLikesCell;
+
+@property (nonatomic, strong) NSMutableArray *arrayWithNetworkPosts;
 
 @end

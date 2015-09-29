@@ -12,10 +12,10 @@
 
 //+ (NSString*)createStringForPostWithReason :(ReasonType) reason andNetworkType :(NetworkType) networkType {
 //    NSString *requestString = [NSString stringWithFormat:@"SELECT * FROM %@",@"Posts"];
-//    
+//
 //    if (networkType != AllNetworks) {
 //        requestString = [requestString stringByAppendingString:[NSString stringWithFormat:@" WHERE networkType = \"%ld\"", (long)networkType]];
-//        
+//
 //        if (reason != AllReasons) {
 //            requestString = [requestString stringByAppendingString: [NSString stringWithFormat: @" AND reson = \"%ld\"", (long)reason]];
 //        }
@@ -58,7 +58,7 @@
 
 + (NSString*) createStringForNetworkPostToGetLastObject {
     return [NSString stringWithFormat:@"SELECT * FROM %@ SELECT %@",@"NetworkPosts",@"last_insert_rowid()"];//SELECT fields FROM table ORDER BY id DESC LIMIT 1;
-
+    
     
     //return [NSString stringWithFormat:@"SELECT * FROM %@ WHERE id = \"%@\" ",@"NetworkPosts",@"last_id"];//SELECT fields FROM table ORDER BY id DESC LIMIT 1;
 }
@@ -88,7 +88,7 @@
 }
 
 + (NSString*) createStringForAllUsers {
-   return [NSString stringWithFormat:@"SELECT * FROM %@",@"Users"];
+    return [NSString stringWithFormat:@"SELECT * FROM %@",@"Users"];
 }
 
 + (NSString*) createStringForUsersWithNetworkType :(NSInteger) networkType {
@@ -140,7 +140,7 @@
 
 //+ (NSString*) createStringPostsForUpdateWithObjectPost :(Post*) post {
 //    NSString *stringPostsForUpdate = @"UPDATE Posts set ";
-//    
+//
 //    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"locationID = \"%@\", "];
 //    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"postDescription = \"%@\", "];
 //    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"arrayImagesUrl = \"%@\", "];
@@ -155,7 +155,7 @@
 //    NSString *postDescription = [post.postDescription stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
 //
 //    NSString *finalStringPostsForUpdate = [NSString stringWithFormat:stringPostsForUpdate, post.locationId, postDescription, [post convertArrayImagesUrlToString], post.likesCount, post.commentsCount, post.networkType, post.dateCreate, post.reason, post.userId, post.postID, post.primaryKey];
-//    
+//
 //    return finalStringPostsForUpdate;
 //}
 

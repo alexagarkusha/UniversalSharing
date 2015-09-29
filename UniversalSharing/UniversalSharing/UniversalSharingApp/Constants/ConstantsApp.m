@@ -114,7 +114,7 @@ NSString *const musAppImage_Name_CommentsImage = @"Comments.png";
 NSString *const musAppFilter_Title_Shared = @"Success";
 NSString *const musAppFilter_Title_Offline = @"Offline";
 NSString *const musAppFilter_Title_Error = @"Failed";
-NSInteger const musAppPostsVC_HeightOfPostCell = 95;
+NSInteger const musAppPostsVC_HeightOfPostCell = 96;
 NSString *const musApp_ActionSheet_Title_ChooseAction = @"Choose action";
 NSInteger const musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithoutUserPhotos = 8;
 NSInteger const musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithUserPhotos = 90;
@@ -155,7 +155,7 @@ NSInteger const musAppDetailPostVC_HeightOfPostLocationCell = 200;
 NSInteger const musAppDetailPostVC_HeightOfGalleryOfPhotosCell_WithoutPhotos = 70;
 NSInteger const musAppDetailPostVC_HeightOfGalleryOfPhotosCell_WithPhotos = 150;
 NSString *const musAppDetailPostVC_UpdatePostAlert = @"Do you want to update your Post?";
-NSInteger const musAppDetailPostVC_NumberOfRows = 4;
+NSInteger const musAppDetailPostVC_NumberOfRows = 3;
 
 #pragma mark - MUSCustomMapView
 
