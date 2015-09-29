@@ -57,10 +57,8 @@
  */
 @property (nonatomic, assign) NSInteger predicateReason;
 
-
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllButton;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *editButton;
 @property (strong, nonatomic) NSMutableSet *setWithUniquePrimaryKeysOfPost ;
+
 @property (nonatomic, strong) SSARefreshControl *refreshControl;
 
 @end
@@ -286,7 +284,6 @@
 - (void) obtainArrayPosts {
     self.arrayPosts = [[NSMutableArray alloc] initWithArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper createStringForAllPosts]]];
 
-    self.editButton.enabled = [self isArrayOfPostsNotEmpty];
     [self.tableView reloadData];
     [self.refreshControl endRefreshing];
 }
