@@ -44,7 +44,6 @@
 @property (weak, nonatomic) IBOutlet UITableView *commentsAndLikesPostTableView;
 @property (strong, nonatomic) CAShapeLayer *shapeLayer;
 
-@property (weak, nonatomic)     IBOutlet    MUSGalleryViewOfPhotos *galleryViewOfPhotos;
 
 @end
 
@@ -57,32 +56,8 @@
         currentImageView.backgroundColor = [UIColor lightGrayColor];
         [currentImageView cornerRadius: 0.0 andBorderWidth: 1.0 withBorderColor: [UIColor whiteColor]];
     }
+    self.backgroundColor = BROWN_COLOR_Lightly;
 
-    
-//    self.backgroundViewOfCell.backgroundColor = BROWN_COLOR_Lightly;
-////    
-////        CGRect rect = CGRectMake(0, 0, self.backgroundViewOfCell.frame.size.width, musAppPostsVC_HeightOfPostCell + [MUSReasonCommentsAndLikesCell heightForReasonCommentsAndLikesCell] * self.currentPost.arrayWithNetworkPosts.count);
-////    
-////        UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect: rect byRoundingCorners:(UIRectCornerBottomLeft | UIRectCornerBottomRight | UIRectCornerTopLeft | UIRectCornerTopRight) cornerRadii:CGSizeMake(5, 5)];
-////    
-////        CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
-////        maskLayer.frame = rect;
-////        maskLayer.path  = maskPath.CGPath;
-////        self.backgroundViewOfCell.layer.mask = maskLayer;
-////    
-////        CAShapeLayer *shape = [CAShapeLayer layer];
-////        shape.frame = rect;
-////        shape.path = maskPath.CGPath;
-////        shape.lineWidth = 3.0f;
-////        shape.strokeColor = BROWN_COLOR_MIDLight.CGColor;
-////        shape.fillColor = [UIColor clearColor].CGColor;
-////        [self.backgroundViewOfCell.layer addSublayer:shape];
-
-
-    
-    
-    
-    //    self.backgroundColor = [UIColor whiteColor];
     // Initialization code
 }
 
@@ -108,63 +83,35 @@
     return musAppPostsVC_HeightOfPostCell + [MUSReasonCommentsAndLikesCell heightForReasonCommentsAndLikesCell] * post.arrayWithNetworkPosts.count;
 }
 
-//- (void) configurationUpdatingPostCell: (Post*) currentPost {
-//    NSLog(@"COUNT = %@", currentPost.arrayWithNetworkPosts);
-//    
-//    
-//    [self configurateBordersOfCell: currentPost];
-//    [self configuratePostDescriptionLabelForPost: currentPost];
-//    self.updatingPostLabel.hidden = NO;
-//}
-
-- (void) configurationPostCellWithoutPostDescription: (Post*) currentPost {
-    NSLog(@"COUNT = %@", currentPost.arrayWithNetworkPosts);
-    [self.commentsAndLikesPostTableView reloadData];
-    [self configurateBordersOfCell: currentPost];
-    //self.updatingPostLabel.hidden = YES;
-    [self configuratePostDescriptionLabelForPostWithoutText];
-    [self configurateFirstImageOfPost: currentPost];
-}
-
 - (void) configurationPostCell: (Post*) currentPost {
-    NSLog(@"COUNT = %@", currentPost.arrayWithNetworkPosts);
-    self.galleryViewOfPhotos.hidden = YES;
+    [self hideAllImageView];
     [self.commentsAndLikesPostTableView reloadData];
     [self configurateBordersOfCell: currentPost];
     //self.updatingPostLabel.hidden = YES;
     [self configuratePostDescriptionLabelForPost: currentPost];
     [self configurateFirstImageOfPost: currentPost];
+    self.commentsAndLikesPostTableView.backgroundColor = BROWN_COLOR_Light;
 }
 
 - (void) configuratePostDescriptionLabelForPost: (Post*) post {
     self.postDescriptionLabel.text = post.postDescription;
-    [self.postDescriptionLabel sizeToFit];
 }
 
 - (void) configuratePostDescriptionLabelForPostWithoutText {
+    self.postDescriptionLabel.backgroundColor = BROWN_COLOR_Lightly;
     self.postDescriptionLabel.hidden = YES;
 }
 
 - (void) configurateFirstImageOfPost : (Post*) currentPost {
     if (![[currentPost.arrayImagesUrl firstObject] isEqualToString: @""] || ![currentPost.arrayImagesUrl firstObject]) {
-        [self showAllImageView];
+        //[self showAllImageView];
         self.postDescriptionLabelLeftConstraint.constant = musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithUserPhotos;
-        //[self loadImageFromPostToImageView: currentPost];
-        [self loadImagesFromDataBaseToImageView: currentPost.arrayImagesUrl];
+        [self loadImageFromPostToImageView: currentPost];
+        //[self loadImagesFromDataBaseToImageView: currentPost.arrayImagesUrl];
     } else {
         [self hideAllImageView];
         self.postDescriptionLabelLeftConstraint.constant = musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithoutUserPhotos;
     }
-}
-
-- (void) configurateFirstImageOfPostWithoutText : (Post*) currentPost {
-//    self.galleryViewOfPhotos.isEditableGallery = NO;
-//    self.galleryViewOfPhotos.hidden = NO;
-//    [self.galleryViewOfPhotos initiationGalleryViewOfPhotos];
-//    self.galleryViewOfPhotos.arrayOfPhotos = [NSMutableArray arrayWithArray : arrayWithImages];
-//    [self.galleryViewOfPhotos isVisiblePageControl : YES];
-//    [self.galleryViewOfPhotos.collectionView reloadData];
-//}
 }
 
 - (void) hideAllImageView {
@@ -182,6 +129,7 @@
 - (void) loadImagesFromDataBaseToImageView : (NSArray*) arrayImagesUrl  {
     for (int i = 0; i < MIN(arrayImagesUrl.count, self.arrayOfImageView.count); i++) {
         UIImageView *imageView = [self.arrayOfImageView objectAtIndex: i];
+        imageView.hidden = NO;
         [imageView loadImageFromDataBase: [arrayImagesUrl objectAtIndex: i]];
     }
 }
@@ -191,6 +139,7 @@
         UIImageView *imageView = [self.arrayOfImageView objectAtIndex: i];
         ImageToPost *imageToPost = [post.arrayImages objectAtIndex: i];
         imageView.image = imageToPost.image;
+        imageView.hidden = NO;
         //[imageView loadImageFromDataBase: [po.arrayImagesUrl objectAtIndex: i]];
     }
 }
@@ -206,7 +155,7 @@
     
     CGRect rect = CGRectMake(0, 0, self.backgroundViewOfCell.frame.size.width, musAppPostsVC_HeightOfPostCell + [MUSReasonCommentsAndLikesCell heightForReasonCommentsAndLikesCell] * post.arrayWithNetworkPosts.count);
     
-    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect: rect byRoundingCorners:(UIRectCornerBottomLeft | UIRectCornerBottomRight | UIRectCornerTopLeft | UIRectCornerTopRight) cornerRadii:CGSizeMake(5, 5)];
+    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect: rect byRoundingCorners:(UIRectCornerBottomLeft | UIRectCornerBottomRight | UIRectCornerTopLeft | UIRectCornerTopRight) cornerRadii:CGSizeMake(0, 0)];
     
     CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
     maskLayer.frame = rect;
@@ -217,7 +166,7 @@
     self.shapeLayer.frame = rect;
     self.shapeLayer.path = maskPath.CGPath;
     self.shapeLayer.lineWidth = 3.0f;
-    self.shapeLayer.strokeColor = BROWN_COLOR_MIDLight.CGColor;
+    self.shapeLayer.strokeColor = BROWN_COLOR_Light.CGColor;
     self.shapeLayer.fillColor = [UIColor clearColor].CGColor;
     [self.backgroundViewOfCell.layer addSublayer: self.shapeLayer];
 
@@ -240,9 +189,6 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     MUSReasonCommentsAndLikesCell *reasonCommentsAndLikesCell = (MUSReasonCommentsAndLikesCell*) cell;
-//    if ([self.currentPost.arrayWithNetworkPosts objectAtIndex: indexPath.row] == [self.currentPost.arrayWithNetworkPosts lastObject]) {
-//        reasonCommentsAndLikesCell.separatorView.hidden = YES;
-//    }
     [reasonCommentsAndLikesCell configurationReasonCommentsAndLikesCell: [self.arrayWithNetworkPosts objectAtIndex: indexPath.row]];
 }
 

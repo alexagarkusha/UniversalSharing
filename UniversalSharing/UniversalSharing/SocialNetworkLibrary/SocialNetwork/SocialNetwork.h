@@ -113,7 +113,7 @@
 //- (void) updatePostDataBaseWithReason :(ReasonType) reason andPost :(Post*) post;
 - (void) saveOrUpdatePost : (Post*) post withReason : (ReasonType) reason;
 
-- (void) updatePost;
+- (void) updatePostWithComplition : (ComplitionUpdateNetworkPosts) block;
 
 - (NSError*) errorConnection;
 

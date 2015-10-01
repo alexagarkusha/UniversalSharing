@@ -14,7 +14,7 @@
     NSLocale *usLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
     NSDate *date = [NSDate dateWithTimeIntervalSince1970: dateInDouble];
     NSDateFormatter *formatDate = [[NSDateFormatter alloc] init];
-    [formatDate setDateFormat:@"MMMM dd, yyyy"];
+    [formatDate setDateFormat:@"MMM dd, yyyy"];
     [formatDate setLocale: usLocale];
     return [formatDate stringFromDate:date];
 }

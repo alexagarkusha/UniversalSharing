@@ -32,10 +32,11 @@ static SocialManager *model = nil;
 - (instancetype) init {
     self = [super init];
     if (self) {
-        self.accountsArray = [self networks:@[@(Twitters), @(VKontakt), @(Facebook)]];
+        self.accountsArray = [self networks:@[@(Facebook), @(Twitters), @(VKontakt)]];
     }
     return self;
 }
+
 + (SocialNetwork*) currentSocialNetwork {
     SocialNetwork *currentSocialNetwork = nil;    
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isLogin == %d AND isVisible == %d", YES, YES];
@@ -47,7 +48,6 @@ static SocialManager *model = nil;
 }
 
 - (NSArray*) obtainAccountsArray {
-    
     return self.accountsArray;
 }
 
@@ -61,12 +61,26 @@ static SocialManager *model = nil;
         [arrayWithNetworks addObject:[SocialNetwork sharedManagerWithType: [arrayWithNetwork[currentIndex] integerValue]]];
         
     }];
+    
     return arrayWithNetworks;
 }
 
+- (NSMutableArray*) activeSocialNetworks {
+    NSMutableArray *activeSocialNetworksArray = [[NSMutableArray alloc] init];
+    NSArray *allNetworksArray = [self networks:@[@(Facebook), @(Twitters), @(VKontakt)]];
+    
+    for (SocialNetwork *currentSocialNetwork in allNetworksArray) {
+        if (currentSocialNetwork.isLogin) {
+            [activeSocialNetworksArray addObject: currentSocialNetwork];
+        }
+    }
+    return activeSocialNetworksArray;
+}
+
+
 - (void) obtainNetworksWithComplition :(ComplitionWithArrays) block {
-    NSMutableArray *arrayWithNetworks = [self networks:@[@(Twitters), @(VKontakt), @(Facebook)]];
-    self.arrayLogin = [NSMutableArray new];
+    NSMutableArray *arrayWithNetworks = [self networks:@[@(Facebook), @(Twitters), @(VKontakt)]];
+     self.arrayLogin = [NSMutableArray new];
      self.arrayHidden = [NSMutableArray new];
      self.arrayUnactive = [NSMutableArray new];
     [arrayWithNetworks enumerateObjectsUsingBlock:^(SocialNetwork *network, NSUInteger idx, BOOL *stop) {
@@ -105,7 +119,6 @@ static SocialManager *model = nil;
     }];
     
 }
-
 
 
 @end

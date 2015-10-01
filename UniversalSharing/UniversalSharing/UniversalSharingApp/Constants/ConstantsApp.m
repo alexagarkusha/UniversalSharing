@@ -108,15 +108,32 @@ NSString *const musAppImage_Name_TwitterIconImage = @"Twitter_icon.png";
 NSString *const musAppImage_Name_VKLikeImage = @"VK_Likes.png";
 NSString *const musAppImage_Name_FBLikeImage = @"Facebook_Like.png";
 NSString *const musAppImage_Name_TwitterLikeImage = @"Twitter_Like.png";
+NSString *const musAppImage_Name_TwitterCommentsImage = @"Twitter_Comment.png";
 NSString *const musAppImage_Name_CommentsImage = @"Comments.png";
 
+NSString *const musAppImage_Name_VKIconImage_grey = @"VK_icon_grey.png";
+NSString *const musAppImage_Name_FBIconImage_grey = @"Facebook_Icon_grey.png";
+NSString *const musAppImage_Name_TwitterIconImage_grey = @"Twitter_icon_grey.png";
 
-NSString *const musAppFilter_Title_Shared = @"Success";
+NSString *const musAppImage_Name_VKLikeImage_grey = @"VK_Likes_grey.png";
+NSString *const musAppImage_Name_FBLikeImage_grey = @"Facebook_Like_grey.png";
+NSString *const musAppImage_Name_TwitterLikeImage_grey = @"Twitter_Like_grey.png";
+NSString *const musAppImage_Name_TwitterCommentsImage_grey = @"Twitter_Comment_grey.png";
+NSString *const musAppImage_Name_CommentsImage_grey = @"Comments_grey.png";
+
+
+
+
+
+
+
+
+NSString *const musAppFilter_Title_Shared = @"Published";
 NSString *const musAppFilter_Title_Offline = @"Offline";
 NSString *const musAppFilter_Title_Error = @"Failed";
 NSInteger const musAppPostsVC_HeightOfPostCell = 96;
 NSString *const musApp_ActionSheet_Title_ChooseAction = @"Choose action";
-NSInteger const musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithoutUserPhotos = 8;
+NSInteger const musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithoutUserPhotos = 12;
 NSInteger const musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithUserPhotos = 90;
 NSString *const musApp_PostCell_Image_Name_CheckMarkTaken = @"checkMarkTaken.jpeg";
 NSString *const musApp_PostCell_Image_Name_CheckMark = @"checkMark.jpeg";
@@ -145,7 +162,7 @@ NSInteger const musApp_PostDescriptionCell_TextView_LeftConstraint = 8;
 NSInteger const musApp_PostDescriptionCell_TextView_RightConstraint = 8;
 
 NSString *const musApp_PostDescriptionCell_TextView_Font_Name = @"Times New Roman";
-NSInteger const musApp_PostDescriptionCell_TextView_Font_Size = 17;
+NSInteger const musApp_PostDescriptionCell_TextView_Font_Size = 20;
 
 
 #pragma mark - MUSDetailPostViewController

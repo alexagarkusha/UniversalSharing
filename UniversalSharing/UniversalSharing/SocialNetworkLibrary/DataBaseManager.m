@@ -137,7 +137,8 @@ static DataBaseManager *databaseManager;
         sqlite3_bind_int64(statement, 2, networkPost.commentsCount);
         sqlite3_bind_int64(statement, 3, networkPost.networkType);
         sqlite3_bind_int64(statement, 4, networkPost.reason);
-        sqlite3_bind_text (statement, 5, [[self checkExistedString: networkPost.postID] UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text (statement, 5, [[self checkExistedString: networkPost.dateCreate] UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text (statement, 6, [[self checkExistedString: networkPost.postID] UTF8String], -1, SQLITE_TRANSIENT);
         if(sqlite3_step(statement) == SQLITE_DONE)
         {
             lastRowId = (NSInteger) sqlite3_last_insert_rowid(_database);
@@ -309,22 +310,22 @@ static DataBaseManager *databaseManager;
             post.arrayImagesUrl = [[[NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 2)] componentsSeparatedByString: @", "]mutableCopy];
             post.arrayWithNetworkPostsId = [[[NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 3)] componentsSeparatedByString: @","]mutableCopy];//check when gether all the parts
             //////////////////////////////////////////////////
-            post.arrayWithNetworkPosts = [NSMutableArray new];
-            [post.arrayWithNetworkPostsId enumerateObjectsUsingBlock:^(NSString *primaryKeyNetPost, NSUInteger idx, BOOL *stop) {
-                [post.arrayWithNetworkPosts addObject:[self obtainNetworkPostsFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForNetworkPostWithPrimaryKey:[primaryKeyNetPost integerValue]]]];
-            }];
+//            post.arrayWithNetworkPosts = [NSMutableArray new];
+//            [post.arrayWithNetworkPostsId enumerateObjectsUsingBlock:^(NSString *primaryKeyNetPost, NSUInteger idx, BOOL *stop) {
+//                [post.arrayWithNetworkPosts addObject:[self obtainNetworkPostsFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForNetworkPostWithPrimaryKey:[primaryKeyNetPost integerValue]]]];
+//            }];
             post.dateCreate = [[NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 4)] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];//check when gether all the parts
             
-//            post.arrayImages = [NSMutableArray new];
-//            for (int i = 0; i < post.arrayImagesUrl.count; i++) {
-//                UIImage *image = [UIImage new];
-//                image = [image loadImageFromDataBase: [post.arrayImagesUrl objectAtIndex: i]];
-//                ImageToPost *imageToPost = [[ImageToPost alloc] init];
-//                imageToPost.image = image;
-//                imageToPost.quality = 1.0f;
-//                imageToPost.imageType = JPEG;
-//                [post.arrayImages addObject: imageToPost];
-//            }
+            post.arrayImages = [NSMutableArray new];
+            for (int i = 0; i < post.arrayImagesUrl.count; i++) {
+                UIImage *image = [UIImage new];
+                image = [image loadImageFromDataBase: [post.arrayImagesUrl objectAtIndex: i]];
+                ImageToPost *imageToPost = [[ImageToPost alloc] init];
+                imageToPost.image = image;
+                imageToPost.quality = 1.0f;
+                imageToPost.imageType = JPEG;
+                [post.arrayImages addObject: imageToPost];
+            }
         [arrayWithPosts addObject:post];
         }
     }
@@ -334,17 +335,16 @@ static DataBaseManager *databaseManager;
 - (NetworkPost*)obtainNetworkPostsFromDataBaseWithRequestString : (NSString*) requestString {
     //NSMutableArray *arrayWithNetworkPosts = [NSMutableArray new];
     sqlite3_stmt *statement = nil;
-    NetworkPost *networkPost = [NetworkPost new];
-
+    NetworkPost *networkPost = [NetworkPost create];
     if(sqlite3_prepare_v2(_database, [requestString UTF8String], -1, &statement, nil) == SQLITE_OK) {
         while (sqlite3_step(statement) == SQLITE_ROW) {
             networkPost.primaryKey = sqlite3_column_int(statement, 0);
-
             networkPost.likesCount = sqlite3_column_int(statement, 1);
             networkPost.commentsCount = sqlite3_column_int(statement, 2);
             networkPost.networkType = sqlite3_column_int(statement, 3);
             networkPost.reason = sqlite3_column_int(statement, 4);
-            networkPost.postID = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 5)];
+            networkPost.dateCreate = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 5)];
+            networkPost.postID = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 6)];
             //[arrayWithNetworkPosts addObject:networkPost];
         }
     }
@@ -355,20 +355,20 @@ static DataBaseManager *databaseManager;
 - (NSMutableArray*)obtainNetworkPostsFromDataBaseWithRequestStrings : (NSString*) requestString {
     NSMutableArray *arrayWithNetworkPosts = [NSMutableArray new];
     sqlite3_stmt *statement = nil;
-    NetworkPost *networkPost = [NetworkPost new];
     
     if(sqlite3_prepare_v2(_database, [requestString UTF8String], -1, &statement, nil) == SQLITE_OK) {
         while (sqlite3_step(statement) == SQLITE_ROW) {
+            NetworkPost *networkPost = [NetworkPost create];
             networkPost.primaryKey = sqlite3_column_int(statement, 0);
             networkPost.likesCount = sqlite3_column_int(statement, 1);
             networkPost.commentsCount = sqlite3_column_int(statement, 2);
             networkPost.networkType = sqlite3_column_int(statement, 3);
             networkPost.reason = sqlite3_column_int(statement, 4);
-            networkPost.postID = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 5)];
+            networkPost.dateCreate = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 5)];
+            networkPost.postID = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 6)];
             [arrayWithNetworkPosts addObject:networkPost];
         }
     }
-    
     return arrayWithNetworkPosts;
 }
 

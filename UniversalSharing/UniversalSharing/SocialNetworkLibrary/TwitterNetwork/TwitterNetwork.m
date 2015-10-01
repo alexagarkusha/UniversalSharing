@@ -17,6 +17,7 @@
 #import "MUSDatabaseRequestStringsHelper.h"
 #import "InternetConnectionManager.h"
 #import "NetworkPost.h"
+#import "NSString+MUSCurrentDate.h"
 
 @interface TwitterNetwork () //<TWTRCoreOAuthSigning>
 
@@ -100,11 +101,11 @@ static TwitterNetwork *model = nil;
 }
 
 - (void) startTimerForUpdatePosts {
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:600.0f
-                                                  target:self
-                                                selector:@selector(updatePost)
-                                                userInfo:nil
-                                                 repeats:YES];
+//    self.timer = [NSTimer scheduledTimerWithTimeInterval:600.0f
+//                                                  target:self
+//                                                selector:@selector(updatePost)
+//                                                userInfo:nil
+//                                                 repeats:YES];
 }
 
 #pragma mark - loginInNetwork
@@ -208,35 +209,37 @@ static TwitterNetwork *model = nil;
      }];
 }
 
-- (void) updatePost {
-#warning NEED TO GET ARRAY OF NETWORKPOSTS AND THEN UPDATE;    
-//    NSArray * posts = [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForPostWithReason:Connect andNetworkType:Twitters]];
+- (void) updatePostWithComplition: (ComplitionUpdateNetworkPosts) block {
     NSArray * networksPostsIDs = [[DataBaseManager sharedManager] obtainNetworkPostsFromDataBaseWithRequestStrings: [MUSDatabaseRequestStringsHelper createStringForNetworkPostWithReason: Connect andNetworkType: Twitters]];
-
     
     if (![[InternetConnectionManager manager] isInternetConnection] || !networksPostsIDs.count || (![[InternetConnectionManager manager] isInternetConnection] && networksPostsIDs.count)) {
-        [self updatePostInfoNotification];
+        block (@"Twitter, Error update network posts");
+        //[self updatePostInfoNotification];
         return;
     }
-    //    Post *post = posts[2];
-//    [self obtainCountOfLikesAndCommentsFromPost:post];
+    
+    __block NSUInteger counterOfNetworkPosts = 0;
+    __block NSUInteger numberOfNetworkPosts = networksPostsIDs.count;
+
     [networksPostsIDs enumerateObjectsUsingBlock:^(NetworkPost *networkPost, NSUInteger idx, BOOL *stop) {
-        [self obtainCountOfLikesAndCommentsFromPost: networkPost];
+        [self obtainCountOfLikesAndCommentsFromPost: networkPost withComplition:^(id result, NSError *error) {
+            counterOfNetworkPosts++;
+            if (counterOfNetworkPosts == numberOfNetworkPosts) {
+                block (@"Twitter update all network posts");
+            }
+        }];
     }];
     
     
 }
 
-- (void) obtainCountOfLikesAndCommentsFromPost :(NetworkPost*) networkPost{
-     //https://api.twitter.com/1.1/statuses/retweets/509457288717819904.json
+- (void) obtainCountOfLikesAndCommentsFromPost :(NetworkPost*) networkPost withComplition : (Complition) block {
     NSString *statusesShowEndpoint = musTwitterURL_Statuses_Show;
-    //[NSString stringWithFormat:@"https://api.twitter.com/1.1/statuses/retweets/%@.json",post.postID];
     
     NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:networkPost.postID,@"id",@"true",@"include_my_retweet",nil];//,@"100",@"count"
     NSError *clientError;
     
     NSURLRequest *request = [[[Twitter sharedInstance] APIClient] URLRequestWithMethod:@"GET" URL:statusesShowEndpoint parameters:params error:&clientError];
-    __weak TwitterNetwork *weakSelf = self;
     __block NetworkPost *networkPostCopy = networkPost;
     
     if (request) {
@@ -245,31 +248,31 @@ static TwitterNetwork *model = nil;
                 NSError *jsonError;
                 NSDictionary *arrayJson = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
                 if (!arrayJson.count) {
-                    [weakSelf updatePostInfoNotification];
+                    block (@"Error data post update", nil);
                     return;
                 }
                 if (networkPostCopy.likesCount == [[arrayJson  objectForKey:@"favorite_count"] integerValue] &&  networkPostCopy.commentsCount == [[arrayJson  objectForKey:@"retweet_count"] integerValue] ) {
-                    [weakSelf updatePostInfoNotification];
+                    block (@"Post is already updated", nil);
                     return;
                 }
                 
                networkPostCopy.likesCount = [[arrayJson  objectForKey:@"favorite_count"] integerValue];
-                //networkPostCopy.likesCount = [favoriteCount integerValue];
-                //networkPostCopy.likesCount = [arrayJson  objectForKey:@"favorite_count"];
                 networkPostCopy.commentsCount = [[arrayJson objectForKey:@"retweet_count"] integerValue];
+                
+                NSLog(@"TW post.id = %@, post.like = %d, post.comments = %d", networkPost.postID, networkPost.likesCount, networkPost.commentsCount);
+
+                
+                
                 [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringNetworkPostsForUpdateWithObjectPost : networkPostCopy]];
-//                [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost:post]];
-                [weakSelf updatePostInfoNotification];
+                block (@"Post updated", nil);
             }
             else {
-                [weakSelf updatePostInfoNotification];
-                NSLog(@"Error: %@", connectionError);
+                block (connectionError, nil);
             }
         }];
     }
     else {
-        [weakSelf updatePostInfoNotification];
-        NSLog(@"Error: %@", clientError);
+        block (@"Error update network posts", nil);
     }
 }
 
@@ -397,6 +400,7 @@ static TwitterNetwork *model = nil;
                             }
                             networkPostCopy.postID = [[jsonData objectForKey:@"id"]stringValue];
                             networkPostCopy.reason = Connect;
+                            networkPost.dateCreate = [NSString currentDate];
                             self.copyComplition (networkPostCopy, nil);
                         }else{
                             networkPostCopy.reason = ErrorConnection;
@@ -461,6 +465,7 @@ static TwitterNetwork *model = nil;
                                      }
                                     networkPostCopy.postID = [[jsonData objectForKey:@"id"] stringValue];
                                     networkPostCopy.reason = Connect;
+                                    networkPost.dateCreate = [NSString currentDate];
                                     self.copyComplition (networkPostCopy, nil);
                                 } else {
                                     NSError *connectionError = [NSError errorWithMessage: musErrorConnection
@@ -556,10 +561,6 @@ static TwitterNetwork *model = nil;
  */
 - (NSError*) errorTwitter {
     return [NSError errorWithMessage: musTwitterError andCodeError: musTwitterErrorCode];
-}
-
-- (void) updatePostInfoNotification {
-    [[NSNotificationCenter defaultCenter] postNotificationName:MUSNotificationPostsInfoWereUpDated object:nil];
 }
 
 @end

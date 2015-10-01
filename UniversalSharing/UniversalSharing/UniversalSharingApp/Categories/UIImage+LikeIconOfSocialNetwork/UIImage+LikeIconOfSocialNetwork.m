@@ -14,13 +14,13 @@
 + (UIImage*) likeIconOfSocialNetwork : (NetworkType) networkType {
     switch (networkType) {
         case Facebook:
-            return [UIImage imageNamed: musAppImage_Name_FBLikeImage];
+            return [UIImage imageNamed: musAppImage_Name_FBLikeImage_grey];
             break;
         case VKontakt:
-            return [UIImage imageNamed: musAppImage_Name_VKLikeImage];
+            return [UIImage imageNamed: musAppImage_Name_VKLikeImage_grey];
             break;
         case Twitters:
-            return [UIImage imageNamed: musAppImage_Name_TwitterLikeImage];
+            return [UIImage imageNamed: musAppImage_Name_TwitterLikeImage_grey];
             break;
         case AllNetworks:
             break;

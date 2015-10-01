@@ -6,6 +6,7 @@
 //
 
 #import "SSACircleView.h"
+#import "ConstantsApp.h"
 
 
 @implementation SSACircleView
@@ -39,7 +40,7 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     if (!self.color) {
-        self.color = [UIColor lightGrayColor];
+        self.color = BROWN_COLOR_MIDLightHIGHT;
     }
 
     CGContextSetStrokeColorWithColor(context, self.color.CGColor);

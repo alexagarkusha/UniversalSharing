@@ -29,6 +29,8 @@
     [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary  dictionaryWithObjectsAndKeys: [UIColor darkGrayColor], NSForegroundColorAttributeName, nil] forState:UIControlStateNormal];
     [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary  dictionaryWithObjectsAndKeys:BROWN_COLOR_MIDLight, NSForegroundColorAttributeName, nil] forState:UIControlStateSelected];
     
+    [MUSPostManager manager];
+    
     return [[FBSDKApplicationDelegate sharedInstance] application:application
                                     didFinishLaunchingWithOptions:launchOptions];
 }

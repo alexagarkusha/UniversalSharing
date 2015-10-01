@@ -36,5 +36,6 @@
 
 #import "MultySharingManager.h"
 
+#import "MUSPostManager.h"
 
 #endif
