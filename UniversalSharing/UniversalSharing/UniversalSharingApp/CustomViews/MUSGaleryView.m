@@ -134,16 +134,18 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
         cell.indexPath = indexPath;
         //NSLog(@"INDEXPATH %@", indexPath);
     ImageToPost *image;
-    if ([self.arrayWithChosenImages count] == indexPath.row) {
-        image = self.arrayWithChosenImages[indexPath.row - 1];
-        //return cell;
-    } else {
-        image = self.arrayWithChosenImages[indexPath.row];
-    }
+//    if ([self.arrayWithChosenImages count] == indexPath.row) {
+//        image = self.arrayWithChosenImages[indexPath.row - 1];
+//        //return cell;
+//    } else {
+    
+   // }
         //cell.isEditable = self.isEditableCollectionView;
     if (indexPath.section == 0 && [self.arrayWithChosenImages count] != 4) {
+        //cell.backgroundColor =  BROWN_COLOR_MIDLight;
         [cell configurationCellForFirstSection];
     }else {
+        image = self.arrayWithChosenImages[indexPath.row];
     [cell configurationCellWithPhoto:image.image andEditableState:YES];
     }
     _flagForDelete = NO;
@@ -196,11 +198,11 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
 //}
 
 -(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
-    return 10.0f;
+    return 2.5f;
 }
 
 -(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section{
-    return 10.0f;
+    return 2.5f;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {

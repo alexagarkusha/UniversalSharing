@@ -29,7 +29,7 @@
 - (IBAction)endEditingMessage:(id)sender;
 
 
-@property (weak, nonatomic)     IBOutlet    UIToolbar *shareToolBar;
+@property (weak, nonatomic)     IBOutlet    UIButton *shareToolBar;
 //@property (weak, nonatomic)     IBOutlet    UITextView *messageTextView;
 @property (strong, nonatomic)   IBOutlet    UITapGestureRecognizer *mainGestureRecognizer;
 @property (weak, nonatomic)     IBOutlet    UIBarButtonItem *shareButtonOutlet;
@@ -100,8 +100,11 @@
 @property (strong, nonatomic)               NSMutableArray *arrayPicsForDetailCollectionView;
 @property (assign, nonatomic)               NSInteger indexPicTapped;
 //@property (assign, nonatomic)               BOOL fragForTextView;
+@property (weak, nonatomic) IBOutlet UIButton *buttonLocation;
+@property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
 
 @property (strong, nonatomic)                MUSPopUpForSharing * popVC ;
+@property (strong, nonatomic) NSString *address;
 @end
 
 @implementation MUSShareViewController
@@ -110,6 +113,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.shareButtonOutlet setTintColor:BROWN_COLOR_MIDLight];
+    //self.buttonLocation.backgroundColor = BROWN_COLOR_MIDLight;
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(obtainPicFromPicker) name:notificationImagePickerForCollection object:nil];
 #warning "Must be remove observe"
     [[NSNotificationCenter defaultCenter] addObserver : self
@@ -170,6 +176,34 @@
     self.changeSocialNetworkButton = [UIButton new];
     [self.changeSocialNetworkButton addTarget:self action:@selector(changeSocialNetworkAccount:)forControlEvents:UIControlEventTouchUpInside];
 }
+- (IBAction)buttonLocationTapped:(UIButton *)sender {////////////////////////////////////////////////////////////////////
+    
+    if (!sender.selected) {
+        sender.selected = !sender.selected;
+        
+ [[MUSLocationManager sharedManager] startTrackLocationWithComplition:^(CLLocation* location, NSError *error) {
+  NSString *longitude = [NSString stringWithFormat: @"%f",location.coordinate.longitude];
+    NSString *latitude = [NSString stringWithFormat: @"%f",location.coordinate.latitude];
+     //////////////////////////////////////////////////////////////////////////////////////////////////////////
+     [[MUSLocationManager sharedManager] obtainAddressFromLocation:location complitionBlock:^(NSString *address, NSError *error) {
+         self.address = address;
+         [self.buttonLocation setTitle:address forState:UIControlStateNormal];
+         self.iconImageView.highlighted = !self.iconImageView.highlighted;
+     }];
+     
+ }];
+    } else {
+        
+        UIActionSheet* sheet = [UIActionSheet new];
+        sheet.title = self.address;
+        sheet.delegate = self;
+        [sheet addButtonWithTitle: @"Delete"];
+        sheet.cancelButtonIndex = [sheet addButtonWithTitle:musAppButtonTitle_Cancel];
+        [sheet showInView:self.view];
+        
+    }
+}
+
 
 - (IBAction)btnShareLocationTapped:(id)sender {
     if (!_currentSocialNetwork || !_currentSocialNetwork.isLogin || !_currentSocialNetwork.isVisible) {
@@ -243,7 +277,7 @@
     [textStorage addLayoutManager:layoutManager];
     
     CGSize textSizeFrame = CGSizeMake([[UIScreen mainScreen] bounds].size.width,
-                                      [[UIScreen mainScreen] bounds].size.height - [UIApplication sharedApplication].statusBarFrame.size.height - self.navigationController.navigationBar.frame.size.height - self.galeryView.frame.size.height - self.shareToolBar.frame.size.height - self.tabBarController.tabBar.frame.size.height);
+                                      [[UIScreen mainScreen] bounds].size.height - [UIApplication sharedApplication].statusBarFrame.size.height - self.navigationController.navigationBar.frame.size.height - self.galeryView.frame.size.height - self.buttonLocation.frame.size.height - self.tabBarController.tabBar.frame.size.height);
     
     
     NSTextContainer *textContainer = [[NSTextContainer alloc] initWithSize: CGSizeMake (textSizeFrame.width, textSizeFrame.height)];
@@ -355,8 +389,10 @@
    // NSArray *array = [[NSArray alloc] initWithObjects:  @(Facebook), nil];
     if (arrayChosenNetworksForPost) {
          [self createPost];
-    
+        [self refreshShareScreen];
     [[MultySharingManager sharedManager] sharePost: self.post toSocialNetworks: arrayChosenNetworksForPost withComplition:^(id result, NSError *error) {
+        self.post = nil;
+        
         NSLog(@"RESULT %@", result);
         NSLog(@"ERROR %@", error);
     }];
@@ -373,11 +409,13 @@
 //    [self.view endEditing:YES];
     //[UIView animateWithDuration: 0.4 animations:^{
         [self.navigationController addChildViewController:_popVC];
-        _popVC.view.frame = self.view.bounds;//CGRectMake(0, 100, 200, 200);//
+    _popVC.view.frame = self.view.bounds;//CGRectMake(self.view.bounds.size.width/2-125, self.view.bounds.origin.y, 250, 350);//
+    //self.view.bounds;
+   
+    NSLog(@"%@",_popVC.view);
         [self.navigationController.view addSubview:_popVC.view];
         [_popVC didMoveToParentViewController:self];
         [self.view endEditing:YES];
-
             //}];
     //[UIView commitAnimations];
 
@@ -435,18 +473,17 @@
 
 - (void) refreshShareScreen {
     [self initialParametersOfMessageTextView];
-    [self.messageTextView setSelectedRange:NSMakeRange(0, 0)];    
-    self.post = nil;
+    [self.messageTextView setSelectedRange:NSMakeRange(0, 0)];
+    self.buttonLocation.selected = NO;
+    [self.buttonLocation setTitle:@"Select your location" forState:UIControlStateNormal];
     self.place = nil;
+    self.shareButtonOutlet.enabled = NO;
     //self.view.userInteractionEnabled = YES;
-    [self.shareLocationButton setTintColor: [UIColor blackColor]];
-    [self.shareLocationButton setTitle: musAppButtonTitle_ShareLocation];
-    [self changeSharePhotoButtonColorAndShareButtonState:NO];
+//    [self.shareLocationButton setTintColor: [UIColor blackColor]];
+//    [self.shareLocationButton setTitle: musAppButtonTitle_ShareLocation];
+    //[self changeSharePhotoButtonColorAndShareButtonState:NO];
     [self.galeryView clearCollectionAfterPosted];
 }
-
-
-
 
 - (void) createPost {
     if(!self.post) {
@@ -568,19 +605,25 @@
 }
 
 - (void) actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if ( buttonIndex != 0 ) {
-        /*
-         after a user chose new network we change current social network
-         */
-        NetworkType oldNetworkType = _currentSocialNetwork.networkType;
-        _currentSocialNetwork = [self.socialNetworkAccountsArray objectAtIndex: buttonIndex - 1];
-        if (oldNetworkType != _currentSocialNetwork.networkType) {
-            [self.shareLocationButton setTintColor: [UIColor blackColor]];
-            self.place = nil;
-            [self.shareLocationButton setTitle: musAppButtonTitle_ShareLocation];
-        }
+    if ( buttonIndex == 0 ) {
+        self.iconImageView.highlighted = NO;
+        self.buttonLocation.selected = NO;
+        [self.buttonLocation setTitle:@"Select your location" forState:UIControlStateNormal];
+        ///////////delete location
         
-        [self.changeSocialNetworkButton initiationSocialNetworkButtonForSocialNetwork:_currentSocialNetwork];
+        
+//        /*
+//         after a user chose new network we change current social network
+//         */
+//        NetworkType oldNetworkType = _currentSocialNetwork.networkType;
+//        _currentSocialNetwork = [self.socialNetworkAccountsArray objectAtIndex: buttonIndex - 1];
+//        if (oldNetworkType != _currentSocialNetwork.networkType) {
+//            [self.shareLocationButton setTintColor: [UIColor blackColor]];
+//            self.place = nil;
+//            [self.shareLocationButton setTitle: musAppButtonTitle_ShareLocation];
+//        }
+//        
+//        [self.changeSocialNetworkButton initiationSocialNetworkButtonForSocialNetwork:_currentSocialNetwork];
     }
 }
 
@@ -666,6 +709,7 @@
         };
     } else {//goToShowImages
         MUSDetailPostCollectionViewController *vc = [MUSDetailPostCollectionViewController new];
+        ///////////
         vc = [segue destinationViewController];
         [vc setObjectsWithArrayOfPhotos: self.arrayPicsForDetailCollectionView withCurrentSocialNetwork: _currentSocialNetwork indexPicTapped:self.indexPicTapped andReasonTypeOfPost: AllReasons];
     }

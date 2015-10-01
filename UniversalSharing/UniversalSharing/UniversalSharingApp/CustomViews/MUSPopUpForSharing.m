@@ -58,6 +58,7 @@
 - (void) createArraySwirtchButtons {
     NSArray *arrayWithNetworks = @[@(Twitters), @(VKontakt), @(Facebook)];
     self.arrayWithNetworksObj = [[SocialManager sharedManager] networks : arrayWithNetworks];
+    __block NSInteger count = 0;
     if (_stateSwitchButons) {
         [_stateSwitchButons removeAllObjects];
     }else {
@@ -67,10 +68,20 @@
     [self.arrayWithNetworksObj enumerateObjectsUsingBlock:^(SocialNetwork *obj, NSUInteger idx, BOOL *stop) {
         if (!obj.isLogin) {
             [_stateSwitchButons setValue:[NSNumber numberWithBool:NO] forKey:[NSString stringWithFormat:@"%ld",(long)obj.networkType]];
+            count++;
+            
         }else {
             [_stateSwitchButons setValue:[NSNumber numberWithBool:YES] forKey:[NSString stringWithFormat:@"%ld",(long)obj.networkType]];
         }
     }];
+    if (count == 3) {
+        _buttonShare.enabled = NO;
+        [_buttonShare setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+
+    } else {
+        _buttonShare.enabled = YES;
+        [_buttonShare setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];       
+    }
     
 }
 
@@ -83,7 +94,7 @@
         [_buttonShare setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     } else {
         _buttonShare.enabled = NO;
-         [_buttonShare setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+         [_buttonShare setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
 
     }
 }
@@ -110,8 +121,12 @@
 }
 
 - (void) setColorAndRudius {
-    self.secondView.layer.masksToBounds = YES;
-    self.secondView.layer.cornerRadius = 25;
+//    CGRect newFrame = self.secondView.frame;
+//    newFrame.size = CGSizeMake(23.0, 500.0);
+//    self.secondView.frame = newFrame;
+    [self.secondView setFrame:CGRectMake(50, 50, self.secondView.frame.size.width, self.secondView.frame.size.height)];
+//    self.secondView.layer.masksToBounds = YES;
+    //self.secondView.layer.cornerRadius = 25;
     self.secondView.layer.borderWidth = 2;
     self.secondView.layer.borderColor = [UIColor blackColor].CGColor;
     [self.imageView setBackgroundColor:BROWN_COLOR_Light];

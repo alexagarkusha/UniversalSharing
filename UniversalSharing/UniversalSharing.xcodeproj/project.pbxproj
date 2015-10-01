@@ -56,6 +56,13 @@
 		30C9DDC61BB95E8C00F3266A /* close6.png in Resources */ = {isa = PBXBuildFile; fileRef = 30C9DDC51BB95E8C00F3266A /* close6.png */; };
 		30C9DDCB1BB99A9F00F3266A /* MUSPopUpTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C9DDC91BB99A9F00F3266A /* MUSPopUpTableViewCell.m */; };
 		30C9DDCC1BB99A9F00F3266A /* MUSPopUpTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30C9DDCA1BB99A9F00F3266A /* MUSPopUpTableViewCell.xib */; };
+		30C9DDCE1BBAD6C700F3266A /* add_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 30C9DDCD1BBAD6C700F3266A /* add_image.png */; };
+		30C9DDD01BBADE5000F3266A /* location_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 30C9DDCF1BBADE5000F3266A /* location_icon.png */; };
+		30C9DDD41BBBE97200F3266A /* placeholderPin.png in Resources */ = {isa = PBXBuildFile; fileRef = 30C9DDD31BBBE97200F3266A /* placeholderPin.png */; };
+		30C9DDD81BBBEC6300F3266A /* placeholderPinSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 30C9DDD71BBBEC6300F3266A /* placeholderPinSelected.png */; };
+		30C9DDDF1BBC23C600F3266A /* MUSPopUpDeleteButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C9DDDE1BBC23C600F3266A /* MUSPopUpDeleteButton.m */; };
+		30C9DDE11BBD5DC700F3266A /* placeholderPin-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 30C9DDE01BBD5DC700F3266A /* placeholderPin-1.png */; };
+		30C9DDE51BBD607300F3266A /* camera25.png in Resources */ = {isa = PBXBuildFile; fileRef = 30C9DDE41BBD607300F3266A /* camera25.png */; };
 		30D73BFD1BA715A2001B2FE8 /* MUSImageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30D73BFC1BA715A2001B2FE8 /* MUSImageScrollView.m */; };
 		30DBFD8B1B677A9A002F83D0 /* TwitterNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD8A1B677A9A002F83D0 /* TwitterNetwork.m */; };
 		30DBFD8F1B677AD7002F83D0 /* VKNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD8E1B677AD7002F83D0 /* VKNetwork.m */; };
@@ -65,12 +72,10 @@
 		30DBFDA31B6BAA48002F83D0 /* TWimage.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 30DBFDA21B6BAA48002F83D0 /* TWimage.jpeg */; };
 		30DBFDA51B6BAA52002F83D0 /* VKimage.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBFDA41B6BAA52002F83D0 /* VKimage.png */; };
 		973D67AE1B69114C00A20D00 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 973D67AD1B69114C00A20D00 /* Post.m */; };
-		9778FBFA1BBB31C900A8825D /* UIImage+CommentIconOfSocialNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 9778FBF91BBB31C900A8825D /* UIImage+CommentIconOfSocialNetwork.m */; };
 		97903B581B7B983600FF24E7 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97903B571B7B983600FF24E7 /* CoreText.framework */; };
 		979164A81B8C60F500DFCE64 /* NSString+DateStringFromUNIXTimestamp.m in Sources */ = {isa = PBXBuildFile; fileRef = 979164A71B8C60F500DFCE64 /* NSString+DateStringFromUNIXTimestamp.m */; };
 		979164B41B8CADDA00DFCE64 /* UIImage+LoadImageFromDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 979164B31B8CADDA00DFCE64 /* UIImage+LoadImageFromDataBase.m */; };
 		97B2B54A1B87B387009FAB12 /* UIImageView+MUSLoadImageFromDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 97B2B5491B87B387009FAB12 /* UIImageView+MUSLoadImageFromDataBase.m */; };
-		97BCD3721BBBDEC900428FB8 /* MUSPostManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 97BCD3711BBBDEC900428FB8 /* MUSPostManager.m */; };
 		97BD0B5F1B8F4D7B00BFD4AF /* UIColor+ReasonColorForPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 97BD0B5E1B8F4D7B00BFD4AF /* UIColor+ReasonColorForPost.m */; };
 		97C05F9C1BB5394600EF6079 /* MultySharingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C05F9B1BB5394600EF6079 /* MultySharingManager.m */; };
 		97C05FA01BB5494F00EF6079 /* InternetConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C05F9F1BB5494F00EF6079 /* InternetConnectionManager.m */; };
@@ -91,15 +96,6 @@
 		97C2954B1B985ADA001B21FF /* NSString+ReasonTypeInString.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C2954A1B985ADA001B21FF /* NSString+ReasonTypeInString.m */; };
 		97C2A7C21B9D7B4F007FF8CA /* MUSCustomMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C2A7C11B9D7B4F007FF8CA /* MUSCustomMapView.m */; };
 		97C2A7C91B9DA61B007FF8CA /* MUSLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C2A7C81B9DA61B007FF8CA /* MUSLocationViewController.m */; };
-		97C2A9EB1BBD241500D076CB /* Comments_grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 97C2A9E31BBD241500D076CB /* Comments_grey.png */; };
-		97C2A9EC1BBD241500D076CB /* Facebook_Icon_grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 97C2A9E41BBD241500D076CB /* Facebook_Icon_grey.png */; };
-		97C2A9ED1BBD241500D076CB /* Facebook_Like_grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 97C2A9E51BBD241500D076CB /* Facebook_Like_grey.png */; };
-		97C2A9EE1BBD241500D076CB /* Twitter_Comment_grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 97C2A9E61BBD241500D076CB /* Twitter_Comment_grey.png */; };
-		97C2A9EF1BBD241500D076CB /* Twitter_icon_grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 97C2A9E71BBD241500D076CB /* Twitter_icon_grey.png */; };
-		97C2A9F01BBD241500D076CB /* Twitter_Like_grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 97C2A9E81BBD241500D076CB /* Twitter_Like_grey.png */; };
-		97C2A9F11BBD241500D076CB /* VK_icon_grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 97C2A9E91BBD241500D076CB /* VK_icon_grey.png */; };
-		97C2A9F21BBD241500D076CB /* VK_Likes_grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 97C2A9EA1BBD241500D076CB /* VK_Likes_grey.png */; };
-		97C2A9F61BBD2C9900D076CB /* NSString+MUSCurrentDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C2A9F51BBD2C9900D076CB /* NSString+MUSCurrentDate.m */; };
 		97C2E2A21BBA900000C82D58 /* MEExpandableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C2E29E1BBA900000C82D58 /* MEExpandableHeaderView.m */; };
 		97C2E2AB1BBACE0B00C82D58 /* Twitter_Like.png in Resources */ = {isa = PBXBuildFile; fileRef = 97C2E2AA1BBACE0B00C82D58 /* Twitter_Like.png */; };
 		97C2E2AD1BBACE1C00C82D58 /* Twitter_Comment.png in Resources */ = {isa = PBXBuildFile; fileRef = 97C2E2AC1BBACE1C00C82D58 /* Twitter_Comment.png */; };
@@ -253,6 +249,14 @@
 		30C9DDC81BB99A9F00F3266A /* MUSPopUpTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSPopUpTableViewCell.h; sourceTree = "<group>"; };
 		30C9DDC91BB99A9F00F3266A /* MUSPopUpTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSPopUpTableViewCell.m; sourceTree = "<group>"; };
 		30C9DDCA1BB99A9F00F3266A /* MUSPopUpTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MUSPopUpTableViewCell.xib; sourceTree = "<group>"; };
+		30C9DDCD1BBAD6C700F3266A /* add_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add_image.png; sourceTree = "<group>"; };
+		30C9DDCF1BBADE5000F3266A /* location_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = location_icon.png; sourceTree = "<group>"; };
+		30C9DDD31BBBE97200F3266A /* placeholderPin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholderPin.png; sourceTree = "<group>"; };
+		30C9DDD71BBBEC6300F3266A /* placeholderPinSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholderPinSelected.png; sourceTree = "<group>"; };
+		30C9DDDD1BBC23C600F3266A /* MUSPopUpDeleteButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSPopUpDeleteButton.h; sourceTree = "<group>"; };
+		30C9DDDE1BBC23C600F3266A /* MUSPopUpDeleteButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSPopUpDeleteButton.m; sourceTree = "<group>"; };
+		30C9DDE01BBD5DC700F3266A /* placeholderPin-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "placeholderPin-1.png"; sourceTree = "<group>"; };
+		30C9DDE41BBD607300F3266A /* camera25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera25.png; sourceTree = "<group>"; };
 		30D73BFB1BA715A2001B2FE8 /* MUSImageScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSImageScrollView.h; sourceTree = "<group>"; };
 		30D73BFC1BA715A2001B2FE8 /* MUSImageScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSImageScrollView.m; sourceTree = "<group>"; };
 		30DBFD891B677A9A002F83D0 /* TwitterNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterNetwork.h; sourceTree = "<group>"; };
@@ -270,8 +274,6 @@
 		7930E9BF698DEF5E51379530 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		973D67AC1B69114C00A20D00 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Post.h; path = UniversalSharing/SocialNetworkLibrary/Post/Post.h; sourceTree = SOURCE_ROOT; };
 		973D67AD1B69114C00A20D00 /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Post.m; path = UniversalSharing/SocialNetworkLibrary/Post/Post.m; sourceTree = SOURCE_ROOT; };
-		9778FBF81BBB31C900A8825D /* UIImage+CommentIconOfSocialNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+CommentIconOfSocialNetwork.h"; path = "UniversalSharing/UniversalSharingApp/Categories/UIImage+CommentIconOfSocialNetwork/UIImage+CommentIconOfSocialNetwork.h"; sourceTree = SOURCE_ROOT; };
-		9778FBF91BBB31C900A8825D /* UIImage+CommentIconOfSocialNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+CommentIconOfSocialNetwork.m"; path = "UniversalSharing/UniversalSharingApp/Categories/UIImage+CommentIconOfSocialNetwork/UIImage+CommentIconOfSocialNetwork.m"; sourceTree = SOURCE_ROOT; };
 		97903B571B7B983600FF24E7 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		979164A61B8C60F500DFCE64 /* NSString+DateStringFromUNIXTimestamp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+DateStringFromUNIXTimestamp.h"; path = "UniversalSharing/UniversalSharingApp/Categories/NSString+DateStringFromUNIXTimestamp/NSString+DateStringFromUNIXTimestamp.h"; sourceTree = SOURCE_ROOT; };
 		979164A71B8C60F500DFCE64 /* NSString+DateStringFromUNIXTimestamp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+DateStringFromUNIXTimestamp.m"; path = "UniversalSharing/UniversalSharingApp/Categories/NSString+DateStringFromUNIXTimestamp/NSString+DateStringFromUNIXTimestamp.m"; sourceTree = SOURCE_ROOT; };
@@ -279,8 +281,6 @@
 		979164B31B8CADDA00DFCE64 /* UIImage+LoadImageFromDataBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+LoadImageFromDataBase.m"; path = "UniversalSharing/UniversalSharingApp/Categories/UIImage+LoadImageToPostFromDataBase/UIImage+LoadImageFromDataBase.m"; sourceTree = SOURCE_ROOT; };
 		97B2B5481B87B387009FAB12 /* UIImageView+MUSLoadImageFromDataBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+MUSLoadImageFromDataBase.h"; sourceTree = "<group>"; };
 		97B2B5491B87B387009FAB12 /* UIImageView+MUSLoadImageFromDataBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+MUSLoadImageFromDataBase.m"; sourceTree = "<group>"; };
-		97BCD3701BBBDEC800428FB8 /* MUSPostManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUSPostManager.h; path = UniversalSharing/SocialNetworkLibrary/Managers/PostManager/MUSPostManager.h; sourceTree = SOURCE_ROOT; };
-		97BCD3711BBBDEC900428FB8 /* MUSPostManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUSPostManager.m; path = UniversalSharing/SocialNetworkLibrary/Managers/PostManager/MUSPostManager.m; sourceTree = SOURCE_ROOT; };
 		97BD0B5D1B8F4D7B00BFD4AF /* UIColor+ReasonColorForPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+ReasonColorForPost.h"; path = "UIColor+ReasonColorForPost/UIColor+ReasonColorForPost.h"; sourceTree = "<group>"; };
 		97BD0B5E1B8F4D7B00BFD4AF /* UIColor+ReasonColorForPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+ReasonColorForPost.m"; path = "UIColor+ReasonColorForPost/UIColor+ReasonColorForPost.m"; sourceTree = "<group>"; };
 		97C05F9A1BB5394600EF6079 /* MultySharingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultySharingManager.h; path = UniversalSharing/SocialNetworkLibrary/MultySharingManager/MultySharingManager.h; sourceTree = SOURCE_ROOT; };
@@ -311,16 +311,6 @@
 		97C2A7C11B9D7B4F007FF8CA /* MUSCustomMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUSCustomMapView.m; path = CustomMapView/MUSCustomMapView.m; sourceTree = "<group>"; };
 		97C2A7C71B9DA61B007FF8CA /* MUSLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUSLocationViewController.h; path = LocationViewController/MUSLocationViewController.h; sourceTree = "<group>"; };
 		97C2A7C81B9DA61B007FF8CA /* MUSLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUSLocationViewController.m; path = LocationViewController/MUSLocationViewController.m; sourceTree = "<group>"; };
-		97C2A9E31BBD241500D076CB /* Comments_grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Comments_grey.png; sourceTree = "<group>"; };
-		97C2A9E41BBD241500D076CB /* Facebook_Icon_grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Facebook_Icon_grey.png; sourceTree = "<group>"; };
-		97C2A9E51BBD241500D076CB /* Facebook_Like_grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Facebook_Like_grey.png; sourceTree = "<group>"; };
-		97C2A9E61BBD241500D076CB /* Twitter_Comment_grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Twitter_Comment_grey.png; sourceTree = "<group>"; };
-		97C2A9E71BBD241500D076CB /* Twitter_icon_grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Twitter_icon_grey.png; sourceTree = "<group>"; };
-		97C2A9E81BBD241500D076CB /* Twitter_Like_grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Twitter_Like_grey.png; sourceTree = "<group>"; };
-		97C2A9E91BBD241500D076CB /* VK_icon_grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = VK_icon_grey.png; sourceTree = "<group>"; };
-		97C2A9EA1BBD241500D076CB /* VK_Likes_grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = VK_Likes_grey.png; sourceTree = "<group>"; };
-		97C2A9F41BBD2C9900D076CB /* NSString+MUSCurrentDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+MUSCurrentDate.h"; path = "UniversalSharing/SocialNetworkLibrary/Categories/NSString+MUSCurrentDate/NSString+MUSCurrentDate.h"; sourceTree = SOURCE_ROOT; };
-		97C2A9F51BBD2C9900D076CB /* NSString+MUSCurrentDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+MUSCurrentDate.m"; path = "UniversalSharing/SocialNetworkLibrary/Categories/NSString+MUSCurrentDate/NSString+MUSCurrentDate.m"; sourceTree = SOURCE_ROOT; };
 		97C2E29D1BBA900000C82D58 /* MEExpandableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEExpandableHeaderView.h; sourceTree = "<group>"; };
 		97C2E29E1BBA900000C82D58 /* MEExpandableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEExpandableHeaderView.m; sourceTree = "<group>"; };
 		97C2E2AA1BBACE0B00C82D58 /* Twitter_Like.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Twitter_Like.png; sourceTree = "<group>"; };
@@ -550,8 +540,8 @@
 				97C49E8F1B836FEC005241CE /* Model */,
 				18BB29A71B67E3F000B498AC /* Managers */,
 				18BB29A41B67E3F000B498AC /* Images.xcassets */,
-				97C2A9E21BBD241500D076CB /* IconsForApp_GreyColor */,
 				97C0A0FA1BB95EFA004E5F38 /* Facebook_Icon.png */,
+				30C9DDCF1BBADE5000F3266A /* location_icon.png */,
 				97C0A0FB1BB95EFA004E5F38 /* Twitter_icon.png */,
 				97C2E2AC1BBACE1C00C82D58 /* Twitter_Comment.png */,
 				97C2E2AA1BBACE0B00C82D58 /* Twitter_Like.png */,
@@ -575,6 +565,11 @@
 				97C4ACCE1B997DD4008B93B3 /* Button_Change.png */,
 				307611F01BA074250051C2AD /* checkMarkTaken.jpeg */,
 				307611F81BA17B1D0051C2AD /* checkMark.jpeg */,
+				30C9DDCD1BBAD6C700F3266A /* add_image.png */,
+				30C9DDD31BBBE97200F3266A /* placeholderPin.png */,
+				30C9DDE41BBD607300F3266A /* camera25.png */,
+				30C9DDE01BBD5DC700F3266A /* placeholderPin-1.png */,
+				30C9DDD71BBBEC6300F3266A /* placeholderPinSelected.png */,
 				30C9DDC51BB95E8C00F3266A /* close6.png */,
 				30C9DDB71BAC37B400F3266A /* trash.png */,
 				18B505471B726FAF00679F9D /* Info.plist */,
@@ -602,7 +597,6 @@
 				97BD0B5C1B8F4D1F00BFD4AF /* UIColor+ReasonColorForPost */,
 				97D1C44D1B8203ED00009BCF /* UILabel+CornerRadiusLabel */,
 				97CCC9D91B74AB4100E0FAC6 /* UIImage+ChangeScaleImage */,
-				9778FBFB1BBB31E100A8825D /* UIImage+CommentIconOfSocialNetwork */,
 				97C0A0F61BB9558E004E5F38 /* UIImage+LikeIconOfSocialNetwork */,
 				97C295401B985428001B21FF /* UIImage+IconOfSocialNetwork */,
 				979164B11B8CADA500DFCE64 /* UIImage+LoadImageFromDataBase */,
@@ -902,6 +896,15 @@
 			name = PopUpCell;
 			sourceTree = "<group>";
 		};
+		30C9DDD91BBC233000F3266A /* PopUpDeleteButton */ = {
+			isa = PBXGroup;
+			children = (
+				30C9DDDD1BBC23C600F3266A /* MUSPopUpDeleteButton.h */,
+				30C9DDDE1BBC23C600F3266A /* MUSPopUpDeleteButton.m */,
+			);
+			name = PopUpDeleteButton;
+			sourceTree = "<group>";
+		};
 		30D73BFA1BA71546001B2FE8 /* ImageScrollView */ = {
 			isa = PBXGroup;
 			children = (
@@ -983,16 +986,6 @@
 			name = Post;
 			sourceTree = "<group>";
 		};
-		9778FBFB1BBB31E100A8825D /* UIImage+CommentIconOfSocialNetwork */ = {
-			isa = PBXGroup;
-			children = (
-				9778FBF81BBB31C900A8825D /* UIImage+CommentIconOfSocialNetwork.h */,
-				9778FBF91BBB31C900A8825D /* UIImage+CommentIconOfSocialNetwork.m */,
-			);
-			name = "UIImage+CommentIconOfSocialNetwork";
-			path = "UIButton+CornerRadiusButton";
-			sourceTree = "<group>";
-		};
 		979164A51B8C5FE000DFCE64 /* NSString+DateStringFromUNIXTimestamp */ = {
 			isa = PBXGroup;
 			children = (
@@ -1021,15 +1014,6 @@
 			);
 			name = "UIImageView+LoadImageFromDataBase";
 			path = "UIImageView+LoadImageFromNetwork";
-			sourceTree = "<group>";
-		};
-		97BCD36F1BBBDE7B00428FB8 /* PostManager */ = {
-			isa = PBXGroup;
-			children = (
-				97BCD3701BBBDEC800428FB8 /* MUSPostManager.h */,
-				97BCD3711BBBDEC900428FB8 /* MUSPostManager.m */,
-			);
-			name = PostManager;
 			sourceTree = "<group>";
 		};
 		97BD0B5C1B8F4D1F00BFD4AF /* UIColor+ReasonColorForPost */ = {
@@ -1062,7 +1046,6 @@
 		97C05FA11BB5525700EF6079 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				97BCD36F1BBBDE7B00428FB8 /* PostManager */,
 				97C05FA21BB5529A00EF6079 /* PostImagesManager */,
 				97C05F9D1BB548C300EF6079 /* InternetConnectionManager */,
 				187FC5171B65222D00A3916C /* SocialManager */,
@@ -1137,30 +1120,6 @@
 				97C2A7C81B9DA61B007FF8CA /* MUSLocationViewController.m */,
 			);
 			name = LocationViewController;
-			sourceTree = "<group>";
-		};
-		97C2A9E21BBD241500D076CB /* IconsForApp_GreyColor */ = {
-			isa = PBXGroup;
-			children = (
-				97C2A9E31BBD241500D076CB /* Comments_grey.png */,
-				97C2A9E41BBD241500D076CB /* Facebook_Icon_grey.png */,
-				97C2A9E51BBD241500D076CB /* Facebook_Like_grey.png */,
-				97C2A9E61BBD241500D076CB /* Twitter_Comment_grey.png */,
-				97C2A9E71BBD241500D076CB /* Twitter_icon_grey.png */,
-				97C2A9E81BBD241500D076CB /* Twitter_Like_grey.png */,
-				97C2A9E91BBD241500D076CB /* VK_icon_grey.png */,
-				97C2A9EA1BBD241500D076CB /* VK_Likes_grey.png */,
-			);
-			path = IconsForApp_GreyColor;
-			sourceTree = "<group>";
-		};
-		97C2A9F31BBD2C4300D076CB /* NSString+MUSCurrentDate */ = {
-			isa = PBXGroup;
-			children = (
-				97C2A9F41BBD2C9900D076CB /* NSString+MUSCurrentDate.h */,
-				97C2A9F51BBD2C9900D076CB /* NSString+MUSCurrentDate.m */,
-			);
-			name = "NSString+MUSCurrentDate";
 			sourceTree = "<group>";
 		};
 		97C2E29C1BBA900000C82D58 /* MEExpandableHeaderView */ = {
@@ -1282,6 +1241,7 @@
 		97C4ACC51B9973E2008B93B3 /* Custom Buttons */ = {
 			isa = PBXGroup;
 			children = (
+				30C9DDD91BBC233000F3266A /* PopUpDeleteButton */,
 				97C4ACD41B99ABA1008B93B3 /* AddPhotoButton */,
 				97C4ACD01B997E0E008B93B3 /* ChangeButton */,
 				97C4ACC61B997406008B93B3 /* DeleteButton */,
@@ -1321,7 +1281,6 @@
 		97C63BD61B724617006E99C6 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				97C2A9F31BBD2C4300D076CB /* NSString+MUSCurrentDate */,
 				97CB301B1BB7DC9000185AC9 /* NSString+MUSSocialNetworkNameOfPost */,
 				97C330371BB73D880014C90A /* NSString+MUSReasonNameOfPost */,
 				303CAC7A1B86099500B48D72 /* NSString+MUSPathToDocumentsdirectory */,
@@ -1581,39 +1540,37 @@
 				30416A261B73A4AC000CB2C2 /* MUSGaleryView.xib in Resources */,
 				97C49E781B832404005241CE /* MUSGalleryOfPhotosCell.xib in Resources */,
 				97D1C4441B81DB5D00009BCF /* Comment.png in Resources */,
-				97C2A9F11BBD241500D076CB /* VK_icon_grey.png in Resources */,
 				97C273E01BB6B76A0016D15B /* MUSReasonCommentsAndLikesCell.xib in Resources */,
 				18BB29BE1B67E3F000B498AC /* MUSUserProfileCell.xib in Resources */,
 				97C49E801B835130005241CE /* MUSCommentsAndLikesCell.xib in Resources */,
+				30C9DDCE1BBAD6C700F3266A /* add_image.png in Resources */,
+				30C9DDE11BBD5DC700F3266A /* placeholderPin-1.png in Resources */,
 				97CAF5691BAC001F00F16F6B /* Ressources.bundle in Resources */,
-				97C2A9EE1BBD241500D076CB /* Twitter_Comment_grey.png in Resources */,
-				97C2A9F21BBD241500D076CB /* VK_Likes_grey.png in Resources */,
 				97C0A0FF1BB95EFA004E5F38 /* VK_icon.png in Resources */,
-				97C2A9ED1BBD241500D076CB /* Facebook_Like_grey.png in Resources */,
+				30C9DDD01BBADE5000F3266A /* location_icon.png in Resources */,
 				30DBFDA51B6BAA52002F83D0 /* VKimage.png in Resources */,
 				97C0A0F51BB95504004E5F38 /* Facebook_Like.png in Resources */,
 				97C0A0F01BB953DD004E5F38 /* Comments.png in Resources */,
 				307611F11BA074250051C2AD /* checkMarkTaken.jpeg in Resources */,
 				18BB29AE1B67E3F000B498AC /* LaunchScreen.xib in Resources */,
-				97C2A9EC1BBD241500D076CB /* Facebook_Icon_grey.png in Resources */,
 				97CB10DD1B9086D30061F851 /* btn-close@2x.png in Resources */,
+				30C9DDD41BBBE97200F3266A /* placeholderPin.png in Resources */,
 				18BB29C01B67E3F000B498AC /* Images.xcassets in Resources */,
-				97C2A9EB1BBD241500D076CB /* Comments_grey.png in Resources */,
 				97C4ACCD1B997B9C008B93B3 /* Button_Delete.png in Resources */,
 				18BB29BA1B67E3F000B498AC /* MUSAccountTableViewCell.xib in Resources */,
 				97C4ACD91B99BF99008B93B3 /* Button_addPhoto.png in Resources */,
 				30C9DDCC1BB99A9F00F3266A /* MUSPopUpTableViewCell.xib in Resources */,
 				97C74ADE1B7DDEF4004DC863 /* UnknownUser.jpg in Resources */,
 				97C8A9DF1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.xib in Resources */,
-				97C2A9F01BBD241500D076CB /* Twitter_Like_grey.png in Resources */,
 				30C9DDAE1BA973E400F3266A /* MUSTopBarForDetailCollectionView.xib in Resources */,
 				30DBFDA11B6BAA3F002F83D0 /* FBimage.jpg in Resources */,
 				97C0A0F31BB953DD004E5F38 /* VK_Likes.png in Resources */,
 				97C9A2EC1BA2D52300D0C478 /* MUSLocationCell.xib in Resources */,
 				97C49E8C1B836AFD005241CE /* MUSPostLocationCell.xib in Resources */,
+				30C9DDE51BBD607300F3266A /* camera25.png in Resources */,
 				30DBFDA31B6BAA48002F83D0 /* TWimage.jpeg in Resources */,
 				97C4ACCF1B997DD4008B93B3 /* Button_Change.png in Resources */,
-				97C2A9EF1BBD241500D076CB /* Twitter_icon_grey.png in Resources */,
+				30C9DDD81BBBEC6300F3266A /* placeholderPinSelected.png in Resources */,
 				97C273E81BB6BBB20016D15B /* TWimage.png in Resources */,
 				97D1C4401B81D0A200009BCF /* MUSPostCell.xib in Resources */,
 				97C273E71BB6BBB20016D15B /* FBimage.png in Resources */,
@@ -1756,12 +1713,10 @@
 				18BB29B91B67E3F000B498AC /* MUSAccountTableViewCell.m in Sources */,
 				97C49E931B83703F005241CE /* MUSAnnotation.m in Sources */,
 				30DBFD931B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.m in Sources */,
-				9778FBFA1BBB31C900A8825D /* UIImage+CommentIconOfSocialNetwork.m in Sources */,
 				97CCC9DC1B74ABAE00E0FAC6 /* UIImage+ChangeScaleImage.m in Sources */,
 				303CAC821B8F0B8600B48D72 /* MUSDatabaseRequestStringsHelper.m in Sources */,
 				97C05FA01BB5494F00EF6079 /* InternetConnectionManager.m in Sources */,
 				30C9DDC11BB93E0500F3266A /* MUSPopUpForSharing.m in Sources */,
-				97C2A9F61BBD2C9900D076CB /* NSString+MUSCurrentDate.m in Sources */,
 				97B2B54A1B87B387009FAB12 /* UIImageView+MUSLoadImageFromDataBase.m in Sources */,
 				187FC5271B65222D00A3916C /* SocialManager.m in Sources */,
 				30C9DDB21BABFA7300F3266A /* MUSToolBarForDetailCollectionView.m in Sources */,
@@ -1773,9 +1728,9 @@
 				30416A6A1B81D0E0000CB2C2 /* DataBaseManager.m in Sources */,
 				187FC5261B65222D00A3916C /* FacebookNetwork.m in Sources */,
 				307611ED1B9DC1F80051C2AD /* MUSDetailPostCollectionViewController.m in Sources */,
-				97BCD3721BBBDEC900428FB8 /* MUSPostManager.m in Sources */,
 				30416A241B73A49B000CB2C2 /* MUSGaleryView.m in Sources */,
 				30D73BFD1BA715A2001B2FE8 /* MUSImageScrollView.m in Sources */,
+				30C9DDDF1BBC23C600F3266A /* MUSPopUpDeleteButton.m in Sources */,
 				97C2954B1B985ADA001B21FF /* NSString+ReasonTypeInString.m in Sources */,
 				979164B41B8CADDA00DFCE64 /* UIImage+LoadImageFromDataBase.m in Sources */,
 				97CAF56B1BAC001F00F16F6B /* SSAPullToRefreshAnimator.m in Sources */,
