@@ -38,7 +38,7 @@
                                     <constraint firstAttribute="width" constant="74" id="vfT-fQ-DDL"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="slgdkfjnkjnkfdsjhkvjdnfkdknfkgdkfnkdnfkgndkfngkndfkgnkdfnkgnkdfkdffjsdbfjandasdjaksjndkasndknaskjdkansdknaksd" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="none" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9a0-JS-qNj">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="slgdkfjnkjnkfdsjhkvjdnfkdknfkgdkfnkdnfkgndkfngkndfkgnkdfnkgnkdfkdffjsdbfjandasdjaksjndkasndknaskjdkansdknaksd" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="none" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9a0-JS-qNj">
                                 <rect key="frame" x="90" y="12" width="210" height="67"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="75" id="xax-Ku-55G"/>

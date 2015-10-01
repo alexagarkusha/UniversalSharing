@@ -30,6 +30,8 @@
 
 @property (nonatomic, assign) ReasonType reason;
 
+@property (nonatomic, strong) NSString *dateCreate;
+
 @property (nonatomic, assign) NSInteger primaryKey;
 
 + (instancetype)create;

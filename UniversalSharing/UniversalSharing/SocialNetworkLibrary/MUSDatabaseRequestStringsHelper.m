@@ -53,7 +53,7 @@
 }
 
 + (NSString*) createStringForSaveNetworkPostToTable {
-    return [NSString stringWithFormat:@"INSERT INTO '%@'('%@','%@','%@','%@','%@')VALUES(?,?,?,?,?)",@"NetworkPosts",@"likesCount",@"commentsCount",@"networkType",@"reson",@"postId"];
+    return [NSString stringWithFormat:@"INSERT INTO '%@'('%@','%@','%@','%@','%@','%@')VALUES(?,?,?,?,?,?)",@"NetworkPosts",@"likesCount",@"commentsCount",@"networkType",@"reson",@"dateCreate",@"postId"];
 }
 
 + (NSString*) createStringForNetworkPostToGetLastObject {
@@ -166,11 +166,13 @@
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"likesCount = \"%d\", "];
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"commentsCount = \"%d\", "];
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"networkType = \"%d\", "];
-    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"reson = \"%d\" "];
+    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"reson = \"%d\", "];
+    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"dateCreate = \"%@\" "];
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"WHERE id = \"%d\""];
+
     //NSString *postDescription = [post.postDescription stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
     
-    NSString *finalStringPostsForUpdate = [NSString stringWithFormat:stringPostsForUpdate, networkPost.likesCount, networkPost.commentsCount, networkPost.networkType, networkPost.reason, networkPost.primaryKey];
+    NSString *finalStringPostsForUpdate = [NSString stringWithFormat:stringPostsForUpdate, networkPost.likesCount, networkPost.commentsCount, networkPost.networkType, networkPost.reason, networkPost.dateCreate, networkPost.primaryKey];
     
     return finalStringPostsForUpdate;
 }
@@ -269,6 +271,7 @@
     stringNetworkPostsTable = [stringNetworkPostsTable stringByAppendingString:@"commentsCount INTEGER, "];
     stringNetworkPostsTable = [stringNetworkPostsTable stringByAppendingString:@"networkType INTEGER, "];
     stringNetworkPostsTable = [stringNetworkPostsTable stringByAppendingString:@"reson INTEGER, "];
+    stringNetworkPostsTable = [stringNetworkPostsTable stringByAppendingString:@"dateCreate TEXT, "];
     stringNetworkPostsTable = [stringNetworkPostsTable stringByAppendingString:@"postId TEXT)"];
     
     return stringNetworkPostsTable;
@@ -281,10 +284,11 @@
 + (NSString*) createStringNetworkPostForUpdateWithObjectNetworkPostForVK :(NetworkPost*) networkPost {
     NSString *stringPostsForUpdate = @"UPDATE NetworkPosts set ";
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"likesCount = \"%d\", "];
-    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"commentsCount = \"%d\" "];
+    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"commentsCount = \"%d\", "];
+    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"dateCreate = \"%@\" "];
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"WHERE networkType = \"%d\" AND postId = \"%@\""];
     
-    NSString *finalStringPostsForUpdate = [NSString stringWithFormat:stringPostsForUpdate, networkPost.likesCount, networkPost.commentsCount, networkPost.networkType, networkPost.postID];
+    NSString *finalStringPostsForUpdate = [NSString stringWithFormat:stringPostsForUpdate, networkPost.likesCount, networkPost.commentsCount, networkPost.dateCreate, networkPost.networkType, networkPost.postID];
     
     return finalStringPostsForUpdate;
 }
@@ -296,10 +300,11 @@
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"commentsCount = \"%d\", "];
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"networkType = \"%d\", "];
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"reson = \"%d\", "];
+    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"dateCreate = \"%@\", "];
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"postID = \"%@\" "];
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"WHERE id = \"%d\""];
     
-    NSString *finalStringPostsForUpdate = [NSString stringWithFormat:stringPostsForUpdate, networkPost.likesCount, networkPost.commentsCount, networkPost.networkType, networkPost.reason, networkPost.postID, networkPost.primaryKey];
+    NSString *finalStringPostsForUpdate = [NSString stringWithFormat:stringPostsForUpdate, networkPost.likesCount, networkPost.commentsCount, networkPost.networkType, networkPost.reason, networkPost.dateCreate, networkPost.postID, networkPost.primaryKey];
     
     return finalStringPostsForUpdate;
 }

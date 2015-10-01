@@ -15,6 +15,7 @@
 #import "NSString+MUSSocialNetworkNameOfPost.h"
 #import "SocialManager.h"
 #import "MUSPostManager.h"
+#import "NSString+MUSCurrentDate.h"
 
 @interface MultySharingManager ()
 
@@ -135,11 +136,16 @@ static MultySharingManager *model = nil;
 - (void) updateCurrentNetworkPost : (NetworkPost*) newNetworkPost andArrayOfOldNetworkPosts : (NSMutableArray*) arrayOfOldPosts {
     for (NetworkPost *currentNetworkPost in arrayOfOldPosts) {
         if (currentNetworkPost.networkType == newNetworkPost.networkType) {
-            currentNetworkPost.reason = newNetworkPost.reason;
-            currentNetworkPost.postID = newNetworkPost.postID;
-            currentNetworkPost.likesCount = newNetworkPost.likesCount;
-            currentNetworkPost.commentsCount = newNetworkPost.commentsCount;
-            [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringForUpdateNetworkPost: currentNetworkPost]];
+            if (newNetworkPost.reason != Connect) {
+                return;
+            } else {
+                currentNetworkPost.reason = newNetworkPost.reason;
+                currentNetworkPost.postID = newNetworkPost.postID;
+                currentNetworkPost.likesCount = newNetworkPost.likesCount;
+                currentNetworkPost.commentsCount = newNetworkPost.commentsCount;
+                currentNetworkPost.dateCreate = [NSString currentDate];
+                [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringForUpdateNetworkPost: currentNetworkPost]];
+            }
         }
     }
 }

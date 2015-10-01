@@ -17,6 +17,7 @@
 #import "MUSDatabaseRequestStringsHelper.h"
 #import "InternetConnectionManager.h"
 #import "NetworkPost.h"
+#import "NSString+MUSCurrentDate.h"
 
 @interface FacebookNetwork()<FBSDKGraphRequestConnectionDelegate>
 
@@ -226,7 +227,7 @@ static FacebookNetwork *model = nil;
     
     
     if (![[InternetConnectionManager manager] isInternetConnection]){
-        NetworkPost *networkPost = [[NetworkPost alloc] init];
+        NetworkPost *networkPost = [NetworkPost create];
         networkPost.networkType = Facebook;
         networkPost.reason = Offline;
         // Return Result - object NetworkPost with reason = offline, Error - internet Connection
@@ -270,7 +271,7 @@ static FacebookNetwork *model = nil;
  */
 
 - (void) postMessageToFB : (Post*) post {
-    NetworkPost *networkPost = [[NetworkPost alloc] init];
+    NetworkPost *networkPost = [NetworkPost create];
     networkPost.networkType = Facebook;
     __block NetworkPost *networkPostCopy = networkPost;
     
@@ -288,6 +289,7 @@ static FacebookNetwork *model = nil;
      ^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
          if (!error) {
              networkPostCopy.reason = Connect;
+             networkPost.dateCreate = [NSString currentDate];
              networkPostCopy.postID = [result objectForKey: @"id" ];
              self.copyComplition (networkPostCopy, nil);
          } else {
@@ -338,6 +340,7 @@ static FacebookNetwork *model = nil;
                      
                      if (counterOfImages == numberOfPostImagesArray) {
                          networkPostCopy.reason = Connect;
+                         networkPost.dateCreate = [NSString currentDate];
                          self.copyComplition (networkPostCopy, nil);
                      }
                      networkPostCopy.postID = [networkPostCopy.postID stringByAppendingString: @","];

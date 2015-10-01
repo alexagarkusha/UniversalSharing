@@ -17,6 +17,7 @@
 #import "MUSDatabaseRequestStringsHelper.h"
 #import "InternetConnectionManager.h"
 #import "NetworkPost.h"
+#import "NSString+MUSCurrentDate.h"
 
 @interface TwitterNetwork () //<TWTRCoreOAuthSigning>
 
@@ -209,7 +210,6 @@ static TwitterNetwork *model = nil;
 }
 
 - (void) updatePostWithComplition: (ComplitionUpdateNetworkPosts) block {
-#warning NEED TO GET ARRAY OF NETWORKPOSTS AND THEN UPDATE;    
     NSArray * networksPostsIDs = [[DataBaseManager sharedManager] obtainNetworkPostsFromDataBaseWithRequestStrings: [MUSDatabaseRequestStringsHelper createStringForNetworkPostWithReason: Connect andNetworkType: Twitters]];
     
     if (![[InternetConnectionManager manager] isInternetConnection] || !networksPostsIDs.count || (![[InternetConnectionManager manager] isInternetConnection] && networksPostsIDs.count)) {
@@ -240,7 +240,6 @@ static TwitterNetwork *model = nil;
     NSError *clientError;
     
     NSURLRequest *request = [[[Twitter sharedInstance] APIClient] URLRequestWithMethod:@"GET" URL:statusesShowEndpoint parameters:params error:&clientError];
-    __weak TwitterNetwork *weakSelf = self;
     __block NetworkPost *networkPostCopy = networkPost;
     
     if (request) {
@@ -401,6 +400,7 @@ static TwitterNetwork *model = nil;
                             }
                             networkPostCopy.postID = [[jsonData objectForKey:@"id"]stringValue];
                             networkPostCopy.reason = Connect;
+                            networkPost.dateCreate = [NSString currentDate];
                             self.copyComplition (networkPostCopy, nil);
                         }else{
                             networkPostCopy.reason = ErrorConnection;
@@ -465,6 +465,7 @@ static TwitterNetwork *model = nil;
                                      }
                                     networkPostCopy.postID = [[jsonData objectForKey:@"id"] stringValue];
                                     networkPostCopy.reason = Connect;
+                                    networkPost.dateCreate = [NSString currentDate];
                                     self.copyComplition (networkPostCopy, nil);
                                 } else {
                                     NSError *connectionError = [NSError errorWithMessage: musErrorConnection

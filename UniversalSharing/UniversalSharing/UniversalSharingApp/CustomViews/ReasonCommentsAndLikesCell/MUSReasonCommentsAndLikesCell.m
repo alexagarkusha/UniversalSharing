@@ -13,7 +13,7 @@
 #import "UIImage+LikeIconOfSocialNetwork.h"
 #import "UIImage+CommentIconOfSocialNetwork.h"
 #import <QuartzCore/QuartzCore.h>
-
+#import "NSString+DateStringFromUNIXTimestamp.h"
 
 #define   DEGREES_TO_RADIANS(degrees)  ((3.14159265359 * degrees)/ 180)
 
@@ -45,7 +45,8 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-    self.backgroundViewOfCell.backgroundColor = BROWN_COLOR_Light;
+    //self.backgroundViewOfCell.backgroundColor = BROWN_COLOR_Light;
+    //self.backgroundColor = BROWN_COLOR_Light;
     // Configure the view for the selected state
 }
 
@@ -82,7 +83,13 @@
 }
 
 - (void) configurateReasonOfPostLabel : (NetworkPost*) networkPost {
-    self.reasonOfPostLabel.text = [NSString reasonTypeInString: networkPost.reason];
+    NSString *reasonString = [NSString reasonTypeInString: networkPost.reason];
+    if (networkPost.reason == Connect) {
+        NSString *dateCreate = [NSString dateStringFromUNIXTimestamp: [networkPost.dateCreate doubleValue]];
+        reasonString = [reasonString stringByAppendingString: @" "];
+        reasonString = [reasonString stringByAppendingString: dateCreate];
+    }
+    self.reasonOfPostLabel.text = reasonString;
 }
 
 - (void) configurateIconOfSocialNetworkImageViewForPost: (NetworkPost*) networkPost {

@@ -65,8 +65,11 @@
     // Do any additional setup after loading the view.
     [self initiationTableView];
     [self obtainArrayPosts];
+    [self initiationSSARefreshControl];
     self.setWithUniquePrimaryKeysOfPost = [[NSMutableSet alloc] init];
     [self.navigationController.navigationBar setTintColor: BROWN_COLOR_MIDLightHIGHT];
+    [self.navigationController.navigationBar setTitleTextAttributes:
+         @{NSForegroundColorAttributeName: BROWN_COLOR_MIDLightHIGHT}];
 
     //[self obtainArrayPosts];
     self.title = musApp_PostsViewController_NavigationBar_Title;
@@ -74,10 +77,10 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear : YES];
-    [self initiationSSARefreshControl];
+    [self updateNetworkPostsInPost];
     // Notification for updating likes and comments in posts.
     [[NSNotificationCenter defaultCenter] addObserver : self
-                                             selector : @selector(obtainArrayPosts)
+                                             selector : @selector(updateArrayPosts)
                                                  name : MUSNotificationPostsInfoWereUpDated
                                                object : nil];
 }
@@ -122,6 +125,7 @@
         tableView.dataSource = self;
         tableView.delegate = self;
         tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        tableView.backgroundColor = BROWN_COLOR_Lightly;
         [self.view addSubview:tableView];
         tableView;
     });
@@ -154,8 +158,6 @@
         }
         Post *currentPost = [self.arrayPosts objectAtIndex: indexPath.section];
         [currentPost updateAllNetworkPostsFromDataBaseForCurrentPost];
-    
-    
         cell.arrayWithNetworkPosts = currentPost.arrayWithNetworkPosts;
         cell.selectionStyle = UITableViewCellSelectionStyleNone; // disable the cell selection highlighting
         return cell;
@@ -237,9 +239,20 @@
     [self.tableView reloadData];
 }
 
+#pragma Update all posts in array
+
 - (void) updateArrayPosts {
     self.arrayPosts = [[NSMutableArray alloc] initWithArray: [[MUSPostManager manager] updateArrayOfPost]];
     [self.tableView reloadData];
+}
+
+#pragma Update network posts in array
+
+- (void) updateNetworkPostsInPost {
+    [[MultySharingManager sharedManager] updateNetworkPostsWithComplition:^(id result, NSError *error) {
+        [self.tableView reloadData];
+        [self.refreshControl endRefreshing];
+    }];
 }
 
 - (BOOL) isArrayOfPostsNotEmpty {
@@ -266,10 +279,7 @@
     }
     
     if (!self.isEditing) {
-        [[MultySharingManager sharedManager] updateNetworkPostsWithComplition:^(id result, NSError *error) {
-            [self.tableView reloadData];
-            [self.refreshControl endRefreshing];
-        }];
+        [self updateNetworkPostsInPost];
     } else {
         [self.refreshControl endRefreshing];
     }

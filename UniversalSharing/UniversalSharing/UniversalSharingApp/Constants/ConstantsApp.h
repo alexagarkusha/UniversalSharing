@@ -152,6 +152,18 @@ FOUNDATION_EXPORT NSString *const musAppImage_Name_TwitterLikeImage;
 FOUNDATION_EXPORT NSString *const musAppImage_Name_TwitterCommentsImage;
 FOUNDATION_EXPORT NSString *const musAppImage_Name_CommentsImage;
 
+
+FOUNDATION_EXPORT NSString *const musAppImage_Name_VKIconImage_grey;
+FOUNDATION_EXPORT NSString *const musAppImage_Name_FBIconImage_grey;
+FOUNDATION_EXPORT NSString *const musAppImage_Name_TwitterIconImage_grey;
+
+FOUNDATION_EXPORT NSString *const musAppImage_Name_VKLikeImage_grey;
+FOUNDATION_EXPORT NSString *const musAppImage_Name_FBLikeImage_grey;
+FOUNDATION_EXPORT NSString *const musAppImage_Name_TwitterLikeImage_grey;
+FOUNDATION_EXPORT NSString *const musAppImage_Name_TwitterCommentsImage_grey;
+FOUNDATION_EXPORT NSString *const musAppImage_Name_CommentsImage_grey;
+
+
 FOUNDATION_EXPORT NSString *const musAppFilter_Title_Shared;
 FOUNDATION_EXPORT NSString *const musAppFilter_Title_Offline;
 FOUNDATION_EXPORT NSString *const musAppFilter_Title_Error;

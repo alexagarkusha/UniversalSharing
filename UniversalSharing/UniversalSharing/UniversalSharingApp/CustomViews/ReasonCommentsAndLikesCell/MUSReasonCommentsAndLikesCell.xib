@@ -22,10 +22,10 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Published" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WgU-yo-yDc">
-                        <rect key="frame" x="34" y="10" width="60" height="14"/>
+                        <rect key="frame" x="34" y="10" width="150" height="14"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="14" id="Nk5-KB-rrR"/>
-                            <constraint firstAttribute="width" constant="60" id="j1u-qw-9QH"/>
+                            <constraint firstAttribute="width" constant="150" id="j1u-qw-9QH"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>

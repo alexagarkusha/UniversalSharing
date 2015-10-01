@@ -20,7 +20,7 @@
     networkPost.networkType = AllNetworks;
     networkPost.reason = AllReasons;
     networkPost.primaryKey = 0;
-    
+    networkPost.dateCreate = @"";
     return networkPost;
 }
 
