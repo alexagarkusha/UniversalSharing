@@ -104,11 +104,11 @@ static VKNetwork *model = nil;
 }
 
 - (void) startTimerForUpdatePosts {
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:600.0f
-                                                  target:self
-                                                selector:@selector(updatePost)
-                                                userInfo:nil
-                                                 repeats:YES];
+//    self.timer = [NSTimer scheduledTimerWithTimeInterval:600.0f
+//                                                  target:self
+//                                                selector:@selector(updatePost)
+//                                                userInfo:nil
+//                                                 repeats:YES];
 }
 #pragma mark - loginInNetwork
 
@@ -182,11 +182,11 @@ static VKNetwork *model = nil;
 }
 
 
-- (void) updatePost {
+- (void) updatePostWithComplition: (ComplitionUpdateNetworkPosts) block {
     NSArray * networksPostsIDs = [[DataBaseManager sharedManager] obtainNetworkPostsFromDataBaseWithRequestStrings: [MUSDatabaseRequestStringsHelper createStringForNetworkPostWithReason: Connect andNetworkType: VKontakt]];
     
     if (![[InternetConnectionManager manager] isInternetConnection] || !networksPostsIDs.count  || (![[InternetConnectionManager manager] isInternetConnection] && networksPostsIDs.count)) {
-        [self updatePostInfoNotification];
+        block (@"Vkontakte, Error update network posts");
         return;
     }
     __block NSString *stringPostsWithUserIdAndPostId = @"";
@@ -211,20 +211,13 @@ static VKNetwork *model = nil;
             networkPost.networkType = VKontakt;
             networkPost.likesCount = [[[response.json[i] objectForKey:@"likes"] objectForKey:@"count"] integerValue];
             networkPost.commentsCount = [[[response.json[i] objectForKey:@"comments"] objectForKey:@"count"] integerValue];
-//            
-//            Post *post = [Post new];
-//            post.postID = [response.json[i] objectForKey:@"id"];
-//            post.userId = [response.json[i] objectForKey:@"owner_id"];
-//            post.commentsCount = [[[response.json[i] objectForKey:@"comments"] objectForKey:@"count"] integerValue];
-//            post.likesCount = [[[response.json[i] objectForKey:@"likes"] objectForKey:@"count"] integerValue];
             [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringNetworkPostForUpdateWithObjectNetworkPostForVK: networkPost]];
         }
-        [[NSNotificationCenter defaultCenter] postNotificationName:MUSNotificationPostsInfoWereUpDated object:nil];
+        block (@"Vkontakte update all network posts");
     } errorBlock: ^(NSError *error) {
         //self.copyComplition (nil, [self errorVkontakte]);
-        [[NSNotificationCenter defaultCenter] postNotificationName:MUSNotificationPostsInfoWereUpDated object:nil];
-    }];
-
+        block (@"Error update network posts");
+}];
 }
 
 - (VKRequest*) createRequestForCountOfLikesAndCountOfComments :(NSString*) stringPostsWithUserIdAndPostId {

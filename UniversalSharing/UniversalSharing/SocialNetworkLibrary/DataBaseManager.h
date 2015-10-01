@@ -29,4 +29,6 @@
 ///////////////////////////////////////////////////////////////////////////
 - (NSMutableArray*)obtainNetworkPostsFromDataBaseWithRequestStrings : (NSString*) requestString;
 - (NSInteger) saveNetworkPostToTableWithObject :(NetworkPost*) networkPost;
+- (NetworkPost*)obtainNetworkPostsFromDataBaseWithRequestString : (NSString*) requestString;
+
 @end

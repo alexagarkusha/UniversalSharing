@@ -7,6 +7,8 @@
 //
 
 #import "Post.h"
+#import "DataBaseManager.h"
+#import "MUSDatabaseRequestStringsHelper.h"
 
 @implementation Post
 
@@ -41,6 +43,16 @@
     copyPost.arrayWithNetworkPosts = [self.arrayWithNetworkPosts mutableCopy];
     copyPost.arrayWithNetworkPostsId = [self.arrayWithNetworkPostsId mutableCopy];
     return copyPost;
+}
+
+- (void) updateAllNetworkPostsFromDataBaseForCurrentPost {
+    if (!_arrayWithNetworkPosts) {
+        _arrayWithNetworkPosts = [[NSMutableArray alloc] init];
+    }
+    [_arrayWithNetworkPosts removeAllObjects];
+    [_arrayWithNetworkPostsId enumerateObjectsUsingBlock:^(NSString *primaryKeyNetPost, NSUInteger idx, BOOL *stop) {
+        [_arrayWithNetworkPosts addObject: [[DataBaseManager sharedManager] obtainNetworkPostsFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForNetworkPostWithPrimaryKey:[primaryKeyNetPost integerValue]]]];
+    }];
 }
 
 #pragma mark - GETTERS

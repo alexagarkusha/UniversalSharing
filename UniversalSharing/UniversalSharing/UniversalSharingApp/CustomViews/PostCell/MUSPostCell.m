@@ -44,7 +44,6 @@
 @property (weak, nonatomic) IBOutlet UITableView *commentsAndLikesPostTableView;
 @property (strong, nonatomic) CAShapeLayer *shapeLayer;
 
-@property (weak, nonatomic)     IBOutlet    MUSGalleryViewOfPhotos *galleryViewOfPhotos;
 
 @end
 
@@ -117,18 +116,8 @@
 //    self.updatingPostLabel.hidden = NO;
 //}
 
-- (void) configurationPostCellWithoutPostDescription: (Post*) currentPost {
-    NSLog(@"COUNT = %@", currentPost.arrayWithNetworkPosts);
-    [self.commentsAndLikesPostTableView reloadData];
-    [self configurateBordersOfCell: currentPost];
-    //self.updatingPostLabel.hidden = YES;
-    [self configuratePostDescriptionLabelForPostWithoutText];
-    [self configurateFirstImageOfPost: currentPost];
-}
-
 - (void) configurationPostCell: (Post*) currentPost {
-    NSLog(@"COUNT = %@", currentPost.arrayWithNetworkPosts);
-    self.galleryViewOfPhotos.hidden = YES;
+    [self hideAllImageView];
     [self.commentsAndLikesPostTableView reloadData];
     [self configurateBordersOfCell: currentPost];
     //self.updatingPostLabel.hidden = YES;
@@ -147,10 +136,10 @@
 
 - (void) configurateFirstImageOfPost : (Post*) currentPost {
     if (![[currentPost.arrayImagesUrl firstObject] isEqualToString: @""] || ![currentPost.arrayImagesUrl firstObject]) {
-        [self showAllImageView];
+        //[self showAllImageView];
         self.postDescriptionLabelLeftConstraint.constant = musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithUserPhotos;
-        //[self loadImageFromPostToImageView: currentPost];
-        [self loadImagesFromDataBaseToImageView: currentPost.arrayImagesUrl];
+        [self loadImageFromPostToImageView: currentPost];
+        //[self loadImagesFromDataBaseToImageView: currentPost.arrayImagesUrl];
     } else {
         [self hideAllImageView];
         self.postDescriptionLabelLeftConstraint.constant = musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithoutUserPhotos;
@@ -182,6 +171,7 @@
 - (void) loadImagesFromDataBaseToImageView : (NSArray*) arrayImagesUrl  {
     for (int i = 0; i < MIN(arrayImagesUrl.count, self.arrayOfImageView.count); i++) {
         UIImageView *imageView = [self.arrayOfImageView objectAtIndex: i];
+        imageView.hidden = NO;
         [imageView loadImageFromDataBase: [arrayImagesUrl objectAtIndex: i]];
     }
 }
@@ -191,6 +181,7 @@
         UIImageView *imageView = [self.arrayOfImageView objectAtIndex: i];
         ImageToPost *imageToPost = [post.arrayImages objectAtIndex: i];
         imageView.image = imageToPost.image;
+        imageView.hidden = NO;
         //[imageView loadImageFromDataBase: [po.arrayImagesUrl objectAtIndex: i]];
     }
 }
@@ -206,7 +197,7 @@
     
     CGRect rect = CGRectMake(0, 0, self.backgroundViewOfCell.frame.size.width, musAppPostsVC_HeightOfPostCell + [MUSReasonCommentsAndLikesCell heightForReasonCommentsAndLikesCell] * post.arrayWithNetworkPosts.count);
     
-    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect: rect byRoundingCorners:(UIRectCornerBottomLeft | UIRectCornerBottomRight | UIRectCornerTopLeft | UIRectCornerTopRight) cornerRadii:CGSizeMake(5, 5)];
+    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect: rect byRoundingCorners:(UIRectCornerBottomLeft | UIRectCornerBottomRight | UIRectCornerTopLeft | UIRectCornerTopRight) cornerRadii:CGSizeMake(0, 0)];
     
     CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
     maskLayer.frame = rect;
@@ -217,7 +208,7 @@
     self.shapeLayer.frame = rect;
     self.shapeLayer.path = maskPath.CGPath;
     self.shapeLayer.lineWidth = 3.0f;
-    self.shapeLayer.strokeColor = BROWN_COLOR_MIDLight.CGColor;
+    self.shapeLayer.strokeColor = BROWN_COLOR_Light.CGColor;
     self.shapeLayer.fillColor = [UIColor clearColor].CGColor;
     [self.backgroundViewOfCell.layer addSublayer: self.shapeLayer];
 

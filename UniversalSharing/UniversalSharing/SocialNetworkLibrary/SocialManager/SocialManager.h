@@ -29,6 +29,8 @@
 
 - (NSMutableArray*) networks :(NSArray*) arrayWithNetwork;
 
+- (NSMutableArray*) activeSocialNetworks;
+
 - (void) obtainNetworksWithComplition :(ComplitionWithArrays) block;
 - (void) editNetworks;
 

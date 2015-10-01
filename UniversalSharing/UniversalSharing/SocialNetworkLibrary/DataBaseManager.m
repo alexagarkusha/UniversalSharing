@@ -309,22 +309,22 @@ static DataBaseManager *databaseManager;
             post.arrayImagesUrl = [[[NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 2)] componentsSeparatedByString: @", "]mutableCopy];
             post.arrayWithNetworkPostsId = [[[NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 3)] componentsSeparatedByString: @","]mutableCopy];//check when gether all the parts
             //////////////////////////////////////////////////
-            post.arrayWithNetworkPosts = [NSMutableArray new];
-            [post.arrayWithNetworkPostsId enumerateObjectsUsingBlock:^(NSString *primaryKeyNetPost, NSUInteger idx, BOOL *stop) {
-                [post.arrayWithNetworkPosts addObject:[self obtainNetworkPostsFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForNetworkPostWithPrimaryKey:[primaryKeyNetPost integerValue]]]];
-            }];
+//            post.arrayWithNetworkPosts = [NSMutableArray new];
+//            [post.arrayWithNetworkPostsId enumerateObjectsUsingBlock:^(NSString *primaryKeyNetPost, NSUInteger idx, BOOL *stop) {
+//                [post.arrayWithNetworkPosts addObject:[self obtainNetworkPostsFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForNetworkPostWithPrimaryKey:[primaryKeyNetPost integerValue]]]];
+//            }];
             post.dateCreate = [[NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 4)] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];//check when gether all the parts
             
-//            post.arrayImages = [NSMutableArray new];
-//            for (int i = 0; i < post.arrayImagesUrl.count; i++) {
-//                UIImage *image = [UIImage new];
-//                image = [image loadImageFromDataBase: [post.arrayImagesUrl objectAtIndex: i]];
-//                ImageToPost *imageToPost = [[ImageToPost alloc] init];
-//                imageToPost.image = image;
-//                imageToPost.quality = 1.0f;
-//                imageToPost.imageType = JPEG;
-//                [post.arrayImages addObject: imageToPost];
-//            }
+            post.arrayImages = [NSMutableArray new];
+            for (int i = 0; i < post.arrayImagesUrl.count; i++) {
+                UIImage *image = [UIImage new];
+                image = [image loadImageFromDataBase: [post.arrayImagesUrl objectAtIndex: i]];
+                ImageToPost *imageToPost = [[ImageToPost alloc] init];
+                imageToPost.image = image;
+                imageToPost.quality = 1.0f;
+                imageToPost.imageType = JPEG;
+                [post.arrayImages addObject: imageToPost];
+            }
         [arrayWithPosts addObject:post];
         }
     }
@@ -355,10 +355,10 @@ static DataBaseManager *databaseManager;
 - (NSMutableArray*)obtainNetworkPostsFromDataBaseWithRequestStrings : (NSString*) requestString {
     NSMutableArray *arrayWithNetworkPosts = [NSMutableArray new];
     sqlite3_stmt *statement = nil;
-    NetworkPost *networkPost = [NetworkPost new];
     
     if(sqlite3_prepare_v2(_database, [requestString UTF8String], -1, &statement, nil) == SQLITE_OK) {
         while (sqlite3_step(statement) == SQLITE_ROW) {
+            NetworkPost *networkPost = [[NetworkPost alloc] init];
             networkPost.primaryKey = sqlite3_column_int(statement, 0);
             networkPost.likesCount = sqlite3_column_int(statement, 1);
             networkPost.commentsCount = sqlite3_column_int(statement, 2);
@@ -368,7 +368,6 @@ static DataBaseManager *databaseManager;
             [arrayWithNetworkPosts addObject:networkPost];
         }
     }
-    
     return arrayWithNetworkPosts;
 }
 

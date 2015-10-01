@@ -16,4 +16,6 @@
 
 - (void) sharePost : (Post*) post toSocialNetworks : (NSArray*) arrayOfNetworksType withComplition : (Complition) block;
 
+- (void) updateNetworkPostsWithComplition : (Complition) block;
+
 @end

@@ -64,4 +64,6 @@
 
 - (id)copy;
 
+- (void) updateAllNetworkPostsFromDataBaseForCurrentPost;
+
 @end

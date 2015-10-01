@@ -289,4 +289,20 @@
     return finalStringPostsForUpdate;
 }
 
++ (NSString*) createStringForUpdateNetworkPost :(NetworkPost*) networkPost {
+    NSString *stringPostsForUpdate = @"UPDATE NetworkPosts set ";
+    
+    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"likesCount = \"%d\", "];
+    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"commentsCount = \"%d\", "];
+    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"networkType = \"%d\", "];
+    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"reson = \"%d\", "];
+    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"postID = \"%@\" "];
+    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"WHERE id = \"%d\""];
+    
+    NSString *finalStringPostsForUpdate = [NSString stringWithFormat:stringPostsForUpdate, networkPost.likesCount, networkPost.commentsCount, networkPost.networkType, networkPost.reason, networkPost.postID, networkPost.primaryKey];
+    
+    return finalStringPostsForUpdate;
+}
+
+
 @end

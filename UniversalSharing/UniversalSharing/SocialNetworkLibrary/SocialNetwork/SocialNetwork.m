@@ -61,7 +61,7 @@
 - (void) sharePost : (Post*) post withComplition : (Complition) block {
 }
 
-- (void) updatePost {
+- (void) updatePostWithComplition : (ComplitionUpdateNetworkPosts) block {
     
 }
 

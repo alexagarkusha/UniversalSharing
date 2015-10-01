@@ -149,6 +149,7 @@ FOUNDATION_EXPORT NSString *const musAppImage_Name_TwitterIconImage;
 FOUNDATION_EXPORT NSString *const musAppImage_Name_VKLikeImage;
 FOUNDATION_EXPORT NSString *const musAppImage_Name_FBLikeImage;
 FOUNDATION_EXPORT NSString *const musAppImage_Name_TwitterLikeImage;
+FOUNDATION_EXPORT NSString *const musAppImage_Name_TwitterCommentsImage;
 FOUNDATION_EXPORT NSString *const musAppImage_Name_CommentsImage;
 
 FOUNDATION_EXPORT NSString *const musAppFilter_Title_Shared;

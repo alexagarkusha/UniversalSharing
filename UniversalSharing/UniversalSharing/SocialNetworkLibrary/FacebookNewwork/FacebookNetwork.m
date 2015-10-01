@@ -21,6 +21,8 @@
 @interface FacebookNetwork()<FBSDKGraphRequestConnectionDelegate>
 
 @property (copy, nonatomic) Complition copyComplition;
+@property (copy, nonatomic) ComplitionUpdateNetworkPosts copyComplitionUpdateNetworkPosts;
+
 @property (strong, nonatomic) NSString *firstPlaceId;
 
 @end
@@ -95,11 +97,11 @@ static FacebookNetwork *model = nil;
     }
 
 - (void) startTimerForUpdatePosts {
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:600.0f
-                                                  target:self
-                                                selector:@selector(updatePost)
-                                                userInfo:nil
-                                                 repeats:YES];
+//    self.timer = [NSTimer scheduledTimerWithTimeInterval:600.0f
+//                                                  target:self
+//                                                selector:@selector(updatePost)
+//                                                userInfo:nil
+//                                                 repeats:YES];
 }
 #pragma mark - loginInNetwork
 
@@ -350,14 +352,15 @@ static FacebookNetwork *model = nil;
     [connection start];
 }
 
-- (void) updatePost {
+#pragma mark - UpdateNetworkPost
+
+- (void) updatePostWithComplition : (ComplitionUpdateNetworkPosts) block {
 #warning NEED TO GET ARRAY OF NETWORKPOSTS AND THEN UPDATE;
-    //NSArray * posts = [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForPostWithReason:Connect andNetworkType:Facebook]];
-    
+    self.copyComplitionUpdateNetworkPosts = block;
     NSArray * networksPostsIDs = [[DataBaseManager sharedManager] obtainNetworkPostsFromDataBaseWithRequestStrings: [MUSDatabaseRequestStringsHelper createStringForNetworkPostWithReason: Connect andNetworkType: Facebook]];
                                   
     if (![[InternetConnectionManager manager] isInternetConnection] || !networksPostsIDs.count  || (![[InternetConnectionManager manager] isInternetConnection] && networksPostsIDs.count)) {
-        [self updatePostInfoNotification];
+        block (@"Facebook, Error update network posts");
         return;
     }
     
@@ -366,7 +369,7 @@ static FacebookNetwork *model = nil;
     [networksPostsIDs enumerateObjectsUsingBlock:^(NetworkPost *networkPost, NSUInteger index, BOOL *stop) {
         
         NSArray *arrayOfIdPost = [networkPost.postID componentsSeparatedByString: @","];
-
+        
         [self obtainNumberOfLikesForArrayOfPostId: arrayOfIdPost andConnection : connection withComplition:^(id result, NSError *error) {
             
             if (!error) {
@@ -374,18 +377,34 @@ static FacebookNetwork *model = nil;
                     return;
                 }
                 networkPost.likesCount = [result integerValue];
+                
+                NSLog(@"FB post.id = %@, post.like = %d, post.comments = %d", networkPost.postID, networkPost.likesCount, networkPost.commentsCount);
+
+                
                 [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringNetworkPostsForUpdateWithObjectPost : networkPost]];
+            } else {
+            
+                NSLog(@"ERROR");
+            
             }
+            
         }];
         
         [self obtainNumberOfCommentsForArrayOfPostId: arrayOfIdPost andConnection : connection withComplition:^(id result, NSError *error) {
-            NSLog (@"result = %ld", (long)[result integerValue]);
+            //NSLog (@"result = %ld", (long)[result integerValue]);
             if (!error) {
                 if (networkPost.commentsCount == [result integerValue]) {
                     return;
                 }
                 networkPost.commentsCount = [result integerValue];
+                
+                
+                NSLog(@"FB post.id = %@, post.like = %d, post.comments = %d", networkPost.postID, networkPost.likesCount, networkPost.commentsCount);
+
+                
                 [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringNetworkPostsForUpdateWithObjectPost : networkPost]];
+            } else {
+                NSLog(@"ERROR");
             }
         }];
     }];
@@ -394,6 +413,7 @@ static FacebookNetwork *model = nil;
         [connection start];
     }
 }
+
 
 
 - (void) obtainNumberOfLikesForArrayOfPostId : (NSArray*) arrayOfIdPost andConnection:(FBSDKGraphRequestConnection*)connection withComplition : (Complition) block {
@@ -449,10 +469,13 @@ static FacebookNetwork *model = nil;
              block ([[result objectForKey:@"summary"]objectForKey:@"total_count"], nil);
              
          }];
-    
 }
+
 - (void)requestConnectionDidFinishLoading:(FBSDKGraphRequestConnection *)connection {
-    [self updatePostInfoNotification];
+    if (self.copyComplitionUpdateNetworkPosts) {
+        self.copyComplitionUpdateNetworkPosts (@"Facebook update all network posts");
+    }
+    //[self updatePostInfoNotification];
 }
 
 - (void) obtainCountOfCommentsFromPost :(NSString*) postID andConnection:(FBSDKGraphRequestConnection*)connection withComplition : (Complition) block {

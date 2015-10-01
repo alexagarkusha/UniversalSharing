@@ -23,8 +23,9 @@
 //#import "SSARefreshControl.h"
 #import "MUSUserDetailViewController.h"
 #import "MEExpandableHeaderView.h"
+#import "MUSPopUpForSharing.h"
 
-@interface MUSDetailPostViewController () <UITableViewDataSource, UITableViewDelegate, MUSPostDescriptionCellDelegate, MUSGalleryOfPhotosCellDelegate, MUSPostLocationCellDelegate,  UIActionSheetDelegate, UIAlertViewDelegate, /*SSARefreshControlDelegate, MUSCommentsAndLikesCellDelegate, */ UIScrollViewDelegate>
+@interface MUSDetailPostViewController () <UITableViewDataSource, UITableViewDelegate, MUSPostDescriptionCellDelegate, MUSGalleryOfPhotosCellDelegate, MUSPostLocationCellDelegate,  UIActionSheetDelegate, UIAlertViewDelegate, /*SSARefreshControlDelegate, MUSCommentsAndLikesCellDelegate, */ UIScrollViewDelegate, MUSPopUpForSharingDelegate>
 ///*!
 // @abstract flag of table view. User selects - table view is editable or not.
 // */
@@ -62,8 +63,9 @@
 
 @property (nonatomic, strong) NSIndexPath *postDescriptionCellIndexPath;
 
-@property(nonatomic, strong) MEExpandableHeaderView *headerView;
+@property (nonatomic, strong) MEExpandableHeaderView *headerView;
 
+@property (nonatomic, strong) MUSPopUpForSharing *popUpForSharing;
 
 @end
 
@@ -182,10 +184,17 @@
  @abstract initiation Navigation Bar
  */
 - (void) initiationNavigationBar {
-//    if (self.isEditableTableView) {
-//        self.shareButton = [[UIBarButtonItem alloc] initWithTitle : musAppButtonTitle_Share style:2 target:self action: @selector(sendPost)];
-//        self.navigationItem.rightBarButtonItem = self.shareButton;
-//    }
+    BOOL isPostConnect = YES;
+    for (NetworkPost *currentNetworkPost in self.currentPost.arrayWithNetworkPosts) {
+        if (currentNetworkPost.networkType != Connect) {
+            isPostConnect = NO;
+        }
+    }
+    
+    if (!isPostConnect) {
+        self.shareButton = [[UIBarButtonItem alloc] initWithTitle : musAppButtonTitle_Share style:2 target:self action: @selector(sendPost)];
+        self.navigationItem.rightBarButtonItem = self.shareButton;
+    }
     
 //    [self.navigationController.navigationBar setTitleTextAttributes:
 //     @{NSForegroundColorAttributeName:[UIColor yellowColor]}];
@@ -284,34 +293,45 @@
  @abstract send post to social network
  */
 - (void) sendPost {
-    if (!_currentSocialNetwork.isVisible || !_currentSocialNetwork) {
-        [self showAlertWithMessage: musAppError_Logged_Into_Social_Networks];
-        return;
-    }
+    self.popUpForSharing = [MUSPopUpForSharing new];
+    self.popUpForSharing.delegate = self;
+    [self.navigationController addChildViewController: self.popUpForSharing];
+    self.popUpForSharing.view.frame = self.view.bounds;//CGRectMake(0, 100, 200, 200);//
+    [self.navigationController.view addSubview: self.popUpForSharing.view];
+    [self.popUpForSharing didMoveToParentViewController:self];
+    [self.view endEditing:YES];
+
     
-    self.view.userInteractionEnabled = NO;
-    [self startActivityIndicatorAnimating];
-    [self updatePost: self.currentPost];
     
-    if (![self isPostEmpty]) {
-        [self.delegate updatePostByPrimaryKey: [NSString stringWithFormat: @"%ld", (long)self.currentPost.primaryKey]];
-        __weak MUSDetailPostViewController *weakSelf = self;
-        [_currentSocialNetwork sharePost: self.currentPost withComplition:^(id result, NSError *error) {
-            if (!error) {
-                [weakSelf showAlertWithMessage : titleCongratulatoryAlert];
-                weakSelf.view.userInteractionEnabled = YES;
-                //weakSelf.isEditableTableView = NO;
-                [weakSelf stopActivityIndicatorAnimating];
-                weakSelf.navigationItem.rightBarButtonItem = nil;
-                [weakSelf.tableView reloadData];
-            } else {
-                [weakSelf showErrorAlertWithError : error];
-                weakSelf.view.userInteractionEnabled = YES;
-                [weakSelf stopActivityIndicatorAnimating];
-                [weakSelf.tableView reloadData];
-            }
-        }];
-    }
+//    
+//    if (!_currentSocialNetwork.isVisible || !_currentSocialNetwork) {
+//        [self showAlertWithMessage: musAppError_Logged_Into_Social_Networks];
+//        return;
+//    }
+//    
+//    self.view.userInteractionEnabled = NO;
+//    [self startActivityIndicatorAnimating];
+//    [self updatePost: self.currentPost];
+//    
+//    if (![self isPostEmpty]) {
+//        [self.delegate updatePostByPrimaryKey: [NSString stringWithFormat: @"%ld", (long)self.currentPost.primaryKey]];
+//        __weak MUSDetailPostViewController *weakSelf = self;
+//        [_currentSocialNetwork sharePost: self.currentPost withComplition:^(id result, NSError *error) {
+//            if (!error) {
+//                [weakSelf showAlertWithMessage : titleCongratulatoryAlert];
+//                weakSelf.view.userInteractionEnabled = YES;
+//                //weakSelf.isEditableTableView = NO;
+//                [weakSelf stopActivityIndicatorAnimating];
+//                weakSelf.navigationItem.rightBarButtonItem = nil;
+//                [weakSelf.tableView reloadData];
+//            } else {
+//                [weakSelf showErrorAlertWithError : error];
+//                weakSelf.view.userInteractionEnabled = YES;
+//                [weakSelf stopActivityIndicatorAnimating];
+//                [weakSelf.tableView reloadData];
+//            }
+//        }];
+//    }
 }
 
 
@@ -695,6 +715,26 @@
         [self.headerView offsetDidUpdate:scrollView.contentOffset];
     }
 }
+
+#pragma mark - Share Post to Social network
+- (void) sharePosts : (NSMutableArray*) arrayChosenNetworksForPost {
+    
+    [self.popUpForSharing removeFromParentViewController];
+    [self.popUpForSharing.view removeFromSuperview];
+    self.popUpForSharing = nil;
+    
+    __weak MUSDetailPostViewController *weakSelf = self;
+    
+    if (arrayChosenNetworksForPost) {
+        
+    [[MultySharingManager sharedManager] sharePost: self.currentPost toSocialNetworks: arrayChosenNetworksForPost withComplition:^(id result, NSError *error) {
+            //NSLog(@"RESULT %@", result);
+            //NSLog(@"ERROR %@", error);
+            //[weakSelf.post.arrayWithNetworkPostsId removeAllObjects];
+        }];
+    }
+}
+
 
 
 @end
