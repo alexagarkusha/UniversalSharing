@@ -712,8 +712,10 @@
         ///////////
         
         vc = [segue destinationViewController];
+        vc.isEditableCollectionView = YES;
         [vc setObjectsWithArrayOfPhotos: self.arrayPicsForDetailCollectionView withCurrentSocialNetwork: _currentSocialNetwork indexPicTapped:self.indexPicTapped andReasonTypeOfPost: AllReasons];
     }
+    
 }
 
 #pragma mark - MUSGaleryViewDelegate

@@ -248,8 +248,8 @@
             if (result) {
                 [weakSelf.arrayUnactive removeObjectAtIndex:indexPath.row];
                 [weakSelf.arrayLogin insertObject:result atIndex:0];
-                //[weakSelf.tableView reloadData];
-                [weakSelf performSegueWithIdentifier: goToUserDetailViewControllerSegueIdentifier sender:result];
+                [weakSelf.tableView reloadData];
+                //[weakSelf performSegueWithIdentifier: goToUserDetailViewControllerSegueIdentifier sender:result];
             }
         }];
     }
@@ -302,13 +302,6 @@
     
     MUSUserDetailViewController *vc = [MUSUserDetailViewController new];
     if ([[segue identifier] isEqualToString:goToUserDetailViewControllerSegueIdentifier]) {
-        UINavigationController *nav  = (UINavigationController*)[self.childViewControllers firstObject];
-        if (self.navigationController.viewControllers.count > 1) {
-            [nav popViewControllerAnimated:YES];}
-        else{
-            
-            [self.navigationController popViewControllerAnimated:YES];
-        }
         vc = [segue destinationViewController];
         vc.delegate = self;
         [vc setNetwork:sender];//self.arrayWithNetworksObj[self.selectedIndexPath.row]];

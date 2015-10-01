@@ -66,6 +66,9 @@ static NSString * const reuseIdentifier = @"Cell";
                      forControlEvents:UIControlEventTouchUpInside];
     if (!self.isEditableCollectionView) {
         _toolBar.hidden = YES;
+    }else {
+        
+         _toolBar.hidden = NO;
     }
     
 }
@@ -125,20 +128,34 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 
 - (void) trashButton:(id)sender {
+    
     CGRect visibleRect = (CGRect){.origin = self.collectionView.contentOffset, .size = self.collectionView.bounds.size};
     CGPoint visiblePoint = CGPointMake(CGRectGetMidX(visibleRect), CGRectGetMidY(visibleRect));
     NSIndexPath *visibleIndexPath = [self.collectionView indexPathForItemAtPoint:visiblePoint];
     if (_arrayOfPics.count && _currentReasonType != Connect) {
         [_arrayOfPics removeObjectAtIndex: visibleIndexPath.row];
-        [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long)visibleIndexPath.row + 1,(unsigned long)[_arrayOfPics count]]];
-        if ([_arrayOfPics count] == 1) {
-            [_topBar initializeLableCountImages: [NSString stringWithFormat:@"1 from 1"]];
-        }
-        if ([_arrayOfPics count] == 0) {
-            [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long) 0, (unsigned long)[_arrayOfPics count]]];
+        
+        if (_arrayOfPics.count && visibleIndexPath.row != 0) {
+            [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long)visibleIndexPath.row , (unsigned long)[self.arrayOfPics count]]];
+        } else if (_arrayOfPics.count && visibleIndexPath.row == 0) {
+            [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long)visibleIndexPath.row + 1,(unsigned long)[self.arrayOfPics count]]];
+        } else {
+            [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long) 0, (unsigned long)[self.arrayOfPics count]]];
             [[NSNotificationCenter defaultCenter] postNotificationName:notificationUpdateCollection object:nil];
             [self.navigationController popViewControllerAnimated:YES];
         }
+        
+// this is rubbish!!
+        
+//        [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long)visibleIndexPath.row + 1,(unsigned long)[_arrayOfPics count]]];
+//        if ([_arrayOfPics count] == 1) {
+//            [_topBar initializeLableCountImages: [NSString stringWithFormat:@"1 from 1"]];
+//        }
+//        if ([_arrayOfPics count] == 0) {
+//            [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long) 0, (unsigned long)[_arrayOfPics count]]];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:notificationUpdateCollection object:nil];
+//            [self.navigationController popViewControllerAnimated:YES];
+//        }
         [_collectionView reloadData];
     }
     

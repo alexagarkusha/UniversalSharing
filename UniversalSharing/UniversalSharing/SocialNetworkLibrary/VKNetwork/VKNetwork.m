@@ -502,12 +502,12 @@ static VKNetwork *model = nil;
 
 - (void)vkSdkUserDeniedAccess:(VKError *)authorizationError
 {
-   /*
+   
     self.isLogin = NO;
     self.isVisible = YES;
     NSError *error = [NSError errorWithMessage: musErrorAccesDenied andCodeError: musErrorAccesDeniedCode];
     self.copyComplition (nil, error);
-    */
+    
 }
 
 
