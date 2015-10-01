@@ -16,6 +16,9 @@
 
 @interface MUSPopUpForSharing : UIViewController
 @property (nonatomic, assign) id <MUSPopUpForSharingDelegate> delegate;
+
+@property (nonatomic, strong) NSArray *arrayOfNetworksPost;
+
 //@property (weak, nonatomic) IBOutlet UIView *popUpView;
 
 @end

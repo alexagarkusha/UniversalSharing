@@ -400,7 +400,7 @@ static TwitterNetwork *model = nil;
                             }
                             networkPostCopy.postID = [[jsonData objectForKey:@"id"]stringValue];
                             networkPostCopy.reason = Connect;
-                            networkPost.dateCreate = [NSString currentDate];
+                            networkPostCopy.dateCreate = [NSString currentDate];
                             self.copyComplition (networkPostCopy, nil);
                         }else{
                             networkPostCopy.reason = ErrorConnection;

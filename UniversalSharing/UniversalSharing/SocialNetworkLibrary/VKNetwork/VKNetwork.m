@@ -365,7 +365,7 @@ static VKNetwork *model = nil;
     
     [request executeWithResultBlock: ^(VKResponse *response) {
         networkPostCopy.reason = Connect;
-        networkPost.dateCreate = [NSString currentDate];
+        networkPostCopy.dateCreate = [NSString currentDate];
         networkPostCopy.postID = [[response.json objectForKey:@"post_id"] stringValue];
         self.copyComplition (networkPostCopy, nil);
     } errorBlock: ^(NSError *error) {
@@ -427,7 +427,7 @@ static VKNetwork *model = nil;
         [postRequest executeWithResultBlock: ^(VKResponse *response) {
             networkPostCopy.postID = [[response.json objectForKey:@"post_id"] stringValue];
             networkPostCopy.reason = Connect;
-            networkPost.dateCreate = [NSString currentDate];
+            networkPostCopy.dateCreate = [NSString currentDate];
             self.copyComplition (networkPostCopy, nil);
         } errorBlock: ^(NSError *error) {
             networkPostCopy.reason = ErrorConnection;

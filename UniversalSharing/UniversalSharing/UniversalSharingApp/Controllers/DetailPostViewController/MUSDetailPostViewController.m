@@ -248,6 +248,7 @@
     self.popUpForSharing.view.frame = self.view.bounds;//CGRectMake(0, 100, 200, 200);//
     [self.navigationController.view addSubview: self.popUpForSharing.view];
     [self.popUpForSharing didMoveToParentViewController:self];
+    self.popUpForSharing.arrayOfNetworksPost = self.currentPost.arrayWithNetworkPosts;
     [self.view endEditing:YES];
 }
 
