@@ -134,7 +134,7 @@ NSString *const notificationShowImagesInCollectionView = @"notificationShowImage
 #pragma mark - MUSGalleryOfPhotosCell
 
 NSString *const musAppButton_ImageName_ButtonAdd = @"Button_Add.png";
-NSString *const musAppButton_ImageName_AddPhoto = @"Button_addPhoto.png";
+NSString *const musAppButton_ImageName_AddPhoto = @"add_image.png";
 NSInteger const musApp_GalleryOfPhotosCell_addButton_ButtomConstraint_WithoutPhotos = -4;
 NSInteger const musApp_GalleryOfPhotosCell_addButton_ButtomConstraint_WithPhotos = 50;
 

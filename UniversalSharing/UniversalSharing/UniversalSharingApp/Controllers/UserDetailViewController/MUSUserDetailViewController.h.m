@@ -44,7 +44,14 @@
 //    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle: @"Back" style: 1 target:self action: @selector(backToNetworks)];
 //    self.navigationItem.leftBarButtonItem = backButton;
     
-    self.navigationItem.title = @"A custom title";
+    if (self.socialNetwork.networkType == Facebook) {
+        self.navigationItem.title = @"Facebook";
+    } else if (self.socialNetwork.networkType == Twitters) {
+        self.navigationItem.title = @"Twitter";
+    } else {
+        self.navigationItem.title = @"VKontakt";
+    }
+    
     self.userPropertyArray = @[@"profile", @"dateOfBirth", @"city", @"clientID"];
 }
 

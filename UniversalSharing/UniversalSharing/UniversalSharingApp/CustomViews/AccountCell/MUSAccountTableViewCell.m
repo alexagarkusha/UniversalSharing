@@ -34,7 +34,7 @@
 - (void)awakeFromNib {
     //self.multipleTouchEnabled = YES;
     
-    [self.networkIconImageView roundImageView];
+   // [self.networkIconImageView roundImageView];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
