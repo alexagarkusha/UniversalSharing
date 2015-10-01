@@ -22,5 +22,6 @@
 
 - (void) setObjectsWithArrayOfPhotos :(NSMutableArray*) arrayOfPhotos withCurrentSocialNetwork :(SocialNetwork*) currentSocialNetwork indexPicTapped :(NSInteger) indexPicTapped andReasonTypeOfPost : (ReasonType) reasonType;
 
+@property (assign, nonatomic) BOOL isEditableCollectionView;
 
 @end
