@@ -31,7 +31,6 @@
    backgroundImage:(UIImage*)image
       contentPages:(NSArray*)pages
 {
-    //assert(image != nil && [image isKindOfClass:[UIImage class]]);
     assert(pages == nil || [pages isKindOfClass:[NSArray class]]);
     
     self = [super initWithFrame:CGRectMake(0, 0, size.width, size.height)];
@@ -41,7 +40,6 @@
         _originalImage = image;
         _previousContentOffset = CGPointZero;
         
-        //[self setupBackgroundView];
         [self setupPages:pages];
         [self setupPageControl:[pages count]];
     }
@@ -49,18 +47,6 @@
 }
 
 #pragma mark - Setup
-
-//- (void)setupBackgroundView
-//{
-//    assert(!self.backgroundImageView);
-//    
-//    UIImageView *imageView = [[UIImageView alloc] initWithImage:self.originalImage];
-//    imageView.frame = self.bounds;
-//    imageView.contentMode = UIViewContentModeCenter;
-//    
-//    [self addSubview:imageView];
-//    self.backgroundImageView = imageView;
-//}
 
 - (void)setupPages:(NSArray*)pages
 {
@@ -91,6 +77,10 @@
     
     [self addSubview:pagesScrollView];
     self.pagesScrollView = pagesScrollView;
+    
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action: @selector(handleTap:)];
+    singleTap.cancelsTouchesInView = NO;
+    [self.pagesScrollView addGestureRecognizer:singleTap];
 
 }
 
@@ -118,23 +108,26 @@
         CGSize pageControlSize = [pageControl sizeForNumberOfPages:pagesCount];
         
 #warning NEED ADD FRAME TO PAGE CONTROL
-        pageControl.frame = CGRectMake(self.bounds.size.width - pageControlSize.width - pagesCount * kPageControlPadding,
-                                       self.bounds.size.height-(pageControl.frame.size.height+kPageControlPadding),
+        
+        pageControl.frame = CGRectMake(
                                        
-                                       pageControlSize.width + kPageControlPadding * 2,
+        self.bounds.size.width,
                                        
-                                       pageControl.frame.size.height);
+        self.bounds.size.height-(pageControl.frame.size.height+kPageControlPadding),
+                                       
+        pageControlSize.width + kPageControlPadding * 2,
+                                       
+        pageControl.frame.size.height);
+        
 
-        
-//        pageControl.frame = CGRectMake((self.bounds.size.width-pageControlSize.width)/2.0,
-//                                       self.bounds.size.height-(pageControl.frame.size.height+kPageControlPadding),
-//                                       pageControlSize.width+kPageControlPadding*2,
-//                                       pageControl.frame.size.height);
-        
         pageControl.layer.cornerRadius = pageControl.frame.size.height/2.0;
         
         [self addSubview:pageControl];
         self.pageControl = pageControl;
+        
+        self.pageControl.frame = CGRectMake(self.bounds.size.width - self.pageControl.frame.size.width - 8, self.bounds.size.height-(pageControl.frame.size.height+kPageControlPadding), self.pageControl.frame.size.width ,self.pageControl.frame.size.height);
+        
+        
     }
 }
 
@@ -188,16 +181,17 @@
         
         CGAffineTransform translateAndZoom = CGAffineTransformScale(translate, scaleFactor, scaleFactor);
         
-//        float radius = -newOffset.y/40.0;
-//        self.backgroundImageView.image = [self.originalImage applyBlurWithRadius:radius
-//                                                                        tintColor:nil
-//                                                            saturationDeltaFactor:1.0
-//                                                                        maskImage:nil];
-//        self.backgroundImageView.transform = translateAndZoom;
         self.pagesScrollView.transform = translateAndZoom;
     }
     
     self.previousContentOffset = newOffset;
+}
+
+#pragma mark - Tap Gesture Recognizer 
+
+- (void)handleTap:(UIGestureRecognizer *)tapGestureRecognizer
+{
+    [self.delegate currentPageIndex: self.pageControl.currentPage];
 }
 
 @end

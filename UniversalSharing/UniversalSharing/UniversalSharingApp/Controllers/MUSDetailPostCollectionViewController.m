@@ -55,15 +55,19 @@ static NSString * const reuseIdentifier = @"Cell";
     [_topBar.buttonBack addTarget:self
                            action:@selector(backButton:)
                  forControlEvents:UIControlEventTouchUpInside];
-    [_topBar.showUserProfileButton addTarget:self
-                           action:@selector(showUserProfile)
-                 forControlEvents:UIControlEventTouchUpInside];
+//    [_topBar.showUserProfileButton addTarget:self
+//                           action:@selector(showUserProfile)
+//                 forControlEvents:UIControlEventTouchUpInside];
     [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long) _indexPicTapped + 1, (unsigned long)[self.arrayOfPics count]]];
-    [_topBar initializeImageView:_currentSocialNetwork.icon];
+//    [_topBar initializeImageView:_currentSocialNetwork.icon];
     
     [_toolBar.buttonToolBar addTarget:self
                                action:@selector(trashButton:)
                      forControlEvents:UIControlEventTouchUpInside];
+    if (!self.isEditableCollectionView) {
+        _toolBar.hidden = YES;
+    }
+    
 }
 
 - (void) viewWillAppear:(BOOL)animated {

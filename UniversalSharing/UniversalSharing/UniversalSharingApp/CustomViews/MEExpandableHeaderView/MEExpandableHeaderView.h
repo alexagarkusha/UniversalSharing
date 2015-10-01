@@ -8,11 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
+
+@protocol MEExpandableHeaderViewDelegate <NSObject>
+
+- (void) currentPageIndex : (NSInteger) currentIndex;
+
+@end
+
+
 @interface MEExpandableHeaderView : UIView
 
 @property(nonatomic, strong, readonly) UIImageView *backgroundImageView;
 @property(nonatomic, strong, readonly) UIScrollView *pagesScrollView;
 @property(nonatomic, strong, readonly) UIPageControl *pageControl;
+@property (assign, nonatomic) id <MEExpandableHeaderViewDelegate> delegate;
 
 /**
  *	@brief		Creates a new instance of MEExpandableHeaderView class.

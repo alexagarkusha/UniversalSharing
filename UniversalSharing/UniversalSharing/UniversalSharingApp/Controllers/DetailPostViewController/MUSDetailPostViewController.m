@@ -25,7 +25,7 @@
 #import "MEExpandableHeaderView.h"
 #import "MUSPopUpForSharing.h"
 
-@interface MUSDetailPostViewController () <UITableViewDataSource, UITableViewDelegate, MUSPostLocationCellDelegate,  UIActionSheetDelegate, UIAlertViewDelegate, /*SSARefreshControlDelegate, MUSCommentsAndLikesCellDelegate, */ UIScrollViewDelegate, MUSPopUpForSharingDelegate>
+@interface MUSDetailPostViewController () <UITableViewDataSource, UITableViewDelegate, MUSPostLocationCellDelegate,  UIActionSheetDelegate, UIAlertViewDelegate, MEExpandableHeaderViewDelegate, UIScrollViewDelegate, MUSPopUpForSharingDelegate>
 ///*!
 // @abstract flag of table view. User selects - table view is editable or not.
 // */
@@ -136,11 +136,12 @@
         for (int i = 0; i < self.currentPost.arrayImages.count; i++) {
             [arrayOfPagesForHeader addObject: [self createPageViewWithText: [self.currentPost.arrayImages objectAtIndex: i]]];
         }
-        CGSize headerViewSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, 200);
+        CGSize headerViewSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, 250);
         MEExpandableHeaderView *headerView = [[MEExpandableHeaderView alloc]
                                               initWithSize : headerViewSize
                                               backgroundImage : nil
                                               contentPages : arrayOfPagesForHeader];
+        headerView.delegate = self;
         self.tableView.tableHeaderView = headerView;
         self.headerView = headerView;
     }
@@ -148,11 +149,16 @@
 
 - (UIView*)createPageViewWithText:(ImageToPost*) imageToPost
 {
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame: CGRectMake (0, 0, [UIScreen mainScreen].bounds.size.width, 200)];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame: CGRectMake (0, 0, [UIScreen mainScreen].bounds.size.width, 250)];
     imageView.image = imageToPost.image;
     imageView.clipsToBounds = YES;
-    [imageView setContentMode: UIViewContentModeCenter];
-
+    
+    
+    if (imageView.image.size.height < 250.0f || imageView.image.size.width <  [UIScreen mainScreen].bounds.size.width ) {
+        [imageView setContentMode: UIViewContentModeScaleAspectFill];
+    } else {
+        [imageView setContentMode: UIViewContentModeTop];
+    }
     return imageView;
 }
 
@@ -425,6 +431,13 @@
     {
         [self.headerView offsetDidUpdate:scrollView.contentOffset];
     }
+}
+
+#pragma mark - MEExpandableHeaderViewDelegate 
+
+- (void) currentPageIndex:(NSInteger)currentIndex {
+    _indexPicTapped = currentIndex;
+    [self performSegueWithIdentifier: @"goToDitailPostCollectionViewController" sender:nil];
 }
 
 #pragma mark - Share Post to Social network

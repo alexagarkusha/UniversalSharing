@@ -64,14 +64,11 @@
 - (void)viewDidLoad {
     // Do any additional setup after loading the view.
     [self initiationTableView];
-    [self obtainArrayPosts];
     [self initiationSSARefreshControl];
     self.setWithUniquePrimaryKeysOfPost = [[NSMutableSet alloc] init];
     [self.navigationController.navigationBar setTintColor: BROWN_COLOR_MIDLightHIGHT];
     [self.navigationController.navigationBar setTitleTextAttributes:
          @{NSForegroundColorAttributeName: BROWN_COLOR_MIDLightHIGHT}];
-
-    //[self obtainArrayPosts];
     self.title = musApp_PostsViewController_NavigationBar_Title;
 }
 
