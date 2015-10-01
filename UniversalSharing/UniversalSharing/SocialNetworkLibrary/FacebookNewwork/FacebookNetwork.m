@@ -289,7 +289,7 @@ static FacebookNetwork *model = nil;
      ^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
          if (!error) {
              networkPostCopy.reason = Connect;
-             networkPost.dateCreate = [NSString currentDate];
+             networkPostCopy.dateCreate = [NSString currentDate];
              networkPostCopy.postID = [result objectForKey: @"id" ];
              self.copyComplition (networkPostCopy, nil);
          } else {
@@ -340,7 +340,7 @@ static FacebookNetwork *model = nil;
                      
                      if (counterOfImages == numberOfPostImagesArray) {
                          networkPostCopy.reason = Connect;
-                         networkPost.dateCreate = [NSString currentDate];
+                         networkPostCopy.dateCreate = [NSString currentDate];
                          self.copyComplition (networkPostCopy, nil);
                      }
                      networkPostCopy.postID = [networkPostCopy.postID stringByAppendingString: @","];
