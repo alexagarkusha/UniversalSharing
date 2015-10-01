@@ -38,16 +38,16 @@
     return nibArray[0];
 }
 
-- (void) configurationProfileUserTableViewCellWith: (SocialNetwork*) socialNetwork {
+- (void) configurationPopUpTableViewCellWith: (SocialNetwork*) socialNetwork andReason:(ReasonType) currentReason {
     self.imageViewNetwork.image = [UIImage imageNamed:socialNetwork.icon];
     self.switchButton.tag = socialNetwork.networkType;
-    if (!socialNetwork.isLogin) {
+    
+    if (!socialNetwork.isLogin || currentReason == Connect) {
         [self.switchButton setOn:NO animated:YES];
         self.switchButton.enabled = NO;
         self.switchButton.backgroundColor = [UIColor whiteColor];
         self.switchButton.layer.cornerRadius = 16.0;
     } else{
-        
         [self.switchButton setOn:YES animated:YES];
         self.switchButton.enabled = YES;
     }

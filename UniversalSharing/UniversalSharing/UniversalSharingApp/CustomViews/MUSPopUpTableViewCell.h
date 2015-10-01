@@ -21,6 +21,6 @@
 //===
 + (NSString*) cellID;
 + (instancetype) popUpTableViewCell;
-- (void) configurationProfileUserTableViewCellWith: (SocialNetwork*) socialNetwork ;
+- (void) configurationPopUpTableViewCellWith: (SocialNetwork*) socialNetwork andReason: (ReasonType) currentReason;
 
 @end

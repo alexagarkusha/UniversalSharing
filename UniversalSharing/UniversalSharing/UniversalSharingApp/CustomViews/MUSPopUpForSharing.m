@@ -109,15 +109,27 @@
      XIB
      */
     MUSPopUpTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[MUSPopUpTableViewCell cellID]];
-    SocialNetwork *socialNetwork = self.arrayWithNetworksObj[indexPath.row];
-    
+    //SocialNetwork *socialNetwork = self.arrayWithNetworksObj[indexPath.row];
     if(!cell) {
         cell = [MUSPopUpTableViewCell popUpTableViewCell];
     }
     cell.delegate = self;
    
-    [cell configurationProfileUserTableViewCellWith:socialNetwork];
+    //[cell configurationProfileUserTableViewCellWith:socialNetwork];
     return cell;
+}
+
+- (void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    SocialNetwork *socialNetwork = self.arrayWithNetworksObj[indexPath.row];
+    ReasonType currentReason = AllReasons;
+    for (NetworkPost *currentNetworkPost in self.arrayOfNetworksPost) {
+        if (currentNetworkPost.networkType == socialNetwork.networkType) {
+            currentReason = currentNetworkPost.reason;
+        }
+    }
+    
+    MUSPopUpTableViewCell *popUpTableViewCell = (MUSPopUpTableViewCell*) cell;
+    [popUpTableViewCell configurationPopUpTableViewCellWith: socialNetwork andReason: currentReason];
 }
 
 - (void) setColorAndRudius {
