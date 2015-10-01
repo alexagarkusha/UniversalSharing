@@ -96,6 +96,17 @@
 		97C2954B1B985ADA001B21FF /* NSString+ReasonTypeInString.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C2954A1B985ADA001B21FF /* NSString+ReasonTypeInString.m */; };
 		97C2A7C21B9D7B4F007FF8CA /* MUSCustomMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C2A7C11B9D7B4F007FF8CA /* MUSCustomMapView.m */; };
 		97C2A7C91B9DA61B007FF8CA /* MUSLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C2A7C81B9DA61B007FF8CA /* MUSLocationViewController.m */; };
+		97C2AA001BBD726300D076CB /* Comments_grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 97C2A9F81BBD726300D076CB /* Comments_grey.png */; };
+		97C2AA011BBD726300D076CB /* Facebook_Icon_grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 97C2A9F91BBD726300D076CB /* Facebook_Icon_grey.png */; };
+		97C2AA021BBD726300D076CB /* Facebook_Like_grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 97C2A9FA1BBD726300D076CB /* Facebook_Like_grey.png */; };
+		97C2AA031BBD726300D076CB /* Twitter_Comment_grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 97C2A9FB1BBD726300D076CB /* Twitter_Comment_grey.png */; };
+		97C2AA041BBD726300D076CB /* Twitter_icon_grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 97C2A9FC1BBD726300D076CB /* Twitter_icon_grey.png */; };
+		97C2AA051BBD726300D076CB /* Twitter_Like_grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 97C2A9FD1BBD726300D076CB /* Twitter_Like_grey.png */; };
+		97C2AA061BBD726300D076CB /* VK_icon_grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 97C2A9FE1BBD726300D076CB /* VK_icon_grey.png */; };
+		97C2AA071BBD726300D076CB /* VK_Likes_grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 97C2A9FF1BBD726300D076CB /* VK_Likes_grey.png */; };
+		97C2AA0B1BBD728B00D076CB /* MUSPostManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C2AA0A1BBD728B00D076CB /* MUSPostManager.m */; };
+		97C2AA0F1BBD72E200D076CB /* UIImage+CommentIconOfSocialNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C2AA0E1BBD72E200D076CB /* UIImage+CommentIconOfSocialNetwork.m */; };
+		97C2AA131BBD731500D076CB /* NSString+MUSCurrentDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C2AA121BBD731500D076CB /* NSString+MUSCurrentDate.m */; };
 		97C2E2A21BBA900000C82D58 /* MEExpandableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C2E29E1BBA900000C82D58 /* MEExpandableHeaderView.m */; };
 		97C2E2AB1BBACE0B00C82D58 /* Twitter_Like.png in Resources */ = {isa = PBXBuildFile; fileRef = 97C2E2AA1BBACE0B00C82D58 /* Twitter_Like.png */; };
 		97C2E2AD1BBACE1C00C82D58 /* Twitter_Comment.png in Resources */ = {isa = PBXBuildFile; fileRef = 97C2E2AC1BBACE1C00C82D58 /* Twitter_Comment.png */; };
@@ -311,6 +322,20 @@
 		97C2A7C11B9D7B4F007FF8CA /* MUSCustomMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUSCustomMapView.m; path = CustomMapView/MUSCustomMapView.m; sourceTree = "<group>"; };
 		97C2A7C71B9DA61B007FF8CA /* MUSLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUSLocationViewController.h; path = LocationViewController/MUSLocationViewController.h; sourceTree = "<group>"; };
 		97C2A7C81B9DA61B007FF8CA /* MUSLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUSLocationViewController.m; path = LocationViewController/MUSLocationViewController.m; sourceTree = "<group>"; };
+		97C2A9F81BBD726300D076CB /* Comments_grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Comments_grey.png; sourceTree = "<group>"; };
+		97C2A9F91BBD726300D076CB /* Facebook_Icon_grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Facebook_Icon_grey.png; sourceTree = "<group>"; };
+		97C2A9FA1BBD726300D076CB /* Facebook_Like_grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Facebook_Like_grey.png; sourceTree = "<group>"; };
+		97C2A9FB1BBD726300D076CB /* Twitter_Comment_grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Twitter_Comment_grey.png; sourceTree = "<group>"; };
+		97C2A9FC1BBD726300D076CB /* Twitter_icon_grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Twitter_icon_grey.png; sourceTree = "<group>"; };
+		97C2A9FD1BBD726300D076CB /* Twitter_Like_grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Twitter_Like_grey.png; sourceTree = "<group>"; };
+		97C2A9FE1BBD726300D076CB /* VK_icon_grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = VK_icon_grey.png; sourceTree = "<group>"; };
+		97C2A9FF1BBD726300D076CB /* VK_Likes_grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = VK_Likes_grey.png; sourceTree = "<group>"; };
+		97C2AA091BBD728B00D076CB /* MUSPostManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSPostManager.h; sourceTree = "<group>"; };
+		97C2AA0A1BBD728B00D076CB /* MUSPostManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSPostManager.m; sourceTree = "<group>"; };
+		97C2AA0D1BBD72E200D076CB /* UIImage+CommentIconOfSocialNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+CommentIconOfSocialNetwork.h"; sourceTree = "<group>"; };
+		97C2AA0E1BBD72E200D076CB /* UIImage+CommentIconOfSocialNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+CommentIconOfSocialNetwork.m"; sourceTree = "<group>"; };
+		97C2AA111BBD731500D076CB /* NSString+MUSCurrentDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MUSCurrentDate.h"; sourceTree = "<group>"; };
+		97C2AA121BBD731500D076CB /* NSString+MUSCurrentDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MUSCurrentDate.m"; sourceTree = "<group>"; };
 		97C2E29D1BBA900000C82D58 /* MEExpandableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEExpandableHeaderView.h; sourceTree = "<group>"; };
 		97C2E29E1BBA900000C82D58 /* MEExpandableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEExpandableHeaderView.m; sourceTree = "<group>"; };
 		97C2E2AA1BBACE0B00C82D58 /* Twitter_Like.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Twitter_Like.png; sourceTree = "<group>"; };
@@ -540,6 +565,7 @@
 				97C49E8F1B836FEC005241CE /* Model */,
 				18BB29A71B67E3F000B498AC /* Managers */,
 				18BB29A41B67E3F000B498AC /* Images.xcassets */,
+				97C2A9F71BBD726300D076CB /* IconsForApp_GreyColor */,
 				97C0A0FA1BB95EFA004E5F38 /* Facebook_Icon.png */,
 				30C9DDCF1BBADE5000F3266A /* location_icon.png */,
 				97C0A0FB1BB95EFA004E5F38 /* Twitter_icon.png */,
@@ -590,6 +616,7 @@
 		18BB297B1B67E3F000B498AC /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				97C2AA0C1BBD72E200D076CB /* UIImage+CommentIconOfSocialNetwork */,
 				979164A51B8C5FE000DFCE64 /* NSString+DateStringFromUNIXTimestamp */,
 				97C295481B985A6A001B21FF /* NSString+ReasonTypeInString */,
 				18BB297C1B67E3F000B498AC /* UIButton+CornerRadiusButton */,
@@ -1046,6 +1073,7 @@
 		97C05FA11BB5525700EF6079 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				97C2AA081BBD728B00D076CB /* PostManager */,
 				97C05FA21BB5529A00EF6079 /* PostImagesManager */,
 				97C05F9D1BB548C300EF6079 /* InternetConnectionManager */,
 				187FC5171B65222D00A3916C /* SocialManager */,
@@ -1120,6 +1148,48 @@
 				97C2A7C81B9DA61B007FF8CA /* MUSLocationViewController.m */,
 			);
 			name = LocationViewController;
+			sourceTree = "<group>";
+		};
+		97C2A9F71BBD726300D076CB /* IconsForApp_GreyColor */ = {
+			isa = PBXGroup;
+			children = (
+				97C2A9F81BBD726300D076CB /* Comments_grey.png */,
+				97C2A9F91BBD726300D076CB /* Facebook_Icon_grey.png */,
+				97C2A9FA1BBD726300D076CB /* Facebook_Like_grey.png */,
+				97C2A9FB1BBD726300D076CB /* Twitter_Comment_grey.png */,
+				97C2A9FC1BBD726300D076CB /* Twitter_icon_grey.png */,
+				97C2A9FD1BBD726300D076CB /* Twitter_Like_grey.png */,
+				97C2A9FE1BBD726300D076CB /* VK_icon_grey.png */,
+				97C2A9FF1BBD726300D076CB /* VK_Likes_grey.png */,
+			);
+			path = IconsForApp_GreyColor;
+			sourceTree = "<group>";
+		};
+		97C2AA081BBD728B00D076CB /* PostManager */ = {
+			isa = PBXGroup;
+			children = (
+				97C2AA091BBD728B00D076CB /* MUSPostManager.h */,
+				97C2AA0A1BBD728B00D076CB /* MUSPostManager.m */,
+			);
+			path = PostManager;
+			sourceTree = "<group>";
+		};
+		97C2AA0C1BBD72E200D076CB /* UIImage+CommentIconOfSocialNetwork */ = {
+			isa = PBXGroup;
+			children = (
+				97C2AA0D1BBD72E200D076CB /* UIImage+CommentIconOfSocialNetwork.h */,
+				97C2AA0E1BBD72E200D076CB /* UIImage+CommentIconOfSocialNetwork.m */,
+			);
+			path = "UIImage+CommentIconOfSocialNetwork";
+			sourceTree = "<group>";
+		};
+		97C2AA101BBD731500D076CB /* NSString+MUSCurrentDate */ = {
+			isa = PBXGroup;
+			children = (
+				97C2AA111BBD731500D076CB /* NSString+MUSCurrentDate.h */,
+				97C2AA121BBD731500D076CB /* NSString+MUSCurrentDate.m */,
+			);
+			path = "NSString+MUSCurrentDate";
 			sourceTree = "<group>";
 		};
 		97C2E29C1BBA900000C82D58 /* MEExpandableHeaderView */ = {
@@ -1284,6 +1354,7 @@
 				97CB301B1BB7DC9000185AC9 /* NSString+MUSSocialNetworkNameOfPost */,
 				97C330371BB73D880014C90A /* NSString+MUSReasonNameOfPost */,
 				303CAC7A1B86099500B48D72 /* NSString+MUSPathToDocumentsdirectory */,
+				97C2AA101BBD731500D076CB /* NSString+MUSCurrentDate */,
 				97C63BD71B7246B6006E99C6 /* NSError+MUSError.h */,
 				97C63BD81B7246B6006E99C6 /* NSError+MUSError.m */,
 			);
@@ -1537,6 +1608,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				97C350541B8490C7002C6D8E /* Button_Add.png in Resources */,
+				97C2AA071BBD726300D076CB /* VK_Likes_grey.png in Resources */,
 				30416A261B73A4AC000CB2C2 /* MUSGaleryView.xib in Resources */,
 				97C49E781B832404005241CE /* MUSGalleryOfPhotosCell.xib in Resources */,
 				97D1C4441B81DB5D00009BCF /* Comment.png in Resources */,
@@ -1544,8 +1616,10 @@
 				18BB29BE1B67E3F000B498AC /* MUSUserProfileCell.xib in Resources */,
 				97C49E801B835130005241CE /* MUSCommentsAndLikesCell.xib in Resources */,
 				30C9DDCE1BBAD6C700F3266A /* add_image.png in Resources */,
+				97C2AA031BBD726300D076CB /* Twitter_Comment_grey.png in Resources */,
 				30C9DDE11BBD5DC700F3266A /* placeholderPin-1.png in Resources */,
 				97CAF5691BAC001F00F16F6B /* Ressources.bundle in Resources */,
+				97C2AA001BBD726300D076CB /* Comments_grey.png in Resources */,
 				97C0A0FF1BB95EFA004E5F38 /* VK_icon.png in Resources */,
 				30C9DDD01BBADE5000F3266A /* location_icon.png in Resources */,
 				30DBFDA51B6BAA52002F83D0 /* VKimage.png in Resources */,
@@ -1555,6 +1629,9 @@
 				18BB29AE1B67E3F000B498AC /* LaunchScreen.xib in Resources */,
 				97CB10DD1B9086D30061F851 /* btn-close@2x.png in Resources */,
 				30C9DDD41BBBE97200F3266A /* placeholderPin.png in Resources */,
+				97C2AA011BBD726300D076CB /* Facebook_Icon_grey.png in Resources */,
+				97C2AA021BBD726300D076CB /* Facebook_Like_grey.png in Resources */,
+				97C2AA041BBD726300D076CB /* Twitter_icon_grey.png in Resources */,
 				18BB29C01B67E3F000B498AC /* Images.xcassets in Resources */,
 				97C4ACCD1B997B9C008B93B3 /* Button_Delete.png in Resources */,
 				18BB29BA1B67E3F000B498AC /* MUSAccountTableViewCell.xib in Resources */,
@@ -1582,12 +1659,14 @@
 				30416A2B1B73AF49000CB2C2 /* MUSCollectionViewCell.xib in Resources */,
 				97C2E2AD1BBACE1C00C82D58 /* Twitter_Comment.png in Resources */,
 				30C9DDC21BB93E0500F3266A /* MUSPopUpForSharing.xib in Resources */,
+				97C2AA051BBD726300D076CB /* Twitter_Like_grey.png in Resources */,
 				307611F91BA17B1D0051C2AD /* checkMark.jpeg in Resources */,
 				97C0A0FD1BB95EFA004E5F38 /* Facebook_Icon.png in Resources */,
 				18BB29AF1B67E3F000B498AC /* Main.storyboard in Resources */,
 				30C9DDB61BABFAD900F3266A /* MUSToolBarForDetailCollectionView.xib in Resources */,
 				97C2E2AB1BBACE0B00C82D58 /* Twitter_Like.png in Resources */,
 				30C9DDB81BAC37B400F3266A /* trash.png in Resources */,
+				97C2AA061BBD726300D076CB /* VK_icon_grey.png in Resources */,
 				97C9A2E61BA2BBEF00D0C478 /* Button_Delete_Location.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1677,6 +1756,7 @@
 				97C63BD91B7246B6006E99C6 /* NSError+MUSError.m in Sources */,
 				97C460CF1B68B6AD00C010DE /* MUSPhotoManager.m in Sources */,
 				187FC52A1B65222D00A3916C /* User.m in Sources */,
+				97C2AA131BBD731500D076CB /* NSString+MUSCurrentDate.m in Sources */,
 				18BB29BB1B67E3F000B498AC /* MUSTopUserProfileCell.m in Sources */,
 				97C8A9DE1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.m in Sources */,
 				97C4ACD71B99ABDE008B93B3 /* MUSAddPhotoButton.m in Sources */,
@@ -1704,6 +1784,7 @@
 				18BB29B71B67E3F000B498AC /* MUSShareViewController.m in Sources */,
 				30C9DDAC1BA973D700F3266A /* MUSTopBarForDetailCollectionView.m in Sources */,
 				18BB29B41B67E3F000B498AC /* UIImageView+RoundImage.m in Sources */,
+				97C2AA0F1BBD72E200D076CB /* UIImage+CommentIconOfSocialNetwork.m in Sources */,
 				303CAC7D1B860A2F00B48D72 /* NSString+MUSPathToDocumentsdirectory.m in Sources */,
 				303CAC881B998FB400B48D72 /* LSFadingSwipeToDeleteCollectionViewLayout.m in Sources */,
 				30416A2A1B73AF49000CB2C2 /* MUSCollectionViewCell.m in Sources */,
@@ -1729,6 +1810,7 @@
 				187FC5261B65222D00A3916C /* FacebookNetwork.m in Sources */,
 				307611ED1B9DC1F80051C2AD /* MUSDetailPostCollectionViewController.m in Sources */,
 				30416A241B73A49B000CB2C2 /* MUSGaleryView.m in Sources */,
+				97C2AA0B1BBD728B00D076CB /* MUSPostManager.m in Sources */,
 				30D73BFD1BA715A2001B2FE8 /* MUSImageScrollView.m in Sources */,
 				30C9DDDF1BBC23C600F3266A /* MUSPopUpDeleteButton.m in Sources */,
 				97C2954B1B985ADA001B21FF /* NSString+ReasonTypeInString.m in Sources */,

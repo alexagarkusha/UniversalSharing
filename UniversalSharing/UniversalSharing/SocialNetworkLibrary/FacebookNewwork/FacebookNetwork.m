@@ -358,7 +358,6 @@ static FacebookNetwork *model = nil;
 #pragma mark - UpdateNetworkPost
 
 - (void) updatePostWithComplition : (ComplitionUpdateNetworkPosts) block {
-#warning NEED TO GET ARRAY OF NETWORKPOSTS AND THEN UPDATE;
     self.copyComplitionUpdateNetworkPosts = block;
     NSArray * networksPostsIDs = [[DataBaseManager sharedManager] obtainNetworkPostsFromDataBaseWithRequestStrings: [MUSDatabaseRequestStringsHelper createStringForNetworkPostWithReason: Connect andNetworkType: Facebook]];
                                   
