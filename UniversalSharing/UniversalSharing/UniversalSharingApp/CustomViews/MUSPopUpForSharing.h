@@ -16,5 +16,6 @@
 
 @interface MUSPopUpForSharing : UIViewController
 @property (nonatomic, assign) id <MUSPopUpForSharingDelegate> delegate;
+//@property (weak, nonatomic) IBOutlet UIView *popUpView;
 
 @end

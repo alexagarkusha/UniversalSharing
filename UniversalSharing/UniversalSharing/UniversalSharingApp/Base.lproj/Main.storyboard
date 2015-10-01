@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -417,36 +417,50 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xwB-dx-Bb3">
-                                <rect key="frame" x="0.0" y="507" width="600" height="44"/>
-                                <items>
-                                    <barButtonItem systemItem="flexibleSpace" id="eNG-tv-c0s">
-                                        <inset key="imageInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
-                                    </barButtonItem>
-                                    <barButtonItem title="Select your location" id="kvU-Tv-8tp">
-                                        <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <action selector="btnShareLocationTapped:" destination="8rJ-Kc-sve" id="5N6-tq-HsN"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="P8j-yb-1Ip"/>
-                                </items>
-                            </toolbar>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O2b-Bf-7wZ" customClass="MUSGaleryView">
-                                <rect key="frame" x="0.0" y="407" width="600" height="100"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="25b-FR-Yj7">
+                                <rect key="frame" x="0.0" y="500" width="600" height="50"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="ykK-8V-ynh"/>
+                                    <constraint firstAttribute="height" constant="50" id="F28-SG-2KG"/>
+                                </constraints>
+                                <inset key="titleEdgeInsets" minX="27" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <inset key="imageEdgeInsets" minX="9" minY="7" maxX="3" maxY="7"/>
+                                <state key="normal" title="Select your location">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected">
+                                    <color key="titleShadowColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="buttonLocationTapped:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="Uwy-Yh-AF6"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O2b-Bf-7wZ" customClass="MUSGaleryView">
+                                <rect key="frame" x="0.0" y="400" width="600" height="100"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="LuJ-fo-3YT"/>
                                 </constraints>
                             </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholderPin-1.png" highlightedImage="placeholderPinSelected.png" translatesAutoresizingMaskIntoConstraints="NO" id="4kG-OY-BXB">
+                                <rect key="frame" x="0.0" y="515" width="30" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="AiM-Kg-UI1"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="xwB-dx-Bb3" secondAttribute="trailing" id="2O8-GV-6gG"/>
-                            <constraint firstAttribute="bottom" secondItem="xwB-dx-Bb3" secondAttribute="bottom" constant="49" id="AEN-V0-A19"/>
-                            <constraint firstItem="xwB-dx-Bb3" firstAttribute="top" secondItem="O2b-Bf-7wZ" secondAttribute="bottom" id="QGI-gF-5jf"/>
-                            <constraint firstItem="xwB-dx-Bb3" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="QJI-mN-ydT"/>
-                            <constraint firstAttribute="trailing" secondItem="O2b-Bf-7wZ" secondAttribute="trailing" id="ttO-UR-Cfh"/>
-                            <constraint firstItem="O2b-Bf-7wZ" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="uct-a8-9mV"/>
+                            <constraint firstItem="O2b-Bf-7wZ" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="0Wl-ad-TGG"/>
+                            <constraint firstAttribute="trailing" secondItem="O2b-Bf-7wZ" secondAttribute="trailing" id="0t9-8j-che"/>
+                            <constraint firstItem="25b-FR-Yj7" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="5fk-f9-b4e"/>
+                            <constraint firstAttribute="bottom" secondItem="25b-FR-Yj7" secondAttribute="bottom" constant="50" id="EYT-lS-seF"/>
+                            <constraint firstItem="25b-FR-Yj7" firstAttribute="bottom" secondItem="4kG-OY-BXB" secondAttribute="bottom" constant="15" id="GCb-Dx-vmo"/>
+                            <constraint firstItem="25b-FR-Yj7" firstAttribute="top" secondItem="O2b-Bf-7wZ" secondAttribute="bottom" id="am0-R9-pSg"/>
+                            <constraint firstItem="25b-FR-Yj7" firstAttribute="top" secondItem="4kG-OY-BXB" secondAttribute="top" constant="-15" id="ohL-Vp-ZrT"/>
+                            <constraint firstItem="25b-FR-Yj7" firstAttribute="leading" secondItem="4kG-OY-BXB" secondAttribute="leading" id="un2-67-1xc"/>
+                            <constraint firstAttribute="trailing" secondItem="25b-FR-Yj7" secondAttribute="trailing" id="zr8-N6-zI7"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="Q3Z-Zc-VoA" appends="YES" id="McJ-97-Hx9"/>
@@ -461,13 +475,12 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="buttonLocation" destination="25b-FR-Yj7" id="ch9-nc-jya"/>
                         <outlet property="galeryView" destination="O2b-Bf-7wZ" id="alu-vP-TdG"/>
-                        <outlet property="galeryViewLayoutConstraint" destination="ykK-8V-ynh" id="Ua2-mE-2zf"/>
+                        <outlet property="iconImageView" destination="4kG-OY-BXB" id="hvZ-1l-PJt"/>
                         <outlet property="mainGestureRecognizer" destination="Q3Z-Zc-VoA" id="hSm-6a-V0c"/>
                         <outlet property="shareButtonOutlet" destination="pvH-Dt-bbm" id="uqW-1D-Imf"/>
-                        <outlet property="shareLocationButton" destination="kvU-Tv-8tp" id="kE7-Jb-kzz"/>
-                        <outlet property="shareToolBar" destination="xwB-dx-Bb3" id="sw4-sM-akm"/>
-                        <outlet property="toolBarLayoutConstraint" destination="AEN-V0-A19" id="U7t-rt-nZT"/>
+                        <outlet property="toolBarLayoutConstraint" destination="EYT-lS-seF" id="ZVx-Dh-kc3"/>
                         <segue destination="57R-w2-ySy" kind="show" identifier="Location" id="GpK-3N-ETI"/>
                         <segue destination="Mqx-YE-PKH" kind="show" identifier="goToShowImages" id="ujR-wZ-DmO"/>
                     </connections>
@@ -582,6 +595,8 @@
     <resources>
         <image name="account_icon" width="31" height="31"/>
         <image name="archive_icon" width="32" height="32"/>
+        <image name="placeholderPin-1.png" width="25" height="40"/>
+        <image name="placeholderPinSelected.png" width="25" height="40"/>
         <image name="upload_icon" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>

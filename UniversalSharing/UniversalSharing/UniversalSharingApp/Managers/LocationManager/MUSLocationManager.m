@@ -59,6 +59,8 @@
 }
 - (void) stopAndGetCurrentLocation {
     [self.locationManager stopUpdatingLocation];
+    
+    
     self.copyLocationBLock (self.locationManager.location, nil);
 }
 
@@ -73,4 +75,28 @@
     }
 }
 
+- (void) obtainAddressFromLocation:(CLLocation *)location complitionBlock: (Complition) block {
+    __block CLPlacemark* placemark;
+    __block NSString *address = nil;
+    CLLocation* eventLocation = [[CLLocation alloc] initWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude];
+    CLGeocoder* geocoder = [CLGeocoder new];
+    [geocoder reverseGeocodeLocation:eventLocation completionHandler:^(NSArray *placemarks, NSError *error)
+     {
+         if (error == nil && [placemarks count] > 0)
+         {
+             placemark = [placemarks lastObject];
+             if (placemark.name) {
+                  address = [NSString stringWithFormat:@"%@", placemark.name];
+             } else if (placemark.locality) {
+                 address = [NSString stringWithFormat:@"%@", placemark.locality];
+             } else if (placemark.country){
+                  address = [NSString stringWithFormat:@"%@", placemark.country];
+             } else {
+                 address = @"Location is not defined";//[NSString stringWithFormat:@"%@", placemark.country];
+             }
+             //address = [NSString stringWithFormat:@"%@, %@ %@", placemark.name, placemark.locality, placemark.country];
+             block(address, error);
+         }
+     }];
+}
 @end
