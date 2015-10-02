@@ -114,6 +114,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.shareButtonOutlet setTintColor:BROWN_COLOR_MIDLight];
+    [self.shareButtonOutlet setStyle:2];
     //self.buttonLocation.backgroundColor = BROWN_COLOR_MIDLight;
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(obtainPicFromPicker) name:notificationImagePickerForCollection object:nil];
