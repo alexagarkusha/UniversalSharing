@@ -22,6 +22,7 @@
 @interface VKNetwork () <VKSdkDelegate>
 @property (strong, nonatomic) UINavigationController *navigationController;
 @property (copy, nonatomic) Complition copyComplition;
+@property (copy, nonatomic) ComplitionProgressLoading copyComplitionProgressLoading;
 
 @end
 
@@ -329,7 +330,7 @@ static VKNetwork *model = nil;
 
 #pragma mark - sharePostToNetwork
 
-- (void) sharePost : (Post*) post withComplition : (Complition) block {
+- (void) sharePost : (Post*) post withComplition : (Complition) block andComplitionLoading :(ComplitionProgressLoading)blockLoading{
     if (![[InternetConnectionManager manager] isInternetConnection]){
         NetworkPost *networkPost = [NetworkPost create];
         networkPost.networkType = VKontakt;

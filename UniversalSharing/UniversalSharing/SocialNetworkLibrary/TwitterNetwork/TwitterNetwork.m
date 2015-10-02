@@ -26,6 +26,8 @@
 @property (strong, nonatomic) NSArray *accountsArray;
 @property (strong, nonatomic) ACAccount *twitterAccount;
 @property (assign, nonatomic) BOOL doubleTouchFlag;
+@property (copy, nonatomic) ComplitionProgressLoading copyComplitionProgressLoading;
+
 @end
 
 static TwitterNetwork *model = nil;
@@ -339,7 +341,7 @@ static TwitterNetwork *model = nil;
 
 #pragma mark - sharePostToNetwork
 
-- (void) sharePost:(Post *)post withComplition:(Complition)block {
+- (void) sharePost:(Post *)post withComplition:(Complition)block andComplitionLoading :(ComplitionProgressLoading)blockLoading {
     if (![[InternetConnectionManager manager] isInternetConnection]){
         NetworkPost *networkPost = [NetworkPost create];
         networkPost.reason = Offline;
