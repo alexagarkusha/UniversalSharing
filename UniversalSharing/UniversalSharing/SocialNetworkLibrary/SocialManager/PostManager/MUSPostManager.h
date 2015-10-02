@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MUSSocialNetworkLibraryConstants.h"
 
 @interface MUSPostManager : NSObject
 
@@ -18,6 +19,9 @@
 - (NSArray*) updateArrayOfPost;
 
 - (void) updateNetworkPosts;
+
+- (void) deleteNetworkPostFromPostsOfSocialNetworkType : (NetworkType) networkType;
+
 
 @property (assign, nonatomic) BOOL needToRefreshPosts;
 

@@ -104,16 +104,15 @@ static DataBaseManager *databaseManager;
     sqlite3_stmt *statement = nil;
     //post.locationId = [self saveLocationToTableWithObject:post];
     const char *sql = [[MUSDatabaseRequestStringsHelper createStringForSavePostToTable] UTF8String];
-#warning NEED TO CHANGE IT;
-    
-    post.postID = @"";
-    for (int i = 0; i < post.arrayWithNetworkPostsId.count; i++) {
-        post.postID = [post.postID stringByAppendingString: [post.arrayWithNetworkPostsId objectAtIndex:i]];
-        if (i != post.arrayWithNetworkPostsId.count - 1) {
-            post.postID = [post.postID stringByAppendingString: @","];
-        }
-    }
-    
+#warning NEED TO CHANGE
+//    post.postID = @"";
+//    for (int i = 0; i < post.arrayWithNetworkPostsId.count; i++) {
+//        post.postID = [post.postID stringByAppendingString: [post.arrayWithNetworkPostsId objectAtIndex:i]];
+//        if (i != post.arrayWithNetworkPostsId.count - 1) {
+//            post.postID = [post.postID stringByAppendingString: @","];
+//        }
+//    }
+    [post convertArrayWithNetworkPostsIdsToString];
     if(sqlite3_prepare_v2(_database, sql, -1, &statement, nil) == SQLITE_OK) {
         
         sqlite3_bind_text(statement, 1, [[self checkExistedString: post.postDescription] UTF8String], -1, SQLITE_TRANSIENT);

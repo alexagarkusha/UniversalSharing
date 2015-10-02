@@ -20,8 +20,9 @@
 //===
 - (void)insertIntoTable:(id) object;
 //===
-- (void)deletePostByPrimaryKey :(Post*) post;
-- (void)deleteUserByClientId :(NSString*) clientId;
+- (void) deletePostByPrimaryKey :(Post*) post;
+- (void) deleteUserByClientId :(NSString*) clientId;
+- (void) deleteObjectFromDataDase : (NSString*) deleteSQL;
 //===
 - (void) editObjectAtDataBaseWithRequestString : (NSString*) requestString;
 - (NSMutableArray*)obtainPostsFromDataBaseWithRequestString : (NSString*) requestString;

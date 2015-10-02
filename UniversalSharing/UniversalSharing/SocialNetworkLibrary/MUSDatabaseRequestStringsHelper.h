@@ -48,6 +48,8 @@
 + (NSString*) createStringForDeletePostWithUserId :(NSString*) userId;
 
 + (NSString*) createStringNetworkPostForUpdateWithObjectNetworkPostForVK :(NetworkPost*) networkPost;
-+ (NSString*) createStringForUpdateNetworkPost :(NetworkPost*) networkPost;
++ (NSString*) createStringForUpdateNetworkPost : (NetworkPost*) networkPost;
++ (NSString*) createStringForDeleteNetworkPost : (NetworkPost*) networkPost;
++ (NSString*) createStringForUpdateNetworkPostIdsInPost :(Post*) post;
 
 @end

@@ -78,64 +78,62 @@
 //// ADD to USER ????? /////
 
 - (void) removeUserFromDataBaseAndImageFromDocumentsFolder :(User*) user {
-    [self removeImagesOfPostFromDocumentsFolder: user.clientID];
+    //[self removeImagesOfPostFromDocumentsFolder: user.clientID];
     
     [[DataBaseManager sharedManager] deleteUserByClientId : user.clientID];
-    
     NSError *error;
-    
     [[NSFileManager defaultManager] removeItemAtPath: [user.photoURL obtainPathToDocumentsFolder: user.photoURL] error: &error];
 }
 
-- (void) removeImagesOfPostFromDocumentsFolder :(NSString*) userId {
-    [[PostImagesManager manager] removeAllImagesFromAllPostsByUserID: userId];
-}
+//- (void) removeImagesOfPostFromDocumentsFolder :(NSString*) userId {
+//    [[PostImagesManager manager] removeAllImagesFromAllPostsByUserID: userId];
+//}
 
 
 //// ADD to POST ????? /////
 
-- (void) saveOrUpdatePost : (Post*) post withReason : (ReasonType) reason {
-    if (!post.primaryKey) {
-        [self savePostDataBaseWithReason: reason andPost: post];
-    } else {
-        [self updatePostDataBaseWithReason: reason andPost: post];
-    }
-}
-
-- (void) savePostDataBaseWithReason :(ReasonType) reason andPost :(Post*) post {
-    post.reason = reason;
-    [self saveImageToDocumentsFolderAndFillArrayWithUrl:post];
-}
-
-- (void) updatePostDataBaseWithReason :(ReasonType) reason andPost :(Post*) post {
-    post.reason = reason;
-    [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost: post]];
-    [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringLocationsForUpdateWithObjectPost: post]];
-}
-
-- (void) saveImageToDocumentsFolderAndFillArrayWithUrl :(Post*) post {
-    if (!post.arrayImagesUrl) {
-        post.arrayImagesUrl = [NSMutableArray new];
-    } else {
-        [post.arrayImagesUrl removeAllObjects];
-    }
-    post.arrayImagesUrl = [[PostImagesManager manager] saveImagesToDocumentsFolderAndGetArrayWithImagesUrls: post.arrayImages];
-    [[DataBaseManager sharedManager] insertIntoTable:post];
-    
-    /*
-     [post.arrayImages enumerateObjectsUsingBlock:^(ImageToPost *image, NSUInteger index, BOOL *stop) {
-     NSData *data = UIImagePNGRepresentation(image.image);
-     //Get the docs directory
-     NSString *filePath = @"image";
-     filePath = [filePath stringByAppendingString:[NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970] * 1000]];
-     filePath = [filePath stringByAppendingString:@".png"];
-     [post.arrayImagesUrl addObject:filePath];
-     
-     [data writeToFile:[filePath obtainPathToDocumentsFolder:filePath] atomically:YES]; //Write the file
-     }];
-     */
-}
-
+//- (void) saveOrUpdatePost : (Post*) post withReason : (ReasonType) reason {
+//    if (!post.primaryKey) {
+//        [self savePostDataBaseWithReason: reason andPost: post];
+//    } else {
+//        [self updatePostDataBaseWithReason: reason andPost: post];
+//    }
+//}
+//
+//- (void) savePostDataBaseWithReason :(ReasonType) reason andPost :(Post*) post {
+//    post.reason = reason;
+//    [self saveImageToDocumentsFolderAndFillArrayWithUrl:post];
+//}
+//
+//- (void) updatePostDataBaseWithReason :(ReasonType) reason andPost :(Post*) post {
+//    post.reason = reason;
+//    [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost: post]];
+//    [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringLocationsForUpdateWithObjectPost: post]];
+//}
+//
+//- (void) saveImageToDocumentsFolderAndFillArrayWithUrl :(Post*) post {
+//    if (!post.arrayImagesUrl) {
+//        post.arrayImagesUrl = [NSMutableArray new];
+//    } else {
+//        [post.arrayImagesUrl removeAllObjects];
+//    }
+//    post.arrayImagesUrl = [[PostImagesManager manager] saveImagesToDocumentsFolderAndGetArrayWithImagesUrls: post.arrayImages];
+//    [[DataBaseManager sharedManager] insertIntoTable:post];
+//    
+//    /*
+//     [post.arrayImages enumerateObjectsUsingBlock:^(ImageToPost *image, NSUInteger index, BOOL *stop) {
+//     NSData *data = UIImagePNGRepresentation(image.image);
+//     //Get the docs directory
+//     NSString *filePath = @"image";
+//     filePath = [filePath stringByAppendingString:[NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970] * 1000]];
+//     filePath = [filePath stringByAppendingString:@".png"];
+//     [post.arrayImagesUrl addObject:filePath];
+//     
+//     [data writeToFile:[filePath obtainPathToDocumentsFolder:filePath] atomically:YES]; //Write the file
+//     }];
+//     */
+//}
+//
 
 
 

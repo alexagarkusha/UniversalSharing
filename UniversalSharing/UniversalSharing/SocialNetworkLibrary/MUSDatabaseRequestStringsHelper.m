@@ -159,6 +159,7 @@
 //    return finalStringPostsForUpdate;
 //}
 
+#warning Rename THIS METHOD
 + (NSString*) createStringNetworkPostsForUpdateWithObjectPost :(NetworkPost*) networkPost {
     NSString *stringPostsForUpdate = @"UPDATE NetworkPosts set ";
     
@@ -300,12 +301,25 @@
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"networkType = \"%d\", "];
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"reson = \"%d\", "];
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"dateCreate = \"%@\", "];
-    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"postID = \"%@\" "];
+    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"postId = \"%@\" "];
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"WHERE id = \"%d\""];
     
     NSString *finalStringPostsForUpdate = [NSString stringWithFormat:stringPostsForUpdate, networkPost.likesCount, networkPost.commentsCount, networkPost.networkType, networkPost.reason, networkPost.dateCreate, networkPost.postID, networkPost.primaryKey];
     
     return finalStringPostsForUpdate;
+}
+
++ (NSString*) createStringForDeleteNetworkPost : (NetworkPost*) networkPost {
+    return [NSString stringWithFormat:@"DELETE from NetworkPosts WHERE id = \"%d\"",networkPost.primaryKey];
+}
+
++ (NSString*) createStringForUpdateNetworkPostIdsInPost :(Post*) post {
+    NSString *stringPostsForUpdate = @"UPDATE Posts set ";
+        stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"networkPostsId = \"%@\" "];
+        stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"WHERE id = \"%d\""];
+        [post convertArrayWithNetworkPostsIdsToString];
+        NSString *finalStringPostsForUpdate = [NSString stringWithFormat:stringPostsForUpdate, post.postID, post.primaryKey];
+        return finalStringPostsForUpdate;
 }
 
 

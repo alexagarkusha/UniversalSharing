@@ -18,6 +18,7 @@
 #import "InternetConnectionManager.h"
 #import "NetworkPost.h"
 #import "NSString+MUSCurrentDate.h"
+#import "MUSPostManager.h"
 
 @interface FacebookNetwork()<FBSDKGraphRequestConnectionDelegate>
 
@@ -132,6 +133,8 @@ static FacebookNetwork *model = nil;
 
 
 - (void) loginOut {
+    [[MUSPostManager manager] deleteNetworkPostFromPostsOfSocialNetworkType: self.networkType];
+    [MUSPostManager manager].needToRefreshPosts = YES;
     [self removeUserFromDataBaseAndImageFromDocumentsFolder:self.currentUser];
     [FBSDKAccessToken setCurrentAccessToken:nil];
     [FBSDKProfile setCurrentProfile:nil];
@@ -477,7 +480,6 @@ static FacebookNetwork *model = nil;
     if (self.copyComplitionUpdateNetworkPosts) {
         self.copyComplitionUpdateNetworkPosts (@"Facebook update all network posts");
     }
-    //[self updatePostInfoNotification];
 }
 
 - (void) obtainCountOfCommentsFromPost :(NSString*) postID andConnection:(FBSDKGraphRequestConnection*)connection withComplition : (Complition) block {
@@ -502,10 +504,6 @@ static FacebookNetwork *model = nil;
     return [NSError errorWithMessage: musFacebookError andCodeError: musFacebookErrorCode];
 }
 
-
-- (void) updatePostInfoNotification {
-    [[NSNotificationCenter defaultCenter] postNotificationName:MUSNotificationPostsInfoWereUpDated object:nil];
-}
 
 /*
 -(void) postPhotosToAlbum:(Post *) post {

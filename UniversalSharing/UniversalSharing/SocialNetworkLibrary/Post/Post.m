@@ -22,6 +22,18 @@
     return url;    
 }
 
+- (NSString *) convertArrayWithNetworkPostsIdsToString {
+    _postID = @"";
+    for (int i = 0; i < _arrayWithNetworkPostsId.count; i++) {
+        _postID = [_postID stringByAppendingString: [_arrayWithNetworkPostsId objectAtIndex:i]];
+        if (i != _arrayWithNetworkPostsId.count - 1) {
+            _postID = [_postID stringByAppendingString: @","];
+        }
+    }
+    return _postID;
+}
+
+
 - (id)copy
 {
     Post *copyPost = [Post new];
