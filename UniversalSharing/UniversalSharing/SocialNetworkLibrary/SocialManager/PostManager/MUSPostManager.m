@@ -8,6 +8,7 @@
 
 #import "MUSPostManager.h"
 #import "DataBaseManager.h"
+#import "PostImagesManager.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 
 @interface MUSPostManager ()
@@ -48,6 +49,35 @@ static MUSPostManager *model = nil;
 
 - (void) updateNetworkPosts {
     
+}
+
+- (void) deleteNetworkPostFromPostsOfSocialNetworkType : (NetworkType) networkType {
+    for (Post *currentPost in self.arrayOfPosts) {
+        [currentPost updateAllNetworkPostsFromDataBaseForCurrentPost];
+        for (NetworkPost *networkPost in currentPost.arrayWithNetworkPosts) {
+            if (networkPost.networkType == networkType) {
+                // Delete NetworkPost ID from post
+                [currentPost.arrayWithNetworkPostsId removeObject: [NSString stringWithFormat: @"%d", networkPost.primaryKey]];
+                // Delete NetworkPost from Data Base
+                [[DataBaseManager sharedManager] deleteObjectFromDataDase: [MUSDatabaseRequestStringsHelper createStringForDeleteNetworkPost: networkPost]];
+            }
+        }
+        
+        if (!currentPost.arrayWithNetworkPostsId.count) {
+            // Delete all images from documents
+            [[PostImagesManager manager] removeAllImagesFromPostByArrayOfImagesUrls : currentPost.arrayImagesUrl];
+            // Delete post from Data Base
+            [[DataBaseManager sharedManager] deleteObjectFromDataDase: [MUSDatabaseRequestStringsHelper createStringForDeletePostWithPrimaryKey: currentPost.primaryKey]];
+        } else {
+            //Update post in Data Base
+            [[DataBaseManager sharedManager] deleteObjectFromDataDase: [MUSDatabaseRequestStringsHelper createStringForUpdateNetworkPostIdsInPost: currentPost]];
+        }
+    }
+    [self updatePostInfoNotification];
+}
+
+- (void) updatePostInfoNotification {
+    [[NSNotificationCenter defaultCenter] postNotificationName:MUSNotificationPostsInfoWereUpDated object:nil];
 }
 
 

@@ -18,6 +18,7 @@
 #import "InternetConnectionManager.h"
 #import "NetworkPost.h"
 #import "NSString+MUSCurrentDate.h"
+#import "MUSPostManager.h"
 
 @interface TwitterNetwork () //<TWTRCoreOAuthSigning>
 
@@ -156,8 +157,8 @@ static TwitterNetwork *model = nil;
         [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
     }
     
-    
-    
+    [[MUSPostManager manager] deleteNetworkPostFromPostsOfSocialNetworkType: self.networkType];
+    [MUSPostManager manager].needToRefreshPosts = YES;
     
     //[[Twitter sharedInstance] logOutGuest];
     [self removeUserFromDataBaseAndImageFromDocumentsFolder:self.currentUser];
@@ -214,7 +215,6 @@ static TwitterNetwork *model = nil;
     
     if (![[InternetConnectionManager manager] isInternetConnection] || !networksPostsIDs.count || (![[InternetConnectionManager manager] isInternetConnection] && networksPostsIDs.count)) {
         block (@"Twitter, Error update network posts");
-        //[self updatePostInfoNotification];
         return;
     }
     

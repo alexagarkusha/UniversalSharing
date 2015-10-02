@@ -448,24 +448,25 @@
     [self.popUpForSharing.view removeFromSuperview];
     self.popUpForSharing = nil;
     
+    self.shareButton.enabled = NO;
     __weak MUSDetailPostViewController *weakSelf = self;
     
     if (arrayChosenNetworksForPost) {
         
     [[MultySharingManager sharedManager] sharePost: self.currentPost toSocialNetworks: arrayChosenNetworksForPost withComplition:^(id result, NSError *error) {
 
-#warning NEED TO THINK how to refresh post;
-        
-        
-        
-            //NSLog(@"RESULT %@", result);
-            //NSLog(@"ERROR %@", error);
-            //[weakSelf.post.arrayWithNetworkPostsId removeAllObjects];
+        [weakSelf.currentPost updateAllNetworkPostsFromDataBaseForCurrentPost];
+
+        [weakSelf.tableView reloadData];
+
+        for (NetworkPost *networkPost in weakSelf.currentPost.arrayWithNetworkPosts) {
+            if (networkPost.reason != Connect) {
+                self.shareButton.enabled = YES;
+            }
+        }
         }];
     }
 }
-
-
 
 @end
 

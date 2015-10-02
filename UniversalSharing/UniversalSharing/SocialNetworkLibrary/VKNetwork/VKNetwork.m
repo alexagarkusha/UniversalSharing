@@ -17,6 +17,7 @@
 #import "InternetConnectionManager.h"
 #import "NetworkPost.h"
 #import "NSString+MUSCurrentDate.h"
+#import "MUSPostManager.h"
 
 @interface VKNetwork () <VKSdkDelegate>
 @property (strong, nonatomic) UINavigationController *navigationController;
@@ -135,6 +136,8 @@ static VKNetwork *model = nil;
 
 - (void) loginOut {
     [VKSdk forceLogout];
+    [[MUSPostManager manager] deleteNetworkPostFromPostsOfSocialNetworkType: self.networkType];
+    [MUSPostManager manager].needToRefreshPosts = YES;
     [self removeUserFromDataBaseAndImageFromDocumentsFolder:self.currentUser];
     self.currentUser = nil;
     [self initiationPropertiesWithoutSession];
@@ -528,11 +531,6 @@ static VKNetwork *model = nil;
 - (NSError*) errorVkontakte {
     return [NSError errorWithMessage: musFacebookError andCodeError: musFacebookErrorCode];
 }
-
-- (void) updatePostInfoNotification {
-    [[NSNotificationCenter defaultCenter] postNotificationName:MUSNotificationPostsInfoWereUpDated object:nil];
-}
-
 
 @end
 

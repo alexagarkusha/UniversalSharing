@@ -62,6 +62,8 @@
 
 - (NSString*) convertArrayImagesUrlToString;
 
+- (NSString *) convertArrayWithNetworkPostsIdsToString;
+
 - (id)copy;
 
 - (void) updateAllNetworkPostsFromDataBaseForCurrentPost;

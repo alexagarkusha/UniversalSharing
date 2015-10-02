@@ -106,9 +106,7 @@
         [pageControl setBackgroundColor:backgroundColor];
         
         CGSize pageControlSize = [pageControl sizeForNumberOfPages:pagesCount];
-        
-#warning NEED ADD FRAME TO PAGE CONTROL
-        
+                
         pageControl.frame = CGRectMake(
                                        
         self.bounds.size.width,

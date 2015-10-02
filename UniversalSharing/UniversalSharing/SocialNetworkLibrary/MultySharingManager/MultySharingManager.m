@@ -106,7 +106,6 @@ static MultySharingManager *model = nil;
 }
 
 
-#warning NEW METHOD - Need to test it
 
 - (void) updatePost : (Post*) post toSocialNetworks : (NSArray*) arrayWithNetworks {
     __block Post *postCopy = post;
