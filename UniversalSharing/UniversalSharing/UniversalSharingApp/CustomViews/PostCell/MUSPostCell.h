@@ -23,6 +23,7 @@
 
 //- (void) configurationUpdatingPostCell: (Post*) currentPost;
 - (void) configurationPostCell: (Post*) currentPost;
+@property (weak, nonatomic) IBOutlet UIView *backgroundViewOfCell;
 //- (void) configurateFirstImageOfPost : (Post*) currentPost;
 
 @property (nonatomic, strong) NSMutableArray *arrayWithNetworkPosts;

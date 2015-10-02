@@ -106,8 +106,16 @@
 @property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
 
 @property (strong, nonatomic)                MUSPopUpForSharing * popVC ;
+//<<<<<<< HEAD
 @property (strong, nonatomic)                NSString *address;
 @property (strong, nonatomic)                MUSProgressBar * progressBar ;
+//=======
+//@property (strong, nonatomic)                NSString* address;
+
+@property (strong, nonatomic)               NSString *longitude;
+@property (strong, nonatomic)               NSString *latitude;
+
+//>>>>>>> de36ea2567a4ea8074988b37c8efbda4eb95e414
 @end
 
 @implementation MUSShareViewController
@@ -185,30 +193,27 @@
     [self.changeSocialNetworkButton addTarget:self action:@selector(changeSocialNetworkAccount:)forControlEvents:UIControlEventTouchUpInside];
 }
 - (IBAction)buttonLocationTapped:(UIButton *)sender {////////////////////////////////////////////////////////////////////
-    
+    __weak MUSShareViewController *weakSelf = self;
     if (!sender.selected) {
         sender.selected = !sender.selected;
-        
- [[MUSLocationManager sharedManager] startTrackLocationWithComplition:^(CLLocation* location, NSError *error) {
-  NSString *longitude = [NSString stringWithFormat: @"%f",location.coordinate.longitude];
-    NSString *latitude = [NSString stringWithFormat: @"%f",location.coordinate.latitude];
-     //////////////////////////////////////////////////////////////////////////////////////////////////////////
-     [[MUSLocationManager sharedManager] obtainAddressFromLocation:location complitionBlock:^(NSString *address, NSError *error) {
-         self.address = address;
-         [self.buttonLocation setTitle:address forState:UIControlStateNormal];
-         self.iconImageView.highlighted = !self.iconImageView.highlighted;
-     }];
-     
- }];
+        [[MUSLocationManager sharedManager] startTrackLocationWithComplition:^(CLLocation* location, NSError *error) {
+            weakSelf.latitude = [NSString stringWithFormat: @"%f",location.coordinate.latitude];
+            weakSelf.longitude = [NSString stringWithFormat: @"%f",location.coordinate.longitude];
+             //weakSelf.post.longitude = [NSString stringWithFormat: @"%f",location.coordinate.longitude];
+            //weakSelf.post.latitude = [NSString stringWithFormat: @"%f",location.coordinate.latitude];
+            [[MUSLocationManager sharedManager] obtainAddressFromLocation:location complitionBlock:^(NSString *address, NSError *error) {
+                self.address = address;
+                [self.buttonLocation setTitle:address forState:UIControlStateNormal];
+                self.iconImageView.highlighted = !self.iconImageView.highlighted;
+            }];
+        }];
     } else {
-        
         UIActionSheet* sheet = [UIActionSheet new];
         sheet.title = self.address;
         sheet.delegate = self;
         [sheet addButtonWithTitle: @"Delete"];
         sheet.cancelButtonIndex = [sheet addButtonWithTitle:musAppButtonTitle_Cancel];
         [sheet showInView:self.view];
-        
     }
 }
 
@@ -506,6 +511,8 @@
     [self.buttonLocation setTitle:@"Select your location" forState:UIControlStateNormal];
     self.place = nil;
     self.shareButtonOutlet.enabled = NO;
+    self.longitude = @"";
+    self.latitude = @"";
     //self.view.userInteractionEnabled = YES;
 //    [self.shareLocationButton setTintColor: [UIColor blackColor]];
 //    [self.shareLocationButton setTitle: musAppButtonTitle_ShareLocation];
@@ -524,6 +531,8 @@
         self.post.postDescription = @"";
     }
     self.post.networkType = _currentSocialNetwork.networkType;
+    self.post.longitude = self.longitude;
+    self.post.latitude = self.latitude;
     /*
      get array with chosen images from MUSGaleryView
      */

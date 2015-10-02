@@ -41,6 +41,9 @@
 @property (nonatomic, strong) NSString *latitude;
 
 @property (nonatomic, assign) BOOL isChosen;
+
++ (instancetype) create;
+
 /*!
  @abstract return an instance of the Place.
  @param dictionary takes dictionary from social network.
@@ -49,6 +52,5 @@
 + (Place*) createFromDictionary: (NSDictionary*) dictionary andNetworkType : (NetworkType) networkType;
 
 - (id) copy;
-
 
 @end

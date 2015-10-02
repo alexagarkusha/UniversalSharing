@@ -32,10 +32,6 @@
  @abstract array of share reasons.
  */
 @property (nonatomic, strong) NSArray *arrayOfShareReason;
-///*!
-// @abstract custom drop down menu for filtering posts by network type or by reason type.
-// */
-//@property (nonatomic, strong) DOPDropDownMenu *menu;
 /*!
  @abstract table view for presenting array of posts.
  */
@@ -76,16 +72,16 @@
     [super viewWillAppear : YES];
     [self updateNetworkPostsInPost];
     // Notification for updating likes and comments in posts.
-    [[NSNotificationCenter defaultCenter] addObserver : self
-                                             selector : @selector(updateArrayPosts)
-                                                 name : MUSNotificationPostsInfoWereUpDated
-                                               object : nil];
+    [[NSNotificationCenter defaultCenter]
+                            addObserver : self
+                               selector : @selector(updateArrayPosts)
+                                   name : MUSNotificationPostsInfoWereUpDated
+                                 object : nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 }
-
 
 - (void) viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear: YES];
@@ -167,6 +163,11 @@
     return [MUSPostCell heightForPostCell: currentPost];
 }
 
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
+{
+    view.tintColor = [UIColor clearColor];
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 3;
@@ -179,8 +180,36 @@
     }
 }
 
+- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView didHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.tableView.contentOffset.y >= 0) {
+        MUSPostCell *cell = (MUSPostCell *)[tableView cellForRowAtIndexPath:indexPath];
+        //cell.backgroundViewOfCell.backgroundColor = BROWN_COLOR_Light;
+        [self setCellColor: BROWN_COLOR_LightMID ForCell: cell];
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didUnhighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+    MUSPostCell *cell = (MUSPostCell *)[tableView cellForRowAtIndexPath:indexPath];
+    //cell.backgroundViewOfCell.backgroundColor = BROWN_COLOR_Light;
+    [self setCellColor: [UIColor clearColor] ForCell: cell];
+}
+
+- (void) setCellColor: (UIColor *) color ForCell: (MUSPostCell *) cell {
+    [UIView animateWithDuration: 0.3 animations:^{
+        cell.backgroundViewOfCell.backgroundColor = color;
+        //cell.contentView.backgroundColor = color;
+    }];
+    [UIView commitAnimations];
+}
+
+
+
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    //MUSDetailPostViewController *detailPostViewController = [[MUSDetailPostViewController alloc] init];
     if ([[segue identifier] isEqualToString:goToDetailPostViewControllerSegueIdentifier]) {
         MUSDetailPostViewController * detailPostViewController = (MUSDetailPostViewController*)[segue destinationViewController];
         detailPostViewController.delegate = self;
@@ -294,37 +323,4 @@
 
 
 
-//- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
-//    Post *post = [self.arrayPosts objectAtIndex: indexPath.row];
-//    if (![self.setWithUniquePrimaryKeysOfPost containsObject: [NSString stringWithFormat: @"%ld", (long)post.primaryKey]]) {
-//        return YES;
-//    } else {
-//        return NO;
-//    }
-//}
-//
-//- (void)tableView:(UITableView *)tableView didHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
-//    if (self.tableView.contentOffset.y >= 0) {
-//        MUSPostCell *cell = (MUSPostCell *)[tableView cellForRowAtIndexPath:indexPath];
-//        [self setCellColor: [UIColor colorWithRed:230.0/255.0 green:230.0/255.0 blue:230.0/255.0 alpha: 1.0] ForCell: cell];
-//    }
-//}
-//
-//- (void)tableView:(UITableView *)tableView didUnhighlightRowAtIndexPath:(NSIndexPath *)indexPath {
-//    if (!self.editing) {
-//        MUSPostCell *cell = (MUSPostCell *)[tableView cellForRowAtIndexPath:indexPath];
-//        [self setCellColor: [UIColor whiteColor] ForCell: cell];
-//    }
-//}
-//
-//- (void) setCellColor: (UIColor *) color ForCell: (UITableViewCell *) cell {
-//    [UIView animateWithDuration: 0.3 animations:^{
-//        cell.contentView.backgroundColor = color;
-//    }];
-//    [UIView commitAnimations];
-//}
-//
-//- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    return UITableViewCellEditingStyleNone;
-//}
 

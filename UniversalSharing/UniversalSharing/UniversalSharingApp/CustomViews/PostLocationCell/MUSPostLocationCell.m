@@ -13,13 +13,9 @@
 
 @interface MUSPostLocationCell () <MKMapViewDelegate>
 
-- (IBAction)changeLocationButtonTouch:(id)sender;
 
 @property (weak, nonatomic) IBOutlet    MKMapView  *mapView;
-@property (weak, nonatomic) IBOutlet    UIButton   *changeLocationButton;
 @property (weak, nonatomic) IBOutlet    UILabel    *placeNameLabel;
-@property (weak, nonatomic) IBOutlet    UIView     *addLocationView;
-@property (weak, nonatomic) IBOutlet    UILabel    *addLocationLabel;
 
 @property (nonatomic, strong) id<MKAnnotation> lastAnnotation;
 
@@ -53,8 +49,8 @@
 
 #pragma mark - height for PostLocationCell
 
-+ (CGFloat) heightForPostLocationCell : (Place*) place {
-    if (!place.placeID.length > 0 || [place.placeID isEqualToString: @"(null)"]) {
++ (CGFloat) heightForPostLocationCell : (Post*) currentPost {
+    if (!currentPost.longitude.length > 0 || [currentPost.longitude isEqualToString: @"(null)"] || !currentPost.latitude.length > 0 || [currentPost.latitude isEqualToString: @"(null)"]) {
         return 0;
     } else {
         return musAppDetailPostVC_HeightOfPostLocationCell;
@@ -73,47 +69,27 @@
 
 #pragma mark - configuration PostLocationCell
 
-- (void) configurationPostLocationCellByPostPlace: (Place *) currentPlace {
-    self.addLocationLabel.text = @"Add location to your Post";
-    [self checkChangeLocationButtonStatus];
-    self.addLocationView.hidden = NO;
-    if (currentPlace.placeID.length > 0 && ![currentPlace.placeID isEqualToString: @"(null)"]) {
-        [self initialMapViewForCurrentPlace: currentPlace];
-    }
+- (void) configurationPostLocationCellByPostPlace: (Post *) currentPost {
+    [self initialMapViewForCurrentPlace: currentPost];
 }
 
 #pragma mark initiation MapView for the currentPlace
 
-- (void) initialMapViewForCurrentPlace: (Place*) currentPlace {
-    self.addLocationView.hidden = YES;
+- (void) initialMapViewForCurrentPlace: (Post*) currentPost {
     [self.mapView removeAnnotations: self.mapView.annotations];
-    if (currentPlace.fullName.length > 0) {
-        self.placeNameLabel.hidden = NO;
-        self.placeNameLabel.text = [NSString stringWithFormat: @"%@", currentPlace.fullName];
-    }
-    CLLocationCoordinate2D currentCityLocation = CLLocationCoordinate2DMake([currentPlace.latitude floatValue], [currentPlace.longitude floatValue]);
+//    if (currentPlace.fullName.length > 0) {
+//        self.placeNameLabel.hidden = NO;
+//        self.placeNameLabel.text = [NSString stringWithFormat: @"%@", currentPlace.fullName];
+//    }
+    CLLocationCoordinate2D currentCityLocation = CLLocationCoordinate2DMake([currentPost.latitude floatValue], [currentPost.longitude floatValue]);
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(currentCityLocation, 500, 500);
     MUSAnnotation *pin = [[MUSAnnotation alloc] init];
-    pin.title = currentPlace.fullName;
+    //pin.title = currentPost.fullName;
     pin.coordinate = currentCityLocation;
     [self.mapView setRegion : region animated:YES];
     [self.mapView addAnnotation : pin];
 }
 
-#pragma mark check ChangeLocationButton status
 
-- (void) checkChangeLocationButtonStatus {
-    if (!self.isEditableCell) {
-        self.changeLocationButton.hidden = YES;
-    } else {
-        self.changeLocationButton.hidden = NO;
-    }
-}
-
-#pragma mark ChangeLocationButton touch
-
-- (IBAction)changeLocationButtonTouch:(id)sender {
-    [self.delegate changeLocationForPost];
-}
 
 @end

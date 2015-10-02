@@ -40,7 +40,6 @@
 
 @property (strong, nonatomic) NSArray *arrayOfImageView;
 
-@property (weak, nonatomic) IBOutlet UIView *backgroundViewOfCell;
 @property (weak, nonatomic) IBOutlet UITableView *commentsAndLikesPostTableView;
 @property (strong, nonatomic) CAShapeLayer *shapeLayer;
 
@@ -56,7 +55,8 @@
         currentImageView.backgroundColor = [UIColor lightGrayColor];
         [currentImageView cornerRadius: 0.0 andBorderWidth: 1.0 withBorderColor: [UIColor whiteColor]];
     }
-    self.backgroundColor = BROWN_COLOR_Lightly;
+    //self.backgroundView.alpha = 0;
+    self.backgroundColor = [UIColor clearColor];
 
     // Initialization code
 }
@@ -94,12 +94,14 @@
 }
 
 - (void) configuratePostDescriptionLabelForPost: (Post*) post {
-    self.postDescriptionLabel.text = post.postDescription;
-}
-
-- (void) configuratePostDescriptionLabelForPostWithoutText {
-    self.postDescriptionLabel.backgroundColor = BROWN_COLOR_Lightly;
-    self.postDescriptionLabel.hidden = YES;
+    //self.postDescriptionLabel.backgroundColor = BROWN_COLOR_Lightly;
+    if (!post.postDescription.length) {
+        self.postDescriptionLabel.text = @"No text...";
+        self.postDescriptionLabel.textColor = [UIColor lightGrayColor];
+    } else {
+        self.postDescriptionLabel.text = post.postDescription;
+        self.postDescriptionLabel.textColor = [UIColor blackColor];
+    }
 }
 
 - (void) configurateFirstImageOfPost : (Post*) currentPost {

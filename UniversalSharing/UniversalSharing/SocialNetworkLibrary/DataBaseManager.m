@@ -10,7 +10,6 @@
 #import "SocialNetwork.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 #import <sqlite3.h>
-#import "UIImage+LoadImageFromDataBase.h"
 
 @interface DataBaseManager() {
     sqlite3 *_database;
@@ -104,23 +103,16 @@ static DataBaseManager *databaseManager;
     sqlite3_stmt *statement = nil;
     //post.locationId = [self saveLocationToTableWithObject:post];
     const char *sql = [[MUSDatabaseRequestStringsHelper createStringForSavePostToTable] UTF8String];
-#warning NEED TO CHANGE
-//    post.postID = @"";
-//    for (int i = 0; i < post.arrayWithNetworkPostsId.count; i++) {
-//        post.postID = [post.postID stringByAppendingString: [post.arrayWithNetworkPostsId objectAtIndex:i]];
-//        if (i != post.arrayWithNetworkPostsId.count - 1) {
-//            post.postID = [post.postID stringByAppendingString: @","];
-//        }
-//    }
     [post convertArrayWithNetworkPostsIdsToString];
     if(sqlite3_prepare_v2(_database, sql, -1, &statement, nil) == SQLITE_OK) {
         
         sqlite3_bind_text(statement, 1, [[self checkExistedString: post.postDescription] UTF8String], -1, SQLITE_TRANSIENT);
         sqlite3_bind_text(statement, 2, [[self checkExistedString: [post convertArrayImagesUrlToString]] UTF8String], -1, SQLITE_TRANSIENT);
         //change logic array to string
-        sqlite3_bind_text(statement, 3, [[self checkExistedString: post.postID] UTF8String], -1, SQLITE_TRANSIENT);//networkPostsId
-        sqlite3_bind_text(statement, 4, [[self checkExistedString: post.dateCreate] UTF8String], -1, SQLITE_TRANSIENT);
-
+        sqlite3_bind_text(statement, 3, [[self checkExistedString: post.postID] UTF8String], -1, SQLITE_TRANSIENT);//postId
+        sqlite3_bind_text(statement, 4, [[self checkExistedString: post.longitude] UTF8String], -1, SQLITE_TRANSIENT);//longitude
+        sqlite3_bind_text(statement, 5, [[self checkExistedString: post.latitude] UTF8String], -1, SQLITE_TRANSIENT);//latitude
+        sqlite3_bind_text(statement, 6, [[self checkExistedString: post.dateCreate] UTF8String], -1, SQLITE_TRANSIENT);//dateCreate
     }
     
     return statement;
@@ -308,23 +300,10 @@ static DataBaseManager *databaseManager;
             post.postDescription = [[NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 1)] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
             post.arrayImagesUrl = [[[NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 2)] componentsSeparatedByString: @", "]mutableCopy];
             post.arrayWithNetworkPostsId = [[[NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 3)] componentsSeparatedByString: @","]mutableCopy];//check when gether all the parts
-            //////////////////////////////////////////////////
-//            post.arrayWithNetworkPosts = [NSMutableArray new];
-//            [post.arrayWithNetworkPostsId enumerateObjectsUsingBlock:^(NSString *primaryKeyNetPost, NSUInteger idx, BOOL *stop) {
-//                [post.arrayWithNetworkPosts addObject:[self obtainNetworkPostsFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForNetworkPostWithPrimaryKey:[primaryKeyNetPost integerValue]]]];
-//            }];
-            post.dateCreate = [[NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 4)] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];//check when gether all the parts
-            
-            post.arrayImages = [NSMutableArray new];
-            for (int i = 0; i < post.arrayImagesUrl.count; i++) {
-                UIImage *image = [UIImage new];
-                image = [image loadImageFromDataBase: [post.arrayImagesUrl objectAtIndex: i]];
-                ImageToPost *imageToPost = [[ImageToPost alloc] init];
-                imageToPost.image = image;
-                imageToPost.quality = 1.0f;
-                imageToPost.imageType = JPEG;
-                [post.arrayImages addObject: imageToPost];
-            }
+            post.longitude = [[NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 4)] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];//check when gether all the parts
+            post.latitude = [[NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 5)] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];//check when gether all the parts
+            post.dateCreate = [[NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 6)] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];//check when gether all the parts
+            [post convertArrayOfImagesUrlToArrayImagesWithObjectsImageToPost];
         [arrayWithPosts addObject:post];
         }
     }

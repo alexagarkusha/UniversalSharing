@@ -49,7 +49,7 @@
 /////////////////////////////////////////////////////////
 
 + (NSString*) createStringForSavePostToTable {
-    return [NSString stringWithFormat:@"INSERT INTO '%@'('%@','%@','%@','%@')VALUES(?,?,?,?)",@"Posts",@"postDescription",@"arrayImagesUrl",@"networkPostsId",@"dateCreate"];
+    return [NSString stringWithFormat:@"INSERT INTO '%@'('%@','%@','%@','%@','%@','%@')VALUES(?,?,?,?,?,?)",@"Posts",@"postDescription",@"arrayImagesUrl",@"networkPostsId",@"longitude",@"latitude",@"dateCreate"];
 }
 
 + (NSString*) createStringForSaveNetworkPostToTable {
@@ -160,7 +160,7 @@
 //}
 
 #warning Rename THIS METHOD
-+ (NSString*) createStringNetworkPostsForUpdateWithObjectPost :(NetworkPost*) networkPost {
++ (NSString*) createStringNetworkPostsForUpdateObjectPost :(NetworkPost*) networkPost {
     NSString *stringPostsForUpdate = @"UPDATE NetworkPosts set ";
     
     
@@ -261,6 +261,8 @@
     stringPostsTable = [stringPostsTable stringByAppendingString:@"postDescription TEXT, "];
     stringPostsTable = [stringPostsTable stringByAppendingString:@"arrayImagesUrl TEXT, "];
     stringPostsTable = [stringPostsTable stringByAppendingString:@"networkPostsId TEXT, "];
+    stringPostsTable = [stringPostsTable stringByAppendingString:@"longitude TEXT, "];
+    stringPostsTable = [stringPostsTable stringByAppendingString:@"latitude TEXT, "];
     stringPostsTable = [stringPostsTable stringByAppendingString:@"dateCreate TEXT)"];
     return stringPostsTable;
 }
@@ -292,6 +294,10 @@
     
     return finalStringPostsForUpdate;
 }
+
+
+
+
 
 + (NSString*) createStringForUpdateNetworkPost :(NetworkPost*) networkPost {
     NSString *stringPostsForUpdate = @"UPDATE NetworkPosts set ";
