@@ -20,7 +20,7 @@
 @interface MultySharingManager ()
 
 @property (copy, nonatomic) Complition copyComplition;
-
+@property (copy, nonatomic) ComplitionProgressLoading copyProgressLoading;
 @end
 
 
@@ -37,10 +37,10 @@ static MultySharingManager *model = nil;
     return  model;
 }
 
-- (void) sharePost : (Post*) post toSocialNetworks : (NSArray*) arrayOfNetworksType withComplition : (Complition) block {
+- (void) sharePost : (Post*) post toSocialNetworks : (NSArray*) arrayOfNetworksType withComplition : (Complition) block andComplitionProgressLoading :(ComplitionProgressLoading) blockLoading {
     NSMutableArray *arrayWithNetworks = [self arrayWithNetworks: arrayOfNetworksType];
     self.copyComplition = block;
-
+    self.copyProgressLoading = blockLoading;
     if (!post.primaryKey) {
         [self shareNewPost: post toSocialNetworks: arrayWithNetworks];
     } else {
@@ -75,7 +75,7 @@ static MultySharingManager *model = nil;
                 [postCopy.arrayWithNetworkPostsId addObject: [NSString stringWithFormat: @"%ld", (long)[[DataBaseManager sharedManager] saveNetworkPostToTableWithObject: networkPost]]];
             }
             
-            NSLog(@"Current post ID = %@, networktype =%d", networkPost.postID, networkPost.networkType);
+            NSLog(@"Current post ID = %@, networktype =%ld", networkPost.postID, (long)networkPost.networkType);
             
             
             if (counterOfSocialNetwork == numberOfSocialNetworks) {
@@ -84,7 +84,7 @@ static MultySharingManager *model = nil;
                 [weakMultySharingManager savePostImagesToDocument: postCopy];
                 
                 NSLog(@"Current post IDs = %@", postCopy.arrayWithNetworkPostsId);
-
+                
                 
                 [[DataBaseManager sharedManager] insertIntoTable : postCopy];
                 
@@ -93,7 +93,11 @@ static MultySharingManager *model = nil;
                 [self updatePostInfoNotification];
                 self.copyComplition (blockResultString, error);
             }
+
+        } andComplitionLoading:^(float result) {
+            self.copyProgressLoading(result);
         }];
+        
         //});
     }
     //
@@ -116,6 +120,7 @@ static MultySharingManager *model = nil;
 
     for (SocialNetwork *socialNetwork in arrayWithNetworks) {
         [socialNetwork sharePost: post withComplition:^(id result, NSError *error) {
+            
             //networkpost create
             counterOfSocialNetwork++;
             NetworkPost *networkPost;
@@ -128,6 +133,9 @@ static MultySharingManager *model = nil;
             if (counterOfSocialNetwork == numberOfSocialNetworks) {
                 self.copyComplition (blockResultString, error);
             }
+
+        } andComplitionLoading:^(float result) {
+            
         }];
     }
 }

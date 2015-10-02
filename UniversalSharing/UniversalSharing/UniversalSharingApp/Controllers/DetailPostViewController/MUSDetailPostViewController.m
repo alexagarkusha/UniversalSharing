@@ -454,6 +454,8 @@
                 self.shareButton.enabled = YES;
             }
         }
+        } andComplitionProgressLoading:^(float result) {
+            
         }];
     }
 }
