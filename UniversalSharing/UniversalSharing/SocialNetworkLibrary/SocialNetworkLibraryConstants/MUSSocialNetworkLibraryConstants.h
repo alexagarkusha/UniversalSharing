@@ -11,6 +11,7 @@
 #pragma mark Blocks
 
 typedef void (^Complition)(id result, NSError *error);
+typedef void (^ComplitionProgressLoading)(float result);
 typedef void (^ComplitionUpdateNetworkPosts)(id result);
 typedef void (^ComplitionWithArrays)(id arrayLogin, id arrayHidden, id arrayUnactive, NSError *error);
 

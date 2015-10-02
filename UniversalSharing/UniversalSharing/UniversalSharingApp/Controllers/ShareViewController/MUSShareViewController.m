@@ -22,6 +22,8 @@
 #import "DataBaseManager.h"
 #import "MUSDetailPostCollectionViewController.h"
 #import "MUSPopUpForSharing.h"
+#import "MUSProgressBar.h"
+#import "ImageToPost.h"
 
 @interface MUSShareViewController () <UITextViewDelegate, UIActionSheetDelegate, UIAlertViewDelegate, UINavigationControllerDelegate, UIToolbarDelegate, MUSGaleryViewDelegate, MUSPopUpForSharingDelegate>
 
@@ -104,7 +106,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
 
 @property (strong, nonatomic)                MUSPopUpForSharing * popVC ;
-@property (strong, nonatomic) NSString *address;
+@property (strong, nonatomic)                NSString *address;
+@property (strong, nonatomic)                MUSProgressBar * progressBar ;
 @end
 
 @implementation MUSShareViewController
@@ -129,6 +132,10 @@
                                                object : nil];
     self.view.backgroundColor = [UIColor whiteColor];
     [self initiationMUSShareViewController];
+    
+    self.progressBar = [[MUSProgressBar alloc]initWithFrame:CGRectMake(0, 15, self.view.frame.size.width, 50 )];
+    
+     //[self.navigationController.view addSubview:self.progressBar.view];
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -370,9 +377,22 @@
 }
 
 #pragma mark - Share Post to Social network
-- (void) sharePosts : (NSMutableArray*) arrayChosenNetworksForPost {
+- (void) sharePosts : (NSMutableArray*) arrayChosenNetworksForPost {///////////////////////////////////////////////////////////////
     //MUSPopUpForSharing * popVC = [MUSPopUpForSharing new];
-    
+    [self.navigationController.view addSubview:self.progressBar.view];
+    self.progressBar.labelStutus.text = @"Publishing";
+    NSArray * pics = [self.galeryView obtainArrayWithChosenPics];
+    if(pics.count){
+        self.progressBar.lableConstraint.constant = 50;
+        ImageToPost *image;
+        image = pics[0];
+        self.progressBar.imageViewPost.image = image.image;
+    } else {
+        self.progressBar.imageViewPost.image = nil;
+        self.progressBar.lableConstraint.constant = 8;
+        
+    }
+
     [_popVC removeFromParentViewController];
     [_popVC.view removeFromSuperview];
     _popVC = nil;
@@ -393,9 +413,18 @@
         [self refreshShareScreen];
     [[MultySharingManager sharedManager] sharePost: self.post toSocialNetworks: arrayChosenNetworksForPost withComplition:^(id result, NSError *error) {
         self.post = nil;
-        
+        //finish of post
         NSLog(@"RESULT %@", result);
         NSLog(@"ERROR %@", error);
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            [self.progressBar.view removeFromSuperview];
+        });
+    } andComplitionProgressLoading:^(float result) {
+        self.progressBar.progressView.progress = result;
+        if (result == 1) {
+            self.progressBar.labelStutus.text = @"Published :))";
+        }
     }];
     }
 }
@@ -411,9 +440,7 @@
     //[UIView animateWithDuration: 0.4 animations:^{
         [self.navigationController addChildViewController:_popVC];
     _popVC.view.frame = self.view.bounds;//CGRectMake(self.view.bounds.size.width/2-125, self.view.bounds.origin.y, 250, 350);//
-    //self.view.bounds;
-   
-    NSLog(@"%@",_popVC.view);
+  
         [self.navigationController.view addSubview:_popVC.view];
         [_popVC didMoveToParentViewController:self];
         [self.view endEditing:YES];

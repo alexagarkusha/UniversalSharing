@@ -63,6 +63,8 @@
 		30C9DDDF1BBC23C600F3266A /* MUSPopUpDeleteButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C9DDDE1BBC23C600F3266A /* MUSPopUpDeleteButton.m */; };
 		30C9DDE11BBD5DC700F3266A /* placeholderPin-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 30C9DDE01BBD5DC700F3266A /* placeholderPin-1.png */; };
 		30C9DDE51BBD607300F3266A /* camera25.png in Resources */ = {isa = PBXBuildFile; fileRef = 30C9DDE41BBD607300F3266A /* camera25.png */; };
+		30C9DDE91BBEA64800F3266A /* MUSProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C9DDE81BBEA64800F3266A /* MUSProgressBar.m */; };
+		30C9DDEB1BBEA65600F3266A /* MUSProgressBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30C9DDEA1BBEA65600F3266A /* MUSProgressBar.xib */; };
 		30D73BFD1BA715A2001B2FE8 /* MUSImageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30D73BFC1BA715A2001B2FE8 /* MUSImageScrollView.m */; };
 		30DBFD8B1B677A9A002F83D0 /* TwitterNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD8A1B677A9A002F83D0 /* TwitterNetwork.m */; };
 		30DBFD8F1B677AD7002F83D0 /* VKNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD8E1B677AD7002F83D0 /* VKNetwork.m */; };
@@ -268,6 +270,9 @@
 		30C9DDDE1BBC23C600F3266A /* MUSPopUpDeleteButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSPopUpDeleteButton.m; sourceTree = "<group>"; };
 		30C9DDE01BBD5DC700F3266A /* placeholderPin-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "placeholderPin-1.png"; sourceTree = "<group>"; };
 		30C9DDE41BBD607300F3266A /* camera25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera25.png; sourceTree = "<group>"; };
+		30C9DDE71BBEA64800F3266A /* MUSProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSProgressBar.h; sourceTree = "<group>"; };
+		30C9DDE81BBEA64800F3266A /* MUSProgressBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSProgressBar.m; sourceTree = "<group>"; };
+		30C9DDEA1BBEA65600F3266A /* MUSProgressBar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MUSProgressBar.xib; sourceTree = "<group>"; };
 		30D73BFB1BA715A2001B2FE8 /* MUSImageScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSImageScrollView.h; sourceTree = "<group>"; };
 		30D73BFC1BA715A2001B2FE8 /* MUSImageScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSImageScrollView.m; sourceTree = "<group>"; };
 		30DBFD891B677A9A002F83D0 /* TwitterNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterNetwork.h; sourceTree = "<group>"; };
@@ -724,6 +729,7 @@
 		18BB29961B67E3F000B498AC /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				30C9DDE61BBEA60700F3266A /* ProgressBar */,
 				30C9DDC71BB99A2E00F3266A /* PopUpCell */,
 				30C9DDBD1BB93A6100F3266A /* PopUpForSharing */,
 				30C9DDAF1BABFA0B00F3266A /* ToolBarForDetailCollectionView */,
@@ -930,6 +936,16 @@
 				30C9DDDE1BBC23C600F3266A /* MUSPopUpDeleteButton.m */,
 			);
 			name = PopUpDeleteButton;
+			sourceTree = "<group>";
+		};
+		30C9DDE61BBEA60700F3266A /* ProgressBar */ = {
+			isa = PBXGroup;
+			children = (
+				30C9DDE71BBEA64800F3266A /* MUSProgressBar.h */,
+				30C9DDE81BBEA64800F3266A /* MUSProgressBar.m */,
+				30C9DDEA1BBEA65600F3266A /* MUSProgressBar.xib */,
+			);
+			name = ProgressBar;
 			sourceTree = "<group>";
 		};
 		30D73BFA1BA71546001B2FE8 /* ImageScrollView */ = {
@@ -1655,6 +1671,7 @@
 				97C0A0FE1BB95EFA004E5F38 /* Twitter_icon.png in Resources */,
 				97C49E861B835B64005241CE /* MUSPostDescriptionCell.xib in Resources */,
 				30C9DDC61BB95E8C00F3266A /* close6.png in Resources */,
+				30C9DDEB1BBEA65600F3266A /* MUSProgressBar.xib in Resources */,
 				18BB29BC1B67E3F000B498AC /* MUSTopUserProfileCell.xib in Resources */,
 				30416A2B1B73AF49000CB2C2 /* MUSCollectionViewCell.xib in Resources */,
 				97C2E2AD1BBACE1C00C82D58 /* Twitter_Comment.png in Resources */,
@@ -1744,6 +1761,7 @@
 				18BB29B51B67E3F000B498AC /* ConstantsApp.m in Sources */,
 				97C9A2EB1BA2D52300D0C478 /* MUSLocationCell.m in Sources */,
 				979164A81B8C60F500DFCE64 /* NSString+DateStringFromUNIXTimestamp.m in Sources */,
+				30C9DDE91BBEA64800F3266A /* MUSProgressBar.m in Sources */,
 				97C7D79F1B73889B004DC83D /* MUSSocialNetworkLibraryConstantsForParseObjects.m in Sources */,
 				97BD0B5F1B8F4D7B00BFD4AF /* UIColor+ReasonColorForPost.m in Sources */,
 				97D1C44C1B81ED7F00009BCF /* DOPDropDownMenu.m in Sources */,

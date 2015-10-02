@@ -102,7 +102,7 @@
  @warning This method requires that you have been login in Social Network.
 */
 
-- (void) sharePost : (Post*) post withComplition : (Complition) block;
+- (void) sharePost : (Post*) post withComplition : (Complition) block andComplitionLoading :(ComplitionProgressLoading)blockLoading;
 
 - (void) setIsVisible:(BOOL)isVisible;
 
