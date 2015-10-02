@@ -468,7 +468,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Share" image="upload_icon" id="cPa-gy-q4n"/>
                     <navigationItem key="navigationItem" title="Share Post" id="oIA-lG-G83">
-                        <barButtonItem key="rightBarButtonItem" title="Share" id="pvH-Dt-bbm">
+                        <barButtonItem key="rightBarButtonItem" title="Share" style="plain" id="pvH-Dt-bbm">
                             <connections>
                                 <action selector="shareToSocialNetwork:" destination="8rJ-Kc-sve" id="gl5-yO-bCM"/>
                             </connections>
