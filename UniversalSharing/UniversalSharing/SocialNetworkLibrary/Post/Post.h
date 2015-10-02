@@ -57,15 +57,20 @@
 @property (strong, nonatomic) NetworkPost *networkPost;
 @property (strong, nonatomic) NSMutableArray *arrayWithNetworkPosts;
 @property (strong, nonatomic) NSMutableArray *arrayWithNetworkPostsId;
+@property (strong, nonatomic) NSString *longitude;
+@property (strong, nonatomic) NSString *latitude;
 
 //===
++ (instancetype)create;
+
+- (id)copy;
+
+- (void) updateAllNetworkPostsFromDataBaseForCurrentPost;
 
 - (NSString*) convertArrayImagesUrlToString;
 
 - (NSString *) convertArrayWithNetworkPostsIdsToString;
 
-- (id)copy;
-
-- (void) updateAllNetworkPostsFromDataBaseForCurrentPost;
+- (NSMutableArray*) convertArrayOfImagesUrlToArrayImagesWithObjectsImageToPost;
 
 @end

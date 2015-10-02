@@ -11,6 +11,20 @@
 
 @implementation Place
 
++ (instancetype) create {
+    Place *place = [[Place alloc] init];
+    place.fullName = @"";
+    place.placeID = @"";
+    place.country = @"";
+    place.placeType = @"";
+    place.city = @"";
+    place.longitude = @"";
+    place.latitude = @"";
+    place.isChosen = NO;
+    return place;
+}
+
+
 + (Place*) createFromDictionary: (NSDictionary*) dictionary andNetworkType :(NetworkType) networkType
 {
     switch (networkType) {

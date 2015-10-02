@@ -31,59 +31,17 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Loz-Pa-Uz7">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="150"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3cX-aj-nKp">
-                                <rect key="frame" x="32" y="56" width="257" height="37"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="37" id="RhB-8B-jAi"/>
-                                    <constraint firstAttribute="width" constant="257" id="eKG-57-6O5"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="SavoyeLetPlain" family="Savoye LET" pointSize="31"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="centerX" secondItem="3cX-aj-nKp" secondAttribute="centerX" id="Qrq-hm-Qox"/>
-                            <constraint firstAttribute="centerY" secondItem="3cX-aj-nKp" secondAttribute="centerY" id="UMT-dT-jkr"/>
-                        </constraints>
-                    </view>
-                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7hm-f2-P8D" customClass="MUSChangeButton">
-                        <rect key="frame" x="270" y="0.0" width="50" height="50"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="50" id="TVu-mD-uAL"/>
-                            <constraint firstAttribute="width" constant="50" id="fVa-MN-Pp7"/>
-                        </constraints>
-                        <state key="normal">
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                        <connections>
-                            <action selector="changeLocationButtonTouch:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Ixz-2g-V3O"/>
-                        </connections>
-                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="s2W-iQ-k2g" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="2sR-iF-zd7"/>
                     <constraint firstItem="0Bv-6Z-rPl" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="QMt-bt-1Be"/>
-                    <constraint firstItem="Loz-Pa-Uz7" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Qsw-9t-2sF"/>
                     <constraint firstItem="s2W-iQ-k2g" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="Qxg-v9-keY"/>
-                    <constraint firstAttribute="trailing" secondItem="Loz-Pa-Uz7" secondAttribute="trailing" id="aXP-bV-kbQ"/>
                     <constraint firstAttribute="bottom" secondItem="0Bv-6Z-rPl" secondAttribute="bottom" constant="-1" id="bbK-7T-K8N"/>
-                    <constraint firstItem="Loz-Pa-Uz7" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="bsN-rH-yBg"/>
-                    <constraint firstAttribute="trailing" secondItem="7hm-f2-P8D" secondAttribute="trailing" id="c6Q-tQ-Ib2"/>
                     <constraint firstItem="0Bv-6Z-rPl" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="gzx-ky-3aT"/>
-                    <constraint firstAttribute="bottom" secondItem="Loz-Pa-Uz7" secondAttribute="bottom" constant="-1" id="mKr-h3-XW5"/>
                     <constraint firstAttribute="trailing" secondItem="0Bv-6Z-rPl" secondAttribute="trailing" id="pEk-LN-qUj"/>
-                    <constraint firstItem="7hm-f2-P8D" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="pbV-PN-mPY"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="addLocationLabel" destination="3cX-aj-nKp" id="iRJ-eD-nQg"/>
-                <outlet property="addLocationView" destination="Loz-Pa-Uz7" id="C4f-eu-5M9"/>
-                <outlet property="changeLocationButton" destination="7hm-f2-P8D" id="RqH-dg-OYp"/>
                 <outlet property="mapView" destination="0Bv-6Z-rPl" id="LzN-QT-4Cj"/>
                 <outlet property="placeNameLabel" destination="s2W-iQ-k2g" id="fxj-6j-Zec"/>
             </connections>

@@ -25,11 +25,7 @@
 #import "MEExpandableHeaderView.h"
 #import "MUSPopUpForSharing.h"
 
-@interface MUSDetailPostViewController () <UITableViewDataSource, UITableViewDelegate, MUSPostLocationCellDelegate,  UIActionSheetDelegate, UIAlertViewDelegate, MEExpandableHeaderViewDelegate, UIScrollViewDelegate, MUSPopUpForSharingDelegate>
-///*!
-// @abstract flag of table view. User selects - table view is editable or not.
-// */
-//@property (nonatomic, assign) BOOL isEditableTableView;
+@interface MUSDetailPostViewController () <UITableViewDataSource, UITableViewDelegate,  UIActionSheetDelegate, UIAlertViewDelegate, MEExpandableHeaderViewDelegate, UIScrollViewDelegate, MUSPopUpForSharingDelegate>
 /*!
  @abstract tableview frame size of the detail post
  */
@@ -57,10 +53,6 @@
 
 @property (nonatomic, assign) NSInteger indexPicTapped;
 
-//@property (nonatomic, strong) SSARefreshControl *refreshControl;
-
-//@property (nonatomic, strong) Post *currentPostCopy;
-
 @property (nonatomic, strong) NSIndexPath *postDescriptionCellIndexPath;
 
 @property (nonatomic, strong) MEExpandableHeaderView *headerView;
@@ -80,7 +72,6 @@
     [self initiationCurrentSocialNetwork];
     [self initiationNavigationBar];
     [self initiationActivityIndicator];
-    //[self initiationSSARefreshControl];
     
     self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForUsersWithNetworkType: self.currentSocialNetwork.networkType]] firstObject];
     self.tableViewFrame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height);
@@ -300,8 +291,7 @@
         }
         default: {
             MUSPostLocationCell *postLocationCell = (MUSPostLocationCell*) cell;
-            postLocationCell.delegate = self;
-            [postLocationCell configurationPostLocationCellByPostPlace: self.currentPost.place];
+            [postLocationCell configurationPostLocationCellByPostPlace: self.currentPost];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             break;
         }
@@ -357,7 +347,7 @@
             break;
         }
         default:
-            return [MUSPostLocationCell heightForPostLocationCell: self.currentPost.place];
+            return [MUSPostLocationCell heightForPostLocationCell: self.currentPost];
             break;
     }
 }
