@@ -62,18 +62,23 @@
     if (_stateSwitchButons) {
         [_stateSwitchButons removeAllObjects];
     }else {
-    _stateSwitchButons = [NSMutableDictionary new];
+        _stateSwitchButons = [NSMutableDictionary new];
     }
     
     [self.arrayWithNetworksObj enumerateObjectsUsingBlock:^(SocialNetwork *obj, NSUInteger idx, BOOL *stop) {
-        if (!obj.isLogin) {
+        
+        
+        
+        if (!obj.isLogin || [self currentReasonForSocialNetwork: obj] == Connect) {
             [_stateSwitchButons setValue:[NSNumber numberWithBool:NO] forKey:[NSString stringWithFormat:@"%ld",(long)obj.networkType]];
             count++;
-            
         }else {
             [_stateSwitchButons setValue:[NSNumber numberWithBool:YES] forKey:[NSString stringWithFormat:@"%ld",(long)obj.networkType]];
         }
     }];
+    
+    
+    
     if (count == 3) {
         _buttonShare.enabled = NO;
         [_buttonShare setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
@@ -121,15 +126,8 @@
 
 - (void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     SocialNetwork *socialNetwork = self.arrayWithNetworksObj[indexPath.row];
-    ReasonType currentReason = AllReasons;
-    for (NetworkPost *currentNetworkPost in self.arrayOfNetworksPost) {
-        if (currentNetworkPost.networkType == socialNetwork.networkType) {
-            currentReason = currentNetworkPost.reason;
-        }
-    }
-    
     MUSPopUpTableViewCell *popUpTableViewCell = (MUSPopUpTableViewCell*) cell;
-    [popUpTableViewCell configurationPopUpTableViewCellWith: socialNetwork andReason: currentReason];
+    [popUpTableViewCell configurationPopUpTableViewCellWith: socialNetwork andReason: [self currentReasonForSocialNetwork: socialNetwork]];
 }
 
 - (void) setColorAndRudius {
@@ -161,6 +159,19 @@
     //[self.view removeFromSuperview];
     [self.delegate sharePosts:arrayWithNetworksForPost];
     
+}
+
+
+- (ReasonType) currentReasonForSocialNetwork : (SocialNetwork*) socialNetwork {
+    ReasonType currentReason = AllReasons;
+   
+    for (NetworkPost *currentNetworkPost in self.arrayOfNetworksPost) {
+        if (currentNetworkPost.networkType == socialNetwork.networkType) {
+            currentReason = currentNetworkPost.reason;
+        }
+    
+    }
+    return currentReason;
 }
 //- (IBAction)switchTapped:(UISwitch*)sender {
 //    if (!sender.isOn) {

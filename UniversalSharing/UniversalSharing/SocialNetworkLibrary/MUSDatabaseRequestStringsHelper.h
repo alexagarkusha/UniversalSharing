@@ -31,7 +31,7 @@
 + (NSString*) createStringForNetworkPostToGetLastObject;
 + (NSString*) createStringForNetworkPostWithPrimaryKey :(NSInteger) primaryKey;
 + (NSString*) createStringForNetworkPostWithReason :(ReasonType) reason andNetworkType :(NetworkType) networkType;
-+ (NSString*) createStringNetworkPostsForUpdateWithObjectPost :(NetworkPost*) networkPost;
++ (NSString*) createStringNetworkPostsForUpdateObjectNetworkPost :(NetworkPost*) networkPost;
 
 ///////////////////////////////////////////////////////
 

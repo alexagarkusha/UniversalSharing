@@ -136,8 +136,10 @@
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-
     MUSPostCell *postCell = (MUSPostCell*) cell;
+//    Post *currentPost = [self.arrayPosts objectAtIndex: indexPath.section];
+//    [currentPost updateAllNetworkPostsFromDataBaseForCurrentPost];
+//    postCell.arrayWithNetworkPosts = currentPost.arrayWithNetworkPosts;
     [postCell configurationPostCell : [self.arrayPosts objectAtIndex: indexPath.section]];
 }
 

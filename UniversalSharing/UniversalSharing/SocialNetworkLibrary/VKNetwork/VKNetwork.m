@@ -18,6 +18,7 @@
 #import "NetworkPost.h"
 #import "NSString+MUSCurrentDate.h"
 #import "MUSPostManager.h"
+#import "VKOperation.h"
 
 @interface VKNetwork () <VKSdkDelegate>
 @property (strong, nonatomic) UINavigationController *navigationController;
@@ -361,9 +362,10 @@ static VKNetwork *model = nil;
     
         parameters [VK_API_OWNER_ID] = [VKSdk getAccessToken].userId;
         parameters [VK_API_MESSAGE] = post.postDescription;
-        if (post.place.placeID) {
-            parameters [VK_API_PLACE_ID] = post.place.placeID;
-        }
+    if (post.longitude.length > 0 && ![post.longitude isEqualToString: @"(null)"] && post.latitude.length > 0 && ![post.latitude isEqualToString: @"(null)"]) {
+        parameters [VK_API_LONG] = post.longitude;
+        parameters [VK_API_LAT] = post.latitude;
+    }
     
     VKRequest *request = [[VKApi wall] post: parameters];
     
@@ -385,7 +387,7 @@ static VKNetwork *model = nil;
  */
 
 - (void) postImagesToVK : (Post*) post {
-    __block int numberOfImagesInPost = [post.arrayImages count];
+    __block NSUInteger numberOfImagesInPost = [post.arrayImages count];
     __block int counterOfImages = 0;
     NetworkPost *networkPost = [NetworkPost create];
     networkPost.networkType = VKontakt;
@@ -420,8 +422,9 @@ static VKNetwork *model = nil;
         
         parameters [VK_API_OWNER_ID] = [VKSdk getAccessToken].userId;
         parameters [VK_API_ATTACHMENTS] = [photosAttachments componentsJoinedByString: @","];
-        if (post.placeID) {
-            parameters [VK_API_PLACE_ID] = post.placeID;
+        if (post.longitude.length > 0 && ![post.longitude isEqualToString: @"(null)"] && post.latitude.length > 0 && ![post.latitude isEqualToString: @"(null)"]) {
+            parameters [VK_API_LONG] = post.longitude;
+            parameters [VK_API_LAT] = post.latitude;
         }
         if (post.postDescription) {
             parameters [VK_API_MESSAGE] = post.postDescription;
@@ -532,6 +535,19 @@ static VKNetwork *model = nil;
 - (NSError*) errorVkontakte {
     return [NSError errorWithMessage: musFacebookError andCodeError: musFacebookErrorCode];
 }
+
+- (void)setDownloadProgressBlock:(void (^)(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead))block {
+    
+    
+    
+    
+}
+
+- (void)setUploadProgressBlock:(void (^)(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite))block {
+    
+}
+
+
 
 @end
 

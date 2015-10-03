@@ -260,12 +260,8 @@ static TwitterNetwork *model = nil;
                 
                networkPostCopy.likesCount = [[arrayJson  objectForKey:@"favorite_count"] integerValue];
                 networkPostCopy.commentsCount = [[arrayJson objectForKey:@"retweet_count"] integerValue];
-                
-                NSLog(@"TW post.id = %@, post.like = %d, post.comments = %d", networkPost.postID, networkPost.likesCount, networkPost.commentsCount);
-
-                
-                
-                [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringNetworkPostsForUpdateWithObjectPost : networkPostCopy]];
+               // NSLog(@"TW post.id = %@, post.like = %ld, post.comments = %d", networkPost.postID, (long)networkPost.likesCount, networkPost.commentsCount);
+                [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringNetworkPostsForUpdateObjectNetworkPost : networkPostCopy]];
                 block (@"Post updated", nil);
             }
             else {
@@ -374,8 +370,9 @@ static TwitterNetwork *model = nil;
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     
     params [musTwitterParameter_Status] = post.postDescription;
-    if (post.place.placeID) {
-        params [musTwitterParameter_PlaceID] = post.place.placeID;
+    if (post.longitude.length > 0 && ![post.longitude isEqualToString: @"(null)"] && post.latitude.length > 0 && ![post.latitude isEqualToString: @"(null)"]) {
+        params [musTwitterLocationParameter_Latitude] = post.latitude;
+        params [musTwitterLocationParameter_Longituge] = post.longitude;
     }
     
     NSURLRequest *preparedRequest = [client URLRequestWithMethod : musPOST
@@ -436,8 +433,9 @@ static TwitterNetwork *model = nil;
             if (post.postDescription) {
                 params [musTwitterParameter_Status] = post.postDescription;
             }
-            if (post.place.placeID) {
-                params [musTwitterParameter_PlaceID] = post.place.placeID;
+            if (post.longitude.length > 0 && ![post.longitude isEqualToString: @"(null)"] && post.latitude.length > 0 && ![post.latitude isEqualToString: @"(null)"]) {
+                params [musTwitterLocationParameter_Latitude] = post.latitude;
+                params [musTwitterLocationParameter_Longituge] = post.longitude;
             }
             NSError *error = nil;
             
