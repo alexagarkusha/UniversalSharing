@@ -18,6 +18,9 @@
 
 //@property (nonatomic, assign) id <MUSDetailPostCollectionViewControllerDelegate> delegateDetailPostCollectionViewController;
 //===
+
+
+#warning "As if post contains network type, why we shoud"
 - (void) setObjectsWithPost :(Post*) currentPost andCurrentSocialNetwork :(id)currentSocialNetwork andIndexPicTapped :(NSInteger) indexPicTapped;
 
 @end

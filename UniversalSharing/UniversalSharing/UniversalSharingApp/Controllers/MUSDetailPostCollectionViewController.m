@@ -16,6 +16,8 @@
 #import "ConstantsApp.h"
 #import "MUSUserDetailViewController.h"
 
+#warning "method order"
+
 @interface MUSDetailPostCollectionViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (strong, nonatomic) NSMutableArray *arrayOfPics;
@@ -79,6 +81,7 @@ static NSString * const reuseIdentifier = @"Cell";
         _topBarConstraint.constant -= _topBar.frame.size.height;
         _toolBarConstraint.constant -= _toolBar.frame.size.height;
         [UIView animateWithDuration: 0.4  animations:^{
+#warning "order??"
             [self.view layoutIfNeeded];
             [self.view setNeedsLayout];
         }];

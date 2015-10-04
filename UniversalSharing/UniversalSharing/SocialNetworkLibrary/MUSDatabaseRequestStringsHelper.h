@@ -11,7 +11,14 @@
 #import "User.h"
 #import "Post.h"
 
+
+////use
+//@class User;
+//@class Post;
+//and remove they header file in .m file
 @interface MUSDatabaseRequestStringsHelper : NSObject
+
+#warning "Read https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/CodingGuidelines/Articles/NamingMethods.html#//apple_ref/doc/uid/20001282-BCIGIJJF"
 
 + (NSString*) createStringForPostWithReason :(ReasonType) reason andNetworkType :(NetworkType) networkType;
 + (NSString*) createStringForPostWithUserId :(NSString*) userId;

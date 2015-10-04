@@ -19,6 +19,7 @@
 //===
 - (void)insertIntoTable:(id) object;
 //===
+#warning "method name not match with parameter"
 - (void)deletePostByPrimaryKey :(Post*) post;
 - (void)deleteUserByClientId :(NSString*) clientId;
 //===

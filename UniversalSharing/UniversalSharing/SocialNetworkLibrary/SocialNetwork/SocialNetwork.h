@@ -106,6 +106,8 @@
 
 
 - (void) removeUserFromDataBaseAndImageFromDocumentsFolder :(User*) user;
+
+#warning "Specific method for each network???"
 - (BOOL) obtainCurrentConnection;
 //- (void) savePostDataBaseWithReason :(ReasonType) reason andPost :(Post*) post;
 //- (void) updatePostDataBaseWithReason :(ReasonType) reason andPost :(Post*) post;
@@ -113,6 +115,8 @@
 
 - (void) updatePost;
 
+
+#warning "Specific method for each network???"
 - (NSError*) errorConnection;
 
 - (void) stopUpdatingPostWithObject : (id) object;
