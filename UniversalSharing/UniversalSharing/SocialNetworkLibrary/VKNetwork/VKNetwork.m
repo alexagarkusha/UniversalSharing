@@ -331,13 +331,13 @@ static VKNetwork *model = nil;
 #pragma mark - sharePostToNetwork
 
 - (void) sharePost : (Post*) post withComplition : (Complition) block andComplitionLoading :(ComplitionProgressLoading)blockLoading{
-    if (![[InternetConnectionManager manager] isInternetConnection]){
-        NetworkPost *networkPost = [NetworkPost create];
-        networkPost.networkType = VKontakt;
-        networkPost.reason = Offline;
-        block(networkPost,[self errorConnection]);
-        return;
-    }
+   // if (![[InternetConnectionManager manager] isInternetConnection]){
+//        NetworkPost *networkPost = [NetworkPost create];
+//        networkPost.networkType = VKontakt;
+//        networkPost.reason = Offline;
+//        block(networkPost,[self errorConnection]);
+//        return;
+   // }
     self.copyComplition = block;
     if ([post.arrayImages count] > 0) {
         [self postImagesToVK: post];
@@ -366,8 +366,13 @@ static VKNetwork *model = nil;
         }
     
     VKRequest *request = [[VKApi wall] post: parameters];
-    
+    request.requestTimeout = 10;
+   // NSInteger s = request.requestTiming.loadTime;
+    VKRequestTiming *a = [VKRequestTiming new];
+   // a.loadTime
     [request executeWithResultBlock: ^(VKResponse *response) {
+        NSLog(@"%@", response.request.requestTiming);
+
         networkPostCopy.reason = Connect;
         networkPostCopy.dateCreate = [NSString currentDate];
         networkPostCopy.postID = [[response.json objectForKey:@"post_id"] stringValue];

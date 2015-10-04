@@ -7,10 +7,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MUSProgressBar">
             <connections>
-                <outlet property="imageViewPost" destination="GiC-wA-zaG" id="2d5-dT-Tws"/>
-                <outlet property="labelStutus" destination="yQU-ns-4rg" id="CdG-DF-Y0n"/>
-                <outlet property="lableConstraint" destination="7pA-UI-oTf" id="F3k-K3-r1i"/>
-                <outlet property="progressView" destination="iBE-eP-J1E" id="hh7-q4-VVq"/>
+                <outlet property="imageViewPost" destination="i1h-iQ-bkh" id="mbs-NP-93V"/>
+                <outlet property="labelStutus" destination="jR6-a5-0uL" id="FFQ-k7-Esn"/>
+                <outlet property="lableConstraint" destination="ecm-cU-hDd" id="fQG-XW-E8x"/>
+                <outlet property="progressView" destination="ItA-W5-AYK" id="Etk-5S-WNq"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -18,39 +18,47 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iBE-eP-J1E">
+                <imageView userInteractionEnabled="NO" alpha="0.49999999999999961" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Au9-no-tud">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="i1h-iQ-bkh">
+                    <rect key="frame" x="8" y="19" width="31" height="31"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="31" id="FjN-u0-cZd"/>
+                        <constraint firstAttribute="width" constant="31" id="a7C-Ms-G5r"/>
+                    </constraints>
+                </imageView>
+                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ItA-W5-AYK">
                     <rect key="frame" x="0.0" y="8" width="600" height="2"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="2" id="gXL-ud-dOO"/>
+                        <constraint firstAttribute="height" constant="2" id="iLP-Ib-Uyy"/>
                     </constraints>
                 </progressView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Publishing" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yQU-ns-4rg">
-                    <rect key="frame" x="50" y="23" width="542" height="21"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jR6-a5-0uL">
+                    <rect key="frame" x="47" y="18" width="545" height="31"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="21" id="Ybk-dz-T2C"/>
+                        <constraint firstAttribute="height" constant="31" id="cDn-Qb-yIQ"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GiC-wA-zaG">
-                    <rect key="frame" x="8" y="18" width="31" height="31"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="31" id="6e5-bw-mkS"/>
-                        <constraint firstAttribute="height" constant="31" id="zXT-Pg-feB"/>
-                    </constraints>
-                </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="iBE-eP-J1E" secondAttribute="trailing" id="1t1-JN-Drp"/>
-                <constraint firstAttribute="bottom" secondItem="yQU-ns-4rg" secondAttribute="bottom" constant="6" id="4rx-AK-v9J"/>
-                <constraint firstItem="yQU-ns-4rg" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="50" id="7pA-UI-oTf"/>
-                <constraint firstItem="iBE-eP-J1E" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="ah3-ST-bZW"/>
-                <constraint firstItem="GiC-wA-zaG" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="f5B-5U-dcr"/>
-                <constraint firstAttribute="trailing" secondItem="yQU-ns-4rg" secondAttribute="trailing" constant="8" id="m62-nh-0ic"/>
-                <constraint firstItem="iBE-eP-J1E" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="ojp-Gf-uhS"/>
-                <constraint firstAttribute="bottom" secondItem="GiC-wA-zaG" secondAttribute="bottom" constant="1" id="sle-D7-xl3"/>
+                <constraint firstItem="ItA-W5-AYK" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="51c-HZ-NMk"/>
+                <constraint firstAttribute="bottom" secondItem="i1h-iQ-bkh" secondAttribute="bottom" id="6fU-dC-Jto"/>
+                <constraint firstAttribute="trailing" secondItem="ItA-W5-AYK" secondAttribute="trailing" id="70m-af-w5G"/>
+                <constraint firstAttribute="trailing" secondItem="jR6-a5-0uL" secondAttribute="trailing" constant="8" id="8XM-lt-Plz"/>
+                <constraint firstItem="ItA-W5-AYK" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="RCO-m2-pcV"/>
+                <constraint firstAttribute="bottom" secondItem="jR6-a5-0uL" secondAttribute="bottom" constant="1" id="VUz-30-Lcr"/>
+                <constraint firstItem="Au9-no-tud" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Yox-vd-P7Q"/>
+                <constraint firstItem="jR6-a5-0uL" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="47" id="ecm-cU-hDd"/>
+                <constraint firstAttribute="bottom" secondItem="Au9-no-tud" secondAttribute="bottom" id="h94-DV-LBf"/>
+                <constraint firstItem="i1h-iQ-bkh" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="p6f-PH-TeU"/>
+                <constraint firstItem="Au9-no-tud" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="vqG-PO-nwh"/>
+                <constraint firstAttribute="trailing" secondItem="Au9-no-tud" secondAttribute="trailing" id="x87-Iv-hiq"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

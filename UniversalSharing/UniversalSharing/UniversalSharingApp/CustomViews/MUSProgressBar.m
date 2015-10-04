@@ -7,7 +7,7 @@
 //
 
 #import "MUSProgressBar.h"
-
+#import "ConstantsApp.h"
 @implementation MUSProgressBar
 -(id) initWithFrame:(CGRect)frame
 {
@@ -33,6 +33,7 @@
 
 -(UIView*)loadViewFromNib {
     NSArray *nibObjects = [[NSBundle mainBundle]loadNibNamed:@"MUSProgressBar" owner:self options:nil];
+    self.progressView.trackTintColor = BROWN_COLOR_MIDLight;
     //[self initiationGestureRecognizer];
     return [nibObjects firstObject];
 }
