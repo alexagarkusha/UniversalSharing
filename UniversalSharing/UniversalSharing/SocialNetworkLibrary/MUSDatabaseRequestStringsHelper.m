@@ -159,11 +159,9 @@
 //    return finalStringPostsForUpdate;
 //}
 
-#warning Rename THIS METHOD
-+ (NSString*) createStringNetworkPostsForUpdateObjectPost :(NetworkPost*) networkPost {
++ (NSString*) createStringNetworkPostsForUpdateObjectNetworkPost :(NetworkPost*) networkPost {
+   
     NSString *stringPostsForUpdate = @"UPDATE NetworkPosts set ";
-    
-    
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"likesCount = \"%d\", "];
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"commentsCount = \"%d\", "];
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"networkType = \"%d\", "];

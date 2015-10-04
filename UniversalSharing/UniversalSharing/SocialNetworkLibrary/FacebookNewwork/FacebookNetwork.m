@@ -227,28 +227,7 @@ static FacebookNetwork *model = nil;
 
 #pragma mark - sharePost
 
-- (void) requestConnection:	(FBSDKGraphRequestConnection *)connection didSendBodyData:	(NSInteger)bytesWritten totalBytesWritten:	(NSInteger)totalBytesWritten totalBytesExpectedToWrite:	(NSInteger)totalBytesExpectedToWrite {
-    
-    self.copyComplitionProgressLoading ((float)totalBytesWritten / totalBytesExpectedToWrite);
-}
-//- (void) requestConnectionDidFinishLoading:(FBSDKGraphRequestConnection *)connection {
-//
-//
-//}
-- (void) requestConnectionWillBeginLoading:(FBSDKGraphRequestConnection *)connection {
-    
-    
-}
-
-- (void)requestConnectionDidFinishLoading:(FBSDKGraphRequestConnection *)connection {
-    if (self.copyComplitionUpdateNetworkPosts) {
-        self.copyComplitionUpdateNetworkPosts (@"Facebook update all network posts");
-    }
-    
-}
-- (void) sharePost:(Post *)post withComplition:(Complition)block andComplitionLoading :(ComplitionProgressLoading)blockLoading  {/////////////////////////////////////////////////////////////////
-    // Create object NETWORKPOST
-    
+- (void) sharePost:(Post *)post withComplition:(Complition)block andComplitionLoading :(ComplitionProgressLoading)blockLoading  {
     
     if (![[InternetConnectionManager manager] isInternetConnection]){
         NetworkPost *networkPost = [NetworkPost create];
@@ -281,7 +260,32 @@ static FacebookNetwork *model = nil;
  */
 
 - (void) sharePostToFacebook : (Post*) post  {
-    //FBSDKGraphRequestConnection *connection = [[FBSDKGraphRequestConnection alloc] init];
+    __block Post *postCopy = post;
+    __weak FacebookNetwork *weakSelf = self;
+    
+    if (post.longitude.length > 0 && ![post.longitude isEqualToString: @"(null)"] && post.latitude.length > 0 && ![post.latitude isEqualToString: @"(null)"]) {
+        Location *location = [Location create];
+        location.latitude = post.latitude;
+        location.longitude = post.longitude;
+        location.type = @"place";
+        location.distance = @"500";
+        [self obtainArrayOfPlaces: location withComplition:^(id result, NSError *error) {
+            
+            if (!error) {
+                Place *firstPlace = (Place*) [result firstObject];
+                if (firstPlace) {
+                    postCopy.place = firstPlace;
+                }
+                
+            }
+            [weakSelf sharePost: postCopy];
+        }];
+    } else {
+        [self sharePost: post];
+    }
+}
+
+- (void) sharePost : (Post*) post {
     if (post.arrayImages.count > 0) {
         [self postPhotosToAlbum: post];
     } else {
@@ -438,7 +442,7 @@ static FacebookNetwork *model = nil;
                 NSLog(@"FB post.id = %@, post.like = %ld, post.comments = %ld", networkPost.postID, (long)networkPost.likesCount, (long)networkPost.commentsCount);
                 
                 
-                [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringNetworkPostsForUpdateWithObjectPost : networkPost]];
+                [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringNetworkPostsForUpdateObjectNetworkPost : networkPost]];
             } else {
                 
                 NSLog(@"ERROR");
@@ -459,7 +463,7 @@ static FacebookNetwork *model = nil;
                 NSLog(@"FB post.id = %@, post.like = %d, post.comments = %d", networkPost.postID, networkPost.likesCount, networkPost.commentsCount);
                 
                 
-                [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringNetworkPostsForUpdateWithObjectPost : networkPost]];
+                [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringNetworkPostsForUpdateObjectNetworkPost : networkPost]];
             } else {
                 NSLog(@"ERROR");
             }
@@ -543,6 +547,27 @@ static FacebookNetwork *model = nil;
              
          }];
 }
+
+
+
+- (void) requestConnection:	(FBSDKGraphRequestConnection *)connection didSendBodyData:	(NSInteger)bytesWritten totalBytesWritten:	(NSInteger)totalBytesWritten totalBytesExpectedToWrite:	(NSInteger)totalBytesExpectedToWrite {
+    if (self.copyComplitionProgressLoading) {
+        self.copyComplitionProgressLoading ((float)totalBytesWritten / totalBytesExpectedToWrite);
+    }
+}
+
+- (void) requestConnectionWillBeginLoading:(FBSDKGraphRequestConnection *)connection {
+    
+}
+
+- (void)requestConnectionDidFinishLoading:(FBSDKGraphRequestConnection *)connection {
+    if (self.copyComplitionUpdateNetworkPosts) {
+        self.copyComplitionUpdateNetworkPosts (@"Facebook update all network posts");
+    }
+    
+}
+
+
 
 /*!
  @abstract returned Facebook network error

@@ -37,4 +37,7 @@
 */
 @property (nonatomic, strong) NSString *q; 
 
++ (instancetype) create;
+
+
 @end
