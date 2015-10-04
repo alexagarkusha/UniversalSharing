@@ -32,7 +32,7 @@
 
 + (NSString*) cellID;
 + (instancetype) postDescriptionCell;
-+ (CGFloat) heightForPostDescriptionCell : (NSString*) postDescription andIsEditableCell : (BOOL) isEditableCell;
++ (CGFloat) heightForPostDescriptionCell : (NSString*) postDescription;
 
 - (void) configurationPostDescriptionCell: (NSString*) postDescription andNetworkType: (NetworkType) networkType;
 

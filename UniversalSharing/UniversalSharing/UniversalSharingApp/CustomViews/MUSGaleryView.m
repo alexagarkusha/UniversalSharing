@@ -11,6 +11,8 @@
 #import "ConstantsApp.h"
 #import <LSSwipeToDeleteCollectionViewLayout.h>
 #import "LSFadingSwipeToDeleteCollectionViewLayout.h"
+#import "MUSAddPhotoButton.h"
+#import "MUSPhotoManager.h"
 
 static NSString *LSCollectionViewCellIdentifier = @"Cell";
 
@@ -31,6 +33,9 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
 @property (assign, nonatomic) BOOL flagForDelete;
 @property (assign, nonatomic) NSInteger count;
 //////////////////////////////////////////////////
+
+@property (strong, nonatomic) MUSAddPhotoButton *addPhotoButton;
+
 @end
 
 @implementation MUSGaleryView
@@ -98,18 +103,26 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
     
 }
 #pragma mark - UICollectionViewDataSource
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
+    return 2;
+}
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    //NSLog(@"COUNT ROW = %d", [self.arrayWithChosenImages count]);
+    if (section == 0) {
+        if ([self.arrayWithChosenImages count] < 4) {
+            return 1;
+        } else {
+            return 0;
+
+        }
+            }
     return  [self.arrayWithChosenImages count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     MUSCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[MUSCollectionViewCell customCellID] forIndexPath:indexPath];
-    if (_flagForDelete) {
-       // _count--;
-    }
+    
     if (self.flag && [self.arrayWithChosenImages count] < 3 && _flagForDelete) {
         cell.photoImageViewCell.image  = nil;
         cell.deletePhotoButtonOutlet.hidden = YES;
@@ -121,14 +134,20 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
         cell.indexPath = indexPath;
         //NSLog(@"INDEXPATH %@", indexPath);
     ImageToPost *image;
-    if ([self.arrayWithChosenImages count] == indexPath.row) {
-        image = self.arrayWithChosenImages[indexPath.row - 1];
-        //return cell;
-    } else {
-        image = self.arrayWithChosenImages[indexPath.row];
-    }
+//    if ([self.arrayWithChosenImages count] == indexPath.row) {
+//        image = self.arrayWithChosenImages[indexPath.row - 1];
+//        //return cell;
+//    } else {
+    
+   // }
         //cell.isEditable = self.isEditableCollectionView;
+    if (indexPath.section == 0 && [self.arrayWithChosenImages count] != 4) {
+        //cell.backgroundColor =  BROWN_COLOR_MIDLight;
+        [cell configurationCellForFirstSection];
+    }else {
+        image = self.arrayWithChosenImages[indexPath.row];
     [cell configurationCellWithPhoto:image.image andEditableState:YES];
+    }
     _flagForDelete = NO;
 
     return  cell;
@@ -142,12 +161,15 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
     
     
 }
-//-(BOOL)swipeToDeleteLayout:(LSSwipeToDeleteCollectionViewLayout *)layout canDeleteCellAtIndexPath:(NSIndexPath *)indexPath{
-//    
-//    return NO;
-//}
+-(BOOL)swipeToDeleteLayout:(LSSwipeToDeleteCollectionViewLayout *)layout canDeleteCellAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 0) {
+        return NO;
+    }
+    return NO;//no swiping ((
+}
 
 -(void)swipeToDeleteLayout:(LSSwipeToDeleteCollectionViewLayout *)layout didDeleteCellAtIndexPath:(NSIndexPath *)indexPath {
+    
     _count++;
         [self.arrayWithChosenImages removeObjectAtIndex: indexPath.row];
     NSLog(@"lllll");
@@ -176,19 +198,19 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
 //}
 
 -(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
-    return 10.0f;
+    return 2.5f;
 }
 
 -(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section{
-    return 10.0f;
+    return 2.5f;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSMutableArray *arrayWithImages = [NSMutableArray new];
-    [self.arrayWithChosenImages enumerateObjectsUsingBlock:^(ImageToPost* image, NSUInteger idx, BOOL *stop) {
-        [arrayWithImages addObject:image.image];
-    }];
-    [self.delegate showImagesOnOtherVcWithArray :arrayWithImages andIndexPicTapped :indexPath.row];
+//    NSMutableArray *arrayWithImages = [NSMutableArray new];
+//    [self.arrayWithChosenImages enumerateObjectsUsingBlock:^(ImageToPost* image, NSUInteger idx, BOOL *stop) {
+//        [arrayWithImages addObject:image.image];
+//    }];
+    [self.delegate showImagesOnOtherVcWithArray : self.arrayWithChosenImages andIndexPicTapped :indexPath.row];
 }
 
 
@@ -259,7 +281,7 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
     [self.collectionView reloadData];
 }
 
-- (NSArray*) obtainArrayWithChosenPics {
+- (NSMutableArray*) obtainArrayWithChosenPics {
     return self.arrayWithChosenImages;
 }
 
@@ -326,4 +348,5 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
 @end

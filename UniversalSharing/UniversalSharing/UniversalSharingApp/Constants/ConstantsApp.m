@@ -42,6 +42,8 @@ NSString *const musAppError_With_Domain_Universal_Sharing = @"Universal Sharing 
 NSString *const musAppError_Internet_Connection = @"Please check your internet connection or try again later";
 NSString *const musAppError_Logged_Into_Social_Networks = @"You are not logged into any of social networks";
 NSString *const musAppError_Internet_Connection_Location = @"Could not find any locations. Check the Internet connection settings";
+NSString *const musAppError_Empty_Post = @"This post could not be sent because it does not contain any information.";
+
 
 #pragma mark - MUSPhotoManager
 
@@ -62,6 +64,7 @@ NSString *const showButtonTitle = @"Show";
 NSString *const hideButtonTitle = @"Hide";
 
 #pragma mark - General constants
+NSString *const notificationImagePickerForCollection = @"notificationImagePickerForCollection";
 NSString *const notificationUpdateCollection = @"notificationUpdateCollection";
 NSString *const musAppButtonTitle_Cancel = @"Cancel";
 NSString *const musAppButtonTitle_OK = @"Ok";
@@ -96,22 +99,48 @@ NSInteger const musApp_DropDownMenu_Height = 40;
 
 #pragma mark - MUSPostCell
 
-NSString *const musAppImage_Name_Comment = @"Comment.png";
-NSString *const musAppImage_Name_Like = @"Like.png";
-NSString *const musAppImage_Name_VKIconImage = @"VKimage.png";
-NSString *const musAppImage_Name_FBIconImage = @"FBimage.jpg";
-NSString *const musAppImage_Name_TwitterIconImage = @"TWimage.jpeg";
+//NSString *const musAppImage_Name_Comment = @"Comment.png";
+//NSString *const musAppImage_Name_Like = @"Like.png";
+NSString *const musAppImage_Name_VKIconImage = @"VK_icon.png";
+NSString *const musAppImage_Name_FBIconImage = @"Facebook_Icon.png";
+NSString *const musAppImage_Name_TwitterIconImage = @"Twitter_icon.png";
+
+NSString *const musAppImage_Name_VKLikeImage = @"VK_Likes.png";
+NSString *const musAppImage_Name_FBLikeImage = @"Facebook_Like.png";
+NSString *const musAppImage_Name_TwitterLikeImage = @"Twitter_Like.png";
+NSString *const musAppImage_Name_TwitterCommentsImage = @"Twitter_Comment.png";
+NSString *const musAppImage_Name_CommentsImage = @"Comments.png";
+
+NSString *const musAppImage_Name_VKIconImage_grey = @"VK_icon_grey.png";
+NSString *const musAppImage_Name_FBIconImage_grey = @"Facebook_Icon_grey.png";
+NSString *const musAppImage_Name_TwitterIconImage_grey = @"Twitter_icon_grey.png";
+
+NSString *const musAppImage_Name_VKLikeImage_grey = @"VK_Likes_grey.png";
+NSString *const musAppImage_Name_FBLikeImage_grey = @"Facebook_Like_grey.png";
+NSString *const musAppImage_Name_TwitterLikeImage_grey = @"Twitter_Like_grey.png";
+NSString *const musAppImage_Name_TwitterCommentsImage_grey = @"Twitter_Comment_grey.png";
+NSString *const musAppImage_Name_CommentsImage_grey = @"Comments_grey.png";
 
 
-NSString *const musAppFilter_Title_Shared = @"Success";
+
+
+
+
+
+
+NSString *const musAppFilter_Title_Shared = @"Published";
 NSString *const musAppFilter_Title_Offline = @"Offline";
 NSString *const musAppFilter_Title_Error = @"Failed";
-NSInteger const musAppPostsVC_HeightOfPostCell = 100;
+NSInteger const musAppPostsVC_HeightOfPostCell = 96;
 NSString *const musApp_ActionSheet_Title_ChooseAction = @"Choose action";
-NSInteger const musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithoutUserPhotos = 8;
-NSInteger const musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithUserPhotos = 58;
+NSInteger const musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithoutUserPhotos = 12;
+NSInteger const musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithUserPhotos = 90;
 NSString *const musApp_PostCell_Image_Name_CheckMarkTaken = @"checkMarkTaken.jpeg";
 NSString *const musApp_PostCell_Image_Name_CheckMark = @"checkMark.jpeg";
+
+#pragma mark - MUSReasonCommentsAndLikesCell
+
+NSInteger const musAppCommentsAndLikesCell_HeightOfRow = 31;
 
 #pragma mark - MUSGalleryViewOfPhotos
 
@@ -121,7 +150,7 @@ NSString *const notificationShowImagesInCollectionView = @"notificationShowImage
 #pragma mark - MUSGalleryOfPhotosCell
 
 NSString *const musAppButton_ImageName_ButtonAdd = @"Button_Add.png";
-NSString *const musAppButton_ImageName_AddPhoto = @"Button_addPhoto.png";
+NSString *const musAppButton_ImageName_AddPhoto = @"camera25.png";
 NSInteger const musApp_GalleryOfPhotosCell_addButton_ButtomConstraint_WithoutPhotos = -4;
 NSInteger const musApp_GalleryOfPhotosCell_addButton_ButtomConstraint_WithPhotos = 50;
 
@@ -133,7 +162,7 @@ NSInteger const musApp_PostDescriptionCell_TextView_LeftConstraint = 8;
 NSInteger const musApp_PostDescriptionCell_TextView_RightConstraint = 8;
 
 NSString *const musApp_PostDescriptionCell_TextView_Font_Name = @"Times New Roman";
-NSInteger const musApp_PostDescriptionCell_TextView_Font_Size = 17;
+NSInteger const musApp_PostDescriptionCell_TextView_Font_Size = 20;
 
 
 #pragma mark - MUSDetailPostViewController
@@ -143,7 +172,7 @@ NSInteger const musAppDetailPostVC_HeightOfPostLocationCell = 200;
 NSInteger const musAppDetailPostVC_HeightOfGalleryOfPhotosCell_WithoutPhotos = 70;
 NSInteger const musAppDetailPostVC_HeightOfGalleryOfPhotosCell_WithPhotos = 150;
 NSString *const musAppDetailPostVC_UpdatePostAlert = @"Do you want to update your Post?";
-NSInteger const musAppDetailPostVC_NumberOfRows = 4;
+NSInteger const musAppDetailPostVC_NumberOfRows = 3;
 
 #pragma mark - MUSCustomMapView
 

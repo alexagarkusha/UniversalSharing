@@ -32,5 +32,10 @@
 
 #import "User.h"
 
+#import "PostImagesManager.h"
+
+#import "MultySharingManager.h"
+
+#import "MUSPostManager.h"
 
 #endif

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MUSPopUpForSharing">
+            <connections>
+                <outlet property="buttonShare" destination="VEi-dn-xAC" id="3rs-Qo-Lva"/>
+                <outlet property="imageView" destination="udI-2I-7e5" id="Y0Z-kP-WGf"/>
+                <outlet property="secondView" destination="MZT-0H-Szw" id="VZA-3S-0LL"/>
+                <outlet property="tableView" destination="Nfj-Ud-QsH" id="hRd-YL-D4A"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="300" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" alpha="0.49999999999999961" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Yh1-Vl-5qz">
+                    <rect key="frame" x="0.0" y="0.0" width="300" height="600"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MZT-0H-Szw">
+                    <rect key="frame" x="30" y="150" width="240" height="300"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VEi-dn-xAC">
+                            <rect key="frame" x="34" y="244" width="173" height="40"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                            <state key="normal" title="Share">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="buttonShareTapped:" destination="-1" eventType="touchUpInside" id="SZz-c3-eIF"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DVC-bS-NnW" customClass="MUSPopUpDeleteButton">
+                            <rect key="frame" x="180" y="0.0" width="60" height="60"/>
+                            <state key="normal">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="ButtonCloseTapped:" destination="-1" eventType="touchUpInside" id="h9z-ho-nlY"/>
+                            </connections>
+                        </button>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="56" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Nfj-Ud-QsH">
+                            <rect key="frame" x="0.0" y="46" width="240" height="198"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </tableView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="udI-2I-7e5">
+                            <rect key="frame" x="0.0" y="0.0" width="240" height="300"/>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="300" id="Adl-hO-4sL"/>
+                        <constraint firstAttribute="width" constant="240" id="w4S-N9-OKN"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <constraints>
+                <constraint firstItem="MZT-0H-Szw" firstAttribute="centerX" secondItem="Yh1-Vl-5qz" secondAttribute="centerX" id="0Vb-SE-EAF"/>
+                <constraint firstItem="Yh1-Vl-5qz" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="A0c-zL-bUp"/>
+                <constraint firstItem="MZT-0H-Szw" firstAttribute="centerY" secondItem="Yh1-Vl-5qz" secondAttribute="centerY" id="gzt-9l-Kv2"/>
+                <constraint firstItem="Yh1-Vl-5qz" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="mTS-GY-RpZ"/>
+                <constraint firstAttribute="trailing" secondItem="Yh1-Vl-5qz" secondAttribute="trailing" id="qp1-Zc-BaE"/>
+                <constraint firstAttribute="bottom" secondItem="Yh1-Vl-5qz" secondAttribute="bottom" id="qyh-Ff-aai"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="289" y="180"/>
+        </view>
+    </objects>
+</document>

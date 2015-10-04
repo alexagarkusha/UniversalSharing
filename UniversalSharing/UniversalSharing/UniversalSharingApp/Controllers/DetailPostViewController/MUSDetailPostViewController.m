@@ -20,14 +20,12 @@
 #import "UIImage+LoadImageFromDataBase.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 #import "MUSDetailPostCollectionViewController.h"
-#import "SSARefreshControl.h"
+//#import "SSARefreshControl.h"
 #import "MUSUserDetailViewController.h"
+#import "MEExpandableHeaderView.h"
+#import "MUSPopUpForSharing.h"
 
-@interface MUSDetailPostViewController () <UITableViewDataSource, UITableViewDelegate, MUSPostDescriptionCellDelegate, MUSGalleryOfPhotosCellDelegate, MUSPostLocationCellDelegate,  UIActionSheetDelegate, UIAlertViewDelegate, SSARefreshControlDelegate, MUSCommentsAndLikesCellDelegate>
-/*!
- @abstract flag of table view. User selects - table view is editable or not.
- */
-@property (nonatomic, assign) BOOL isEditableTableView;
+@interface MUSDetailPostViewController () <UITableViewDataSource, UITableViewDelegate,  UIActionSheetDelegate, UIAlertViewDelegate, MEExpandableHeaderViewDelegate, UIScrollViewDelegate, MUSPopUpForSharingDelegate>
 /*!
  @abstract tableview frame size of the detail post
  */
@@ -55,11 +53,11 @@
 
 @property (nonatomic, assign) NSInteger indexPicTapped;
 
-@property (nonatomic, strong) SSARefreshControl *refreshControl;
-
-@property (nonatomic, strong) Post *currentPostCopy;
-
 @property (nonatomic, strong) NSIndexPath *postDescriptionCellIndexPath;
+
+@property (nonatomic, strong) MEExpandableHeaderView *headerView;
+
+@property (nonatomic, strong) MUSPopUpForSharing *popUpForSharing;
 
 @end
 
@@ -68,12 +66,12 @@
 
 - (void)viewDidLoad {
     // Do any additional setup after loading the view.
-    [self initiationCurrentPostCopy];
+    [self.currentPost updateAllNetworkPostsFromDataBaseForCurrentPost];
     [self initiationTableView];
-    [self initiationCurrentSocialNetwork];
+    [self setupHeaderView];
+    //[self initiationCurrentSocialNetwork];
     [self initiationNavigationBar];
     [self initiationActivityIndicator];
-    [self initiationSSARefreshControl];
     
     self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForUsersWithNetworkType: self.currentSocialNetwork.networkType]] firstObject];
     self.tableViewFrame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height);
@@ -86,18 +84,6 @@
                                              selector : @selector(showPhotosOnCollectionView :)
                                                  name : notificationShowImagesInCollectionView
                                                object : nil];
-    [[NSNotificationCenter defaultCenter] addObserver : self
-                                             selector : @selector(keyboardShow:)
-                                                 name : UIKeyboardWillShowNotification
-                                               object : nil];
-    [[NSNotificationCenter defaultCenter] addObserver : self
-                                             selector : @selector(keyboardWillHide:)
-                                                 name : UIKeyboardWillHideNotification
-                                               object : nil];
-    [[NSNotificationCenter defaultCenter] addObserver : self
-                                             selector : @selector(obtainPosts)
-                                                 name : MUSNotificationPostsInfoWereUpDated
-                                               object : nil];
 }
 
 - (void) viewDidDisappear:(BOOL)animated {
@@ -109,17 +95,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
-- (void) obtainPosts {
-    if (!self.isEditableTableView) {
-        NSArray *thePost = [[NSMutableArray alloc] initWithArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper createStringForPostWithPostId: self.currentPost.postID]]];
-        self.currentPost = [thePost firstObject];
-        [self.refreshControl endRefreshing];
-        [self.tableView reloadData];
-    }
-}
-
 
 #pragma mark initiation UITableView
 /*!
@@ -139,16 +114,63 @@
     //self.isEditableTableView = NO;
 }
 
+#pragma mark - SetupHeaderForTableView
+
+- (void)setupHeaderView
+{
+    ImageToPost *firstImage = [self.currentPost.arrayImages firstObject];
+    
+    if (!self.currentPost.arrayImages.count || !firstImage.image) {
+        self.currentPost.arrayImages = nil;
+    } else {
+        NSMutableArray *arrayOfPagesForHeader = [[NSMutableArray alloc] init];
+        for (int i = 0; i < self.currentPost.arrayImages.count; i++) {
+            [arrayOfPagesForHeader addObject: [self createPageViewWithText: [self.currentPost.arrayImages objectAtIndex: i]]];
+        }
+        CGSize headerViewSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, 250);
+        MEExpandableHeaderView *headerView = [[MEExpandableHeaderView alloc]
+                                              initWithSize : headerViewSize
+                                              backgroundImage : nil
+                                              contentPages : arrayOfPagesForHeader];
+        headerView.delegate = self;
+        self.tableView.tableHeaderView = headerView;
+        self.headerView = headerView;
+    }
+}
+
+- (UIView*)createPageViewWithText:(ImageToPost*) imageToPost
+{
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame: CGRectMake (0, 0, [UIScreen mainScreen].bounds.size.width, 250)];
+    imageView.image = imageToPost.image;
+    imageView.clipsToBounds = YES;
+    
+    
+    if (imageView.image.size.height < 250.0f || imageView.image.size.width <  [UIScreen mainScreen].bounds.size.width ) {
+        [imageView setContentMode: UIViewContentModeScaleAspectFill];
+    } else {
+        [imageView setContentMode: UIViewContentModeTop];
+    }
+    return imageView;
+}
+
 #pragma mark initiation UINavigationBar
 /*!
  @method
  @abstract initiation Navigation Bar
  */
 - (void) initiationNavigationBar {
-    if (self.isEditableTableView) {
+    BOOL isPostConnect = YES;
+    for (NetworkPost *currentNetworkPost in self.currentPost.arrayWithNetworkPosts) {
+        if (currentNetworkPost.reason != Connect) {
+            isPostConnect = NO;
+        }
+    }
+    
+    if (!isPostConnect) {
         self.shareButton = [[UIBarButtonItem alloc] initWithTitle : musAppButtonTitle_Share style:2 target:self action: @selector(sendPost)];
         self.navigationItem.rightBarButtonItem = self.shareButton;
     }
+    
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle: musAppButtonTitle_Back style:2 target:self action: @selector(backToThePostsViewController)];
     self.navigationItem.leftBarButtonItem = backButton;
     self.title = self.currentSocialNetwork.name;
@@ -159,38 +181,14 @@
  @method
  @abstract initiation Current social network
  */
-- (void) initiationCurrentSocialNetwork {
-    self.currentSocialNetwork = [SocialNetwork sharedManagerWithType:self.currentPost.networkType];
-}
-
+//- (void) initiationCurrentSocialNetwork {
+//    self.currentSocialNetwork = //[SocialNetwork sharedManagerWithType:self.currentPost.networkType];
+//}
 
 - (void) showPhotosOnCollectionView :(NSNotification *)notification{
     _indexPicTapped = [[[notification userInfo] objectForKey:@"index"] integerValue];
     [self performSegueWithIdentifier: @"goToDitailPostCollectionViewController" sender:nil];
 
-}
-#pragma mark initiation current postDescription, arrayOfUsersPictures, postLocation
-/*!
- @method
- @abstract initiation post description, array of pictures and location of the current post
- */
-- (void) initiationCurrentPostCopy {
-    
-    self.currentPostCopy = [self.currentPost copy];
-    self.currentPost.arrayImages = [[NSMutableArray alloc] init];
-    if (![[self.currentPost.arrayImagesUrl firstObject] isEqualToString: @""]) {
-        for (int i = 0; i < self.currentPost.arrayImagesUrl.count; i++) {
-            ImageToPost *currentImageToPost = [[ImageToPost alloc] init];
-            UIImage *image = [[UIImage alloc] init];
-            image = [image loadImageFromDataBase: [self.currentPost.arrayImagesUrl objectAtIndex: i]];
-            currentImageToPost.image = image;
-            [self.currentPost.arrayImages addObject: currentImageToPost];
-        }
-    }
-    self.currentPostCopy.arrayImages = [[NSMutableArray alloc] initWithArray: self.currentPost.arrayImages];
-    if (self.currentPostCopy.reason != Connect) {
-        self.isEditableTableView = YES;
-    }
 }
 
 #pragma mark  initiation Activity Indicator
@@ -204,20 +202,13 @@
     [self.view addSubview:self.activityIndicator];
 }
 
-#pragma mark - initiation SSARefreshControl
-
-- (void) initiationSSARefreshControl {
-    self.refreshControl = [[SSARefreshControl alloc] initWithScrollView:self.tableView andRefreshViewLayerType:SSARefreshViewLayerTypeOnScrollView];
-    self.refreshControl.delegate = self;
-}
-
 #pragma mark  start Activity Indicator Animating
 /*!
  @method
  @abstract start activity indicator animating
  */
 - (void) startActivityIndicatorAnimating {
-    self.activityIndicator.color = [UIColor blueColor];
+    self.activityIndicator.color = BROWN_COLOR_MIDLightHIGHT;
     [self.shareButton setCustomView : self.activityIndicator];
     [self.activityIndicator startAnimating];
     self.shareButton.enabled = NO;
@@ -235,36 +226,31 @@
 }
 
 
-#pragma mark SentPost
+#pragma mark SendPost
 /*!
  @method
  @abstract send post to social network
  */
 - (void) sendPost {
-    if (!_currentSocialNetwork.isVisible || !_currentSocialNetwork) {
-        [self showAlertWithMessage: musAppError_Logged_Into_Social_Networks];
-        return;
+    self.popUpForSharing = [MUSPopUpForSharing new];
+    self.popUpForSharing.arrayOfNetworksPost = self.currentPost.arrayWithNetworkPosts;
+    self.popUpForSharing.delegate = self;
+    [self.navigationController addChildViewController: self.popUpForSharing];
+    self.popUpForSharing.view.frame = self.view.bounds;//CGRectMake(0, 100, 200, 200);//
+    [self.navigationController.view addSubview: self.popUpForSharing.view];
+    [self.popUpForSharing didMoveToParentViewController:self];
+    [self.view endEditing:YES];
+}
+
+
+- (BOOL) isPostEmpty {
+    if ([self.currentPost.postDescription isEqualToString:@""] && !self.currentPost.arrayImagesUrl.count) {
+        [self showAlertWithMessage: musAppError_Empty_Post];
+        self.view.userInteractionEnabled = YES;
+        [self stopActivityIndicatorAnimating];
+        return YES;
     }
-    self.isEditableTableView = NO;
-    [self.tableView reloadData];
-    [self.delegate updatePostByPrimaryKey: [NSString stringWithFormat: @"%ld", (long)self.currentPost.primaryKey]];
-    [self startActivityIndicatorAnimating];
-    [self updatePost: self.currentPost];
-    __weak MUSDetailPostViewController *weakSelf = self;
-    [_currentSocialNetwork sharePost: self.currentPost withComplition:^(id result, NSError *error) {
-        if (!error) {
-            [self showAlertWithMessage : titleCongratulatoryAlert];
-            weakSelf.isEditableTableView = NO;
-            [weakSelf stopActivityIndicatorAnimating];
-            weakSelf.navigationItem.rightBarButtonItem = nil;
-            [weakSelf.tableView reloadData];
-        } else {
-            [weakSelf showErrorAlertWithError : error];
-            weakSelf.isEditableTableView = YES;
-            [weakSelf stopActivityIndicatorAnimating];
-            [weakSelf.tableView reloadData];
-        }
-    }];
+    return NO;
 }
 
 #pragma mark BackToThePostsViewController
@@ -274,27 +260,7 @@
  */
 - (void) backToThePostsViewController {
     // back to the Posts ViewController. If user did some changes in post - show alert. And then update post.
-    if ((![self checkForChangesInTheArrayOfimagesInPost] || !([self.currentPost.postDescription isEqualToString: self.currentPostCopy.postDescription]) || (self.currentPost.place.placeID != self.currentPostCopy.place.placeID)) && self.isEditableTableView ) {
-        [self showUpdateAlert];
-    } else {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
- }
-
-- (BOOL) checkForChangesInTheArrayOfimagesInPost {
-    BOOL isEqualArray = YES;
-    if (self.currentPost.arrayImages.count != self.currentPostCopy.arrayImages.count) {
-        return NO;
-    } else {
-        for (int i = 0; i < self.currentPostCopy.arrayImages.count; i ++) {
-            if ([self.currentPostCopy.arrayImages objectAtIndex: i] != [self.currentPost.   arrayImages objectAtIndex: i]) {
-                return NO;
-            } else {
-                isEqualArray = YES;
-            }
-        }
-    }
-    return isEqualArray;
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - UITableViewDataSource
@@ -308,36 +274,23 @@
     DetailPostVC_CellType detailPostVC_CellType = indexPath.row;
     
     switch (detailPostVC_CellType) {
-        case GalleryOfPhotosCellType: {
-            MUSGalleryOfPhotosCell *galleryOfPhotosCell = (MUSGalleryOfPhotosCell*) cell;
-            galleryOfPhotosCell.delegate = self;
-            galleryOfPhotosCell.isEditableCell = self.isEditableTableView;
-            [galleryOfPhotosCell configurationGalleryOfPhotosCellByArrayOfImages : self.currentPostCopy.arrayImages];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            break;
-        }
         case CommentsAndLikesCellType: {
             MUSCommentsAndLikesCell *commentsAndLikesCell = (MUSCommentsAndLikesCell*) cell;
-            [commentsAndLikesCell configurationCommentsAndLikesCellByPost:self.currentPost socialNetworkIconName:self.currentSocialNetwork.icon andUser: self.currentUser];
-            commentsAndLikesCell.delegate = self;
+            commentsAndLikesCell.arrayWithNetworkPosts = self.currentPost.arrayWithNetworkPosts;
+            [commentsAndLikesCell configurationCommentsAndLikesCell];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             break;
         }
         case PostDescriptionCellType: {
             MUSPostDescriptionCell *postDescriptionCell = (MUSPostDescriptionCell*) cell;
-            postDescriptionCell.delegate = self;
-            postDescriptionCell.isEditableCell = self.isEditableTableView;
             postDescriptionCell.currentIndexPath = indexPath;
-            [postDescriptionCell configurationPostDescriptionCell: self.currentPostCopy.postDescription andNetworkType: self.currentSocialNetwork.networkType];
+            [postDescriptionCell configurationPostDescriptionCell: self.currentPost.postDescription andNetworkType: self.currentSocialNetwork.networkType];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             break;
         }
         default: {
             MUSPostLocationCell *postLocationCell = (MUSPostLocationCell*) cell;
-            postLocationCell.isEditableCell = self.isEditableTableView;
-            postLocationCell.delegate = self;
-            postLocationCell.isEditableCell = self.isEditableTableView;
-            [postLocationCell configurationPostLocationCellByPostPlace: self.currentPostCopy.place];
+            [postLocationCell configurationPostLocationCellByPostPlace: self.currentPost];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             break;
         }
@@ -350,19 +303,12 @@
     
     DetailPostVC_CellType detailPostVC_CellType = indexPath.row;
     switch (detailPostVC_CellType) {
-        case GalleryOfPhotosCellType: {
-            MUSGalleryOfPhotosCell *cell = [tableView dequeueReusableCellWithIdentifier:[MUSGalleryOfPhotosCell cellID]];
-            if(!cell) {
-                cell = [MUSGalleryOfPhotosCell galleryOfPhotosCell];
-            }
-            return cell;
-            break;
-        }
         case CommentsAndLikesCellType: {
             MUSCommentsAndLikesCell *cell = [tableView dequeueReusableCellWithIdentifier:[MUSCommentsAndLikesCell cellID]];
             if(!cell) {
                 cell = [MUSCommentsAndLikesCell commentsAndLikesCell];
             }
+            cell.arrayWithNetworkPosts = self.currentPost.arrayWithNetworkPosts;
             return cell;
             break;
         }
@@ -391,23 +337,16 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     DetailPostVC_CellType  detailPostVC_CellType = indexPath.row;
     switch (detailPostVC_CellType) {
-        case GalleryOfPhotosCellType:
-            return [MUSGalleryOfPhotosCell heightForGalleryOfPhotosCell: self.currentPostCopy.arrayImages.count andIsEditableCell : self.isEditableTableView];
-            break;
         case CommentsAndLikesCellType:
-            return [MUSCommentsAndLikesCell heightForCommentsAndLikesCell];;
+            return [MUSCommentsAndLikesCell heightForCommentsAndLikesCell: self.currentPost.arrayWithNetworkPosts];;
             break;
         case PostDescriptionCellType:
         {
-            CGFloat heightOfPostDescriptionRow = [MUSPostDescriptionCell heightForPostDescriptionCell: self.currentPostCopy.postDescription andIsEditableCell: self.isEditableTableView];
-            if (heightOfPostDescriptionRow < 100 && self.isEditableTableView) {
-                heightOfPostDescriptionRow = 100;
-            }
-            return heightOfPostDescriptionRow;
+            return [MUSPostDescriptionCell heightForPostDescriptionCell: self.currentPost.postDescription];
             break;
         }
         default:
-            return [MUSPostLocationCell heightForPostLocationCell: self.currentPostCopy.place andIsEditableCell: self.isEditableTableView];
+            return [MUSPostLocationCell heightForPostLocationCell: self.currentPost];
             break;
     }
 }
@@ -415,8 +354,6 @@
 #pragma mark - MUSPostLocationCellDelegate
 
 - (void) changeLocationForPost {
-    //[self performSegueWithIdentifier:@"go" sender:nil];
-    
     [self performSegueWithIdentifier: goToLocationViewControllerSegueIdentifier sender:nil];
 }
 
@@ -425,17 +362,17 @@
         MUSLocationViewController *locationTableViewController = [MUSLocationViewController new];
         locationTableViewController = [segue destinationViewController];
         [locationTableViewController currentUser:_currentSocialNetwork];
-        locationTableViewController.place = self.currentPostCopy.place;
+        locationTableViewController.place = self.currentPost.place;
         __weak MUSDetailPostViewController *weakSelf = self;
         locationTableViewController.placeComplition = ^(Place* result, NSError *error) {
             /*
              back place object and we get id for network
              */
             if (result) {
-                weakSelf.currentPostCopy.place = result;
+                weakSelf.currentPost.place = result;
                 [weakSelf.tableView reloadData];
             } else if (!result && !error) {
-                weakSelf.currentPostCopy.place = nil;
+                weakSelf.currentPost.place = nil;
                 [weakSelf.tableView reloadData];
             }
 
@@ -443,87 +380,8 @@
     } else if ([[segue identifier]isEqualToString : @"goToDitailPostCollectionViewController"]) {
         MUSDetailPostCollectionViewController *vc = [MUSDetailPostCollectionViewController new];
         vc = [segue destinationViewController];
-        [vc setObjectsWithPost:self.currentPostCopy andCurrentSocialNetwork:_currentSocialNetwork andIndexPicTapped:self.indexPicTapped];
-        
-    } else if ([[segue identifier]isEqualToString : goToUserDetailViewControllerSegueIdentifier]) {
-        MUSUserDetailViewController *userDetailViewController = [MUSUserDetailViewController new];
-        userDetailViewController = [segue destinationViewController];
-        userDetailViewController.isLogoutButtonHide = YES;
-        [userDetailViewController setNetwork: self.currentSocialNetwork];
+        [vc setObjectsWithPost: self.currentPost withCurrentSocialNetwork: self.currentSocialNetwork andIndexPicTapped: self.indexPicTapped];
     }
-    
-}
-
-
-#pragma mark - MUSPostDescriptionCellDelegate
-
-- (void) saveChangesInPostDescription:(NSString *)postDescription {
-    self.currentPostCopy.postDescription = postDescription;
-}
-
-- (void) endEditingPostDescriptionAndReloadTableView {
-    [self.tableView reloadData];
-}
-
-- (void) beginEditingPostDescription:(NSIndexPath *)currentIndexPath {
-    self.postDescriptionCellIndexPath = currentIndexPath;
-}
-/*!
- @method
- @abstract scroll table view to the current cell
- @param current index path of cell
- */
--(void) scrollToCell:(NSIndexPath*) path {
-    [self.tableView scrollToRowAtIndexPath: path atScrollPosition : UITableViewScrollPositionNone animated:YES];
-}
-
-#pragma mark - MUSGalleryOfPhotosCellDelegate
-
-- (void) editArrayOfPicturesInPost: (NSArray *)arrayOfImages {
-    if (!arrayOfImages.firstObject) {
-        [self.currentPostCopy.arrayImages removeAllObjects];
-        [self.tableView reloadData];
-        return;
-    }
-    self.currentPostCopy.arrayImages = [NSMutableArray arrayWithArray: arrayOfImages];
-}
-
-- (void) showImagePicker {
-    if ([self.currentPostCopy.arrayImages count] == countOfAllowedPics) {
-        [self showAlertWithMessage : musAppAlertTitle_NO_Pics_Anymore];
-        return;
-    }
-    __weak MUSDetailPostViewController *weakSelf = self;
-    [[MUSPhotoManager sharedManager] photoShowFromViewController:self withComplition:^(id result, NSError *error) {
-        if(!error) {
-            ImageToPost *imageToPost = result;
-            [weakSelf.currentPostCopy.arrayImages addObject: imageToPost];//////////////////////////////////////////////////
-            [weakSelf.tableView reloadData];
-        } else {
-            [weakSelf showErrorAlertWithError : error];
-            return;
-        }
-    }];
-}
-
-
-#pragma mark - Keyboard Show/Hide
-/*!
- @method
- @abstract scroll table view to the current cell
- @param current index path of cell
- */
--(void) keyboardShow:(NSNotification*) notification {
-    CGRect initialFrame = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    CGRect convertedFrame = [self.view convertRect:initialFrame fromView:nil];
-    CGRect tvFrame = self.tableViewFrame;
-    tvFrame.size.height = convertedFrame.origin.y - self.tabBarController.tabBar.frame.size.height - 14;
-    self.tableView.frame = tvFrame;
-    [self performSelector:@selector(scrollToCell:) withObject: self.postDescriptionCellIndexPath afterDelay:0.5f];
-}
-
-- (void) keyboardWillHide: (NSNotification*) notification {
-    self.tableView.frame = CGRectMake(self.tableViewFrame.origin.x, self.tableViewFrame.origin.y, self.tableViewFrame.size.width, self.tableViewFrame.size.height);
 }
 
 #pragma mark - error alert with error and alert with message
@@ -538,7 +396,7 @@
 }
 
 - (void) showAlertWithMessage : (NSString*) message {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle : musErrorWithDomainUniversalSharing
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle : musAppError_With_Domain_Universal_Sharing
                                                     message : message
                                                    delegate : nil
                                           cancelButtonTitle : musAppButtonTitle_OK
@@ -547,7 +405,7 @@
 }
 
 - (void) showUpdateAlert  {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle : musErrorWithDomainUniversalSharing
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle : musAppError_With_Domain_Universal_Sharing
                                                     message : musAppDetailPostVC_UpdatePostAlert
                                                    delegate : self
                                           cancelButtonTitle : musAppButtonTitle_Cancel
@@ -555,101 +413,101 @@
     [alert show];
 }
 
-#pragma mark - UIAlertViewDelegate
+#pragma mark - UIScrollViewDelegate
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    switch (buttonIndex) {
-        case YES:
-            [self updatePost: self.currentPost];
-            [self updatePostInDataBase];
-            [self.navigationController popViewControllerAnimated:YES];
-            break;
-        default:
-            [self.navigationController popViewControllerAnimated:YES];
-            break;
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (scrollView == self.tableView)
+    {
+        [self.headerView offsetDidUpdate:scrollView.contentOffset];
     }
 }
 
-#pragma mark UpdatePost
+#pragma mark - MEExpandableHeaderViewDelegate 
 
-- (void) updatePost : (Post*) postForUpdating {
-    [self updateCurrentPost];
-    [self deletePostImagesFromDocumentsFolder: self.currentPost];
-    [self saveImageToDocumentsFolderAndFillArrayWithUrl : self.currentPost];
+- (void) currentPageIndex:(NSInteger)currentIndex {
+    _indexPicTapped = currentIndex;
+    [self performSegueWithIdentifier: @"goToDitailPostCollectionViewController" sender:nil];
 }
 
-- (void) updateCurrentPost {
-    if (![self.currentPostCopy.postDescription isEqualToString: kPlaceholderText]) {
-        self.currentPost.postDescription = self.currentPostCopy.postDescription;
-    } else {
-        self.currentPost.postDescription = @"";
-    }
-    //if (self.currentPostCopy.place) {
-    self.currentPost.place = [self.currentPostCopy.place copy];
-    //}
-    self.currentPost.arrayImages = [[NSMutableArray alloc] init];
+#pragma mark - Share Post to Social network
+- (void) sharePosts : (NSMutableArray*) arrayChosenNetworksForPost {
     
-    for (int i = 0; i < self.currentPostCopy.arrayImages.count; i++) {
-        //ImageToPost *imageToPost = [[ImageToPost alloc] init];
-        ImageToPost *imageToPost = [self.currentPostCopy.arrayImages objectAtIndex: i];
-        imageToPost.quality = 1.0f;
-        imageToPost.imageType = JPEG;
-        [self.currentPost.arrayImages addObject: imageToPost];
-    }
-}
-
-- (void) saveImageToDocumentsFolderAndFillArrayWithUrl :(Post*) post {
-    if (!post.arrayImagesUrl) {
-        post.arrayImagesUrl = [NSMutableArray new];
-    } else {
-        [post.arrayImagesUrl removeAllObjects];
-    }
-    [post.arrayImages enumerateObjectsUsingBlock:^(ImageToPost *image, NSUInteger index, BOOL *stop) {
-        NSData *data = UIImagePNGRepresentation(image.image);
-        //Get the docs directory
-        NSString *filePath = @"image";
-        filePath = [filePath stringByAppendingString:[NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970] * 1000]];
-        filePath = [filePath stringByAppendingString:@".png"];
-        [post.arrayImagesUrl addObject:filePath];
-        [data writeToFile:[filePath obtainPathToDocumentsFolder:filePath] atomically:YES]; //Write the file
+    [self.popUpForSharing removeFromParentViewController];
+    [self.popUpForSharing.view removeFromSuperview];
+    self.popUpForSharing = nil;
+    
+    self.shareButton.enabled = NO;
+    __weak MUSDetailPostViewController *weakSelf = self;
+    
+    if (arrayChosenNetworksForPost) {
         
-    }];
-}
+    [[MultySharingManager sharedManager] sharePost: self.currentPost toSocialNetworks: arrayChosenNetworksForPost withComplition:^(id result, NSError *error) {
 
-- (void) deletePostImagesFromDocumentsFolder : (Post*) post {
-    if (![[post.arrayImagesUrl firstObject] isEqualToString: @""] && post.arrayImagesUrl.count > 0) {
-        __block NSError *error;
-        [post.arrayImagesUrl enumerateObjectsUsingBlock:^(NSString *urlImage, NSUInteger idx, BOOL *stop) {
-            [[NSFileManager defaultManager] removeItemAtPath: [urlImage obtainPathToDocumentsFolder: urlImage] error: &error];
+        [weakSelf.currentPost updateAllNetworkPostsFromDataBaseForCurrentPost];
+
+        [weakSelf.tableView reloadData];
+
+        for (NetworkPost *networkPost in weakSelf.currentPost.arrayWithNetworkPosts) {
+            if (networkPost.reason != Connect) {
+                self.shareButton.enabled = YES;
+            }
+        }
+        } andComplitionProgressLoading:^(float result) {
+            
         }];
     }
 }
 
-- (void) updatePostInDataBase {
-    
-    
-    [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringLocationsForUpdateWithObjectPost: self.currentPost]];
-    [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost: self.currentPost]];
-}
 
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
 
-#pragma mark - SSARefreshControlDelegate
-
-- (void) beganRefreshing {
-    if (self.currentPost.reason != Connect) {
-        [self.refreshControl endRefreshing];
-        return;
-    }
-    [self.currentSocialNetwork updatePost];
-}
-
-#pragma mark - MUSCommentsAndLikesCellDelegate 
-
-- (void) showUserProfile {
-    [self performSegueWithIdentifier: goToUserDetailViewControllerSegueIdentifier sender:nil];
-}
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//#pragma mark initiation current postDescription, arrayOfUsersPictures, postLocation
+///*!
+// @method
+// @abstract initiation post description, array of pictures and location of the current post
+// */
+//- (void) initiationCurrentPostCopy {
+//    
+//    self.currentPostCopy = [self.currentPost copy];
+//    self.currentPost.arrayImages = [[NSMutableArray alloc] init];
+//    if (![[self.currentPost.arrayImagesUrl firstObject] isEqualToString: @""]) {
+//        for (int i = 0; i < self.currentPost.arrayImagesUrl.count; i++) {
+//            ImageToPost *currentImageToPost = [[ImageToPost alloc] init];
+//            UIImage *image = [[UIImage alloc] init];
+//            image = [image loadImageFromDataBase: [self.currentPost.arrayImagesUrl objectAtIndex: i]];
+//            currentImageToPost.image = image;
+//            currentImageToPost.imageType = JPEG;
+//            currentImageToPost.quality = 1.0f;
+//            [self.currentPost.arrayImages addObject: currentImageToPost];
+//        }
+//    }
+//    self.currentPostCopy.arrayImages = [[NSMutableArray alloc] initWithArray: self.currentPost.arrayImages];
+//    //    if (self.currentPostCopy.reason != Connect) {
+//    //        self.isEditableTableView = YES;
+//    //    }
+//}
+
+
+
+
+
+
+

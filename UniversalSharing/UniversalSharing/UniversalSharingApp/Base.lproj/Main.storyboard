@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9052" systemVersion="15A282b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9040"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -17,24 +17,12 @@
                     <view key="view" contentMode="scaleToFill" id="tsR-hK-woN">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Posts" image="archive_icon" id="acW-dT-cKf"/>
-                    <navigationItem key="navigationItem" id="pJr-Hq-3rU">
-                        <barButtonItem key="leftBarButtonItem" title="Select All" id="JHp-eg-J2H">
-                            <connections>
-                                <action selector="buttonSelectAllTapped:" destination="9pv-A4-QxB" id="j7h-S0-d74"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Edit" id="XU0-9N-dqn">
-                            <connections>
-                                <action selector="buttonEditTapped:" destination="9pv-A4-QxB" id="VsL-36-aMm"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="pJr-Hq-3rU"/>
                     <connections>
-                        <outlet property="editButton" destination="XU0-9N-dqn" id="edK-f1-BJu"/>
-                        <outlet property="selectAllButton" destination="JHp-eg-J2H" id="l1r-RW-J7e"/>
                         <segue destination="rW8-Fp-nEm" kind="show" identifier="DetailPostViewController" id="mhy-BG-aNn"/>
                     </connections>
                 </viewController>
@@ -53,6 +41,7 @@
                     <view key="view" contentMode="scaleToFill" id="ooV-oC-CGm">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                     </view>
@@ -80,6 +69,7 @@
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="aRM-TH-eEy">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="650"/>
+                                <animations/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="8eg-Hm-iGk">
                                     <size key="itemSize" width="173" height="148"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -88,7 +78,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="detailCell" id="MFw-yk-j5C" customClass="MUSCollectionViewCellForDetailView">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="173" height="148"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="173" height="148"/>
@@ -96,10 +86,13 @@
                                             <subviews>
                                                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Epg-4E-pX1" customClass="MUSImageScrollView">
                                                     <rect key="frame" x="0.0" y="0.0" width="173" height="148"/>
+                                                    <animations/>
                                                 </scrollView>
                                             </subviews>
+                                            <animations/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
+                                        <animations/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="Epg-4E-pX1" secondAttribute="trailing" id="KZK-Y3-ftP"/>
                                             <constraint firstAttribute="bottom" secondItem="Epg-4E-pX1" secondAttribute="bottom" id="P1H-Ns-359"/>
@@ -121,10 +114,12 @@
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" alpha="0.49999999999999961" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="g8N-26-IK8">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
+                                        <animations/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </imageView>
                                 </subviews>
+                                <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="g8N-26-IK8" secondAttribute="trailing" id="CfZ-lx-LiA"/>
@@ -139,10 +134,12 @@
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" alpha="0.49999999999999961" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WV8-OJ-Xuy">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
+                                        <animations/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </imageView>
                                 </subviews>
+                                <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="WV8-OJ-Xuy" secondAttribute="trailing" id="2qE-vt-bvz"/>
@@ -153,6 +150,7 @@
                                 </constraints>
                             </view>
                         </subviews>
+                        <animations/>
                         <constraints>
                             <constraint firstItem="jtt-2I-4dm" firstAttribute="leading" secondItem="Rue-AB-c1p" secondAttribute="leading" id="1Kr-0P-eN5"/>
                             <constraint firstAttribute="bottom" secondItem="jtt-2I-4dm" secondAttribute="bottom" id="4hY-Nd-63C"/>
@@ -208,8 +206,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="isr-mg-OJ7">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="isr-mg-OJ7">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="649"/>
+                                <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="dataSource" destination="xqB-o5-zWK" id="Wwv-Mw-NDy"/>
@@ -217,6 +216,7 @@
                                 </connections>
                             </tableView>
                         </subviews>
+                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="isr-mg-OJ7" firstAttribute="leading" secondItem="mNq-lb-21j" secondAttribute="leading" id="5Te-if-rD4"/>
@@ -241,6 +241,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Pql-IC-asA">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
                     </navigationBar>
                     <connections>
                         <segue destination="sDs-sX-TUf" kind="relationship" relationship="rootViewController" id="Czm-pe-RbY"/>
@@ -264,6 +265,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="ICe-7s-J4T">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="dataSource" destination="sDs-sX-TUf" id="0Pj-6w-mvM"/>
@@ -275,6 +277,7 @@
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ERROR" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mfr-Hw-2bg">
                                         <rect key="frame" x="250" y="90" width="101" height="21"/>
+                                        <animations/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="AcL-wR-e5a"/>
                                             <constraint firstAttribute="width" constant="101" id="ES9-Mk-7nJ"/>
@@ -285,6 +288,7 @@
                                     </label>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="Cannot establish a network connection!" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mac-t5-Efr">
                                         <rect key="frame" x="139" y="138" width="323" height="79"/>
+                                        <animations/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="79" id="wrh-Om-4as"/>
                                             <constraint firstAttribute="width" constant="323" id="yHk-dE-vf3"/>
@@ -294,6 +298,7 @@
                                     </textView>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="Check internet or wifi settings " textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3aS-oL-xbj">
                                         <rect key="frame" x="151" y="227" width="299" height="38"/>
+                                        <animations/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="38" id="3VM-kq-PGq"/>
                                             <constraint firstAttribute="width" constant="299" id="52K-Xy-qhb"/>
@@ -303,6 +308,7 @@
                                     </textView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h9f-nw-3rM">
                                         <rect key="frame" x="206" y="463" width="188" height="30"/>
+                                        <animations/>
                                         <color key="backgroundColor" red="0.78446546299999997" green="0.92132090239999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="WVY-LU-gDv"/>
@@ -319,6 +325,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s3b-v5-BFs">
                                         <rect key="frame" x="206" y="425" width="188" height="30"/>
+                                        <animations/>
                                         <color key="backgroundColor" red="0.95516538326937228" green="1" blue="0.3444527734809103" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                         <state key="normal" title="Use anyway">
@@ -329,8 +336,9 @@
                                             <action selector="buttonUseAnyWayTapped:" destination="sDs-sX-TUf" eventType="touchUpInside" id="QsJ-Sq-V8P"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OR" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hcg-gL-usD">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="OR" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hcg-gL-usD">
                                         <rect key="frame" x="288" y="267" width="25" height="149"/>
+                                        <animations/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="7ha-JV-D7f"/>
                                         </constraints>
@@ -339,6 +347,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
+                                <animations/>
                                 <color key="backgroundColor" red="0.63852076727631479" green="0.80806535141315794" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="3aS-oL-xbj" firstAttribute="top" secondItem="Mac-t5-Efr" secondAttribute="bottom" constant="10" id="1QF-t3-GI0"/>
@@ -359,6 +368,7 @@
                                 </constraints>
                             </view>
                         </subviews>
+                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="JW1-jR-cIx" firstAttribute="top" secondItem="ICe-7s-J4T" secondAttribute="bottom" constant="-49" id="9vL-v8-Ntt"/>
@@ -392,6 +402,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="YJx-MI-yAG">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
                     </navigationBar>
                     <connections>
                         <segue destination="8rJ-Kc-sve" kind="relationship" relationship="rootViewController" id="Qni-Zl-CQb"/>
@@ -409,6 +420,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="guJ-ta-c7x">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
                     </navigationBar>
                     <connections>
                         <segue destination="9pv-A4-QxB" kind="relationship" relationship="rootViewController" id="6sw-kH-c7k"/>
@@ -430,41 +442,54 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xwB-dx-Bb3">
-                                <rect key="frame" x="0.0" y="507" width="600" height="44"/>
-                                <items>
-                                    <barButtonItem title="Share Photo" id="5Z1-vA-aVX">
-                                        <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <action selector="btnSharePhotoTapped:" destination="8rJ-Kc-sve" id="82E-BD-5Gm"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem systemItem="flexibleSpace" id="eNG-tv-c0s">
-                                        <inset key="imageInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
-                                    </barButtonItem>
-                                    <barButtonItem title="Share Location" id="kvU-Tv-8tp">
-                                        <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <action selector="btnShareLocationTapped:" destination="8rJ-Kc-sve" id="5N6-tq-HsN"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
-                            </toolbar>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O2b-Bf-7wZ" customClass="MUSGaleryView">
-                                <rect key="frame" x="0.0" y="407" width="600" height="100"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="25b-FR-Yj7">
+                                <rect key="frame" x="0.0" y="500" width="600" height="50"/>
+                                <animations/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="ykK-8V-ynh"/>
+                                    <constraint firstAttribute="height" constant="50" id="F28-SG-2KG"/>
+                                </constraints>
+                                <inset key="titleEdgeInsets" minX="27" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <inset key="imageEdgeInsets" minX="9" minY="7" maxX="3" maxY="7"/>
+                                <state key="normal" title="Select your location">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected">
+                                    <color key="titleShadowColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="buttonLocationTapped:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="Uwy-Yh-AF6"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O2b-Bf-7wZ" customClass="MUSGaleryView">
+                                <rect key="frame" x="0.0" y="400" width="600" height="100"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="LuJ-fo-3YT"/>
                                 </constraints>
                             </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholderPin-1.png" highlightedImage="placeholderPinSelected.png" translatesAutoresizingMaskIntoConstraints="NO" id="4kG-OY-BXB">
+                                <rect key="frame" x="0.0" y="515" width="30" height="20"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="AiM-Kg-UI1"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="xwB-dx-Bb3" secondAttribute="trailing" id="2O8-GV-6gG"/>
-                            <constraint firstAttribute="bottom" secondItem="xwB-dx-Bb3" secondAttribute="bottom" constant="49" id="AEN-V0-A19"/>
-                            <constraint firstItem="xwB-dx-Bb3" firstAttribute="top" secondItem="O2b-Bf-7wZ" secondAttribute="bottom" id="QGI-gF-5jf"/>
-                            <constraint firstItem="xwB-dx-Bb3" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="QJI-mN-ydT"/>
-                            <constraint firstAttribute="trailing" secondItem="O2b-Bf-7wZ" secondAttribute="trailing" id="ttO-UR-Cfh"/>
-                            <constraint firstItem="O2b-Bf-7wZ" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="uct-a8-9mV"/>
+                            <constraint firstItem="O2b-Bf-7wZ" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="0Wl-ad-TGG"/>
+                            <constraint firstAttribute="trailing" secondItem="O2b-Bf-7wZ" secondAttribute="trailing" id="0t9-8j-che"/>
+                            <constraint firstItem="25b-FR-Yj7" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="5fk-f9-b4e"/>
+                            <constraint firstAttribute="bottom" secondItem="25b-FR-Yj7" secondAttribute="bottom" constant="50" id="EYT-lS-seF"/>
+                            <constraint firstItem="25b-FR-Yj7" firstAttribute="bottom" secondItem="4kG-OY-BXB" secondAttribute="bottom" constant="15" id="GCb-Dx-vmo"/>
+                            <constraint firstItem="25b-FR-Yj7" firstAttribute="top" secondItem="O2b-Bf-7wZ" secondAttribute="bottom" id="am0-R9-pSg"/>
+                            <constraint firstItem="25b-FR-Yj7" firstAttribute="top" secondItem="4kG-OY-BXB" secondAttribute="top" constant="-15" id="ohL-Vp-ZrT"/>
+                            <constraint firstItem="25b-FR-Yj7" firstAttribute="leading" secondItem="4kG-OY-BXB" secondAttribute="leading" id="un2-67-1xc"/>
+                            <constraint firstAttribute="trailing" secondItem="25b-FR-Yj7" secondAttribute="trailing" id="zr8-N6-zI7"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="Q3Z-Zc-VoA" appends="YES" id="McJ-97-Hx9"/>
@@ -472,21 +497,19 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Share" image="upload_icon" id="cPa-gy-q4n"/>
                     <navigationItem key="navigationItem" title="Share Post" id="oIA-lG-G83">
-                        <barButtonItem key="rightBarButtonItem" title="Share" id="pvH-Dt-bbm">
+                        <barButtonItem key="rightBarButtonItem" title="Share" style="plain" id="pvH-Dt-bbm">
                             <connections>
                                 <action selector="shareToSocialNetwork:" destination="8rJ-Kc-sve" id="gl5-yO-bCM"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="buttonLocation" destination="25b-FR-Yj7" id="ch9-nc-jya"/>
                         <outlet property="galeryView" destination="O2b-Bf-7wZ" id="alu-vP-TdG"/>
-                        <outlet property="galeryViewLayoutConstraint" destination="ykK-8V-ynh" id="Ua2-mE-2zf"/>
+                        <outlet property="iconImageView" destination="4kG-OY-BXB" id="hvZ-1l-PJt"/>
                         <outlet property="mainGestureRecognizer" destination="Q3Z-Zc-VoA" id="hSm-6a-V0c"/>
                         <outlet property="shareButtonOutlet" destination="pvH-Dt-bbm" id="uqW-1D-Imf"/>
-                        <outlet property="shareLocationButton" destination="kvU-Tv-8tp" id="kE7-Jb-kzz"/>
-                        <outlet property="sharePhotoButton" destination="5Z1-vA-aVX" id="JrQ-sz-gSe"/>
-                        <outlet property="shareToolBar" destination="xwB-dx-Bb3" id="sw4-sM-akm"/>
-                        <outlet property="toolBarLayoutConstraint" destination="AEN-V0-A19" id="U7t-rt-nZT"/>
+                        <outlet property="toolBarLayoutConstraint" destination="EYT-lS-seF" id="ZVx-Dh-kc3"/>
                         <segue destination="57R-w2-ySy" kind="show" identifier="Location" id="GpK-3N-ETI"/>
                         <segue destination="Mqx-YE-PKH" kind="show" identifier="goToShowImages" id="ujR-wZ-DmO"/>
                     </connections>
@@ -515,14 +538,18 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="SaV-6C-DDY">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LocationCell" id="xbe-0B-kMB">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="86" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xbe-0B-kMB" id="lPl-aR-E3P">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <animations/>
                                         </tableViewCellContentView>
+                                        <animations/>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -535,11 +562,13 @@
                                 <subviews>
                                     <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YHd-WZ-eaz">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
+                                        <animations/>
                                         <connections>
                                             <outlet property="delegate" destination="Mpg-wF-a9d" id="0GN-mt-ls5"/>
                                         </connections>
                                     </mapView>
                                 </subviews>
+                                <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="YHd-WZ-eaz" secondAttribute="trailing" id="NBu-ak-hf1"/>
@@ -552,6 +581,7 @@
                                 </connections>
                             </view>
                         </subviews>
+                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Mpg-wF-a9d" firstAttribute="leading" secondItem="uFn-9S-XED" secondAttribute="leading" id="1TE-Cl-1ri"/>
@@ -585,6 +615,7 @@
                     <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
                         <rect key="frame" x="0.0" y="975" width="768" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                        <animations/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
@@ -601,6 +632,8 @@
     <resources>
         <image name="account_icon" width="31" height="31"/>
         <image name="archive_icon" width="32" height="32"/>
+        <image name="placeholderPin-1.png" width="25" height="40"/>
+        <image name="placeholderPinSelected.png" width="25" height="40"/>
         <image name="upload_icon" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>

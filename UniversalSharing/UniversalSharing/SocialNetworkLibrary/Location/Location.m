@@ -10,4 +10,15 @@
 
 @implementation Location
 
++ (instancetype) create {
+    Location *location = [[Location alloc] init];
+    location.longitude = @"";
+    location.latitude = @"";
+    location.distance = @"";
+    location.type = @"";
+    location.q = @"";
+    return location;
+}
+
+
 @end

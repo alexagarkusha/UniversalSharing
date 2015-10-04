@@ -15,7 +15,7 @@
 
 - (IBAction)deletePhoto:(id)sender;
 @property (strong, nonatomic) MUSAddPhotoButton *addPhotoButton;
-
+@property (strong, nonatomic) MUSAddPhotoButton *addPhotoButtonForFirstSection;
 
 @end
 @implementation MUSCollectionViewCell
@@ -39,6 +39,7 @@
 
 - (void) configurationCellWithPhoto:(UIImage *)photoImageView andEditableState: (BOOL)isEditable {
     [self.addPhotoButton removeFromSuperview];
+    [self.addPhotoButtonForFirstSection removeFromSuperview];
     //[self.deletePhotoButtonOutlet setImage:[UIImage imageNamed: @"Button_Delete.png"] forState:UIControlStateNormal];
     
     if (!photoImageView && isEditable) {
@@ -53,6 +54,22 @@
         [self hideDeleteButton];
         self.photoImageViewCell.image = photoImageView;
     }
+}
+
+- (void) configurationCellForFirstSection {
+    [self.addPhotoButtonForFirstSection removeFromSuperview];
+    [self hideDeleteButton];
+    self.photoImageViewCell.hidden = YES;
+    [self showAddPhotoButtonForFirstSection];
+    
+}
+
+- (void) showAddPhotoButtonForFirstSection {
+    
+    self.addPhotoButtonForFirstSection = [[MUSAddPhotoButton alloc] initWithFrame: CGRectMake( 0, 0, self.frame.size.width, self.frame.size.height)];
+    [self addSubview: self.addPhotoButtonForFirstSection];
+    [self.addPhotoButtonForFirstSection addTarget:self
+                            action:@selector(addPhotoToCollectionForFirstSection:)forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void) showAddPhotoButton {
@@ -82,7 +99,10 @@
     [self.delegate addPhotoToCollection];
 }
 
+- (void)addPhotoToCollectionForFirstSection:(id)sender {
+    [[NSNotificationCenter defaultCenter] postNotificationName:notificationImagePickerForCollection object:nil];
 
+}
 
 
 

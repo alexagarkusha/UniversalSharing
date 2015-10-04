@@ -11,6 +11,9 @@
 #pragma mark Blocks
 
 typedef void (^Complition)(id result, NSError *error);
+typedef void (^ComplitionProgressLoading)(float result);
+typedef void (^ComplitionUpdateNetworkPosts)(id result);
+typedef void (^ComplitionWithArrays)(id arrayLogin, id arrayHidden, id arrayUnactive, NSError *error);
 
 #pragma mark Types
 
@@ -156,6 +159,11 @@ FOUNDATION_EXPORT NSInteger const musErrorConnectionCode;
 
 FOUNDATION_EXPORT NSString *const nameDataBase;
 
+#pragma mark Categories
+
+FOUNDATION_EXPORT NSString *const musReasonName_Shared;
+FOUNDATION_EXPORT NSString *const musReasonName_Offline;
+FOUNDATION_EXPORT NSString *const musReasonName_Error;
 
 
 

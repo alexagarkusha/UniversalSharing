@@ -11,6 +11,8 @@
 #import "MUSSocialNetworkLibraryConstants.h"
 #import "ImageToPost.h"
 #import "Place.h"
+#import "NetworkPost.h"
+
 @interface Post : NSObject
 
 /*!
@@ -50,11 +52,25 @@
 @property (nonatomic, assign) ReasonType reason;
 @property (strong, nonatomic) NSString *locationId;
 @property (strong, nonatomic) Place *place;
+/////////////////////////////////////////////////////////////////////////////////////////
+
+@property (strong, nonatomic) NetworkPost *networkPost;
+@property (strong, nonatomic) NSMutableArray *arrayWithNetworkPosts;
+@property (strong, nonatomic) NSMutableArray *arrayWithNetworkPostsId;
+@property (strong, nonatomic) NSString *longitude;
+@property (strong, nonatomic) NSString *latitude;
 
 //===
++ (instancetype)create;
+
+- (id)copy;
+
+- (void) updateAllNetworkPostsFromDataBaseForCurrentPost;
 
 - (NSString*) convertArrayImagesUrlToString;
 
-- (id)copy;
+- (NSString *) convertArrayWithNetworkPostsIdsToString;
+
+- (NSMutableArray*) convertArrayOfImagesUrlToArrayImagesWithObjectsImageToPost;
 
 @end

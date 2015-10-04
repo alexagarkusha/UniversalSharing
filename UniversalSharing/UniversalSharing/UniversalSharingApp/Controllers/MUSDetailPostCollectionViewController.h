@@ -19,8 +19,10 @@
 //@property (nonatomic, assign) id <MUSDetailPostCollectionViewControllerDelegate> delegateDetailPostCollectionViewController;
 //===
 
+- (void) setObjectsWithPost :(Post*) currentPost withCurrentSocialNetwork :(id)currentSocialNetwork andIndexPicTapped :(NSInteger) indexPicTapped;
 
-#warning "As if post contains network type, why we shoud"
-- (void) setObjectsWithPost :(Post*) currentPost andCurrentSocialNetwork :(id)currentSocialNetwork andIndexPicTapped :(NSInteger) indexPicTapped;
+- (void) setObjectsWithArrayOfPhotos :(NSMutableArray*) arrayOfPhotos withCurrentSocialNetwork :(SocialNetwork*) currentSocialNetwork indexPicTapped :(NSInteger) indexPicTapped andReasonTypeOfPost : (ReasonType) reasonType;
+
+@property (assign, nonatomic) BOOL isEditableCollectionView;
 
 @end

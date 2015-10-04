@@ -40,6 +40,18 @@
         self.logoutButton = [[UIBarButtonItem alloc] initWithTitle: @"Logout" style: 1 target:self action: @selector(logoutFromSocialNetwork)];
         self.navigationItem.rightBarButtonItem = self.logoutButton;
     }
+    
+//    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle: @"Back" style: 1 target:self action: @selector(backToNetworks)];
+//    self.navigationItem.leftBarButtonItem = backButton;
+    
+    if (self.socialNetwork.networkType == Facebook) {
+        self.navigationItem.title = @"Facebook";
+    } else if (self.socialNetwork.networkType == Twitters) {
+        self.navigationItem.title = @"Twitter";
+    } else {
+        self.navigationItem.title = @"VKontakt";
+    }
+    
     self.userPropertyArray = @[@"profile", @"dateOfBirth", @"city", @"clientID"];
 }
 
@@ -54,8 +66,15 @@
 - (void) logoutFromSocialNetwork {
     [self.socialNetwork loginOut];
     [self.navigationController popViewControllerAnimated:YES];
-    self.navigationController.navigationBar.translucent = YES;
+     self.navigationController.navigationBar.translucent = YES;
+    [self.delegate changeArrays:self.socialNetwork];
     }
+
+- (void) backToNetworks {
+    [self.navigationController popViewControllerAnimated:YES];
+    self.navigationController.navigationBar.translucent = YES;
+    
+}
 
 #pragma mark - UITableViewDataSource
 

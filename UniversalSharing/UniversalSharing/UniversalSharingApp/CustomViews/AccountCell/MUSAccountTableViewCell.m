@@ -34,7 +34,7 @@
 - (void)awakeFromNib {
     //self.multipleTouchEnabled = YES;
     
-    [self.networkIconImageView roundImageView];
+   // [self.networkIconImageView roundImageView];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -51,39 +51,39 @@
 }
 - (void) configurateCellForNetwork:(SocialNetwork *)socialNetwork {
     
-    if (socialNetwork.isLogin && socialNetwork.isVisible) {
-        
-        // __weak MUSAccountTableViewCell *weakSelf = self;
-        
-        //[socialNetwork obtainInfoFromNetworkWithComplition:^(id result, NSError *error) {
-        NSData *data = [NSData dataWithContentsOfFile:[self obtainPathToDocumentsFolder:socialNetwork.icon]];
-        self.networkIconImageView.image = [UIImage imageWithData:data];
-        //[weakSelf.networkIconImageView loadImageFromUrl:[NSURL URLWithString:socialNetwork.icon]];
-        self.loginLabel.text = socialNetwork.title;
-        self.loginLabel.textColor = [UIColor blackColor];
-        // }];
-    } else if(socialNetwork.isLogin && !socialNetwork.isVisible){
-        
-        NSData *data = [NSData dataWithContentsOfFile:[self obtainPathToDocumentsFolder:socialNetwork.icon]];
-        self.networkIconImageView.image = [UIImage imageWithData:data];
-        self.networkIconImageView.image = [self translucentImageFromImage:self.networkIconImageView.image withAlpha:0.3f];
-        self.loginLabel.text = socialNetwork.title;
-        self.loginLabel.textColor = [[UIColor lightGrayColor]colorWithAlphaComponent:0.3f];
-        
-        //        __weak MUSAccountTableViewCell *weakSelf = self;
-        //        [socialNetwork obtainInfoFromNetworkWithComplition:^(id result, NSError *error) {
-        //
-        //            [weakSelf.networkIconImageView  loadImageFromUrl:[NSURL URLWithString:socialNetwork.icon]];
-        //            weakSelf.networkIconImageView.image = [self translucentImageFromImage:self.networkIconImageView.image withAlpha:0.3f];
-        //            weakSelf.loginLabel.text = socialNetwork.title;
-        //            weakSelf.loginLabel.textColor = [[UIColor lightGrayColor]colorWithAlphaComponent:0.3f];
-        //        }];
-    }
-    else {
+//    if (socialNetwork.isLogin && socialNetwork.isVisible) {
+//        
+//        // __weak MUSAccountTableViewCell *weakSelf = self;
+//        
+//        //[socialNetwork obtainInfoFromNetworkWithComplition:^(id result, NSError *error) {
+//        NSData *data = [NSData dataWithContentsOfFile:[self obtainPathToDocumentsFolder:socialNetwork.icon]];
+//        self.networkIconImageView.image = [UIImage imageWithData:data];
+//        //[weakSelf.networkIconImageView loadImageFromUrl:[NSURL URLWithString:socialNetwork.icon]];
+//        self.loginLabel.text = socialNetwork.title;
+//        self.loginLabel.textColor = [UIColor blackColor];
+//        // }];
+//    } else if(socialNetwork.isLogin && !socialNetwork.isVisible){
+//        
+//        NSData *data = [NSData dataWithContentsOfFile:[self obtainPathToDocumentsFolder:socialNetwork.icon]];
+//        self.networkIconImageView.image = [UIImage imageWithData:data];
+//        self.networkIconImageView.image = [self translucentImageFromImage:self.networkIconImageView.image withAlpha:0.3f];
+//        self.loginLabel.text = socialNetwork.title;
+//        self.loginLabel.textColor = [[UIColor lightGrayColor]colorWithAlphaComponent:0.3f];
+//        
+//        //        __weak MUSAccountTableViewCell *weakSelf = self;
+//        //        [socialNetwork obtainInfoFromNetworkWithComplition:^(id result, NSError *error) {
+//        //
+//        //            [weakSelf.networkIconImageView  loadImageFromUrl:[NSURL URLWithString:socialNetwork.icon]];
+//        //            weakSelf.networkIconImageView.image = [self translucentImageFromImage:self.networkIconImageView.image withAlpha:0.3f];
+//        //            weakSelf.loginLabel.text = socialNetwork.title;
+//        //            weakSelf.loginLabel.textColor = [[UIColor lightGrayColor]colorWithAlphaComponent:0.3f];
+//        //        }];
+//    }
+//    else {
         self.networkIconImageView.image = [UIImage imageNamed:socialNetwork.icon];
         self.loginLabel.text = socialNetwork.title;
         self.loginLabel.textColor = [UIColor blackColor];
-    }
+    //}
 }
 
 - (void) changeColorOfCell :(SocialNetwork *)socialNetwork {

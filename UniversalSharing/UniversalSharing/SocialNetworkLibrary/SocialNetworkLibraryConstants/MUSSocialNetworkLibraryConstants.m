@@ -11,7 +11,7 @@
 #pragma mark Facebook Constants
 
 NSString *const musFacebookTitle = @"Login Facebook";
-NSString *const musFacebookIconName = @"FBimage.jpg";
+NSString *const musFacebookIconName = @"Facebook_Icon.png";
 NSString *const musFacebookName = @"Facebook";
 
 NSString *const musFacebookPermission_Email = @"email";
@@ -44,7 +44,7 @@ NSInteger const musFacebookErrorCode = 1300;
 NSString *const musVKAppID = @"5004830";
 NSString *const musVKAllUserFields = @"first_name,last_name,photo_200_orig,id,birthday";
 NSString *const musVKTitle = @"Login VK";
-NSString *const musVKIconName = @"VKimage.png";
+NSString *const musVKIconName = @"VK_icon.png";
 NSString *const musVKName = @"VK";
 
 NSString *const musVKMethodPlacesSearch = @"places.search";
@@ -78,7 +78,7 @@ NSString *const musTwitterConsumerKey = @"lUY36ubrBYXpYsZhJJvg8CYdf";
 
 
 NSString *const musTwitterTitle = @"Login Twitter";
-NSString *const musTwitterIconName = @"TWimage.jpeg";
+NSString *const musTwitterIconName = @"Twitter_icon.png";
 NSString *const musTwitterName = @"Twitter";
 
 NSString *const musTwitterError = @"Twitter error. Please retry again.";
@@ -126,11 +126,15 @@ NSInteger const musErrorLocationPropertiesCode = 1011;
 NSString *const musErrorAccesDenied = @"Access denied!";
 NSInteger const musErrorAccesDeniedCode = 1020;
 
-NSString *const musErrorConnection = @"Error connection to social network. Please, retry again";
+NSString *const musErrorConnection = @"NO INTERNET CONNECTION. You can resend this post from shared posts";
 NSInteger const musErrorConnectionCode = 1030;
 
 #pragma mark DataBase Constants
 
 NSString *const nameDataBase = @"UniversalSharing.sql";
 
+#pragma mark Categories
 
+NSString *const musReasonName_Shared = @"Success";
+NSString *const musReasonName_Offline = @"Offline";
+NSString *const musReasonName_Error = @"Failed";

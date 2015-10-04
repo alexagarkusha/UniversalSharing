@@ -11,8 +11,6 @@
                 <outlet property="buttonConstrain" destination="AVw-1z-mVZ" id="zyS-Wa-3jg"/>
                 <outlet property="labelConstrain" destination="CG3-dQ-izO" id="pzV-fH-xCB"/>
                 <outlet property="lableCountImages" destination="WNj-F9-7A7" id="CaJ-iU-MON"/>
-                <outlet property="showUserProfileButton" destination="gE2-lM-pAI" id="YnP-Ld-QWr"/>
-                <outlet property="showUserProfileButtonTopConstraint" destination="NR7-OB-pwV" id="qL4-Ne-wsZ"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -42,27 +40,12 @@
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gE2-lM-pAI" customClass="MUSUserProfileButton">
-                    <rect key="frame" x="551" y="23" width="34" height="34"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="34" id="Laq-8p-rBa"/>
-                        <constraint firstAttribute="height" constant="34" id="oM0-V0-B8C"/>
-                    </constraints>
-                    <state key="normal" title="Button">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="showUserProfileButtonTouch:" destination="-1" eventType="touchUpInside" id="3C5-aJ-3wJ"/>
-                    </connections>
-                </button>
             </subviews>
             <constraints>
                 <constraint firstItem="scf-Qr-vop" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="7" id="8a0-Yy-uDs"/>
                 <constraint firstItem="scf-Qr-vop" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="30" id="AVw-1z-mVZ"/>
                 <constraint firstItem="WNj-F9-7A7" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="35" id="CG3-dQ-izO"/>
-                <constraint firstItem="gE2-lM-pAI" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="23" id="NR7-OB-pwV"/>
                 <constraint firstAttribute="centerX" secondItem="WNj-F9-7A7" secondAttribute="centerX" id="WqN-qO-fe0"/>
-                <constraint firstAttribute="trailing" secondItem="gE2-lM-pAI" secondAttribute="trailing" constant="15" id="xwW-pR-AHh"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="411" y="-152"/>

@@ -27,35 +27,35 @@
                                         repeats : YES];
         
         [self cornerRadius:10];
-        [self initiationSocialNetworkButtonForSocialNetwork:nil];
+        //[self initiationSocialNetworkButtonForSocialNetwork:nil];
     }
     return self;
 }
 
-- (void) initiationSocialNetworkButtonForSocialNetwork :(SocialNetwork*) socialNetwork {
-    
-    SocialNetwork *currentSocialNetwork = socialNetwork;
-    if (!currentSocialNetwork) {
-        currentSocialNetwork = [SocialManager currentSocialNetwork];
-    }
-    
-    if (!currentSocialNetwork) {
-        [self setImage: [UIImage imageNamed: musAppButton_ImageName_UnknownUser] forState:UIControlStateNormal];
-        [self.imageView setContentMode:UIViewContentModeScaleAspectFill];
-        return;
-    } else {
-//        __weak UIButton *socialNetworkButton = self;
-//        [currentSocialNetwork obtainInfoFromNetworkWithComplition:^(id result, NSError *error) {
-//            SocialNetwork *currentSocialNetwork = (SocialNetwork*) result;
-//            User *currentUser = currentSocialNetwork.currentUser;
-//            [socialNetworkButton loadBackroundImageFromNetworkWithURL:[NSURL URLWithString: currentUser.photoURL]];
-//        }];
-        NSData *data = [NSData dataWithContentsOfFile:[self obtainPathToDocumentsFolder:currentSocialNetwork.icon]];
-        UIImage *image = [UIImage imageWithData:data];
-        [self setImage:image forState:UIControlStateNormal];
-        [self.imageView setContentMode:UIViewContentModeScaleAspectFill];
-    }
-}
+//- (void) initiationSocialNetworkButtonForSocialNetwork :(SocialNetwork*) socialNetwork {
+//    
+//    SocialNetwork *currentSocialNetwork = socialNetwork;
+//    if (!currentSocialNetwork) {
+//        currentSocialNetwork = [SocialManager currentSocialNetwork];
+//    }
+//    
+//    if (!currentSocialNetwork) {
+//        [self setImage: [UIImage imageNamed: musAppButton_ImageName_UnknownUser] forState:UIControlStateNormal];
+//        [self.imageView setContentMode:UIViewContentModeScaleAspectFill];
+//        return;
+//    } else {
+////        __weak UIButton *socialNetworkButton = self;
+////        [currentSocialNetwork obtainInfoFromNetworkWithComplition:^(id result, NSError *error) {
+////            SocialNetwork *currentSocialNetwork = (SocialNetwork*) result;
+////            User *currentUser = currentSocialNetwork.currentUser;
+////            [socialNetworkButton loadBackroundImageFromNetworkWithURL:[NSURL URLWithString: currentUser.photoURL]];
+////        }];
+//        NSData *data = [NSData dataWithContentsOfFile:[self obtainPathToDocumentsFolder:currentSocialNetwork.icon]];
+//        UIImage *image = [UIImage imageWithData:data];
+//        [self setImage:image forState:UIControlStateNormal];
+//        [self.imageView setContentMode:UIViewContentModeScaleAspectFill];
+//    }
+//}
 
 - (NSString*) obtainPathToDocumentsFolder :(NSString*) pathFromDataBase {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);

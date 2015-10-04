@@ -13,33 +13,12 @@
 #import "TwitterNetwork.h"
 #import "DataBaseManager.h"
 #import "NSString+MUSPathToDocumentsdirectory.h"
-#import "ReachabilityManager.h"
+//#import "ReachabilityManager.h"
 #import "NSError+MUSError.h"
 #import "MUSDatabaseRequestStringsHelper.h"
+#import "PostImagesManager.h"
 
 @implementation SocialNetwork
-
-+ (SocialNetwork*) sharedManagerWithType :(NetworkType) networkType {
-    SocialNetwork *socialNetwork = nil;
-    switch (networkType) {
-        case Facebook:{
-            socialNetwork = [FacebookNetwork sharedManager];
-            break;
-        }
-        case Twitters:{
-            socialNetwork = [TwitterNetwork sharedManager];
-            break;
-        }
-        case VKontakt:{
-            socialNetwork = [VKNetwork sharedManager];
-            break;
-        }
-        default:
-            break;
-    }
-    return socialNetwork;
-}
-
 
 - (void)setNetworkType:(NetworkType)networkType {
     _networkType = networkType;
@@ -60,7 +39,7 @@
 - (void) sharePost : (Post*) post withComplition : (Complition) block {
 }
 
-- (void) updatePost {
+- (void) updatePostWithComplition : (ComplitionUpdateNetworkPosts) block {
     
 }
 
@@ -74,76 +53,71 @@
     }    
 }
 
-- (void) saveImageToDocumentsFolderAndFillArrayWithUrl :(Post*) post {
-    if (!post.arrayImagesUrl) {
-        post.arrayImagesUrl = [NSMutableArray new];
-    } else {
-        [post.arrayImagesUrl removeAllObjects];
-    }
-    
-    [post.arrayImages enumerateObjectsUsingBlock:^(ImageToPost *image, NSUInteger index, BOOL *stop) {
-        NSData *data = UIImagePNGRepresentation(image.image);
-        //Get the docs directory
-        NSString *filePath = @"image";
-        filePath = [filePath stringByAppendingString:[NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970] * 1000]];
-        filePath = [filePath stringByAppendingString:@".png"];
-        [post.arrayImagesUrl addObject:filePath];
-        
-        [data writeToFile:[filePath obtainPathToDocumentsFolder:filePath] atomically:YES]; //Write the file
-    }];
-    [[DataBaseManager sharedManager] insertIntoTable:post];
-}
+//// ADD to USER ????? /////
 
 - (void) removeUserFromDataBaseAndImageFromDocumentsFolder :(User*) user {
-    [self removeImagesOfPostFromDocumentsFolder:user.clientID];
-    [[DataBaseManager sharedManager] deleteUserByClientId:user.clientID];
+    //[self removeImagesOfPostFromDocumentsFolder: user.clientID];
+    
+    [[DataBaseManager sharedManager] deleteUserByClientId : user.clientID];
     NSError *error;
     [[NSFileManager defaultManager] removeItemAtPath: [user.photoURL obtainPathToDocumentsFolder: user.photoURL] error: &error];
 }
 
-- (void) removeImagesOfPostFromDocumentsFolder :(NSString*) userId {
-    __block NSError *error;
-    NSArray *arrayWithPostsOfUser = [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForPostWithUserId:userId]];
-    [arrayWithPostsOfUser enumerateObjectsUsingBlock:^(Post *post, NSUInteger idx, BOOL *stop) {
-        
-        if (![[post.arrayImagesUrl firstObject] isEqualToString: @""] && post.arrayImagesUrl.count > 0) {
-                [post.arrayImagesUrl enumerateObjectsUsingBlock:^(NSString *urlImage, NSUInteger idx, BOOL *stop) {
-                    [[NSFileManager defaultManager] removeItemAtPath: [urlImage obtainPathToDocumentsFolder: urlImage] error: &error];
-            
-            }];
-        }
-    }];
-    
-    
-}
+//- (void) removeImagesOfPostFromDocumentsFolder :(NSString*) userId {
+//    [[PostImagesManager manager] removeAllImagesFromAllPostsByUserID: userId];
+//}
 
-- (BOOL) obtainCurrentConnection {
-    BOOL isReachable = [ReachabilityManager isReachable];
-    BOOL isReachableViaWiFi = [ReachabilityManager isReachableViaWiFi];
-    
-    if (!isReachableViaWiFi && !isReachable){
-        return NO;
-    }
-    return YES;
-}
-- (void) savePostDataBaseWithReason :(ReasonType) reason andPost :(Post*) post {
-    post.reason = reason;
-    [self saveImageToDocumentsFolderAndFillArrayWithUrl:post];
-}
 
-- (void) updatePostDataBaseWithReason :(ReasonType) reason andPost :(Post*) post {
-    post.reason = reason;
-    [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost: post]];
-    [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringLocationsForUpdateWithObjectPost: post]];
-}
+//// ADD to POST ????? /////
 
-- (void) saveOrUpdatePost : (Post*) post withReason : (ReasonType) reason {
-    if (!post.primaryKey) {
-        [self savePostDataBaseWithReason: reason andPost: post];
-    } else {
-        [self updatePostDataBaseWithReason: reason andPost: post];
-    }
-}
+//- (void) saveOrUpdatePost : (Post*) post withReason : (ReasonType) reason {
+//    if (!post.primaryKey) {
+//        [self savePostDataBaseWithReason: reason andPost: post];
+//    } else {
+//        [self updatePostDataBaseWithReason: reason andPost: post];
+//    }
+//}
+//
+//- (void) savePostDataBaseWithReason :(ReasonType) reason andPost :(Post*) post {
+//    post.reason = reason;
+//    [self saveImageToDocumentsFolderAndFillArrayWithUrl:post];
+//}
+//
+//- (void) updatePostDataBaseWithReason :(ReasonType) reason andPost :(Post*) post {
+//    post.reason = reason;
+//    [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost: post]];
+//    [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringLocationsForUpdateWithObjectPost: post]];
+//}
+//
+//- (void) saveImageToDocumentsFolderAndFillArrayWithUrl :(Post*) post {
+//    if (!post.arrayImagesUrl) {
+//        post.arrayImagesUrl = [NSMutableArray new];
+//    } else {
+//        [post.arrayImagesUrl removeAllObjects];
+//    }
+//    post.arrayImagesUrl = [[PostImagesManager manager] saveImagesToDocumentsFolderAndGetArrayWithImagesUrls: post.arrayImages];
+//    [[DataBaseManager sharedManager] insertIntoTable:post];
+//    
+//    /*
+//     [post.arrayImages enumerateObjectsUsingBlock:^(ImageToPost *image, NSUInteger index, BOOL *stop) {
+//     NSData *data = UIImagePNGRepresentation(image.image);
+//     //Get the docs directory
+//     NSString *filePath = @"image";
+//     filePath = [filePath stringByAppendingString:[NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970] * 1000]];
+//     filePath = [filePath stringByAppendingString:@".png"];
+//     [post.arrayImagesUrl addObject:filePath];
+//     
+//     [data writeToFile:[filePath obtainPathToDocumentsFolder:filePath] atomically:YES]; //Write the file
+//     }];
+//     */
+//}
+//
+
+
+
+
+
+
 
 - (NSError*) errorConnection {
     return [NSError errorWithMessage: musErrorConnection andCodeError: musErrorConnectionCode];

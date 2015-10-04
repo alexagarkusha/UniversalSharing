@@ -23,7 +23,8 @@
 - (void)awakeFromNib {
     // Initialization code
     self.postDescriptionTextView.delegate = self;
-    }
+    self.backgroundColor = BROWN_COLOR_Lightly;
+}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
@@ -45,8 +46,8 @@
 
 #pragma mark - height for PostDescriptionCell
 
-+ (CGFloat) heightForPostDescriptionCell : (NSString*) postDescription andIsEditableCell : (BOOL) isEditableCell {
-    if (!postDescription.length > 0 && !isEditableCell) {
++ (CGFloat) heightForPostDescriptionCell : (NSString*) postDescription {
+    if (!postDescription.length > 0) {
         return 0;
     }
     UITextView *calculationView = [[UITextView alloc] init];
@@ -57,8 +58,8 @@
                                                                      attributes : options];
     [calculationView setAttributedText : attrString];
     CGSize size = [calculationView sizeThatFits: CGSizeMake ([UIScreen mainScreen].bounds.size.width - musApp_PostDescriptionCell_TextView_LeftConstraint - musApp_PostDescriptionCell_TextView_RightConstraint, FLT_MAX)];
-    return size.height + musApp_PostDescriptionCell_TextView_BottomConstraint + musApp_PostDescriptionCell_TextView_TopConstraint;
-
+    CGFloat heightOfRow = size.height + musApp_PostDescriptionCell_TextView_BottomConstraint + musApp_PostDescriptionCell_TextView_TopConstraint;
+    return heightOfRow;
 }
 
 #pragma mark - configuration PostDescriptionCell
@@ -87,17 +88,27 @@
 
 #pragma mark - UITextViewDelegate
 
-- (BOOL) textViewShouldBeginEditing:(UITextView *)textView {
-    if(textView.tag == 0) {
-        [self initialParametersOfTextInTextView: changePlaceholderWhenStartEditing];
-        textView.textColor = [UIColor blackColor];
-        textView.tag = 1;
+- (void)textViewDidChange:(UITextView *)textView {
+    if (textView.text.length > 0) {
+        NSString *rawString = [textView text];
+        NSCharacterSet *whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+        NSString *trimmed = [rawString stringByTrimmingCharactersInSet:whitespace];
+        if ([trimmed length] == 0) {
+            [self initialPostDescriptionTextView];
+            [self.postDescriptionTextView setSelectedRange:NSMakeRange(0, 0)];
+            return;
+        }
+    } else {
+        [self initialPostDescriptionTextView];
+        [self.postDescriptionTextView setSelectedRange:NSMakeRange(0, 0)];
     }
-    return YES;
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-    if( [text rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet]].location == NSNotFound ) {
+    if([text rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet]].location == NSNotFound ) {
+        if (textView.tag == 0 && text.length > 0) {
+            [self initialPostDescriptionTextViewWhenStartingEditingText];
+        }
         if (self.currentNetworkType != Twitters) {
             return textView.text.length + (text.length - range.length) <= countOfAllowedLettersInTextView;
         } else {
@@ -108,23 +119,22 @@
     return NO;
 }
 
-- (void) textViewDidChange:(UITextView *)textView {
-    [self.delegate saveChangesInPostDescription: textView.text];
-}
-
 - (void)textViewDidEndEditing:(UITextView *)textView {
-    
     if([textView.text length] == 0) {
         [self initialPostDescriptionTextView];
-        //[self.delegate saveChangesInPostDescription: textView.text];
         [self.delegate endEditingPostDescriptionAndReloadTableView];
     } else {
-        //[self.delegate saveChangesInPostDescription: textView.text];
         [self.delegate endEditingPostDescriptionAndReloadTableView];
     }
     [self.postDescriptionTextView setEditable: NO];
-    //self.postDescriptionTextView.selectable = NO;
-    //self.postDescriptionTextView.scrollEnabled = NO;
+}
+
+- (void)textViewDidChangeSelection:(UITextView *)textView {
+    if ([textView.text isEqualToString: kPlaceholderText] && textView.textColor == [UIColor lightGrayColor]) {
+        [self.postDescriptionTextView setSelectedRange:NSMakeRange(0, 0)];
+    } else {
+        [self.delegate saveChangesInPostDescription: textView.text];
+    }
 }
 
 #pragma mark initiation PostDescriptionTextView
@@ -133,6 +143,12 @@
     self.postDescriptionTextView.tag = 0;
     [self initialParametersOfTextInTextView: kPlaceholderText];
     self.postDescriptionTextView.textColor = [UIColor lightGrayColor];
+}
+
+- (void) initialPostDescriptionTextViewWhenStartingEditingText {
+    self.postDescriptionTextView.text = changePlaceholderWhenStartEditing;
+    self.postDescriptionTextView.textColor = [UIColor blackColor];
+    self.postDescriptionTextView.tag = 1;
 }
 
 #pragma mark initiation Parameters of text in text view
@@ -157,7 +173,12 @@
     self.postDescriptionTextView.autocorrectionType = UITextAutocorrectionTypeNo;
     [self.delegate beginEditingPostDescription: self.currentIndexPath];
     [self.postDescriptionTextView becomeFirstResponder];
-    self.postDescriptionTextView.selectedRange = NSMakeRange([self.postDescriptionTextView.text length], 0);
+    
+    if (![self.postDescriptionTextView.text isEqualToString: kPlaceholderText]) {
+        self.postDescriptionTextView.selectedRange = NSMakeRange([self.postDescriptionTextView.text length], 0);
+    } else {
+        [self.postDescriptionTextView setSelectedRange:NSMakeRange(0, 0)];
+    }
 }
 
 @end

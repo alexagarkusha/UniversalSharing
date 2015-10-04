@@ -49,13 +49,7 @@
  */
 @property (assign, nonatomic) NetworkType networkType;
 
-
-/*!
- @abstract return object of SocialNetwork with the given type of social network
- @param networkType takes the type of social network (like Facebook, Twitters, Vkontakte)
-*/
-
-+ (SocialNetwork*) sharedManagerWithType :(NetworkType) networkType;
+//@property (assign, nonatomic) NSInteger indexPosition;
 
 
 /*!
@@ -100,27 +94,25 @@
  @warning This method requires that you have been login in Social Network.
 */
 
-- (void) sharePost : (Post*) post withComplition : (Complition) block;
+- (void) sharePost : (Post*) post withComplition : (Complition) block andComplitionLoading :(ComplitionProgressLoading)blockLoading;
 
 - (void) setIsVisible:(BOOL)isVisible;
 
 
 - (void) removeUserFromDataBaseAndImageFromDocumentsFolder :(User*) user;
 
-#warning "Specific method for each network???"
-- (BOOL) obtainCurrentConnection;
+//- (BOOL) obtainCurrentConnection;
 //- (void) savePostDataBaseWithReason :(ReasonType) reason andPost :(Post*) post;
 //- (void) updatePostDataBaseWithReason :(ReasonType) reason andPost :(Post*) post;
-- (void) saveOrUpdatePost : (Post*) post withReason : (ReasonType) reason;
-
-- (void) updatePost;
+//- (void) saveOrUpdatePost : (Post*) post withReason : (ReasonType) reason;
+//
+- (void) updatePostWithComplition : (ComplitionUpdateNetworkPosts) block;
 
 
 #warning "Specific method for each network???"
 - (NSError*) errorConnection;
 
 - (void) stopUpdatingPostWithObject : (id) object;
-
 
 
 @end
