@@ -333,14 +333,15 @@ static TwitterNetwork *model = nil;
 #pragma mark - sharePostToNetwork
 
 - (void) sharePost:(Post *)post withComplition:(Complition)block andComplitionLoading :(ComplitionProgressLoading)blockLoading {
-    //    if (![[InternetConnectionManager manager] isInternetConnection]){
-    //        NetworkPost *networkPost = [NetworkPost create];
-    //        networkPost.reason = Offline;
-    //        networkPost.networkType = Twitters;
-    //        block(networkPost,[self errorConnection]);
-    //        [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
-    //        return;
-    //    }
+        if (![[InternetConnectionManager manager] isInternetConnection]){
+            NetworkPost *networkPost = [NetworkPost create];
+            networkPost.reason = Offline;
+            networkPost.networkType = Twitters;
+            block(networkPost,[self errorConnection]);
+            blockLoading (1.0f);
+            [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
+            return;
+        }
     self.copyComplitionProgressLoading = blockLoading;
     self.copyComplition = block;
     if ([post.arrayImages count] > 0) {

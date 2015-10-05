@@ -309,6 +309,15 @@ static VKNetwork *model = nil;
 #pragma mark - sharePostToNetwork
 
 - (void) sharePost : (Post*) post withComplition : (Complition) block andComplitionLoading :(ComplitionProgressLoading)blockLoading{
+    if (![[InternetConnectionManager manager] isInternetConnection]){
+        NetworkPost *networkPost = [NetworkPost create];
+        networkPost.networkType = VKontakt;
+        networkPost.reason = Offline;
+        blockLoading (1.0f);
+        block(networkPost,[self errorConnection]);
+        return;
+    }
+    
     self.copyComplition = block;
     self.copyComplitionProgressLoading = blockLoading;
 

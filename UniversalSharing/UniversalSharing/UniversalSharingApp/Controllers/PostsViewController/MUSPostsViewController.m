@@ -71,6 +71,7 @@
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear : YES];
     [self updateNetworkPostsInPost];
+    self.view.userInteractionEnabled = YES;
     // Notification for updating likes and comments in posts.
     [[NSNotificationCenter defaultCenter]
                             addObserver : self
@@ -177,9 +178,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     Post *post = [self.arrayPosts objectAtIndex: indexPath.section];
-    if (![self.setWithUniquePrimaryKeysOfPost containsObject: [NSString stringWithFormat: @"%ld", (long)post.primaryKey]]) {
-        [self performSegueWithIdentifier: goToDetailPostViewControllerSegueIdentifier sender: post];
-    }
+    self.view.userInteractionEnabled = NO;
+//    if (![self.setWithUniquePrimaryKeysOfPost containsObject: [NSString stringWithFormat: @"%ld", (long)post.primaryKey]]) {
+    [self performSegueWithIdentifier: goToDetailPostViewControllerSegueIdentifier sender: post];
+//    }
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -264,13 +266,24 @@
         self.arrayPosts = [[NSMutableArray alloc] initWithArray: [[MUSPostManager manager] updateArrayOfPost]];
         [MUSPostManager manager].needToRefreshPosts = NO;
     }
+    [self checkArrayOfPosts];
     [self.tableView reloadData];
 }
+
+- (void) checkArrayOfPosts {
+    if (!self.arrayPosts.count) {
+        self.tableView.scrollEnabled = NO;
+    } else {
+        self.tableView.scrollEnabled = YES;
+    }
+}
+
 
 #pragma Update all posts in array
 
 - (void) updateArrayPosts {
     self.arrayPosts = [[NSMutableArray alloc] initWithArray: [[MUSPostManager manager] updateArrayOfPost]];
+    [self checkArrayOfPosts];
     [self.tableView reloadData];
 }
 

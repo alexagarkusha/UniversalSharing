@@ -166,7 +166,7 @@
         }
     }
     
-    if (!isPostConnect) {
+    if (!isPostConnect && ![[MultySharingManager sharedManager] isPostInQueueOfPosts: self.currentPost.primaryKey]) {
         self.shareButton = [[UIBarButtonItem alloc] initWithTitle : musAppButtonTitle_Share style:2 target:self action: @selector(sendPost)];
         self.navigationItem.rightBarButtonItem = self.shareButton;
     }
@@ -450,7 +450,10 @@
 
         for (NetworkPost *networkPost in weakSelf.currentPost.arrayWithNetworkPosts) {
             if (networkPost.reason != Connect) {
-                self.shareButton.enabled = YES;
+                weakSelf.shareButton.enabled = YES;
+            } else {
+                [weakSelf.navigationItem.rightBarButtonItem setTintColor:[UIColor clearColor]];
+                [weakSelf.navigationItem.rightBarButtonItem setEnabled:NO];
             }
         }
         } andComplitionProgressLoading:^(float result) {
