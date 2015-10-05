@@ -11,11 +11,16 @@
 @interface MUSProgressBar : UIView
 // as long as it is so, then we would change to private)
 
-@property (weak, nonatomic) IBOutlet UIImageView *imageViewPost;
+@property (weak, nonatomic) IBOutlet UIImageView *imageViewPostFirst;
+@property (weak, nonatomic) IBOutlet UIImageView *imageViewPostSecond;
+@property (weak, nonatomic) IBOutlet UIImageView *imageViewPostThird;
+
 @property (weak, nonatomic) IBOutlet UILabel *labelStutus;
 @property (weak, nonatomic) IBOutlet UIProgressView *progressView;
 //@property (strong, nonatomic) IBOutlet UIView *view;
 @property (strong, nonatomic)  UIView *view;
 @property (weak, nonatomic)     IBOutlet    NSLayoutConstraint* lableConstraint;
+@property (weak, nonatomic)     IBOutlet    NSLayoutConstraint* lableConstraintHieght;
 
+- (void) configurationProgresBar: (NSArray*) arrayImages;
 @end

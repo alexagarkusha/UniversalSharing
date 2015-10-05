@@ -368,10 +368,6 @@ static VKNetwork *model = nil;
     }
     
     VKRequest *request = [[VKApi wall] post: parameters];
-    request.requestTimeout = 10;
-    // NSInteger s = request.requestTiming.loadTime;
-    VKRequestTiming *a = [VKRequestTiming new];
-    // a.loadTime
     [request executeWithResultBlock: ^(VKResponse *response) {
         NSLog(@"%@", response.request.requestTiming);
         

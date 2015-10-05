@@ -460,7 +460,7 @@ static FacebookNetwork *model = nil;
                 networkPost.commentsCount = [result integerValue];
                 
                 
-                NSLog(@"FB post.id = %@, post.like = %d, post.comments = %d", networkPost.postID, networkPost.likesCount, networkPost.commentsCount);
+                NSLog(@"FB post.id = %@, post.like = %ld, post.comments = %ld", networkPost.postID, (long)networkPost.likesCount, (long)networkPost.commentsCount);
                 
                 
                 [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringNetworkPostsForUpdateObjectNetworkPost : networkPost]];

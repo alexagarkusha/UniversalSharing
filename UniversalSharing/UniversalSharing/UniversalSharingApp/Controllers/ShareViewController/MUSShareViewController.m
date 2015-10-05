@@ -144,7 +144,7 @@
     CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
     CGFloat navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
     self.progressBar = [[MUSProgressBar alloc]initWithFrame:CGRectMake(0, statusBarHeight, self.view.frame.size.width, navigationBarHeight)];
-    
+    //self.progressBar.progressView.progressTintColor = BROWN_COLOR_MIDLight;
      //[self.navigationController.view addSubview:self.progressBar.view];
 }
 
@@ -388,19 +388,19 @@
 - (void) sharePosts : (NSMutableArray*) arrayChosenNetworksForPost {///////////////////////////////////////////////////////////////
     //MUSPopUpForSharing * popVC = [MUSPopUpForSharing new];
     [self.navigationController.view addSubview:self.progressBar.view];
-    
-    self.progressBar.labelStutus.text = @"Publishing";
-    NSArray * pics = [self.galeryView obtainArrayWithChosenPics];
-    if(pics.count){
-        self.progressBar.lableConstraint.constant = 50;
-        ImageToPost *image;
-        image = pics[0];
-        self.progressBar.imageViewPost.image = image.image;
-    } else {
-        self.progressBar.imageViewPost.image = nil;
-        self.progressBar.lableConstraint.constant = 8;
-        
-    }
+    [self.progressBar configurationProgresBar:[self.galeryView obtainArrayWithChosenPics]];
+       //NSArray * pics = [self.galeryView obtainArrayWithChosenPics];
+//    if(pics.count){
+//        self.progressBar.lableConstraint.constant = 50;
+//        ImageToPost *image;
+//        image = pics[0];
+//        self.progressBar.imageViewPost.image = image.image;
+//    } else {
+//        self.progressBar.imageViewPost.image = nil;
+//        self.progressBar.lableConstraint.constant = 8;
+//        
+//    }
+//    self.progressBar.labelStutus.text = @"Publishing";
 
     [_popVC removeFromParentViewController];
     [_popVC.view removeFromSuperview];
@@ -417,37 +417,40 @@
     //        __weak MUSShareViewController *weakSelf = self;
     
    // NSArray *array = [[NSArray alloc] initWithObjects:  @(Facebook), nil];
+    __weak MUSShareViewController *weakSelf = self;
+    //__block
     if (arrayChosenNetworksForPost) {
          [self createPost];
         [self refreshShareScreen];
         [[MultySharingManager sharedManager] sharePost: self.post toSocialNetworks: arrayChosenNetworksForPost withComplition:^(id result, NSError *error) {
-        self.post = nil;
+        weakSelf.post = nil;
         //finish of post
         NSLog(@"RESULT %@", result);
         NSLog(@"ERROR %@", error);
         
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                [self.progressBar.view removeFromSuperview];
-            });
+//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+//                [weakSelf.progressBar.view removeFromSuperview];
+//            });
             
     } andComplitionProgressLoading:^(float result) {
-        self.progressBar.progressView.progress = result;
-        if (result == 1) {
-            self.progressBar.labelStutus.text = @"Published :))";
+        //sum
+        weakSelf.progressBar.progressView.progress = result;// arrayChosenNetworksForPost.count;
+        if (result >= 1) {
+            weakSelf.progressBar.labelStutus.text = @"Published";
             
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                [self.progressBar.view removeFromSuperview];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 10 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                [weakSelf.progressBar.view removeFromSuperview];
             });
         }
     }];
     }
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-        CGRect frame = self.progressBar.view.frame;
-        frame.size.height = self.progressBar.progressView.frame.size.height;
-        [self.progressBar.view setFrame:frame];
-        //[self.progressBar.view removeFromSuperview];
-    });
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+//        CGRect frame = self.progressBar.view.frame;
+//        frame.size.height = self.progressBar.progressView.frame.size.height;
+//        [self.progressBar.view setFrame:frame];
+//        //[self.progressBar.view removeFromSuperview];
+//    });
     
 }
 

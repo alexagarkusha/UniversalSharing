@@ -20,7 +20,7 @@
 #import "NSString+MUSCurrentDate.h"
 #import "MUSPostManager.h"
 
-@interface TwitterNetwork () <TWTRTweetViewDelegate,TWTRTimelineDataSource,TWTRAuthSession,TWTRCoreOAuthSigning>//<TWTRCoreOAuthSigning>
+@interface TwitterNetwork () //<TWTRCoreOAuthSigning>
 
 @property (copy, nonatomic) Complition copyComplition;
 @property (strong, nonatomic) NSArray *accountsArray;
@@ -42,86 +42,6 @@ static TwitterNetwork *model = nil;
     });
     return  model;
 }
-- (void)loadPreviousTweetsBeforePosition:(NSString * __twtr_nullable)position completion:(TWTRLoadTimelineCompletion)completion {
-    
-    
-}
-- (void)tweetView:(TWTRTweetView *)tweetView didSelectTweet:(TWTRTweet *)tweet{
-    
-}
-
-/**
- *  A URL in the text of a tweet was tapped. Implement to show your own webview rather than opening Safari.
- *
- *  @param tweetView The Tweet view that was tapped.
- *  @param url       The URL that was tapped.
- */
-- (void)tweetView:(TWTRTweetView *)tweetView didTapURL:(NSURL *)url{
-    
-    
-}
-
-/**
- *  The Tweet view "Share" button was tapped and the `UIActivityViewController` was shown.
- *
- *  @param tweetView The Tweet view that was tapped.
- *  @param tweet     The Tweet model object being shown.
- */
-- (void)tweetView:(TWTRTweetView *)tweetView willShareTweet:(TWTRTweet *)tweet{
-    
-    
-}
-
-/**
- *  The share action for a Tweet was completed.
- *
- *  @param tweetView The Tweet view that was tapped.
- *  @param tweet     The Tweet model object being shown.
- *  @param shareType The share action that was completed. (e.g. `UIActivityTypePostToFacebook`, `UIActivityTypePostToTwitter`, or `UIActivityTypeMail`)
- */
-- (void)tweetView:(TWTRTweetView *)tweetView didShareTweet:(TWTRTweet *)tweet withType:(NSString *)shareType{
-    
-    
-}
-
-/**
- *  The share action for a Tweet was cancelled.
- *
- *  @param tweetView The Tweet view handling the share action.
- *  @param tweet     The Tweet model object represented.
- */
-- (void)tweetView:(TWTRTweetView *)tweetView cancelledShareTweet:(TWTRTweet *)tweet{
-    
-    
-}
-
-/**
- *  The Tweet view favorite button was tapped and the action was completed with
- *  the Twitter API.
- *
- *  @param tweetView The Tweet view showing this Tweet object.
- *  @param tweet     The Tweet model that was just favorited.
- */
-- (void)tweetView:(TWTRTweetView *)tweetView didFavoriteTweet:(TWTRTweet *)tweet{
-    
-    
-}
-
-/**
- *  The Tweet view unfavorite button was tapped and the action was completed with
- *  the Twitter API.
- *
- *  @param tweetView The Tweet view showing this Tweet object.
- *  @param tweet     The Tweet model object that was just unfavorited.
- */
-- (void)tweetView:(TWTRTweetView *)tweetView didUnfavoriteTweet:(TWTRTweet *)tweet{
-    
-    
-}
-/*!
- Initiation TwitterNetwork.
- @warning This method requires that you have set up your `consumerKey` and `consumerSecret`.
- */
 
 - (instancetype) init {
     self = [super init];
@@ -421,7 +341,7 @@ static TwitterNetwork *model = nil;
     //        [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
     //        return;
     //    }
-    
+    self.copyComplitionProgressLoading = blockLoading;
     self.copyComplition = block;
     if ([post.arrayImages count] > 0) {
         [self postImagesToTwitter: post];
@@ -462,6 +382,7 @@ static TwitterNetwork *model = nil;
     
     [client sendTwitterRequest:preparedRequest
                     completion:^(NSURLResponse *urlResponse, NSData *responseData, NSError *error){
+                        self.copyComplitionProgressLoading(1);
                         if(!error){
                             NSError *jsonError = nil;
                             
@@ -528,6 +449,7 @@ static TwitterNetwork *model = nil;
             }
             [client sendTwitterRequest : request
                             completion : ^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+                                self.copyComplitionProgressLoading(1);
                                 if (!connectionError) {
                                     
                                     NSError *jsonError = nil;
