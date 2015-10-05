@@ -12,6 +12,7 @@
 
 typedef void (^Complition)(id result, NSError *error);
 typedef void (^ComplitionProgressLoading)(float result);
+typedef void (^ProgressLoadingImagesToVK)(int objectOfLoading, long long bytesLoaded, long long bytesTotal);
 typedef void (^ComplitionUpdateNetworkPosts)(id result);
 typedef void (^ComplitionWithArrays)(id arrayLogin, id arrayHidden, id arrayUnactive, NSError *error);
 
