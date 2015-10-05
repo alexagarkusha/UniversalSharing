@@ -19,6 +19,7 @@
 #import "NSString+MUSCurrentDate.h"
 #import "MUSPostManager.h"
 #import "VKOperation.h"
+#import "VKUploadImage.h"
 
 @interface VKNetwork () <VKSdkDelegate>
 @property (strong, nonatomic) UINavigationController *navigationController;
@@ -235,30 +236,6 @@ static VKNetwork *model = nil;
     return request;
 }
 
-//- (VKRequest*) obtainCountOfCommentsFromPost :(Post*) post {
-//    NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"100",@"count",post.userId,@"owner_id",post.postID,@"post_id",@"1",@"need_likes",nil];
-//
-//
-//    VKRequest * request = [VKApi requestWithMethod : @"wall.getComments"
-//                                             andParameters : params
-//                                             andHttpMethod : musGET];
-////
-////    [locationRequest executeWithResultBlock:^(VKResponse * response)
-////     {
-////         post.commentsCount = [[response.json objectForKey:@"count"] integerValue];
-////         [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost:post]];
-////
-////     } errorBlock:^(NSError * error) {
-////         if (error.code != VK_API_ERROR) {
-////             [error.vkError.request repeat];
-////         }
-////         else {
-////             //block (nil, [self errorVkontakte]);
-////         }
-////     }];
-//    return request;
-//}
-
 #pragma mark - obtainArrayOfPlacesFromNetwork
 
 
@@ -332,16 +309,33 @@ static VKNetwork *model = nil;
 #pragma mark - sharePostToNetwork
 
 - (void) sharePost : (Post*) post withComplition : (Complition) block andComplitionLoading :(ComplitionProgressLoading)blockLoading{
-    // if (![[InternetConnectionManager manager] isInternetConnection]){
-    //        NetworkPost *networkPost = [NetworkPost create];
-    //        networkPost.networkType = VKontakt;
-    //        networkPost.reason = Offline;
-    //        block(networkPost,[self errorConnection]);
-    //        return;
-    // }
     self.copyComplition = block;
+    self.copyComplitionProgressLoading = blockLoading;
+
     if ([post.arrayImages count] > 0) {
-        [self postImagesToVK: post];
+        __block NSUInteger numberOfImagesInPost = [post.arrayImages count];
+        __block NSMutableArray *arrayOfLoadingObjects = [[NSMutableArray alloc] init];
+        for (int i = 0; i < [post.arrayImages count]; i++) {
+            NSNumber *loadingObject = [[NSNumber alloc] init];
+            loadingObject = [NSNumber numberWithFloat: 0.0000001];
+            [arrayOfLoadingObjects addObject: loadingObject];
+        }    
+        [self postImagesToVK: post withProgressLoadingImagesToVK:^(int objectOfLoading, long long bytesLoaded, long long bytesTotal) {
+            if (arrayOfLoadingObjects.count > objectOfLoading) {
+                NSNumber *currentObject = [arrayOfLoadingObjects objectAtIndex:objectOfLoading];
+                currentObject = [NSNumber numberWithFloat: (bytesLoaded * 1.0f / bytesTotal)];
+                [arrayOfLoadingObjects replaceObjectAtIndex: objectOfLoading withObject:currentObject];
+            }
+            
+            float totalProgress = 0;
+            
+            for (int i = 0; i < [arrayOfLoadingObjects count]; i ++) {
+                NSNumber *currentObject = [arrayOfLoadingObjects objectAtIndex: i];
+                totalProgress += [currentObject floatValue];
+            }
+            blockLoading (totalProgress / numberOfImagesInPost);
+            //NSLog(@"total progress = %f", totalProgress / numberOfImagesInPost);
+        }];
     } else {
         [self postMessageToVK: post];
     }
@@ -367,10 +361,21 @@ static VKNetwork *model = nil;
         parameters [VK_API_LAT] = post.latitude;
     }
     
+    
     VKRequest *request = [[VKApi wall] post: parameters];
+//////<<<<<<< HEAD
+//=======
+    
+    [request setProgressBlock:^(VKProgressType progressType, long long bytesLoaded, long long bytesTotal) {
+        if (bytesTotal < 0) {
+            return;
+        }
+        float totalProgress = (bytesLoaded * 1.0f / bytesTotal);
+        self.copyComplitionProgressLoading (totalProgress);
+    }];
+
+//>>>>>>> b977834042062c2a59ebac2d636324646a88f47f
     [request executeWithResultBlock: ^(VKResponse *response) {
-        NSLog(@"%@", response.request.requestTiming);
-        
         networkPostCopy.reason = Connect;
         networkPostCopy.dateCreate = [NSString currentDate];
         networkPostCopy.postID = [[response.json objectForKey:@"post_id"] stringValue];
@@ -387,7 +392,7 @@ static VKNetwork *model = nil;
  @param current post of @class Post
  */
 
-- (void) postImagesToVK : (Post*) post {
+- (void) postImagesToVK : (Post*) post withProgressLoadingImagesToVK : (ProgressLoadingImagesToVK) progressLoadingImagesToVK {
     __block NSUInteger numberOfImagesInPost = [post.arrayImages count];
     __block int counterOfImages = 0;
     NetworkPost *networkPost = [NetworkPost create];
@@ -396,14 +401,20 @@ static VKNetwork *model = nil;
     
     NSInteger userId = [self.currentUser.clientID integerValue];
     NSMutableArray *requestArray = [[NSMutableArray alloc] init]; //array of requests to add pictures in the social network
-    
     for (int i = 0; i < [post.arrayImages count]; i++) {
         ImageToPost *imageToPost = [post.arrayImages objectAtIndex: i];
-        
+
         VKRequest * request = [VKApi uploadWallPhotoRequest: imageToPost.image
                                                  parameters: [self imageForVKNetwork: imageToPost]
                                                      userId: userId
                                                     groupId: 0];
+        __block int object = i;
+        [request setProgressBlock:^(VKProgressType progressType, long long bytesLoaded, long long bytesTotal) {
+            if (bytesTotal < 0) {
+                return;
+            }
+            progressLoadingImagesToVK (object, bytesLoaded, bytesTotal);
+        }];
         [requestArray addObject: request];
     }
     
@@ -431,8 +442,12 @@ static VKNetwork *model = nil;
             parameters [VK_API_MESSAGE] = post.postDescription;
         }
         
+        
         VKRequest *postRequest = [[VKApi wall] post: parameters];
+                
         [postRequest executeWithResultBlock: ^(VKResponse *response) {
+            
+            
             networkPostCopy.postID = [[response.json objectForKey:@"post_id"] stringValue];
             networkPostCopy.reason = Connect;
             networkPostCopy.dateCreate = [NSString currentDate];
