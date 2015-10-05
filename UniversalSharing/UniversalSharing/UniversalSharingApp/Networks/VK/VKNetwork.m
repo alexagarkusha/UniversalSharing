@@ -21,20 +21,6 @@
 #import "VKOperation.h"
 #import "VKUploadImage.h"
 
-
-
-@interface VKUploadingAttachment : VKObject
-@property(nonatomic, assign) BOOL isUploaded;
-@property(nonatomic, assign) BOOL isDownloading;
-@property(nonatomic, assign) CGSize attachSize;
-@property(nonatomic, strong) NSString *attachmentString;
-@property(nonatomic, strong) UIImage *preview;
-@property(nonatomic, strong) VKUploadImage *targetUpload;
-@property(nonatomic, weak) VKRequest *uploadingRequest;
-@end
-
-
-
 @interface VKNetwork () <VKSdkDelegate>
 @property (strong, nonatomic) UINavigationController *navigationController;
 @property (copy, nonatomic) Complition copyComplition;
@@ -250,30 +236,6 @@ static VKNetwork *model = nil;
     return request;
 }
 
-//- (VKRequest*) obtainCountOfCommentsFromPost :(Post*) post {
-//    NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"100",@"count",post.userId,@"owner_id",post.postID,@"post_id",@"1",@"need_likes",nil];
-//
-//
-//    VKRequest * request = [VKApi requestWithMethod : @"wall.getComments"
-//                                             andParameters : params
-//                                             andHttpMethod : musGET];
-////
-////    [locationRequest executeWithResultBlock:^(VKResponse * response)
-////     {
-////         post.commentsCount = [[response.json objectForKey:@"count"] integerValue];
-////         [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringPostsForUpdateWithObjectPost:post]];
-////
-////     } errorBlock:^(NSError * error) {
-////         if (error.code != VK_API_ERROR) {
-////             [error.vkError.request repeat];
-////         }
-////         else {
-////             //block (nil, [self errorVkontakte]);
-////         }
-////     }];
-//    return request;
-//}
-
 #pragma mark - obtainArrayOfPlacesFromNetwork
 
 
@@ -479,47 +441,7 @@ static VKNetwork *model = nil;
         
         
         VKRequest *postRequest = [[VKApi wall] post: parameters];
-        
-        
-//        NSMutableArray *attachmentsArray = [[NSMutableArray alloc] init];
-//        
-//        for (VKUploadImage *imageToUpload in arrayWithUploadingImages) {
-//            VKUploadingAttachment *attach = [VKUploadingAttachment new];
-//            attach.isUploaded = NO;
-//            attach.attachSize = imageToUpload.sourceImage.size;
-//            attach.targetUpload = imageToUpload;
-//            //attach.preview = [imageToUpload.sourceImage vkRoundCornersImage:0.0f resultSize: imageToUpload.sourceImage.size];
-//            [attachmentsArray addObject:attach];
-//        }
-//        
-//
-//        VKUploadingAttachment *attach = [attachmentsArray objectAtIndex: 0];
-//        
-//        postRequest = attach.uploadingRequest;
-        //VKRequest *request = attach.uploadingRequest;
-        
-//        [postRequest setProgressBlock:^(VKProgressType progressType, long long bytesLoaded, long long bytesTotal) {
-//            if (bytesTotal < 0) {
-//                return;
-//            }
-//            
-//            NSLog(@"progress = %f", bytesLoaded * 1.0f / bytesTotal);
-//            //weakCell.progress = bytesLoaded * 1.0f / bytesTotal;
-//        }];
-
-        
-        
-        
-        
-        
-        
-//        [postRequest setProgressBlock:^(VKProgressType q, long long y, long long b) {
-//            NSLog(@"q = %ld", (long)q);
-//            NSLog(@"y = %lld", y);
-//            NSLog(@"b = %lld", b);
-//            
-//        }];
-        
+                
         [postRequest executeWithResultBlock: ^(VKResponse *response) {
             
             
