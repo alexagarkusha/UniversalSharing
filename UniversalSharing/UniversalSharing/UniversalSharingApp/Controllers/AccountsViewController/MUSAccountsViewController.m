@@ -77,7 +77,10 @@
     //////////////////////////////////////////////////////////////////////////
 //        UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressGestureRecognized:)];
 //        [self.tableView addGestureRecognizer:longPress];
-    
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     @{NSForegroundColorAttributeName: BROWN_COLOR_MIDLightHIGHT}];
+    [self.navigationController.navigationBar setTintColor: BROWN_COLOR_MIDLightHIGHT];
+
     ///////////////////////////////////////////////////////////////////////////////
     [super viewDidLoad];
     [self obtanObjectsOfSocialNetworks];

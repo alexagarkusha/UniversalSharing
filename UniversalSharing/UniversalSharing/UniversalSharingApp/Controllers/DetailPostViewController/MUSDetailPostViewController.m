@@ -24,6 +24,8 @@
 #import "MUSUserDetailViewController.h"
 #import "MEExpandableHeaderView.h"
 #import "MUSPopUpForSharing.h"
+#import "MUSProgressBar.h"
+#import "MUSProgressBarEndLoading.h"
 
 @interface MUSDetailPostViewController () <UITableViewDataSource, UITableViewDelegate,  UIActionSheetDelegate, UIAlertViewDelegate, MEExpandableHeaderViewDelegate, UIScrollViewDelegate, MUSPopUpForSharingDelegate>
 /*!
@@ -59,6 +61,10 @@
 
 @property (nonatomic, strong) MUSPopUpForSharing *popUpForSharing;
 
+@property (strong, nonatomic)                MUSProgressBar * progressBar ;
+@property (strong, nonatomic)                MUSProgressBarEndLoading * progressBarEndLoading ;
+
+
 @end
 
 
@@ -72,6 +78,8 @@
     //[self initiationCurrentSocialNetwork];
     [self initiationNavigationBar];
     [self initiationActivityIndicator];
+    [self initiationProgressBar];
+    
     
     self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForUsersWithNetworkType: self.currentSocialNetwork.networkType]] firstObject];
     self.tableViewFrame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height);
@@ -171,9 +179,9 @@
         self.navigationItem.rightBarButtonItem = self.shareButton;
     }
     
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle: musAppButtonTitle_Back style:2 target:self action: @selector(backToThePostsViewController)];
-    self.navigationItem.leftBarButtonItem = backButton;
-    self.title = self.currentSocialNetwork.name;
+//    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle: musAppButtonTitle_Back style:2 target:self action: @selector(backToThePostsViewController)];
+//    self.navigationItem.leftBarButtonItem = backButton;
+//    self.title = self.currentSocialNetwork.name;
 }
 
 #pragma mark initiation CurrentSocialNetwork
@@ -200,6 +208,15 @@
     self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.activityIndicator.hidesWhenStopped = YES;
     [self.view addSubview:self.activityIndicator];
+}
+
+- (void) initiationProgressBar {
+    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+    CGFloat navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
+    self.progressBar = [[MUSProgressBar alloc]initWithFrame:CGRectMake(0, statusBarHeight, self.view.frame.size.width, navigationBarHeight)];
+    self.progressBarEndLoading = [[MUSProgressBarEndLoading alloc]initWithFrame:CGRectMake(0, statusBarHeight, self.view.frame.size.width, navigationBarHeight)];
+    self.progressBar.viewHeightConstraint.constant = 0;
+    self.progressBarEndLoading.viewHeightConstraint.constant = 0;
 }
 
 #pragma mark  start Activity Indicator Animating
@@ -431,7 +448,12 @@
 }
 
 #pragma mark - Share Post to Social network
-- (void) sharePosts : (NSMutableArray*) arrayChosenNetworksForPost {
+- (void) sharePosts : (NSMutableArray*) arrayChosenNetworksForPost andFlagTwitter :(BOOL) flagTwitter {
+    
+    
+    [self.tabBarController.view addSubview:self.progressBar.view];
+    self.progressBar.progressView.progress = 0;
+    [self.progressBar.viewWithPicsAndLable layoutIfNeeded];
     
     [self.popUpForSharing removeFromParentViewController];
     [self.popUpForSharing.view removeFromSuperview];
@@ -439,6 +461,16 @@
     
     self.shareButton.enabled = NO;
     __weak MUSDetailPostViewController *weakSelf = self;
+    
+    
+    weakSelf.progressBar.viewHeightConstraint.constant = 42;
+    [UIView animateWithDuration:1 animations:^{
+        
+        [weakSelf.progressBar.viewWithPicsAndLable layoutIfNeeded];
+    }];
+    [UIView commitAnimations];
+    
+    [self.progressBar configurationProgressBar: nil :NO :0 :0];
     
     if (arrayChosenNetworksForPost) {
         
@@ -455,9 +487,36 @@
                 [weakSelf.navigationItem.rightBarButtonItem setTintColor:[UIColor clearColor]];
                 [weakSelf.navigationItem.rightBarButtonItem setEnabled:NO];
             }
-        }
-        } andComplitionProgressLoading:^(float result) {
             
+            
+            [weakSelf.progressBar.viewWithPicsAndLable layoutIfNeeded];
+            
+            weakSelf.progressBar.viewHeightConstraint.constant = 0;
+            [UIView animateWithDuration:1 animations:^{
+                
+                [weakSelf.progressBar.viewWithPicsAndLable layoutIfNeeded];
+            }];
+            [UIView commitAnimations];
+            
+            [weakSelf.tabBarController.view addSubview:weakSelf.progressBarEndLoading.view];
+            [weakSelf.progressBarEndLoading.viewWithPicsAndLable layoutIfNeeded];
+            weakSelf.progressBarEndLoading.viewHeightConstraint.constant = 42;
+            [UIView animateWithDuration:2 animations:^{
+                [weakSelf.progressBarEndLoading.viewWithPicsAndLable layoutIfNeeded];
+            } completion:^(BOOL finished) {
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                    [weakSelf.progressBar.view removeFromSuperview];
+                    [weakSelf.progressBarEndLoading.view removeFromSuperview];
+                    weakSelf.progressBarEndLoading.viewHeightConstraint.constant = 0;
+                });
+            }];
+            [weakSelf.progressBarEndLoading configurationProgressBar: nil :[result intValue] :arrayChosenNetworksForPost.count];
+ 
+            
+            }
+        } andComplitionProgressLoading:^(float result) {
+            weakSelf.progressBar.progressView.progress = result;// arrayChosenNetworksForPost.count;
+            //NSLog(@"result");
         }];
     }
 }

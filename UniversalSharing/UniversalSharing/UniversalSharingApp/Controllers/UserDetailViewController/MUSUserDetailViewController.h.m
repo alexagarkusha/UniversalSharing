@@ -37,7 +37,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     if (!self.isLogoutButtonHide) {
-        self.logoutButton = [[UIBarButtonItem alloc] initWithTitle: @"Logout" style: 1 target:self action: @selector(logoutFromSocialNetwork)];
+        self.logoutButton = [[UIBarButtonItem alloc] initWithTitle: @"Logout" style: 2 target:self action: @selector(logoutFromSocialNetwork)];
         self.navigationItem.rightBarButtonItem = self.logoutButton;
     }
     
