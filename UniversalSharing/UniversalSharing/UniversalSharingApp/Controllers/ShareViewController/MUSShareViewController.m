@@ -396,7 +396,7 @@
 #pragma mark - Share Post to Social network
 - (void) sharePosts : (NSMutableArray*) arrayChosenNetworksForPost {///////////////////////////////////////////////////////////////
 [self.tabBarController.view addSubview:self.progressBar.view];
-
+self.progressBar.progressView.progress = 0;
     [self.progressBar.viewWithPicsAndLable layoutIfNeeded];
     
     __weak MUSShareViewController *weakSelf = self;
