@@ -21,8 +21,8 @@
 
 @property (copy, nonatomic) Complition copyComplition;
 @property (copy, nonatomic) ComplitionProgressLoading copyProgressLoading;
-@property (strong, nonatomic) NSMutableArray *arrayWithQueueOfPosts;
-@property (assign, nonatomic) BOOL isPostLoading;
+//@property (strong, nonatomic) NSMutableArray *arrayWithQueueOfPosts;
+//@property (assign, nonatomic) BOOL isPostLoading;
 
 @end
 
