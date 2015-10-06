@@ -21,8 +21,8 @@
 
 @property (copy, nonatomic) Complition copyComplition;
 @property (copy, nonatomic) ComplitionProgressLoading copyProgressLoading;
-@property (strong, nonatomic) NSMutableArray *arrayWithQueueOfPosts;
-@property (assign, nonatomic) BOOL isPostLoading;
+//@property (strong, nonatomic) NSMutableArray *arrayWithQueueOfPosts;
+//@property (assign, nonatomic) BOOL isPostLoading;
 
 @end
 
@@ -68,6 +68,7 @@ static MultySharingManager *model = nil;
 
 - (void) sharePost: (Post*) post toSocialNetworks: (NSArray *) arrayWithNetworks {
     NSLog(@"New OBJECT");
+    [self startSharePostNotification];
     if (!post.primaryKey) {
         [self shareNewPost: post toSocialNetworks: arrayWithNetworks];
     } else {
@@ -106,8 +107,6 @@ static MultySharingManager *model = nil;
             }
             //NSLog(@"Current post ID = %@, networktype =%ld", networkPost.postID, (long)networkPost.networkType);
             if (counterOfSocialNetwork == numberOfSocialNetworks) {
-                
-                
                 [weakMultySharingManager savePostImagesToDocument: postCopy];
                 //NSLog(@"Current post IDs = %@", postCopy.arrayWithNetworkPostsId);
                 [[DataBaseManager sharedManager] insertIntoTable : postCopy];
@@ -117,6 +116,7 @@ static MultySharingManager *model = nil;
                 NSLog(@"END LOAD");
                 
                 weakMultySharingManager.copyComplition ([NSNumber numberWithInt:countConnectPosts], error);
+                [weakMultySharingManager endSharePostNotificationWithObject: [NSNumber numberWithInt:countConnectPosts]];
                 [weakMultySharingManager checkArrayWithQueueOfPosts];
             }
 
@@ -168,6 +168,7 @@ static MultySharingManager *model = nil;
             }
             if (counterOfSocialNetwork == numberOfSocialNetworks) {
                 weakMultySharingManager.copyComplition ([NSNumber numberWithInt:countConnectPosts], error);
+                [weakMultySharingManager endSharePostNotificationWithObject: [NSNumber numberWithInt:countConnectPosts]];
                 [weakMultySharingManager checkArrayWithQueueOfPosts];
             }
 
@@ -253,6 +254,16 @@ static MultySharingManager *model = nil;
 - (void) updatePostInfoNotification {
     [[NSNotificationCenter defaultCenter] postNotificationName:MUSNotificationPostsInfoWereUpDated object:nil];
 }
+
+- (void) startSharePostNotification {
+    [[NSNotificationCenter defaultCenter] postNotificationName: @"StartSharePost" object:nil];
+}
+
+- (void) endSharePostNotificationWithObject : (NSNumber*) countConnectPosts {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"EndSharePost" object: countConnectPosts];
+}
+
+
 
 - (BOOL) isPostInQueueOfPosts:(NSInteger)primaryKeyOfPost {
     for (NSDictionary *dictionary in self.arrayWithQueueOfPosts) {

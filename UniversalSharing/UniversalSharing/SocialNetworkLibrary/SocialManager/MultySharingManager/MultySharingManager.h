@@ -15,7 +15,13 @@
 + (MultySharingManager*) sharedManager;
 
 - (void) sharePost : (Post*) post toSocialNetworks : (NSArray*) arrayOfNetworksType withComplition : (Complition) block andComplitionProgressLoading :(ComplitionProgressLoading) blockLoading;
+
 - (void) updateNetworkPostsWithComplition : (Complition) block;
+
 - (BOOL) isPostInQueueOfPosts : (NSInteger) primaryKeyOfPost;
+
+@property (strong, nonatomic) NSMutableArray *arrayWithQueueOfPosts;
+
+@property (assign, nonatomic) BOOL isPostLoading;
 
 @end
