@@ -1,16 +1,14 @@
 //
-//  MUSProgressBar.h
+//  MUSProgressBarEndLoading.h
 //  UniversalSharing
 //
-//  Created by Roman on 10/2/15.
+//  Created by Roman on 10/5/15.
 //  Copyright (c) 2015 Mobindustry. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface MUSProgressBar : UIView
-// as long as it is so, then we would change to private)
-
+@interface MUSProgressBarEndLoading : UIView
 @property (weak, nonatomic) IBOutlet UIImageView *imageViewPostFirst;
 @property (weak, nonatomic) IBOutlet UIImageView *imageViewPostSecond;
 @property (weak, nonatomic) IBOutlet UIImageView *imageViewPostThird;
@@ -22,7 +20,7 @@
 @property (weak, nonatomic)     IBOutlet    NSLayoutConstraint* lableConstraint;
 //@property (weak, nonatomic)     IBOutlet    NSLayoutConstraint* viewConstraint;
 @property (weak, nonatomic) IBOutlet UIView *viewWithPicsAndLable;
-
 @property (weak, nonatomic)     IBOutlet    NSLayoutConstraint* viewHeightConstraint;
 
-- (void) configurationProgressBar: (NSArray*) arrayImages :(BOOL) flag :(NSInteger) countSuccessPosted :(NSInteger) countNetworks;@end
+- (void) configurationProgressBar: (NSArray*) arrayImages  :(NSInteger) countSuccessPosted :(NSInteger) countNetworks;
+@end
