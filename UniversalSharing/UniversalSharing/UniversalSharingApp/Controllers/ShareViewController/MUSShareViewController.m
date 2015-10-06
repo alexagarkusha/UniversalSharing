@@ -461,7 +461,7 @@
             self.progressBarEndLoading.viewHeightConstraint.constant = 0;
         });
     }];
-    [[MUSProgressBarEndLoading sharedProgressBarEndLoading] configurationProgressBar:[self.galeryView obtainArrayWithChosenPics] :countConnect:_arrayChosenNetworksForPost.count];
+    //[[MUSProgressBarEndLoading sharedProgressBarEndLoading] configurationProgressBar:[self.galeryView obtainArrayWithChosenPics] :countConnect:_arrayChosenNetworksForPost.count];
     
 }
 
