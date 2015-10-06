@@ -26,7 +26,7 @@
 @property (strong, nonatomic) NSArray *accountsArray;
 @property (strong, nonatomic) ACAccount *twitterAccount;
 @property (assign, nonatomic) BOOL doubleTouchFlag;
-@property (copy, nonatomic) ComplitionProgressLoading copyComplitionProgressLoading;
+@property (copy, nonatomic) ProgressLoading copyProgressLoading;
 
 @end
 
@@ -332,17 +332,17 @@ static TwitterNetwork *model = nil;
 
 #pragma mark - sharePostToNetwork
 
-- (void) sharePost:(Post *)post withComplition:(Complition)block andComplitionLoading :(ComplitionProgressLoading)blockLoading {
+- (void) sharePost:(Post *)post withComplition:(Complition)block andProgressLoadingBlock:(ProgressLoading)blockLoading {
         if (![[InternetConnectionManager manager] isInternetConnection]){
             NetworkPost *networkPost = [NetworkPost create];
             networkPost.reason = Offline;
             networkPost.networkType = Twitters;
             block(networkPost,[self errorConnection]);
-            blockLoading (1.0f);
+            blockLoading ([NSNumber numberWithInteger: self.networkType], 1.0f);
             [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
             return;
         }
-    self.copyComplitionProgressLoading = blockLoading;
+    self.copyProgressLoading = blockLoading;
     self.copyComplition = block;
     if ([post.arrayImages count] > 0) {
         [self postImagesToTwitter: post];
@@ -383,7 +383,8 @@ static TwitterNetwork *model = nil;
     
     [client sendTwitterRequest:preparedRequest
                     completion:^(NSURLResponse *urlResponse, NSData *responseData, NSError *error){
-                        self.copyComplitionProgressLoading(1);
+                        //self.copyComplitionProgressLoading(1);
+                        self.copyProgressLoading ([NSNumber numberWithInteger: self.networkType], 1.0f);
                         if(!error){
                             NSError *jsonError = nil;
                             
@@ -450,7 +451,7 @@ static TwitterNetwork *model = nil;
             }
             [client sendTwitterRequest : request
                             completion : ^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-                                self.copyComplitionProgressLoading(1);
+                                self.copyProgressLoading ([NSNumber numberWithInteger: self.networkType], 1.0f);
                                 if (!connectionError) {
                                     
                                     NSError *jsonError = nil;

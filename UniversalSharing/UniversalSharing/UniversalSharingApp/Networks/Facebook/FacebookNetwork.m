@@ -25,7 +25,7 @@
 
 @property (copy, nonatomic) Complition copyComplition;
 @property (copy, nonatomic) ComplitionUpdateNetworkPosts copyComplitionUpdateNetworkPosts;
-@property (copy, nonatomic) ComplitionProgressLoading copyComplitionProgressLoading;
+@property (copy, nonatomic) ProgressLoading copyProgressLoading;
 
 @property (strong, nonatomic) NSString *firstPlaceId;
 
@@ -227,7 +227,7 @@ static FacebookNetwork *model = nil;
 
 #pragma mark - sharePost
 
-- (void) sharePost:(Post *)post withComplition:(Complition)block andComplitionLoading :(ComplitionProgressLoading)blockLoading  {
+- (void) sharePost:(Post *)post withComplition:(Complition)block andProgressLoadingBlock:(ProgressLoading)blockLoading {
     
     if (![[InternetConnectionManager manager] isInternetConnection]){
         NetworkPost *networkPost = [NetworkPost create];
@@ -238,7 +238,7 @@ static FacebookNetwork *model = nil;
         return;
     }
     self.copyComplition = block;
-    self.copyComplitionProgressLoading = blockLoading;
+    self.copyProgressLoading = blockLoading;
     if ([[FBSDKAccessToken currentAccessToken] hasGranted: musFacebookPermission_Publish_Actions]) {
         [self sharePostToFacebook: post];
     } else {
@@ -551,8 +551,8 @@ static FacebookNetwork *model = nil;
 
 
 - (void) requestConnection:	(FBSDKGraphRequestConnection *)connection didSendBodyData:	(NSInteger)bytesWritten totalBytesWritten:	(NSInteger)totalBytesWritten totalBytesExpectedToWrite:	(NSInteger)totalBytesExpectedToWrite {
-    if (self.copyComplitionProgressLoading) {
-        self.copyComplitionProgressLoading ((float)totalBytesWritten / totalBytesExpectedToWrite);
+    if (self.copyProgressLoading) {
+        self.copyProgressLoading ([NSNumber numberWithInteger: self.networkType], (float)totalBytesWritten / totalBytesExpectedToWrite);
     }
 }
 

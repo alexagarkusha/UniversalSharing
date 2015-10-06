@@ -24,7 +24,7 @@
 @interface VKNetwork () <VKSdkDelegate>
 @property (strong, nonatomic) UINavigationController *navigationController;
 @property (copy, nonatomic) Complition copyComplition;
-@property (copy, nonatomic) ComplitionProgressLoading copyComplitionProgressLoading;
+@property (copy, nonatomic) ProgressLoading copyProgressLoading;
 
 @end
 
@@ -308,18 +308,18 @@ static VKNetwork *model = nil;
 
 #pragma mark - sharePostToNetwork
 
-- (void) sharePost : (Post*) post withComplition : (Complition) block andComplitionLoading :(ComplitionProgressLoading)blockLoading{
+- (void) sharePost : (Post*) post withComplition : (Complition) block andProgressLoadingBlock:(ProgressLoading) blockLoading{
     if (![[InternetConnectionManager manager] isInternetConnection]){
         NetworkPost *networkPost = [NetworkPost create];
         networkPost.networkType = VKontakt;
         networkPost.reason = Offline;
-        blockLoading (1.0f);
+        blockLoading ([NSNumber numberWithInteger: self.networkType], 1.0f);
         block(networkPost,[self errorConnection]);
         return;
     }
     
     self.copyComplition = block;
-    self.copyComplitionProgressLoading = blockLoading;
+    self.copyProgressLoading = blockLoading;
 
     if ([post.arrayImages count] > 0) {
         __block NSUInteger numberOfImagesInPost = [post.arrayImages count];
@@ -342,7 +342,7 @@ static VKNetwork *model = nil;
                 NSNumber *currentObject = [arrayOfLoadingObjects objectAtIndex: i];
                 totalProgress += [currentObject floatValue];
             }
-            blockLoading (totalProgress / numberOfImagesInPost);
+            blockLoading ([NSNumber numberWithInteger: self.networkType], totalProgress / numberOfImagesInPost);
             //NSLog(@"total progress = %f", totalProgress / numberOfImagesInPost);
         }];
     } else {
@@ -380,7 +380,7 @@ static VKNetwork *model = nil;
             return;
         }
         float totalProgress = (bytesLoaded * 1.0f / bytesTotal);
-        self.copyComplitionProgressLoading (totalProgress);
+        self.copyProgressLoading ([NSNumber numberWithInteger: self.networkType], totalProgress);
     }];
 
 //>>>>>>> b977834042062c2a59ebac2d636324646a88f47f

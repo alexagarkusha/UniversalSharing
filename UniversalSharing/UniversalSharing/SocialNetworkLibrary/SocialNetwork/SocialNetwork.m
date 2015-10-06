@@ -36,7 +36,7 @@
 - (void) obtainArrayOfPlaces : (Location*) location withComplition : (Complition) block {
 }
 
-- (void) sharePost : (Post*) post withComplition : (Complition) block {
+- (void) sharePost : (Post*) post withComplition : (Complition) block andProgressLoadingBlock :(ProgressLoading) blockLoading{
 }
 
 - (void) updatePostWithComplition : (ComplitionUpdateNetworkPosts) block {

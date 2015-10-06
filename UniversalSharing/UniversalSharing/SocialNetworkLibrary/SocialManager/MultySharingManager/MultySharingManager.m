@@ -64,13 +64,6 @@ static MultySharingManager *model = nil;
     if (!self.isPostLoading /*&& self.arrayWithQueueOfPosts.count == 1*/) {
         [self sharePost: post toSocialNetworks: arrayWithNetworks];
     }
-    
-    //        if (![InternetConnectionManager manager].isInternetConnection) {
-    //            blockLoading (1.0f * arrayWithNetworks.count);
-    //            block (musErrorConnection, nil);
-    //            return
-    //        }
-    
 }
 
 - (void) sharePost: (Post*) post toSocialNetworks: (NSArray *) arrayWithNetworks {
@@ -84,7 +77,7 @@ static MultySharingManager *model = nil;
 
 - (void) shareNewPost : (Post*) newPost toSocialNetworks : (NSArray*) arrayWithNetworks {
 #warning Need to refactor this
-    
+    __block NSMutableArray *arrayOfLoadingObjects = [self arrayOfLoadingObjectsFromNetworks: arrayWithNetworks];
     self.isPostLoading = YES;
     newPost.arrayWithNetworkPostsId = [NSMutableArray new];
 
@@ -123,8 +116,10 @@ static MultySharingManager *model = nil;
                 [weakMultySharingManager checkArrayWithQueueOfPosts];
             }
 
-        } andComplitionLoading:^(float result) {
-            weakMultySharingManager.copyProgressLoading(result);
+        } andProgressLoadingBlock:^(id currentNetworkType, float result) {
+            
+            float totalProgress = [weakMultySharingManager totalResultOfLoadingToSocialNetworks: arrayOfLoadingObjects withCurrentObject: currentNetworkType andResult: result];
+            weakMultySharingManager.copyProgressLoading(totalProgress / numberOfSocialNetworks);
         }];
         
         //});
@@ -141,6 +136,8 @@ static MultySharingManager *model = nil;
 
 
 - (void) updatePost : (Post*) post toSocialNetworks : (NSArray*) arrayWithNetworks {
+    __block NSMutableArray *arrayOfLoadingObjects = [self arrayOfLoadingObjectsFromNetworks: arrayWithNetworks];
+
     self.isPostLoading = YES;
 
     __block Post *postCopy = post;
@@ -166,8 +163,11 @@ static MultySharingManager *model = nil;
                 [weakMultySharingManager checkArrayWithQueueOfPosts];
             }
 
-        } andComplitionLoading:^(float result) {
-            weakMultySharingManager.copyProgressLoading(result);
+        } andProgressLoadingBlock:^(id currentNetworkType, float result) {
+            //NSLog(@"OBJECT = %@, result = %f", currentNetworkType, result);
+            float totalProgress = [weakMultySharingManager totalResultOfLoadingToSocialNetworks: arrayOfLoadingObjects withCurrentObject: currentNetworkType andResult: result];
+            weakMultySharingManager.copyProgressLoading(totalProgress / numberOfSocialNetworks);
+            NSLog(@"UPDATE RESULT = %f", totalProgress / numberOfSocialNetworks);
         }];
     }
 }
@@ -256,5 +256,37 @@ static MultySharingManager *model = nil;
     return NO;
 }
 
-                       
+- (NSMutableArray*) arrayOfLoadingObjectsFromNetworks : (NSArray*) arrayWithNetworks {
+    NSMutableArray *arrayOfLoadingObjects = [[NSMutableArray alloc] init];
+    for (int i = 0; i < [arrayWithNetworks count]; i++) {
+        SocialNetwork *socialNetwork = [arrayWithNetworks objectAtIndex: i];
+        //        NSNumber *totalLoading = [[NSNumber alloc] init];
+        NSNumber *totalLoading = [NSNumber numberWithFloat: 0.000001];
+        NSNumber *networkType = [NSNumber numberWithInt: socialNetwork.networkType];
+        NSMutableDictionary *mutableDictionary = [[NSMutableDictionary alloc] initWithObjectsAndKeys: networkType, @"networkType", totalLoading, @"totalLoading",nil];
+        [arrayOfLoadingObjects addObject: mutableDictionary];
+    }
+    return arrayOfLoadingObjects;
+}
+
+- (float) totalResultOfLoadingToSocialNetworks : (NSMutableArray*) arrayOfLoadingObjects withCurrentObject : (id) currentNetworkType andResult : (float) result {
+    for (int i = 0; i < arrayOfLoadingObjects.count; i++) {
+        NSMutableDictionary *currentDictionary = [arrayOfLoadingObjects objectAtIndex: i];
+        if ([currentDictionary objectForKey: @"networkType"] == currentNetworkType) {
+            [currentDictionary setObject: [NSNumber numberWithFloat: result] forKey: @"totalLoading"];
+            [arrayOfLoadingObjects replaceObjectAtIndex: i withObject: currentDictionary];
+        }
+        
+    }
+    float totalProgress = 0;
+    for (int i = 0; i < [arrayOfLoadingObjects count]; i ++) {
+        NSMutableDictionary *currentDictionary = [arrayOfLoadingObjects objectAtIndex: i];
+        NSNumber *currentObject = [currentDictionary objectForKey: @"totalLoading"];
+        //NSNumber *currentObject = [arrayOfLoadingObjects objectAtIndex: i];
+        totalProgress += [currentObject floatValue];
+    }
+    return totalProgress;
+}
+
+
 @end
