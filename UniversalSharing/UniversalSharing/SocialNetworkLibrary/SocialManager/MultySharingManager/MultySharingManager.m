@@ -116,7 +116,11 @@ static MultySharingManager *model = nil;
                 NSLog(@"END LOAD");
                 
                 weakMultySharingManager.copyComplition ([NSNumber numberWithInt:countConnectPosts], error);
-                [weakMultySharingManager endSharePostNotificationWithObject: [NSNumber numberWithInt:countConnectPosts]];
+                NSDictionary *resultDictionary = [[NSDictionary alloc] initWithObjectsAndKeys: [NSNumber numberWithInt:counterOfSocialNetwork], @"numberOfSocialNetworks", [NSNumber numberWithInt:countConnectPosts], @"countConnectPosts", nil];
+                [weakMultySharingManager endSharePostNotificationWithObject: resultDictionary];
+//
+//                
+//                [weakMultySharingManager endSharePostNotificationWithObject: [NSNumber numberWithInt:countConnectPosts]];
                 [weakMultySharingManager checkArrayWithQueueOfPosts];
             }
 
@@ -168,7 +172,8 @@ static MultySharingManager *model = nil;
             }
             if (counterOfSocialNetwork == numberOfSocialNetworks) {
                 weakMultySharingManager.copyComplition ([NSNumber numberWithInt:countConnectPosts], error);
-                [weakMultySharingManager endSharePostNotificationWithObject: [NSNumber numberWithInt:countConnectPosts]];
+                NSDictionary *resultDictionary = [[NSDictionary alloc] initWithObjectsAndKeys: [NSNumber numberWithInt:counterOfSocialNetwork], @"numberOfSocialNetworks", [NSNumber numberWithInt:countConnectPosts], @"countConnectPosts", nil];
+                [weakMultySharingManager endSharePostNotificationWithObject: resultDictionary];
                 [weakMultySharingManager checkArrayWithQueueOfPosts];
             }
 
@@ -259,8 +264,8 @@ static MultySharingManager *model = nil;
     [[NSNotificationCenter defaultCenter] postNotificationName: @"StartSharePost" object:nil];
 }
 
-- (void) endSharePostNotificationWithObject : (NSNumber*) countConnectPosts {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"EndSharePost" object: countConnectPosts];
+- (void) endSharePostNotificationWithObject : (NSDictionary*) resultDictionary {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"EndSharePost" object: resultDictionary];
 }
 
 
