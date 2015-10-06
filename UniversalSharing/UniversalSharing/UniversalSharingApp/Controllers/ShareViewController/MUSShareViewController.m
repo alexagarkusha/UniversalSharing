@@ -152,10 +152,10 @@
     CGFloat navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
     ////////////////////////
     self.progressBar = [MUSProgressBar sharedProgressBar];
-    [self.progressBar setFrame:CGRectMake(0, statusBarHeight, self.view.frame.size.width, navigationBarHeight)];
+    [self.progressBar.view setFrame:CGRectMake(0, statusBarHeight, self.view.frame.size.width, navigationBarHeight)];
     /////////////////////////////////////////////////
     self.progressBarEndLoading = [MUSProgressBarEndLoading sharedProgressBarEndLoading];
-    [self.progressBarEndLoading setFrame:CGRectMake(0, statusBarHeight, self.view.frame.size.width, navigationBarHeight)];
+    [self.progressBarEndLoading.view setFrame:CGRectMake(0, statusBarHeight, self.view.frame.size.width, navigationBarHeight)];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startProgressView) name:@"StartSharePost" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(endProgressViewWithCountConnect:) name:@"EndSharePost" object:nil ];
@@ -448,7 +448,13 @@
     
 }
 
-- (void) endProgressViewWithCountConnect :(NSDictionary *)sourceDictionary{
+- (void) endProgressViewWithCountConnect :(NSNotification *) notification {
+    NSDictionary *dictionary = [notification object];
+    NSNumber *countConnect = [dictionary objectForKey: @"countConnectPosts"];
+    NSNumber *numberOfChosenNetworks = [dictionary objectForKey: @"numberOfSocialNetworks"];
+
+    //NSInteger numberOfChosenNetworks = [object] numberOfSocialNetworks
+    
     [self.tabBarController.view addSubview:self.progressBarEndLoading.view];
     [self.progressBarEndLoading.viewWithPicsAndLable layoutIfNeeded];
     self.progressBarEndLoading.viewHeightConstraint.constant = 42;
@@ -461,7 +467,7 @@
             self.progressBarEndLoading.viewHeightConstraint.constant = 0;
         });
     }];
-    //[[MUSProgressBarEndLoading sharedProgressBarEndLoading] configurationProgressBar:[self.galeryView obtainArrayWithChosenPics] :countConnect:_arrayChosenNetworksForPost.count];
+    [[MUSProgressBarEndLoading sharedProgressBarEndLoading] configurationProgressBar:[self.galeryView obtainArrayWithChosenPics] : [countConnect integerValue]: [numberOfChosenNetworks integerValue]];
     
 }
 
