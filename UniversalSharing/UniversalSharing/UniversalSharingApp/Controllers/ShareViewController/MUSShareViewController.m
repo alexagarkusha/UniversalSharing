@@ -116,7 +116,7 @@
 
 @property (strong, nonatomic)               NSString *longitude;
 @property (strong, nonatomic)               NSString *latitude;
-
+@property (strong, nonatomic)               NSArray *arrayChosenNetworksForPost;
 //>>>>>>> de36ea2567a4ea8074988b37c8efbda4eb95e414
 @end
 
@@ -126,7 +126,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.shareButtonOutlet setTintColor:BROWN_COLOR_MIDLight];
+    [self.navigationController.navigationBar setTintColor:BROWN_COLOR_MIDLight];
+    //[self.shareButtonOutlet setTintColor:BROWN_COLOR_MIDLight];
     [self.shareButtonOutlet setStyle:2];
     //self.buttonLocation.backgroundColor = BROWN_COLOR_MIDLight;
 
@@ -393,32 +394,23 @@
     [UIView commitAnimations];
 }
 
-#pragma mark - Share Post to Social network
-- (void) sharePosts : (NSMutableArray*) arrayChosenNetworksForPost andFlagTwitter:(BOOL)flagTwitter{//////////////////////////
-    if (arrayChosenNetworksForPost == nil) {
-        [_popVC removeFromParentViewController];
-        [_popVC.view removeFromSuperview];
-        _popVC = nil;
-        return;
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 1) {
+        [self share];
     }
     
-//    if ([self.messageTextView.text length] >= 2 && flagTwitter) {
-//        UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle : @"Warning"
-//                                                             message : @"You want to tweet on tweeter more 117 letters"
-//                                                            delegate : nil
-//                                                   cancelButtonTitle : musAppButtonTitle_OK
-//                                                   otherButtonTitles : nil];
-//        [errorAlert show];
-//        return;
-//    }
-[self.tabBarController.view addSubview:self.progressBar.view];
-self.progressBar.progressView.progress = 0;
+}
+
+#pragma mark - Share Post to Social network
+- (void) share {
+    [self.tabBarController.view addSubview:self.progressBar.view];
+    self.progressBar.progressView.progress = 0;
     [self.progressBar.viewWithPicsAndLable layoutIfNeeded];
     
     __weak MUSShareViewController *weakSelf = self;
     weakSelf.progressBar.viewHeightConstraint.constant = 42;
     [UIView animateWithDuration:1 animations:^{
-       
+        
         [weakSelf.progressBar.viewWithPicsAndLable layoutIfNeeded];
     }];
     [UIView commitAnimations];
@@ -430,37 +422,37 @@ self.progressBar.progressView.progress = 0;
     
     
     
-
+    
     [_popVC removeFromParentViewController];
     [_popVC.view removeFromSuperview];
     _popVC = nil;
-//    if (!_currentSocialNetwork.isVisible || !_currentSocialNetwork || !_currentSocialNetwork.isLogin) {
-//        [self showAlertWithMessage: musAppError_Logged_Into_Social_Networks];
-//        return;
-//    }
+    //    if (!_currentSocialNetwork.isVisible || !_currentSocialNetwork || !_currentSocialNetwork.isLogin) {
+    //        [self showAlertWithMessage: musAppError_Logged_Into_Social_Networks];
+    //        return;
+    //    }
     //    [self.shareButtonOutlet setCustomView:self.activityIndicator];
     //    [self.activityIndicator startAnimating];
     //    self.shareButtonOutlet.enabled = NO;
     //    self.view.userInteractionEnabled = NO;
-   
+    
     //        __weak MUSShareViewController *weakSelf = self;
     
-   // NSArray *array = [[NSArray alloc] initWithObjects:  @(Facebook), nil];
-   // __weak MUSShareViewController *weakSelf = self;
-   // __block int count = 0;
+    // NSArray *array = [[NSArray alloc] initWithObjects:  @(Facebook), nil];
+    // __weak MUSShareViewController *weakSelf = self;
+    // __block int count = 0;
     __block float summa = 0;
-    if (arrayChosenNetworksForPost) {
-         [self createPost];
+    if (_arrayChosenNetworksForPost) {
+        [self createPost];
         
-        [[MultySharingManager sharedManager] sharePost: self.post toSocialNetworks: arrayChosenNetworksForPost withComplition:^(id result, NSError *error) {
+        [[MultySharingManager sharedManager] sharePost: self.post toSocialNetworks: _arrayChosenNetworksForPost withComplition:^(id result, NSError *error) {
             
             if(!error){
                 //count++;
             }
-        weakSelf.post = nil;
-        //finish of post
-//        NSLog(@"RESULT %@", result);
-//        NSLog(@"ERROR %@", error);
+            weakSelf.post = nil;
+            //finish of post
+            //        NSLog(@"RESULT %@", result);
+            //        NSLog(@"ERROR %@", error);
             
             [weakSelf.progressBar.viewWithPicsAndLable layoutIfNeeded];
             
@@ -470,48 +462,71 @@ self.progressBar.progressView.progress = 0;
                 [weakSelf.progressBar.viewWithPicsAndLable layoutIfNeeded];
             }];
             [UIView commitAnimations];
-        
-            [weakSelf.tabBarController.view addSubview:weakSelf.progressBarEndLoading.view];
-                        [weakSelf.progressBarEndLoading.viewWithPicsAndLable layoutIfNeeded];
-            weakSelf.progressBarEndLoading.viewHeightConstraint.constant = 42;
-                    [UIView animateWithDuration:2 animations:^{
-                         [weakSelf.progressBarEndLoading.viewWithPicsAndLable layoutIfNeeded];
-                    } completion:^(BOOL finished) {
-                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                        [weakSelf.progressBar.view removeFromSuperview];
-                        [weakSelf.progressBarEndLoading.view removeFromSuperview];
-                              weakSelf.progressBarEndLoading.viewHeightConstraint.constant = 0;
-                         });
-                    }];
-            [weakSelf.progressBarEndLoading configurationProgressBar:[weakSelf.galeryView obtainArrayWithChosenPics] :[result intValue] :arrayChosenNetworksForPost.count];
-              [weakSelf refreshShareScreen];
-//
-//                });
-//                //[weakSelf.progressBar.view removeFromSuperview];
-//            });
             
-    } andComplitionProgressLoading:^(float result) {
-        
-
-        //summa += result * (1 / arrayChosenNetworksForPost.count);
-        weakSelf.progressBar.progressView.progress = result;// arrayChosenNetworksForPost.count;
-        //if (result >= 1) {
+            [weakSelf.tabBarController.view addSubview:weakSelf.progressBarEndLoading.view];
+            [weakSelf.progressBarEndLoading.viewWithPicsAndLable layoutIfNeeded];
+            weakSelf.progressBarEndLoading.viewHeightConstraint.constant = 42;
+            [UIView animateWithDuration:2 animations:^{
+                [weakSelf.progressBarEndLoading.viewWithPicsAndLable layoutIfNeeded];
+            } completion:^(BOOL finished) {
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                    [weakSelf.progressBar.view removeFromSuperview];
+                    [weakSelf.progressBarEndLoading.view removeFromSuperview];
+                    weakSelf.progressBarEndLoading.viewHeightConstraint.constant = 0;
+                });
+            }];
+            [weakSelf.progressBarEndLoading configurationProgressBar:[weakSelf.galeryView obtainArrayWithChosenPics] :[result intValue] :_arrayChosenNetworksForPost.count];
+            [weakSelf refreshShareScreen];
+            //
+            //                });
+            //                //[weakSelf.progressBar.view removeFromSuperview];
+            //            });
+            
+        } andComplitionProgressLoading:^(float result) {
+            
+            
+            //summa += result * (1 / arrayChosenNetworksForPost.count);
+            weakSelf.progressBar.progressView.progress = result;// arrayChosenNetworksForPost.count;
+            //if (result >= 1) {
             //weakSelf.progressBar.labelStutus.text = @"Published";
             
-//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 10 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-//                [weakSelf.progressBar.view removeFromSuperview];
-//            });
-        //}
-    }];
+            //            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 10 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            //                [weakSelf.progressBar.view removeFromSuperview];
+            //            });
+            //}
+        }];
     }
     
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-//        CGRect frame = self.progressBar.view.frame;
-//        frame.size.height = self.progressBar.progressView.frame.size.height;
-//        [self.progressBar.view setFrame:frame];
-//        //[self.progressBar.view removeFromSuperview];
-//    });
+    //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+    //        CGRect frame = self.progressBar.view.frame;
+    //        frame.size.height = self.progressBar.progressView.frame.size.height;
+    //        [self.progressBar.view setFrame:frame];
+    //        //[self.progressBar.view removeFromSuperview];
+    //    });
+
     
+}
+
+- (void) sharePosts : (NSMutableArray*) arrayChosenNetworksForPost andFlagTwitter:(BOOL)flagTwitter{//////////////////////////
+   
+    if (arrayChosenNetworksForPost == nil) {
+        [_popVC removeFromParentViewController];
+        [_popVC.view removeFromSuperview];
+        _popVC = nil;
+        return;
+    }
+     _arrayChosenNetworksForPost = arrayChosenNetworksForPost;
+    if ([self.messageTextView.text length] >= 117 && flagTwitter) {
+        UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle : @"Your tweet exceeds the limit of text and will be cut"
+                                                             message : @"Continue sharing?"
+                                                            delegate : self
+                                                   cancelButtonTitle : @"Cancel"
+                                                   otherButtonTitles : @"Share", nil];
+        [errorAlert show];
+        
+    } else{
+    [self share];
+    }
 }
 
 - (IBAction)shareToSocialNetwork:(id)sender {
