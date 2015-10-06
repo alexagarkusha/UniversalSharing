@@ -143,20 +143,24 @@
 }
 
 - (IBAction)ButtonCloseTapped:(id)sender {
-     [self.delegate sharePosts:nil];
+     [self.delegate sharePosts:nil andFlagTwitter:NO];
 }
 
 - (IBAction)buttonShareTapped:(id)sender {
+   __block BOOL flagTwitter = NO;
     NSMutableArray *arrayWithNetworksForPost = [NSMutableArray new];// = @[@(Twitters), @(VKontakt), @(Facebook)];
     [_stateSwitchButons enumerateKeysAndObjectsUsingBlock:^(NSString* key, id value, BOOL* stop) {
         if ([value boolValue]) {
             NetworkType currentNetwork = [key integerValue];
+            if (currentNetwork == Twitters) {
+                flagTwitter = YES;
+            }
             [arrayWithNetworksForPost addObject:@(currentNetwork)];
         }
         
     }];
     //[self.view removeFromSuperview];
-    [self.delegate sharePosts:arrayWithNetworksForPost];
+    [self.delegate sharePosts:arrayWithNetworksForPost andFlagTwitter:flagTwitter];
     
 }
 

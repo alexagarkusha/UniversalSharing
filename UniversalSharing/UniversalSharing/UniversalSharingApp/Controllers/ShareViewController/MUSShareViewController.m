@@ -394,7 +394,23 @@
 }
 
 #pragma mark - Share Post to Social network
-- (void) sharePosts : (NSMutableArray*) arrayChosenNetworksForPost {///////////////////////////////////////////////////////////////
+- (void) sharePosts : (NSMutableArray*) arrayChosenNetworksForPost andFlagTwitter:(BOOL)flagTwitter{//////////////////////////
+    if (arrayChosenNetworksForPost == nil) {
+        [_popVC removeFromParentViewController];
+        [_popVC.view removeFromSuperview];
+        _popVC = nil;
+        return;
+    }
+    
+//    if ([self.messageTextView.text length] >= 2 && flagTwitter) {
+//        UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle : @"Warning"
+//                                                             message : @"You want to tweet on tweeter more 117 letters"
+//                                                            delegate : nil
+//                                                   cancelButtonTitle : musAppButtonTitle_OK
+//                                                   otherButtonTitles : nil];
+//        [errorAlert show];
+//        return;
+//    }
 [self.tabBarController.view addSubview:self.progressBar.view];
 self.progressBar.progressView.progress = 0;
     [self.progressBar.viewWithPicsAndLable layoutIfNeeded];
@@ -705,28 +721,30 @@ self.progressBar.progressView.progress = 0;
 //    //[sheet showInView:[UIApplication sharedApplication].keyWindow];
 //}
 //
-//- (void) actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-//    if ( buttonIndex == 0 ) {
-//        self.iconImageView.highlighted = NO;
-//        self.buttonLocation.selected = NO;
-//        [self.buttonLocation setTitle:@"Select your location" forState:UIControlStateNormal];
-//        ///////////delete location
+- (void) actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if ( buttonIndex == 0 ) {
+        self.iconImageView.highlighted = NO;
+        self.buttonLocation.selected = NO;
+        [self.buttonLocation setTitle:@"Select your location" forState:UIControlStateNormal];
+        self.latitude = @"";
+        self.longitude = @"";
+        ///////////delete location
+        
+        
+//        /*
+//         after a user chose new network we change current social network
+//         */
+//        NetworkType oldNetworkType = _currentSocialNetwork.networkType;
+//        _currentSocialNetwork = [self.socialNetworkAccountsArray objectAtIndex: buttonIndex - 1];
+//        if (oldNetworkType != _currentSocialNetwork.networkType) {
+//            [self.shareLocationButton setTintColor: [UIColor blackColor]];
+//            self.place = nil;
+//            [self.shareLocationButton setTitle: musAppButtonTitle_ShareLocation];
+//        }
 //        
-//        
-////        /*
-////         after a user chose new network we change current social network
-////         */
-////        NetworkType oldNetworkType = _currentSocialNetwork.networkType;
-////        _currentSocialNetwork = [self.socialNetworkAccountsArray objectAtIndex: buttonIndex - 1];
-////        if (oldNetworkType != _currentSocialNetwork.networkType) {
-////            [self.shareLocationButton setTintColor: [UIColor blackColor]];
-////            self.place = nil;
-////            [self.shareLocationButton setTitle: musAppButtonTitle_ShareLocation];
-////        }
-////        
-////        [self.changeSocialNetworkButton initiationSocialNetworkButtonForSocialNetwork:_currentSocialNetwork];
-//    }
-//}
+//        [self.changeSocialNetworkButton initiationSocialNetworkButtonForSocialNetwork:_currentSocialNetwork];
+    }
+}
 
 #pragma mark - obtainChosenImage
 /*!
