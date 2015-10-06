@@ -157,6 +157,8 @@
     self.progressBarEndLoading = [MUSProgressBarEndLoading sharedProgressBarEndLoading];
     [self.progressBarEndLoading setFrame:CGRectMake(0, statusBarHeight, self.view.frame.size.width, navigationBarHeight)];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startProgressView) name:@"StartSharePost" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(endProgressViewWithCountConnect:) name:@"EndSharePost" object:nil ];
     
     /////////////////////////////////////////////////////
     //self.progressBar = [[MUSProgressBar alloc]initWithFrame:CGRectMake(0, statusBarHeight, self.view.frame.size.width, navigationBarHeight)];
@@ -446,7 +448,7 @@
     
 }
 
-- (void) endProgressViewWithCountConnect :(NSInteger) countConnect{
+- (void) endProgressViewWithCountConnect :(NSDictionary *)sourceDictionary{
     [self.tabBarController.view addSubview:self.progressBarEndLoading.view];
     [self.progressBarEndLoading.viewWithPicsAndLable layoutIfNeeded];
     self.progressBarEndLoading.viewHeightConstraint.constant = 42;
