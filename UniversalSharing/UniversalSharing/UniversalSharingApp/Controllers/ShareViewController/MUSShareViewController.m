@@ -423,7 +423,16 @@
     //[self.navigationController.view addSubview:self.progressBar.view];
     [self.progressBar configurationProgressBar:[self.galeryView obtainArrayWithChosenPics] :NO :0 :0];
     
-    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [weakSelf.progressBar.viewWithPicsAndLable layoutIfNeeded];
+        
+        weakSelf.progressBar.viewHeightConstraint.constant = 0;
+        [UIView animateWithDuration:1 animations:^{
+            
+            [weakSelf.progressBar.viewWithPicsAndLable layoutIfNeeded];
+        }];
+        [UIView commitAnimations];
+    });
     
     
     [_popVC removeFromParentViewController];
@@ -457,14 +466,7 @@
             //        NSLog(@"RESULT %@", result);
             //        NSLog(@"ERROR %@", error);
             
-            [weakSelf.progressBar.viewWithPicsAndLable layoutIfNeeded];
             
-            weakSelf.progressBar.viewHeightConstraint.constant = 0;
-            [UIView animateWithDuration:1 animations:^{
-                
-                [weakSelf.progressBar.viewWithPicsAndLable layoutIfNeeded];
-            }];
-            [UIView commitAnimations];
             
             [weakSelf.tabBarController.view addSubview:weakSelf.progressBarEndLoading.view];
             [weakSelf.progressBarEndLoading.viewWithPicsAndLable layoutIfNeeded];
