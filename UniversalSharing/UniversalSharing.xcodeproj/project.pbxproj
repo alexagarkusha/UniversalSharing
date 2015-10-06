@@ -99,6 +99,8 @@
 		30C9DDDF1BBC23C600F3266A /* MUSPopUpDeleteButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C9DDDE1BBC23C600F3266A /* MUSPopUpDeleteButton.m */; };
 		30C9DDE91BBEA64800F3266A /* MUSProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C9DDE81BBEA64800F3266A /* MUSProgressBar.m */; };
 		30C9DDEB1BBEA65600F3266A /* MUSProgressBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30C9DDEA1BBEA65600F3266A /* MUSProgressBar.xib */; };
+		30C9DDEF1BC2F98900F3266A /* MUSProgressBarEndLoading.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C9DDEE1BC2F98900F3266A /* MUSProgressBarEndLoading.m */; };
+		30C9DDF11BC2F99B00F3266A /* MUSProgressBarEndLoading.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30C9DDF01BC2F99B00F3266A /* MUSProgressBarEndLoading.xib */; };
 		30D73BFD1BA715A2001B2FE8 /* MUSImageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30D73BFC1BA715A2001B2FE8 /* MUSImageScrollView.m */; };
 		30DBFD931B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD921B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.m */; };
 		30DBFD9F1B6B7A1A002F83D0 /* CacheImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD9E1B6B7A1A002F83D0 /* CacheImage.m */; };
@@ -311,6 +313,9 @@
 		30C9DDE71BBEA64800F3266A /* MUSProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSProgressBar.h; sourceTree = "<group>"; };
 		30C9DDE81BBEA64800F3266A /* MUSProgressBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSProgressBar.m; sourceTree = "<group>"; };
 		30C9DDEA1BBEA65600F3266A /* MUSProgressBar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MUSProgressBar.xib; sourceTree = "<group>"; };
+		30C9DDED1BC2F98900F3266A /* MUSProgressBarEndLoading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSProgressBarEndLoading.h; sourceTree = "<group>"; };
+		30C9DDEE1BC2F98900F3266A /* MUSProgressBarEndLoading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSProgressBarEndLoading.m; sourceTree = "<group>"; };
+		30C9DDF01BC2F99B00F3266A /* MUSProgressBarEndLoading.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MUSProgressBarEndLoading.xib; sourceTree = "<group>"; };
 		30D73BFB1BA715A2001B2FE8 /* MUSImageScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSImageScrollView.h; sourceTree = "<group>"; };
 		30D73BFC1BA715A2001B2FE8 /* MUSImageScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSImageScrollView.m; sourceTree = "<group>"; };
 		30DBFD911B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSSocialNetworkLibraryConstants.h; sourceTree = "<group>"; };
@@ -684,6 +689,7 @@
 		18BB29961B67E3F000B498AC /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				30C9DDEC1BC2F93900F3266A /* ProgressBarEndLoading */,
 				30C9DDE61BBEA60700F3266A /* ProgressBar */,
 				30C9DDC71BB99A2E00F3266A /* PopUpCell */,
 				30C9DDBD1BB93A6100F3266A /* PopUpForSharing */,
@@ -1011,6 +1017,16 @@
 				30C9DDEA1BBEA65600F3266A /* MUSProgressBar.xib */,
 			);
 			name = ProgressBar;
+			sourceTree = "<group>";
+		};
+		30C9DDEC1BC2F93900F3266A /* ProgressBarEndLoading */ = {
+			isa = PBXGroup;
+			children = (
+				30C9DDED1BC2F98900F3266A /* MUSProgressBarEndLoading.h */,
+				30C9DDEE1BC2F98900F3266A /* MUSProgressBarEndLoading.m */,
+				30C9DDF01BC2F99B00F3266A /* MUSProgressBarEndLoading.xib */,
+			);
+			name = ProgressBarEndLoading;
 			sourceTree = "<group>";
 		};
 		30D73BFA1BA71546001B2FE8 /* ImageScrollView */ = {
@@ -1687,6 +1703,7 @@
 				18BF759D1BC1816300A05625 /* Comments.png in Resources */,
 				18BB29BC1B67E3F000B498AC /* MUSTopUserProfileCell.xib in Resources */,
 				18BF75971BC1816300A05625 /* Button_Delete_Location.png in Resources */,
+				30C9DDF11BC2F99B00F3266A /* MUSProgressBarEndLoading.xib in Resources */,
 				30416A2B1B73AF49000CB2C2 /* MUSCollectionViewCell.xib in Resources */,
 				18BF75AC1BC1816300A05625 /* placeholderPin-1.png in Resources */,
 				18BF75921BC1816300A05625 /* btn-close@2x.png in Resources */,
@@ -1844,6 +1861,7 @@
 				307611ED1B9DC1F80051C2AD /* MUSDetailPostCollectionViewController.m in Sources */,
 				30416A241B73A49B000CB2C2 /* MUSGaleryView.m in Sources */,
 				97C2AA0B1BBD728B00D076CB /* MUSPostManager.m in Sources */,
+				30C9DDEF1BC2F98900F3266A /* MUSProgressBarEndLoading.m in Sources */,
 				30D73BFD1BA715A2001B2FE8 /* MUSImageScrollView.m in Sources */,
 				30C9DDDF1BBC23C600F3266A /* MUSPopUpDeleteButton.m in Sources */,
 				97C2954B1B985ADA001B21FF /* NSString+ReasonTypeInString.m in Sources */,

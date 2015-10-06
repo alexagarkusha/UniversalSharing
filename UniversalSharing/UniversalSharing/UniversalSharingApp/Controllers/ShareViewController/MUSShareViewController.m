@@ -23,6 +23,7 @@
 #import "MUSDetailPostCollectionViewController.h"
 #import "MUSPopUpForSharing.h"
 #import "MUSProgressBar.h"
+#import "MUSProgressBarEndLoading.h"
 #import "ImageToPost.h"
 
 @interface MUSShareViewController () <UITextViewDelegate, UIActionSheetDelegate, UIAlertViewDelegate, UINavigationControllerDelegate, UIToolbarDelegate, MUSGaleryViewDelegate, MUSPopUpForSharingDelegate>
@@ -109,6 +110,7 @@
 //<<<<<<< HEAD
 @property (strong, nonatomic)                NSString *address;
 @property (strong, nonatomic)                MUSProgressBar * progressBar ;
+@property (strong, nonatomic)                MUSProgressBarEndLoading * progressBarEndLoading ;
 //=======
 //@property (strong, nonatomic)                NSString* address;
 
@@ -144,6 +146,13 @@
     CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
     CGFloat navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
     self.progressBar = [[MUSProgressBar alloc]initWithFrame:CGRectMake(0, statusBarHeight, self.view.frame.size.width, navigationBarHeight)];
+    self.progressBarEndLoading = [[MUSProgressBarEndLoading alloc]initWithFrame:CGRectMake(0, statusBarHeight, self.view.frame.size.width, navigationBarHeight)];
+    //[self.progressBar.viewWithPicsAndLable layoutIfNeeded];
+
+    self.progressBar.viewHeightConstraint.constant = 0;
+    self.progressBarEndLoading.viewHeightConstraint.constant = 0;
+    //[self.progressBar.viewWithPicsAndLable setNeedsLayout];
+
     //self.progressBar.progressView.progressTintColor = BROWN_COLOR_MIDLight;
      //[self.navigationController.view addSubview:self.progressBar.view];
 }
@@ -386,21 +395,25 @@
 
 #pragma mark - Share Post to Social network
 - (void) sharePosts : (NSMutableArray*) arrayChosenNetworksForPost {///////////////////////////////////////////////////////////////
-    //MUSPopUpForSharing * popVC = [MUSPopUpForSharing new];
-    [self.navigationController.view addSubview:self.progressBar.view];
-    [self.progressBar configurationProgresBar:[self.galeryView obtainArrayWithChosenPics]];
-       //NSArray * pics = [self.galeryView obtainArrayWithChosenPics];
-//    if(pics.count){
-//        self.progressBar.lableConstraint.constant = 50;
-//        ImageToPost *image;
-//        image = pics[0];
-//        self.progressBar.imageViewPost.image = image.image;
-//    } else {
-//        self.progressBar.imageViewPost.image = nil;
-//        self.progressBar.lableConstraint.constant = 8;
-//        
-//    }
-//    self.progressBar.labelStutus.text = @"Publishing";
+[self.tabBarController.view addSubview:self.progressBar.view];
+
+    [self.progressBar.viewWithPicsAndLable layoutIfNeeded];
+    
+    __weak MUSShareViewController *weakSelf = self;
+    weakSelf.progressBar.viewHeightConstraint.constant = 42;
+    [UIView animateWithDuration:1 animations:^{
+       
+        [weakSelf.progressBar.viewWithPicsAndLable layoutIfNeeded];
+    }];
+    [UIView commitAnimations];
+    
+    
+    
+    //[self.navigationController.view addSubview:self.progressBar.view];
+    [self.progressBar configurationProgressBar:[self.galeryView obtainArrayWithChosenPics] :NO :0 :0];
+    
+    
+    
 
     [_popVC removeFromParentViewController];
     [_popVC.view removeFromSuperview];
@@ -417,31 +430,72 @@
     //        __weak MUSShareViewController *weakSelf = self;
     
    // NSArray *array = [[NSArray alloc] initWithObjects:  @(Facebook), nil];
-    __weak MUSShareViewController *weakSelf = self;
-    //__block
+   // __weak MUSShareViewController *weakSelf = self;
+    __block int count = 0;
+    __block float summa = 0;
     if (arrayChosenNetworksForPost) {
          [self createPost];
-        [self refreshShareScreen];
+        
         [[MultySharingManager sharedManager] sharePost: self.post toSocialNetworks: arrayChosenNetworksForPost withComplition:^(id result, NSError *error) {
+            
+            if(!error){
+                count++;
+            }
         weakSelf.post = nil;
         //finish of post
         NSLog(@"RESULT %@", result);
         NSLog(@"ERROR %@", error);
+            
+            [weakSelf.progressBar.viewWithPicsAndLable layoutIfNeeded];
+            
+            weakSelf.progressBar.viewHeightConstraint.constant = 0;
+            [UIView animateWithDuration:1 animations:^{
+                
+                [weakSelf.progressBar.viewWithPicsAndLable layoutIfNeeded];
+            }];
+            [UIView commitAnimations];
         
-//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-//                [weakSelf.progressBar.view removeFromSuperview];
+//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+//                [UIView transitionWithView:self.progressBar.view duration:0.5
+//                                   options:UIViewAnimationOptionTransitionCurlUp
+//                                animations:^ { [self.navigationController.view addSubview:self.progressBar.view]; }
+//                                completion:nil];
+//                //[self.navigationController.view addSubview:self.progressBar.view];
+//                [self.progressBar configurationProgressBar:[self.galeryView obtainArrayWithChosenPics] :YES :count :arrayChosenNetworksForPost.count];
+//                
+//                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+//
+            [weakSelf.tabBarController.view addSubview:weakSelf.progressBarEndLoading.view];
+                        [weakSelf.progressBarEndLoading.viewWithPicsAndLable layoutIfNeeded];
+            weakSelf.progressBarEndLoading.viewHeightConstraint.constant = 42;
+                    [UIView animateWithDuration:2 animations:^{
+                         [weakSelf.progressBarEndLoading.viewWithPicsAndLable layoutIfNeeded];
+                    } completion:^(BOOL finished) {
+                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                        [weakSelf.progressBar.view removeFromSuperview];
+                        [weakSelf.progressBarEndLoading.view removeFromSuperview];
+                              weakSelf.progressBarEndLoading.viewHeightConstraint.constant = 0;
+                         });
+                    }];
+            [weakSelf.progressBarEndLoading configurationProgressBar:[weakSelf.galeryView obtainArrayWithChosenPics] :count :arrayChosenNetworksForPost.count];
+              [weakSelf refreshShareScreen];
+//
+//                });
+//                //[weakSelf.progressBar.view removeFromSuperview];
 //            });
             
     } andComplitionProgressLoading:^(float result) {
-        //sum
-        weakSelf.progressBar.progressView.progress = result;// arrayChosenNetworksForPost.count;
-        if (result >= 1) {
-            weakSelf.progressBar.labelStutus.text = @"Published";
+        
+
+        summa += result * (1 / arrayChosenNetworksForPost.count);
+        weakSelf.progressBar.progressView.progress = summa;// arrayChosenNetworksForPost.count;
+        //if (result >= 1) {
+            //weakSelf.progressBar.labelStutus.text = @"Published";
             
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 10 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                [weakSelf.progressBar.view removeFromSuperview];
-            });
-        }
+//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 10 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+//                [weakSelf.progressBar.view removeFromSuperview];
+//            });
+        //}
     }];
     }
     

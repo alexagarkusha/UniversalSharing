@@ -1,21 +1,21 @@
 //
-//  MUSProgressBar.m
+//  MUSProgressBarEndLoading.m
 //  UniversalSharing
 //
-//  Created by Roman on 10/2/15.
+//  Created by Roman on 10/5/15.
 //  Copyright (c) 2015 Mobindustry. All rights reserved.
 //
 
-#import "MUSProgressBar.h"
+#import "MUSProgressBarEndLoading.h"
 #import "ConstantsApp.h"
 #import "ImageToPost.h"
 
-@interface MUSProgressBar()
+@interface MUSProgressBarEndLoading()
 @property (strong, nonatomic) NSArray *arrayOfImageView;
 
 
 @end
-@implementation MUSProgressBar
+@implementation MUSProgressBarEndLoading
 -(id) initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -39,22 +39,20 @@
 
 
 -(UIView*)loadViewFromNib {
-    NSArray *nibObjects = [[NSBundle mainBundle]loadNibNamed:@"MUSProgressBar" owner:self options:nil];
+    NSArray *nibObjects = [[NSBundle mainBundle]loadNibNamed:@"MUSProgressBarEndLoading" owner:self options:nil];
     self.progressView.progressTintColor = BROWN_COLOR_MIDLight;
-    self.progressView.progress = 0;
-     self.arrayOfImageView = [[NSArray alloc] initWithObjects: self.imageViewPostThird, self.imageViewPostSecond, self.imageViewPostFirst, nil];
+    self.progressView.progress = 1;
+    self.arrayOfImageView = [[NSArray alloc] initWithObjects: self.imageViewPostThird, self.imageViewPostSecond, self.imageViewPostFirst, nil];
     //[self initiationGestureRecognizer];
     return [nibObjects firstObject];
 }
 
 - (void) awakeFromNib {
-   
+    
 }
 
-- (void) configurationProgressBar: (NSArray*) arrayImages :(BOOL) flag :(NSInteger) countSuccessPosted :(NSInteger) countNetworks {
-    if (flag  == NO) {
-         self.labelStutus.text = @"Publishing";
-    } else {
+- (void) configurationProgressBar: (NSArray*) arrayImages  :(NSInteger) countSuccessPosted :(NSInteger) countNetworks {
+   
         if (countSuccessPosted == countNetworks) {
             self.labelStutus.text = @"Published";
         }else if(countSuccessPosted == 0){
@@ -66,8 +64,8 @@
             self.labelStutus.text = [NSString stringWithFormat:@"%ld from %ld were published",(long)countSuccessPosted,(long)countNetworks];
             
         }
-    }
-   
+    
+    
     [self clearImageViews];
     if(arrayImages.count){
         ImageToPost *image;
@@ -87,15 +85,15 @@
         
     }
     
-
+    
     
 }
 
 - (void) clearImageViews {
     for (int i = 0; i < self.arrayOfImageView.count; i++) {
         
-            UIImageView *currentImage =  self.arrayOfImageView[i];
-            currentImage.image = nil;
+        UIImageView *currentImage =  self.arrayOfImageView[i];
+        currentImage.image = nil;
     }
 }
 @end
