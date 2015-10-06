@@ -16,5 +16,6 @@
 
 - (void) sharePost : (Post*) post toSocialNetworks : (NSArray*) arrayOfNetworksType withComplition : (Complition) block andComplitionProgressLoading :(ComplitionProgressLoading) blockLoading;
 - (void) updateNetworkPostsWithComplition : (Complition) block;
+- (BOOL) isPostInQueueOfPosts : (NSInteger) primaryKeyOfPost;
 
 @end

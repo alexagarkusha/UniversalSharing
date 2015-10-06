@@ -388,7 +388,7 @@ static DataBaseManager *databaseManager;
     sqlite3_stmt *selectStmt;
     
     if(sqlite3_prepare_v2(_database, update_stmt, -1, &selectStmt, nil) == SQLITE_OK) {
-        NSLog(@"the object is updated");
+        //NSLog(@"the object is updated");
     }
     
     if(sqlite3_step(selectStmt) != SQLITE_DONE) {

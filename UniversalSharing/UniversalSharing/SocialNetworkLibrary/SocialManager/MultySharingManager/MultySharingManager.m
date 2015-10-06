@@ -21,6 +21,9 @@
 
 @property (copy, nonatomic) Complition copyComplition;
 @property (copy, nonatomic) ComplitionProgressLoading copyProgressLoading;
+@property (strong, nonatomic) NSMutableArray *arrayWithQueueOfPosts;
+@property (assign, nonatomic) BOOL isPostLoading;
+
 @end
 
 
@@ -37,10 +40,41 @@ static MultySharingManager *model = nil;
     return  model;
 }
 
+- (instancetype) init {
+    self = [super init];
+    if (self) {
+        if (!self.arrayWithQueueOfPosts) {
+            self.arrayWithQueueOfPosts = [[NSMutableArray alloc] init];
+            self.isPostLoading = NO;
+        }
+    }
+    return self;
+}
+
+
 - (void) sharePost : (Post*) post toSocialNetworks : (NSArray*) arrayOfNetworksType withComplition : (Complition) block andComplitionProgressLoading :(ComplitionProgressLoading) blockLoading {
     NSMutableArray *arrayWithNetworks = [[SocialManager sharedManager]networksForKeys:arrayOfNetworksType];//[self arrayWithNetworks: arrayOfNetworksType];
     self.copyComplition = block;
     self.copyProgressLoading = blockLoading;
+    
+    NSDictionary *postDictionary = [NSDictionary
+                                    dictionaryWithObjectsAndKeys: post, @"post",
+                                    arrayWithNetworks, @"arrayWithNetworks", nil];
+    [self.arrayWithQueueOfPosts addObject: postDictionary];
+    if (!self.isPostLoading /*&& self.arrayWithQueueOfPosts.count == 1*/) {
+        [self sharePost: post toSocialNetworks: arrayWithNetworks];
+    }
+    
+    //        if (![InternetConnectionManager manager].isInternetConnection) {
+    //            blockLoading (1.0f * arrayWithNetworks.count);
+    //            block (musErrorConnection, nil);
+    //            return
+    //        }
+    
+}
+
+- (void) sharePost: (Post*) post toSocialNetworks: (NSArray *) arrayWithNetworks {
+    NSLog(@"New OBJECT");
     if (!post.primaryKey) {
         [self shareNewPost: post toSocialNetworks: arrayWithNetworks];
     } else {
@@ -51,9 +85,9 @@ static MultySharingManager *model = nil;
 - (void) shareNewPost : (Post*) newPost toSocialNetworks : (NSArray*) arrayWithNetworks {
 #warning Need to refactor this
     
-    if (!newPost.arrayWithNetworkPostsId.count) {
-        newPost.arrayWithNetworkPostsId = [[NSMutableArray alloc] init];
-    }
+    self.isPostLoading = YES;
+    newPost.arrayWithNetworkPostsId = [NSMutableArray new];
+
     __block Post *postCopy = newPost;
     __block NSUInteger numberOfSocialNetworks = arrayWithNetworks.count;
     __block int counterOfSocialNetwork = 0;
@@ -74,28 +108,23 @@ static MultySharingManager *model = nil;
                 blockResultString = [blockResultString stringByAppendingString: [NSString stringWithFormat: @"%@ - post status is %@ \n", [NSString socialNetworkNameOfPost: networkPost.networkType], [NSString reasonNameOfPost: networkPost.reason]]];
                 [postCopy.arrayWithNetworkPostsId addObject: [NSString stringWithFormat: @"%ld", (long)[[DataBaseManager sharedManager] saveNetworkPostToTableWithObject: networkPost]]];
             }
-            
-            NSLog(@"Current post ID = %@, networktype =%ld", networkPost.postID, (long)networkPost.networkType);
-            
-            
+            //NSLog(@"Current post ID = %@, networktype =%ld", networkPost.postID, (long)networkPost.networkType);
             if (counterOfSocialNetwork == numberOfSocialNetworks) {
                 
                 
                 [weakMultySharingManager savePostImagesToDocument: postCopy];
-                
-                NSLog(@"Current post IDs = %@", postCopy.arrayWithNetworkPostsId);
-                
-                
+                //NSLog(@"Current post IDs = %@", postCopy.arrayWithNetworkPostsId);
                 [[DataBaseManager sharedManager] insertIntoTable : postCopy];
-                
                 //NSLog(@"%@", blockResultString);
                 [MUSPostManager manager].needToRefreshPosts = YES;
-                [self updatePostInfoNotification];
-                self.copyComplition (blockResultString, error);
+                [weakMultySharingManager updatePostInfoNotification];
+                NSLog(@"END LOAD");
+                weakMultySharingManager.copyComplition (blockResultString, error);
+                [weakMultySharingManager checkArrayWithQueueOfPosts];
             }
 
         } andComplitionLoading:^(float result) {
-            self.copyProgressLoading(result);
+            weakMultySharingManager.copyProgressLoading(result);
         }];
         
         //});
@@ -112,6 +141,8 @@ static MultySharingManager *model = nil;
 
 
 - (void) updatePost : (Post*) post toSocialNetworks : (NSArray*) arrayWithNetworks {
+    self.isPostLoading = YES;
+
     __block Post *postCopy = post;
     __block NSUInteger numberOfSocialNetworks = arrayWithNetworks.count;
     __block int counterOfSocialNetwork = 0;
@@ -131,11 +162,12 @@ static MultySharingManager *model = nil;
                 blockResultString = [blockResultString stringByAppendingString: [NSString stringWithFormat: @"%@ - post status is %@ \n", [NSString socialNetworkNameOfPost: networkPost.networkType], [NSString reasonNameOfPost: networkPost.reason]]];
             }
             if (counterOfSocialNetwork == numberOfSocialNetworks) {
-                self.copyComplition (blockResultString, error);
+                weakMultySharingManager.copyComplition (blockResultString, error);
+                [weakMultySharingManager checkArrayWithQueueOfPosts];
             }
 
         } andComplitionLoading:^(float result) {
-            
+            weakMultySharingManager.copyProgressLoading(result);
         }];
     }
 }
@@ -156,6 +188,17 @@ static MultySharingManager *model = nil;
         }
     }
 }
+
+- (void) checkArrayWithQueueOfPosts {
+    [self.arrayWithQueueOfPosts removeObjectAtIndex: 0];
+    if (self.arrayWithQueueOfPosts.count > 0) {
+        NSDictionary *postDictionary = [self.arrayWithQueueOfPosts firstObject];
+        [self sharePost: [postDictionary objectForKey: @"post"] toSocialNetworks: [postDictionary objectForKey: @"arrayWithNetworks"]];
+    } else {
+        self.isPostLoading = NO;
+    }
+}
+
 
 //- (NSMutableArray *) arrayWithNetworks : (NSArray*) arrayOfNetworksType {
 //    NSOrderedSet *orderedSet = [NSOrderedSet orderedSetWithArray: arrayOfNetworksType];
@@ -201,6 +244,16 @@ static MultySharingManager *model = nil;
 
 - (void) updatePostInfoNotification {
     [[NSNotificationCenter defaultCenter] postNotificationName:MUSNotificationPostsInfoWereUpDated object:nil];
+}
+
+- (BOOL) isPostInQueueOfPosts:(NSInteger)primaryKeyOfPost {
+    for (NSDictionary *dictionary in self.arrayWithQueueOfPosts) {
+        Post *currentPost = [dictionary objectForKey: @"post"];
+        if (currentPost.primaryKey == primaryKeyOfPost) {
+            return YES;
+        }
+    }
+    return NO;
 }
 
                        
