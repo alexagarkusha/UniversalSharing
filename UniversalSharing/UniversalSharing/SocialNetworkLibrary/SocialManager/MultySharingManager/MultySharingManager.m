@@ -100,7 +100,6 @@ static MultySharingManager *model = nil;
                 networkPost = (NetworkPost*) result;
                 blockResultString = [blockResultString stringByAppendingString: [NSString stringWithFormat: @"%@ - post status is %@ \n", [NSString socialNetworkNameOfPost: networkPost.networkType], [NSString reasonNameOfPost: networkPost.reason]]];
                 if(networkPost.reason == Connect){
-                    
                     countConnectPosts++;
                 }
                 [postCopy.arrayWithNetworkPostsId addObject: [NSString stringWithFormat: @"%ld", (long)[[DataBaseManager sharedManager] saveNetworkPostToTableWithObject: networkPost]]];
@@ -150,6 +149,7 @@ static MultySharingManager *model = nil;
     __block int counterOfSocialNetwork = 0;
     __block NSString *blockResultString = @"Result updating: \n";
     __weak MultySharingManager *weakMultySharingManager = self;
+    __block int countConnectPosts = 0;
 
     for (SocialNetwork *socialNetwork in arrayWithNetworks) {
         [socialNetwork sharePost: post withComplition:^(id result, NSError *error) {
@@ -162,9 +162,12 @@ static MultySharingManager *model = nil;
                 networkPost = (NetworkPost*) result;
                 [weakMultySharingManager updateCurrentNetworkPost: networkPost andArrayOfOldNetworkPosts: postCopy.arrayWithNetworkPosts];
                 blockResultString = [blockResultString stringByAppendingString: [NSString stringWithFormat: @"%@ - post status is %@ \n", [NSString socialNetworkNameOfPost: networkPost.networkType], [NSString reasonNameOfPost: networkPost.reason]]];
+                if(networkPost.reason == Connect){
+                    countConnectPosts++;
+                }
             }
             if (counterOfSocialNetwork == numberOfSocialNetworks) {
-                weakMultySharingManager.copyComplition (blockResultString, error);
+                weakMultySharingManager.copyComplition ([NSNumber numberWithInt:countConnectPosts], error);
                 [weakMultySharingManager checkArrayWithQueueOfPosts];
             }
 

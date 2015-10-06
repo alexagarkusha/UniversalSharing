@@ -237,7 +237,7 @@
         <scene sceneID="k8x-xu-hJy">
             <objects>
                 <navigationController id="5g8-Gy-Hka" userLabel="Accounts Navigation Controller" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Accounts" image="account_icon" id="1sb-re-uxj"/>
+                    <tabBarItem key="tabBarItem" title="Networks" image="account_icon" id="1sb-re-uxj"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Pql-IC-asA">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

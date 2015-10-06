@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 @protocol MUSPopUpForSharingDelegate <NSObject>
-
+@optional
 - (void) sharePosts : (NSMutableArray*) arrayChosenNetworksForPost andFlagTwitter :(BOOL) flagTwitter;
-
 @end
 
 
