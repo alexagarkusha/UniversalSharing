@@ -396,7 +396,7 @@
 #pragma mark - Share Post to Social network
 - (void) sharePosts : (NSMutableArray*) arrayChosenNetworksForPost {///////////////////////////////////////////////////////////////
 [self.tabBarController.view addSubview:self.progressBar.view];
-
+self.progressBar.progressView.progress = 0;
     [self.progressBar.viewWithPicsAndLable layoutIfNeeded];
     
     __weak MUSShareViewController *weakSelf = self;
@@ -431,7 +431,7 @@
     
    // NSArray *array = [[NSArray alloc] initWithObjects:  @(Facebook), nil];
    // __weak MUSShareViewController *weakSelf = self;
-    __block int count = 0;
+   // __block int count = 0;
     __block float summa = 0;
     if (arrayChosenNetworksForPost) {
          [self createPost];
@@ -439,12 +439,12 @@
         [[MultySharingManager sharedManager] sharePost: self.post toSocialNetworks: arrayChosenNetworksForPost withComplition:^(id result, NSError *error) {
             
             if(!error){
-                count++;
+                //count++;
             }
         weakSelf.post = nil;
         //finish of post
-        NSLog(@"RESULT %@", result);
-        NSLog(@"ERROR %@", error);
+//        NSLog(@"RESULT %@", result);
+//        NSLog(@"ERROR %@", error);
             
             [weakSelf.progressBar.viewWithPicsAndLable layoutIfNeeded];
             
@@ -455,16 +455,6 @@
             }];
             [UIView commitAnimations];
         
-//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-//                [UIView transitionWithView:self.progressBar.view duration:0.5
-//                                   options:UIViewAnimationOptionTransitionCurlUp
-//                                animations:^ { [self.navigationController.view addSubview:self.progressBar.view]; }
-//                                completion:nil];
-//                //[self.navigationController.view addSubview:self.progressBar.view];
-//                [self.progressBar configurationProgressBar:[self.galeryView obtainArrayWithChosenPics] :YES :count :arrayChosenNetworksForPost.count];
-//                
-//                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-//
             [weakSelf.tabBarController.view addSubview:weakSelf.progressBarEndLoading.view];
                         [weakSelf.progressBarEndLoading.viewWithPicsAndLable layoutIfNeeded];
             weakSelf.progressBarEndLoading.viewHeightConstraint.constant = 42;
@@ -477,7 +467,7 @@
                               weakSelf.progressBarEndLoading.viewHeightConstraint.constant = 0;
                          });
                     }];
-            [weakSelf.progressBarEndLoading configurationProgressBar:[weakSelf.galeryView obtainArrayWithChosenPics] :count :arrayChosenNetworksForPost.count];
+            [weakSelf.progressBarEndLoading configurationProgressBar:[weakSelf.galeryView obtainArrayWithChosenPics] :[result intValue] :arrayChosenNetworksForPost.count];
               [weakSelf refreshShareScreen];
 //
 //                });
@@ -487,8 +477,8 @@
     } andComplitionProgressLoading:^(float result) {
         
 
-        summa += result * (1 / arrayChosenNetworksForPost.count);
-        weakSelf.progressBar.progressView.progress = summa;// arrayChosenNetworksForPost.count;
+        //summa += result * (1 / arrayChosenNetworksForPost.count);
+        weakSelf.progressBar.progressView.progress = result;// arrayChosenNetworksForPost.count;
         //if (result >= 1) {
             //weakSelf.progressBar.labelStutus.text = @"Published";
             

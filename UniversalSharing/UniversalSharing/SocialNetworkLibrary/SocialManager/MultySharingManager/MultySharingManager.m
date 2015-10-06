@@ -86,7 +86,7 @@ static MultySharingManager *model = nil;
     __block int counterOfSocialNetwork = 0;
     __block NSString *blockResultString = @"Result: \n";
     __weak MultySharingManager *weakMultySharingManager = self;
-    
+    __block int countConnectPosts = 0;
     //dispatch_group_t group = dispatch_group_create();
     //dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     for (SocialNetwork *socialNetwork in arrayWithNetworks) {
@@ -99,6 +99,10 @@ static MultySharingManager *model = nil;
             if ([result isKindOfClass: [NetworkPost class]]) {
                 networkPost = (NetworkPost*) result;
                 blockResultString = [blockResultString stringByAppendingString: [NSString stringWithFormat: @"%@ - post status is %@ \n", [NSString socialNetworkNameOfPost: networkPost.networkType], [NSString reasonNameOfPost: networkPost.reason]]];
+                if(networkPost.reason == Connect){
+                    
+                    countConnectPosts++;
+                }
                 [postCopy.arrayWithNetworkPostsId addObject: [NSString stringWithFormat: @"%ld", (long)[[DataBaseManager sharedManager] saveNetworkPostToTableWithObject: networkPost]]];
             }
             //NSLog(@"Current post ID = %@, networktype =%ld", networkPost.postID, (long)networkPost.networkType);
@@ -112,7 +116,8 @@ static MultySharingManager *model = nil;
                 [MUSPostManager manager].needToRefreshPosts = YES;
                 [weakMultySharingManager updatePostInfoNotification];
                 NSLog(@"END LOAD");
-                weakMultySharingManager.copyComplition (blockResultString, error);
+                
+                weakMultySharingManager.copyComplition ([NSNumber numberWithInt:countConnectPosts], error);
                 [weakMultySharingManager checkArrayWithQueueOfPosts];
             }
 
