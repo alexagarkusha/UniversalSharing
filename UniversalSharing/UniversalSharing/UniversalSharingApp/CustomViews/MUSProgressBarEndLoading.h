@@ -21,6 +21,6 @@
 //@property (weak, nonatomic)     IBOutlet    NSLayoutConstraint* viewConstraint;
 @property (weak, nonatomic) IBOutlet UIView *viewWithPicsAndLable;
 @property (weak, nonatomic)     IBOutlet    NSLayoutConstraint* viewHeightConstraint;
-
++ (MUSProgressBarEndLoading*) sharedProgressBarEndLoading;
 - (void) configurationProgressBar: (NSArray*) arrayImages  :(NSInteger) countSuccessPosted :(NSInteger) countNetworks;
 @end

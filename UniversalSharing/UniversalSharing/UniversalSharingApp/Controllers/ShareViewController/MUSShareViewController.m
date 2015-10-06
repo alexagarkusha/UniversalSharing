@@ -117,6 +117,7 @@
 @property (strong, nonatomic)               NSString *longitude;
 @property (strong, nonatomic)               NSString *latitude;
 @property (strong, nonatomic)               NSArray *arrayChosenNetworksForPost;
+//@property (assign, nonatomic)               BOOL fragForMultiSharing;
 //>>>>>>> de36ea2567a4ea8074988b37c8efbda4eb95e414
 @end
 
@@ -133,7 +134,7 @@
     [self.shareButtonOutlet setTintColor:BROWN_COLOR_MIDLightHIGHT];
     [self.shareButtonOutlet setStyle:2];
     //self.buttonLocation.backgroundColor = BROWN_COLOR_MIDLight;
-
+    //_fragForMultiSharing = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(obtainPicFromPicker) name:notificationImagePickerForCollection object:nil];
 #warning "Must be remove observe"
     [[NSNotificationCenter defaultCenter] addObserver : self
@@ -149,8 +150,17 @@
     
     CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
     CGFloat navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
-    self.progressBar = [[MUSProgressBar alloc]initWithFrame:CGRectMake(0, statusBarHeight, self.view.frame.size.width, navigationBarHeight)];
-    self.progressBarEndLoading = [[MUSProgressBarEndLoading alloc]initWithFrame:CGRectMake(0, statusBarHeight, self.view.frame.size.width, navigationBarHeight)];
+    ////////////////////////
+    self.progressBar = [MUSProgressBar sharedProgressBar];
+    [self.progressBar setFrame:CGRectMake(0, statusBarHeight, self.view.frame.size.width, navigationBarHeight)];
+    /////////////////////////////////////////////////
+    self.progressBarEndLoading = [MUSProgressBarEndLoading sharedProgressBarEndLoading];
+    [self.progressBarEndLoading setFrame:CGRectMake(0, statusBarHeight, self.view.frame.size.width, navigationBarHeight)];
+    
+    
+    /////////////////////////////////////////////////////
+    //self.progressBar = [[MUSProgressBar alloc]initWithFrame:CGRectMake(0, statusBarHeight, self.view.frame.size.width, navigationBarHeight)];
+//    self.progressBarEndLoading = [[MUSProgressBarEndLoading alloc]initWithFrame:CGRectMake(0, statusBarHeight, self.view.frame.size.width, navigationBarHeight)];
     //[self.progressBar.viewWithPicsAndLable layoutIfNeeded];
 
     self.progressBar.viewHeightConstraint.constant = 0;
@@ -404,8 +414,7 @@
     
 }
 
-#pragma mark - Share Post to Social network
-- (void) share {
+- (void) startProgressView {
     [self.tabBarController.view addSubview:self.progressBar.view];
     self.progressBar.progressView.progress = 0;
     [self.progressBar.viewWithPicsAndLable layoutIfNeeded];
@@ -421,7 +430,7 @@
     
     
     //[self.navigationController.view addSubview:self.progressBar.view];
-    [self.progressBar configurationProgressBar:[self.galeryView obtainArrayWithChosenPics] :NO :0 :0];
+    [[MUSProgressBar sharedProgressBar] configurationProgressBar:[self.galeryView obtainArrayWithChosenPics] :NO :0 :0];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
         [weakSelf.progressBar.viewWithPicsAndLable layoutIfNeeded];
@@ -433,8 +442,33 @@
         }];
         [UIView commitAnimations];
     });
+
+    
+}
+
+- (void) endProgressViewWithCountConnect :(NSInteger) countConnect{
+    [self.tabBarController.view addSubview:self.progressBarEndLoading.view];
+    [self.progressBarEndLoading.viewWithPicsAndLable layoutIfNeeded];
+    self.progressBarEndLoading.viewHeightConstraint.constant = 42;
+    [UIView animateWithDuration:2 animations:^{
+        [self.progressBarEndLoading.viewWithPicsAndLable layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            [self.progressBar.view removeFromSuperview];
+            [self.progressBarEndLoading.view removeFromSuperview];
+            self.progressBarEndLoading.viewHeightConstraint.constant = 0;
+        });
+    }];
+    [[MUSProgressBarEndLoading sharedProgressBarEndLoading] configurationProgressBar:[self.galeryView obtainArrayWithChosenPics] :countConnect:_arrayChosenNetworksForPost.count];
+    
+}
+
+
+#pragma mark - Share Post to Social network
+- (void) share {
     
     
+     __weak MUSShareViewController *weakSelf = self;
     [_popVC removeFromParentViewController];
     [_popVC.view removeFromSuperview];
     _popVC = nil;
@@ -452,7 +486,7 @@
     // NSArray *array = [[NSArray alloc] initWithObjects:  @(Facebook), nil];
     // __weak MUSShareViewController *weakSelf = self;
     // __block int count = 0;
-    __block float summa = 0;
+    //__block float summa = 0;
     if (_arrayChosenNetworksForPost) {
         [self createPost];
         
@@ -468,19 +502,7 @@
             
             
             
-            [weakSelf.tabBarController.view addSubview:weakSelf.progressBarEndLoading.view];
-            [weakSelf.progressBarEndLoading.viewWithPicsAndLable layoutIfNeeded];
-            weakSelf.progressBarEndLoading.viewHeightConstraint.constant = 42;
-            [UIView animateWithDuration:2 animations:^{
-                [weakSelf.progressBarEndLoading.viewWithPicsAndLable layoutIfNeeded];
-            } completion:^(BOOL finished) {
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                    [weakSelf.progressBar.view removeFromSuperview];
-                    [weakSelf.progressBarEndLoading.view removeFromSuperview];
-                    weakSelf.progressBarEndLoading.viewHeightConstraint.constant = 0;
-                });
-            }];
-            [weakSelf.progressBarEndLoading configurationProgressBar:[weakSelf.galeryView obtainArrayWithChosenPics] :[result intValue] :_arrayChosenNetworksForPost.count];
+           
             [weakSelf refreshShareScreen];
             //
             //                });
@@ -512,8 +534,8 @@
     
 }
 
-- (void) sharePosts : (NSMutableArray*) arrayChosenNetworksForPost andFlagTwitter:(BOOL)flagTwitter{//////////////////////////
-   
+- (void) sharePosts : (NSMutableArray*) arrayChosenNetworksForPost andFlagTwitter:(BOOL)flagTwitter {//////////////////////////
+    
     if (arrayChosenNetworksForPost == nil) {
         [_popVC removeFromParentViewController];
         [_popVC.view removeFromSuperview];

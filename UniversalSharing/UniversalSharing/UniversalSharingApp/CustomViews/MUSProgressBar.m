@@ -15,7 +15,19 @@
 
 
 @end
+
+static MUSProgressBar *model = nil;
+
 @implementation MUSProgressBar
+
++ (MUSProgressBar*) sharedProgressBar {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        model = [[MUSProgressBar alloc] init];
+    });
+    return  model;
+}
+
 -(id) initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];

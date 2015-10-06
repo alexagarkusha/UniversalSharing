@@ -15,7 +15,17 @@
 
 
 @end
+static MUSProgressBarEndLoading *model = nil;
 @implementation MUSProgressBarEndLoading
+
++ (MUSProgressBarEndLoading*) sharedProgressBarEndLoading {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        model = [[MUSProgressBarEndLoading alloc] init];
+    });
+    return  model;
+}
+
 -(id) initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -56,7 +66,7 @@
         if (countSuccessPosted == countNetworks) {
             self.labelStutus.text = @"Published";
         }else if(countSuccessPosted == 0){
-            self.labelStutus.text    = @"Failed";
+            self.labelStutus.text = @"Failed";
         }else if(countSuccessPosted == 1) {
             
             self.labelStutus.text = [NSString stringWithFormat:@"1 from %ld was published",(long)countNetworks];
