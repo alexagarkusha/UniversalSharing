@@ -22,8 +22,8 @@ typedef void (^ComplitionWithArrays)(id arrayLogin, id arrayHidden, id arrayUnac
 typedef NS_ENUM (NSInteger, NetworkType) {
     AllNetworks,
     Facebook,
-    VKontakt,
-    Twitters
+    Twitters,
+    VKontakt
 };
 
 typedef NS_ENUM (NSInteger, ImageType) {

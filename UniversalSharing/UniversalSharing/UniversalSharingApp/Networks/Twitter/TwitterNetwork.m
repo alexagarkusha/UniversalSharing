@@ -365,7 +365,13 @@ static TwitterNetwork *model = nil;
     NSString *url = musTwitterURL_Statuses_Update;
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     
-    params [musTwitterParameter_Status] = post.postDescription;
+    NSString* messageText = post.postDescription;
+    
+    if (post.postDescription.length > 117) {
+        messageText = [post.postDescription substringToIndex: 117];
+    }
+    
+    params [musTwitterParameter_Status] = messageText;
     if (post.longitude.length > 0 && ![post.longitude isEqualToString: @"(null)"] && post.latitude.length > 0 && ![post.latitude isEqualToString: @"(null)"]) {
         params [musTwitterLocationParameter_Latitude] = post.latitude;
         params [musTwitterLocationParameter_Longituge] = post.longitude;
@@ -430,8 +436,16 @@ static TwitterNetwork *model = nil;
             NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
             
             params [musTwitterParameter_MediaID] = mediaIdsString;
+            
+            
+            NSString* messageText = post.postDescription;
+            
+            if (post.postDescription.length > 117) {
+                messageText = [post.postDescription substringToIndex: 117];
+            }
+
             if (post.postDescription) {
-                params [musTwitterParameter_Status] = post.postDescription;
+                params [musTwitterParameter_Status] = messageText;
             }
             if (post.longitude.length > 0 && ![post.longitude isEqualToString: @"(null)"] && post.latitude.length > 0 && ![post.latitude isEqualToString: @"(null)"]) {
                 params [musTwitterLocationParameter_Latitude] = post.latitude;
