@@ -62,7 +62,7 @@ static FacebookNetwork *model = nil;
             //[self updatePost];/////////////////////////////////////////////////////////////////////////////////////////////
             
             [self startTimerForUpdatePosts];
-            self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForUsersWithNetworkType:self.networkType]]firstObject]; // obtainUsersWithNetworkType:self.networkType];
+            self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType:self.networkType]]firstObject]; // obtainUsersWithNetworkType:self.networkType];
             //self.icon = self.currentUser.photoURL;
             self.icon = musFacebookIconName;
             self.title = [NSString stringWithFormat:@"%@ %@", self.currentUser.firstName, self.currentUser.lastName];
@@ -78,7 +78,7 @@ static FacebookNetwork *model = nil;
                     [[NSFileManager defaultManager] removeItemAtPath: [deleteImageFromFolder obtainPathToDocumentsFolder:deleteImageFromFolder] error: nil];
                     result.currentUser.isVisible = self.isVisible;
                     result.currentUser.indexPosition = indexPosition;
-                    [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringUsersForUpdateWithObjectUser:result.currentUser]];//editUser:result.currentUser];
+                    [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUpdateUser:result.currentUser]];//editUser:result.currentUser];
                 }];
             }
         }
@@ -418,7 +418,7 @@ static FacebookNetwork *model = nil;
 
 - (void) updatePostWithComplition : (ComplitionUpdateNetworkPosts) block {
     self.copyComplitionUpdateNetworkPosts = block;
-    NSArray * networksPostsIDs = [[DataBaseManager sharedManager] obtainNetworkPostsFromDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringForNetworkPostWithReason: Connect andNetworkType: Facebook]];
+    NSArray * networksPostsIDs = [[DataBaseManager sharedManager] obtainNetworkPostsFromDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForNetworkPostWithReason: Connect andNetworkType: Facebook]];
     
     if (![[InternetConnectionManager connectionManager] isInternetConnection] || !networksPostsIDs.count  || (![[InternetConnectionManager connectionManager] isInternetConnection] && networksPostsIDs.count)) {
         block (@"Facebook, Error update network posts");
@@ -442,7 +442,7 @@ static FacebookNetwork *model = nil;
                 NSLog(@"FB post.id = %@, post.like = %ld, post.comments = %ld", networkPost.postID, (long)networkPost.likesCount, (long)networkPost.commentsCount);
                 
                 
-                [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringNetworkPostsForUpdateObjectNetworkPost : networkPost]];
+                [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForUpdateNetworkPost : networkPost]];
             } else {
                 
                 NSLog(@"ERROR");
@@ -463,7 +463,7 @@ static FacebookNetwork *model = nil;
                 NSLog(@"FB post.id = %@, post.like = %ld, post.comments = %ld", networkPost.postID, (long)networkPost.likesCount, (long)networkPost.commentsCount);
                 
                 
-                [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringNetworkPostsForUpdateObjectNetworkPost : networkPost]];
+                [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForUpdateNetworkPost : networkPost]];
             } else {
                 NSLog(@"ERROR");
             }

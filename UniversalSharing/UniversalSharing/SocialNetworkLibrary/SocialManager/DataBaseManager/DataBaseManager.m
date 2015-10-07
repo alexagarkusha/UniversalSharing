@@ -50,9 +50,9 @@ static DataBaseManager *databaseManager;
 
 -(void) createSqliteTables {
     char *error;
-    NSString *stringUsersTable = [MUSDatabaseRequestStringsHelper createStringUsersTable];
-    NSString *stringPostsTable = [MUSDatabaseRequestStringsHelper createStringPostsTable];
-    NSString *stringNetworkPostsTable = [MUSDatabaseRequestStringsHelper createStringNetworkPostsTable];
+    NSString *stringUsersTable = [MUSDatabaseRequestStringsHelper stringCreateTableOfUsers];
+    NSString *stringPostsTable = [MUSDatabaseRequestStringsHelper stringCreateTableOfPosts];
+    NSString *stringNetworkPostsTable = [MUSDatabaseRequestStringsHelper stringCreateTableOfNetworkPosts];
     
     if(sqlite3_exec(_database, [stringPostsTable UTF8String], NULL, NULL, &error) != SQLITE_OK) {
         NSLog(@"Insert failed: %s", sqlite3_errmsg(_database));
@@ -75,7 +75,7 @@ static DataBaseManager *databaseManager;
 
 - (sqlite3_stmt*) savePost :(Post*) post {
     sqlite3_stmt *statement = nil;
-    const char *sql = [[MUSDatabaseRequestStringsHelper createStringForSavePostToTable] UTF8String];
+    const char *sql = [[MUSDatabaseRequestStringsHelper stringForSavePost] UTF8String];
     [post convertArrayWithNetworkPostsIdsToString];
     if(sqlite3_prepare_v2(_database, sql, -1, &statement, nil) == SQLITE_OK) {
         
@@ -94,7 +94,7 @@ static DataBaseManager *databaseManager;
 - (NSInteger) saveNetworkPost :(NetworkPost*) networkPost {//networkPOst
     NSInteger lastRowId;
     sqlite3_stmt *statement = nil;
-    const char *sql = [[MUSDatabaseRequestStringsHelper createStringForSaveNetworkPostToTable] UTF8String];
+    const char *sql = [[MUSDatabaseRequestStringsHelper stringSaveNetworkPost] UTF8String];
     if(sqlite3_prepare_v2(_database, sql, -1, &statement, nil) == SQLITE_OK) {
         sqlite3_bind_int64(statement, 1, networkPost.likesCount);
         sqlite3_bind_int64(statement, 2, networkPost.commentsCount);
@@ -113,7 +113,7 @@ static DataBaseManager *databaseManager;
 
 - (sqlite3_stmt*) saveUser :(User*) user {
     sqlite3_stmt *statement = nil;
-    const char *sql = [[MUSDatabaseRequestStringsHelper createStringForSaveUserToTable] UTF8String];
+    const char *sql = [[MUSDatabaseRequestStringsHelper stringForSaveUser] UTF8String];
     
     if(sqlite3_prepare_v2(_database, sql, -1, &statement, nil) == SQLITE_OK) {
         sqlite3_bind_text(statement, 1, [[self checkExistedString: user.username] UTF8String], -1, SQLITE_TRANSIENT);

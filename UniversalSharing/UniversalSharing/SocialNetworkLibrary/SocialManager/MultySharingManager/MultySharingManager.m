@@ -189,7 +189,7 @@ static MultySharingManager *model = nil;
                 currentNetworkPost.likesCount = newNetworkPost.likesCount;
                 currentNetworkPost.commentsCount = newNetworkPost.commentsCount;
                 currentNetworkPost.dateCreate = [NSString currentDate];
-                [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringForUpdateNetworkPost: currentNetworkPost]];
+                [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForUpdateNetworkPost: currentNetworkPost]];
             }
         }
     }

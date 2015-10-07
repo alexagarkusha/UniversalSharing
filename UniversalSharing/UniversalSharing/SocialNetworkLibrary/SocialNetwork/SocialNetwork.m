@@ -49,14 +49,14 @@
     if (self.currentUser.isVisible != isVisible && self.currentUser) {
         
         self.currentUser.isVisible = isVisible;
-        [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringUsersForUpdateWithObjectUser:self.currentUser]];
+        [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUpdateUser:self.currentUser]];
     }    
 }
 
 //// ADD to USER ????? /////
 
 - (void) removeUserFromDataBaseAndImageFromDocumentsFolder :(User*) user {
-    [[DataBaseManager sharedManager] deleteObjectFromDataBaseWithRequestStrings:[MUSDatabaseRequestStringsHelper createStringForDeleteUserWithClientId:user.clientID]];
+    [[DataBaseManager sharedManager] deleteObjectFromDataBaseWithRequestStrings:[MUSDatabaseRequestStringsHelper stringForDeleteUserByClientId:user.clientID]];
     NSError *error;
     [[NSFileManager defaultManager] removeItemAtPath: [user.photoURL obtainPathToDocumentsFolder: user.photoURL] error: &error];
 }
