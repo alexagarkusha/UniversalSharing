@@ -165,9 +165,9 @@ FOUNDATION_EXPORT NSString *const musAppImage_Name_TwitterCommentsImage_grey;
 FOUNDATION_EXPORT NSString *const musAppImage_Name_CommentsImage_grey;
 
 
-FOUNDATION_EXPORT NSString *const musAppFilter_Title_Shared;
-FOUNDATION_EXPORT NSString *const musAppFilter_Title_Offline;
-FOUNDATION_EXPORT NSString *const musAppFilter_Title_Error;
+FOUNDATION_EXPORT NSString *const musAppReasonType_Published;
+FOUNDATION_EXPORT NSString *const musAppReasonType_Offline;
+FOUNDATION_EXPORT NSString *const musAppReasonType_Error;
 FOUNDATION_EXPORT NSInteger const musAppPostsVC_HeightOfPostCell;
 FOUNDATION_EXPORT NSString *const musApp_ActionSheet_Title_ChooseAction;
 FOUNDATION_EXPORT NSInteger const musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithoutUserPhotos;

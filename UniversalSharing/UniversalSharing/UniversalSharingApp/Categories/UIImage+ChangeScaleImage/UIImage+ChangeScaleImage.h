@@ -13,5 +13,4 @@
 
 + (UIImage*) scaleImage: (UIImage*) image toSize: (CGSize) newSize;
 
-
 @end

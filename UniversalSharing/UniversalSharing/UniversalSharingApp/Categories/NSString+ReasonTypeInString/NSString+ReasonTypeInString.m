@@ -11,23 +11,21 @@
 
 @implementation NSString (ReasonTypeInString)
 
-
 + (NSString*) reasonTypeInString : (ReasonType) reasonType {
     switch (reasonType) {
         case Connect:
-            return musAppFilter_Title_Shared;
+            return musAppReasonType_Published;
             break;
         case ErrorConnection:
-            return musAppFilter_Title_Error;
+            return musAppReasonType_Error;
             break;
         case Offline:
-            return musAppFilter_Title_Offline;
+            return musAppReasonType_Offline;
             break;
         default:
             break;
     }
     return nil;
 }
-
 
 @end

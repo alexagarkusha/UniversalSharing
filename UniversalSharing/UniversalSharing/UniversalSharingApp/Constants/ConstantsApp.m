@@ -128,9 +128,9 @@ NSString *const musAppImage_Name_CommentsImage_grey = @"Comments_grey.png";
 
 
 
-NSString *const musAppFilter_Title_Shared = @"Published";
-NSString *const musAppFilter_Title_Offline = @"Offline";
-NSString *const musAppFilter_Title_Error = @"Failed";
+NSString *const musAppReasonType_Published = @"Published";
+NSString *const musAppReasonType_Offline = @"Offline";
+NSString *const musAppReasonType_Error = @"Failed";
 NSInteger const musAppPostsVC_HeightOfPostCell = 96;
 NSString *const musApp_ActionSheet_Title_ChooseAction = @"Choose action";
 NSInteger const musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithoutUserPhotos = 12;
