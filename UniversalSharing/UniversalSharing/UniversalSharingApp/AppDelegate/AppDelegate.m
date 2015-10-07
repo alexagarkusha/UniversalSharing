@@ -30,7 +30,8 @@
                                          @(Twitters) : [TwitterNetwork class],
                                          @(VKontakt) : [VKNetwork class]};
     
-    [[SocialManager sharedManager] setupNetworksClass:networksDictionary];
+    [[SocialManager sharedManager] configurateWithNetworkClasses: networksDictionary];
+    
     [MUSPostManager manager];
     
     [self p_setupTabBarController];
