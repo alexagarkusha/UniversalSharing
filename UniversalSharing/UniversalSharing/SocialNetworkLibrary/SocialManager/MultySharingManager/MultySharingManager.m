@@ -20,7 +20,7 @@
 @interface MultySharingManager ()
 
 @property (copy, nonatomic) Complition copyComplition;
-@property (copy, nonatomic) ComplitionProgressLoading copyProgressLoading;
+@property (copy, nonatomic) ProgressLoadingComplition copyProgressLoading;
 //@property (strong, nonatomic) NSMutableArray *arrayWithQueueOfPosts;
 //@property (assign, nonatomic) BOOL isPostLoading;
 
@@ -52,7 +52,7 @@ static MultySharingManager *model = nil;
 }
 
 
-- (void) sharePost : (Post*) post toSocialNetworks : (NSArray*) arrayOfNetworksType withComplition : (Complition) block andComplitionProgressLoading :(ComplitionProgressLoading) blockLoading {
+- (void) sharePost : (Post*) post toSocialNetworks : (NSArray*) arrayOfNetworksType withComplition : (Complition) block andProgressLoadingComplition :(ProgressLoadingComplition) blockLoading {
     NSMutableArray *arrayWithNetworks = [[SocialManager sharedManager]networksForKeys:arrayOfNetworksType];//[self arrayWithNetworks: arrayOfNetworksType];
     self.copyComplition = block;
     self.copyProgressLoading = blockLoading;
@@ -132,16 +132,8 @@ static MultySharingManager *model = nil;
         
         //});
     }
-    //
-    //    dispatch_group_notify(group, queue, ^{
-    //        //Save Post to DataBase After Send POST TO SN;
-    //        block (nil, nil);
-    //        [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
-    //        NSLog(@"ALL Tasks complete");
-    //    });
+    
 }
-
-
 
 - (void) updatePost : (Post*) post toSocialNetworks : (NSArray*) arrayWithNetworks {
     __block NSMutableArray *arrayOfLoadingObjects = [self arrayOfLoadingObjectsFromNetworks: arrayWithNetworks];
@@ -272,7 +264,7 @@ static MultySharingManager *model = nil;
 
 
 
-- (BOOL) isPostInQueueOfPosts:(NSInteger)primaryKeyOfPost {
+- (BOOL) queueOfPosts:(NSInteger)primaryKeyOfPost {
     for (NSDictionary *dictionary in self.arrayWithQueueOfPosts) {
         Post *currentPost = [dictionary objectForKey: @"post"];
         if (currentPost.primaryKey == primaryKeyOfPost) {

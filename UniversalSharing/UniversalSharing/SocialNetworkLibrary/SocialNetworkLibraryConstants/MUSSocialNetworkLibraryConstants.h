@@ -11,7 +11,7 @@
 #pragma mark Blocks
 
 typedef void (^Complition)(id result, NSError *error);
-typedef void (^ComplitionProgressLoading)(float result);
+typedef void (^ProgressLoadingComplition)(float result);
 typedef void (^ProgressLoadingImagesToVK)(int objectOfLoading, long long bytesLoaded, long long bytesTotal);
 typedef void (^ProgressLoading)(id currentNetworkType, float result);
 typedef void (^ComplitionUpdateNetworkPosts)(id result);

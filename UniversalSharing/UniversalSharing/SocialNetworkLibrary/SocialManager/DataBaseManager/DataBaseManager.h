@@ -20,7 +20,7 @@
 //===
 - (void)insertObjectIntoTable:(id) object;
 //===
-- (void) deleteObjectFromDataDaseWithRequestStrings : (NSString*) requestString;
+- (void) deleteObjectFromDataBaseWithRequestStrings : (NSString*) requestString;
 //===
 - (void) editObjectAtDataBaseWithRequestString : (NSString*) requestString;
 - (NSMutableArray*)obtainPostsFromDataBaseWithRequestString : (NSString*) requestString;

@@ -56,7 +56,7 @@
 //// ADD to USER ????? /////
 
 - (void) removeUserFromDataBaseAndImageFromDocumentsFolder :(User*) user {
-    [[DataBaseManager sharedManager] deleteObjectFromDataDaseWithRequestStrings:[MUSDatabaseRequestStringsHelper createStringForDeleteUserWithClientId:user.clientID]];
+    [[DataBaseManager sharedManager] deleteObjectFromDataBaseWithRequestStrings:[MUSDatabaseRequestStringsHelper createStringForDeleteUserWithClientId:user.clientID]];
     NSError *error;
     [[NSFileManager defaultManager] removeItemAtPath: [user.photoURL obtainPathToDocumentsFolder: user.photoURL] error: &error];
 }
