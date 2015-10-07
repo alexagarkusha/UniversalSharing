@@ -8,21 +8,12 @@
 
 #import "MUSPostDescriptionCell.h"
 #import "ConstantsApp.h"
-#import "MUSChangeButton.h"
-
-@interface MUSPostDescriptionCell () <UITextViewDelegate>
-
-@property (weak, nonatomic)     IBOutlet   MUSChangeButton    *changeButtonOutlet;
-@property (nonatomic, assign)              NetworkType        currentNetworkType;
-
-@end
 
 
 @implementation MUSPostDescriptionCell
 
 - (void)awakeFromNib {
     // Initialization code
-    self.postDescriptionTextView.delegate = self;
     self.backgroundColor = BROWN_COLOR_Lightly;
 }
 
@@ -64,91 +55,8 @@
 
 #pragma mark - configuration PostDescriptionCell
 
-- (void) configurationPostDescriptionCell: (NSString*) postDescription andNetworkType: (NetworkType) networkType {
-    [self checkPostDescriptionStatus];
-    self.currentNetworkType = networkType;
-    if (![postDescription isEqualToString: changePlaceholderWhenStartEditing] && ![postDescription isEqualToString: kPlaceholderText]) {
-        [self initialParametersOfTextInTextView: postDescription];
-        self.postDescriptionTextView.tag = 1;
-    } else {
-        [self initialPostDescriptionTextView];
-    }
-}
-
-#pragma mark - Check PostDescriptionTextView status
-
-- (void) checkPostDescriptionStatus {
-    if (!self.isEditableCell) {
-        self.changeButtonOutlet.hidden = YES;
-        self.postDescriptionTextView.scrollEnabled = NO;
-    } else {
-        self.changeButtonOutlet.hidden = NO;
-    }
-}
-
-#pragma mark - UITextViewDelegate
-
-- (void)textViewDidChange:(UITextView *)textView {
-    if (textView.text.length > 0) {
-        NSString *rawString = [textView text];
-        NSCharacterSet *whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
-        NSString *trimmed = [rawString stringByTrimmingCharactersInSet:whitespace];
-        if ([trimmed length] == 0) {
-            [self initialPostDescriptionTextView];
-            [self.postDescriptionTextView setSelectedRange:NSMakeRange(0, 0)];
-            return;
-        }
-    } else {
-        [self initialPostDescriptionTextView];
-        [self.postDescriptionTextView setSelectedRange:NSMakeRange(0, 0)];
-    }
-}
-
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-    if([text rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet]].location == NSNotFound ) {
-        if (textView.tag == 0 && text.length > 0) {
-            [self initialPostDescriptionTextViewWhenStartingEditingText];
-        }
-        if (self.currentNetworkType != Twitters) {
-            return textView.text.length + (text.length - range.length) <= countOfAllowedLettersInTextView;
-        } else {
-            return textView.text.length + (text.length - range.length) <= musApp_TextView_CountOfAllowedLetters_ForTwitter;
-        }
-    }
-    [textView resignFirstResponder];
-    return NO;
-}
-
-- (void)textViewDidEndEditing:(UITextView *)textView {
-    if([textView.text length] == 0) {
-        [self initialPostDescriptionTextView];
-        [self.delegate endEditingPostDescriptionAndReloadTableView];
-    } else {
-        [self.delegate endEditingPostDescriptionAndReloadTableView];
-    }
-    [self.postDescriptionTextView setEditable: NO];
-}
-
-- (void)textViewDidChangeSelection:(UITextView *)textView {
-    if ([textView.text isEqualToString: kPlaceholderText] && textView.textColor == [UIColor lightGrayColor]) {
-        [self.postDescriptionTextView setSelectedRange:NSMakeRange(0, 0)];
-    } else {
-        [self.delegate saveChangesInPostDescription: textView.text];
-    }
-}
-
-#pragma mark initiation PostDescriptionTextView
-
-- (void) initialPostDescriptionTextView {
-    self.postDescriptionTextView.tag = 0;
-    [self initialParametersOfTextInTextView: kPlaceholderText];
-    self.postDescriptionTextView.textColor = [UIColor lightGrayColor];
-}
-
-- (void) initialPostDescriptionTextViewWhenStartingEditingText {
-    self.postDescriptionTextView.text = changePlaceholderWhenStartEditing;
-    self.postDescriptionTextView.textColor = [UIColor blackColor];
-    self.postDescriptionTextView.tag = 1;
+- (void) configurationPostDescriptionCell: (NSString*) postDescription {
+    [self initialParametersOfTextInTextView: postDescription];
 }
 
 #pragma mark initiation Parameters of text in text view
@@ -157,28 +65,10 @@
     NSDictionary *options = @{ NSFontAttributeName: [UIFont
                 fontWithName : musApp_PostDescriptionCell_TextView_Font_Name
                         size : musApp_PostDescriptionCell_TextView_Font_Size]};
-    NSAttributedString* attrString = [[NSAttributedString alloc]
-                                  initWithString : text
-                                      attributes : options];
-    [self.postDescriptionTextView setAttributedText : attrString];
-    
-    if (self.isEditableCell) {
-        UIBezierPath *rectanglePath = [UIBezierPath bezierPathWithRect:CGRectMake(self.frame.size.width - 30, 0, 30, 30)];
-        [[self.postDescriptionTextView textContainer] setExclusionPaths:@[rectanglePath]];
-    }    
+    NSAttributedString* attributedString = [[NSAttributedString alloc] initWithString : text
+                                                                           attributes : options];
+    [self.postDescriptionTextView setAttributedText : attributedString];
 }
 
-- (IBAction)changeButtonTouch:(id)sender {
-    self.postDescriptionTextView.editable = YES;
-    self.postDescriptionTextView.autocorrectionType = UITextAutocorrectionTypeNo;
-    [self.delegate beginEditingPostDescription: self.currentIndexPath];
-    [self.postDescriptionTextView becomeFirstResponder];
-    
-    if (![self.postDescriptionTextView.text isEqualToString: kPlaceholderText]) {
-        self.postDescriptionTextView.selectedRange = NSMakeRange([self.postDescriptionTextView.text length], 0);
-    } else {
-        [self.postDescriptionTextView setSelectedRange:NSMakeRange(0, 0)];
-    }
-}
 
 @end
