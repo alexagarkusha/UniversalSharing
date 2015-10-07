@@ -17,16 +17,13 @@
 
 + (SocialManager*) sharedManager;
 
-///*!
-// @abstract Returns a list of social networks in a user-defined order
-// */
-//
-- (NSMutableArray*) allNetworks; //all networks
+/*!
+ @abstract Returns a list of social networks in a user-defined order
+ */
+- (NSMutableArray*) allNetworks;
 
 - (NSMutableArray*) networksForKeys: (NSArray*) keysArray; ///
 
-- (void) setupNetworksClass: (NSDictionary*) networksWithKeys;
-
-//- (NSMutableArray*) activeSocialNetworks; // delete this method
+- (void) configurateWithNetworkClasses: (NSDictionary*) networksWithKeys;
 
 @end

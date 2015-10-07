@@ -10,14 +10,12 @@
 #import "MUSSocialNetworkLibraryConstants.h"
 #import "DataBaseManager.h"
 #import "MUSDatabaseRequestStringsHelper.h"
+
 @interface SocialManager()
 
-@property (strong, nonatomic) NSArray *accountsArray;
-@property (strong, nonatomic) NSMutableArray *arrayLogin;
-@property (strong, nonatomic) NSMutableArray *arrayHidden;
-@property (strong, nonatomic) NSMutableArray *arrayUnactive;
+@property (strong, nonatomic)   NSArray           *accountsArray;
+@property (strong, nonatomic)   NSDictionary      *networksDictinary;
 
-@property (strong, nonatomic) NSDictionary *networksDictinary;
 @end
 
 static SocialManager *model = nil;
@@ -31,14 +29,7 @@ static SocialManager *model = nil;
     return  model;
 }
 
-- (instancetype) init {
-    self = [super init];
-    if (self) {
-    }
-    return self;
-}
-
-- (NSArray *)accountsArray
+- (NSArray *) accountsArray
 {
     if (!_accountsArray) {
         [self p_configureAccounts];
@@ -46,7 +37,7 @@ static SocialManager *model = nil;
     return _accountsArray;
 }
 
-- (void)setupNetworksClass:(NSDictionary *)networksWithKeys
+- (void) configurateWithNetworkClasses: (NSDictionary*) networksWithKeys
 {
     self.networksDictinary = [networksWithKeys copy];
 }
