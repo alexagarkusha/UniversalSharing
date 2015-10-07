@@ -20,7 +20,6 @@
     place.city = @"";
     place.longitude = @"";
     place.latitude = @"";
-    place.isChosen = NO;
     return place;
 }
 
@@ -117,7 +116,6 @@
     copyPlace.city = [self.city copy];
     copyPlace.longitude = [self.longitude copy];
     copyPlace.latitude = [self.latitude copy];
-    copyPlace.isChosen = self.isChosen;
     return copyPlace;
 }
 

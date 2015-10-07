@@ -10,9 +10,6 @@
 
 @interface UIImageView (CornerRadiusBorderWidthAndBorderColorImageView)
 
-
 - (void) cornerRadius: (CGFloat) radius andBorderWidth : (CGFloat) borderWidth withBorderColor : (UIColor*) borderColor;
-
-
 
 @end

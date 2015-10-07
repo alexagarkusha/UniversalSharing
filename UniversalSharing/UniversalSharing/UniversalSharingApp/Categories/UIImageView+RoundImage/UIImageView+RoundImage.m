@@ -12,7 +12,7 @@
 
 - (void) roundImageView {
     self.layer.masksToBounds = YES;
-    self.layer.cornerRadius = CGRectGetHeight(self.frame) / 2; // == self.frame.size.height / 2;
+    self.layer.cornerRadius = CGRectGetHeight(self.frame) / 2;
 }
 
 @end

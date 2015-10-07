@@ -12,7 +12,6 @@
 
 @interface UIImage (IconOfSocialNetwork)
 
-+ (UIImage*) iconOfSocialNetworkForPost : (Post*) currentPost;
 + (UIImage*) iconOfSocialNetworkForNetworkPost : (NetworkPost*) networkPost;
 
 @end

@@ -297,8 +297,7 @@
         }
         case PostDescriptionCellType: {
             MUSPostDescriptionCell *postDescriptionCell = (MUSPostDescriptionCell*) cell;
-            postDescriptionCell.currentIndexPath = indexPath;
-            [postDescriptionCell configurationPostDescriptionCell: self.currentPost.postDescription andNetworkType: self.currentSocialNetwork.networkType];
+            [postDescriptionCell configurationPostDescriptionCell: self.currentPost.postDescription];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             break;
         }
