@@ -16,14 +16,10 @@
 
 - (NSArray*) arrayOfAllPosts;
 
-- (NSArray*) updateArrayOfPost;
+- (void) updateArrayOfPost;
 
-- (void) updateNetworkPosts;
-
-- (void) deleteNetworkPostFromPostsOfSocialNetworkType : (NetworkType) networkType;
-
+- (void) deleteNetworkPostForNetworkType : (NetworkType) networkType;
 
 @property (assign, nonatomic) BOOL needToRefreshPosts;
-
 
 @end

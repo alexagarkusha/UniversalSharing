@@ -70,7 +70,7 @@ static VKNetwork *model = nil;
             self.isVisible = self.currentUser.isVisible;
             NSInteger indexPosition = self.currentUser.indexPosition;
             
-            if ([[InternetConnectionManager manager] isInternetConnection]){
+            if ([[InternetConnectionManager connectionManager] isInternetConnection]){
                 
                 NSString *deleteImageFromFolder = self.currentUser.photoURL;
                 
@@ -139,7 +139,7 @@ static VKNetwork *model = nil;
 
 - (void) loginOut {
     [VKSdk forceLogout];
-    [[MUSPostManager manager] deleteNetworkPostFromPostsOfSocialNetworkType: self.networkType];
+    [[MUSPostManager manager] deleteNetworkPostForNetworkType: self.networkType];
     [MUSPostManager manager].needToRefreshPosts = YES;
     [self removeUserFromDataBaseAndImageFromDocumentsFolder:self.currentUser];
     self.currentUser = nil;
@@ -192,7 +192,7 @@ static VKNetwork *model = nil;
 - (void) updatePostWithComplition: (ComplitionUpdateNetworkPosts) block {
     NSArray * networksPostsIDs = [[DataBaseManager sharedManager] obtainNetworkPostsFromDataBaseWithRequestStrings: [MUSDatabaseRequestStringsHelper createStringForNetworkPostWithReason: Connect andNetworkType: VKontakt]];
     
-    if (![[InternetConnectionManager manager] isInternetConnection] || !networksPostsIDs.count  || (![[InternetConnectionManager manager] isInternetConnection] && networksPostsIDs.count)) {
+    if (![[InternetConnectionManager connectionManager] isInternetConnection] || !networksPostsIDs.count  || (![[InternetConnectionManager connectionManager] isInternetConnection] && networksPostsIDs.count)) {
         block (@"Vkontakte, Error update network posts");
         return;
     }
@@ -309,7 +309,7 @@ static VKNetwork *model = nil;
 #pragma mark - sharePostToNetwork
 
 - (void) sharePost : (Post*) post withComplition : (Complition) block andProgressLoadingBlock:(ProgressLoading) blockLoading{
-    if (![[InternetConnectionManager manager] isInternetConnection]){
+    if (![[InternetConnectionManager connectionManager] isInternetConnection]){
         NetworkPost *networkPost = [NetworkPost create];
         networkPost.networkType = VKontakt;
         networkPost.reason = Offline;

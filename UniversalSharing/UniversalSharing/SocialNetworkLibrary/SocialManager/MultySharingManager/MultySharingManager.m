@@ -227,13 +227,15 @@ static MultySharingManager *model = nil;
 //}
 
 - (void) updateNetworkPostsWithComplition : (Complition) block {
-    NSMutableArray *activeSocialNetworksArray = [[SocialManager sharedManager] activeSocialNetworks];
-    __block NSUInteger numberOfActiveSocialNetworks = activeSocialNetworksArray.count;
+    //Need to add a check isLogin socialNetwork or not in each social network?
+    
+    NSMutableArray *allSocialNetworksArray = [[SocialManager sharedManager] allNetworks];
+    __block NSUInteger numberOfActiveSocialNetworks = allSocialNetworksArray.count;
     __block NSUInteger counterOfSocialNetworks = 0;
     __block NSString *blockResultString = @"Result: \n";
     
-    for (int i = 0; i < activeSocialNetworksArray.count; i++) {
-        SocialNetwork *currentSocialNetwork = [activeSocialNetworksArray objectAtIndex: i];
+    for (int i = 0; i < allSocialNetworksArray.count; i++) {
+        SocialNetwork *currentSocialNetwork = [allSocialNetworksArray objectAtIndex: i];
         [currentSocialNetwork updatePostWithComplition:^(id result) {
             counterOfSocialNetworks++;
             //NSLog(@"counter = %d", counterOfSocialNetworks);

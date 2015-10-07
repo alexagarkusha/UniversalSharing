@@ -67,7 +67,7 @@ static TwitterNetwork *model = nil;
             
             //////////////////////////////////////////////////////////
             
-            if ([[InternetConnectionManager manager] isInternetConnection]){
+            if ([[InternetConnectionManager connectionManager] isInternetConnection]){
                 
                 NSString *deleteImageFromFolder = self.currentUser.photoURL;
                 
@@ -154,7 +154,7 @@ static TwitterNetwork *model = nil;
         [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
     }
     
-    [[MUSPostManager manager] deleteNetworkPostFromPostsOfSocialNetworkType: self.networkType];
+    [[MUSPostManager manager] deleteNetworkPostForNetworkType: self.networkType];
     [MUSPostManager manager].needToRefreshPosts = YES;
     
     //[[Twitter sharedInstance] logOutGuest];
@@ -210,7 +210,7 @@ static TwitterNetwork *model = nil;
 - (void) updatePostWithComplition: (ComplitionUpdateNetworkPosts) block {
     NSArray * networksPostsIDs = [[DataBaseManager sharedManager] obtainNetworkPostsFromDataBaseWithRequestStrings: [MUSDatabaseRequestStringsHelper createStringForNetworkPostWithReason: Connect andNetworkType: Twitters]];
     
-    if (![[InternetConnectionManager manager] isInternetConnection] || !networksPostsIDs.count || (![[InternetConnectionManager manager] isInternetConnection] && networksPostsIDs.count)) {
+    if (![[InternetConnectionManager connectionManager] isInternetConnection] || !networksPostsIDs.count || (![[InternetConnectionManager connectionManager] isInternetConnection] && networksPostsIDs.count)) {
         block (@"Twitter, Error update network posts");
         return;
     }
@@ -333,7 +333,7 @@ static TwitterNetwork *model = nil;
 #pragma mark - sharePostToNetwork
 
 - (void) sharePost:(Post *)post withComplition:(Complition)block andProgressLoadingBlock:(ProgressLoading)blockLoading {
-        if (![[InternetConnectionManager manager] isInternetConnection]){
+        if (![[InternetConnectionManager connectionManager] isInternetConnection]){
             NetworkPost *networkPost = [NetworkPost create];
             networkPost.reason = Offline;
             networkPost.networkType = Twitters;

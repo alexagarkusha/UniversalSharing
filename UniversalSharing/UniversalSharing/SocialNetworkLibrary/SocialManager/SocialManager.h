@@ -21,17 +21,12 @@
 // @abstract Returns a list of social networks in a user-defined order
 // */
 //
+- (NSMutableArray*) allNetworks; //all networks
 
-- (NSMutableArray*)networks;
+- (NSMutableArray*) networksForKeys: (NSArray*) keysArray; ///
 
-- (NSMutableArray*)networksForKeys:(NSArray*)keysArray;
+- (void) setupNetworksClass: (NSDictionary*) networksWithKeys;
 
-- (void)setupNetworksClass:(NSDictionary*)networksWithKeys;
-
-- (NSMutableArray*) activeSocialNetworks;
-
-//- (void) obtainNetworksWithComplition :(ComplitionWithArrays) block;
-//- (void) editNetworks;
-
+//- (NSMutableArray*) activeSocialNetworks; // delete this method
 
 @end

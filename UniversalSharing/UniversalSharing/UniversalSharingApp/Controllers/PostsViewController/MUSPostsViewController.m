@@ -261,9 +261,12 @@
  */
 - (void) obtainArrayPosts {
     if (![MUSPostManager manager].needToRefreshPosts) {
-        self.arrayPosts = [[NSMutableArray alloc] initWithArray: [[MUSPostManager manager] arrayOfAllPosts]];
+        [self.arrayPosts removeAllObjects];
+        [self.arrayPosts addObjectsFromArray: [[MUSPostManager manager] arrayOfAllPosts]];
     } else {
-        self.arrayPosts = [[NSMutableArray alloc] initWithArray: [[MUSPostManager manager] updateArrayOfPost]];
+        [[MUSPostManager manager] updateArrayOfPost];
+        [self.arrayPosts removeAllObjects];
+        [self.arrayPosts addObjectsFromArray: [[MUSPostManager manager] arrayOfAllPosts]];
         [MUSPostManager manager].needToRefreshPosts = NO;
     }
     [self checkArrayOfPosts];
@@ -282,7 +285,9 @@
 #pragma Update all posts in array
 
 - (void) updateArrayPosts {
-    self.arrayPosts = [[NSMutableArray alloc] initWithArray: [[MUSPostManager manager] updateArrayOfPost]];
+    [[MUSPostManager manager] updateArrayOfPost];
+    [self.arrayPosts removeAllObjects];
+    [self.arrayPosts addObjectsFromArray: [[MUSPostManager manager] arrayOfAllPosts]];
     [self checkArrayOfPosts];
     [self.tableView reloadData];
 }

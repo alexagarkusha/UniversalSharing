@@ -13,7 +13,7 @@
 
 @interface MUSPostManager ()
 
-@property (strong, nonatomic) NSArray *arrayOfPosts;
+@property (strong, nonatomic) NSMutableArray *arrayOfPosts; //mutable
 
 @end
 
@@ -33,7 +33,8 @@ static MUSPostManager *model = nil;
 - (instancetype) init {
     self = [super init];
     if (self) {
-        self.arrayOfPosts = [[NSArray alloc] initWithArray: [[[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper createStringForAllPosts]] mutableCopy]];
+        self.arrayOfPosts = [[NSMutableArray alloc] init];
+        [self.arrayOfPosts addObjectsFromArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper createStringForAllPosts]]];
     }
     return self;
 }
@@ -42,22 +43,18 @@ static MUSPostManager *model = nil;
     return self.arrayOfPosts;
 }
 
-- (NSArray*) updateArrayOfPost {
-    self.arrayOfPosts = [[NSArray alloc] initWithArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper createStringForAllPosts]]];
-    return self.arrayOfPosts;
+- (void) updateArrayOfPost {
+    [self.arrayOfPosts removeAllObjects];
+    [self.arrayOfPosts addObjectsFromArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper createStringForAllPosts]]];
 }
 
-- (void) updateNetworkPosts {
-    
-}
-
-- (void) deleteNetworkPostFromPostsOfSocialNetworkType : (NetworkType) networkType {
+- (void) deleteNetworkPostForNetworkType : (NetworkType) networkType {
     for (Post *currentPost in self.arrayOfPosts) {
         [currentPost updateAllNetworkPostsFromDataBaseForCurrentPost];
         for (NetworkPost *networkPost in currentPost.arrayWithNetworkPosts) {
             if (networkPost.networkType == networkType) {
                 // Delete NetworkPost ID from post
-                [currentPost.arrayWithNetworkPostsId removeObject: [NSString stringWithFormat: @"%d", networkPost.primaryKey]];
+                [currentPost.arrayWithNetworkPostsId removeObject: [NSString stringWithFormat: @"%ld", (long)networkPost.primaryKey]];
                 // Delete NetworkPost from Data Base
                 [[DataBaseManager sharedManager] deleteObjectFromDataDase: [MUSDatabaseRequestStringsHelper createStringForDeleteNetworkPost: networkPost]];
             }
@@ -73,11 +70,11 @@ static MUSPostManager *model = nil;
             [[DataBaseManager sharedManager] deleteObjectFromDataDase: [MUSDatabaseRequestStringsHelper createStringForUpdateNetworkPostIdsInPost: currentPost]];
         }
     }
-    [self updatePostInfoNotification];
+    [self networkPostsWereUpdatedNotification];
 }
 
-- (void) updatePostInfoNotification {
-    [[NSNotificationCenter defaultCenter] postNotificationName:MUSNotificationPostsInfoWereUpDated object:nil];
+- (void) networkPostsWereUpdatedNotification {
+    [[NSNotificationCenter defaultCenter] postNotificationName: MUSNetworkPostsWereUpdatedNotification object:nil];
 }
 
 

@@ -13,7 +13,7 @@ static InternetConnectionManager *model = nil;
 
 @implementation InternetConnectionManager
 
-+ (InternetConnectionManager*) manager {
++ (InternetConnectionManager*) connectionManager {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         model = [[InternetConnectionManager alloc] init];

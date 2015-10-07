@@ -56,7 +56,7 @@
 }
 
 - (void) createArraySwirtchButtons {
-    self.arrayWithNetworksObj = [[SocialManager sharedManager] networks];
+    self.arrayWithNetworksObj = [[SocialManager sharedManager] allNetworks];
     __block NSInteger count = 0;
     if (_stateSwitchButons) {
         [_stateSwitchButons removeAllObjects];

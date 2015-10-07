@@ -70,7 +70,7 @@ static FacebookNetwork *model = nil;
             NSInteger indexPosition = self.currentUser.indexPosition;
             //////////////////////////////////////////////////////////
             
-            if ([[InternetConnectionManager manager] isInternetConnection]){
+            if ([[InternetConnectionManager connectionManager] isInternetConnection]){
                 
                 NSString *deleteImageFromFolder = self.currentUser.photoURL;
                 
@@ -135,7 +135,7 @@ static FacebookNetwork *model = nil;
 
 
 - (void) loginOut {
-    [[MUSPostManager manager] deleteNetworkPostFromPostsOfSocialNetworkType: self.networkType];
+    [[MUSPostManager manager] deleteNetworkPostForNetworkType: self.networkType];
     [MUSPostManager manager].needToRefreshPosts = YES;
     [self removeUserFromDataBaseAndImageFromDocumentsFolder:self.currentUser];
     [FBSDKAccessToken setCurrentAccessToken:nil];
@@ -229,7 +229,7 @@ static FacebookNetwork *model = nil;
 
 - (void) sharePost:(Post *)post withComplition:(Complition)block andProgressLoadingBlock:(ProgressLoading)blockLoading {
     
-    if (![[InternetConnectionManager manager] isInternetConnection]){
+    if (![[InternetConnectionManager connectionManager] isInternetConnection]){
         NetworkPost *networkPost = [NetworkPost create];
         networkPost.networkType = Facebook;
         networkPost.reason = Offline;
@@ -420,7 +420,7 @@ static FacebookNetwork *model = nil;
     self.copyComplitionUpdateNetworkPosts = block;
     NSArray * networksPostsIDs = [[DataBaseManager sharedManager] obtainNetworkPostsFromDataBaseWithRequestStrings: [MUSDatabaseRequestStringsHelper createStringForNetworkPostWithReason: Connect andNetworkType: Facebook]];
     
-    if (![[InternetConnectionManager manager] isInternetConnection] || !networksPostsIDs.count  || (![[InternetConnectionManager manager] isInternetConnection] && networksPostsIDs.count)) {
+    if (![[InternetConnectionManager connectionManager] isInternetConnection] || !networksPostsIDs.count  || (![[InternetConnectionManager connectionManager] isInternetConnection] && networksPostsIDs.count)) {
         block (@"Facebook, Error update network posts");
         return;
     }

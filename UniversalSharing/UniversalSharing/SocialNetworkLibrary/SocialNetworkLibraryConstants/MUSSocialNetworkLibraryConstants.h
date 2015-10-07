@@ -141,6 +141,7 @@ FOUNDATION_EXPORT NSString *const musErrorWithDomainUniversalSharing;
 FOUNDATION_EXPORT NSString *const MUSNotificationPostsInfoWereUpDated;
 FOUNDATION_EXPORT NSString *const MUSNotificationStartUpdatingPost;
 FOUNDATION_EXPORT NSString *const MUSNotificationStopUpdatingPost;
+FOUNDATION_EXPORT NSString *const MUSNetworkPostsWereUpdatedNotification;
 
 
 #pragma mark Error Constants

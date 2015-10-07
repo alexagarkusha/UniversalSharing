@@ -165,7 +165,7 @@
  */
 - (void) obtanObjectsOfSocialNetworks {
         //NSArray *arrayWithNetworks = @[@(Twitters), @(VKontakt), @(Facebook)];
-    self.arrayWithNetworksObj = [[SocialManager sharedManager]networks];//[[SocialManager sharedManager] networks : arrayWithNetworks];
+    self.arrayWithNetworksObj = [[SocialManager sharedManager] allNetworks];//[[SocialManager sharedManager] networks : arrayWithNetworks];
 //    [[SocialManager sharedManager] obtainNetworksWithComplition:^(id arrayLogin, id arrayHidden, id arrayUnactive, NSError *error) {
 //        self.arrayLogin = arrayLogin;
 //        self.arrayHidden = arrayHidden;

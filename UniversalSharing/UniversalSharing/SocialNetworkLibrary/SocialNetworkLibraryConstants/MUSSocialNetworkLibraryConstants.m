@@ -111,6 +111,7 @@ NSString *const musErrorWithDomainUniversalSharing = @"Universal Sharing library
 NSString *const MUSNotificationPostsInfoWereUpDated = @"MUSNotificationPostsInfoWereUpDated";
 NSString *const MUSNotificationStartUpdatingPost = @"MUSNotificationStartUpdatingPost";
 NSString *const MUSNotificationStopUpdatingPost = @"MUSNotificationStopUpdatingPost";
+NSString *const MUSNetworkPostsWereUpdatedNotification = @"MUSUpdateNetworkPostNotification";
 
 
 

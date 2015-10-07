@@ -10,7 +10,7 @@
 
 @interface InternetConnectionManager : NSObject
 
-+ (InternetConnectionManager*) manager;
++ (InternetConnectionManager*) connectionManager;
 
 - (BOOL) isInternetConnection;
 
