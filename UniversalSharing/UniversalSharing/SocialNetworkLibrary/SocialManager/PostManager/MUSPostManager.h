@@ -14,7 +14,7 @@
 + (MUSPostManager*) manager;
 
 
-- (NSArray*) arrayOfAllPosts;
+- (NSMutableArray*) arrayOfAllPosts;
 
 - (void) updateArrayOfPost;
 

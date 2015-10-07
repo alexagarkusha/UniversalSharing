@@ -8,7 +8,6 @@
 
 #import "MUSAddPhotoButton.h"
 #import "ConstantsApp.h"
-#import "UIButton+CornerRadiusButton.h"
 
 @implementation MUSAddPhotoButton
 
@@ -22,7 +21,6 @@
     if (self) {
         [UIView commitAnimations];
         self.layer.masksToBounds = YES;
-        //[self cornerRadius: self.frame.size.height / 2];
         [self setImage:[UIImage imageNamed: musAppButton_ImageName_AddPhoto] forState:UIControlStateNormal];
         [self.imageView setContentMode : UIViewContentModeScaleAspectFit];
 //        [self addPhotobuttonAnimationStart];

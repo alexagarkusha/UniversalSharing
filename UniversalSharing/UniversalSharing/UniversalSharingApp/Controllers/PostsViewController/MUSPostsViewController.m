@@ -261,12 +261,10 @@
  */
 - (void) obtainArrayPosts {
     if (![MUSPostManager manager].needToRefreshPosts) {
-        [self.arrayPosts removeAllObjects];
-        [self.arrayPosts addObjectsFromArray: [[MUSPostManager manager] arrayOfAllPosts]];
+        self.arrayPosts = [[[MUSPostManager manager] arrayOfAllPosts] mutableCopy];
     } else {
         [[MUSPostManager manager] updateArrayOfPost];
-        [self.arrayPosts removeAllObjects];
-        [self.arrayPosts addObjectsFromArray: [[MUSPostManager manager] arrayOfAllPosts]];
+        self.arrayPosts = [[[MUSPostManager manager] arrayOfAllPosts] mutableCopy];
         [MUSPostManager manager].needToRefreshPosts = NO;
     }
     [self checkArrayOfPosts];
