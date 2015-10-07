@@ -40,8 +40,6 @@
  */
 @property (nonatomic, strong) NSString *latitude;
 
-@property (nonatomic, assign) BOOL isChosen;
-
 + (instancetype) create;
 
 /*!
