@@ -167,7 +167,7 @@ static FacebookNetwork *model = nil;
         //weakSell.currentUser.indexPosition = 0;
         //weakSell.icon = weakSell.currentUser.photoURL;////
         if (!weakSell.isLogin) {
-            [[DataBaseManager sharedManager] insertIntoTable:weakSell.currentUser];
+            [[DataBaseManager sharedManager] insertObjectIntoTable:weakSell.currentUser];
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -418,7 +418,7 @@ static FacebookNetwork *model = nil;
 
 - (void) updatePostWithComplition : (ComplitionUpdateNetworkPosts) block {
     self.copyComplitionUpdateNetworkPosts = block;
-    NSArray * networksPostsIDs = [[DataBaseManager sharedManager] obtainNetworkPostsFromDataBaseWithRequestStrings: [MUSDatabaseRequestStringsHelper createStringForNetworkPostWithReason: Connect andNetworkType: Facebook]];
+    NSArray * networksPostsIDs = [[DataBaseManager sharedManager] obtainNetworkPostsFromDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringForNetworkPostWithReason: Connect andNetworkType: Facebook]];
     
     if (![[InternetConnectionManager connectionManager] isInternetConnection] || !networksPostsIDs.count  || (![[InternetConnectionManager connectionManager] isInternetConnection] && networksPostsIDs.count)) {
         block (@"Facebook, Error update network posts");

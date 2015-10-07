@@ -184,7 +184,7 @@ static TwitterNetwork *model = nil;
              //weakSell.currentUser.indexPosition = 0;
              //weakSell.icon = weakSell.currentUser.photoURL;////
              if (!weakSell.isLogin)
-                 [[DataBaseManager sharedManager] insertIntoTable:weakSell.currentUser];
+                 [[DataBaseManager sharedManager] insertObjectIntoTable:weakSell.currentUser];
              
              dispatch_async(dispatch_get_main_queue(), ^{
                  weakSell.isLogin = YES;
@@ -208,7 +208,7 @@ static TwitterNetwork *model = nil;
 }
 
 - (void) updatePostWithComplition: (ComplitionUpdateNetworkPosts) block {
-    NSArray * networksPostsIDs = [[DataBaseManager sharedManager] obtainNetworkPostsFromDataBaseWithRequestStrings: [MUSDatabaseRequestStringsHelper createStringForNetworkPostWithReason: Connect andNetworkType: Twitters]];
+    NSArray * networksPostsIDs = [[DataBaseManager sharedManager] obtainNetworkPostsFromDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringForNetworkPostWithReason: Connect andNetworkType: Twitters]];
     
     if (![[InternetConnectionManager connectionManager] isInternetConnection] || !networksPostsIDs.count || (![[InternetConnectionManager connectionManager] isInternetConnection] && networksPostsIDs.count)) {
         block (@"Twitter, Error update network posts");
