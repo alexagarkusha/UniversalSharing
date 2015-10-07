@@ -103,13 +103,13 @@ static MultySharingManager *model = nil;
                 if(networkPost.reason == Connect){
                     countConnectPosts++;
                 }
-                [postCopy.arrayWithNetworkPostsId addObject: [NSString stringWithFormat: @"%ld", (long)[[DataBaseManager sharedManager] saveNetworkPostToTableWithObject: networkPost]]];
+                [postCopy.arrayWithNetworkPostsId addObject: [NSString stringWithFormat: @"%ld", (long)[[DataBaseManager sharedManager] saveNetworkPost: networkPost]]];
             }
             //NSLog(@"Current post ID = %@, networktype =%ld", networkPost.postID, (long)networkPost.networkType);
             if (counterOfSocialNetwork == numberOfSocialNetworks) {
                 [weakMultySharingManager savePostImagesToDocument: postCopy];
                 //NSLog(@"Current post IDs = %@", postCopy.arrayWithNetworkPostsId);
-                [[DataBaseManager sharedManager] insertIntoTable : postCopy];
+                [[DataBaseManager sharedManager] insertObjectIntoTable : postCopy];
                 //NSLog(@"%@", blockResultString);
                 [MUSPostManager manager].needToRefreshPosts = YES;
                 [weakMultySharingManager updatePostInfoNotification];

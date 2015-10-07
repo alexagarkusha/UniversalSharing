@@ -18,18 +18,16 @@
 
 + (DataBaseManager*)sharedManager;
 //===
-- (void)insertIntoTable:(id) object;
+- (void)insertObjectIntoTable:(id) object;
 //===
-- (void) deletePostByPrimaryKey :(Post*) post;
-- (void) deleteUserByClientId :(NSString*) clientId;
-- (void) deleteObjectFromDataDase : (NSString*) deleteSQL;
+- (void) deleteObjectFromDataDaseWithRequestStrings : (NSString*) requestString;
 //===
 - (void) editObjectAtDataBaseWithRequestString : (NSString*) requestString;
 - (NSMutableArray*)obtainPostsFromDataBaseWithRequestString : (NSString*) requestString;
 - (NSMutableArray*)obtainUsersFromDataBaseWithRequestString : (NSString*) requestString;
-///////////////////////////////////////////////////////////////////////////
-- (NSMutableArray*)obtainNetworkPostsFromDataBaseWithRequestStrings : (NSString*) requestString;
-- (NSInteger) saveNetworkPostToTableWithObject :(NetworkPost*) networkPost;
-- (NetworkPost*)obtainNetworkPostsFromDataBaseWithRequestString : (NSString*) requestString;
-
+//===
+- (NSMutableArray*)obtainNetworkPostsFromDataBaseWithRequestString : (NSString*) requestString;
+- (NetworkPost*)obtainNetworkPostFromDataBaseWithRequestString : (NSString*) requestString;
+//===
+- (NSInteger) saveNetworkPost :(NetworkPost*) networkPost;
 @end
