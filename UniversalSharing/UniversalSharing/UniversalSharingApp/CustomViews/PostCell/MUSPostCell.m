@@ -11,36 +11,31 @@
 #import "MUSPostCell.h"
 #import "ConstantsApp.h"
 #import "ImageToPost.h"
-#import "UILabel+CornerRadiusLabel.h"
 #import "UIImageView+RoundImage.h"
 #import "UIImageView+MUSLoadImageFromDataBase.h"
-#import "UIColor+ReasonColorForPost.h"
 #import "UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.h"
 #import "UIImage+LoadImageFromDataBase.h"
 #import "UIImage+IconOfSocialNetwork.h"
 #import "NSString+ReasonTypeInString.h"
 #import <QuartzCore/QuartzCore.h>
 #import "MUSReasonCommentsAndLikesCell.h"
-#import "MUSGalleryViewOfPhotos.h"
-
-#define   DEGREES_TO_RADIANS(degrees)  ((3.14159265359 * degrees)/ 180)
-
 
 @interface MUSPostCell ()
 
 @property (weak, nonatomic) IBOutlet UIImageView *firstImageOfPostImageView;
+
 @property (weak, nonatomic) IBOutlet UIImageView *secondImageOfPostImageView;
+
 @property (weak, nonatomic) IBOutlet UIImageView *thirdImageOfPostImageView;
 
 @property (weak, nonatomic) IBOutlet UILabel *postDescriptionLabel;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint* postDescriptionLabelLeftConstraint;
 
-@property (weak, nonatomic) IBOutlet UILabel *updatingPostLabel;
+@property (weak, nonatomic) IBOutlet UITableView *commentsAndLikesPostTableView;
 
 @property (strong, nonatomic) NSArray *arrayOfImageView;
 
-@property (weak, nonatomic) IBOutlet UITableView *commentsAndLikesPostTableView;
 @property (strong, nonatomic) CAShapeLayer *shapeLayer;
 
 

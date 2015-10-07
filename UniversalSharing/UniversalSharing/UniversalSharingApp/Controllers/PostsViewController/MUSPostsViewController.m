@@ -20,10 +20,10 @@
 @interface MUSPostsViewController () <UITableViewDataSource, UITableViewDelegate, MUSDetailPostViewControllerDelegate, UIActionSheetDelegate, UIGestureRecognizerDelegate, SSARefreshControlDelegate>
 
 @property (nonatomic, strong) NSMutableArray *arrayOfLoginSocialNetworks;
-/*!
- @abstract array of posts. Getting an array of posts from the database
- */
-@property (nonatomic, strong) NSMutableArray *arrayPosts;
+///*!
+// @abstract array of posts. Getting an array of posts from the database
+// */
+//@property (nonatomic, strong) NSMutableArray *arrayPosts;
 /*!
  @abstract array of users. Getting an array of users from the database
  */
@@ -133,7 +133,7 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return self.arrayPosts.count;
+    return  [MUSPostManager manager].arrayOfAllPosts.count;
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -141,7 +141,7 @@
 //    Post *currentPost = [self.arrayPosts objectAtIndex: indexPath.section];
 //    [currentPost updateAllNetworkPostsFromDataBaseForCurrentPost];
 //    postCell.arrayWithNetworkPosts = currentPost.arrayWithNetworkPosts;
-    [postCell configurationPostCell : [self.arrayPosts objectAtIndex: indexPath.section]];
+    [postCell configurationPostCell : [[MUSPostManager manager].arrayOfAllPosts objectAtIndex: indexPath.section]];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -152,7 +152,7 @@
         if(!cell) {
             cell = [MUSPostCell postCell];
         }
-        Post *currentPost = [self.arrayPosts objectAtIndex: indexPath.section];
+        Post *currentPost = [[MUSPostManager manager].arrayOfAllPosts objectAtIndex: indexPath.section];
         [currentPost updateAllNetworkPostsFromDataBaseForCurrentPost];
         cell.arrayWithNetworkPosts = currentPost.arrayWithNetworkPosts;
         cell.selectionStyle = UITableViewCellSelectionStyleNone; // disable the cell selection highlighting
@@ -162,7 +162,7 @@
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    Post *currentPost = [self.arrayPosts objectAtIndex: indexPath.section];
+    Post *currentPost = [[MUSPostManager manager].arrayOfAllPosts objectAtIndex: indexPath.section];
     return [MUSPostCell heightForPostCell: currentPost];
 }
 
@@ -177,7 +177,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    Post *post = [self.arrayPosts objectAtIndex: indexPath.section];
+    Post *post = [[MUSPostManager manager].arrayOfAllPosts objectAtIndex: indexPath.section];
     self.view.userInteractionEnabled = NO;
 //    if (![self.setWithUniquePrimaryKeysOfPost containsObject: [NSString stringWithFormat: @"%ld", (long)post.primaryKey]]) {
     [self performSegueWithIdentifier: goToDetailPostViewControllerSegueIdentifier sender: post];
@@ -260,19 +260,19 @@
  @abstract Obtain posts from Data Base.
  */
 - (void) obtainArrayPosts {
-    if (![MUSPostManager manager].needToRefreshPosts) {
-        self.arrayPosts = [[[MUSPostManager manager] arrayOfAllPosts] mutableCopy];
-    } else {
-        [[MUSPostManager manager] updateArrayOfPost];
-        self.arrayPosts = [[[MUSPostManager manager] arrayOfAllPosts] mutableCopy];
-        [MUSPostManager manager].needToRefreshPosts = NO;
-    }
+//    if (![MUSPostManager manager].needToRefreshPosts) {
+//        self.arrayPosts = [[[MUSPostManager manager] arrayOfAllPosts] mutableCopy];
+//    } else {
+//        [[MUSPostManager manager] updateArrayOfPost];
+//        self.arrayPosts = [[[MUSPostManager manager] arrayOfAllPosts] mutableCopy];
+//        [MUSPostManager manager].needToRefreshPosts = NO;
+//    }
     [self checkArrayOfPosts];
     [self.tableView reloadData];
 }
 
 - (void) checkArrayOfPosts {
-    if (!self.arrayPosts.count) {
+    if (![MUSPostManager manager].arrayOfAllPosts.count) {
         self.tableView.scrollEnabled = NO;
     } else {
         self.tableView.scrollEnabled = YES;
@@ -284,8 +284,7 @@
 
 - (void) updateArrayPosts {
     [[MUSPostManager manager] updateArrayOfPost];
-    [self.arrayPosts removeAllObjects];
-    [self.arrayPosts addObjectsFromArray: [[MUSPostManager manager] arrayOfAllPosts]];
+    //self.arrayPosts = [[[MUSPostManager manager] arrayOfAllPosts] mutableCopy];
     [self checkArrayOfPosts];
     [self.tableView reloadData];
 }
@@ -300,7 +299,7 @@
 }
 
 - (BOOL) isArrayOfPostsNotEmpty {
-    if (!self.arrayPosts.count) {
+    if (![MUSPostManager manager].arrayOfAllPosts.count) {
         return NO;
     } else {
         return YES;
@@ -316,7 +315,7 @@
 
 - (void) beganRefreshing {
     
-    if ([MUSPostManager manager].needToRefreshPosts || !self.arrayPosts.count) {
+    if ([MUSPostManager manager].needToRefreshPosts || ![MUSPostManager manager].arrayOfAllPosts.count) {
         [self obtainArrayPosts];
         [self.refreshControl endRefreshing];
         return;

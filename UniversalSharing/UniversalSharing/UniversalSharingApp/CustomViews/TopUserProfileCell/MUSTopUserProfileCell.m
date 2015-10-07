@@ -9,7 +9,6 @@
 #import "MUSTopUserProfileCell.h"
 
 #import "UIImageView+RoundImage.h"
-#import "UIImageView+LoadImageFromNetwork.h"
 
 @interface MUSTopUserProfileCell ()
 

@@ -13,7 +13,6 @@
 
 @interface MUSPostManager ()
 
-@property (strong, nonatomic) NSMutableArray *arrayOfPosts; //mutable
 
 @end
 
@@ -40,8 +39,8 @@ static MUSPostManager *model = nil;
     return self;
 }
 
-- (NSMutableArray*) arrayOfAllPosts {
-    return self.arrayOfPosts;
+- (void)setArrayOfPosts:(NSMutableArray *)arrayOfPosts {
+    _arrayOfPosts = arrayOfPosts;
 }
 
 - (void) updateArrayOfPost {
@@ -71,12 +70,9 @@ static MUSPostManager *model = nil;
             [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringForUpdateNetworkPostIdsInPost: currentPost]];
         }
     }
-    [self networkPostsWereUpdatedNotification];
+    [self updateArrayOfPost];
 }
 
-- (void) networkPostsWereUpdatedNotification {
-    [[NSNotificationCenter defaultCenter] postNotificationName: MUSNetworkPostsWereUpdatedNotification object:nil];
-}
 
 
 @end

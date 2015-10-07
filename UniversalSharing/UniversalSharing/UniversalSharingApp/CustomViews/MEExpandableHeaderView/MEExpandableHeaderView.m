@@ -16,8 +16,6 @@
 @property(nonatomic, strong) UIImage *originalImage;
 @property(nonatomic, assign) CGPoint previousContentOffset;
 @property(nonatomic, assign) CGFloat originalHeight;
-
-//@property(nonatomic, strong, readwrite) UIImageView *backgroundImageView;
 @property(nonatomic, strong, readwrite) UIScrollView *pagesScrollView;
 @property(nonatomic, strong, readwrite) UIPageControl *pageControl;
 

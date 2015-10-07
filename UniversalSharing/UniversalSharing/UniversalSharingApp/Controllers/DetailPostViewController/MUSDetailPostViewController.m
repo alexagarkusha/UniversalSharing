@@ -7,7 +7,6 @@
 //
 
 #import "MUSDetailPostViewController.h"
-#import "MUSGalleryOfPhotosCell.h"
 #import "MUSCommentsAndLikesCell.h"
 #import "MUSPostDescriptionCell.h"
 #import "MUSPostLocationCell.h"
@@ -19,7 +18,6 @@
 #import "UIImage+LoadImageFromDataBase.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 #import "MUSDetailPostCollectionViewController.h"
-//#import "SSARefreshControl.h"
 #import "MUSUserDetailViewController.h"
 #import "MEExpandableHeaderView.h"
 #import "MUSPopUpForSharing.h"

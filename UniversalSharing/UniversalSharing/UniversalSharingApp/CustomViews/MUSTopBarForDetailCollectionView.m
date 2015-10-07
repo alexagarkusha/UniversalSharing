@@ -9,7 +9,6 @@
 #import "MUSTopBarForDetailCollectionView.h"
 #import "UIImageView+MUSLoadImageFromDataBase.h"
 #import "UIImage+LoadImageFromDataBase.h"
-#import "UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.h"
 #import "ConstantsApp.h"
 
 @interface MUSTopBarForDetailCollectionView()

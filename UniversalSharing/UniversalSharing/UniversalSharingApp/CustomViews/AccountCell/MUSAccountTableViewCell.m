@@ -7,8 +7,6 @@
 //
 
 #import "MUSAccountTableViewCell.h"
-#import "UIImageView+RoundImage.h"
-#import "UIImageView+LoadImageFromNetwork.h"
 #import "DataBaseManager.h"
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 @interface MUSAccountTableViewCell ()
@@ -32,9 +30,6 @@
 }
 
 - (void)awakeFromNib {
-    //self.multipleTouchEnabled = YES;
-    
-   // [self.networkIconImageView roundImageView];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

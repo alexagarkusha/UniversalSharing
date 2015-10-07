@@ -7,7 +7,6 @@
 //
 
 #import "MUSCollectionViewCell.h"
-#import "UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.h"
 #import "ConstantsApp.h"
 #import "MUSAddPhotoButton.h"
 

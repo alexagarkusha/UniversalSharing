@@ -18,7 +18,6 @@
 
 - (void)awakeFromNib {
     // Initialization code
-    //[self.userImageView roundImageView];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

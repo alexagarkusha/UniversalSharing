@@ -13,13 +13,12 @@
 
 + (MUSPostManager*) manager;
 
-
-- (NSMutableArray*) arrayOfAllPosts;
-
 - (void) updateArrayOfPost;
 
 - (void) deleteNetworkPostForNetworkType : (NetworkType) networkType;
 
 @property (assign, nonatomic) BOOL needToRefreshPosts;
+
+@property (strong, nonatomic, readonly) NSMutableArray *arrayOfPosts;
 
 @end
