@@ -514,7 +514,7 @@
             //                //[weakSelf.progressBar.view removeFromSuperview];
             //            });
             
-        } andComplitionProgressLoading:^(float result) {
+        } andProgressLoadingComplition:^(float result) {
             
             
             //summa += result * (1 / arrayChosenNetworksForPost.count);

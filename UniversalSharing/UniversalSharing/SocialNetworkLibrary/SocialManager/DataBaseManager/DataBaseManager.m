@@ -245,7 +245,7 @@ static DataBaseManager *databaseManager;
 
 #pragma mark - delete methods
 
-- (void) deleteObjectFromDataDaseWithRequestStrings : (NSString*) requestString {
+- (void) deleteObjectFromDataBaseWithRequestStrings : (NSString*) requestString {
     sqlite3_stmt *statement = nil;
     const char *delete_stmt = [requestString UTF8String];
     if( sqlite3_prepare_v2(_database, delete_stmt, -1, &statement, NULL ) == SQLITE_OK) {

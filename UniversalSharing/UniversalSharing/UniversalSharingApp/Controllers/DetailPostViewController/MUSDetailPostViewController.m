@@ -171,7 +171,7 @@
         }
     }
     
-    if (!isPostConnect && ![[MultySharingManager sharedManager] isPostInQueueOfPosts: self.currentPost.primaryKey]) {
+    if (!isPostConnect && ![[MultySharingManager sharedManager] queueOfPosts: self.currentPost.primaryKey]) {
         self.shareButton = [[UIBarButtonItem alloc] initWithTitle : musAppButtonTitle_Share style:2 target:self action: @selector(sendPost)];
         self.navigationItem.rightBarButtonItem = self.shareButton;
     }
@@ -492,7 +492,7 @@
  
             
             }
-        } andComplitionProgressLoading:^(float result) {
+        } andProgressLoadingComplition:^(float result) {
             weakSelf.progressBar.progressView.progress = result;// arrayChosenNetworksForPost.count;
             //NSLog(@"result");
         }];
