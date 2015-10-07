@@ -1,9 +1,9 @@
 platform :ios, '7.0'
 inhibit_all_warnings!
 
-pod 'FBSDKCoreKit', '~> 4.4'
-pod 'FBSDKLoginKit', '~> 4.4'
-pod 'FBSDKShareKit', '~> 4.4'
+pod 'FBSDKCoreKit', '~> 4.6'
+pod 'FBSDKLoginKit', '~> 4.6'
+pod 'FBSDKShareKit', '~> 4.6'
 pod 'VK-ios-sdk', '~> 1.1'
 pod 'Fabric'
 pod 'TwitterKit'
