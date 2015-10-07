@@ -20,7 +20,7 @@
 
 #warning "Read https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/CodingGuidelines/Articles/NamingMethods.html#//apple_ref/doc/uid/20001282-BCIGIJJF"
 
-+ (NSString*) createStringForPostWithReason :(ReasonType) reason andNetworkType :(NetworkType) networkType;
++ (NSString*) stringForPostWithReason :(ReasonType) reason andNetworkType :(NetworkType) networkType;
 + (NSString*) createStringForPostWithUserId :(NSString*) userId;
 + (NSString*) createStringForPostWithPostId :(NSString*) PostId;
 + (NSString*) createStringForAllPosts;
@@ -57,7 +57,7 @@
 
 + (NSString*) createStringNetworkPostForUpdateWithObjectNetworkPostForVK :(NetworkPost*) networkPost;
 + (NSString*) createStringForUpdateNetworkPost : (NetworkPost*) networkPost;
-+ (NSString*) createStringForDeleteNetworkPost : (NetworkPost*) networkPost;
++ (NSString*) stringForDeleteNetworkPost : (NetworkPost*) networkPost;
 + (NSString*) createStringForUpdateNetworkPostIdsInPost :(Post*) post;
 
 @end

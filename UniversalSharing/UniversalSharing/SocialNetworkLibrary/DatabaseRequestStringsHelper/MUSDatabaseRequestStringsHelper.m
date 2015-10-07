@@ -313,7 +313,7 @@
     return finalStringPostsForUpdate;
 }
 
-+ (NSString*) createStringForDeleteNetworkPost : (NetworkPost*) networkPost {
++ (NSString*) stringForDeleteNetworkPost : (NetworkPost*) networkPost {
     return [NSString stringWithFormat:@"DELETE from NetworkPosts WHERE id = \"%d\"",networkPost.primaryKey];
 }
 

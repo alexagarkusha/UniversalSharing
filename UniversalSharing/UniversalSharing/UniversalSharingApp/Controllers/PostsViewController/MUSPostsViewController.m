@@ -133,7 +133,7 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return  [MUSPostManager manager].arrayOfAllPosts.count;
+    return  [MUSPostManager manager].arrayOfPosts.count;
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -141,7 +141,7 @@
 //    Post *currentPost = [self.arrayPosts objectAtIndex: indexPath.section];
 //    [currentPost updateAllNetworkPostsFromDataBaseForCurrentPost];
 //    postCell.arrayWithNetworkPosts = currentPost.arrayWithNetworkPosts;
-    [postCell configurationPostCell : [[MUSPostManager manager].arrayOfAllPosts objectAtIndex: indexPath.section]];
+    [postCell configurationPostCell : [[MUSPostManager manager].arrayOfPosts objectAtIndex: indexPath.section]];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -152,7 +152,7 @@
         if(!cell) {
             cell = [MUSPostCell postCell];
         }
-        Post *currentPost = [[MUSPostManager manager].arrayOfAllPosts objectAtIndex: indexPath.section];
+        Post *currentPost = [[MUSPostManager manager].arrayOfPosts objectAtIndex: indexPath.section];
         [currentPost updateAllNetworkPostsFromDataBaseForCurrentPost];
         cell.arrayWithNetworkPosts = currentPost.arrayWithNetworkPosts;
         cell.selectionStyle = UITableViewCellSelectionStyleNone; // disable the cell selection highlighting
@@ -162,7 +162,7 @@
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    Post *currentPost = [[MUSPostManager manager].arrayOfAllPosts objectAtIndex: indexPath.section];
+    Post *currentPost = [[MUSPostManager manager].arrayOfPosts objectAtIndex: indexPath.section];
     return [MUSPostCell heightForPostCell: currentPost];
 }
 
@@ -177,7 +177,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    Post *post = [[MUSPostManager manager].arrayOfAllPosts objectAtIndex: indexPath.section];
+    Post *post = [[MUSPostManager manager].arrayOfPosts objectAtIndex: indexPath.section];
     self.view.userInteractionEnabled = NO;
 //    if (![self.setWithUniquePrimaryKeysOfPost containsObject: [NSString stringWithFormat: @"%ld", (long)post.primaryKey]]) {
     [self performSegueWithIdentifier: goToDetailPostViewControllerSegueIdentifier sender: post];
@@ -272,7 +272,7 @@
 }
 
 - (void) checkArrayOfPosts {
-    if (![MUSPostManager manager].arrayOfAllPosts.count) {
+    if (![MUSPostManager manager].arrayOfPosts.count) {
         self.tableView.scrollEnabled = NO;
     } else {
         self.tableView.scrollEnabled = YES;
@@ -299,7 +299,7 @@
 }
 
 - (BOOL) isArrayOfPostsNotEmpty {
-    if (![MUSPostManager manager].arrayOfAllPosts.count) {
+    if (![MUSPostManager manager].arrayOfPosts.count) {
         return NO;
     } else {
         return YES;
@@ -315,7 +315,7 @@
 
 - (void) beganRefreshing {
     
-    if ([MUSPostManager manager].needToRefreshPosts || ![MUSPostManager manager].arrayOfAllPosts.count) {
+    if ([MUSPostManager manager].needToRefreshPosts || ![MUSPostManager manager].arrayOfPosts.count) {
         [self obtainArrayPosts];
         [self.refreshControl endRefreshing];
         return;

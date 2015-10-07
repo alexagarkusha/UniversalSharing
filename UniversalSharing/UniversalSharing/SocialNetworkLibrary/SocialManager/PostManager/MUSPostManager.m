@@ -56,7 +56,7 @@ static MUSPostManager *model = nil;
                 // Delete NetworkPost ID from post
                 [currentPost.arrayWithNetworkPostsId removeObject: [NSString stringWithFormat: @"%ld", (long)networkPost.primaryKey]];
                 // Delete NetworkPost from Data Base
-                [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringForDeleteNetworkPost: networkPost]];
+                [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForDeleteNetworkPost: networkPost]];
             }
         }
         
