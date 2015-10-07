@@ -35,11 +35,12 @@ static MUSPostManager *model = nil;
     if (self) {
         self.arrayOfPosts = [[NSMutableArray alloc] init];
         [self.arrayOfPosts addObjectsFromArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper createStringForAllPosts]]];
+        
     }
     return self;
 }
 
-- (NSArray*) arrayOfAllPosts {
+- (NSMutableArray*) arrayOfAllPosts {
     return self.arrayOfPosts;
 }
 

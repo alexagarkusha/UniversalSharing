@@ -8,7 +8,6 @@
 
 #import "MUSCommentsAndLikesCell.h"
 #import "ConstantsApp.h"
-#import "MUSUserProfileButton.h"
 #import "MUSReasonCommentsAndLikesCell.h"
 
 @interface MUSCommentsAndLikesCell ()

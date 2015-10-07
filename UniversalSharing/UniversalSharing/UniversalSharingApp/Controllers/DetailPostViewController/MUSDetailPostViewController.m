@@ -13,7 +13,6 @@
 #import "MUSPostLocationCell.h"
 #import "ConstantsApp.h"
 #import "MUSPhotoManager.h"
-#import "MUSLocationViewController.h"
 #import <CoreLocation/CoreLocation.h>
 #import "DataBaseManager.h"
 #import "NSString+MUSPathToDocumentsdirectory.h"
@@ -375,26 +374,7 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([[segue identifier] isEqualToString:goToLocationViewControllerSegueIdentifier]) {
-        MUSLocationViewController *locationTableViewController = [MUSLocationViewController new];
-        locationTableViewController = [segue destinationViewController];
-        [locationTableViewController currentUser:_currentSocialNetwork];
-        locationTableViewController.place = self.currentPost.place;
-        __weak MUSDetailPostViewController *weakSelf = self;
-        locationTableViewController.placeComplition = ^(Place* result, NSError *error) {
-            /*
-             back place object and we get id for network
-             */
-            if (result) {
-                weakSelf.currentPost.place = result;
-                [weakSelf.tableView reloadData];
-            } else if (!result && !error) {
-                weakSelf.currentPost.place = nil;
-                [weakSelf.tableView reloadData];
-            }
-
-        };
-    } else if ([[segue identifier]isEqualToString : @"goToDitailPostCollectionViewController"]) {
+    if ([[segue identifier]isEqualToString : @"goToDitailPostCollectionViewController"]) {
         MUSDetailPostCollectionViewController *vc = [MUSDetailPostCollectionViewController new];
         vc = [segue destinationViewController];
         [vc setObjectsWithPost: self.currentPost withCurrentSocialNetwork: self.currentSocialNetwork andIndexPicTapped: self.indexPicTapped];

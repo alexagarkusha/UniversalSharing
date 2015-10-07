@@ -7,15 +7,12 @@
 //
 
 #import "MUSShareViewController.h"
-#import "UIButton+CornerRadiusButton.h"
 #import "ConstantsApp.h"
 #import "MUSSocialNetworkLibraryHeader.h"
 #import "MUSPhotoManager.h"
 #import "MUSLocationManager.h"
 #import "MUSCollectionViewCell.h"
-#import "MUSLocationViewController.h"
 #import "Place.h"
-#import "UIButton+MUSSocialNetwork.h"
 #import "MUSGaleryView.h"
 #import "ReachabilityManager.h"
 #import <CoreText/CoreText.h>
@@ -849,37 +846,8 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
-    if ([[segue identifier] isEqualToString:goToLocationViewControllerSegueIdentifier]) {
-        MUSLocationViewController *locationViewController = [MUSLocationViewController new];
-        locationViewController = [segue destinationViewController];
-        //[locationViewController currentUser:_currentSocialNetwork];
-        self.galeryView.isEditableCollectionView = NO;
-        [self.galeryView.collectionView reloadData];
-        [locationViewController setPlace: self.place];
-
-        
-        __weak MUSShareViewController *weakSelf = self;
-        locationViewController.placeComplition = ^(Place* result, NSError *error) {
-            /*
-             back place object and we get id for network
-             */
-            if (result) {
-                weakSelf.place = result;
-                NSString *title = result.fullName;
-                if (result.fullName.length > 18) {
-                    title = [result.fullName substringToIndex: 18];
-                    title = [title stringByAppendingString : @"..."];
-                }
-                [weakSelf.shareLocationButton setTitle: title];
-            } else if (!result && !error) {
-                weakSelf.place = nil;
-                [weakSelf.shareLocationButton setTitle: musAppButtonTitle_ShareLocation];
-            }
-        };
-    } else {//goToShowImages
-        MUSDetailPostCollectionViewController *vc = [MUSDetailPostCollectionViewController new];
-        ///////////
-        
+    if ([[segue identifier] isEqualToString: @"goToShowImages"]) {
+        MUSDetailPostCollectionViewController *vc = [MUSDetailPostCollectionViewController new];        
         vc = [segue destinationViewController];
         vc.isEditableCollectionView = YES;
         [vc setObjectsWithArrayOfPhotos: self.arrayPicsForDetailCollectionView withCurrentSocialNetwork: _currentSocialNetwork indexPicTapped:self.indexPicTapped andReasonTypeOfPost: AllReasons];
