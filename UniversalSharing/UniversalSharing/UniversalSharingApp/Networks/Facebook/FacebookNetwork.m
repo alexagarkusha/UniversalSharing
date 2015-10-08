@@ -52,7 +52,7 @@ static FacebookNetwork *model = nil;
     self = [super init];
     if (self) {
         self.networkType = MUSFacebook;
-        self.name = musFacebookName;
+        self.name = MUSFacebookName;
         if (![FBSDKAccessToken currentAccessToken]) {
             [self initiationPropertiesWithoutSession];
             
@@ -64,7 +64,7 @@ static FacebookNetwork *model = nil;
             [self startTimerForUpdatePosts];
             self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType:self.networkType]]firstObject]; // obtainUsersWithNetworkType:self.networkType];
             //self.icon = self.currentUser.photoURL;
-            self.icon = musFacebookIconName;
+            self.icon = MUSFacebookIconName;
             self.title = [NSString stringWithFormat:@"%@ %@", self.currentUser.firstName, self.currentUser.lastName];
             self.isVisible = self.currentUser.isVisible;
             NSInteger indexPosition = self.currentUser.indexPosition;
@@ -91,8 +91,8 @@ static FacebookNetwork *model = nil;
  */
 
 - (void) initiationPropertiesWithoutSession {
-    self.title = musFacebookTitle;
-    self.icon = musFacebookIconName;
+    self.title = MUSFacebookTitle;
+    self.icon = MUSFacebookIconName;
     self.isLogin = NO;
     self.isVisible = YES;
     self.currentUser = nil;
@@ -114,7 +114,7 @@ static FacebookNetwork *model = nil;
     
     
     __weak FacebookNetwork *weakSell = self;
-    [login logInWithReadPermissions:@[musFacebookPermission_Email] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+    [login logInWithReadPermissions:@[MUSFacebookPermission_Email] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
         if (error) {
             block(nil, [self errorFacebook]);
         } else if (result.isCancelled) {
@@ -125,7 +125,7 @@ static FacebookNetwork *model = nil;
             weakSell.isVisible = YES;
             // If you ask for multiple permissions at once, you
             // should check if specific permissions missing
-            if ([result.grantedPermissions containsObject: musFacebookPermission_Email]) {
+            if ([result.grantedPermissions containsObject: MUSFacebookPermission_Email]) {
                 [self startTimerForUpdatePosts];
                 [weakSell obtainInfoFromNetworkWithComplition:block];
             }
@@ -148,8 +148,8 @@ static FacebookNetwork *model = nil;
 
 - (void) obtainInfoFromNetworkWithComplition :(Complition) block {
     __weak FacebookNetwork *weakSell = self;
-    FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]initWithGraphPath: musFacebookGraphPath_Me
-                                                                  parameters: @{ musFacebookParameter_Fields: musFacebookParametrsRequest}
+    FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]initWithGraphPath: MUSFacebookGraphPath_Me
+                                                                  parameters: @{ MUSFacebookParameter_Fields: MUSFacebookParametrsRequest}
                                                                   HTTPMethod: musGET];
     
     [request startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection,
@@ -189,12 +189,12 @@ static FacebookNetwork *model = nil;
     NSString *currentLocation = [NSString stringWithFormat:@"%@,%@", location.latitude, location.longitude];
     
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
-    params[musFacebookLoactionParameter_Q] = location.q;
-    params[musFacebookLoactionParameter_Type] = location.type;
-    params[musFacebookLoactionParameter_Center] = currentLocation;
-    params[musFacebookLoactionParameter_Distance] = location.distance;
+    params[MUSFacebookLocationParameter_Q] = location.q;
+    params[MUSFacebookLocationParameter_Type] = location.type;
+    params[MUSFacebookLocationParameter_Center] = currentLocation;
+    params[MUSFacebookLocationParameter_Distance] = location.distance;
     
-    FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc] initWithGraphPath:  musFacebookGraphPath_Search
+    FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc] initWithGraphPath:  MUSFacebookGraphPath_Search
                                                                    parameters:  params
                                                                    HTTPMethod:  musGET];
     
@@ -203,7 +203,7 @@ static FacebookNetwork *model = nil;
                                           NSError *error) {
         if (result) {
             NSDictionary *placesDictionary = result;
-            NSArray *places = [placesDictionary objectForKey: musFacebookKeyOfPlaceDictionary];
+            NSArray *places = [placesDictionary objectForKey: MUSFacebookKeyOfPlaceDictionary];
             NSMutableArray *placesArray = [[NSMutableArray alloc] init];
             
             for (int i = 0; i < places.count; i++) {
@@ -239,12 +239,12 @@ static FacebookNetwork *model = nil;
     }
     self.copyComplition = block;
     self.copyProgressLoading = blockLoading;
-    if ([[FBSDKAccessToken currentAccessToken] hasGranted: musFacebookPermission_Publish_Actions]) {
+    if ([[FBSDKAccessToken currentAccessToken] hasGranted: MUSFacebookPermission_Publish_Actions]) {
         [self sharePostToFacebook: post];
     } else {
         
         FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
-        [loginManager logInWithPublishPermissions:@[musFacebookPermission_Publish_Actions] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+        [loginManager logInWithPublishPermissions:@[MUSFacebookPermission_Publish_Actions] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
             if (!error) {
                 [self sharePostToFacebook: post];
             } else {
@@ -308,10 +308,10 @@ static FacebookNetwork *model = nil;
     __block NetworkPost *networkPostCopy = networkPost;
     
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
-    params[musFacebookParameter_Message] = post.postDescription;
+    params[MUSFacebookParameter_Message] = post.postDescription;
     
     if (post.place.placeID) {
-        params[ musFacebookParameter_Place ] = post.place.placeID;
+        params[ MUSFacebookParameter_Place ] = post.place.placeID;
     }
     
     //    [[[FBSDKGraphRequest alloc] initWithGraphPath: musFacebookGraphPath_Me_Feed
@@ -337,7 +337,7 @@ static FacebookNetwork *model = nil;
     //     }];
     
     FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]
-                                  initWithGraphPath: musFacebookGraphPath_Me_Feed
+                                  initWithGraphPath: MUSFacebookGraphPath_Me_Feed
                                   parameters: params
                                   HTTPMethod: musPOST];
     
@@ -372,9 +372,9 @@ static FacebookNetwork *model = nil;
     FBSDKGraphRequestConnection *connection = [[FBSDKGraphRequestConnection alloc] init];
     connection.delegate = self;
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
-    params[musFacebookParameter_Message] = post.postDescription;
+    params[MUSFacebookParameter_Message] = post.postDescription;
     if (post.place.placeID)  {
-        params[musFacebookParameter_Place] = post.place.placeID;
+        params[MUSFacebookParameter_Place] = post.place.placeID;
     }
     
     __block int numberOfPostImagesArray = post.arrayImages.count;
@@ -385,9 +385,9 @@ static FacebookNetwork *model = nil;
     
     for (int i = 0; i < post.arrayImages.count; i++) {
         ImageToPost *imageToPost = [post.arrayImages objectAtIndex: i];
-        params[musFacebookParameter_Picture] = imageToPost.image;
+        params[MUSFacebookParameter_Picture] = imageToPost.image;
         FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]
-                                      initWithGraphPath: musFacebookGraphPath_Me_Photos
+                                      initWithGraphPath: MUSFacebookGraphPath_Me_Photos
                                       parameters: params
                                       HTTPMethod: musPOST];
         [connection addRequest: request
@@ -574,7 +574,7 @@ static FacebookNetwork *model = nil;
  */
 
 - (NSError*) errorFacebook {
-    return [NSError errorWithMessage: musFacebookError andCodeError: musFacebookErrorCode];
+    return [NSError errorWithMessage: MUSFacebookError andCodeError: MUSFacebookErrorCode];
 }
 
 

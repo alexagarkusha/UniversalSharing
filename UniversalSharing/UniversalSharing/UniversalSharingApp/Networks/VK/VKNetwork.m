@@ -51,11 +51,11 @@ static VKNetwork *model = nil;
 
 - (instancetype) init {
     self = [super init];
-    [VKSdk initializeWithDelegate:self andAppId:musVKAppID];
+    [VKSdk initializeWithDelegate:self andAppId:MUSVKAppID];
     
     if (self) {
         self.networkType = MUSVKontakt;
-        self.name = musVKName;
+        self.name = MUSVKName;
         if (![VKNetwork isLoggedIn]) {
             [self initiationPropertiesWithoutSession];
         }
@@ -65,7 +65,7 @@ static VKNetwork *model = nil;
             //[self updatePost];////////////////////////////////////////////////////////////
             self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType:self.networkType]]firstObject];
             //self.icon = self.currentUser.photoURL;
-            self.icon = musVKIconName;
+            self.icon = MUSVKIconName;
             self.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
             self.isVisible = self.currentUser.isVisible;
             NSInteger indexPosition = self.currentUser.indexPosition;
@@ -100,8 +100,8 @@ static VKNetwork *model = nil;
  Initiation properties of VKNetwork without session
  */
 - (void) initiationPropertiesWithoutSession {
-    self.title = musVKTitle;
-    self.icon = musVKIconName;
+    self.title = MUSVKTitle;
+    self.icon = MUSVKIconName;
     self.isLogin = NO;
     self.isVisible = YES;
     [self.timer invalidate];
@@ -152,7 +152,7 @@ static VKNetwork *model = nil;
     
     __weak VKNetwork *weakSell = self;
     
-    VKRequest * request = [[VKApi users] get:@{ VK_API_FIELDS : musVKAllUserFields }];
+    VKRequest * request = [[VKApi users] get:@{ VK_API_FIELDS : MUSVKAllUserFields }];
     [request executeWithResultBlock:^(VKResponse * response)
      {
          weakSell.currentUser = [User createFromDictionary:(NSDictionary*)[response.json firstObject] andNetworkType : weakSell.networkType];
@@ -250,20 +250,20 @@ static VKNetwork *model = nil;
     
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
     
-    params[musVKLoactionParameter_Q] = location.q;
-    params[musVKLoactionParameter_Latitude] = location.latitude;
-    params[musVKLoactionParameter_Longitude] = location.longitude;
-    params[musVKLoactionParameter_Radius] = [NSString stringWithFormat:@"%ld",
+    params[MUSVKLocationParameter_Q] = location.q;
+    params[MUSVKLocationParameter_Latitude] = location.latitude;
+    params[MUSVKLocationParameter_Longitude] = location.longitude;
+    params[MUSVKLocationParameter_Radius] = [NSString stringWithFormat:@"%ld",
                                              (long)[self radiusForVKLocation: location.distance]];
     
-    VKRequest * locationRequest = [VKApi requestWithMethod : musVKMethodPlacesSearch
+    VKRequest * locationRequest = [VKApi requestWithMethod : MUSVKMethodPlacesSearch
                                              andParameters : params
                                              andHttpMethod : musGET];
     
     [locationRequest executeWithResultBlock:^(VKResponse * response)
      {
          NSDictionary *resultDictionary = (NSDictionary*) response.json;
-         NSArray *places = [resultDictionary objectForKey: musVKKeyOfPlaceDictionary];
+         NSArray *places = [resultDictionary objectForKey: MUSVKKeyOfPlaceDictionary];
          NSMutableArray *placesArray = [[NSMutableArray alloc] init];
          
          for (int i = 0; i < [places count]; i++) {
@@ -294,11 +294,11 @@ static VKNetwork *model = nil;
 
 - (DistanceType) radiusForVKLocation : (NSString*) distanceString {
     NSInteger distance = [distanceString floatValue];
-    if (distance <= musVKDistanceEqual300) {
+    if (distance <= MUSVKDistanceEqual300) {
         return MUSDistanceType1;
-    } else if (distance > musVKDistanceEqual300 && distance <= musVKDistanceEqual2400) {
+    } else if (distance > MUSVKDistanceEqual300 && distance <= MUSVKDistanceEqual2400) {
         return MUSDistanceType2;
-    } else if (distance > musVKDistanceEqual2400 && distance <= musVKDistanceEqual18000) {
+    } else if (distance > MUSVKDistanceEqual2400 && distance <= MUSVKDistanceEqual18000) {
         return MUSDistanceType3;
     } else {
         return MUSDistanceType4;
@@ -558,7 +558,7 @@ static VKNetwork *model = nil;
  @abstract returned Vkontakte network error
  */
 - (NSError*) errorVkontakte {
-    return [NSError errorWithMessage: musFacebookError andCodeError: musFacebookErrorCode];
+    return [NSError errorWithMessage: MUSVKError andCodeError: MUSVKErrorCode];
 }
 
 - (void)setDownloadProgressBlock:(void (^)(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead))block {

@@ -230,9 +230,9 @@
  @param string takes title of the drop down menu.
  */
 - (NSInteger) networkTypeFromTitle : (NSString*) title {
-    if ([title isEqual: musVKName]) {
+    if ([title isEqual: MUSVKName]) {
         return MUSVKontakt;
-    } else if ([title isEqual: musFacebookName]) {
+    } else if ([title isEqual: MUSFacebookName]) {
         return MUSFacebook;
     } else {
         return MUSTwitters;

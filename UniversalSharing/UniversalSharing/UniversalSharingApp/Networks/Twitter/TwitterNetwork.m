@@ -46,11 +46,11 @@ static TwitterNetwork *model = nil;
 - (instancetype) init {
     self = [super init];
     self.doubleTouchFlag = NO;
-    [TwitterKit startWithConsumerKey:musTwitterConsumerKey consumerSecret:musTwitterConsumerSecret];
+    [TwitterKit startWithConsumerKey:MUSTwitterConsumerKey consumerSecret:MUSTwitterConsumerSecret];
     [Fabric with : @[TwitterKit]];
     if (self) {
         self.networkType = MUSTwitters;
-        self.name = musTwitterName;
+        self.name = MUSTwitterName;
         if (![[Twitter sharedInstance ]session]) {
             [self initiationPropertiesWithoutSession];
         }
@@ -60,7 +60,7 @@ static TwitterNetwork *model = nil;
             [self startTimerForUpdatePosts];
             self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType:self.networkType]]firstObject];
             // self.icon = self.currentUser.photoURL;
-            self.icon = musTwitterIconName;
+            self.icon = MUSTwitterIconName;
             self.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
             self.isVisible = self.currentUser.isVisible;
             NSInteger indexPosition = self.currentUser.indexPosition;
@@ -89,8 +89,8 @@ static TwitterNetwork *model = nil;
  */
 
 - (void) initiationPropertiesWithoutSession {
-    self.title = musTwitterTitle;
-    self.icon = musTwitterIconName;
+    self.title = MUSTwitterTitle;
+    self.icon = MUSTwitterIconName;
     self.isLogin = NO;
     self.isVisible = YES;
     self.currentUser = nil;
@@ -231,7 +231,7 @@ static TwitterNetwork *model = nil;
 }
 
 - (void) obtainCountOfLikesAndCommentsFromPost :(NetworkPost*) networkPost withComplition : (Complition) block {
-    NSString *statusesShowEndpoint = musTwitterURL_Statuses_Show;
+    NSString *statusesShowEndpoint = MUSTwitterURL_Statuses_Show;
     
     NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:networkPost.postID,@"id",@"true",@"include_my_retweet",nil];//,@"100",@"count"
     NSError *clientError;
@@ -285,8 +285,8 @@ static TwitterNetwork *model = nil;
                                       andCodeError: musErrorLocationPropertiesCode];
         return block (nil, error);
     } else {
-        params [musTwitterLocationParameter_Latitude] = location.latitude;
-        params [musTwitterLocationParameter_Longituge] = location.longitude;
+        params [MUSTwitterLocationParameter_Latitude] = location.latitude;
+        params [MUSTwitterLocationParameter_Longituge] = location.longitude;
     }
     
     NSString *url = musTwitterURL_Geo_Search;
@@ -373,8 +373,8 @@ static TwitterNetwork *model = nil;
     
     params [musTwitterParameter_Status] = messageText;
     if (post.longitude.length > 0 && ![post.longitude isEqualToString: @"(null)"] && post.latitude.length > 0 && ![post.latitude isEqualToString: @"(null)"]) {
-        params [musTwitterLocationParameter_Latitude] = post.latitude;
-        params [musTwitterLocationParameter_Longituge] = post.longitude;
+        params [MUSTwitterLocationParameter_Latitude] = post.latitude;
+        params [MUSTwitterLocationParameter_Longituge] = post.longitude;
     }
     
     NSURLRequest *preparedRequest = [client URLRequestWithMethod : musPOST
@@ -448,8 +448,8 @@ static TwitterNetwork *model = nil;
                 params [musTwitterParameter_Status] = messageText;
             }
             if (post.longitude.length > 0 && ![post.longitude isEqualToString: @"(null)"] && post.latitude.length > 0 && ![post.latitude isEqualToString: @"(null)"]) {
-                params [musTwitterLocationParameter_Latitude] = post.latitude;
-                params [musTwitterLocationParameter_Longituge] = post.longitude;
+                params [MUSTwitterLocationParameter_Latitude] = post.latitude;
+                params [MUSTwitterLocationParameter_Longituge] = post.longitude;
             }
             NSError *error = nil;
             
@@ -575,7 +575,7 @@ static TwitterNetwork *model = nil;
  @abstract returned Twitter network error
  */
 - (NSError*) errorTwitter {
-    return [NSError errorWithMessage: musTwitterError andCodeError: musTwitterErrorCode];
+    return [NSError errorWithMessage: MUSTwitterError andCodeError: MUSTwitterErrorCode];
 }
 
 @end
