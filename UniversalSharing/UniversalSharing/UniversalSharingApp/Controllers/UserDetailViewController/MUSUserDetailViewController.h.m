@@ -67,7 +67,7 @@
     [self.socialNetwork loginOut];
     [self.navigationController popViewControllerAnimated:YES];
      self.navigationController.navigationBar.translucent = YES;
-    [self.delegate changeArrays:self.socialNetwork];
+    //[self.delegate changeArrays:self.socialNetwork];
     }
 
 - (void) backToNetworks {

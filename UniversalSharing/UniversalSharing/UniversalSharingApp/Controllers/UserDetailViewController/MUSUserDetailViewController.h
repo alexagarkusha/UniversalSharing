@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol MUSUserDetailViewControllerDelegate <NSObject>
+@protocol MUSUserDetailViewControllerDelegate <NSObject>//delete this
 
 - (void) changeArrays : (id) socialNetwork;
 
