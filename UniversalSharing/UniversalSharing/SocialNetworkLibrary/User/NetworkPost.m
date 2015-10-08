@@ -21,7 +21,31 @@
     networkPost.reason = AllReasons;
     networkPost.primaryKey = 0;
     networkPost.dateCreate = @"";
+    networkPost.stringReasonType = @"";
     return networkPost;
 }
+
+- (NSString *) stringReasonType {
+    if (!_reason) {
+        return @"";
+    }
+    switch (_reason) {
+        case Connect:
+            return @"Published";
+            break;
+        case ErrorConnection:
+            return @"Failed";
+            break;
+        case Offline:
+            return @"Offline";
+            break;
+        default:
+            break;
+    }
+    return @"";
+}
+
+
+
 
 @end

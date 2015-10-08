@@ -94,7 +94,6 @@
 		97C273DF1BB6B76A0016D15B /* MUSReasonCommentsAndLikesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C273DD1BB6B7690016D15B /* MUSReasonCommentsAndLikesCell.m */; };
 		97C273E01BB6B76A0016D15B /* MUSReasonCommentsAndLikesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97C273DE1BB6B7690016D15B /* MUSReasonCommentsAndLikesCell.xib */; };
 		97C295471B985528001B21FF /* UIImage+IconOfSocialNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C295461B985528001B21FF /* UIImage+IconOfSocialNetwork.m */; };
-		97C2954B1B985ADA001B21FF /* NSString+ReasonTypeInString.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C2954A1B985ADA001B21FF /* NSString+ReasonTypeInString.m */; };
 		97C2AA0B1BBD728B00D076CB /* MUSPostManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C2AA0A1BBD728B00D076CB /* MUSPostManager.m */; };
 		97C2AA131BBD731500D076CB /* NSString+MUSCurrentDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C2AA121BBD731500D076CB /* NSString+MUSCurrentDate.m */; };
 		97C2E2A21BBA900000C82D58 /* MEExpandableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C2E29E1BBA900000C82D58 /* MEExpandableHeaderView.m */; };
@@ -284,8 +283,6 @@
 		97C273DE1BB6B7690016D15B /* MUSReasonCommentsAndLikesCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MUSReasonCommentsAndLikesCell.xib; path = ReasonCommentsAndLikesCell/MUSReasonCommentsAndLikesCell.xib; sourceTree = "<group>"; };
 		97C295451B985528001B21FF /* UIImage+IconOfSocialNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+IconOfSocialNetwork.h"; path = "UniversalSharing/UniversalSharingApp/Categories/UIImage+IconOfSocialNetwork/UIImage+IconOfSocialNetwork.h"; sourceTree = SOURCE_ROOT; };
 		97C295461B985528001B21FF /* UIImage+IconOfSocialNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+IconOfSocialNetwork.m"; path = "UniversalSharing/UniversalSharingApp/Categories/UIImage+IconOfSocialNetwork/UIImage+IconOfSocialNetwork.m"; sourceTree = SOURCE_ROOT; };
-		97C295491B985ADA001B21FF /* NSString+ReasonTypeInString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+ReasonTypeInString.h"; path = "UniversalSharing/UniversalSharingApp/Categories/NSString+ReasonTypeInString/NSString+ReasonTypeInString.h"; sourceTree = SOURCE_ROOT; };
-		97C2954A1B985ADA001B21FF /* NSString+ReasonTypeInString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+ReasonTypeInString.m"; path = "UniversalSharing/UniversalSharingApp/Categories/NSString+ReasonTypeInString/NSString+ReasonTypeInString.m"; sourceTree = SOURCE_ROOT; };
 		97C2AA091BBD728B00D076CB /* MUSPostManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSPostManager.h; sourceTree = "<group>"; };
 		97C2AA0A1BBD728B00D076CB /* MUSPostManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSPostManager.m; sourceTree = "<group>"; };
 		97C2AA111BBD731500D076CB /* NSString+MUSCurrentDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MUSCurrentDate.h"; sourceTree = "<group>"; };
@@ -497,7 +494,6 @@
 			isa = PBXGroup;
 			children = (
 				979164A51B8C5FE000DFCE64 /* NSString+DateStringFromUNIXTimestamp */,
-				97C295481B985A6A001B21FF /* NSString+ReasonTypeInString */,
 				97C295401B985428001B21FF /* UIImage+IconOfSocialNetwork */,
 				97C1F9301BC65EDC00FD0FD7 /* UIImage+SocialNetworkIcons */,
 				97C1F92C1BC64DD900FD0FD7 /* UIImage+Scale */,
@@ -1023,16 +1019,6 @@
 				97C295461B985528001B21FF /* UIImage+IconOfSocialNetwork.m */,
 			);
 			name = "UIImage+IconOfSocialNetwork";
-			path = "UIButton+CornerRadiusButton";
-			sourceTree = "<group>";
-		};
-		97C295481B985A6A001B21FF /* NSString+ReasonTypeInString */ = {
-			isa = PBXGroup;
-			children = (
-				97C295491B985ADA001B21FF /* NSString+ReasonTypeInString.h */,
-				97C2954A1B985ADA001B21FF /* NSString+ReasonTypeInString.m */,
-			);
-			name = "NSString+ReasonTypeInString";
 			path = "UIButton+CornerRadiusButton";
 			sourceTree = "<group>";
 		};
@@ -1567,7 +1553,6 @@
 				30C9DDEF1BC2F98900F3266A /* MUSProgressBarEndLoading.m in Sources */,
 				30D73BFD1BA715A2001B2FE8 /* MUSImageScrollView.m in Sources */,
 				30C9DDDF1BBC23C600F3266A /* MUSPopUpDeleteButton.m in Sources */,
-				97C2954B1B985ADA001B21FF /* NSString+ReasonTypeInString.m in Sources */,
 				979164B41B8CADDA00DFCE64 /* UIImage+LoadImageFromDataBase.m in Sources */,
 				97CAF56B1BAC001F00F16F6B /* SSAPullToRefreshAnimator.m in Sources */,
 				97CA63CA1B6F66D300F9F0C1 /* Place.m in Sources */,

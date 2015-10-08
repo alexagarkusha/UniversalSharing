@@ -9,7 +9,6 @@
 #import "MUSReasonCommentsAndLikesCell.h"
 #import "ConstantsApp.h"
 #import "UIImage+IconOfSocialNetwork.h"
-#import "NSString+ReasonTypeInString.h"
 #import "UIImage+SocialNetworkIcons.h"
 #import <QuartzCore/QuartzCore.h>
 #import "NSString+DateStringFromUNIXTimestamp.h"
@@ -82,7 +81,7 @@
 }
 
 - (void) configurateReasonOfPostLabel : (NetworkPost*) networkPost {
-    NSString *reasonString = [NSString reasonTypeInString: networkPost.reason];
+    NSString *reasonString = networkPost.stringReasonType;
     if (networkPost.reason == Connect) {
         NSString *dateCreate = [NSString dateStringFromUNIXTimestamp: [networkPost.dateCreate doubleValue]];
         reasonString = [reasonString stringByAppendingString: @" "];
