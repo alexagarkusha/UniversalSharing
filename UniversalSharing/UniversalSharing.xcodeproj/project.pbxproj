@@ -91,6 +91,7 @@
 		97B2B54A1B87B387009FAB12 /* UIImageView+MUSLoadImageFromDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 97B2B5491B87B387009FAB12 /* UIImageView+MUSLoadImageFromDataBase.m */; };
 		97C05FA51BB553AC00EF6079 /* PostImagesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C05FA41BB553AC00EF6079 /* PostImagesManager.m */; };
 		97C0A0F91BB955DA004E5F38 /* UIImage+LikeIconOfSocialNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C0A0F81BB955DA004E5F38 /* UIImage+LikeIconOfSocialNetwork.m */; };
+		97C1F92F1BC64E3100FD0FD7 /* UIImage+Scale.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C1F92E1BC64E3100FD0FD7 /* UIImage+Scale.m */; settings = {ASSET_TAGS = (); }; };
 		97C273DF1BB6B76A0016D15B /* MUSReasonCommentsAndLikesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C273DD1BB6B7690016D15B /* MUSReasonCommentsAndLikesCell.m */; };
 		97C273E01BB6B76A0016D15B /* MUSReasonCommentsAndLikesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97C273DE1BB6B7690016D15B /* MUSReasonCommentsAndLikesCell.xib */; };
 		97C295471B985528001B21FF /* UIImage+IconOfSocialNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C295461B985528001B21FF /* UIImage+IconOfSocialNetwork.m */; };
@@ -128,7 +129,6 @@
 		97CB10DB1B904D7B0061F851 /* UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CB10DA1B904D7B0061F851 /* UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.m */; };
 		97CB301E1BB7DCE000185AC9 /* NSString+MUSSocialNetworkNameOfPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CB301D1BB7DCE000185AC9 /* NSString+MUSSocialNetworkNameOfPost.m */; };
 		97CCC9D81B749C2C00E0FAC6 /* ReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CCC9D71B749C2C00E0FAC6 /* ReachabilityManager.m */; };
-		97CCC9DC1B74ABAE00E0FAC6 /* UIImage+ChangeScaleImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CCC9DB1B74ABAE00E0FAC6 /* UIImage+ChangeScaleImage.m */; };
 		97D1C43A1B81CF5100009BCF /* MUSPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D1C4391B81CF5100009BCF /* MUSPostsViewController.m */; };
 		97D1C43F1B81D0A200009BCF /* MUSPostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D1C43D1B81D0A200009BCF /* MUSPostCell.m */; };
 		97D1C4401B81D0A200009BCF /* MUSPostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97D1C43E1B81D0A200009BCF /* MUSPostCell.xib */; };
@@ -281,6 +281,8 @@
 		97C05FA41BB553AC00EF6079 /* PostImagesManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PostImagesManager.m; path = UniversalSharing/SocialNetworkLibrary/PostImagesManager/PostImagesManager.m; sourceTree = SOURCE_ROOT; };
 		97C0A0F71BB955DA004E5F38 /* UIImage+LikeIconOfSocialNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+LikeIconOfSocialNetwork.h"; path = "UniversalSharing/UniversalSharingApp/Categories/UIImage+LikeIconOfSocialNetwork/UIImage+LikeIconOfSocialNetwork.h"; sourceTree = SOURCE_ROOT; };
 		97C0A0F81BB955DA004E5F38 /* UIImage+LikeIconOfSocialNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+LikeIconOfSocialNetwork.m"; path = "UniversalSharing/UniversalSharingApp/Categories/UIImage+LikeIconOfSocialNetwork/UIImage+LikeIconOfSocialNetwork.m"; sourceTree = SOURCE_ROOT; };
+		97C1F92D1BC64E3100FD0FD7 /* UIImage+Scale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Scale.h"; path = "UniversalSharing/UniversalSharingApp/Categories/UIImage+Scale/UIImage+Scale.h"; sourceTree = SOURCE_ROOT; };
+		97C1F92E1BC64E3100FD0FD7 /* UIImage+Scale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Scale.m"; path = "UniversalSharing/UniversalSharingApp/Categories/UIImage+Scale/UIImage+Scale.m"; sourceTree = SOURCE_ROOT; };
 		97C273DC1BB6B7690016D15B /* MUSReasonCommentsAndLikesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUSReasonCommentsAndLikesCell.h; path = ReasonCommentsAndLikesCell/MUSReasonCommentsAndLikesCell.h; sourceTree = "<group>"; };
 		97C273DD1BB6B7690016D15B /* MUSReasonCommentsAndLikesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUSReasonCommentsAndLikesCell.m; path = ReasonCommentsAndLikesCell/MUSReasonCommentsAndLikesCell.m; sourceTree = "<group>"; };
 		97C273DE1BB6B7690016D15B /* MUSReasonCommentsAndLikesCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MUSReasonCommentsAndLikesCell.xib; path = ReasonCommentsAndLikesCell/MUSReasonCommentsAndLikesCell.xib; sourceTree = "<group>"; };
@@ -345,8 +347,6 @@
 		97CB301D1BB7DCE000185AC9 /* NSString+MUSSocialNetworkNameOfPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+MUSSocialNetworkNameOfPost.m"; path = "UniversalSharing/SocialNetworkLibrary/Categories/NSString+MUSSocialNetworkNameOfPost/NSString+MUSSocialNetworkNameOfPost.m"; sourceTree = SOURCE_ROOT; };
 		97CCC9D61B749C2C00E0FAC6 /* ReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReachabilityManager.h; path = UniversalSharing/UniversalSharingApp/Managers/ReachabilityManager/ReachabilityManager.h; sourceTree = SOURCE_ROOT; };
 		97CCC9D71B749C2C00E0FAC6 /* ReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReachabilityManager.m; path = UniversalSharing/UniversalSharingApp/Managers/ReachabilityManager/ReachabilityManager.m; sourceTree = SOURCE_ROOT; };
-		97CCC9DA1B74ABAE00E0FAC6 /* UIImage+ChangeScaleImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+ChangeScaleImage.h"; path = "UniversalSharing/UniversalSharingApp/Categories/UIImage+ChangeScaleImage/UIImage+ChangeScaleImage.h"; sourceTree = SOURCE_ROOT; };
-		97CCC9DB1B74ABAE00E0FAC6 /* UIImage+ChangeScaleImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+ChangeScaleImage.m"; path = "UniversalSharing/UniversalSharingApp/Categories/UIImage+ChangeScaleImage/UIImage+ChangeScaleImage.m"; sourceTree = SOURCE_ROOT; };
 		97D1C4381B81CF5100009BCF /* MUSPostsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSPostsViewController.h; sourceTree = "<group>"; };
 		97D1C4391B81CF5100009BCF /* MUSPostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSPostsViewController.m; sourceTree = "<group>"; };
 		97D1C43C1B81D0A200009BCF /* MUSPostCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUSPostCell.h; path = PostCell/MUSPostCell.h; sourceTree = "<group>"; };
@@ -504,7 +504,7 @@
 			children = (
 				979164A51B8C5FE000DFCE64 /* NSString+DateStringFromUNIXTimestamp */,
 				97C295481B985A6A001B21FF /* NSString+ReasonTypeInString */,
-				97CCC9D91B74AB4100E0FAC6 /* UIImage+ChangeScaleImage */,
+				97C1F92C1BC64DD900FD0FD7 /* UIImage+Scale */,
 				97C2AA0C1BBD72E200D076CB /* UIImage+CommentIconOfSocialNetwork */,
 				97C0A0F61BB9558E004E5F38 /* UIImage+LikeIconOfSocialNetwork */,
 				97C295401B985428001B21FF /* UIImage+IconOfSocialNetwork */,
@@ -1014,6 +1014,16 @@
 			path = "UIButton+CornerRadiusButton";
 			sourceTree = "<group>";
 		};
+		97C1F92C1BC64DD900FD0FD7 /* UIImage+Scale */ = {
+			isa = PBXGroup;
+			children = (
+				97C1F92D1BC64E3100FD0FD7 /* UIImage+Scale.h */,
+				97C1F92E1BC64E3100FD0FD7 /* UIImage+Scale.m */,
+			);
+			name = "UIImage+Scale";
+			path = "UIButton+CornerRadiusButton";
+			sourceTree = "<group>";
+		};
 		97C273DB1BB6B6AE0016D15B /* ReasonCommentsAndLikesCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -1279,16 +1289,6 @@
 			);
 			name = ReachabilityManager;
 			path = LocationManager;
-			sourceTree = "<group>";
-		};
-		97CCC9D91B74AB4100E0FAC6 /* UIImage+ChangeScaleImage */ = {
-			isa = PBXGroup;
-			children = (
-				97CCC9DA1B74ABAE00E0FAC6 /* UIImage+ChangeScaleImage.h */,
-				97CCC9DB1B74ABAE00E0FAC6 /* UIImage+ChangeScaleImage.m */,
-			);
-			name = "UIImage+ChangeScaleImage";
-			path = "UIButton+CornerRadiusButton";
 			sourceTree = "<group>";
 		};
 		97CCC9DD1B74B4F900E0FAC6 /* Model */ = {
@@ -1572,6 +1572,7 @@
 				18BB29B41B67E3F000B498AC /* UIImageView+RoundImage.m in Sources */,
 				97C2AA0F1BBD72E200D076CB /* UIImage+CommentIconOfSocialNetwork.m in Sources */,
 				303CAC7D1B860A2F00B48D72 /* NSString+MUSPathToDocumentsdirectory.m in Sources */,
+				97C1F92F1BC64E3100FD0FD7 /* UIImage+Scale.m in Sources */,
 				303CAC881B998FB400B48D72 /* LSFadingSwipeToDeleteCollectionViewLayout.m in Sources */,
 				30416A2A1B73AF49000CB2C2 /* MUSCollectionViewCell.m in Sources */,
 				30C9DDCB1BB99A9F00F3266A /* MUSPopUpTableViewCell.m in Sources */,
@@ -1580,7 +1581,6 @@
 				18BB29B91B67E3F000B498AC /* MUSAccountTableViewCell.m in Sources */,
 				97C49E931B83703F005241CE /* MUSAnnotation.m in Sources */,
 				30DBFD931B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.m in Sources */,
-				97CCC9DC1B74ABAE00E0FAC6 /* UIImage+ChangeScaleImage.m in Sources */,
 				18BF75C51BC1837300A05625 /* TwitterNetwork.m in Sources */,
 				30C9DDC11BB93E0500F3266A /* MUSPopUpForSharing.m in Sources */,
 				97B2B54A1B87B387009FAB12 /* UIImageView+MUSLoadImageFromDataBase.m in Sources */,

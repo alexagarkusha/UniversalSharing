@@ -223,22 +223,6 @@
 }
 
 
-#pragma mark - ReasonFromMenuTitle
-/*!
- @method
- @abstract return a Reason type of the drop down menu title.
- @param string takes title of the drop down menu.
- */
-- (NSInteger) reasonFromTitle : (NSString*) title {
-    if ([title isEqual: musAppFilter_Title_Error]) {
-        return ErrorConnection;
-    } else if ([title isEqual: musAppFilter_Title_Offline]) {
-        return Offline;
-    } else {
-        return Connect;
-    }
-}
-
 #pragma mark - NetworkTypeFromMenuTitle
 /*!
  @method
@@ -260,13 +244,6 @@
  @abstract Obtain posts from Data Base.
  */
 - (void) obtainArrayPosts {
-//    if (![MUSPostManager manager].needToRefreshPosts) {
-//        self.arrayPosts = [[[MUSPostManager manager] arrayOfAllPosts] mutableCopy];
-//    } else {
-//        [[MUSPostManager manager] updateArrayOfPost];
-//        self.arrayPosts = [[[MUSPostManager manager] arrayOfAllPosts] mutableCopy];
-//        [MUSPostManager manager].needToRefreshPosts = NO;
-//    }
     [self checkArrayOfPosts];
     [self.tableView reloadData];
 }

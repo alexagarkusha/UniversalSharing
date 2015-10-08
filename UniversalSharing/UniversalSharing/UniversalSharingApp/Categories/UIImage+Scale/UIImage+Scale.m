@@ -1,15 +1,14 @@
 //
-//  UIImage+ChangeScaleImage.m
+//  UIImage+Scale.m
 //  UniversalSharing
 //
-//  Created by U 2 on 07.08.15.
-//  Copyright (c) 2015 Mobindustry. All rights reserved.
+//  Created by U 2 on 08.10.15.
+//  Copyright © 2015 Mobindustry. All rights reserved.
 //
 
-#import "UIImage+ChangeScaleImage.h"
+#import "UIImage+Scale.h"
 
-
-@implementation UIImage (ChangeScaleImage)
+@implementation UIImage (Scale)
 
 + (UIImage*) scaleImage: (UIImage*) image toSize: (CGSize) newSize {
     

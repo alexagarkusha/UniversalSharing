@@ -12,7 +12,7 @@
 #import <MobileCoreServices/UTCoreTypes.h>
 #import "ConstantsApp.h"
 #import "ImageToPost.h"
-#import "UIImage+ChangeScaleImage.h"
+#import "UIImage+Scale.h"
 
 
 @interface MUSPhotoManager () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate>
