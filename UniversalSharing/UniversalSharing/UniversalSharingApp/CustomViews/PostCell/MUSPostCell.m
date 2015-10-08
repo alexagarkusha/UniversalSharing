@@ -14,8 +14,6 @@
 #import "UIImageView+RoundImage.h"
 #import "UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.h"
 #import "UIImage+LoadImageFromDataBase.h"
-#import "UIImage+IconOfSocialNetwork.h"
-#import "NSString+ReasonTypeInString.h"
 #import <QuartzCore/QuartzCore.h>
 #import "MUSReasonCommentsAndLikesCell.h"
 

@@ -21,7 +21,31 @@
     networkPost.reason = MUSAllReasons;
     networkPost.primaryKey = 0;
     networkPost.dateCreate = @"";
+    networkPost.stringReasonType = @"";
     return networkPost;
 }
+
+- (NSString *) stringReasonType {
+    if (!_reason) {
+        return @"";
+    }
+    switch (_reason) {
+        case MUSConnect:
+            return @"Published";
+            break;
+        case MUSErrorConnection:
+            return @"Failed";
+            break;
+        case MUSOffline:
+            return @"Offline";
+            break;
+        default:
+            break;
+    }
+    return @"";
+}
+
+
+
 
 @end

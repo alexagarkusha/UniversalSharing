@@ -34,6 +34,8 @@
 
 @property (nonatomic, assign) NSInteger primaryKey;
 
+@property (nonatomic, strong) NSString *stringReasonType;
+
 + (instancetype)create;
 
 @end
