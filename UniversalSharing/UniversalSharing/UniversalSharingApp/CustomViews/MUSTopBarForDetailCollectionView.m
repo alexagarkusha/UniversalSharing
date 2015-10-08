@@ -7,7 +7,6 @@
 //
 
 #import "MUSTopBarForDetailCollectionView.h"
-#import "UIImageView+MUSLoadImageFromDataBase.h"
 #import "UIImage+LoadImageFromDataBase.h"
 #import "ConstantsApp.h"
 

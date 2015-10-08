@@ -12,7 +12,6 @@
 #import "ConstantsApp.h"
 #import "ImageToPost.h"
 #import "UIImageView+RoundImage.h"
-#import "UIImageView+MUSLoadImageFromDataBase.h"
 #import "UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.h"
 #import "UIImage+LoadImageFromDataBase.h"
 #import "UIImage+IconOfSocialNetwork.h"
@@ -104,7 +103,6 @@
         //[self showAllImageView];
         self.postDescriptionLabelLeftConstraint.constant = musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithUserPhotos;
         [self loadImageFromPostToImageView: currentPost];
-        //[self loadImagesFromDataBaseToImageView: currentPost.arrayImagesUrl];
     } else {
         [self hideAllImageView];
         self.postDescriptionLabelLeftConstraint.constant = musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithoutUserPhotos;
@@ -123,16 +121,8 @@
     self.thirdImageOfPostImageView.hidden = NO;
 }
 
-- (void) loadImagesFromDataBaseToImageView : (NSArray*) arrayImagesUrl  {
-    for (int i = 0; i < MIN(arrayImagesUrl.count, self.arrayOfImageView.count); i++) {
-        UIImageView *imageView = [self.arrayOfImageView objectAtIndex: i];
-        imageView.hidden = NO;
-        [imageView loadImageFromDataBase: [arrayImagesUrl objectAtIndex: i]];
-    }
-}
-
 - (void) loadImageFromPostToImageView : (Post*) post  {
-    for (int i = 0; i < MIN(post.arrayImagesUrl.count, self.arrayOfImageView.count); i++) {
+    for (int i = 0; i < MIN(post.arrayImages.count, self.arrayOfImageView.count); i++) {
         UIImageView *imageView = [self.arrayOfImageView objectAtIndex: i];
         ImageToPost *imageToPost = [post.arrayImages objectAtIndex: i];
         imageView.image = imageToPost.image;
