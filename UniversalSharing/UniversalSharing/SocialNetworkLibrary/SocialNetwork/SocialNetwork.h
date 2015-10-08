@@ -106,7 +106,7 @@
 //- (void) updatePostDataBaseWithReason :(ReasonType) reason andPost :(Post*) post;
 //- (void) saveOrUpdatePost : (Post*) post withReason : (ReasonType) reason;
 //
-- (void) updatePostWithComplition : (ComplitionUpdateNetworkPosts) block;
+- (void) updatePostWithComplition : (UpdateNetworkPostsComplition) block;
 
 
 #warning "Specific method for each network???"

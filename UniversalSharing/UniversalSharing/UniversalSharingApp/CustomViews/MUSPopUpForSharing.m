@@ -68,7 +68,7 @@
         
         
         
-        if (!obj.isLogin || [self currentReasonForSocialNetwork: obj] == Connect) {
+        if (!obj.isLogin || [self currentReasonForSocialNetwork: obj] == MUSConnect) {
             [_stateSwitchButons setValue:[NSNumber numberWithBool:NO] forKey:[NSString stringWithFormat:@"%ld",(long)obj.networkType]];
             count++;
         }else {
@@ -152,7 +152,7 @@
     [_stateSwitchButons enumerateKeysAndObjectsUsingBlock:^(NSString* key, id value, BOOL* stop) {
         if ([value boolValue]) {
             NetworkType currentNetwork = [key integerValue];
-            if (currentNetwork == Twitters) {
+            if (currentNetwork == MUSTwitters) {
                 flagTwitter = YES;
             }
             [arrayWithNetworksForPost addObject:@(currentNetwork)];
@@ -166,7 +166,7 @@
 
 
 - (ReasonType) currentReasonForSocialNetwork : (SocialNetwork*) socialNetwork {
-    ReasonType currentReason = AllReasons;
+    ReasonType currentReason = MUSAllReasons;
    
     for (NetworkPost *currentNetworkPost in self.arrayOfNetworksPost) {
         if (currentNetworkPost.networkType == socialNetwork.networkType) {

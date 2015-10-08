@@ -17,8 +17,8 @@
     networkPost.postID = @"";
     networkPost.likesCount = 0;
     networkPost.commentsCount = 0;
-    networkPost.networkType = AllNetworks;
-    networkPost.reason = AllReasons;
+    networkPost.networkType = MUSAllNetworks;
+    networkPost.reason = MUSAllReasons;
     networkPost.primaryKey = 0;
     networkPost.dateCreate = @"";
     return networkPost;

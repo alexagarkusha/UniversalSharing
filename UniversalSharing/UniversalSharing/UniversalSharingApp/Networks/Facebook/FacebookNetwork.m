@@ -24,7 +24,7 @@
 @interface FacebookNetwork()<FBSDKGraphRequestConnectionDelegate>
 
 @property (copy, nonatomic) Complition copyComplition;
-@property (copy, nonatomic) ComplitionUpdateNetworkPosts copyComplitionUpdateNetworkPosts;
+@property (copy, nonatomic) UpdateNetworkPostsComplition copyComplitionUpdateNetworkPosts;
 @property (copy, nonatomic) ProgressLoading copyProgressLoading;
 
 @property (strong, nonatomic) NSString *firstPlaceId;
@@ -51,7 +51,7 @@ static FacebookNetwork *model = nil;
 - (instancetype) init {
     self = [super init];
     if (self) {
-        self.networkType = Facebook;
+        self.networkType = MUSFacebook;
         self.name = musFacebookName;
         if (![FBSDKAccessToken currentAccessToken]) {
             [self initiationPropertiesWithoutSession];
@@ -231,8 +231,8 @@ static FacebookNetwork *model = nil;
     
     if (![[InternetConnectionManager connectionManager] isInternetConnection]){
         NetworkPost *networkPost = [NetworkPost create];
-        networkPost.networkType = Facebook;
-        networkPost.reason = Offline;
+        networkPost.networkType = MUSFacebook;
+        networkPost.reason = MUSOffline;
         // Return Result - object NetworkPost with reason = offline, Error - internet Connection
         block(networkPost,[self errorConnection]);
         return;
@@ -304,7 +304,7 @@ static FacebookNetwork *model = nil;
     FBSDKGraphRequestConnection *connection = [[FBSDKGraphRequestConnection alloc] init];
     connection.delegate = self;
     NetworkPost *networkPost = [NetworkPost create];
-    networkPost.networkType = Facebook;
+    networkPost.networkType = MUSFacebook;
     __block NetworkPost *networkPostCopy = networkPost;
     
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
@@ -343,12 +343,12 @@ static FacebookNetwork *model = nil;
     
     [connection addRequest:request completionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
         if (!error) {
-            networkPostCopy.reason = Connect;
+            networkPostCopy.reason = MUSConnect;
             networkPostCopy.dateCreate = [NSString currentDate];
             networkPostCopy.postID = [result objectForKey: @"id" ];
             self.copyComplition (networkPostCopy, nil);
         } else {
-            networkPostCopy.reason = ErrorConnection;
+            networkPostCopy.reason = MUSErrorConnection;
             if ([error code] != 8){
                 self.copyComplition (networkPostCopy, [self errorFacebook]);
             } else {
@@ -380,7 +380,7 @@ static FacebookNetwork *model = nil;
     __block int numberOfPostImagesArray = post.arrayImages.count;
     __block int counterOfImages = 0;
     NetworkPost *networkPost = [NetworkPost create];
-    networkPost.networkType = Facebook;
+    networkPost.networkType = MUSFacebook;
     __block NetworkPost *networkPostCopy = networkPost;
     
     for (int i = 0; i < post.arrayImages.count; i++) {
@@ -398,14 +398,14 @@ static FacebookNetwork *model = nil;
                      networkPostCopy.postID = [networkPostCopy.postID stringByAppendingString:[result objectForKey:@"id"]];
                      
                      if (counterOfImages == numberOfPostImagesArray) {
-                         networkPostCopy.reason = Connect;
+                         networkPostCopy.reason = MUSConnect;
                          networkPostCopy.dateCreate = [NSString currentDate];
                          self.copyComplition (networkPostCopy, nil);
                      }
                      networkPostCopy.postID = [networkPostCopy.postID stringByAppendingString: @","];
                  } else {
                      if (counterOfImages == numberOfPostImagesArray) {
-                         networkPostCopy.reason = ErrorConnection;
+                         networkPostCopy.reason = MUSErrorConnection;
                          self.copyComplition (networkPostCopy, [self errorFacebook]);
                      }
                  }
@@ -416,9 +416,9 @@ static FacebookNetwork *model = nil;
 
 #pragma mark - UpdateNetworkPost
 
-- (void) updatePostWithComplition : (ComplitionUpdateNetworkPosts) block {
+- (void) updatePostWithComplition : (UpdateNetworkPostsComplition) block {
     self.copyComplitionUpdateNetworkPosts = block;
-    NSArray * networksPostsIDs = [[DataBaseManager sharedManager] obtainNetworkPostsFromDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForNetworkPostWithReason: Connect andNetworkType: Facebook]];
+    NSArray * networksPostsIDs = [[DataBaseManager sharedManager] obtainNetworkPostsFromDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForNetworkPostWithReason: MUSConnect andNetworkType: MUSFacebook]];
     
     if (![[InternetConnectionManager connectionManager] isInternetConnection] || !networksPostsIDs.count  || (![[InternetConnectionManager connectionManager] isInternetConnection] && networksPostsIDs.count)) {
         block (@"Facebook, Error update network posts");

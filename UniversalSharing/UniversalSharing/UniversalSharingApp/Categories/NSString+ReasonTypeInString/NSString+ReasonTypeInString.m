@@ -13,13 +13,13 @@
 
 + (NSString*) reasonTypeInString : (ReasonType) reasonType {
     switch (reasonType) {
-        case Connect:
+        case MUSConnect:
             return musAppReasonType_Published;
             break;
-        case ErrorConnection:
+        case MUSErrorConnection:
             return musAppReasonType_Error;
             break;
-        case Offline:
+        case MUSOffline:
             return musAppReasonType_Offline;
             break;
         default:

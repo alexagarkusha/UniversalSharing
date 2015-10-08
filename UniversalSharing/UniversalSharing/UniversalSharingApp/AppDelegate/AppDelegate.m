@@ -26,9 +26,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [ReachabilityManager sharedManager];
     
-    NSDictionary *networksDictionary = @{@(Facebook) : [FacebookNetwork class],
-                                         @(Twitters) : [TwitterNetwork class],
-                                         @(VKontakt) : [VKNetwork class]};
+    NSDictionary *networksDictionary = @{@(MUSFacebook) : [FacebookNetwork class],
+                                         @(MUSTwitters) : [TwitterNetwork class],
+                                         @(MUSVKontakt) : [VKNetwork class]};
     
     [[SocialManager sharedManager] configurateWithNetworkClasses: networksDictionary];
     

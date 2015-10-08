@@ -22,12 +22,12 @@
     post.likesCount = 0;
     post.commentsCount = 0;
     post.placeID = @"";
-    post.networkType = AllNetworks;
+    post.networkType = MUSAllNetworks;
     post.primaryKey = 0;
     post.arrayImagesUrl = [[NSMutableArray alloc] init];
     post.userId = @"";
     post.dateCreate = @"";
-    post.reason = AllReasons;
+    post.reason = MUSAllReasons;
     post.locationId = @"";
     post.place = [Place create];
     post.networkPost = [NetworkPost create];
@@ -107,7 +107,7 @@
         ImageToPost *imageToPost = [[ImageToPost alloc] init];
         imageToPost.image = image;
         imageToPost.quality = 1.0f;
-        imageToPost.imageType = JPEG;
+        imageToPost.imageType = MUSJPEG;
         [_arrayImages addObject: imageToPost];
     }
     return _arrayImages;

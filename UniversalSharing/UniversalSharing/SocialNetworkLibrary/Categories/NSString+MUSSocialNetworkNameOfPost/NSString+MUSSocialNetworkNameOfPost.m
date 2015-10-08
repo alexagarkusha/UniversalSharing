@@ -12,10 +12,10 @@
 
 + (NSString*) socialNetworkNameOfPost : (NetworkType) networkType {
     switch (networkType) {
-        case Facebook:
+        case MUSFacebook:
             return musFacebookName;
             break;
-        case VKontakt:
+        case MUSVKontakt:
             return musVKName;
         default:
             return musTwitterName;

@@ -41,7 +41,7 @@
     self.imageViewNetwork.image = [UIImage imageNamed:socialNetwork.icon];
     self.switchButton.tag = socialNetwork.networkType;
     
-    if (!socialNetwork.isLogin || currentReason == Connect) {
+    if (!socialNetwork.isLogin || currentReason == MUSConnect) {
         [self.switchButton setOn:NO animated:YES];
         self.switchButton.enabled = NO;
         self.switchButton.backgroundColor = [UIColor whiteColor];

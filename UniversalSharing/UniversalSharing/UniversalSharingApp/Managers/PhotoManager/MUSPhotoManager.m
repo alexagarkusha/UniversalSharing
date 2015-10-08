@@ -116,7 +116,7 @@ static MUSPhotoManager* sharedManager = nil;
         ImageToPost *imageToPost = [[ImageToPost alloc] init];
         UIImage *compressedImage = [UIImage scaleImage: image toSize: CGSizeMake(musAppCompressionSizePicture_By_Width, musAppCompressionSizePicture_By_Height)];
         imageToPost.image = compressedImage;
-        imageToPost.imageType = JPEG;
+        imageToPost.imageType = MUSJPEG;
         imageToPost.quality = 1.0f;
         self.copyComplition (imageToPost, nil);
     }

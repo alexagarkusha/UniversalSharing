@@ -27,13 +27,13 @@
 + (Place*) createFromDictionary: (NSDictionary*) dictionary andNetworkType :(NetworkType) networkType
 {
     switch (networkType) {
-        case Facebook:
+        case MUSFacebook:
             return [Place createPlaceFromFB: dictionary];
             break;
-        case VKontakt:
+        case MUSVKontakt:
             return [Place createPlaceFromVK: dictionary];
             break;
-        case Twitters:
+        case MUSTwitters:
             return [Place createPlaceFromTwitter: dictionary];
             break;
         default:

@@ -13,16 +13,16 @@
 
 + (UIImage*) commentIconOfSocialNetwork : (NetworkType) networkType {
     switch (networkType) {
-        case Facebook:
+        case MUSFacebook:
             return [UIImage imageNamed: musAppImage_Name_CommentsImage_grey];
             break;
-        case VKontakt:
+        case MUSVKontakt:
             return [UIImage imageNamed: musAppImage_Name_CommentsImage_grey];
             break;
-        case Twitters:
+        case MUSTwitters:
             return [UIImage imageNamed: musAppImage_Name_TwitterCommentsImage_grey];
             break;
-        case AllNetworks:
+        case MUSAllNetworks:
             break;
     }
     return nil;
