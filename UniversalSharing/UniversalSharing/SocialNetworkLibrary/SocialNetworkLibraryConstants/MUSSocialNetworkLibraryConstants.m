@@ -45,7 +45,7 @@ NSString *const MUSVKAppID = @"5004830";
 NSString *const MUSVKAllUserFields = @"first_name,last_name,photo_200_orig,id,birthday";
 NSString *const MUSVKTitle = @"Login VK";
 NSString *const MUSVKIconName = @"VK_icon.png";
-NSString *const MUSVKName = @"VK";
+NSString *const MUSVKName = @"VKontakt";
 
 NSString *const MUSVKMethodPlacesSearch = @"places.search";
 

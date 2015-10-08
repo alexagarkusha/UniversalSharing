@@ -73,13 +73,6 @@ typedef void (^Complition)(id result, NSError *error);
 
 #pragma mark MUSAccountViewController Constants
 
-#warning NEED TO DELETE CONSTANTS
-
-FOUNDATION_EXPORT NSString *const editButtonTitle;
-FOUNDATION_EXPORT NSString *const doneButtonTitle;
-FOUNDATION_EXPORT NSString *const showButtonTitle;
-FOUNDATION_EXPORT NSString *const hideButtonTitle;
-
 FOUNDATION_EXPORT NSString *const MUSApp_Button_Title_Edit;
 FOUNDATION_EXPORT NSString *const MUSApp_Button_Title_Done;
 FOUNDATION_EXPORT NSString *const MUSApp_Button_Title_Show;

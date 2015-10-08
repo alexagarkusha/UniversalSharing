@@ -43,13 +43,7 @@
 }
 
 - (void) setUpTitle {
-    if (self.socialNetwork.networkType == MUSFacebook) {
-        self.navigationItem.title = @"Facebook";
-    } else if (self.socialNetwork.networkType == MUSTwitters) {
-        self.navigationItem.title = @"Twitter";
-    } else {
-        self.navigationItem.title = @"VKontakt";
-    }
+    self.navigationController.title = self.socialNetwork.name;
 }
 
 - (void)setNetwork:(id)socialNetwork {

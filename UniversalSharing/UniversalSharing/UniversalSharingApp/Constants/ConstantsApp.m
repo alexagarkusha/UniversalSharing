@@ -46,13 +46,6 @@ NSString *const MUSApp_MUSPhotoManager_Alert_Title_Share_Photo = @"Share photo";
 
 #pragma mark MUSAccountViewController Constants
 
-#warning NEED TO DELETE CONSTANTS
-
-NSString *const editButtonTitle = @"Edit";
-NSString *const doneButtonTitle = @"Done";
-NSString *const showButtonTitle = @"Show";
-NSString *const hideButtonTitle = @"Hide";
-
 NSString *const MUSApp_Button_Title_Edit = @"Edit";
 NSString *const MUSApp_Button_Title_Done = @"Done";
 NSString *const MUSApp_Button_Title_Show = @"Show";
