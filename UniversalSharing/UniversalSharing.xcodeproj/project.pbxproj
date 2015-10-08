@@ -89,14 +89,13 @@
 		979164A81B8C60F500DFCE64 /* NSString+DateStringFromUNIXTimestamp.m in Sources */ = {isa = PBXBuildFile; fileRef = 979164A71B8C60F500DFCE64 /* NSString+DateStringFromUNIXTimestamp.m */; };
 		979164B41B8CADDA00DFCE64 /* UIImage+LoadImageFromDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 979164B31B8CADDA00DFCE64 /* UIImage+LoadImageFromDataBase.m */; };
 		97C05FA51BB553AC00EF6079 /* PostImagesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C05FA41BB553AC00EF6079 /* PostImagesManager.m */; };
-		97C0A0F91BB955DA004E5F38 /* UIImage+LikeIconOfSocialNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C0A0F81BB955DA004E5F38 /* UIImage+LikeIconOfSocialNetwork.m */; };
 		97C1F92F1BC64E3100FD0FD7 /* UIImage+Scale.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C1F92E1BC64E3100FD0FD7 /* UIImage+Scale.m */; settings = {ASSET_TAGS = (); }; };
+		97C1F9331BC661CF00FD0FD7 /* UIImage+SocialNetworkIcons.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C1F9321BC661CF00FD0FD7 /* UIImage+SocialNetworkIcons.m */; settings = {ASSET_TAGS = (); }; };
 		97C273DF1BB6B76A0016D15B /* MUSReasonCommentsAndLikesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C273DD1BB6B7690016D15B /* MUSReasonCommentsAndLikesCell.m */; };
 		97C273E01BB6B76A0016D15B /* MUSReasonCommentsAndLikesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97C273DE1BB6B7690016D15B /* MUSReasonCommentsAndLikesCell.xib */; };
 		97C295471B985528001B21FF /* UIImage+IconOfSocialNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C295461B985528001B21FF /* UIImage+IconOfSocialNetwork.m */; };
 		97C2954B1B985ADA001B21FF /* NSString+ReasonTypeInString.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C2954A1B985ADA001B21FF /* NSString+ReasonTypeInString.m */; };
 		97C2AA0B1BBD728B00D076CB /* MUSPostManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C2AA0A1BBD728B00D076CB /* MUSPostManager.m */; };
-		97C2AA0F1BBD72E200D076CB /* UIImage+CommentIconOfSocialNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C2AA0E1BBD72E200D076CB /* UIImage+CommentIconOfSocialNetwork.m */; };
 		97C2AA131BBD731500D076CB /* NSString+MUSCurrentDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C2AA121BBD731500D076CB /* NSString+MUSCurrentDate.m */; };
 		97C2E2A21BBA900000C82D58 /* MEExpandableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C2E29E1BBA900000C82D58 /* MEExpandableHeaderView.m */; };
 		97C3303A1BB73E2B0014C90A /* NSString+MUSReasonNameOfPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C330391BB73E2B0014C90A /* NSString+MUSReasonNameOfPost.m */; };
@@ -276,10 +275,10 @@
 		979164B31B8CADDA00DFCE64 /* UIImage+LoadImageFromDataBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+LoadImageFromDataBase.m"; path = "UniversalSharing/UniversalSharingApp/Categories/UIImage+LoadImageToPostFromDataBase/UIImage+LoadImageFromDataBase.m"; sourceTree = SOURCE_ROOT; };
 		97C05FA31BB553AC00EF6079 /* PostImagesManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PostImagesManager.h; path = UniversalSharing/SocialNetworkLibrary/PostImagesManager/PostImagesManager.h; sourceTree = SOURCE_ROOT; };
 		97C05FA41BB553AC00EF6079 /* PostImagesManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PostImagesManager.m; path = UniversalSharing/SocialNetworkLibrary/PostImagesManager/PostImagesManager.m; sourceTree = SOURCE_ROOT; };
-		97C0A0F71BB955DA004E5F38 /* UIImage+LikeIconOfSocialNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+LikeIconOfSocialNetwork.h"; path = "UniversalSharing/UniversalSharingApp/Categories/UIImage+LikeIconOfSocialNetwork/UIImage+LikeIconOfSocialNetwork.h"; sourceTree = SOURCE_ROOT; };
-		97C0A0F81BB955DA004E5F38 /* UIImage+LikeIconOfSocialNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+LikeIconOfSocialNetwork.m"; path = "UniversalSharing/UniversalSharingApp/Categories/UIImage+LikeIconOfSocialNetwork/UIImage+LikeIconOfSocialNetwork.m"; sourceTree = SOURCE_ROOT; };
 		97C1F92D1BC64E3100FD0FD7 /* UIImage+Scale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Scale.h"; path = "UniversalSharing/UniversalSharingApp/Categories/UIImage+Scale/UIImage+Scale.h"; sourceTree = SOURCE_ROOT; };
 		97C1F92E1BC64E3100FD0FD7 /* UIImage+Scale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Scale.m"; path = "UniversalSharing/UniversalSharingApp/Categories/UIImage+Scale/UIImage+Scale.m"; sourceTree = SOURCE_ROOT; };
+		97C1F9311BC661CF00FD0FD7 /* UIImage+SocialNetworkIcons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+SocialNetworkIcons.h"; path = "UniversalSharing/UniversalSharingApp/Categories/UIImage+SocialNetworkIcons/UIImage+SocialNetworkIcons.h"; sourceTree = SOURCE_ROOT; };
+		97C1F9321BC661CF00FD0FD7 /* UIImage+SocialNetworkIcons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+SocialNetworkIcons.m"; path = "UniversalSharing/UniversalSharingApp/Categories/UIImage+SocialNetworkIcons/UIImage+SocialNetworkIcons.m"; sourceTree = SOURCE_ROOT; };
 		97C273DC1BB6B7690016D15B /* MUSReasonCommentsAndLikesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUSReasonCommentsAndLikesCell.h; path = ReasonCommentsAndLikesCell/MUSReasonCommentsAndLikesCell.h; sourceTree = "<group>"; };
 		97C273DD1BB6B7690016D15B /* MUSReasonCommentsAndLikesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUSReasonCommentsAndLikesCell.m; path = ReasonCommentsAndLikesCell/MUSReasonCommentsAndLikesCell.m; sourceTree = "<group>"; };
 		97C273DE1BB6B7690016D15B /* MUSReasonCommentsAndLikesCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MUSReasonCommentsAndLikesCell.xib; path = ReasonCommentsAndLikesCell/MUSReasonCommentsAndLikesCell.xib; sourceTree = "<group>"; };
@@ -289,8 +288,6 @@
 		97C2954A1B985ADA001B21FF /* NSString+ReasonTypeInString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+ReasonTypeInString.m"; path = "UniversalSharing/UniversalSharingApp/Categories/NSString+ReasonTypeInString/NSString+ReasonTypeInString.m"; sourceTree = SOURCE_ROOT; };
 		97C2AA091BBD728B00D076CB /* MUSPostManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSPostManager.h; sourceTree = "<group>"; };
 		97C2AA0A1BBD728B00D076CB /* MUSPostManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSPostManager.m; sourceTree = "<group>"; };
-		97C2AA0D1BBD72E200D076CB /* UIImage+CommentIconOfSocialNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+CommentIconOfSocialNetwork.h"; sourceTree = "<group>"; };
-		97C2AA0E1BBD72E200D076CB /* UIImage+CommentIconOfSocialNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+CommentIconOfSocialNetwork.m"; sourceTree = "<group>"; };
 		97C2AA111BBD731500D076CB /* NSString+MUSCurrentDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MUSCurrentDate.h"; sourceTree = "<group>"; };
 		97C2AA121BBD731500D076CB /* NSString+MUSCurrentDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MUSCurrentDate.m"; sourceTree = "<group>"; };
 		97C2E29D1BBA900000C82D58 /* MEExpandableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEExpandableHeaderView.h; sourceTree = "<group>"; };
@@ -501,10 +498,9 @@
 			children = (
 				979164A51B8C5FE000DFCE64 /* NSString+DateStringFromUNIXTimestamp */,
 				97C295481B985A6A001B21FF /* NSString+ReasonTypeInString */,
-				97C1F92C1BC64DD900FD0FD7 /* UIImage+Scale */,
-				97C2AA0C1BBD72E200D076CB /* UIImage+CommentIconOfSocialNetwork */,
-				97C0A0F61BB9558E004E5F38 /* UIImage+LikeIconOfSocialNetwork */,
 				97C295401B985428001B21FF /* UIImage+IconOfSocialNetwork */,
+				97C1F9301BC65EDC00FD0FD7 /* UIImage+SocialNetworkIcons */,
+				97C1F92C1BC64DD900FD0FD7 /* UIImage+Scale */,
 				979164B11B8CADA500DFCE64 /* UIImage+LoadImageFromDataBase */,
 				97CB10D81B904D060061F851 /* UIImageView+CornerRadiusBorderWidthAndBorderColorImageView */,
 				18BB29851B67E3F000B498AC /* UIImageView+RoundImage */,
@@ -990,16 +986,6 @@
 			name = PostImagesManager;
 			sourceTree = "<group>";
 		};
-		97C0A0F61BB9558E004E5F38 /* UIImage+LikeIconOfSocialNetwork */ = {
-			isa = PBXGroup;
-			children = (
-				97C0A0F71BB955DA004E5F38 /* UIImage+LikeIconOfSocialNetwork.h */,
-				97C0A0F81BB955DA004E5F38 /* UIImage+LikeIconOfSocialNetwork.m */,
-			);
-			name = "UIImage+LikeIconOfSocialNetwork";
-			path = "UIButton+CornerRadiusButton";
-			sourceTree = "<group>";
-		};
 		97C1F92C1BC64DD900FD0FD7 /* UIImage+Scale */ = {
 			isa = PBXGroup;
 			children = (
@@ -1007,6 +993,16 @@
 				97C1F92E1BC64E3100FD0FD7 /* UIImage+Scale.m */,
 			);
 			name = "UIImage+Scale";
+			path = "UIButton+CornerRadiusButton";
+			sourceTree = "<group>";
+		};
+		97C1F9301BC65EDC00FD0FD7 /* UIImage+SocialNetworkIcons */ = {
+			isa = PBXGroup;
+			children = (
+				97C1F9311BC661CF00FD0FD7 /* UIImage+SocialNetworkIcons.h */,
+				97C1F9321BC661CF00FD0FD7 /* UIImage+SocialNetworkIcons.m */,
+			);
+			name = "UIImage+SocialNetworkIcons";
 			path = "UIButton+CornerRadiusButton";
 			sourceTree = "<group>";
 		};
@@ -1047,15 +1043,6 @@
 				97C2AA0A1BBD728B00D076CB /* MUSPostManager.m */,
 			);
 			path = PostManager;
-			sourceTree = "<group>";
-		};
-		97C2AA0C1BBD72E200D076CB /* UIImage+CommentIconOfSocialNetwork */ = {
-			isa = PBXGroup;
-			children = (
-				97C2AA0D1BBD72E200D076CB /* UIImage+CommentIconOfSocialNetwork.h */,
-				97C2AA0E1BBD72E200D076CB /* UIImage+CommentIconOfSocialNetwork.m */,
-			);
-			path = "UIImage+CommentIconOfSocialNetwork";
 			sourceTree = "<group>";
 		};
 		97C2AA101BBD731500D076CB /* NSString+MUSCurrentDate */ = {
@@ -1528,10 +1515,10 @@
 				97C273DF1BB6B76A0016D15B /* MUSReasonCommentsAndLikesCell.m in Sources */,
 				97CB301E1BB7DCE000185AC9 /* NSString+MUSSocialNetworkNameOfPost.m in Sources */,
 				973D67AE1B69114C00A20D00 /* Post.m in Sources */,
-				97C0A0F91BB955DA004E5F38 /* UIImage+LikeIconOfSocialNetwork.m in Sources */,
 				97C63BD91B7246B6006E99C6 /* NSError+MUSError.m in Sources */,
 				97C460CF1B68B6AD00C010DE /* MUSPhotoManager.m in Sources */,
 				18BF75D81BC185E100A05625 /* DataBaseManager.m in Sources */,
+				97C1F9331BC661CF00FD0FD7 /* UIImage+SocialNetworkIcons.m in Sources */,
 				187FC52A1B65222D00A3916C /* User.m in Sources */,
 				97C2AA131BBD731500D076CB /* NSString+MUSCurrentDate.m in Sources */,
 				18BB29BB1B67E3F000B498AC /* MUSTopUserProfileCell.m in Sources */,
@@ -1556,7 +1543,6 @@
 				18BB29B71B67E3F000B498AC /* MUSShareViewController.m in Sources */,
 				30C9DDAC1BA973D700F3266A /* MUSTopBarForDetailCollectionView.m in Sources */,
 				18BB29B41B67E3F000B498AC /* UIImageView+RoundImage.m in Sources */,
-				97C2AA0F1BBD72E200D076CB /* UIImage+CommentIconOfSocialNetwork.m in Sources */,
 				303CAC7D1B860A2F00B48D72 /* NSString+MUSPathToDocumentsdirectory.m in Sources */,
 				97C1F92F1BC64E3100FD0FD7 /* UIImage+Scale.m in Sources */,
 				303CAC881B998FB400B48D72 /* LSFadingSwipeToDeleteCollectionViewLayout.m in Sources */,
@@ -1714,8 +1700,9 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Vadim Rozov (3RNNQR4V7R)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Vadim Rozov (3RNNQR4V7R)";
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = UniversalSharing/UniversalSharingApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1731,8 +1718,9 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Vadim Rozov (3RNNQR4V7R)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Vadim Rozov (3RNNQR4V7R)";
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = UniversalSharing/UniversalSharingApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
