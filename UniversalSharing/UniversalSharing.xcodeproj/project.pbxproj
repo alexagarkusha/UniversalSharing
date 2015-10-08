@@ -28,10 +28,6 @@
 		18BB29C01B67E3F000B498AC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18BB29A41B67E3F000B498AC /* Images.xcassets */; };
 		18BB29C21B67E3F000B498AC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB29A61B67E3F000B498AC /* main.m */; };
 		18BB29C31B67E3F000B498AC /* MUSLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB29AA1B67E3F000B498AC /* MUSLocationManager.m */; };
-		18BF75911BC1816300A05625 /* add_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 18BF75681BC1816300A05625 /* add_image.png */; };
-		18BF75921BC1816300A05625 /* btn-close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18BF75691BC1816300A05625 /* btn-close@2x.png */; };
-		18BF75941BC1816300A05625 /* Button_addPhoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 18BF756B1BC1816300A05625 /* Button_addPhoto.png */; };
-		18BF75951BC1816300A05625 /* Button_Change.png in Resources */ = {isa = PBXBuildFile; fileRef = 18BF756C1BC1816300A05625 /* Button_Change.png */; };
 		18BF75961BC1816300A05625 /* Button_Delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 18BF756D1BC1816300A05625 /* Button_Delete.png */; };
 		18BF75981BC1816300A05625 /* camera25.png in Resources */ = {isa = PBXBuildFile; fileRef = 18BF756F1BC1816300A05625 /* camera25.png */; };
 		18BF759B1BC1816300A05625 /* close6.png in Resources */ = {isa = PBXBuildFile; fileRef = 18BF75721BC1816300A05625 /* close6.png */; };
@@ -46,7 +42,6 @@
 		18BF75A71BC1816300A05625 /* Twitter_Like_grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 18BF757F1BC1816300A05625 /* Twitter_Like_grey.png */; };
 		18BF75A81BC1816300A05625 /* VK_icon_grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 18BF75801BC1816300A05625 /* VK_icon_grey.png */; };
 		18BF75A91BC1816300A05625 /* VK_Likes_grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 18BF75811BC1816300A05625 /* VK_Likes_grey.png */; };
-		18BF75AB1BC1816300A05625 /* location_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 18BF75831BC1816300A05625 /* location_icon.png */; };
 		18BF75AC1BC1816300A05625 /* placeholderPin-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 18BF75841BC1816300A05625 /* placeholderPin-1.png */; };
 		18BF75AD1BC1816300A05625 /* placeholderPin.png in Resources */ = {isa = PBXBuildFile; fileRef = 18BF75851BC1816300A05625 /* placeholderPin.png */; };
 		18BF75AE1BC1816300A05625 /* placeholderPinSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 18BF75861BC1816300A05625 /* placeholderPinSelected.png */; };
@@ -191,10 +186,6 @@
 		18BB29A61B67E3F000B498AC /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		18BB29A91B67E3F000B498AC /* MUSLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSLocationManager.h; sourceTree = "<group>"; };
 		18BB29AA1B67E3F000B498AC /* MUSLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSLocationManager.m; sourceTree = "<group>"; };
-		18BF75681BC1816300A05625 /* add_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add_image.png; sourceTree = "<group>"; };
-		18BF75691BC1816300A05625 /* btn-close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-close@2x.png"; sourceTree = "<group>"; };
-		18BF756B1BC1816300A05625 /* Button_addPhoto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Button_addPhoto.png; sourceTree = "<group>"; };
-		18BF756C1BC1816300A05625 /* Button_Change.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Button_Change.png; sourceTree = "<group>"; };
 		18BF756D1BC1816300A05625 /* Button_Delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Button_Delete.png; sourceTree = "<group>"; };
 		18BF756F1BC1816300A05625 /* camera25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera25.png; sourceTree = "<group>"; };
 		18BF75721BC1816300A05625 /* close6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close6.png; sourceTree = "<group>"; };
@@ -209,7 +200,6 @@
 		18BF757F1BC1816300A05625 /* Twitter_Like_grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Twitter_Like_grey.png; sourceTree = "<group>"; };
 		18BF75801BC1816300A05625 /* VK_icon_grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = VK_icon_grey.png; sourceTree = "<group>"; };
 		18BF75811BC1816300A05625 /* VK_Likes_grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = VK_Likes_grey.png; sourceTree = "<group>"; };
-		18BF75831BC1816300A05625 /* location_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = location_icon.png; sourceTree = "<group>"; };
 		18BF75841BC1816300A05625 /* placeholderPin-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "placeholderPin-1.png"; sourceTree = "<group>"; };
 		18BF75851BC1816300A05625 /* placeholderPin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholderPin.png; sourceTree = "<group>"; };
 		18BF75861BC1816300A05625 /* placeholderPinSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholderPinSelected.png; sourceTree = "<group>"; };
@@ -672,10 +662,6 @@
 		18BF75671BC1816300A05625 /* Medias */ = {
 			isa = PBXGroup;
 			children = (
-				18BF75681BC1816300A05625 /* add_image.png */,
-				18BF75691BC1816300A05625 /* btn-close@2x.png */,
-				18BF756B1BC1816300A05625 /* Button_addPhoto.png */,
-				18BF756C1BC1816300A05625 /* Button_Change.png */,
 				18BF756D1BC1816300A05625 /* Button_Delete.png */,
 				18BF756F1BC1816300A05625 /* camera25.png */,
 				18BF75721BC1816300A05625 /* close6.png */,
@@ -683,7 +669,6 @@
 				18BF75751BC1816300A05625 /* Facebook_Icon.png */,
 				18BF75761BC1816300A05625 /* Facebook_Like.png */,
 				18BF75791BC1816300A05625 /* IconsForApp_GreyColor */,
-				18BF75831BC1816300A05625 /* location_icon.png */,
 				18BF75841BC1816300A05625 /* placeholderPin-1.png */,
 				18BF75851BC1816300A05625 /* placeholderPin.png */,
 				18BF75861BC1816300A05625 /* placeholderPinSelected.png */,
@@ -1440,8 +1425,6 @@
 				97C273E01BB6B76A0016D15B /* MUSReasonCommentsAndLikesCell.xib in Resources */,
 				18BF75A41BC1816300A05625 /* Facebook_Like_grey.png in Resources */,
 				18BB29BE1B67E3F000B498AC /* MUSUserProfileCell.xib in Resources */,
-				18BF75AB1BC1816300A05625 /* location_icon.png in Resources */,
-				18BF75951BC1816300A05625 /* Button_Change.png in Resources */,
 				97C49E801B835130005241CE /* MUSCommentsAndLikesCell.xib in Resources */,
 				97CAF5691BAC001F00F16F6B /* Ressources.bundle in Resources */,
 				18BB29AE1B67E3F000B498AC /* LaunchScreen.xib in Resources */,
@@ -1455,11 +1438,9 @@
 				18BF75A51BC1816300A05625 /* Twitter_Comment_grey.png in Resources */,
 				18BF75961BC1816300A05625 /* Button_Delete.png in Resources */,
 				18BF75B41BC1816300A05625 /* Twitter_Like.png in Resources */,
-				18BF75911BC1816300A05625 /* add_image.png in Resources */,
 				30C9DDCC1BB99A9F00F3266A /* MUSPopUpTableViewCell.xib in Resources */,
 				18BF75AF1BC1816300A05625 /* trash.png in Resources */,
 				97C8A9DF1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.xib in Resources */,
-				18BF75941BC1816300A05625 /* Button_addPhoto.png in Resources */,
 				18BF759F1BC1816300A05625 /* Facebook_Like.png in Resources */,
 				18BF75B31BC1816300A05625 /* Twitter_icon.png in Resources */,
 				30C9DDAE1BA973E400F3266A /* MUSTopBarForDetailCollectionView.xib in Resources */,
@@ -1476,7 +1457,6 @@
 				30C9DDF11BC2F99B00F3266A /* MUSProgressBarEndLoading.xib in Resources */,
 				30416A2B1B73AF49000CB2C2 /* MUSCollectionViewCell.xib in Resources */,
 				18BF75AC1BC1816300A05625 /* placeholderPin-1.png in Resources */,
-				18BF75921BC1816300A05625 /* btn-close@2x.png in Resources */,
 				18BF75A21BC1816300A05625 /* Comments_grey.png in Resources */,
 				18BF759E1BC1816300A05625 /* Facebook_Icon.png in Resources */,
 				30C9DDC21BB93E0500F3266A /* MUSPopUpForSharing.xib in Resources */,
