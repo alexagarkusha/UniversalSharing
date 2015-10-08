@@ -10,23 +10,8 @@
 
 @implementation MUSDatabaseRequestStringsHelper
 
-//+ (NSString*)createStringForPostWithReason :(ReasonType) reason andNetworkType :(NetworkType) networkType {
-//    NSString *requestString = [NSString stringWithFormat:@"SELECT * FROM %@",@"Posts"];
-//
-//    if (networkType != AllNetworks) {
-//        requestString = [requestString stringByAppendingString:[NSString stringWithFormat:@" WHERE networkType = \"%ld\"", (long)networkType]];
-//
-//        if (reason != AllReasons) {
-//            requestString = [requestString stringByAppendingString: [NSString stringWithFormat: @" AND reson = \"%ld\"", (long)reason]];
-//        }
-//    } else if (reason != AllReasons && networkType == AllNetworks) {
-//        requestString = [requestString stringByAppendingString: [NSString stringWithFormat: @" WHERE reson=\"%ld\"", (long)reason]];
-//    }
-//    requestString = [requestString stringByAppendingString: [NSString stringWithFormat:@" ORDER BY dateCreate DESC"]];
-//    return requestString;
-//}
 
-+ (NSString*)createStringForNetworkPostWithReason :(ReasonType) reason andNetworkType :(NetworkType) networkType {
++ (NSString*)stringForNetworkPostWithReason :(ReasonType) reason andNetworkType :(NetworkType) networkType {
     
     NSString *requestString = [NSString stringWithFormat:@"SELECT * FROM %@",@"NetworkPosts"];
     
@@ -43,83 +28,39 @@
     return requestString;
 }
 
-//+ (NSString*) createStringForSavePostToTable {
-//    return [NSString stringWithFormat:@"INSERT INTO '%@'('%@','%@','%@','%@','%@','%@','%@','%@','%@','%@')VALUES(?,?,?,?,?,?,?,?,?,?)",@"Posts",@"locationID",@"postDescription",@"arrayImagesUrl",@"likesCount",@"commentsCount",@"networkType",@"dateCreate",@"reson",@"userId",@"postId"];
-//}
-/////////////////////////////////////////////////////////
 
-+ (NSString*) createStringForSavePostToTable {
+
++ (NSString*) stringForSavePost {
     return [NSString stringWithFormat:@"INSERT INTO '%@'('%@','%@','%@','%@','%@','%@')VALUES(?,?,?,?,?,?)",@"Posts",@"postDescription",@"arrayImagesUrl",@"networkPostsId",@"longitude",@"latitude",@"dateCreate"];
 }
 
-+ (NSString*) createStringForSaveNetworkPostToTable {
++ (NSString*) stringSaveNetworkPost {
     return [NSString stringWithFormat:@"INSERT INTO '%@'('%@','%@','%@','%@','%@','%@')VALUES(?,?,?,?,?,?)",@"NetworkPosts",@"likesCount",@"commentsCount",@"networkType",@"reson",@"dateCreate",@"postId"];
 }
 
-+ (NSString*) createStringForNetworkPostToGetLastObject {
-    return [NSString stringWithFormat:@"SELECT * FROM %@ SELECT %@",@"NetworkPosts",@"last_insert_rowid()"];//SELECT fields FROM table ORDER BY id DESC LIMIT 1;
-    
-    
-    //return [NSString stringWithFormat:@"SELECT * FROM %@ WHERE id = \"%@\" ",@"NetworkPosts",@"last_id"];//SELECT fields FROM table ORDER BY id DESC LIMIT 1;
-}
-/////////////////////////////////////////////////////////////////////////////////////////////
-+ (NSString*) createStringForSaveLocationToTable {
-    return [NSString stringWithFormat:@"INSERT INTO '%@'('%@','%@','%@','%@','%@','%@')VALUES(?,?,?,?,?,?)",@"Locations",@"placeID",@"longitude",@"latitude",@"placeName",@"locationID",@"userID"];
-}
 
-+ (NSString*) createStringForSaveUserToTable {
+
++ (NSString*) stringForSaveUser {
     return [NSString stringWithFormat:@"INSERT INTO '%@'('%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@')VALUES(?,?,?,?,?,?,?,?,?,?,?)",@"Users",@"username",@"firstName",@"lastName",@"dateOfBirth",@"city",@"clientID",@"photoURL",@"isVisible",@"isLogin",@"indexPosition",@"networkType"];
 }
 
-+ (NSString*) createStringForLocationId {
-    return [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970] * 1000];
-}
-
-+ (NSString*) createStringForPostWithUserId :(NSString*) userId {
-    return [NSString stringWithFormat:@"SELECT * FROM %@ WHERE userId = \"%@\" ",@"Posts",userId];
-}
-
-+ (NSString*) createStringForPostWithPostId :(NSString*) PostId {
-    return [NSString stringWithFormat:@"SELECT * FROM %@ WHERE postId = \"%@\" ",@"Posts",PostId];
-}
-
-+ (NSString*) createStringForAllPosts {
++ (NSString*) stringForAllPosts {
     return [NSString stringWithFormat:@"SELECT * FROM %@ ORDER BY dateCreate DESC",@"Posts"];
 }
 
-+ (NSString*) createStringForAllUsers {
-    return [NSString stringWithFormat:@"SELECT * FROM %@",@"Users"];
-}
-
-+ (NSString*) createStringForUsersWithNetworkType :(NSInteger) networkType {
++ (NSString*) stringForUserWithNetworkType :(NSInteger) networkType {
     return [NSString stringWithFormat:@"SELECT * FROM Users WHERE networkType = %ld", (long)networkType];
 }
 
-+ (NSString*) createStringForLocationsWithLocationId :(NSString*) locationId {
-    return [NSString stringWithFormat:@"SELECT * FROM %@ WHERE locationID = \"%@\"",@"Locations",locationId];
-}
-
-+ (NSString*) createStringForDeleteLocationWithLocationId :(NSString*) locationId {
-    return [NSString stringWithFormat:@"DELETE from Locations WHERE locationID = \"%@\"",locationId];
-}
-
-+ (NSString*) createStringForDeleteLocationWithUserId :(NSString*) userId {
-    return [NSString stringWithFormat:@"DELETE from Locations WHERE userId = \"%@\"",userId];
-}
-
-+ (NSString*) createStringForDeleteUserWithClientId :(NSString*) clientId {
++ (NSString*) stringForDeleteUserByClientId :(NSString*) clientId {
     return [NSString stringWithFormat:@"DELETE from Users WHERE clientID = \"%@\"",clientId];
 }
 
-+ (NSString*) createStringForDeletePostWithPrimaryKey :(NSInteger) primaryKey {
++ (NSString*) stringForDeletePostByPrimaryKey :(NSInteger) primaryKey {
     return [NSString stringWithFormat:@"DELETE from Posts WHERE id = \"%ld\"",(long)primaryKey];
 }
 
-+ (NSString*) createStringForDeletePostWithUserId :(NSString*) userId {
-    return [NSString stringWithFormat:@"DELETE from Posts WHERE userId = \"%@\"",userId];
-}
-
-+ (NSString *) createStringUsersForUpdateWithObjectUser:(User *)user {
++ (NSString *) stringForUpdateUser:(User *)user {
     NSString *stringUsersForUpdate = @"UPDATE Users set ";
     stringUsersForUpdate = [stringUsersForUpdate stringByAppendingString:@"username = \"%@\", "];
     stringUsersForUpdate = [stringUsersForUpdate stringByAppendingString:@"firstName = \"%@\", "];
@@ -138,76 +79,7 @@
     return finalStringUsersForUpdate;
 }
 
-//+ (NSString*) createStringPostsForUpdateWithObjectPost :(Post*) post {
-//    NSString *stringPostsForUpdate = @"UPDATE Posts set ";
-//
-//    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"locationID = \"%@\", "];
-//    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"postDescription = \"%@\", "];
-//    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"arrayImagesUrl = \"%@\", "];
-//    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"likesCount = \"%d\", "];
-//    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"commentsCount = \"%d\", "];
-//    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"networkType = \"%d\", "];
-//    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"dateCreate = \"%@\", "];
-//    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"reson = \"%d\", "];
-//    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"userId = \"%@\", "];
-//    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"postId = \"%@\" "];
-//    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"WHERE id = \"%d\""];
-//    NSString *postDescription = [post.postDescription stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
-//
-//    NSString *finalStringPostsForUpdate = [NSString stringWithFormat:stringPostsForUpdate, post.locationId, postDescription, [post convertArrayImagesUrlToString], post.likesCount, post.commentsCount, post.networkType, post.dateCreate, post.reason, post.userId, post.postID, post.primaryKey];
-//
-//    return finalStringPostsForUpdate;
-//}
-
-+ (NSString*) createStringNetworkPostsForUpdateObjectNetworkPost :(NetworkPost*) networkPost {
-   
-    NSString *stringPostsForUpdate = @"UPDATE NetworkPosts set ";
-    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"likesCount = \"%d\", "];
-    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"commentsCount = \"%d\", "];
-    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"networkType = \"%d\", "];
-    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"reson = \"%d\", "];
-    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"dateCreate = \"%@\" "];
-    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"WHERE id = \"%d\""];
-
-    //NSString *postDescription = [post.postDescription stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
-    
-    NSString *finalStringPostsForUpdate = [NSString stringWithFormat:stringPostsForUpdate, networkPost.likesCount, networkPost.commentsCount, networkPost.networkType, networkPost.reason, networkPost.dateCreate, networkPost.primaryKey];
-    
-    return finalStringPostsForUpdate;
-}
-
-+ (NSString*) createStringPostsForUpdateWithObjectPostForVK :(Post*) post {
-    NSString *stringPostsForUpdate = @"UPDATE Posts set ";
-    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"likesCount = \"%d\", "];
-    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"commentsCount = \"%d\" "];
-    stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"WHERE userId = \"%@\" AND postId = \"%@\""];
-    
-    NSString *finalStringPostsForUpdate = [NSString stringWithFormat:stringPostsForUpdate, post.likesCount, post.commentsCount,  post.userId, post.postID];
-    
-    return finalStringPostsForUpdate;
-}
-
-+ (NSString*) createStringLocationsForUpdateWithObjectPost :(Post*) post {
-    
-    NSString *stringLocationsForUpdate = @"UPDATE Locations set ";
-    
-    stringLocationsForUpdate = [stringLocationsForUpdate stringByAppendingString:@"userID = \"%@\", "];
-    stringLocationsForUpdate = [stringLocationsForUpdate stringByAppendingString:@"placeID = \"%@\", "];
-    stringLocationsForUpdate = [stringLocationsForUpdate stringByAppendingString:@"longitude = \"%@\", "];
-    stringLocationsForUpdate = [stringLocationsForUpdate stringByAppendingString:@"latitude = \"%@\", "];
-    stringLocationsForUpdate = [stringLocationsForUpdate stringByAppendingString:@"placeName = \"%@\" "];
-    stringLocationsForUpdate = [stringLocationsForUpdate stringByAppendingString:@"WHERE locationID = \"%@\""];
-    
-    NSString *placeId = [post.place.placeID stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
-    NSString *longitude = [post.place.longitude stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
-    NSString *latitude = [post.place.latitude stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
-    NSString *fullName = [post.place.fullName stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
-    
-    NSString *finalStringLocationsForUpdate = [NSString stringWithFormat:stringLocationsForUpdate, post.userId, placeId, longitude, latitude, fullName, post.locationId];
-    return finalStringLocationsForUpdate;
-}
-
-+ (NSString*) createStringUsersTable {
++ (NSString*) stringCreateTableOfUsers {
     NSString *stringUsersTable = @"CREATE TABLE IF NOT EXISTS Users (";
     stringUsersTable = [stringUsersTable stringByAppendingString:@"id INTEGER PRIMARY KEY AUTOINCREMENT, "];
     stringUsersTable = [stringUsersTable stringByAppendingString:@"username TEXT, "];
@@ -224,35 +96,8 @@
     return stringUsersTable;
 }
 
-+ (NSString*) createStringLocationsTable {
-    NSString *stringLocationsTable = @"CREATE TABLE IF NOT EXISTS Locations (";
-    stringLocationsTable = [stringLocationsTable stringByAppendingString:@"userID TEXT, "];
-    stringLocationsTable = [stringLocationsTable stringByAppendingString:@"placeID TEXT, "];
-    stringLocationsTable = [stringLocationsTable stringByAppendingString:@"longitude TEXT, "];
-    stringLocationsTable = [stringLocationsTable stringByAppendingString:@"latitude TEXT, "];
-    stringLocationsTable = [stringLocationsTable stringByAppendingString:@"placeName TEXT, "];
-    stringLocationsTable = [stringLocationsTable stringByAppendingString:@"locationID TEXT)"];
-    return stringLocationsTable;
-}
-
-//+ (NSString*) createStringPostsTable {
-//    NSString *stringPostsTable = @"CREATE TABLE IF NOT EXISTS Posts (";
-//    stringPostsTable = [stringPostsTable stringByAppendingString:@"id INTEGER PRIMARY KEY AUTOINCREMENT, "];
-//    stringPostsTable = [stringPostsTable stringByAppendingString:@"locationID TEXT, "];
-//    stringPostsTable = [stringPostsTable stringByAppendingString:@"postDescription TEXT, "];
-//    stringPostsTable = [stringPostsTable stringByAppendingString:@"arrayImagesUrl TEXT,"];
-//    stringPostsTable = [stringPostsTable stringByAppendingString:@"likesCount INTEGER, "];
-//    stringPostsTable = [stringPostsTable stringByAppendingString:@"commentsCount INTEGER, "];
-//    stringPostsTable = [stringPostsTable stringByAppendingString:@"networkType INTEGER, "];
-//    stringPostsTable = [stringPostsTable stringByAppendingString:@"dateCreate TEXT, "];
-//    stringPostsTable = [stringPostsTable stringByAppendingString:@"reson INTEGER, "];
-//    stringPostsTable = [stringPostsTable stringByAppendingString:@"userId TEXT, "];
-//    stringPostsTable = [stringPostsTable stringByAppendingString:@"postId TEXT)"];
-//
-//    return stringPostsTable;
-//}
-///////////////////////////////////////////////////////////////////////////////////////////////////// brandnew tables
-+ (NSString*) createStringPostsTable {
+///////////////////////////////////////////////////////////////////////////////////////////////// brandnew tables
++ (NSString*) stringCreateTableOfPosts {
     NSString *stringPostsTable = @"CREATE TABLE IF NOT EXISTS Posts (";
     stringPostsTable = [stringPostsTable stringByAppendingString:@"id INTEGER PRIMARY KEY AUTOINCREMENT, "];
     //stringPostsTable = [stringPostsTable stringByAppendingString:@"locationID TEXT, "];// it will be needed later, perhaps
@@ -265,7 +110,7 @@
     return stringPostsTable;
 }
 
-+ (NSString*) createStringNetworkPostsTable {
++ (NSString*) stringCreateTableOfNetworkPosts {
     NSString *stringNetworkPostsTable = @"CREATE TABLE IF NOT EXISTS NetworkPosts (";
     stringNetworkPostsTable = [stringNetworkPostsTable stringByAppendingString:@"id INTEGER PRIMARY KEY AUTOINCREMENT, "];
     stringNetworkPostsTable = [stringNetworkPostsTable stringByAppendingString:@"likesCount INTEGER, "];
@@ -278,11 +123,11 @@
     return stringNetworkPostsTable;
 }
 
-+ (NSString*) createStringForNetworkPostWithPrimaryKey :(NSInteger) primaryKey {
++ (NSString*) stringForNetworkPostWithPrimaryKey :(NSInteger) primaryKey {
     return [NSString stringWithFormat:@"SELECT * FROM NetworkPosts WHERE id = %ld", (long)primaryKey];
 }
 
-+ (NSString*) createStringNetworkPostForUpdateWithObjectNetworkPostForVK :(NetworkPost*) networkPost {
++ (NSString*) stringForVKUpdateNetworkPost :(NetworkPost*) networkPost {
     NSString *stringPostsForUpdate = @"UPDATE NetworkPosts set ";
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"likesCount = \"%d\", "];
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"commentsCount = \"%d\" "];
@@ -293,11 +138,7 @@
     return finalStringPostsForUpdate;
 }
 
-
-
-
-
-+ (NSString*) createStringForUpdateNetworkPost :(NetworkPost*) networkPost {
++ (NSString*) stringForUpdateNetworkPost :(NetworkPost*) networkPost {
     NSString *stringPostsForUpdate = @"UPDATE NetworkPosts set ";
     
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"likesCount = \"%d\", "];
@@ -314,10 +155,10 @@
 }
 
 + (NSString*) stringForDeleteNetworkPost : (NetworkPost*) networkPost {
-    return [NSString stringWithFormat:@"DELETE from NetworkPosts WHERE id = \"%d\"",networkPost.primaryKey];
+    return [NSString stringWithFormat:@"DELETE from NetworkPosts WHERE id = \"%ld\"",(long)networkPost.primaryKey];
 }
 
-+ (NSString*) createStringForUpdateNetworkPostIdsInPost :(Post*) post {
++ (NSString*) stringForUpdatePost :(Post*) post {
     NSString *stringPostsForUpdate = @"UPDATE Posts set ";
         stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"networkPostsId = \"%@\" "];
         stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"WHERE id = \"%d\""];
@@ -325,6 +166,5 @@
         NSString *finalStringPostsForUpdate = [NSString stringWithFormat:stringPostsForUpdate, post.postID, post.primaryKey];
         return finalStringPostsForUpdate;
 }
-
 
 @end

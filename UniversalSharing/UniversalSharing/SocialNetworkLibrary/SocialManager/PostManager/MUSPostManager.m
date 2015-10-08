@@ -33,7 +33,7 @@ static MUSPostManager *model = nil;
     self = [super init];
     if (self) {
         self.arrayOfPosts = [[NSMutableArray alloc] init];
-        [self.arrayOfPosts addObjectsFromArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper createStringForAllPosts]]];
+        [self.arrayOfPosts addObjectsFromArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper stringForAllPosts]]];
         
     }
     return self;
@@ -45,7 +45,7 @@ static MUSPostManager *model = nil;
 
 - (void) updateArrayOfPost {
     [self.arrayOfPosts removeAllObjects];
-    [self.arrayOfPosts addObjectsFromArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper createStringForAllPosts]]];
+    [self.arrayOfPosts addObjectsFromArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper stringForAllPosts]]];
 }
 
 - (void) deleteNetworkPostForNetworkType : (NetworkType) networkType {
@@ -64,10 +64,10 @@ static MUSPostManager *model = nil;
             // Delete all images from documents
             [[PostImagesManager manager] removeImagesFromPostByArrayOfImagesUrls : currentPost.arrayImagesUrl];
             // Delete post from Data Base
-            [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringForDeletePostWithPrimaryKey: currentPost.primaryKey]];
+            [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForDeletePostByPrimaryKey: currentPost.primaryKey]];
         } else {
             //Update post in Data Base
-            [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringForUpdateNetworkPostIdsInPost: currentPost]];
+            [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForUpdatePost: currentPost]];
         }
     }
     [self updateArrayOfPost];

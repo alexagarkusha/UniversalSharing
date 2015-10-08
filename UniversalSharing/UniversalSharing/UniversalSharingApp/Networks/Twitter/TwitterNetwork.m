@@ -58,7 +58,7 @@ static TwitterNetwork *model = nil;
             self.isLogin = YES;
             //[self updatePost];
             [self startTimerForUpdatePosts];
-            self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForUsersWithNetworkType:self.networkType]]firstObject];
+            self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType:self.networkType]]firstObject];
             // self.icon = self.currentUser.photoURL;
             self.icon = musTwitterIconName;
             self.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
@@ -75,7 +75,7 @@ static TwitterNetwork *model = nil;
                     [[NSFileManager defaultManager] removeItemAtPath: [deleteImageFromFolder obtainPathToDocumentsFolder:deleteImageFromFolder] error: nil];
                     result.currentUser.indexPosition = indexPosition;
                     result.currentUser.isVisible = self.isVisible;
-                    [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringUsersForUpdateWithObjectUser:result.currentUser]];
+                    [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUpdateUser:result.currentUser]];
                 }];
             }
             
@@ -208,7 +208,7 @@ static TwitterNetwork *model = nil;
 }
 
 - (void) updatePostWithComplition: (ComplitionUpdateNetworkPosts) block {
-    NSArray * networksPostsIDs = [[DataBaseManager sharedManager] obtainNetworkPostsFromDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringForNetworkPostWithReason: Connect andNetworkType: Twitters]];
+    NSArray * networksPostsIDs = [[DataBaseManager sharedManager] obtainNetworkPostsFromDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForNetworkPostWithReason: Connect andNetworkType: Twitters]];
     
     if (![[InternetConnectionManager connectionManager] isInternetConnection] || !networksPostsIDs.count || (![[InternetConnectionManager connectionManager] isInternetConnection] && networksPostsIDs.count)) {
         block (@"Twitter, Error update network posts");
@@ -256,7 +256,7 @@ static TwitterNetwork *model = nil;
                 networkPostCopy.likesCount = [[arrayJson  objectForKey:@"favorite_count"] integerValue];
                 networkPostCopy.commentsCount = [[arrayJson objectForKey:@"retweet_count"] integerValue];
                 // NSLog(@"TW post.id = %@, post.like = %ld, post.comments = %d", networkPost.postID, (long)networkPost.likesCount, networkPost.commentsCount);
-                [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper createStringNetworkPostsForUpdateObjectNetworkPost : networkPostCopy]];
+                [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForUpdateNetworkPost : networkPostCopy]];
                 block (@"Post updated", nil);
             }
             else {
