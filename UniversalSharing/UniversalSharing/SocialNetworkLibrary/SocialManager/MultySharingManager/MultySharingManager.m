@@ -111,7 +111,7 @@ static MultySharingManager *model = nil;
                 //NSLog(@"Current post IDs = %@", postCopy.arrayWithNetworkPostsId);
                 [[DataBaseManager sharedManager] insertObjectIntoTable : postCopy];
                 //NSLog(@"%@", blockResultString);
-                [MUSPostManager manager].needToRefreshPosts = YES;
+                [[MUSPostManager manager] updateArrayOfPost];
                 [weakMultySharingManager updatePostInfoNotification];
                 NSLog(@"END LOAD");
                 
