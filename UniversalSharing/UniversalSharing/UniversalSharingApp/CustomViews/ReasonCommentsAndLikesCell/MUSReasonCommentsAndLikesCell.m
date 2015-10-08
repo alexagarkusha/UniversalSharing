@@ -10,8 +10,7 @@
 #import "ConstantsApp.h"
 #import "UIImage+IconOfSocialNetwork.h"
 #import "NSString+ReasonTypeInString.h"
-#import "UIImage+LikeIconOfSocialNetwork.h"
-#import "UIImage+CommentIconOfSocialNetwork.h"
+#import "UIImage+SocialNetworkIcons.h"
 #import <QuartzCore/QuartzCore.h>
 #import "NSString+DateStringFromUNIXTimestamp.h"
 
@@ -73,12 +72,12 @@
 }
 
 - (void) configurateCommentsImageAndLabel : (NetworkPost*) networkPost {
-    self.commentImageView.image = [UIImage commentIconOfSocialNetwork: networkPost.networkType];
+    self.commentImageView.image = [UIImage commentsIconByTypeOfSocialNetwork: networkPost.networkType];
     self.numberOfCommentsLabel.text = [NSString stringWithFormat: @"%ld", (long) networkPost.commentsCount];
 }
 
 - (void) configurateLikesImageAndLabel : (NetworkPost*) networkPost {
-    self.likeImageView.image = [UIImage likeIconOfSocialNetwork: networkPost.networkType];
+    self.likeImageView.image = [UIImage likesIconByTypeOfSocialNetwork: networkPost.networkType];
     self.numberOfLikesLabel.text = [NSString stringWithFormat: @"%ld", (long)networkPost.likesCount];
 }
 
