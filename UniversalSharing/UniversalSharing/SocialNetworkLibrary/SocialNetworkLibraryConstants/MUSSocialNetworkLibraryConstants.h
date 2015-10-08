@@ -49,76 +49,76 @@ typedef NS_ENUM (NSInteger, ReasonType) {
 //go app
 #pragma mark Facebook Constants
 
-FOUNDATION_EXPORT NSString *const musFacebookTitle;
-FOUNDATION_EXPORT NSString *const musFacebookIconName;
-FOUNDATION_EXPORT NSString *const musFacebookName;
+FOUNDATION_EXPORT NSString *const MUSFacebookTitle;
+FOUNDATION_EXPORT NSString *const MUSFacebookIconName;
+FOUNDATION_EXPORT NSString *const MUSFacebookName;
 
-FOUNDATION_EXPORT NSString *const musFacebookPermission_Email;
-FOUNDATION_EXPORT NSString *const musFacebookPermission_Publish_Actions;
+FOUNDATION_EXPORT NSString *const MUSFacebookPermission_Email;
+FOUNDATION_EXPORT NSString *const MUSFacebookPermission_Publish_Actions;
 
-FOUNDATION_EXPORT NSString *const musFacebookGraphPath_Me;
-FOUNDATION_EXPORT NSString *const musFacebookGraphPath_Me_Feed;
-FOUNDATION_EXPORT NSString *const musFacebookGraphPath_Me_Photos;
-FOUNDATION_EXPORT NSString *const musFacebookGraphPath_Search;
+FOUNDATION_EXPORT NSString *const MUSFacebookGraphPath_Me;
+FOUNDATION_EXPORT NSString *const MUSFacebookGraphPath_Me_Feed;
+FOUNDATION_EXPORT NSString *const MUSFacebookGraphPath_Me_Photos;
+FOUNDATION_EXPORT NSString *const MUSFacebookGraphPath_Search;
 
-FOUNDATION_EXPORT NSString *const musFacebookParametrsRequest;
-FOUNDATION_EXPORT NSString *const musFacebookParameter_Fields;
-FOUNDATION_EXPORT NSString *const musFacebookParameter_Message;
-FOUNDATION_EXPORT NSString *const musFacebookParameter_Place;
-FOUNDATION_EXPORT NSString *const musFacebookParameter_Picture;
+FOUNDATION_EXPORT NSString *const MUSFacebookParametrsRequest;
+FOUNDATION_EXPORT NSString *const MUSFacebookParameter_Fields;
+FOUNDATION_EXPORT NSString *const MUSFacebookParameter_Message;
+FOUNDATION_EXPORT NSString *const MUSFacebookParameter_Place;
+FOUNDATION_EXPORT NSString *const MUSFacebookParameter_Picture;
 
-FOUNDATION_EXPORT NSString *const musFacebookLoactionParameter_Q;
-FOUNDATION_EXPORT NSString *const musFacebookLoactionParameter_Type;
-FOUNDATION_EXPORT NSString *const musFacebookLoactionParameter_Center;
-FOUNDATION_EXPORT NSString *const musFacebookLoactionParameter_Distance;
+FOUNDATION_EXPORT NSString *const MUSFacebookLocationParameter_Q;
+FOUNDATION_EXPORT NSString *const MUSFacebookLocationParameter_Type;
+FOUNDATION_EXPORT NSString *const MUSFacebookLocationParameter_Center;
+FOUNDATION_EXPORT NSString *const MUSFacebookLocationParameter_Distance;
 
-FOUNDATION_EXPORT NSString *const musFacebookKeyOfPlaceDictionary;
+FOUNDATION_EXPORT NSString *const MUSFacebookKeyOfPlaceDictionary;
 
-FOUNDATION_EXPORT NSString *const musFacebookError;
-FOUNDATION_EXPORT NSInteger const musFacebookErrorCode;
+FOUNDATION_EXPORT NSString *const MUSFacebookError;
+FOUNDATION_EXPORT NSInteger const MUSFacebookErrorCode;
 
 
 #pragma mark Vkontakte Constants
 
-FOUNDATION_EXPORT NSString *const musVKAppID;
-FOUNDATION_EXPORT NSString *const musVKAllUserFields;
-FOUNDATION_EXPORT NSString *const musVKTitle;
-FOUNDATION_EXPORT NSString *const musVKIconName;
-FOUNDATION_EXPORT NSString *const musVKName;
+FOUNDATION_EXPORT NSString *const MUSVKAppID;
+FOUNDATION_EXPORT NSString *const MUSVKAllUserFields;
+FOUNDATION_EXPORT NSString *const MUSVKTitle;
+FOUNDATION_EXPORT NSString *const MUSVKIconName;
+FOUNDATION_EXPORT NSString *const MUSVKName;
 
-FOUNDATION_EXPORT NSString *const musVKMethodPlacesSearch;
+FOUNDATION_EXPORT NSString *const MUSVKMethodPlacesSearch;
 
-FOUNDATION_EXPORT NSString *const musVKLoactionParameter_Q;
-FOUNDATION_EXPORT NSString *const musVKLoactionParameter_Latitude;
-FOUNDATION_EXPORT NSString *const musVKLoactionParameter_Longitude;
-FOUNDATION_EXPORT NSString *const musVKLoactionParameter_Radius;
+FOUNDATION_EXPORT NSString *const MUSVKLocationParameter_Q;
+FOUNDATION_EXPORT NSString *const MUSVKLocationParameter_Latitude;
+FOUNDATION_EXPORT NSString *const MUSVKLocationParameter_Longitude;
+FOUNDATION_EXPORT NSString *const MUSVKLocationParameter_Radius;
 
-FOUNDATION_EXPORT NSString *const musVKKeyOfPlaceDictionary;
+FOUNDATION_EXPORT NSString *const MUSVKKeyOfPlaceDictionary;
 
-FOUNDATION_EXPORT NSInteger const musVKDistanceEqual300;
-FOUNDATION_EXPORT NSInteger const musVKDistanceEqual2400;
-FOUNDATION_EXPORT NSInteger const musVKDistanceEqual18000;
+FOUNDATION_EXPORT NSInteger const MUSVKDistanceEqual300;
+FOUNDATION_EXPORT NSInteger const MUSVKDistanceEqual2400;
+FOUNDATION_EXPORT NSInteger const MUSVKDistanceEqual18000;
 
-FOUNDATION_EXPORT NSString *const musVKError;
-FOUNDATION_EXPORT NSInteger const musVKErrorCode;
+FOUNDATION_EXPORT NSString *const MUSVKError;
+FOUNDATION_EXPORT NSInteger const MUSVKErrorCode;
 
 
 #pragma mark Twitter Constants
 
-FOUNDATION_EXPORT NSString *const musTwitterConsumerSecret;
-FOUNDATION_EXPORT NSString *const musTwitterConsumerKey;
+FOUNDATION_EXPORT NSString *const MUSTwitterConsumerSecret;
+FOUNDATION_EXPORT NSString *const MUSTwitterConsumerKey;
 
-FOUNDATION_EXPORT NSString *const musTwitterTitle;
-FOUNDATION_EXPORT NSString *const musTwitterIconName;
-FOUNDATION_EXPORT NSString *const musTwitterName;
+FOUNDATION_EXPORT NSString *const MUSTwitterTitle;
+FOUNDATION_EXPORT NSString *const MUSTwitterIconName;
+FOUNDATION_EXPORT NSString *const MUSTwitterName;
 
-FOUNDATION_EXPORT NSString *const musTwitterError;
-FOUNDATION_EXPORT NSInteger const musTwitterErrorCode;
+FOUNDATION_EXPORT NSString *const MUSTwitterError;
+FOUNDATION_EXPORT NSInteger const MUSTwitterErrorCode;
 
-FOUNDATION_EXPORT NSString *const musTwitterLocationParameter_Latitude;
-FOUNDATION_EXPORT NSString *const musTwitterLocationParameter_Longituge;
+FOUNDATION_EXPORT NSString *const MUSTwitterLocationParameter_Latitude;
+FOUNDATION_EXPORT NSString *const MUSTwitterLocationParameter_Longituge;
 
-FOUNDATION_EXPORT NSString *const musTwitterURL_Statuses_Show;
+FOUNDATION_EXPORT NSString *const MUSTwitterURL_Statuses_Show;
 FOUNDATION_EXPORT NSString *const musTwitterURL_Users_Show;
 FOUNDATION_EXPORT NSString *const musTwitterURL_Geo_Search;
 FOUNDATION_EXPORT NSString *const musTwitterURL_Statuses_Update;

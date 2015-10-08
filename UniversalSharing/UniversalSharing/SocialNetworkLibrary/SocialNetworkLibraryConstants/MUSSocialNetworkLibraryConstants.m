@@ -10,58 +10,58 @@
 
 #pragma mark Facebook Constants
 
-NSString *const musFacebookTitle = @"Login Facebook";
-NSString *const musFacebookIconName = @"Facebook_Icon.png";
-NSString *const musFacebookName = @"Facebook";
+NSString *const MUSFacebookTitle = @"Login Facebook";
+NSString *const MUSFacebookIconName = @"Facebook_Icon.png";
+NSString *const MUSFacebookName = @"Facebook";
 
-NSString *const musFacebookPermission_Email = @"email";
-NSString *const musFacebookPermission_Publish_Actions = @"publish_actions";
+NSString *const MUSFacebookPermission_Email = @"email";
+NSString *const MUSFacebookPermission_Publish_Actions = @"publish_actions";
 
-NSString *const musFacebookGraphPath_Me = @"/me";
-NSString *const musFacebookGraphPath_Me_Feed = @"me/feed";
-NSString *const musFacebookGraphPath_Me_Photos = @"me/photos";
-NSString *const musFacebookGraphPath_Search = @"/search?";
+NSString *const MUSFacebookGraphPath_Me = @"/me";
+NSString *const MUSFacebookGraphPath_Me_Feed = @"me/feed";
+NSString *const MUSFacebookGraphPath_Me_Photos = @"me/photos";
+NSString *const MUSFacebookGraphPath_Search = @"/search?";
 
-NSString *const musFacebookParametrsRequest = @"name,id,picture.type(large),gender,birthday,email,first_name,last_name,location,friends";
-NSString *const musFacebookParameter_Fields = @"fields";
-NSString *const musFacebookParameter_Message = @"message";
-NSString *const musFacebookParameter_Place = @"place";
-NSString *const musFacebookParameter_Picture = @"picture";
+NSString *const MUSFacebookParametrsRequest = @"name,id,picture.type(large),gender,birthday,email,first_name,last_name,location,friends";
+NSString *const MUSFacebookParameter_Fields = @"fields";
+NSString *const MUSFacebookParameter_Message = @"message";
+NSString *const MUSFacebookParameter_Place = @"place";
+NSString *const MUSFacebookParameter_Picture = @"picture";
 
-NSString *const musFacebookLoactionParameter_Q = @"q";
-NSString *const musFacebookLoactionParameter_Type = @"type";
-NSString *const musFacebookLoactionParameter_Center = @"center";
-NSString *const musFacebookLoactionParameter_Distance = @"distance";
+NSString *const MUSFacebookLocationParameter_Q = @"q";
+NSString *const MUSFacebookLocationParameter_Type = @"type";
+NSString *const MUSFacebookLocationParameter_Center = @"center";
+NSString *const MUSFacebookLocationParameter_Distance = @"distance";
 
-NSString *const musFacebookKeyOfPlaceDictionary = @"data";
+NSString *const MUSFacebookKeyOfPlaceDictionary = @"data";
 
-NSString *const musFacebookError = @"Facebook error. Please retry again.";
-NSInteger const musFacebookErrorCode = 1300;
+NSString *const MUSFacebookError = @"Facebook error. Please retry again.";
+NSInteger const MUSFacebookErrorCode = 1300;
 
 
 #pragma mark Vkontakte Constants
 
-NSString *const musVKAppID = @"5004830";
-NSString *const musVKAllUserFields = @"first_name,last_name,photo_200_orig,id,birthday";
-NSString *const musVKTitle = @"Login VK";
-NSString *const musVKIconName = @"VK_icon.png";
-NSString *const musVKName = @"VK";
+NSString *const MUSVKAppID = @"5004830";
+NSString *const MUSVKAllUserFields = @"first_name,last_name,photo_200_orig,id,birthday";
+NSString *const MUSVKTitle = @"Login VK";
+NSString *const MUSVKIconName = @"VK_icon.png";
+NSString *const MUSVKName = @"VK";
 
-NSString *const musVKMethodPlacesSearch = @"places.search";
+NSString *const MUSVKMethodPlacesSearch = @"places.search";
 
-NSString *const musVKLoactionParameter_Q = @"q";
-NSString *const musVKLoactionParameter_Latitude = @"latitude";
-NSString *const musVKLoactionParameter_Longitude = @"longitude";
-NSString *const musVKLoactionParameter_Radius = @"radius";
+NSString *const MUSVKLocationParameter_Q = @"q";
+NSString *const MUSVKLocationParameter_Latitude = @"latitude";
+NSString *const MUSVKLocationParameter_Longitude = @"longitude";
+NSString *const MUSVKLocationParameter_Radius = @"radius";
 
-NSString *const musVKKeyOfPlaceDictionary = @"items";
+NSString *const MUSVKKeyOfPlaceDictionary = @"items";
 
-NSInteger const musVKDistanceEqual300 = 300;
-NSInteger const musVKDistanceEqual2400 = 2400;
-NSInteger const musVKDistanceEqual18000 = 18000;
+NSInteger const MUSVKDistanceEqual300 = 300;
+NSInteger const MUSVKDistanceEqual2400 = 2400;
+NSInteger const MUSVKDistanceEqual18000 = 18000;
 
-NSString *const musVKError = @"Vkontakte error. Please retry again.";
-NSInteger const musVKErrorCode = 1100;
+NSString *const MUSVKError = @"Vkontakte error. Please retry again.";
+NSInteger const MUSVKErrorCode = 1100;
 
 
 #pragma mark Twitter Contants
@@ -72,22 +72,22 @@ NSInteger const musVKErrorCode = 1100;
 
 //keys from fabric
 
-NSString *const musTwitterConsumerSecret = @"sQNqSfSGW5lksTvqTCqn407pSQXUNCBvIsHJrOYlNKMhREtyT2";
-NSString *const musTwitterConsumerKey = @"lUY36ubrBYXpYsZhJJvg8CYdf";
+NSString *const MUSTwitterConsumerSecret = @"sQNqSfSGW5lksTvqTCqn407pSQXUNCBvIsHJrOYlNKMhREtyT2";
+NSString *const MUSTwitterConsumerKey = @"lUY36ubrBYXpYsZhJJvg8CYdf";
 
 
 
-NSString *const musTwitterTitle = @"Login Twitter";
-NSString *const musTwitterIconName = @"Twitter_icon.png";
-NSString *const musTwitterName = @"Twitter";
+NSString *const MUSTwitterTitle = @"Login Twitter";
+NSString *const MUSTwitterIconName = @"Twitter_icon.png";
+NSString *const MUSTwitterName = @"Twitter";
 
-NSString *const musTwitterError = @"Twitter error. Please retry again.";
-NSInteger const musTwitterErrorCode = 1200;
+NSString *const MUSTwitterError = @"Twitter error. Please retry again.";
+NSInteger const MUSTwitterErrorCode = 1200;
 
-NSString* const musTwitterLocationParameter_Latitude = @"lat";
-NSString* const musTwitterLocationParameter_Longituge = @"long";
+NSString* const MUSTwitterLocationParameter_Latitude = @"lat";
+NSString* const MUSTwitterLocationParameter_Longituge = @"long";
 
-NSString *const musTwitterURL_Statuses_Show = @"https://api.twitter.com/1.1/statuses/show.json";
+NSString *const MUSTwitterURL_Statuses_Show = @"https://api.twitter.com/1.1/statuses/show.json";
 NSString *const musTwitterURL_Users_Show = @"https://api.twitter.com/1.1/users/show.json";
 NSString* const musTwitterURL_Geo_Search = @"https://api.twitter.com/1.1/geo/search.json";
 NSString* const musTwitterURL_Statuses_Update = @"https://api.twitter.com/1.1/statuses/update.json";
