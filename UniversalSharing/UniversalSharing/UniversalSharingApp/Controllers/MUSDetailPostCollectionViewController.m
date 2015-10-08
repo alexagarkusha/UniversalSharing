@@ -125,7 +125,7 @@ static NSString * const reuseIdentifier = @"Cell";
     if ([[segue identifier]isEqualToString : goToUserDetailViewControllerSegueIdentifier]) {
         MUSUserDetailViewController *userDetailViewController = [MUSUserDetailViewController new];
         userDetailViewController = [segue destinationViewController];
-        userDetailViewController.isLogoutButtonHide = YES;
+        //userDetailViewController.isLogoutButtonHide = YES;
         [userDetailViewController setNetwork: self.currentSocialNetwork];
     }
 }
