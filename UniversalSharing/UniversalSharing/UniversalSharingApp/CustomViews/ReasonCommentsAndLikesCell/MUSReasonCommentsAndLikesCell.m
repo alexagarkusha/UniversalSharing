@@ -82,7 +82,7 @@
 
 - (void) configurateReasonOfPostLabel : (NetworkPost*) networkPost {
     NSString *reasonString = networkPost.stringReasonType;
-    if (networkPost.reason == Connect) {
+    if (networkPost.reason == MUSConnect) {
         NSString *dateCreate = [NSString dateStringFromUNIXTimestamp: [networkPost.dateCreate doubleValue]];
         reasonString = [reasonString stringByAppendingString: @" "];
         reasonString = [reasonString stringByAppendingString: dateCreate];
