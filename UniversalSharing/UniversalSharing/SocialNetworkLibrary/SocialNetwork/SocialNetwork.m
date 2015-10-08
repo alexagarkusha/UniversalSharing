@@ -118,12 +118,12 @@
 
 
 - (NSError*) errorConnection {
-    return [NSError errorWithMessage: musErrorConnection andCodeError: musErrorConnectionCode];
+    return [NSError errorWithMessage: MUSConnectionError andCodeError: MUSConnectionErrorCode];
 }
 
 
-- (void) stopUpdatingPostWithObject : (id) object {
-    [[NSNotificationCenter defaultCenter] postNotificationName:MUSNotificationStopUpdatingPost object: object];
-}
+//- (void) stopUpdatingPostWithObject : (id) object {
+//    [[NSNotificationCenter defaultCenter] postNotificationName:MUSNotificationStopUpdatingPost object: object];
+//}
 
 @end

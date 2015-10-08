@@ -281,18 +281,18 @@ static TwitterNetwork *model = nil;
     
     if (!location.latitude || !location.longitude || [location.latitude floatValue] < -90.0f || [location.latitude floatValue] > 90.0f || [location.longitude floatValue] < -180.0f  || [location.longitude floatValue] > 180.0f) {
         
-        NSError *error = [NSError errorWithMessage: musErrorLocationProperties
-                                      andCodeError: musErrorLocationPropertiesCode];
+        NSError *error = [NSError errorWithMessage: MUSLocationPropertiesError
+                                      andCodeError: MUSLocationPropertiesErrorCode];
         return block (nil, error);
     } else {
         params [MUSTwitterLocationParameter_Latitude] = location.latitude;
         params [MUSTwitterLocationParameter_Longituge] = location.longitude;
     }
     
-    NSString *url = musTwitterURL_Geo_Search;
+    NSString *url = MUSTwitterURL_Geo_Search;
     
     
-    NSURLRequest *preparedRequest = [client URLRequestWithMethod : musGET
+    NSURLRequest *preparedRequest = [client URLRequestWithMethod : MUSGET
                                                              URL : url
                                                       parameters : params
                                                            error : &error];
@@ -318,7 +318,7 @@ static TwitterNetwork *model = nil;
                              if ([placesArray count] != 0) {
                                  block (placesArray, nil);
                              }   else {
-                                 NSError *error = [NSError errorWithMessage: musErrorLocationDistance andCodeError: musErrorLocationDistanceCode];
+                                 NSError *error = [NSError errorWithMessage: MUSLocationDistanceError andCodeError: MUSLocationDistanceErrorCode];
                                  block (nil, error);
                              }
                          }else{
@@ -362,7 +362,7 @@ static TwitterNetwork *model = nil;
     TWTRAPIClient *client = [[Twitter sharedInstance] APIClient];
     NSError *error;
     
-    NSString *url = musTwitterURL_Statuses_Update;
+    NSString *url = MUSTwitterURL_Statuses_Update;
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     
     NSString* messageText = post.postDescription;
@@ -371,13 +371,13 @@ static TwitterNetwork *model = nil;
         messageText = [post.postDescription substringToIndex: 117];
     }
     
-    params [musTwitterParameter_Status] = messageText;
+    params [MUSTwitterParameter_Status] = messageText;
     if (post.longitude.length > 0 && ![post.longitude isEqualToString: @"(null)"] && post.latitude.length > 0 && ![post.latitude isEqualToString: @"(null)"]) {
         params [MUSTwitterLocationParameter_Latitude] = post.latitude;
         params [MUSTwitterLocationParameter_Longituge] = post.longitude;
     }
     
-    NSURLRequest *preparedRequest = [client URLRequestWithMethod : musPOST
+    NSURLRequest *preparedRequest = [client URLRequestWithMethod : MUSPOST
                                                              URL : url
                                                       parameters : params
                                                            error : &error];
@@ -431,11 +431,11 @@ static TwitterNetwork *model = nil;
             NSArray *mediaIdsArray = (NSArray*) result;
             NSString *mediaIdsString = [mediaIdsArray componentsJoinedByString:@","];
             
-            NSString *endpoint = musTwitterURL_Statuses_Update;
+            NSString *endpoint = MUSTwitterURL_Statuses_Update;
             
             NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
             
-            params [musTwitterParameter_MediaID] = mediaIdsString;
+            params [MUSTwitterParameter_MediaID] = mediaIdsString;
             
             
             NSString* messageText = post.postDescription;
@@ -445,7 +445,7 @@ static TwitterNetwork *model = nil;
             }
 
             if (post.postDescription) {
-                params [musTwitterParameter_Status] = messageText;
+                params [MUSTwitterParameter_Status] = messageText;
             }
             if (post.longitude.length > 0 && ![post.longitude isEqualToString: @"(null)"] && post.latitude.length > 0 && ![post.latitude isEqualToString: @"(null)"]) {
                 params [MUSTwitterLocationParameter_Latitude] = post.latitude;
@@ -454,7 +454,7 @@ static TwitterNetwork *model = nil;
             NSError *error = nil;
             
             TWTRAPIClient *client = [[Twitter sharedInstance] APIClient];
-            NSURLRequest *request = [client URLRequestWithMethod: musPOST
+            NSURLRequest *request = [client URLRequestWithMethod: MUSPOST
                                                              URL: endpoint
                                                       parameters: params
                                                            error: &error];
@@ -483,8 +483,8 @@ static TwitterNetwork *model = nil;
                                     networkPost.dateCreate = [NSString currentDate];
                                     self.copyComplition (networkPostCopy, nil);
                                 } else {
-                                    NSError *connectionError = [NSError errorWithMessage: musErrorConnection
-                                                                            andCodeError: musErrorConnectionCode];
+                                    NSError *connectionError = [NSError errorWithMessage: MUSConnectionError
+                                                                            andCodeError: MUSConnectionErrorCode];
                                     networkPostCopy.reason = MUSErrorConnection;
                                     self.copyComplition (networkPostCopy, connectionError);
                                     return;
@@ -532,15 +532,15 @@ static TwitterNetwork *model = nil;
  */
 
 - (void) mediaIDForTwitter : (ImageToPost*) imageToPost withComplition : (Complition) block {
-    NSString *endpoint = musTwitterURL_Media_Upload;
+    NSString *endpoint = MUSTwitterURL_Media_Upload;
     
     NSData* imageData = UIImageJPEGRepresentation(imageToPost.image, imageToPost.quality);
     
-    NSDictionary *parameters = @{ musTwitterParameter_Media : [imageData base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed ]};
+    NSDictionary *parameters = @{ MUSTwitterParameter_Media : [imageData base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed ]};
     NSError *error = nil;
     
     TWTRAPIClient *client = [[Twitter sharedInstance] APIClient];
-    NSURLRequest *request = [client URLRequestWithMethod : musPOST
+    NSURLRequest *request = [client URLRequestWithMethod : MUSPOST
                                                      URL : endpoint
                                               parameters : parameters
                                                    error : &error];
@@ -560,11 +560,11 @@ static TwitterNetwork *model = nil;
                                 //block (nil, jsonError);
                                 return;
                             }
-                            NSString *mediaId = jsonData [musTwitterJSONParameterForMediaID];
+                            NSString *mediaId = jsonData [MUSTwitterJSONParameterForMediaID];
                             block (mediaId, nil);
                         } else {
-                            NSError *connectionError = [NSError errorWithMessage : musErrorConnection
-                                                                    andCodeError : musErrorConnectionCode];
+                            NSError *connectionError = [NSError errorWithMessage : MUSConnectionError
+                                                                    andCodeError : MUSConnectionErrorCode];
                             block (nil, connectionError);
                             return;
                         }

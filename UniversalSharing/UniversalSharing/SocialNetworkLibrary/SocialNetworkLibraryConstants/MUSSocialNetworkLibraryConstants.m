@@ -88,54 +88,54 @@ NSString* const MUSTwitterLocationParameter_Latitude = @"lat";
 NSString* const MUSTwitterLocationParameter_Longituge = @"long";
 
 NSString *const MUSTwitterURL_Statuses_Show = @"https://api.twitter.com/1.1/statuses/show.json";
-NSString *const musTwitterURL_Users_Show = @"https://api.twitter.com/1.1/users/show.json";
-NSString* const musTwitterURL_Geo_Search = @"https://api.twitter.com/1.1/geo/search.json";
-NSString* const musTwitterURL_Statuses_Update = @"https://api.twitter.com/1.1/statuses/update.json";
-NSString* const musTwitterURL_Media_Upload = @"https://upload.twitter.com/1.1/media/upload.json";
+//NSString *const MUSTwitterURL_Users_Show = @"https://api.twitter.com/1.1/users/show.json";
+NSString* const MUSTwitterURL_Geo_Search = @"https://api.twitter.com/1.1/geo/search.json";
+NSString* const MUSTwitterURL_Statuses_Update = @"https://api.twitter.com/1.1/statuses/update.json";
+NSString* const MUSTwitterURL_Media_Upload = @"https://upload.twitter.com/1.1/media/upload.json";
 
 
-NSString* const musTwitterParameter_Status = @"status";
-NSString* const musTwitterParameter_PlaceID = @"place_id";
-NSString* const musTwitterParameter_MediaID = @"media_ids";
-NSString* const musTwitterParameter_Media = @"media";
+NSString* const MUSTwitterParameter_Status = @"status";
+//NSString* const MUSTwitterParameter_PlaceID = @"place_id";
+NSString* const MUSTwitterParameter_MediaID = @"media_ids";
+NSString* const MUSTwitterParameter_Media = @"media";
 
-NSString* const musTwitterJSONParameterForMediaID = @"media_id_string";
+NSString* const MUSTwitterJSONParameterForMediaID = @"media_id_string";
 
 
 #pragma mark General Constants
 
-NSString *const musGET = @"GET";
-NSString *const musPOST = @"POST";
-NSString *const musPostSuccess = @"Your post has been sent";
-NSString *const musErrorWithDomainUniversalSharing = @"Universal Sharing library";
-NSString *const MUSNotificationPostsInfoWereUpDated = @"MUSNotificationPostsInfoWereUpDated";
-NSString *const MUSNotificationStartUpdatingPost = @"MUSNotificationStartUpdatingPost";
-NSString *const MUSNotificationStopUpdatingPost = @"MUSNotificationStopUpdatingPost";
-NSString *const MUSNetworkPostsWereUpdatedNotification = @"MUSUpdateNetworkPostNotification";
+NSString *const MUSGET = @"GET";
+NSString *const MUSPOST = @"POST";
+NSString *const MUSPostSuccess = @"Your post has been sent";
+NSString *const MUSErrorWithDomainUniversalSharing = @"Universal Sharing library";
+NSString *const MUSInfoPostsDidUpDateNotification = @"MUSInfoPostsDidUpDateNotification";
+//NSString *const MUSNotificationStartUpdatingPost = @"MUSNotificationStartUpdatingPost";
+//NSString *const MUSNotificationStopUpdatingPost = @"MUSNotificationStopUpdatingPost";
+//NSString *const MUSNetworkPostsDidUpdateNotification = @"MUSUpdateNetworkPostNotification";
 
 
 
 
 #pragma mark Error Constants
 
-NSString *const musErrorLocationDistance = @"Please, change distance of your current location! And try again!";
-NSInteger const musErrorLocationDistanceCode = 1010;
+NSString *const MUSLocationDistanceError = @"Please, change distance of your current location! And try again!";
+NSInteger const MUSLocationDistanceErrorCode = 1010;
 
-NSString *const musErrorLocationProperties = @"One of the parameters specified was missing or invalid. Please check next Location properties: \n 1) string search; \n 2) distance;";
-NSInteger const musErrorLocationPropertiesCode = 1011;
+NSString *const MUSLocationPropertiesError = @"One of the parameters specified was missing or invalid. Please check next Location properties: \n 1) string search; \n 2) distance;";
+NSInteger const MUSLocationPropertiesErrorCode = 1011;
 
-NSString *const musErrorAccesDenied = @"Access denied!";
-NSInteger const musErrorAccesDeniedCode = 1020;
+NSString *const MUSAccessError = @"Access denied!";
+NSInteger const MUSAccessErrorCode = 1020;
 
-NSString *const musErrorConnection = @"NO INTERNET CONNECTION. You can resend this post from shared posts";
-NSInteger const musErrorConnectionCode = 1030;
+NSString *const MUSConnectionError = @"NO INTERNET CONNECTION. You can resend this post from shared posts";
+NSInteger const MUSConnectionErrorCode = 1030;
 
 #pragma mark DataBase Constants
 
-NSString *const nameDataBase = @"UniversalSharing.sql";
+NSString *const MUSNameDataBase = @"UniversalSharing.sql";
 
 #pragma mark Categories
 
-NSString *const musReasonName_Shared = @"Success";
-NSString *const musReasonName_Offline = @"Offline";
-NSString *const musReasonName_Error = @"Failed";
+NSString *const MUSReasonName_Shared = @"Success";
+NSString *const MUSReasonName_Offline = @"Offline";
+NSString *const MUSReasonName_Error = @"Failed";
