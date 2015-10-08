@@ -112,6 +112,24 @@ static NSString * const reuseIdentifier = @"Cell";
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+<<<<<<< HEAD
+=======
+- (void) showUserProfile {
+    if (self.currentSocialNetwork.isLogin && self.currentSocialNetwork.isVisible) {
+        [self performSegueWithIdentifier: goToUserDetailViewControllerSegueIdentifier sender:nil];
+    }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([[segue identifier]isEqualToString : goToUserDetailViewControllerSegueIdentifier]) {
+        MUSUserDetailViewController *userDetailViewController = [MUSUserDetailViewController new];
+        userDetailViewController = [segue destinationViewController];
+        //userDetailViewController.isLogoutButtonHide = YES;
+        [userDetailViewController setNetwork: self.currentSocialNetwork];
+    }
+}
+
+>>>>>>> 5bd6c6602c204d1b3f4d55a65875cd2f25f340de
 - (void) trashButton:(id)sender {
     
     CGRect visibleRect = (CGRect){.origin = self.collectionView.contentOffset, .size = self.collectionView.bounds.size};
