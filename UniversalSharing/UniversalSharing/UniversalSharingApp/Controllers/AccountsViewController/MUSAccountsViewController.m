@@ -118,7 +118,7 @@
      */
     
     if (socialNetwork.isLogin && socialNetwork.currentUser) {
-        [self performSegueWithIdentifier: goToUserDetailViewControllerSegueIdentifier sender:socialNetwork];
+        [self performSegueWithIdentifier: MUSApp_SegueIdentifier_GoToUserDetailViewController sender:socialNetwork];
         
     } else {
         __weak MUSAccountsViewController *weakSelf = self;
@@ -139,7 +139,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     MUSUserDetailViewController *vc = [MUSUserDetailViewController new];
-    if ([[segue identifier] isEqualToString:goToUserDetailViewControllerSegueIdentifier]) {
+    if ([[segue identifier] isEqualToString:MUSApp_SegueIdentifier_GoToUserDetailViewController]) {
         vc = [segue destinationViewController];
         [vc setNetwork:sender];
     }

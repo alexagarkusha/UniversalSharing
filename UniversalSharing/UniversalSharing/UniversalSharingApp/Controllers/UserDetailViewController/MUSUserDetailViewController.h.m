@@ -11,6 +11,8 @@
 #import "MUSUserProfileCell.h"
 #import "MUSSocialNetworkLibraryHeader.h"
 #import "DataBaseManager.h"
+#import "ConstantsApp.h"
+
 @interface MUSUserDetailViewController () <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
 /*!
  @property
@@ -36,7 +38,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];    
-        self.logoutButton = [[UIBarButtonItem alloc] initWithTitle: @"Logout" style: 2 target:self action: @selector(logoutFromSocialNetwork)];
+        self.logoutButton = [[UIBarButtonItem alloc] initWithTitle: MUSApp_Button_Title_Logout style: 2 target:self action: @selector(logoutFromSocialNetwork)];
         self.navigationItem.rightBarButtonItem = self.logoutButton;
     [self setUpTitle];
     self.userPropertiesArray = @[@"profile", @"dateOfBirth", @"city", @"clientID"];
