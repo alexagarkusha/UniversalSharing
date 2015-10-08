@@ -11,11 +11,6 @@
 
 @interface ConstantsApp : NSObject
 
-typedef NS_ENUM(NSInteger, TabBarItemIndex) {
-    Share_photo,
-    Share_location,
-};
-
 typedef NS_ENUM(NSInteger, AlertButtonIndex) {
     Cancel,
     Album,
@@ -23,13 +18,8 @@ typedef NS_ENUM(NSInteger, AlertButtonIndex) {
     Remove,
 };
 
-typedef NS_ENUM(NSInteger, FilterInColumnType) {
-    ByNetworkType,
-    ByShareReason,
-};
 
 typedef NS_ENUM(NSInteger, DetailPostVC_CellType) {
-    //GalleryOfPhotosCellType,
     PostDescriptionCellType,
     CommentsAndLikesCellType,
     PostLocationCellType,

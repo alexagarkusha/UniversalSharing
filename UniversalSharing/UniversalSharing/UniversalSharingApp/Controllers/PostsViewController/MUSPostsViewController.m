@@ -37,10 +37,6 @@
  */
 @property (nonatomic, strong) UITableView *tableView;
 /*!
- @abstract type of column in custom drop down menu for filtering posts.
- */
-@property (nonatomic, assign) FilterInColumnType columnType;
-/*!
  @abstract predicate Network Type.
  */
 @property (nonatomic, assign) NSInteger predicateNetworkType;
