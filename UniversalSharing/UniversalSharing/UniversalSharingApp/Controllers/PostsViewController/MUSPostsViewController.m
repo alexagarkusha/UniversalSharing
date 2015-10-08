@@ -76,7 +76,7 @@
     [[NSNotificationCenter defaultCenter]
                             addObserver : self
                                selector : @selector(updateArrayPosts)
-                                   name : MUSNotificationPostsInfoWereUpDated
+                                   name : MUSInfoPostsDidUpDateNotification
                                  object : nil];
 }
 

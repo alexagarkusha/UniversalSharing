@@ -118,7 +118,7 @@ static FacebookNetwork *model = nil;
         if (error) {
             block(nil, [self errorFacebook]);
         } else if (result.isCancelled) {
-            NSError *accessError = [NSError errorWithMessage: musErrorAccesDenied andCodeError:musErrorAccesDeniedCode];
+            NSError *accessError = [NSError errorWithMessage: MUSAccessError andCodeError:MUSAccessErrorCode];
             block(nil, accessError);
         } else {
             
@@ -150,7 +150,7 @@ static FacebookNetwork *model = nil;
     __weak FacebookNetwork *weakSell = self;
     FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]initWithGraphPath: MUSFacebookGraphPath_Me
                                                                   parameters: @{ MUSFacebookParameter_Fields: MUSFacebookParametrsRequest}
-                                                                  HTTPMethod: musGET];
+                                                                  HTTPMethod: MUSGET];
     
     [request startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection,
                                           id result,
@@ -182,7 +182,7 @@ static FacebookNetwork *model = nil;
 - (void) obtainArrayOfPlaces: (Location *)location withComplition: (Complition) block {
     if (!location.q || !location.latitude || !location.longitude || !location.distance || [location.latitude floatValue] < -90.0f || [location.latitude floatValue] > 90.0f || [location.longitude floatValue] < -180.0f  || [location.longitude floatValue] > 180.0f) {
         
-        NSError *error = [NSError errorWithMessage: musErrorLocationProperties andCodeError: musErrorLocationPropertiesCode];
+        NSError *error = [NSError errorWithMessage: MUSLocationPropertiesError andCodeError: MUSLocationPropertiesErrorCode];
         return block (nil, error);
     }
     
@@ -196,7 +196,7 @@ static FacebookNetwork *model = nil;
     
     FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc] initWithGraphPath:  MUSFacebookGraphPath_Search
                                                                    parameters:  params
-                                                                   HTTPMethod:  musGET];
+                                                                   HTTPMethod:  MUSGET];
     
     [request startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection,
                                           id result,
@@ -216,7 +216,7 @@ static FacebookNetwork *model = nil;
             if (placesArray.count != 0) {
                 block (placesArray, nil);
             }   else {
-                NSError *error = [NSError errorWithMessage: musErrorLocationDistance andCodeError: musErrorLocationDistanceCode];
+                NSError *error = [NSError errorWithMessage: MUSLocationDistanceError andCodeError: MUSLocationDistanceErrorCode];
                 block (nil, error);
             }
         } else {
@@ -339,7 +339,7 @@ static FacebookNetwork *model = nil;
     FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]
                                   initWithGraphPath: MUSFacebookGraphPath_Me_Feed
                                   parameters: params
-                                  HTTPMethod: musPOST];
+                                  HTTPMethod: MUSPOST];
     
     [connection addRequest:request completionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
         if (!error) {
@@ -389,7 +389,7 @@ static FacebookNetwork *model = nil;
         FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]
                                       initWithGraphPath: MUSFacebookGraphPath_Me_Photos
                                       parameters: params
-                                      HTTPMethod: musPOST];
+                                      HTTPMethod: MUSPOST];
         [connection addRequest: request
              completionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
                  counterOfImages ++;
@@ -523,7 +523,7 @@ static FacebookNetwork *model = nil;
     NSString *stringPath = [NSString stringWithFormat:@"/%@/likes",postID];
     FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]initWithGraphPath: stringPath
                                                                   parameters: params
-                                                                  HTTPMethod: musGET];
+                                                                  HTTPMethod: MUSGET];
     [connection addRequest:request
          completionHandler:^(FBSDKGraphRequestConnection *innerConnection, NSDictionary *result, NSError *error) {
              
@@ -539,7 +539,7 @@ static FacebookNetwork *model = nil;
     NSString *stringPath = [NSString stringWithFormat:@"/%@/comments", postID];
     FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]initWithGraphPath: stringPath
                                                                   parameters: params
-                                                                  HTTPMethod: musGET];
+                                                                  HTTPMethod: MUSGET];
     [connection addRequest:request
          completionHandler:^(FBSDKGraphRequestConnection *innerConnection, NSDictionary *result, NSError *error) {
              

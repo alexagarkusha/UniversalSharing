@@ -251,7 +251,7 @@ static MultySharingManager *model = nil;
 }
 
 - (void) updatePostInfoNotification {
-    [[NSNotificationCenter defaultCenter] postNotificationName:MUSNotificationPostsInfoWereUpDated object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:MUSInfoPostsDidUpDateNotification object:nil];
 }
 
 - (void) startSharePostNotification {

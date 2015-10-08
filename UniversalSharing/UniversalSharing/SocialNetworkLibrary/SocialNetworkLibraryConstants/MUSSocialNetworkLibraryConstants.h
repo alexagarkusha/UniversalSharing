@@ -119,54 +119,54 @@ FOUNDATION_EXPORT NSString *const MUSTwitterLocationParameter_Latitude;
 FOUNDATION_EXPORT NSString *const MUSTwitterLocationParameter_Longituge;
 
 FOUNDATION_EXPORT NSString *const MUSTwitterURL_Statuses_Show;
-FOUNDATION_EXPORT NSString *const musTwitterURL_Users_Show;
-FOUNDATION_EXPORT NSString *const musTwitterURL_Geo_Search;
-FOUNDATION_EXPORT NSString *const musTwitterURL_Statuses_Update;
-FOUNDATION_EXPORT NSString *const musTwitterURL_Media_Upload;
+//FOUNDATION_EXPORT NSString *const MUSTwitterURL_Users_Show;
+FOUNDATION_EXPORT NSString *const MUSTwitterURL_Geo_Search;
+FOUNDATION_EXPORT NSString *const MUSTwitterURL_Statuses_Update;
+FOUNDATION_EXPORT NSString *const MUSTwitterURL_Media_Upload;
 
-FOUNDATION_EXPORT NSString *const musTwitterParameter_Status;
-FOUNDATION_EXPORT NSString *const musTwitterParameter_PlaceID;
-FOUNDATION_EXPORT NSString *const musTwitterParameter_MediaID;
-FOUNDATION_EXPORT NSString *const musTwitterParameter_Media;
+FOUNDATION_EXPORT NSString *const MUSTwitterParameter_Status;
+//FOUNDATION_EXPORT NSString *const MUSTwitterParameter_PlaceID;
+FOUNDATION_EXPORT NSString *const MUSTwitterParameter_MediaID;
+FOUNDATION_EXPORT NSString *const MUSTwitterParameter_Media;
 
-FOUNDATION_EXPORT NSString *const musTwitterJSONParameterForMediaID;
+FOUNDATION_EXPORT NSString *const MUSTwitterJSONParameterForMediaID;
 
 
 #pragma mark General Constants
 
-FOUNDATION_EXPORT NSString *const musGET;
-FOUNDATION_EXPORT NSString *const musPOST;
-FOUNDATION_EXPORT NSString *const musPostSuccess;
-FOUNDATION_EXPORT NSString *const musErrorWithDomainUniversalSharing;
-FOUNDATION_EXPORT NSString *const MUSNotificationPostsInfoWereUpDated;
-FOUNDATION_EXPORT NSString *const MUSNotificationStartUpdatingPost;
-FOUNDATION_EXPORT NSString *const MUSNotificationStopUpdatingPost;
-FOUNDATION_EXPORT NSString *const MUSNetworkPostsWereUpdatedNotification;
+FOUNDATION_EXPORT NSString *const MUSGET;
+FOUNDATION_EXPORT NSString *const MUSPOST;
+FOUNDATION_EXPORT NSString *const MUSPostSuccess;
+FOUNDATION_EXPORT NSString *const MUSErrorWithDomainUniversalSharing;
+FOUNDATION_EXPORT NSString *const MUSInfoPostsDidUpDateNotification;
+//FOUNDATION_EXPORT NSString *const MUSNotificationStartUpdatingPost;
+//FOUNDATION_EXPORT NSString *const MUSNotificationStopUpdatingPost;
+//FOUNDATION_EXPORT NSString *const MUSNetworkPostsDidUpdateNotification;
 
 
 #pragma mark Error Constants
 
-FOUNDATION_EXPORT NSString *const musErrorLocationDistance;
-FOUNDATION_EXPORT NSInteger const musErrorLocationDistanceCode;
+FOUNDATION_EXPORT NSString *const MUSLocationDistanceError;
+FOUNDATION_EXPORT NSInteger const MUSLocationDistanceErrorCode;
 
-FOUNDATION_EXPORT NSString *const musErrorLocationProperties;
-FOUNDATION_EXPORT NSInteger const musErrorLocationPropertiesCode;
+FOUNDATION_EXPORT NSString *const MUSLocationPropertiesError;
+FOUNDATION_EXPORT NSInteger const MUSLocationPropertiesErrorCode;
 
-FOUNDATION_EXPORT NSString *const musErrorAccesDenied;
-FOUNDATION_EXPORT NSInteger const musErrorAccesDeniedCode;
+FOUNDATION_EXPORT NSString *const MUSAccessError;
+FOUNDATION_EXPORT NSInteger const MUSAccessErrorCode;
 
-FOUNDATION_EXPORT NSString *const musErrorConnection;
-FOUNDATION_EXPORT NSInteger const musErrorConnectionCode;
+FOUNDATION_EXPORT NSString *const MUSConnectionError;
+FOUNDATION_EXPORT NSInteger const MUSConnectionErrorCode;
 
 #pragma mark DataBase Constants
 
-FOUNDATION_EXPORT NSString *const nameDataBase;
+FOUNDATION_EXPORT NSString *const MUSNameDataBase;
 
 #pragma mark Categories
 
-FOUNDATION_EXPORT NSString *const musReasonName_Shared;
-FOUNDATION_EXPORT NSString *const musReasonName_Offline;
-FOUNDATION_EXPORT NSString *const musReasonName_Error;
+FOUNDATION_EXPORT NSString *const MUSReasonName_Shared;
+FOUNDATION_EXPORT NSString *const MUSReasonName_Offline;
+FOUNDATION_EXPORT NSString *const MUSReasonName_Error;
 
 
 

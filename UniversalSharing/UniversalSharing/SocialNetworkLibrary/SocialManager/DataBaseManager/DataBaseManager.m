@@ -43,7 +43,7 @@ static DataBaseManager *databaseManager;
 - (NSString *) filePath {
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentDirectory=[paths objectAtIndex:0];
-    return [documentDirectory stringByAppendingPathComponent: nameDataBase];
+    return [documentDirectory stringByAppendingPathComponent: MUSNameDataBase];
 }
 
 #pragma mark - createSqliteTables

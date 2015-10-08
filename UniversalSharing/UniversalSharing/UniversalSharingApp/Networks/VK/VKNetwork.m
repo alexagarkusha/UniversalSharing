@@ -232,7 +232,7 @@ static VKNetwork *model = nil;
     
     VKRequest * request = [VKApi requestWithMethod : @"wall.getById"
                                      andParameters : params
-                                     andHttpMethod : musGET];
+                                     andHttpMethod : MUSGET];
     return request;
 }
 
@@ -244,7 +244,7 @@ static VKNetwork *model = nil;
     
     if (!location.q || !location.latitude || !location.longitude || !location.distance || [location.latitude floatValue] < -90.0f || [location.latitude floatValue] > 90.0f || [location.longitude floatValue] < -180.0f  || [location.longitude floatValue] > 180.0f) {
         
-        NSError *error = [NSError errorWithMessage: musErrorLocationProperties andCodeError: musErrorLocationPropertiesCode];
+        NSError *error = [NSError errorWithMessage: MUSLocationPropertiesError andCodeError: MUSLocationPropertiesErrorCode];
         return block (nil, error);
     }
     
@@ -258,7 +258,7 @@ static VKNetwork *model = nil;
     
     VKRequest * locationRequest = [VKApi requestWithMethod : MUSVKMethodPlacesSearch
                                              andParameters : params
-                                             andHttpMethod : musGET];
+                                             andHttpMethod : MUSGET];
     
     [locationRequest executeWithResultBlock:^(VKResponse * response)
      {
@@ -274,7 +274,7 @@ static VKNetwork *model = nil;
          if ([placesArray count] != 0) {
              block (placesArray, nil);
          }   else {
-             NSError *error = [NSError errorWithMessage: musErrorLocationDistance andCodeError: musErrorLocationDistanceCode];
+             NSError *error = [NSError errorWithMessage: MUSLocationDistanceError andCodeError: MUSLocationDistanceErrorCode];
              block (nil, error);
          }
      } errorBlock:^(NSError * error) {
@@ -537,7 +537,7 @@ static VKNetwork *model = nil;
     
     self.isLogin = NO;
     self.isVisible = YES;
-    NSError *error = [NSError errorWithMessage: musErrorAccesDenied andCodeError: musErrorAccesDeniedCode];
+    NSError *error = [NSError errorWithMessage: MUSAccessError andCodeError: MUSAccessErrorCode];
     self.copyComplition (nil, error);
     
 }
