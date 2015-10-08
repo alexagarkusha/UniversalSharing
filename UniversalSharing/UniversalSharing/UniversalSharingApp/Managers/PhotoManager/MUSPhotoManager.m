@@ -52,7 +52,7 @@ static MUSPhotoManager* sharedManager = nil;
 
 - (void) photoAlertShow {
     UIAlertView *photoAlert = [[UIAlertView alloc]
-                               initWithTitle : musAppAlertTitle_Share_Photo
+                               initWithTitle : MUSApp_MUSPhotoManager_Alert_Title_Share_Photo
                                message : nil
                                delegate : self
                                cancelButtonTitle : musAppButtonTitle_Cancel
@@ -98,7 +98,7 @@ static MUSPhotoManager* sharedManager = nil;
 }
 
 - (NSError*) cameraError {
-    NSError *error = [[NSError alloc] initWithDomain: musAppError_With_Domain_Universal_Sharing code: musAppError_NO_Camera_Code userInfo:@{ NSLocalizedFailureReasonErrorKey: musAppError_NO_Camera}];
+    NSError *error = [[NSError alloc] initWithDomain: musAppError_With_Domain_Universal_Sharing code: MUSApp_MUSPhotoManager_Error_NO_Camera_Code userInfo:@{ NSLocalizedFailureReasonErrorKey: MUSApp_MUSPhotoManager_Error_NO_Camera}];
     return error;
 }
 
@@ -114,7 +114,7 @@ static MUSPhotoManager* sharedManager = nil;
     
     if (image != nil) {
         ImageToPost *imageToPost = [[ImageToPost alloc] init];
-        UIImage *compressedImage = [UIImage scaleImage: image toSize: CGSizeMake(musAppCompressionSizePicture_By_Width, musAppCompressionSizePicture_By_Height)];
+        UIImage *compressedImage = [UIImage scaleImage: image toSize: CGSizeMake(MUSApp_MUSPhotoManager_CompressionSizePicture_By_Width, MUSApp_MUSPhotoManager_CompressionSizePicture_By_Height)];
         imageToPost.image = compressedImage;
         imageToPost.imageType = MUSJPEG;
         imageToPost.quality = 1.0f;

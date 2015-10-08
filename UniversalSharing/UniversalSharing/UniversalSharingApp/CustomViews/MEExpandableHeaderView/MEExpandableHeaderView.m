@@ -100,7 +100,7 @@
         [pageControl setNumberOfPages:pagesCount];
         [pageControl setCurrentPage:0];
    
-        UIColor *backgroundColor = BROWN_COLOR_LightMID;
+        UIColor *backgroundColor = BROWN_COLOR_WITH_ALPHA_05;
         [pageControl setBackgroundColor:backgroundColor];
         
         CGSize pageControlSize = [pageControl sizeForNumberOfPages:pagesCount];

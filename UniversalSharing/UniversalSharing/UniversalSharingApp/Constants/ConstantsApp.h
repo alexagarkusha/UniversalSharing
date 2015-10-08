@@ -71,39 +71,39 @@ FOUNDATION_EXPORT NSString *const musAppError_Empty_Post;
 
 #pragma mark - MUSPhotoManager
 
-FOUNDATION_EXPORT NSInteger const musAppCompressionSizePicture_By_Height;
-FOUNDATION_EXPORT NSInteger const musAppCompressionSizePicture_By_Width;
+FOUNDATION_EXPORT NSInteger const MUSApp_MUSPhotoManager_CompressionSizePicture_By_Height;
+FOUNDATION_EXPORT NSInteger const MUSApp_MUSPhotoManager_CompressionSizePicture_By_Width;
 
-FOUNDATION_EXPORT NSString *const musAppError_NO_Camera;
-FOUNDATION_EXPORT NSInteger const musAppError_NO_Camera_Code;
+FOUNDATION_EXPORT NSString *const MUSApp_MUSPhotoManager_Error_NO_Camera;
+FOUNDATION_EXPORT NSInteger const MUSApp_MUSPhotoManager_Error_NO_Camera_Code;
 
-FOUNDATION_EXPORT NSString *const musAppAlertTitle_Share_Photo;
-
-#pragma mark MUSPhotoManager Constants
+FOUNDATION_EXPORT NSString *const MUSApp_MUSPhotoManager_Alert_Title_Share_Photo;
 
 typedef void (^Complition)(id result, NSError *error);
 
 #pragma mark MUSAccountViewController Constants
+
+#warning NEED TO DELETE CONSTANTS
 
 FOUNDATION_EXPORT NSString *const editButtonTitle;
 FOUNDATION_EXPORT NSString *const doneButtonTitle;
 FOUNDATION_EXPORT NSString *const showButtonTitle;
 FOUNDATION_EXPORT NSString *const hideButtonTitle;
 
+FOUNDATION_EXPORT NSString *const MUSApp_Button_Title_Edit;
+FOUNDATION_EXPORT NSString *const MUSApp_Button_Title_Done;
+FOUNDATION_EXPORT NSString *const MUSApp_Button_Title_Show;
+FOUNDATION_EXPORT NSString *const MUSApp_Button_Title_Hide;
+
 #pragma mark - General constants
 
-#define BROWN_COLOR_Lightly [UIColor colorWithRed: 199.0/255.0 green: 176.0/255.0 blue: 163.0/255.0 alpha: 0.1]
-#define BROWN_COLOR_Light [UIColor colorWithRed: 199.0/255.0 green: 176.0/255.0 blue: 163.0/255.0 alpha: 0.25]
-#define BROWN_COLOR_LightMID [UIColor colorWithRed: 199.0/255.0 green: 176.0/255.0 blue: 163.0/255.0 alpha: 0.5]
-#define BROWN_COLOR_LightHIGHT [UIColor colorWithRed: 199.0/255.0 green: 176.0/255.0 blue: 163.0/255.0 alpha: 1.0]
+#define BROWN_COLOR_WITH_ALPHA_01 [UIColor colorWithRed: 199.0/255.0 green: 176.0/255.0 blue: 163.0/255.0 alpha: 0.1]
+#define BROWN_COLOR_WITH_ALPHA_025 [UIColor colorWithRed: 199.0/255.0 green: 176.0/255.0 blue: 163.0/255.0 alpha: 0.25]
+#define BROWN_COLOR_WITH_ALPHA_05 [UIColor colorWithRed: 199.0/255.0 green: 176.0/255.0 blue: 163.0/255.0 alpha: 0.5]
+#define BROWN_COLOR [UIColor colorWithRed: 199.0/255.0 green: 176.0/255.0 blue: 163.0/255.0 alpha: 1.0]
+#define DARK_BROWN_COLOR_WITH_ALPHA_07 [UIColor colorWithRed: 155.0/255.0 green: 101.0/255.0 blue: 79.0/255.0 alpha: 0.7]
+#define DARK_BROWN_COLOR [UIColor colorWithRed: 155.0/255.0 green: 101.0/255.0 blue: 79.0/255.0 alpha: 1.0]
 
-#define BROWN_COLOR_MIDLight [UIColor colorWithRed: 155.0/255.0 green: 101.0/255.0 blue: 79.0/255.0 alpha: 0.7]
-#define BROWN_COLOR_MIDLightHIGHT [UIColor colorWithRed: 155.0/255.0 green: 101.0/255.0 blue: 79.0/255.0 alpha: 1.0]
-
-
-//#define YELLOW_COLOR_Light [UIColor colorWithRed: 255.0/255.0 green: 255.0/255.0 blue: 220.0/255.0 alpha: 1.0]
-//#define YELLOW_COLOR_MidLight [UIColor colorWithRed: 255.0/255.0 green: 255.0/255.0 blue: 190.0/255.0 alpha: 1.0]
-//#define YELLOW_COLOR_UpperMid [UIColor colorWithRed: 255.0/255.0 green: 255.0/255.0 blue: 100.0/255.0 alpha: 1.0]
 FOUNDATION_EXPORT NSString *const musAppButtonTitle_Cancel;
 FOUNDATION_EXPORT NSString *const notificationUpdateCollection;
 FOUNDATION_EXPORT NSString *const musAppButtonTitle_OK;
@@ -164,8 +164,6 @@ FOUNDATION_EXPORT NSInteger const musAppPostsVC_HeightOfPostCell;
 FOUNDATION_EXPORT NSString *const musApp_ActionSheet_Title_ChooseAction;
 FOUNDATION_EXPORT NSInteger const musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithoutUserPhotos;
 FOUNDATION_EXPORT NSInteger const musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithUserPhotos;
-FOUNDATION_EXPORT NSString *const musApp_PostCell_Image_Name_CheckMarkTaken;
-FOUNDATION_EXPORT NSString *const musApp_PostCell_Image_Name_CheckMark;
 
 #pragma mark - MUSReasonCommentsAndLikesCell
 

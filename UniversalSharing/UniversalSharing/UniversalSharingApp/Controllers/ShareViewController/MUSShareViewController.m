@@ -125,10 +125,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.navigationController.navigationBar setTitleTextAttributes:
-     @{NSForegroundColorAttributeName: BROWN_COLOR_MIDLightHIGHT}];
+     @{NSForegroundColorAttributeName: DARK_BROWN_COLOR}];
 
     //[self.navigationController.navigationBar setTintColor:BROWN_COLOR_MIDLight];
-    [self.shareButtonOutlet setTintColor:BROWN_COLOR_MIDLightHIGHT];
+    [self.shareButtonOutlet setTintColor: DARK_BROWN_COLOR];
     [self.shareButtonOutlet setStyle:2];
     //self.buttonLocation.backgroundColor = BROWN_COLOR_MIDLight;
     //_fragForMultiSharing = NO;

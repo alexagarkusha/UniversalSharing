@@ -62,9 +62,9 @@
     [self initiationTableView];
     [self initiationSSARefreshControl];
     self.setWithUniquePrimaryKeysOfPost = [[NSMutableSet alloc] init];
-    [self.navigationController.navigationBar setTintColor: BROWN_COLOR_MIDLightHIGHT];
+    [self.navigationController.navigationBar setTintColor: DARK_BROWN_COLOR];
     [self.navigationController.navigationBar setTitleTextAttributes:
-         @{NSForegroundColorAttributeName: BROWN_COLOR_MIDLightHIGHT}];
+         @{NSForegroundColorAttributeName: DARK_BROWN_COLOR}];
     self.title = musApp_PostsViewController_NavigationBar_Title;
 }
 
@@ -119,7 +119,7 @@
         tableView.dataSource = self;
         tableView.delegate = self;
         tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        tableView.backgroundColor = BROWN_COLOR_Lightly;
+        tableView.backgroundColor = BROWN_COLOR_WITH_ALPHA_01;
         [self.view addSubview:tableView];
         tableView;
     });
@@ -192,7 +192,7 @@
     if (self.tableView.contentOffset.y >= 0) {
         MUSPostCell *cell = (MUSPostCell *)[tableView cellForRowAtIndexPath:indexPath];
         //cell.backgroundViewOfCell.backgroundColor = BROWN_COLOR_Light;
-        [self setCellColor: BROWN_COLOR_LightMID ForCell: cell];
+        [self setCellColor: BROWN_COLOR_WITH_ALPHA_05 ForCell: cell];
     }
 }
 

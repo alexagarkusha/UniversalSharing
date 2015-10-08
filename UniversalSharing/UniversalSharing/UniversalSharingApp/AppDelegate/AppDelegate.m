@@ -79,9 +79,9 @@
 {
     UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
     tabBarController.selectedViewController=[tabBarController.viewControllers objectAtIndex: 1];
-    [[UITabBar appearance] setSelectedImageTintColor: BROWN_COLOR_MIDLightHIGHT];
+    [[UITabBar appearance] setSelectedImageTintColor: DARK_BROWN_COLOR];
     [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary  dictionaryWithObjectsAndKeys: [UIColor darkGrayColor], NSForegroundColorAttributeName, nil] forState:UIControlStateNormal];
-    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary  dictionaryWithObjectsAndKeys:BROWN_COLOR_MIDLight, NSForegroundColorAttributeName, nil] forState:UIControlStateSelected];
+    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary  dictionaryWithObjectsAndKeys:DARK_BROWN_COLOR, NSForegroundColorAttributeName, nil] forState:UIControlStateSelected];
     
 }
 

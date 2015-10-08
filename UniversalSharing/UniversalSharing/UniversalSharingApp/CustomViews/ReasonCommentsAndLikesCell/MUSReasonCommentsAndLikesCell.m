@@ -95,7 +95,7 @@
 
 - (void) leftBorder {
     CALayer *leftBorder = [CALayer layer];
-    leftBorder.backgroundColor = [BROWN_COLOR_MIDLight CGColor];
+    leftBorder.backgroundColor = [DARK_BROWN_COLOR_WITH_ALPHA_07 CGColor];
     leftBorder.frame = CGRectMake(0, 0, 3.0f, CGRectGetHeight (self.backgroundViewOfCell.frame) + 1);
     [self.backgroundViewOfCell.layer addSublayer: leftBorder];
 }
