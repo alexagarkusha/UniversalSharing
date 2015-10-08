@@ -65,7 +65,7 @@
     [self.navigationController.navigationBar setTintColor: DARK_BROWN_COLOR];
     [self.navigationController.navigationBar setTitleTextAttributes:
          @{NSForegroundColorAttributeName: DARK_BROWN_COLOR}];
-    self.title = musApp_PostsViewController_NavigationBar_Title;
+    self.title = MUSApp_MUSPostsViewController_NavigationBar_Title;
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -180,7 +180,7 @@
     Post *post = [[MUSPostManager manager].arrayOfPosts objectAtIndex: indexPath.section];
     self.view.userInteractionEnabled = NO;
 //    if (![self.setWithUniquePrimaryKeysOfPost containsObject: [NSString stringWithFormat: @"%ld", (long)post.primaryKey]]) {
-    [self performSegueWithIdentifier: goToDetailPostViewControllerSegueIdentifier sender: post];
+    [self performSegueWithIdentifier: MUSApp_SegueIdentifier_GoToDetailPostViewController sender: post];
 //    }
 }
 
@@ -214,7 +214,7 @@
 
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([[segue identifier] isEqualToString:goToDetailPostViewControllerSegueIdentifier]) {
+    if ([[segue identifier] isEqualToString:MUSApp_SegueIdentifier_GoToDetailPostViewController]) {
         MUSDetailPostViewController * detailPostViewController = (MUSDetailPostViewController*)[segue destinationViewController];
         detailPostViewController.delegate = self;
         detailPostViewController = [segue destinationViewController];

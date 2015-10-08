@@ -21,7 +21,7 @@
     if (self) {
         [UIView commitAnimations];
         self.layer.masksToBounds = YES;
-        [self setImage:[UIImage imageNamed: musAppButton_ImageName_AddPhoto] forState:UIControlStateNormal];
+        [self setImage:[UIImage imageNamed: MUSApp_Image_Name_AddPhoto] forState:UIControlStateNormal];
         [self.imageView setContentMode : UIViewContentModeScaleAspectFit];
 //        [self addPhotobuttonAnimationStart];
 //        [NSTimer scheduledTimerWithTimeInterval : 4.0f

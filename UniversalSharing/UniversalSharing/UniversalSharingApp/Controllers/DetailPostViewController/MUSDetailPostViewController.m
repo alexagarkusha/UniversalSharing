@@ -85,10 +85,6 @@
 - (void) viewWillAppear:(BOOL)animated {
     [self.tableView reloadData];
     [super viewWillAppear : YES];
-    [[NSNotificationCenter defaultCenter] addObserver : self
-                                             selector : @selector(showPhotosOnCollectionView :)
-                                                 name : notificationShowImagesInCollectionView
-                                               object : nil];
 }
 
 - (void) viewDidDisappear:(BOOL)animated {
@@ -172,13 +168,9 @@
     }
     
     if (!isPostConnect && ![[MultySharingManager sharedManager] queueOfPosts: self.currentPost.primaryKey]) {
-        self.shareButton = [[UIBarButtonItem alloc] initWithTitle : musAppButtonTitle_Share style:2 target:self action: @selector(sendPost)];
+        self.shareButton = [[UIBarButtonItem alloc] initWithTitle : MUSApp_Button_Title_Share style:2 target:self action: @selector(sendPost)];
         self.navigationItem.rightBarButtonItem = self.shareButton;
     }
-    
-//    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle: musAppButtonTitle_Back style:2 target:self action: @selector(backToThePostsViewController)];
-//    self.navigationItem.leftBarButtonItem = backButton;
-//    self.title = self.currentSocialNetwork.name;
 }
 
 #pragma mark initiation CurrentSocialNetwork
@@ -257,30 +249,10 @@
 }
 
 
-- (BOOL) isPostEmpty {
-    if ([self.currentPost.postDescription isEqualToString:@""] && !self.currentPost.arrayImagesUrl.count) {
-        [self showAlertWithMessage: musAppError_Empty_Post];
-        self.view.userInteractionEnabled = YES;
-        [self stopActivityIndicatorAnimating];
-        return YES;
-    }
-    return NO;
-}
-
-#pragma mark BackToThePostsViewController
-/*!
- @method
- @abstract back to the posts view controller
- */
-- (void) backToThePostsViewController {
-    // back to the Posts ViewController. If user did some changes in post - show alert. And then update post.
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return musAppDetailPostVC_NumberOfRows;
+    return MUSApp_MUSDetailPostViewController_NumberOfRowsInTableView;
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -364,11 +336,6 @@
     }
 }
 
-#pragma mark - MUSPostLocationCellDelegate
-
-- (void) changeLocationForPost {
-    [self performSegueWithIdentifier: goToLocationViewControllerSegueIdentifier sender:nil];
-}
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([[segue identifier]isEqualToString : @"goToDitailPostCollectionViewController"]) {
@@ -381,31 +348,23 @@
 #pragma mark - error alert with error and alert with message
 
 - (void) showErrorAlertWithError : (NSError*) error {
-    UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle : Error
+    UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle : MUSApp_Error_With_Domain_Universal_Sharing
                                                          message : [error localizedFailureReason]
                                                         delegate : nil
-                                               cancelButtonTitle : musAppButtonTitle_OK
+                                               cancelButtonTitle : MUSApp_Button_Title_OK
                                                otherButtonTitles : nil];
     [errorAlert show];
 }
 
 - (void) showAlertWithMessage : (NSString*) message {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle : musAppError_With_Domain_Universal_Sharing
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle : MUSApp_Error_With_Domain_Universal_Sharing
                                                     message : message
                                                    delegate : nil
-                                          cancelButtonTitle : musAppButtonTitle_OK
+                                          cancelButtonTitle : MUSApp_Button_Title_OK
                                           otherButtonTitles : nil];
     [alert show];
 }
 
-- (void) showUpdateAlert  {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle : musAppError_With_Domain_Universal_Sharing
-                                                    message : musAppDetailPostVC_UpdatePostAlert
-                                                   delegate : self
-                                          cancelButtonTitle : musAppButtonTitle_Cancel
-                                          otherButtonTitles : musAppButtonTitle_OK, nil];
-    [alert show];
-}
 
 #pragma mark - UIScrollViewDelegate
 

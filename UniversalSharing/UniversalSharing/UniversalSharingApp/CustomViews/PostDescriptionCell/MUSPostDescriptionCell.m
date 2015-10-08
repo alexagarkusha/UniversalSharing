@@ -43,13 +43,13 @@
     }
     UITextView *calculationView = [[UITextView alloc] init];
     NSDictionary *options = @{ NSFontAttributeName: [UIFont
-                            fontWithName : musApp_PostDescriptionCell_TextView_Font_Name
-                                    size : musApp_PostDescriptionCell_TextView_Font_Size]};
+                            fontWithName : MUSApp_MUSPostDescriptionCell_TextView_Font_Name
+                                    size : MUSApp_MUSPostDescriptionCell_TextView_Font_Size]};
     NSAttributedString* attrString = [[NSAttributedString alloc] initWithString : postDescription
                                                                      attributes : options];
     [calculationView setAttributedText : attrString];
-    CGSize size = [calculationView sizeThatFits: CGSizeMake ([UIScreen mainScreen].bounds.size.width - musApp_PostDescriptionCell_TextView_LeftConstraint - musApp_PostDescriptionCell_TextView_RightConstraint, FLT_MAX)];
-    CGFloat heightOfRow = size.height + musApp_PostDescriptionCell_TextView_BottomConstraint + musApp_PostDescriptionCell_TextView_TopConstraint;
+    CGSize size = [calculationView sizeThatFits: CGSizeMake ([UIScreen mainScreen].bounds.size.width - MUSApp_MUSPostDescriptionCell_TextView_LeftConstraint - MUSApp_MUSPostDescriptionCell_TextView_RightConstraint, FLT_MAX)];
+    CGFloat heightOfRow = size.height + MUSApp_MUSPostDescriptionCell_TextView_BottomConstraint + MUSApp_MUSPostDescriptionCell_TextView_TopConstraint;
     return heightOfRow;
 }
 
@@ -63,8 +63,8 @@
 
 - (void) initialParametersOfTextInTextView : (NSString*) text {
     NSDictionary *options = @{ NSFontAttributeName: [UIFont
-                fontWithName : musApp_PostDescriptionCell_TextView_Font_Name
-                        size : musApp_PostDescriptionCell_TextView_Font_Size]};
+                fontWithName : MUSApp_MUSPostDescriptionCell_TextView_Font_Name
+                        size : MUSApp_MUSPostDescriptionCell_TextView_Font_Size]};
     NSAttributedString* attributedString = [[NSAttributedString alloc] initWithString : text
                                                                            attributes : options];
     [self.postDescriptionTextView setAttributedText : attributedString];

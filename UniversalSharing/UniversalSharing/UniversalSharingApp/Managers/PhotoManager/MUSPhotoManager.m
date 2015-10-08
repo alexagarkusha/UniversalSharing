@@ -55,8 +55,8 @@ static MUSPhotoManager* sharedManager = nil;
                                initWithTitle : MUSApp_MUSPhotoManager_Alert_Title_Share_Photo
                                message : nil
                                delegate : self
-                               cancelButtonTitle : musAppButtonTitle_Cancel
-                               otherButtonTitles : musAppButtonTitle_Album, musAppButtonTitle_Camera, nil];
+                               cancelButtonTitle : MUSApp_Button_Title_Cancel
+                               otherButtonTitles : MUSApp_Button_Title_Album, MUSApp_Button_Title_Camera, nil];
     photoAlert.tag = 0;
     [photoAlert show];
 }
@@ -98,7 +98,7 @@ static MUSPhotoManager* sharedManager = nil;
 }
 
 - (NSError*) cameraError {
-    NSError *error = [[NSError alloc] initWithDomain: musAppError_With_Domain_Universal_Sharing code: MUSApp_MUSPhotoManager_Error_NO_Camera_Code userInfo:@{ NSLocalizedFailureReasonErrorKey: MUSApp_MUSPhotoManager_Error_NO_Camera}];
+    NSError *error = [[NSError alloc] initWithDomain: MUSApp_Error_With_Domain_Universal_Sharing code: MUSApp_MUSPhotoManager_Error_NO_Camera_Code userInfo:@{ NSLocalizedFailureReasonErrorKey: MUSApp_MUSPhotoManager_Error_NO_Camera}];
     return error;
 }
 

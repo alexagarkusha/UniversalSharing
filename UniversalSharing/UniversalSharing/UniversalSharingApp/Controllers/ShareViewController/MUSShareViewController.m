@@ -172,7 +172,7 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
-    if (![self.galeryView obtainArrayWithChosenPics].count && [self.messageTextView.text isEqualToString: kPlaceholderText] && self.messageTextView.textColor == [UIColor lightGrayColor]) {
+    if (![self.galeryView obtainArrayWithChosenPics].count && [self.messageTextView.text isEqualToString: MUSApp_TextView_PlaceholderText] && self.messageTextView.textColor == [UIColor lightGrayColor]) {
         self.shareButtonOutlet.enabled = NO;
         [self.sharePhotoButton setTintColor:[UIColor blackColor]];
     }
@@ -237,7 +237,7 @@
         sheet.title = self.address;
         sheet.delegate = self;
         [sheet addButtonWithTitle: @"Delete"];
-        sheet.cancelButtonIndex = [sheet addButtonWithTitle:musAppButtonTitle_Cancel];
+        sheet.cancelButtonIndex = [sheet addButtonWithTitle:MUSApp_Button_Title_Cancel];
         [sheet showInView:self.view];
     }
 }
@@ -245,10 +245,10 @@
 
 - (IBAction)btnShareLocationTapped:(id)sender {
     if (!_currentSocialNetwork || !_currentSocialNetwork.isLogin || !_currentSocialNetwork.isVisible) {
-        [self showAlertWithMessage: musAppError_Logged_Into_Social_Networks];
+        //[self showAlertWithMessage: musAppError_Logged_Into_Social_Networks];
         return;
     } else {
-        [self userCurrentLocation];
+        //[self userCurrentLocation];
     }
 }
 
@@ -306,7 +306,7 @@
     NSDictionary* attrs = @{NSFontAttributeName:
                                 [UIFont preferredFontForTextStyle:UIFontTextStyleBody]};
     NSAttributedString* attrString = [[NSAttributedString alloc]
-                                      initWithString: kPlaceholderText
+                                      initWithString: MUSApp_TextView_PlaceholderText
                                       attributes:attrs];
     
     
@@ -347,13 +347,13 @@
     /*
      text : "write something"
      */
-    self.messageTextView.text = kPlaceholderText;
+    self.messageTextView.text = MUSApp_TextView_PlaceholderText;
     self.messageTextView.textColor = [UIColor lightGrayColor];
     self.messageTextView.tag = 0;
 }
 
 - (void) initialParametersOfMessageTextViewWhenStartingEditingText {
-    self.messageTextView.text = changePlaceholderWhenStartEditing;
+    self.messageTextView.text = MUSApp_TextView_PlaceholderWhenStartEditingTextView;
     self.messageTextView.textColor = [UIColor blackColor];
     self.messageTextView.tag = 1;
 }
@@ -548,7 +548,7 @@
         return;
     }
      _arrayChosenNetworksForPost = arrayChosenNetworksForPost;
-    if ([self.messageTextView.text length] >= 117 && flagTwitter) {
+    if ([self.messageTextView.text length] >= MUSApp_TextView_Twitter_NumberOfAllowedLetters && flagTwitter) {
         UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle : @"Your tweet exceeds the limit of text and will be cut"
                                                              message : @"Continue sharing?"
                                                             delegate : self
@@ -652,7 +652,7 @@
         self.post = [[Post alloc] init];
     }
     self.post.place = self.place;
-    if (![self.messageTextView.text isEqualToString: kPlaceholderText]) {
+    if (![self.messageTextView.text isEqualToString: MUSApp_TextView_PlaceholderText]) {
         self.post.postDescription = self.messageTextView.text;
     } else {
         self.post.postDescription = @"";
@@ -704,7 +704,7 @@
         [self initialParametersOfMessageTextViewWhenStartingEditingText];
     }
 //    if (_currentSocialNetwork.networkType != Twitters) {
-    return textView.text.length + (text.length - range.length) <= countOfAllowedLettersInTextView;
+    return textView.text.length + (text.length - range.length) <= MUSApp_MUSShareViewController_NumberOfAllowedLettersInTextView;
 //    } else {
 //        return textView.text.length + (text.length - range.length) <= musApp_TextView_CountOfAllowedLetters_ForTwitter;
 //    }
@@ -722,7 +722,7 @@
 }
 
 - (void)textViewDidChangeSelection:(UITextView *)textView {
-    if ([textView.text isEqualToString: kPlaceholderText] && textView.textColor == [UIColor lightGrayColor]) {
+    if ([textView.text isEqualToString: MUSApp_TextView_PlaceholderText] && textView.textColor == [UIColor lightGrayColor]) {
         [self.messageTextView setSelectedRange:NSMakeRange(0, 0)];
     }
 }
@@ -800,8 +800,8 @@
  @param without
  */
 - (void) obtainChosenImage {
-    if ([[self.galeryView obtainArrayWithChosenPics] count] == countOfAllowedPics) {
-        [self showAlertWithMessage : musAppAlertTitle_NO_Pics_Anymore];
+    if ([[self.galeryView obtainArrayWithChosenPics] count] == MUSApp_MUSShareViewController_NumberOfAllowedPics) {
+        [self showAlertWithMessage : MUSApp_MUSShareViewController_Alert_Message_No_Pics_Anymore];
         return;
     }
     __weak MUSShareViewController *weakSelf = self;
@@ -815,11 +815,6 @@
     }];
 }
 
-#pragma mark - ShareLocationToolBarItemClick
-
-- (void) userCurrentLocation {
-    [self performSegueWithIdentifier: goToLocationViewControllerSegueIdentifier sender:nil];
-}
 
 #pragma mark - error alert with error and alert with message
 #warning "Same methods :("
@@ -827,16 +822,16 @@
     UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle : @"NO INTERNET CONNECTION"//Error
                                                          message : @"You can resend this post from shared posts"//[error localizedFailureReason]
                                                         delegate : nil
-                                               cancelButtonTitle : musAppButtonTitle_OK
+                                               cancelButtonTitle : MUSApp_Button_Title_OK
                                                otherButtonTitles : nil];
     [errorAlert show];
 }
 
 - (void) showAlertWithMessage : (NSString*) message {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle : musAppError_With_Domain_Universal_Sharing
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle : MUSApp_Error_With_Domain_Universal_Sharing
                                                     message : message
                                                    delegate : nil
-                                          cancelButtonTitle : musAppButtonTitle_OK
+                                          cancelButtonTitle : MUSApp_Button_Title_OK
                                           otherButtonTitles : nil];
     [alert show];
 }
@@ -860,7 +855,7 @@
 - (void)changeSharePhotoButtonColorAndShareButtonState: (BOOL) isPhotos {
     if (!isPhotos) {
         [self.sharePhotoButton setTintColor:[UIColor blackColor]];
-        if ([self.messageTextView.text isEqualToString:kPlaceholderText]) {
+        if ([self.messageTextView.text isEqualToString:MUSApp_TextView_PlaceholderText]) {
             self.shareButtonOutlet.enabled = NO;
         }
     } else {

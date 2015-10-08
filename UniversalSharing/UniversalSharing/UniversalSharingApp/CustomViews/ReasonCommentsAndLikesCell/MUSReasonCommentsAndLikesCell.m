@@ -59,7 +59,7 @@
     return nibArray[0];
 }
 + (CGFloat) heightForReasonCommentsAndLikesCell {
-    return musAppCommentsAndLikesCell_HeightOfRow;
+    return MUSApp_ReasonCommentsAndLikesCell_HeightOfRow;
 }
 
 - (void) configurationReasonCommentsAndLikesCell: (NetworkPost*) networkPost {

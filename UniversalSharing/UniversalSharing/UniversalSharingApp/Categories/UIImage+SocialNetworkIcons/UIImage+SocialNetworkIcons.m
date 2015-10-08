@@ -14,13 +14,13 @@
 + (UIImage*) likesIconByTypeOfSocialNetwork : (NetworkType) networkType {
     switch (networkType) {
         case MUSFacebook:
-            return [UIImage imageNamed: musAppImage_Name_FBLikeImage_grey];
+            return [UIImage imageNamed: MUSApp_Image_Name_FBLikeImage_grey];
             break;
         case MUSVKontakt:
-            return [UIImage imageNamed: musAppImage_Name_VKLikeImage_grey];
+            return [UIImage imageNamed: MUSApp_Image_Name_VKLikeImage_grey];
             break;
         case MUSTwitters:
-            return [UIImage imageNamed: musAppImage_Name_TwitterLikeImage_grey];
+            return [UIImage imageNamed: MUSApp_Image_Name_TwitterLikeImage_grey];
             break;
         case MUSAllNetworks:
             break;
@@ -31,13 +31,13 @@
 + (UIImage*) commentsIconByTypeOfSocialNetwork : (NetworkType) networkType {
     switch (networkType) {
         case MUSFacebook:
-            return [UIImage imageNamed: musAppImage_Name_CommentsImage_grey];
+            return [UIImage imageNamed: MUSApp_Image_Name_CommentsImage_grey];
             break;
         case MUSVKontakt:
-            return [UIImage imageNamed: musAppImage_Name_CommentsImage_grey];
+            return [UIImage imageNamed: MUSApp_Image_Name_CommentsImage_grey];
             break;
         case MUSTwitters:
-            return [UIImage imageNamed: musAppImage_Name_TwitterCommentsImage_grey];
+            return [UIImage imageNamed: MUSApp_Image_Name_TwitterCommentsImage_grey];
             break;
         case MUSAllNetworks:
             break;
@@ -48,13 +48,13 @@
 + (UIImage*) greyIconOfSocialNetworkByTypeOfSocialNetwork : (NetworkType) networkType {
     switch (networkType) {
         case MUSFacebook:
-            return [UIImage imageNamed: musAppImage_Name_FBIconImage_grey];
+            return [UIImage imageNamed: MUSApp_Image_Name_FBIconImage_grey];
             break;
         case MUSVKontakt:
-            return [UIImage imageNamed: musAppImage_Name_VKIconImage_grey];
+            return [UIImage imageNamed: MUSApp_Image_Name_VKIconImage_grey];
             break;
         case MUSTwitters:
-            return [UIImage imageNamed: musAppImage_Name_TwitterIconImage_grey];
+            return [UIImage imageNamed: MUSApp_Image_Name_TwitterIconImage_grey];
             break;
         case MUSAllNetworks:
             break;

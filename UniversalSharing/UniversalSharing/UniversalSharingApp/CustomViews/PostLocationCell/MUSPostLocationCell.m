@@ -53,7 +53,7 @@
     if (!currentPost.longitude.length > 0 || [currentPost.longitude isEqualToString: @"(null)"] || !currentPost.latitude.length > 0 || [currentPost.latitude isEqualToString: @"(null)"]) {
         return 0;
     } else {
-        return musAppDetailPostVC_HeightOfPostLocationCell;
+        return MUSApp_MUSPostLocationCell_HeightOfCell;
     }
 
     

@@ -72,7 +72,7 @@
 }
 
 + (CGFloat) heightForPostCell : (Post*) post {
-    return musAppPostsVC_HeightOfPostCell + [MUSReasonCommentsAndLikesCell heightForReasonCommentsAndLikesCell] * post.arrayWithNetworkPosts.count;
+    return MUSApp_MUSPostCell_HeightOfCell + [MUSReasonCommentsAndLikesCell heightForReasonCommentsAndLikesCell] * post.arrayWithNetworkPosts.count;
 }
 
 - (void) configurationPostCell: (Post*) currentPost {
@@ -99,11 +99,11 @@
 - (void) configurateFirstImageOfPost : (Post*) currentPost {
     if (![[currentPost.arrayImagesUrl firstObject] isEqualToString: @""] || ![currentPost.arrayImagesUrl firstObject]) {
         //[self showAllImageView];
-        self.postDescriptionLabelLeftConstraint.constant = musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithUserPhotos;
+        self.postDescriptionLabelLeftConstraint.constant = MUSApp_MUSPostCell_PostDescriptionLabel_LeftConstraint_WithUserPhotos;
         [self loadImageFromPostToImageView: currentPost];
     } else {
         [self hideAllImageView];
-        self.postDescriptionLabelLeftConstraint.constant = musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithoutUserPhotos;
+        self.postDescriptionLabelLeftConstraint.constant = MUSApp_MUSPostCell_PostDescriptionLabel_LeftConstraint_WithoutUserPhotos;
     }
 }
 
@@ -138,7 +138,7 @@
     
     self.backgroundViewOfCell.backgroundColor = BROWN_COLOR_WITH_ALPHA_01;
     
-    CGRect rect = CGRectMake(0, 0, self.backgroundViewOfCell.frame.size.width, musAppPostsVC_HeightOfPostCell + [MUSReasonCommentsAndLikesCell heightForReasonCommentsAndLikesCell] * post.arrayWithNetworkPosts.count);
+    CGRect rect = CGRectMake(0, 0, self.backgroundViewOfCell.frame.size.width, MUSApp_MUSPostCell_HeightOfCell + [MUSReasonCommentsAndLikesCell heightForReasonCommentsAndLikesCell] * post.arrayWithNetworkPosts.count);
     
     UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect: rect byRoundingCorners:(UIRectCornerBottomLeft | UIRectCornerBottomRight | UIRectCornerTopLeft | UIRectCornerTopRight) cornerRadii:CGSizeMake(0, 0)];
     

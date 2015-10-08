@@ -62,7 +62,7 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
 
 
 -(UIView*)loadViewFromNib {
-    NSArray *nibObjects = [[NSBundle mainBundle]loadNibNamed:loadNibNamed owner:self options:nil];
+    NSArray *nibObjects = [[NSBundle mainBundle]loadNibNamed: MUSApp_MUSGaleryView_NibName owner:self options:nil];
     //[self initiationGestureRecognizer];
     return [nibObjects firstObject];
 }
@@ -288,11 +288,11 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
 #pragma mark - photoAlertDeletePicShow
 
 - (void) photoAlertDeletePicShow {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:titleAlertDeletePicShow
-                                                    message:messageAlertDeletePicShow
-                                                   delegate:self
-                                          cancelButtonTitle:cancelButtonTitleAlertDeletePicShow
-                                          otherButtonTitles:otherButtonTitlesAlertDeletePicShow, nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:MUSApp_MUSGaleryView_Alert_Title_DeletePic
+                                        message: MUSApp_MUSGaleryView_Alert_Message_DeletePic
+                                       delegate: self
+                              cancelButtonTitle: MUSApp_Button_Title_NO
+                              otherButtonTitles: MUSApp_Button_Title_YES, nil];
     [alert show];
 }
 
