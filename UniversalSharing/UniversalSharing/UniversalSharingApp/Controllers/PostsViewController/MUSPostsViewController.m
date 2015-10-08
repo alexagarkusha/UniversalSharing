@@ -231,11 +231,11 @@
  */
 - (NSInteger) networkTypeFromTitle : (NSString*) title {
     if ([title isEqual: musVKName]) {
-        return VKontakt;
+        return MUSVKontakt;
     } else if ([title isEqual: musFacebookName]) {
-        return Facebook;
+        return MUSFacebook;
     } else {
-        return Twitters;
+        return MUSTwitters;
     }
 }
 

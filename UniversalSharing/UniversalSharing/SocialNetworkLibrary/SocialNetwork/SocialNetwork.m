@@ -39,7 +39,7 @@
 - (void) sharePost : (Post*) post withComplition : (Complition) block andProgressLoadingBlock :(ProgressLoading) blockLoading{
 }
 
-- (void) updatePostWithComplition : (ComplitionUpdateNetworkPosts) block {
+- (void) updatePostWithComplition : (UpdateNetworkPostsComplition) block {
     
 }
 

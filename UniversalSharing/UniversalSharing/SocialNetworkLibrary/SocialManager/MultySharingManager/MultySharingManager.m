@@ -100,7 +100,7 @@ static MultySharingManager *model = nil;
             if ([result isKindOfClass: [NetworkPost class]]) {
                 networkPost = (NetworkPost*) result;
                 blockResultString = [blockResultString stringByAppendingString: [NSString stringWithFormat: @"%@ - post status is %@ \n", [NSString socialNetworkNameOfPost: networkPost.networkType], [NSString reasonNameOfPost: networkPost.reason]]];
-                if(networkPost.reason == Connect){
+                if(networkPost.reason == MUSConnect){
                     countConnectPosts++;
                 }
                 [postCopy.arrayWithNetworkPostsId addObject: [NSString stringWithFormat: @"%ld", (long)[[DataBaseManager sharedManager] saveNetworkPost: networkPost]]];
@@ -158,7 +158,7 @@ static MultySharingManager *model = nil;
                 networkPost = (NetworkPost*) result;
                 [weakMultySharingManager updateCurrentNetworkPost: networkPost andArrayOfOldNetworkPosts: postCopy.arrayWithNetworkPosts];
                 blockResultString = [blockResultString stringByAppendingString: [NSString stringWithFormat: @"%@ - post status is %@ \n", [NSString socialNetworkNameOfPost: networkPost.networkType], [NSString reasonNameOfPost: networkPost.reason]]];
-                if(networkPost.reason == Connect){
+                if(networkPost.reason == MUSConnect){
                     countConnectPosts++;
                 }
             }
@@ -181,7 +181,7 @@ static MultySharingManager *model = nil;
 - (void) updateCurrentNetworkPost : (NetworkPost*) newNetworkPost andArrayOfOldNetworkPosts : (NSMutableArray*) arrayOfOldPosts {
     for (NetworkPost *currentNetworkPost in arrayOfOldPosts) {
         if (currentNetworkPost.networkType == newNetworkPost.networkType) {
-            if (newNetworkPost.reason != Connect) {
+            if (newNetworkPost.reason != MUSConnect) {
                 return;
             } else {
                 currentNetworkPost.reason = newNetworkPost.reason;

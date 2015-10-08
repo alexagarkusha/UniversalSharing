@@ -15,13 +15,13 @@
     
     NSString *requestString = [NSString stringWithFormat:@"SELECT * FROM %@",@"NetworkPosts"];
     
-    if (networkType != AllNetworks) {
+    if (networkType != MUSAllNetworks) {
         requestString = [requestString stringByAppendingString:[NSString stringWithFormat:@" WHERE networkType = \"%ld\"", (long)networkType]];
         
-        if (reason != AllReasons) {
+        if (reason != MUSAllReasons) {
             requestString = [requestString stringByAppendingString: [NSString stringWithFormat: @" AND reson = \"%ld\"", (long)reason]];
         }
-    } else if (reason != AllReasons && networkType == AllNetworks) {
+    } else if (reason != MUSAllReasons && networkType == MUSAllNetworks) {
         requestString = [requestString stringByAppendingString: [NSString stringWithFormat: @" WHERE reson=\"%ld\"", (long)reason]];
     }
     //requestString = [requestString stringByAppendingString: [NSString stringWithFormat:@" ORDER BY dateCreate DESC"]];

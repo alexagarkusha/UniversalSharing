@@ -54,7 +54,7 @@ static VKNetwork *model = nil;
     [VKSdk initializeWithDelegate:self andAppId:musVKAppID];
     
     if (self) {
-        self.networkType = VKontakt;
+        self.networkType = MUSVKontakt;
         self.name = musVKName;
         if (![VKNetwork isLoggedIn]) {
             [self initiationPropertiesWithoutSession];
@@ -189,8 +189,8 @@ static VKNetwork *model = nil;
 }
 
 
-- (void) updatePostWithComplition: (ComplitionUpdateNetworkPosts) block {
-    NSArray * networksPostsIDs = [[DataBaseManager sharedManager] obtainNetworkPostsFromDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForNetworkPostWithReason: Connect andNetworkType: VKontakt]];
+- (void) updatePostWithComplition: (UpdateNetworkPostsComplition) block {
+    NSArray * networksPostsIDs = [[DataBaseManager sharedManager] obtainNetworkPostsFromDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForNetworkPostWithReason: MUSConnect andNetworkType: MUSVKontakt]];
     
     if (![[InternetConnectionManager connectionManager] isInternetConnection] || !networksPostsIDs.count  || (![[InternetConnectionManager connectionManager] isInternetConnection] && networksPostsIDs.count)) {
         block (@"Vkontakte, Error update network posts");
@@ -214,8 +214,8 @@ static VKNetwork *model = nil;
         for (int i = 0; i < arrayCount.count;  i++) {
             NetworkPost *networkPost = [NetworkPost create];
             networkPost.postID = [response.json[i] objectForKey:@"id"];
-            networkPost.reason = Connect;
-            networkPost.networkType = VKontakt;
+            networkPost.reason = MUSConnect;
+            networkPost.networkType = MUSVKontakt;
             networkPost.likesCount = [[[response.json[i] objectForKey:@"likes"] objectForKey:@"count"] integerValue];
             networkPost.commentsCount = [[[response.json[i] objectForKey:@"comments"] objectForKey:@"count"] integerValue];
             [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForVKUpdateNetworkPost: networkPost]];
@@ -295,13 +295,13 @@ static VKNetwork *model = nil;
 - (DistanceType) radiusForVKLocation : (NSString*) distanceString {
     NSInteger distance = [distanceString floatValue];
     if (distance <= musVKDistanceEqual300) {
-        return DistanceType1;
+        return MUSDistanceType1;
     } else if (distance > musVKDistanceEqual300 && distance <= musVKDistanceEqual2400) {
-        return DistanceType2;
+        return MUSDistanceType2;
     } else if (distance > musVKDistanceEqual2400 && distance <= musVKDistanceEqual18000) {
-        return DistanceType3;
+        return MUSDistanceType3;
     } else {
-        return DistanceType4;
+        return MUSDistanceType4;
     }
 }
 
@@ -311,8 +311,8 @@ static VKNetwork *model = nil;
 - (void) sharePost : (Post*) post withComplition : (Complition) block andProgressLoadingBlock:(ProgressLoading) blockLoading{
     if (![[InternetConnectionManager connectionManager] isInternetConnection]){
         NetworkPost *networkPost = [NetworkPost create];
-        networkPost.networkType = VKontakt;
-        networkPost.reason = Offline;
+        networkPost.networkType = MUSVKontakt;
+        networkPost.reason = MUSOffline;
         blockLoading ([NSNumber numberWithInteger: self.networkType], 1.0f);
         block(networkPost,[self errorConnection]);
         return;
@@ -359,7 +359,7 @@ static VKNetwork *model = nil;
 
 - (void) postMessageToVK : (Post*) post {
     NetworkPost *networkPost = [NetworkPost create];
-    networkPost.networkType = VKontakt;
+    networkPost.networkType = MUSVKontakt;
     __block NetworkPost *networkPostCopy = networkPost;
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     
@@ -385,12 +385,12 @@ static VKNetwork *model = nil;
 
 //>>>>>>> b977834042062c2a59ebac2d636324646a88f47f
     [request executeWithResultBlock: ^(VKResponse *response) {
-        networkPostCopy.reason = Connect;
+        networkPostCopy.reason = MUSConnect;
         networkPostCopy.dateCreate = [NSString currentDate];
         networkPostCopy.postID = [[response.json objectForKey:@"post_id"] stringValue];
         self.copyComplition (networkPostCopy, nil);
     } errorBlock: ^(NSError *error) {
-        networkPostCopy.reason = ErrorConnection;
+        networkPostCopy.reason = MUSErrorConnection;
         self.copyComplition (networkPostCopy, [self errorVkontakte]);
     }];
     
@@ -405,7 +405,7 @@ static VKNetwork *model = nil;
     __block NSUInteger numberOfImagesInPost = [post.arrayImages count];
     __block int counterOfImages = 0;
     NetworkPost *networkPost = [NetworkPost create];
-    networkPost.networkType = VKontakt;
+    networkPost.networkType = MUSVKontakt;
     __block NetworkPost *networkPostCopy = networkPost;
     
     NSInteger userId = [self.currentUser.clientID integerValue];
@@ -458,17 +458,17 @@ static VKNetwork *model = nil;
             
             
             networkPostCopy.postID = [[response.json objectForKey:@"post_id"] stringValue];
-            networkPostCopy.reason = Connect;
+            networkPostCopy.reason = MUSConnect;
             networkPostCopy.dateCreate = [NSString currentDate];
             self.copyComplition (networkPostCopy, nil);
         } errorBlock: ^(NSError *error) {
-            networkPostCopy.reason = ErrorConnection;
+            networkPostCopy.reason = MUSErrorConnection;
             self.copyComplition (networkPostCopy, [self errorVkontakte]);
         }];
     } errorBlock: ^(NSError *error) {
         counterOfImages++;
         if (counterOfImages == numberOfImagesInPost) {
-            networkPostCopy.reason = ErrorConnection;
+            networkPostCopy.reason = MUSErrorConnection;
             self.copyComplition (networkPostCopy, [self errorVkontakte]);
         }
     }];
@@ -481,10 +481,10 @@ static VKNetwork *model = nil;
 
 - (VKImageParameters*) imageForVKNetwork : (ImageToPost*) imageToPost {
     switch (imageToPost.imageType) {
-        case PNG:
+        case MUSPNG:
             return [VKImageParameters pngImage];
             break;
-        case JPEG:
+        case MUSJPEG:
             if (imageToPost.quality > 0) {
                 return [VKImageParameters jpegImageWithQuality: imageToPost.quality];
                 break;

@@ -166,7 +166,7 @@
 - (void) initiationNavigationBar {
     BOOL isPostConnect = YES;
     for (NetworkPost *currentNetworkPost in self.currentPost.arrayWithNetworkPosts) {
-        if (currentNetworkPost.reason != Connect) {
+        if (currentNetworkPost.reason != MUSConnect) {
             isPostConnect = NO;
         }
     }
@@ -458,7 +458,7 @@
         [weakSelf.tableView reloadData];
 
         for (NetworkPost *networkPost in weakSelf.currentPost.arrayWithNetworkPosts) {
-            if (networkPost.reason != Connect) {
+            if (networkPost.reason != MUSConnect) {
                 weakSelf.shareButton.enabled = YES;
             } else {
                 [weakSelf.navigationItem.rightBarButtonItem setTintColor:[UIColor clearColor]];

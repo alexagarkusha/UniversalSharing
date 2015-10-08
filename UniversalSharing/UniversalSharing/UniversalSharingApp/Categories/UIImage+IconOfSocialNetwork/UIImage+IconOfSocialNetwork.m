@@ -12,16 +12,16 @@
 
 + (UIImage*) iconOfSocialNetworkForNetworkPost : (NetworkPost*) networkPost {
     switch (networkPost.networkType) {
-        case Facebook:
+        case MUSFacebook:
             return [UIImage imageNamed: musAppImage_Name_FBIconImage_grey];
             break;
-        case VKontakt:
+        case MUSVKontakt:
             return [UIImage imageNamed: musAppImage_Name_VKIconImage_grey];
             break;
-        case Twitters:
+        case MUSTwitters:
             return [UIImage imageNamed: musAppImage_Name_TwitterIconImage_grey];
             break;
-        case AllNetworks:
+        case MUSAllNetworks:
             break;
     }
     return nil;

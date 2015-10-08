@@ -135,7 +135,7 @@ static NSString * const reuseIdentifier = @"Cell";
     CGRect visibleRect = (CGRect){.origin = self.collectionView.contentOffset, .size = self.collectionView.bounds.size};
     CGPoint visiblePoint = CGPointMake(CGRectGetMidX(visibleRect), CGRectGetMidY(visibleRect));
     NSIndexPath *visibleIndexPath = [self.collectionView indexPathForItemAtPoint:visiblePoint];
-    if (_arrayOfPics.count && _currentReasonType != Connect) {
+    if (_arrayOfPics.count && _currentReasonType != MUSConnect) {
         [_arrayOfPics removeObjectAtIndex: visibleIndexPath.row];
         
         if (_arrayOfPics.count && visibleIndexPath.row != 0) {

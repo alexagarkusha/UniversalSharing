@@ -12,13 +12,13 @@
 
 + (NSString*) reasonNameOfPost : (ReasonType) reasonType {
     switch (reasonType) {
-        case Connect:
+        case MUSConnect:
             return musReasonName_Shared;
             break;
-        case ErrorConnection:
+        case MUSErrorConnection:
             return musReasonName_Error;
             break;
-        case Offline:
+        case MUSOffline:
             return musReasonName_Offline;
             break;
         default:

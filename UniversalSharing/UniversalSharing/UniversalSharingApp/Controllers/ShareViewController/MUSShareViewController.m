@@ -850,7 +850,7 @@
         MUSDetailPostCollectionViewController *vc = [MUSDetailPostCollectionViewController new];        
         vc = [segue destinationViewController];
         vc.isEditableCollectionView = YES;
-        [vc setObjectsWithArrayOfPhotos: self.arrayPicsForDetailCollectionView withCurrentSocialNetwork: _currentSocialNetwork indexPicTapped:self.indexPicTapped andReasonTypeOfPost: AllReasons];
+        [vc setObjectsWithArrayOfPhotos: self.arrayPicsForDetailCollectionView withCurrentSocialNetwork: _currentSocialNetwork indexPicTapped:self.indexPicTapped andReasonTypeOfPost: MUSAllReasons];
     }
     
 }

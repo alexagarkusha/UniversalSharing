@@ -18,13 +18,13 @@
    // User *user = [[User alloc] init];
     
     switch (networkType) {
-        case Facebook:
+        case MUSFacebook:
             return [User createUserFromFB: dict];
             break;
-        case VKontakt:
+        case MUSVKontakt:
            return [User createUserFromVK: dict];
             break;
-        case Twitters:
+        case MUSTwitters:
             return [User createUserFromTwitter: dict];
             break;
         default:
@@ -46,7 +46,7 @@
         currentUser.username = [userDictionary objectForKey : musFacebookParseUser_Name];
         currentUser.firstName = [userDictionary objectForKey :musFacebookParseUser_First_Name];
         currentUser.lastName = [userDictionary objectForKey : musFacebookParseUser_Last_Name];
-        currentUser.networkType = Facebook;
+        currentUser.networkType = MUSFacebook;
         /////////////////////////////////////for database
         currentUser.isLogin = 1;
         currentUser.isVisible = 1;
@@ -72,7 +72,7 @@
         
         currentUser.firstName = [userDictionary objectForKey : musVKParseUser_First_Name];
         currentUser.lastName = [userDictionary objectForKey : musVKParseUser_Last_Name];
-        currentUser.networkType = VKontakt;
+        currentUser.networkType = MUSVKontakt;
         currentUser.clientID = [NSString stringWithFormat: @"%@", [userDictionary objectForKey : musVKParseUser_ID]];
         currentUser.photoURL = [userDictionary objectForKey : musVKParseUser_Photo_Url];
         /////////////////////////////////////for database
@@ -93,7 +93,7 @@
     currentUser.clientID = userDictionary.userID;
     currentUser.lastName = userDictionary.screenName;
     currentUser.firstName = userDictionary.name;
-    currentUser.networkType = Twitters;
+    currentUser.networkType = MUSTwitters;
     /////////////////////////////////////for database
     currentUser.isLogin = 1;
     currentUser.isVisible = 1;

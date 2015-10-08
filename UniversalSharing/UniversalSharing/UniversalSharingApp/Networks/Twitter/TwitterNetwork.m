@@ -49,7 +49,7 @@ static TwitterNetwork *model = nil;
     [TwitterKit startWithConsumerKey:musTwitterConsumerKey consumerSecret:musTwitterConsumerSecret];
     [Fabric with : @[TwitterKit]];
     if (self) {
-        self.networkType = Twitters;
+        self.networkType = MUSTwitters;
         self.name = musTwitterName;
         if (![[Twitter sharedInstance ]session]) {
             [self initiationPropertiesWithoutSession];
@@ -207,8 +207,8 @@ static TwitterNetwork *model = nil;
      }];
 }
 
-- (void) updatePostWithComplition: (ComplitionUpdateNetworkPosts) block {
-    NSArray * networksPostsIDs = [[DataBaseManager sharedManager] obtainNetworkPostsFromDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForNetworkPostWithReason: Connect andNetworkType: Twitters]];
+- (void) updatePostWithComplition: (UpdateNetworkPostsComplition) block {
+    NSArray * networksPostsIDs = [[DataBaseManager sharedManager] obtainNetworkPostsFromDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForNetworkPostWithReason: MUSConnect andNetworkType: MUSTwitters]];
     
     if (![[InternetConnectionManager connectionManager] isInternetConnection] || !networksPostsIDs.count || (![[InternetConnectionManager connectionManager] isInternetConnection] && networksPostsIDs.count)) {
         block (@"Twitter, Error update network posts");
@@ -335,8 +335,8 @@ static TwitterNetwork *model = nil;
 - (void) sharePost:(Post *)post withComplition:(Complition)block andProgressLoadingBlock:(ProgressLoading)blockLoading {
         if (![[InternetConnectionManager connectionManager] isInternetConnection]){
             NetworkPost *networkPost = [NetworkPost create];
-            networkPost.reason = Offline;
-            networkPost.networkType = Twitters;
+            networkPost.reason = MUSOffline;
+            networkPost.networkType = MUSTwitters;
             block(networkPost,[self errorConnection]);
             blockLoading ([NSNumber numberWithInteger: self.networkType], 1.0f);
             [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
@@ -384,7 +384,7 @@ static TwitterNetwork *model = nil;
     //[preparedRequest setTimeoutInterval:10] ;
     
     NetworkPost *networkPost = [NetworkPost create];
-    networkPost.networkType = Twitters;
+    networkPost.networkType = MUSTwitters;
     __block NetworkPost* networkPostCopy = networkPost;
     
     [client sendTwitterRequest:preparedRequest
@@ -399,16 +399,16 @@ static TwitterNetwork *model = nil;
                                                                                        error:&jsonError];
                             if (jsonError) {
                                 //[self errorTwitter];
-                                networkPostCopy.reason = ErrorConnection;
+                                networkPostCopy.reason = MUSErrorConnection;
                                 self.copyComplition (networkPostCopy, [self errorTwitter]);
                                 return;
                             }
                             networkPostCopy.postID = [[jsonData objectForKey:@"id"]stringValue];
-                            networkPostCopy.reason = Connect;
+                            networkPostCopy.reason = MUSConnect;
                             networkPostCopy.dateCreate = [NSString currentDate];
                             self.copyComplition (networkPostCopy, nil);
                         }else{
-                            networkPostCopy.reason = ErrorConnection;
+                            networkPostCopy.reason = MUSErrorConnection;
                             self.copyComplition (networkPostCopy, [self errorTwitter]);
                         }
                     }];
@@ -423,7 +423,7 @@ static TwitterNetwork *model = nil;
 
 - (void) postImagesToTwitter : (Post*) post {
     NetworkPost *networkPost = [NetworkPost create];
-    networkPost.networkType = Twitters;
+    networkPost.networkType = MUSTwitters;
     __block NetworkPost *networkPostCopy = networkPost;
     [self mediaIdsForTwitter : post withComplition:^(id result, NSError *error) {
         
@@ -459,7 +459,7 @@ static TwitterNetwork *model = nil;
                                                       parameters: params
                                                            error: &error];
             if (error) {
-                networkPostCopy.reason = ErrorConnection;
+                networkPostCopy.reason = MUSErrorConnection;
                 self.copyComplition (networkPostCopy, [self errorTwitter]);
                 return;
             }
@@ -474,24 +474,24 @@ static TwitterNetwork *model = nil;
                                                                                              options:NSJSONReadingMutableContainers
                                                                                                error:&jsonError];
                                     if (jsonError) {
-                                        networkPostCopy.reason = ErrorConnection;
+                                        networkPostCopy.reason = MUSErrorConnection;
                                         self.copyComplition (networkPostCopy, [self errorTwitter]);
                                         return;
                                     }
                                     networkPostCopy.postID = [[jsonData objectForKey:@"id"] stringValue];
-                                    networkPostCopy.reason = Connect;
+                                    networkPostCopy.reason = MUSConnect;
                                     networkPost.dateCreate = [NSString currentDate];
                                     self.copyComplition (networkPostCopy, nil);
                                 } else {
                                     NSError *connectionError = [NSError errorWithMessage: musErrorConnection
                                                                             andCodeError: musErrorConnectionCode];
-                                    networkPostCopy.reason = ErrorConnection;
+                                    networkPostCopy.reason = MUSErrorConnection;
                                     self.copyComplition (networkPostCopy, connectionError);
                                     return;
                                 }
                             }];
         } else {
-            networkPostCopy.reason = ErrorConnection;
+            networkPostCopy.reason = MUSErrorConnection;
             self.copyComplition (networkPostCopy, error);
         }
     }];

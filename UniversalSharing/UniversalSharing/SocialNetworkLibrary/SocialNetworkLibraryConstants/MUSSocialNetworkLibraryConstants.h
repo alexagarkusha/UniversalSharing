@@ -14,39 +14,39 @@ typedef void (^Complition)(id result, NSError *error);
 typedef void (^ProgressLoadingComplition)(float result);
 typedef void (^ProgressLoadingImagesToVK)(int objectOfLoading, long long bytesLoaded, long long bytesTotal);
 typedef void (^ProgressLoading)(id currentNetworkType, float result);
-typedef void (^ComplitionUpdateNetworkPosts)(id result);
-typedef void (^ComplitionWithArrays)(id arrayLogin, id arrayHidden, id arrayUnactive, NSError *error);
+typedef void (^UpdateNetworkPostsComplition)(id result);
+////go apptypedef void (^ComplitionWithArrays)(id arrayLogin, id arrayHidden, id arrayUnactive, NSError *error);
 
 #pragma mark Types
 
 typedef NS_ENUM (NSInteger, NetworkType) {
-    AllNetworks,
-    Facebook,
-    Twitters,
-    VKontakt
+    MUSAllNetworks,
+    MUSFacebook,
+    MUSTwitters,
+    MUSVKontakt
 };
 
 typedef NS_ENUM (NSInteger, ImageType) {
-    PNG,
-    JPEG
+    MUSPNG,
+    MUSJPEG
 };
 
 
 typedef NS_ENUM (NSInteger, DistanceType) {
-    DistanceType1,
-    DistanceType2,
-    DistanceType3,
-    DistanceType4
+    MUSDistanceType1,
+    MUSDistanceType2,
+    MUSDistanceType3,
+    MUSDistanceType4
 };
 
 typedef NS_ENUM (NSInteger, ReasonType) {
-    AllReasons,
-    Offline,
-    ErrorConnection,
-    Connect
+    MUSAllReasons,
+    MUSOffline,
+    MUSErrorConnection,
+    MUSConnect
 };
 
-
+//go app
 #pragma mark Facebook Constants
 
 FOUNDATION_EXPORT NSString *const musFacebookTitle;
