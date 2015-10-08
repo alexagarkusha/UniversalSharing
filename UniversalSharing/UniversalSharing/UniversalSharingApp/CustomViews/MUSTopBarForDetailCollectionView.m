@@ -60,12 +60,12 @@
 
 - (void) awakeFromNib {
     //self.buttonBack.tintColor = BROWN_COLOR_LightHIGHT;
-    [self.buttonBack setTitleColor: BROWN_COLOR_LightHIGHT forState:UIControlStateNormal];
+    [self.buttonBack setTitleColor: BROWN_COLOR forState:UIControlStateNormal];
 
 }
 
 - (void) initializeLableCountImages:(NSString *)stringLableCountImages {
-    self.lableCountImages.textColor = BROWN_COLOR_LightHIGHT;
+    self.lableCountImages.textColor = BROWN_COLOR;
     self.lableCountImages.text = stringLableCountImages;
 }
 

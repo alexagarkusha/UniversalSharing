@@ -40,7 +40,7 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     if (!self.color) {
-        self.color = BROWN_COLOR_MIDLightHIGHT;
+        self.color = DARK_BROWN_COLOR;
     }
 
     CGContextSetStrokeColorWithColor(context, self.color.CGColor);

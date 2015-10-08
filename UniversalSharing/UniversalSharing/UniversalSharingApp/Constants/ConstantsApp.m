@@ -47,21 +47,28 @@ NSString *const musAppError_Empty_Post = @"This post could not be sent because i
 
 #pragma mark - MUSPhotoManager
 
-NSInteger const musAppCompressionSizePicture_By_Height = 800;
-NSInteger const musAppCompressionSizePicture_By_Width = 800;
+NSInteger const MUSApp_MUSPhotoManager_CompressionSizePicture_By_Height = 800;
+NSInteger const MUSApp_MUSPhotoManager_CompressionSizePicture_By_Width = 800;
 
-NSString *const musAppError_NO_Camera = @"Device has no camera";
-NSInteger const musAppError_NO_Camera_Code = 1500;
-NSString *const musAppAlertTitle_Share_Photo = @"Share photo";
+NSString *const MUSApp_MUSPhotoManager_Error_NO_Camera = @"Device has no camera";
+NSInteger const MUSApp_MUSPhotoManager_Error_NO_Camera_Code = 1500;
+NSString *const MUSApp_MUSPhotoManager_Alert_Title_Share_Photo = @"Share photo";
 
 
 
 #pragma mark MUSAccountViewController Constants
 
+#warning NEED TO DELETE CONSTANTS
+
 NSString *const editButtonTitle = @"Edit";
 NSString *const doneButtonTitle = @"Done";
 NSString *const showButtonTitle = @"Show";
 NSString *const hideButtonTitle = @"Hide";
+
+NSString *const MUSApp_Button_Title_Edit = @"Edit";
+NSString *const MUSApp_Button_Title_Done = @"Done";
+NSString *const MUSApp_Button_Title_Show = @"Show";
+NSString *const MUSApp_Button_Title_Hide = @"Hide";
 
 #pragma mark - General constants
 NSString *const notificationImagePickerForCollection = @"notificationImagePickerForCollection";
@@ -119,8 +126,6 @@ NSInteger const musAppPostsVC_HeightOfPostCell = 96;
 NSString *const musApp_ActionSheet_Title_ChooseAction = @"Choose action";
 NSInteger const musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithoutUserPhotos = 12;
 NSInteger const musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithUserPhotos = 90;
-NSString *const musApp_PostCell_Image_Name_CheckMarkTaken = @"checkMarkTaken.jpeg";
-NSString *const musApp_PostCell_Image_Name_CheckMark = @"checkMark.jpeg";
 
 #pragma mark - MUSReasonCommentsAndLikesCell
 

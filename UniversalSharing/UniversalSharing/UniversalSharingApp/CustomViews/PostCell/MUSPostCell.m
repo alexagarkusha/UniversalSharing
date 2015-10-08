@@ -82,7 +82,7 @@
     //self.updatingPostLabel.hidden = YES;
     [self configuratePostDescriptionLabelForPost: currentPost];
     [self configurateFirstImageOfPost: currentPost];
-    self.commentsAndLikesPostTableView.backgroundColor = BROWN_COLOR_Light;
+    self.commentsAndLikesPostTableView.backgroundColor = BROWN_COLOR_WITH_ALPHA_025;
 }
 
 - (void) configuratePostDescriptionLabelForPost: (Post*) post {
@@ -136,7 +136,7 @@
         [self.shapeLayer removeFromSuperlayer];
     }
     
-    self.backgroundViewOfCell.backgroundColor = BROWN_COLOR_Lightly;
+    self.backgroundViewOfCell.backgroundColor = BROWN_COLOR_WITH_ALPHA_01;
     
     CGRect rect = CGRectMake(0, 0, self.backgroundViewOfCell.frame.size.width, musAppPostsVC_HeightOfPostCell + [MUSReasonCommentsAndLikesCell heightForReasonCommentsAndLikesCell] * post.arrayWithNetworkPosts.count);
     
@@ -151,7 +151,7 @@
     self.shapeLayer.frame = rect;
     self.shapeLayer.path = maskPath.CGPath;
     self.shapeLayer.lineWidth = 3.0f;
-    self.shapeLayer.strokeColor = BROWN_COLOR_Light.CGColor;
+    self.shapeLayer.strokeColor = BROWN_COLOR_WITH_ALPHA_025.CGColor;
     self.shapeLayer.fillColor = [UIColor clearColor].CGColor;
     [self.backgroundViewOfCell.layer addSublayer: self.shapeLayer];
 

@@ -222,7 +222,7 @@
  @abstract start activity indicator animating
  */
 - (void) startActivityIndicatorAnimating {
-    self.activityIndicator.color = BROWN_COLOR_MIDLightHIGHT;
+    self.activityIndicator.color = DARK_BROWN_COLOR;
     [self.shareButton setCustomView : self.activityIndicator];
     [self.activityIndicator startAnimating];
     self.shareButton.enabled = NO;

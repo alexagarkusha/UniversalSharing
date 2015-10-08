@@ -138,7 +138,7 @@
     //self.secondView.layer.cornerRadius = 25;
     self.secondView.layer.borderWidth = 2;
     self.secondView.layer.borderColor = [UIColor blackColor].CGColor;
-    [self.imageView setBackgroundColor:BROWN_COLOR_Light];
+    [self.imageView setBackgroundColor: BROWN_COLOR_WITH_ALPHA_025];
     
 }
 

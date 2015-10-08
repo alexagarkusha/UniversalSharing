@@ -52,7 +52,7 @@ static MUSProgressBar *model = nil;
 
 -(UIView*)loadViewFromNib {
     NSArray *nibObjects = [[NSBundle mainBundle]loadNibNamed:@"MUSProgressBar" owner:self options:nil];
-    self.progressView.progressTintColor = BROWN_COLOR_MIDLight;
+    self.progressView.progressTintColor = DARK_BROWN_COLOR_WITH_ALPHA_07;
     self.progressView.progress = 0;
      self.arrayOfImageView = [[NSArray alloc] initWithObjects: self.imageViewPostThird, self.imageViewPostSecond, self.imageViewPostFirst, nil];
     //[self initiationGestureRecognizer];

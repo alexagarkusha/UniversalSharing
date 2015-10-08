@@ -14,7 +14,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
-    self.backgroundColor = BROWN_COLOR_Lightly;
+    self.backgroundColor = BROWN_COLOR_WITH_ALPHA_01;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
