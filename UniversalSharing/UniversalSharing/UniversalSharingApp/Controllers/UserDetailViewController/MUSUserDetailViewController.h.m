@@ -26,7 +26,7 @@
  @property
  @abstract initialization by current info of current user
  */
-@property (strong, nonatomic) NSArray *userPropertyArray;
+@property (strong, nonatomic) NSArray *userPropertiesArray;
 //===
 @property (weak, nonatomic) IBOutlet UITableView *userTableView;
 
@@ -35,15 +35,14 @@
 @implementation MUSUserDetailViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    if (!self.isLogoutButtonHide) {
+    [super viewDidLoad];    
         self.logoutButton = [[UIBarButtonItem alloc] initWithTitle: @"Logout" style: 2 target:self action: @selector(logoutFromSocialNetwork)];
         self.navigationItem.rightBarButtonItem = self.logoutButton;
-    }
-    
-//    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle: @"Back" style: 1 target:self action: @selector(backToNetworks)];
-//    self.navigationItem.leftBarButtonItem = backButton;
-    
+    [self setUpTitle];
+    self.userPropertiesArray = @[@"profile", @"dateOfBirth", @"city", @"clientID"];
+}
+
+- (void) setUpTitle {
     if (self.socialNetwork.networkType == MUSFacebook) {
         self.navigationItem.title = @"Facebook";
     } else if (self.socialNetwork.networkType == MUSTwitters) {
@@ -51,8 +50,6 @@
     } else {
         self.navigationItem.title = @"VKontakt";
     }
-    
-    self.userPropertyArray = @[@"profile", @"dateOfBirth", @"city", @"clientID"];
 }
 
 - (void)setNetwork:(id)socialNetwork {
@@ -67,19 +64,12 @@
     [self.socialNetwork loginOut];
     [self.navigationController popViewControllerAnimated:YES];
      self.navigationController.navigationBar.translucent = YES;
-    //[self.delegate changeArrays:self.socialNetwork];
     }
-
-- (void) backToNetworks {
-    [self.navigationController popViewControllerAnimated:YES];
-    self.navigationController.navigationBar.translucent = YES;
-    
-}
 
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.userPropertyArray count];
+    return [self.userPropertiesArray count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -100,7 +90,7 @@
         if (!cell) {
             cell = [MUSUserProfileCell generalUserInfoTableViewCell];
         }
-        [cell configurationGeneralUserInfoTableViewCellWithUser: self.socialNetwork.currentUser andCurrentProperty: [self.userPropertyArray objectAtIndex: indexPath.row]];
+        [cell configurationGeneralUserInfoTableViewCellWithUser: self.socialNetwork.currentUser andCurrentProperty: [self.userPropertiesArray objectAtIndex: indexPath.row]];
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
@@ -113,7 +103,7 @@
     if (indexPath.row == 0) {
         return 80;
     }
-    NSString *valueOfUserPropertyInfo = [self.socialNetwork.currentUser valueForKey: [self.userPropertyArray objectAtIndex: indexPath.row]];
+    NSString *valueOfUserPropertyInfo = [self.socialNetwork.currentUser valueForKey: [self.userPropertiesArray objectAtIndex: indexPath.row]];
     return [MUSUserProfileCell heightForGeneralUserInfoWithCurrentPropertyOfUser:valueOfUserPropertyInfo];
 }
 
