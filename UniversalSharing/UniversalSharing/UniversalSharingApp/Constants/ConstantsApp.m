@@ -92,15 +92,9 @@ NSString *const musAppButton_ImageName_UnknownUser = @"UnknownUser.jpg";
 #pragma mark - MUSPostsViewController
 
 NSString *const musApp_PostsViewController_NavigationBar_Title = @"Shared Posts";
-NSString *const musApp_PostsViewController_AllShareReasons = @"Status";
-NSString *const musApp_PostsViewController_AllSocialNetworks = @"All";
-NSInteger const musApp_DropDownMenu_Height = 40;
-
 
 #pragma mark - MUSPostCell
 
-//NSString *const musAppImage_Name_Comment = @"Comment.png";
-//NSString *const musAppImage_Name_Like = @"Like.png";
 NSString *const musAppImage_Name_VKIconImage = @"VK_icon.png";
 NSString *const musAppImage_Name_FBIconImage = @"Facebook_Icon.png";
 NSString *const musAppImage_Name_TwitterIconImage = @"Twitter_icon.png";
@@ -121,16 +115,6 @@ NSString *const musAppImage_Name_TwitterLikeImage_grey = @"Twitter_Like_grey.png
 NSString *const musAppImage_Name_TwitterCommentsImage_grey = @"Twitter_Comment_grey.png";
 NSString *const musAppImage_Name_CommentsImage_grey = @"Comments_grey.png";
 
-
-
-
-
-
-
-
-NSString *const musAppReasonType_Published = @"Published";
-NSString *const musAppReasonType_Offline = @"Offline";
-NSString *const musAppReasonType_Error = @"Failed";
 NSInteger const musAppPostsVC_HeightOfPostCell = 96;
 NSString *const musApp_ActionSheet_Title_ChooseAction = @"Choose action";
 NSInteger const musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithoutUserPhotos = 12;
@@ -174,17 +158,6 @@ NSInteger const musAppDetailPostVC_HeightOfGalleryOfPhotosCell_WithPhotos = 150;
 NSString *const musAppDetailPostVC_UpdatePostAlert = @"Do you want to update your Post?";
 NSInteger const musAppDetailPostVC_NumberOfRows = 3;
 
-#pragma mark - MUSCustomMapView
-
-NSInteger const musAppCustomMapView_maxZoomDistance = 450000;
-NSString *const musAppButton_ImageName_ButtonDeleteLocation = @"Button_Delete_Location.png";
-NSString *const musAppCustomMapView_PinAnnotationViewIdentifier = @"MUSAnnotation";
-
-#pragma mark - MUSLocationCell
-
-NSInteger const musAppLocationCell_LeftConstraintOfLabel = 13;
-NSInteger const musAppLocationCell_RightConstraintOfLabel = 13;
-NSInteger const musAppLocationCell_RightConstraintOfLabelWithDeletePlaceButton = 42;
 
 
 @end

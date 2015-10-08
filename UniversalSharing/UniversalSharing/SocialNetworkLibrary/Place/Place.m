@@ -50,15 +50,15 @@
 + (Place*) createPlaceFromFB : (NSDictionary *) dictionary {
     Place *currentPlace = [[Place alloc] init];
     
-    currentPlace.placeID = [dictionary objectForKey: musFacebookParsePlace_ID];
-    currentPlace.fullName = [dictionary objectForKey: musFacebookParsePlace_Name];
-    currentPlace.placeType = [dictionary objectForKey: musFacebookParsePlace_Category];
+    currentPlace.placeID = [dictionary objectForKey: MUSFacebookParsePlace_ID];
+    currentPlace.fullName = [dictionary objectForKey: MUSFacebookParsePlace_Name];
+    currentPlace.placeType = [dictionary objectForKey: MUSFacebookParsePlace_Category];
     
-    NSDictionary *locationFBDictionary = [dictionary objectForKey: musFacebookParsePlace_Location];
-    currentPlace.country = [locationFBDictionary objectForKey: musFacebookParsePlace_Country];
-    currentPlace.city = [locationFBDictionary objectForKey: musFacebookParsePlace_City];
-    currentPlace.longitude = [NSString stringWithFormat: @"%@", [locationFBDictionary objectForKey: musFacebookParsePlace_Longitude]];
-    currentPlace.latitude = [NSString stringWithFormat: @"%@", [locationFBDictionary objectForKey: musFacebookParsePlace_Latitude]];
+    NSDictionary *locationFBDictionary = [dictionary objectForKey: MUSFacebookParsePlace_Location];
+    currentPlace.country = [locationFBDictionary objectForKey: MUSFacebookParsePlace_Country];
+    currentPlace.city = [locationFBDictionary objectForKey: MUSFacebookParsePlace_City];
+    currentPlace.longitude = [NSString stringWithFormat: @"%@", [locationFBDictionary objectForKey: MUSFacebookParsePlace_Longitude]];
+    currentPlace.latitude = [NSString stringWithFormat: @"%@", [locationFBDictionary objectForKey: MUSFacebookParsePlace_Latitude]];
 
     
     return currentPlace;
@@ -72,13 +72,13 @@
 + (Place*) createPlaceFromVK : (NSDictionary *) dictionary {
     Place *currentPlace = [[Place alloc] init];
     
-    currentPlace.placeID = [NSString stringWithFormat: @"%@", [dictionary objectForKey: musVKParsePlace_ID]];
-    currentPlace.fullName = [dictionary objectForKey: musVKParsePlace_Title];
-    currentPlace.placeType = [dictionary objectForKey: musVKParsePlace_Type];
-    currentPlace.country = [dictionary objectForKey: musVKParsePlace_Country];
-    currentPlace.city = [dictionary objectForKey: musVKParsePlace_City];
-    currentPlace.longitude = [NSString stringWithFormat: @"%@", [dictionary objectForKey: musVKParsePlace_Longitude]];
-    currentPlace.latitude = [NSString stringWithFormat: @"%@", [dictionary objectForKey: musVKParsePlace_Latitude]];
+    currentPlace.placeID = [NSString stringWithFormat: @"%@", [dictionary objectForKey: MUSVKParsePlace_ID]];
+    currentPlace.fullName = [dictionary objectForKey: MUSVKParsePlace_Title];
+    currentPlace.placeType = [dictionary objectForKey: MUSVKParsePlace_Type];
+    currentPlace.country = [dictionary objectForKey: MUSVKParsePlace_Country];
+    currentPlace.city = [dictionary objectForKey: MUSVKParsePlace_City];
+    currentPlace.longitude = [NSString stringWithFormat: @"%@", [dictionary objectForKey: MUSVKParsePlace_Longitude]];
+    currentPlace.latitude = [NSString stringWithFormat: @"%@", [dictionary objectForKey: MUSVKParsePlace_Latitude]];
     
     return currentPlace;
 }
@@ -91,18 +91,18 @@
 + (Place*) createPlaceFromTwitter : (NSDictionary *) dictionary {
     Place *currentPlace = [[Place alloc] init];
     
-    currentPlace.placeID   = [dictionary objectForKey: musTwitterParsePlace_ID];
-    currentPlace.placeType = [dictionary objectForKey: musTwitterParsePlace_Place_Type];
-    currentPlace.country   = [dictionary objectForKey: musTwitterParsePlace_Country];
-    currentPlace.fullName  = [dictionary objectForKey: musTwitterParsePlace_Full_Name];
+    currentPlace.placeID   = [dictionary objectForKey: MUSTwitterParsePlace_ID];
+    currentPlace.placeType = [dictionary objectForKey: MUSTwitterParsePlace_Place_Type];
+    currentPlace.country   = [dictionary objectForKey: MUSTwitterParsePlace_Country];
+    currentPlace.fullName  = [dictionary objectForKey: MUSTwitterParsePlace_Full_Name];
     
-    NSArray *centroid = [dictionary objectForKey: musTwitterParsePlace_Centroid];
+    NSArray *centroid = [dictionary objectForKey: MUSTwitterParsePlace_Centroid];
     currentPlace.latitude = [NSString stringWithFormat: @"%@", [centroid lastObject]];
     currentPlace.longitude = [NSString stringWithFormat: @"%@", [centroid firstObject]];
     
-    NSArray *containedWithinArray = [dictionary objectForKey: musTwitterParsePlace_Contained_Within];
+    NSArray *containedWithinArray = [dictionary objectForKey: MUSTwitterParsePlace_Contained_Within];
     NSDictionary *locationTwitterDictionary = [containedWithinArray firstObject];
-    currentPlace.city = [locationTwitterDictionary objectForKey: musTwitterParsePlace_Name];
+    currentPlace.city = [locationTwitterDictionary objectForKey: MUSTwitterParsePlace_Name];
     
     return currentPlace;
 }
