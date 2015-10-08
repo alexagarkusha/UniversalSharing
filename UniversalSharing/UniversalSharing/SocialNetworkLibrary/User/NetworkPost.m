@@ -30,13 +30,13 @@
         return @"";
     }
     switch (_reason) {
-        case Connect:
+        case MUSConnect:
             return @"Published";
             break;
-        case ErrorConnection:
+        case MUSErrorConnection:
             return @"Failed";
             break;
-        case Offline:
+        case MUSOffline:
             return @"Offline";
             break;
         default:

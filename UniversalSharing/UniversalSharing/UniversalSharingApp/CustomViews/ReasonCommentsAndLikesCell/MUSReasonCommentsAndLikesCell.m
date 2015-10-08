@@ -8,7 +8,6 @@
 
 #import "MUSReasonCommentsAndLikesCell.h"
 #import "ConstantsApp.h"
-#import "UIImage+IconOfSocialNetwork.h"
 #import "UIImage+SocialNetworkIcons.h"
 #import <QuartzCore/QuartzCore.h>
 #import "NSString+DateStringFromUNIXTimestamp.h"
@@ -91,7 +90,7 @@
 }
 
 - (void) configurateIconOfSocialNetworkImageViewForPost: (NetworkPost*) networkPost {
-    self.iconOfSocialNetworkImageView.image = [UIImage iconOfSocialNetworkForNetworkPost: networkPost];
+    self.iconOfSocialNetworkImageView.image = [UIImage greyIconOfSocialNetworkByTypeOfSocialNetwork: networkPost.networkType];
 }
 
 - (void) leftBorder {

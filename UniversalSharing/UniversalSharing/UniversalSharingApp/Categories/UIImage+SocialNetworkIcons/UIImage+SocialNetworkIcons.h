@@ -15,4 +15,6 @@
 
 + (UIImage*) commentsIconByTypeOfSocialNetwork : (NetworkType) networkType;
 
++ (UIImage*) greyIconOfSocialNetworkByTypeOfSocialNetwork : (NetworkType) networkType;
+
 @end

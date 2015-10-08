@@ -45,5 +45,24 @@
     return nil;
 }
 
++ (UIImage*) greyIconOfSocialNetworkByTypeOfSocialNetwork : (NetworkType) networkType {
+    switch (networkType) {
+        case MUSFacebook:
+            return [UIImage imageNamed: musAppImage_Name_FBIconImage_grey];
+            break;
+        case MUSVKontakt:
+            return [UIImage imageNamed: musAppImage_Name_VKIconImage_grey];
+            break;
+        case MUSTwitters:
+            return [UIImage imageNamed: musAppImage_Name_TwitterIconImage_grey];
+            break;
+        case MUSAllNetworks:
+            break;
+    }
+    return nil;
+}
+
+
+
 @end
 
