@@ -41,7 +41,7 @@
         self.logoutButton = [[UIBarButtonItem alloc] initWithTitle: MUSApp_Button_Title_Logout style: 2 target:self action: @selector(logoutFromSocialNetwork)];
         self.navigationItem.rightBarButtonItem = self.logoutButton;
     [self setUpTitle];
-    self.userPropertiesArray = @[MUSApp_MUSUserDetailViewController_User_Profile, MUSApp_MUSUserDetailViewController_User_DateOfBirth, MUSApp_MUSUserDetailViewController_User_City, MUSApp_MUSUserDetailViewController_User_ClientID];
+    self.userPropertiesArray = @[MUSApp_MUSUserDetailViewController_User_Profile, MUSApp_MUSUserDetailViewController_User_ClientID];
 }
 
 - (void) setUpTitle {
@@ -57,7 +57,7 @@
  @param without
  */
 - (void) logoutFromSocialNetwork {
-    [self.socialNetwork loginOut];
+    [self.socialNetwork logout];
     [self.navigationController popViewControllerAnimated:YES];
      self.navigationController.navigationBar.translucent = YES;
     }

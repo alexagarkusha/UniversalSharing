@@ -13,6 +13,22 @@
 @implementation User
 
 
++ (instancetype) create {
+    User *user = [[User alloc] init];
+    user.username = @"";
+    user.firstName = @"";
+    user.lastName = @"";
+    user.clientID = @"";
+    user.photoURL = @"";
+    user.networkType = MUSAllNetworks;
+    user.primaryKey = 0;
+    return user;
+}
+
+
+
+
+
 + (User*) createFromDictionary:(id) dict andNetworkType :(NetworkType) networkType
 {
    // User *user = [[User alloc] init];
@@ -47,10 +63,6 @@
         currentUser.firstName = [userDictionary objectForKey :MUSFacebookParseUser_First_Name];
         currentUser.lastName = [userDictionary objectForKey : MUSFacebookParseUser_Last_Name];
         currentUser.networkType = MUSFacebook;
-        /////////////////////////////////////for database
-        currentUser.isLogin = 1;
-        currentUser.isVisible = 1;
-        ///////////////////////////////////////////
         NSDictionary *pictureDictionary = [userDictionary objectForKey : MUSFacebookParseUser_Picture];
         NSDictionary *pictureDataDictionary = [pictureDictionary objectForKey : MUSFacebookParseUser_Data];
         currentUser.photoURL = [pictureDataDictionary objectForKey : MUSFacebookParseUser_Photo_Url];
@@ -66,19 +78,11 @@
 + (User*) createUserFromVK : (id) userDictionary {
     User *currentUser = [[User alloc] init];
     if ([userDictionary isKindOfClass:[NSDictionary class]]){
-        currentUser.dateOfBirth = [userDictionary objectForKey : MUSVKParseUser_BirthDate];
-        NSDictionary *cityDictionary = [userDictionary objectForKey : MUSVKParseUser_City];
-        currentUser.city = [cityDictionary objectForKey : MUSVKParseUser_Title];
-        
         currentUser.firstName = [userDictionary objectForKey : MUSVKParseUser_First_Name];
         currentUser.lastName = [userDictionary objectForKey : MUSVKParseUser_Last_Name];
         currentUser.networkType = MUSVKontakt;
         currentUser.clientID = [NSString stringWithFormat: @"%@", [userDictionary objectForKey : MUSVKParseUser_ID]];
         currentUser.photoURL = [userDictionary objectForKey : MUSVKParseUser_Photo_Url];
-        /////////////////////////////////////for database
-        currentUser.isLogin = 1;
-        currentUser.isVisible = 1;
-        ///////////////////////////////////////////
     }
     return currentUser;
 }
@@ -94,10 +98,6 @@
     currentUser.lastName = userDictionary.screenName;
     currentUser.firstName = userDictionary.name;
     currentUser.networkType = MUSTwitters;
-    /////////////////////////////////////for database
-    currentUser.isLogin = 1;
-    currentUser.isVisible = 1;
-    ///////////////////////////////////////////
     NSString *photoURL_max = userDictionary.profileImageURL;
     photoURL_max = [photoURL_max stringByReplacingOccurrencesOfString:@"_normal"
                                                            withString:@""];
@@ -114,13 +114,6 @@
         return @"";
     }
     return _username;
-}
-
-- (NSString *)dateOfBirth {
-    if (!_dateOfBirth || [_dateOfBirth isKindOfClass:[NSNull class]]) {
-        return @"";
-    }
-    return _dateOfBirth;
 }
 
 - (NSString *)firstName {

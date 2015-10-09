@@ -24,14 +24,6 @@
  */
 @property (strong, nonatomic) NSString *lastName;
 /*!
- @abstract dateOfBirth received after user logged in SocialNetwork.
-*/
-@property (strong, nonatomic) NSString *dateOfBirth;
-/*!
- @abstract city received after user logged in SocialNetwork. Like 'Berlin'
- */
-@property (strong, nonatomic) NSString *city;
-/*!
  @abstract clientID received after user logged in SocialNetwork. Like '53217400'
  */
 @property (strong, nonatomic) NSString *clientID;
@@ -44,21 +36,14 @@
  */
 @property (assign, nonatomic) NetworkType networkType;
 
-@property (assign, nonatomic) NSInteger indexPosition;
+//@property (assign, nonatomic) NSInteger indexPosition;
 /*!
  @abstract
  */
 @property (assign, nonatomic) NSInteger primaryKey;
-//////////////////////////////////////////////////////////////////////for database
-@property (assign, nonatomic) NSInteger isLogin;
 
-@property (assign, nonatomic) NSInteger isVisible;
-///////////////////////////////////////////////////////////////////////////////////////
-/*!
- @abstract return an instance of the User.
- @param dictionary takes dictionary from social network.
- @param networkType takes the type of social network (like Facebook, Twitters, Vkontakte)
-*/
++ (instancetype) create;
+
 + (User*) createFromDictionary:(id) dict andNetworkType :(NetworkType) networkType;
 
 @end

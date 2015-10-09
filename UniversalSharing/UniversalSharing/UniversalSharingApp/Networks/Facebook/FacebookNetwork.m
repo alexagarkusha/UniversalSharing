@@ -66,18 +66,18 @@ static FacebookNetwork *model = nil;
             //self.icon = self.currentUser.photoURL;
             self.icon = MUSFacebookIconName;
             self.title = [NSString stringWithFormat:@"%@ %@", self.currentUser.firstName, self.currentUser.lastName];
-            self.isVisible = self.currentUser.isVisible;
-            NSInteger indexPosition = self.currentUser.indexPosition;
+//            self.isVisible = self.currentUser.isVisible;
+//            NSInteger indexPosition = self.currentUser.indexPosition;
             //////////////////////////////////////////////////////////
             
             if ([[InternetConnectionManager connectionManager] isInternetConnection]){
                 
                 NSString *deleteImageFromFolder = self.currentUser.photoURL;
                 
-                [self obtainInfoFromNetworkWithComplition:^(SocialNetwork* result, NSError *error) {
+                [self obtainUserInfoFromNetworkWithComplition:^(SocialNetwork* result, NSError *error) {
                     [[NSFileManager defaultManager] removeItemAtPath: [deleteImageFromFolder obtainPathToDocumentsFolder:deleteImageFromFolder] error: nil];
-                    result.currentUser.isVisible = self.isVisible;
-                    result.currentUser.indexPosition = indexPosition;
+//                    result.currentUser.isVisible = self.isVisible;
+//                    result.currentUser.indexPosition = indexPosition;
                     [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUpdateUser:result.currentUser]];//editUser:result.currentUser];
                 }];
             }
@@ -101,11 +101,11 @@ static FacebookNetwork *model = nil;
 }
 
 - (void) startTimerForUpdatePosts {
-    //    self.timer = [NSTimer scheduledTimerWithTimeInterval:600.0f
-    //                                                  target:self
-    //                                                selector:@selector(updatePost)
-    //                                                userInfo:nil
-    //                                                 repeats:YES];
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:600.0f
+                                                      target:self
+                                                    selector:@selector(updatePost)
+                                                    userInfo:nil
+                                                     repeats:YES];
 }
 #pragma mark - loginInNetwork
 
@@ -127,14 +127,14 @@ static FacebookNetwork *model = nil;
             // should check if specific permissions missing
             if ([result.grantedPermissions containsObject: MUSFacebookPermission_Email]) {
                 [self startTimerForUpdatePosts];
-                [weakSell obtainInfoFromNetworkWithComplition:block];
+                [weakSell obtainUserInfoFromNetworkWithComplition:block];
             }
         }
     }];
 }
 
 
-- (void) loginOut {
+- (void) logout {
     [[MUSPostManager manager] deleteNetworkPostForNetworkType: self.networkType];
     [MUSPostManager manager].needToRefreshPosts = YES;
     [self removeUserFromDataBaseAndImageFromDocumentsFolder:self.currentUser];
@@ -146,7 +146,7 @@ static FacebookNetwork *model = nil;
 
 #pragma mark - obtainUserFromNetwork
 
-- (void) obtainInfoFromNetworkWithComplition :(Complition) block {
+- (void) obtainUserInfoFromNetworkWithComplition :(Complition) block {
     __weak FacebookNetwork *weakSell = self;
     FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]initWithGraphPath: MUSFacebookGraphPath_Me
                                                                   parameters: @{ MUSFacebookParameter_Fields: MUSFacebookParametrsRequest}
@@ -179,7 +179,7 @@ static FacebookNetwork *model = nil;
 
 #pragma mark - obtainArrayOfPlacesFromNetwork
 
-- (void) obtainArrayOfPlaces: (Location *)location withComplition: (Complition) block {
+- (void) obtainPlacesArrayForLocation: (Location *)location withComplition: (Complition) block {
     if (!location.q || !location.latitude || !location.longitude || !location.distance || [location.latitude floatValue] < -90.0f || [location.latitude floatValue] > 90.0f || [location.longitude floatValue] < -180.0f  || [location.longitude floatValue] > 180.0f) {
         
         NSError *error = [NSError errorWithMessage: MUSLocationPropertiesError andCodeError: MUSLocationPropertiesErrorCode];
@@ -227,7 +227,7 @@ static FacebookNetwork *model = nil;
 
 #pragma mark - sharePost
 
-- (void) sharePost:(Post *)post withComplition:(Complition)block andProgressLoadingBlock:(ProgressLoading)blockLoading {
+- (void) sharePost: (Post *)post withComplition:(Complition)block progressLoadingBlock:(ProgressLoading)blockLoading {
     
     if (![[InternetConnectionManager connectionManager] isInternetConnection]){
         NetworkPost *networkPost = [NetworkPost create];
@@ -269,7 +269,7 @@ static FacebookNetwork *model = nil;
         location.longitude = post.longitude;
         location.type = @"place";
         location.distance = @"500";
-        [self obtainArrayOfPlaces: location withComplition:^(id result, NSError *error) {
+        [self obtainPlacesArrayForLocation: location withComplition:^(id result, NSError *error) {
             
             if (!error) {
                 Place *firstPlace = (Place*) [result firstObject];
@@ -416,7 +416,7 @@ static FacebookNetwork *model = nil;
 
 #pragma mark - UpdateNetworkPost
 
-- (void) updatePostWithComplition : (UpdateNetworkPostsComplition) block {
+- (void) updateNetworkPostWithComplition : (UpdateNetworkPostsComplition) block {
     self.copyComplitionUpdateNetworkPosts = block;
     NSArray * networksPostsIDs = [[DataBaseManager sharedManager] obtainNetworkPostsFromDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForNetworkPostWithReason: MUSConnect andNetworkType: MUSFacebook]];
     
@@ -577,61 +577,5 @@ static FacebookNetwork *model = nil;
     return [NSError errorWithMessage: MUSFacebookError andCodeError: MUSFacebookErrorCode];
 }
 
-
-/*
- -(void) postPhotosToAlbum:(Post *) post {
- FBSDKGraphRequestConnection *connection = [[FBSDKGraphRequestConnection alloc] init];
- NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
- params[musFacebookParameter_Message] = post.postDescription;
- if (post.place.placeID)  {
- params[musFacebookParameter_Place] = post.place.placeID;
- }
- 
- // __weak NSArray *copyPostImagesArray = post.arrayImages;
- __block int numberOfPostImagesArray = post.arrayImages.count;
- __block int counterOfImages = 0;
- for (int i = 0; i < post.arrayImages.count; i++) {
- ImageToPost *imageToPost = [post.arrayImages objectAtIndex: i];
- params[musFacebookParameter_Picture] = imageToPost.image;
- FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]
- initWithGraphPath: musFacebookGraphPath_Me_Photos
- parameters: params
- HTTPMethod: musPOST];
- 
- post.postID = @"";
- 
- NetworkPost *networkPost = [NetworkPost create];
- __block NetworkPost *networkPostCopy = networkPost;
- 
- 
- 
- [connection addRequest: request
- completionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
- counterOfImages ++;
- 
- if (!error) {
- post.postID = [post.postID stringByAppendingString:[result objectForKey:@"id"]];
- 
- if (counterOfImages == numberOfPostImagesArray) {
- networkPost.reason = Connect;
- networkPost.postID = post.postID;
- 
- self.copyComplition (musPostSuccess, nil);
- [self saveOrUpdatePost: post withReason: Connect];
- [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
- }
- post.postID = [post.postID stringByAppendingString: @","];
- } else {
- if (counterOfImages == numberOfPostImagesArray) {
- [self saveOrUpdatePost: post withReason: ErrorConnection];
- self.copyComplition (nil, [self errorFacebook]);
- [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
- }
- }
- }];
- }
- [connection start];
- }
- */
 
 @end

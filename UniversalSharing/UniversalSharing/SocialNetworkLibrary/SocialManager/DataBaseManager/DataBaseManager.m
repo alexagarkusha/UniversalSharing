@@ -119,14 +119,14 @@ static DataBaseManager *databaseManager;
         sqlite3_bind_text(statement, 1, [[self checkExistedString: user.username] UTF8String], -1, SQLITE_TRANSIENT);
         sqlite3_bind_text(statement, 2, [[self checkExistedString: user.firstName] UTF8String], -1, SQLITE_TRANSIENT);
         sqlite3_bind_text(statement, 3, [[self checkExistedString: user.lastName] UTF8String], -1, SQLITE_TRANSIENT);
-        sqlite3_bind_text(statement, 4, [[self checkExistedString: user.dateOfBirth] UTF8String], -1, SQLITE_TRANSIENT);
-        sqlite3_bind_text(statement, 5, [[self checkExistedString: user.city] UTF8String], -1, SQLITE_TRANSIENT);
-        sqlite3_bind_text(statement, 6, [[self checkExistedString: user.clientID] UTF8String], -1, SQLITE_TRANSIENT);
-        sqlite3_bind_text(statement, 7, [[self checkExistedString: user.photoURL] UTF8String], -1, SQLITE_TRANSIENT);
-        sqlite3_bind_int64(statement, 8, user.isVisible);
-        sqlite3_bind_int64(statement, 9, user.isLogin);
-        sqlite3_bind_int64(statement, 10, user.indexPosition);
-        sqlite3_bind_int64(statement, 11, user.networkType);
+//        sqlite3_bind_text(statement, 4, [[self checkExistedString: user.dateOfBirth] UTF8String], -1, SQLITE_TRANSIENT);
+//        sqlite3_bind_text(statement, 5, [[self checkExistedString: user.city] UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(statement, 4, [[self checkExistedString: user.clientID] UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(statement, 5, [[self checkExistedString: user.photoURL] UTF8String], -1, SQLITE_TRANSIENT);
+//        sqlite3_bind_int64(statement, 8, user.isVisible);
+//        sqlite3_bind_int64(statement, 9, user.isLogin);
+//        sqlite3_bind_int64(statement, 10, user.indexPosition);
+        sqlite3_bind_int64(statement, 6, user.networkType);
     }
     return statement;
 }
@@ -169,14 +169,14 @@ static DataBaseManager *databaseManager;
             user.username = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 1)];
             user.firstName = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 2)];
             user.lastName = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 3)];
-            user.dateOfBirth = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 4)];
-            user.city = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 5)];
-            user.clientID = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 6)];
-            user.photoURL = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 7)];
-            user.isVisible = sqlite3_column_int(statement, 8);
-            user.isLogin = sqlite3_column_int(statement, 9);
-            user.indexPosition = sqlite3_column_int(statement, 10);
-            user.networkType = sqlite3_column_int(statement, 11);
+//            user.dateOfBirth = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 4)];
+//            user.city = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 5)];
+            user.clientID = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 4)];
+            user.photoURL = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 5)];
+//            user.isVisible = sqlite3_column_int(statement, 8);
+//            user.isLogin = sqlite3_column_int(statement, 9);
+//            user.indexPosition = sqlite3_column_int(statement, 10);
+            user.networkType = sqlite3_column_int(statement, 6);
             [arrayWithUsers addObject:user];
         }
     }

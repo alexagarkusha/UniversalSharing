@@ -124,7 +124,7 @@ static MultySharingManager *model = nil;
                 [weakMultySharingManager checkArrayWithQueueOfPosts];
             }
 
-        } andProgressLoadingBlock:^(id currentNetworkType, float result) {
+        } progressLoadingBlock:^(id currentNetworkType, float result) {
             
             float totalProgress = [weakMultySharingManager totalResultOfLoadingToSocialNetworks: arrayOfLoadingObjects withCurrentObject: currentNetworkType andResult: result];
             weakMultySharingManager.copyProgressLoading(totalProgress / numberOfSocialNetworks);
@@ -169,7 +169,7 @@ static MultySharingManager *model = nil;
                 [weakMultySharingManager checkArrayWithQueueOfPosts];
             }
 
-        } andProgressLoadingBlock:^(id currentNetworkType, float result) {
+        } progressLoadingBlock:^(id currentNetworkType, float result) {
             //NSLog(@"OBJECT = %@, result = %f", currentNetworkType, result);
             float totalProgress = [weakMultySharingManager totalResultOfLoadingToSocialNetworks: arrayOfLoadingObjects withCurrentObject: currentNetworkType andResult: result];
             weakMultySharingManager.copyProgressLoading(totalProgress / numberOfSocialNetworks);
@@ -228,7 +228,7 @@ static MultySharingManager *model = nil;
     
     for (int i = 0; i < allSocialNetworksArray.count; i++) {
         SocialNetwork *currentSocialNetwork = [allSocialNetworksArray objectAtIndex: i];
-        [currentSocialNetwork updatePostWithComplition:^(id result) {
+        [currentSocialNetwork updateNetworkPostWithComplition:^(id result) {
             counterOfSocialNetworks++;
             //NSLog(@"counter = %d", counterOfSocialNetworks);
             NSLog(@"%@", result);
