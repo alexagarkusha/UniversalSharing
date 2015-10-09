@@ -20,7 +20,7 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
 
 //===
 @property (strong, nonatomic)  UIView *view;
-@property (strong, nonatomic)  NSMutableArray *arrayWithChosenImages;
+//@property (strong, nonatomic)  NSMutableArray *arrayWithChosenImages;
 @property (strong, nonatomic)  UISwipeGestureRecognizer *pressGesture;
 
 /*!
@@ -36,6 +36,7 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
 
 @property (strong, nonatomic) MUSAddPhotoButton *addPhotoButton;
 
+@property (strong, nonatomic) Post *currentPost;
 @end
 
 @implementation MUSGaleryView
@@ -97,6 +98,9 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
     _count = 0;
 }
 
+- (void) initPost :(Post*)post {    
+    self.currentPost = post;
+}
 - (BOOL)canBecomeFirstResponder
 {
     return YES;
@@ -109,21 +113,21 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     if (section == 0) {
-        if ([self.arrayWithChosenImages count] < 4) {
+        if ([self.currentPost.arrayImages count] < 4) {
             return 1;
         } else {
             return 0;
 
         }
             }
-    return  [self.arrayWithChosenImages count];
+    return  [self.currentPost.arrayImages count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     MUSCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[MUSCollectionViewCell customCellID] forIndexPath:indexPath];
     
-    if (self.flag && [self.arrayWithChosenImages count] < 3 && _flagForDelete) {
+    if (self.flag && [self.currentPost.arrayImages count] < 3 && _flagForDelete) {
         cell.photoImageViewCell.image  = nil;
         cell.deletePhotoButtonOutlet.hidden = YES;
          _flagForDelete = NO;
@@ -141,11 +145,11 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
     
    // }
         //cell.isEditable = self.isEditableCollectionView;
-    if (indexPath.section == 0 && [self.arrayWithChosenImages count] != 4) {
+    if (indexPath.section == 0 && [self.currentPost.arrayImages count] != 4) {
         //cell.backgroundColor =  BROWN_COLOR_MIDLight;
         [cell configurationCellForFirstSection];
     }else {
-        image = self.arrayWithChosenImages[indexPath.row];
+        image = self.currentPost.arrayImages[indexPath.row];
     [cell configurationCellWithPhoto:image.image andEditableState:YES];
     }
     _flagForDelete = NO;
@@ -157,34 +161,34 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
     return CGSizeMake(self.collectionView.contentSize.height, self.collectionView.contentSize.height);
 }
 
--(void)swipeToDeleteLayout:(LSSwipeToDeleteCollectionViewLayout *)layout didEndAnimationWithCellAtIndexPath:(NSIndexPath *)indexPath didDeleteCell:(BOOL)didDelete {
-    
-    
-}
--(BOOL)swipeToDeleteLayout:(LSSwipeToDeleteCollectionViewLayout *)layout canDeleteCellAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 0) {
-        return NO;
-    }
-    return NO;//no swiping ((
-}
-
--(void)swipeToDeleteLayout:(LSSwipeToDeleteCollectionViewLayout *)layout didDeleteCellAtIndexPath:(NSIndexPath *)indexPath {
-    
-    _count++;
-        [self.arrayWithChosenImages removeObjectAtIndex: indexPath.row];
-    NSLog(@"lllll");
-    self.flag = YES;
-    _flagForDelete = YES;
-        if ([self.arrayWithChosenImages count] == 0) {
-            //self.collectionView.backgroundColor = [UIColor whiteColor];
-            self.arrayWithChosenImages = nil;
-            [self.delegate changeSharePhotoButtonColorAndShareButtonState : NO];
-            _count = 0;
-            return;
-        }
-    
-    //[self.collectionView reloadData];
-}
+//-(void)swipeToDeleteLayout:(LSSwipeToDeleteCollectionViewLayout *)layout didEndAnimationWithCellAtIndexPath:(NSIndexPath *)indexPath didDeleteCell:(BOOL)didDelete {
+//    
+//    
+//}
+//-(BOOL)swipeToDeleteLayout:(LSSwipeToDeleteCollectionViewLayout *)layout canDeleteCellAtIndexPath:(NSIndexPath *)indexPath{
+//    if (indexPath.section == 0) {
+//        return NO;
+//    }
+//    return NO;//no swiping ((
+//}
+//
+//-(void)swipeToDeleteLayout:(LSSwipeToDeleteCollectionViewLayout *)layout didDeleteCellAtIndexPath:(NSIndexPath *)indexPath {
+//    
+//    _count++;
+//        [self.currentPost.arrayImages removeObjectAtIndex: indexPath.row];
+//    NSLog(@"lllll");
+//    self.flag = YES;
+//    _flagForDelete = YES;
+//        if ([self.currentPost.arrayImages count] == 0) {
+//            //self.collectionView.backgroundColor = [UIColor whiteColor];
+//            self.arrayWithChosenImages = nil;
+//            [self.delegate changeSharePhotoButtonColorAndShareButtonState : NO];
+//            _count = 0;
+//            return;
+//        }
+//    
+//    //[self.collectionView reloadData];
+//}
 //-(void)swipeToDeleteLayout:(LSSwipeToDeleteCollectionViewLayout *)layout cellDidTranslateWithOffset:(UIOffset)offset {
 //    MUSCollectionViewCell *cell = (MUSCollectionViewCell*)[self.collectionView cellForItemAtIndexPath:self.indexForDeletePicture];
 //    cell.photoImageViewCell.alpha = 1 - offset.vertical / -75;
@@ -210,65 +214,22 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
 //    [self.arrayWithChosenImages enumerateObjectsUsingBlock:^(ImageToPost* image, NSUInteger idx, BOOL *stop) {
 //        [arrayWithImages addObject:image.image];
 //    }];
-    [self.delegate showImagesOnOtherVcWithArray : self.arrayWithChosenImages andIndexPicTapped :indexPath.row];
+    [self.delegate showImagesOnOtherVcWithArray : self.currentPost.arrayImages andIndexPicTapped :indexPath.row];
 }
-
-
-#pragma mark - initiation UILongPressGestureRecognizer
-
-//- (void) initiationGestureRecognizer {
-//    //self.pressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGesture:)];
-//    self.pressGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGesture:)];
-//    self.pressGesture.direction = UISwipeGestureRecognizerDirectionUp;
-//    //self.pressGesture.minimumPressDuration = .2;
-//    self.pressGesture.delegate = self;
-//    [self.collectionView addGestureRecognizer: self.pressGesture];
-//}
-//
-//
-//-(void)handleLongPressGesture : (UISwipeGestureRecognizer*) gestureRecognizer {
-//    
-//    if (gestureRecognizer.state != UIGestureRecognizerStateBegan) {
-//        return;
-//    }
-//    
-//    CGPoint point = [gestureRecognizer locationInView:self.collectionView];
-//    NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:point];
-//    
-//    if (!indexPath && self.isEditableCollectionView){
-//        [self notEditableCollectionView];
-//    } else if (indexPath) {
-//        if (!self.isEditableCollectionView) {
-//            [self editableCollectionView];
-//        } else {
-//            [self notEditableCollectionView];
-//        }
-//    }
-//}
-//
-//- (void) editableCollectionView {
-//    self.isEditableCollectionView = YES;
-//    [self.collectionView reloadData];
-//}
-//
-//- (void) notEditableCollectionView {
-//    self.isEditableCollectionView = NO;
-//    [self.collectionView reloadData];
-//}
 
 
 #pragma mark - passChosenImageForCollection
 
 - (void) passChosenImageForCollection :(ImageToPost*) imageForPost {
     self.flag = NO;/////////////////////////////////////////////////////////////////////////////////////////
-    if (!self.arrayWithChosenImages) {
-        self.arrayWithChosenImages = [[NSMutableArray alloc] init];
+    if (!self.currentPost.arrayImages) {
+        self.currentPost.arrayImages = [[NSMutableArray alloc] init];
     }
-    [self.arrayWithChosenImages addObject: imageForPost];
+    [self.currentPost.arrayImages addObject: imageForPost];
     
     //NSLog(@"Array with Images = %@", self.arrayWithChosenImages);
     
-    if ([self.arrayWithChosenImages count] == 1) {
+    if ([self.currentPost.arrayImages count] == 1) {
         //self.collectionView.backgroundColor = YELLOW_COLOR_Slightly;
         [self.delegate changeSharePhotoButtonColorAndShareButtonState : YES];
     }
@@ -277,13 +238,13 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
 }
 
 - (void) clearCollectionAfterPosted {
-    [self.arrayWithChosenImages removeAllObjects];
+    //[self.currentPost.arrayImages removeAllObjects];
     [self.collectionView reloadData];
 }
 
-- (NSMutableArray*) obtainArrayWithChosenPics {
-    return self.arrayWithChosenImages;
-}
+//- (NSMutableArray*) obtainArrayWithChosenPics {
+//    return self.currentPost.arrayImages;
+//}
 
 #pragma mark - photoAlertDeletePicShow
 
@@ -301,23 +262,23 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     switch (buttonIndex) {
         case YES:
-            if ( self.indexForDeletePicture.row > self.arrayWithChosenImages.count - 1 && self.arrayWithChosenImages.count != 1) {
-                [self.arrayWithChosenImages removeObjectAtIndex: self.indexForDeletePicture.row - _count];
+            if ( self.indexForDeletePicture.row > self.currentPost.arrayImages.count - 1 && self.currentPost.arrayImages.count != 1) {
+                [self.currentPost.arrayImages removeObjectAtIndex: self.indexForDeletePicture.row - _count];
                 //_flagForDelete = NO;
-            } else if(self.arrayWithChosenImages.count == 1) {
-                [self.arrayWithChosenImages removeObjectAtIndex: 0];
+            } else if(self.currentPost.arrayImages.count == 1) {
+                [self.currentPost.arrayImages removeObjectAtIndex: 0];
                  //_flagForDelete = NO;
 
             }
             
             else {
-            [self.arrayWithChosenImages removeObjectAtIndex: self.indexForDeletePicture.row];
+            [self.currentPost.arrayImages removeObjectAtIndex: self.indexForDeletePicture.row];
                 // _flagForDelete = NO;
             }
              _flagForDelete = NO;
-            if ([self.arrayWithChosenImages count] == 0) {
+            if ([self.currentPost.arrayImages count] == 0) {
                 self.collectionView.backgroundColor = [UIColor whiteColor];
-                self.arrayWithChosenImages = nil;
+                self.currentPost.arrayImages = nil;
                 [self.collectionView reloadData];
                 [self.delegate changeSharePhotoButtonColorAndShareButtonState : NO];
                 _count = 0;

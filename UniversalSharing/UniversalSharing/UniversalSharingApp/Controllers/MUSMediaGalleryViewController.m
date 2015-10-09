@@ -16,12 +16,8 @@
 #import "ConstantsApp.h"
 #import "MUSUserDetailViewController.h"
 
-#warning "method order"
-
 @interface MUSMediaGalleryViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
 
-@property (strong, nonatomic) NSMutableArray *imagesArray;
-@property (strong, nonatomic) SocialNetwork *currentSocialNetwork;
 @property (assign, nonatomic) NSInteger selectedImageIndex;
 @property (assign, nonatomic) NSInteger deletedImageIndex;
 @property (strong, nonatomic) Post *currentPost;
@@ -33,6 +29,7 @@
 @property (weak, nonatomic) IBOutlet MUSToolBarForDetailCollectionView *toolBar;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topBarHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *toolBarHeightConstraint;
+
 @end
 
 @implementation MUSMediaGalleryViewController
@@ -41,6 +38,10 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self initializeBars];    
+}
+
+- (void) initializeBars {
     self.tabBarController.tabBar.hidden = YES;
     _visibleBars = NO;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapOnCollectionView:)];
@@ -49,20 +50,18 @@ static NSString * const reuseIdentifier = @"Cell";
     [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
     
     [_topBar.buttonBack addTarget:self
-                           action:@selector(backButton:)
+                           action:@selector(doBack:)
                  forControlEvents:UIControlEventTouchUpInside];
-    [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long) _selectedImageIndex + 1, (unsigned long)[self.imagesArray count]]];
+    [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long) _selectedImageIndex + 1, (unsigned long)[self.currentPost.arrayImages count]]];
     
     [_toolBar.buttonToolBar addTarget:self
-                               action:@selector(trashButton:)
+                               action:@selector(deleteImage:)
                      forControlEvents:UIControlEventTouchUpInside];
     if (!self.isEditableCollectionView) {
         _toolBar.hidden = YES;
     }else {
-        
         _toolBar.hidden = NO;
     }
-    
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -78,69 +77,13 @@ static NSString * const reuseIdentifier = @"Cell";
     
 }
 
--(void) didTapOnCollectionView:(UIGestureRecognizer*) recognizer {
-    if (!_visibleBars) {
-        _topBarHeightConstraint.constant -= _topBar.frame.size.height;
-        _toolBarHeightConstraint.constant -= _toolBar.frame.size.height;
-        [UIView animateWithDuration: 0.4  animations:^{
-#warning "order??"
-            [self.view layoutIfNeeded];
-            [self.view setNeedsLayout];
-        }];
-        [UIView commitAnimations];
-    } else  {
-        _topBarHeightConstraint.constant += _topBar.frame.size.height;
-        _toolBarHeightConstraint.constant += _toolBar.frame.size.height;
-        [UIView animateWithDuration: 0.4  animations:^{
-            [self.view layoutIfNeeded];
-            [self.view setNeedsLayout];
-        }];
-        [UIView commitAnimations];
-    }
-    _visibleBars = (_visibleBars)? NO : YES;
-}
+#pragma mark get current post
 
-- (void) backButton:(id)sender {
-    [[NSNotificationCenter defaultCenter] postNotificationName:notificationUpdateCollection object:nil];
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void) trashButton:(id)sender {
-    NSIndexPath *visibleIndexPath = [self obtainCurrentIndexPath];
-    if (_imagesArray.count && _currentReasonType != MUSConnect) {
-        [_imagesArray removeObjectAtIndex: visibleIndexPath.row];
-        [self.collectionView reloadData];
-        
-        if (_imagesArray.count && visibleIndexPath.row != 0 && visibleIndexPath.row < _imagesArray.count ) {
-            [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long)visibleIndexPath.row + 1, (unsigned long)[self.imagesArray count]]];
-        } else if (_imagesArray.count && visibleIndexPath.row != 0) {
-            [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long)visibleIndexPath.row, (unsigned long)[self.imagesArray count]]];
-        } else if (_imagesArray.count && visibleIndexPath.row == 0) {
-            [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long)visibleIndexPath.row + 1,(unsigned long)[self.imagesArray count]]];
-        } else {
-            [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long) 0, (unsigned long)[self.imagesArray count]]];
-            [[NSNotificationCenter defaultCenter] postNotificationName:notificationUpdateCollection object:nil];
-            [self.navigationController popViewControllerAnimated:YES];
-        }        
-    }
-}
-
-//it would be changed
-- (void) setObjectsWithPost :(Post*) currentPost withCurrentSocialNetwork :(id)currentSocialNetwork andIndexPicTapped :(NSInteger) indexPicTapped {
-    self.imagesArray = currentPost.arrayImages;
-    self.selectedImageIndex = indexPicTapped;
-    self.currentSocialNetwork = currentSocialNetwork;
+- (void) sendPost :(Post*) currentPost andSelectedImageIndex :(NSInteger) selectedImageIndex {
+    self.currentPost = currentPost;
+    self.selectedImageIndex = selectedImageIndex;
     self.currentReasonType = currentPost.reason;
 }
-
-//it would be changed
-- (void) setObjectsWithArrayOfPhotos :(NSMutableArray*) arrayOfPhotos withCurrentSocialNetwork :(SocialNetwork*) currentSocialNetwork indexPicTapped :(NSInteger) indexPicTapped andReasonTypeOfPost : (ReasonType) reasonType {
-    self.imagesArray = arrayOfPhotos;
-    self.selectedImageIndex = indexPicTapped;
-    self.currentSocialNetwork = currentSocialNetwork;
-    self.currentReasonType = reasonType;
-}
-
 
 #pragma mark <UICollectionViewDataSource>
 
@@ -151,13 +94,13 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return [self.imagesArray count];
+    return [self.currentPost.arrayImages  count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:
 (NSIndexPath *)indexPath {
     MUSCollectionViewCellForDetailView *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"detailCell" forIndexPath:indexPath];
-    ImageToPost *imageToPost = [self.imagesArray objectAtIndex: indexPath.row];
+    ImageToPost *imageToPost = [self.currentPost.arrayImages  objectAtIndex: indexPath.row];
     [cell.scrollView displayImage: imageToPost.image];
     return cell;
 }
@@ -170,7 +113,7 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     NSIndexPath *visibleIndexPath = [self obtainCurrentIndexPath];
-    [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long)visibleIndexPath.row + 1, (unsigned long)[self.imagesArray count]]];
+    [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long)visibleIndexPath.row + 1, (unsigned long)[self.currentPost.arrayImages  count]]];
     _deletedImageIndex = visibleIndexPath.row;
 }
 
@@ -178,8 +121,58 @@ static NSString * const reuseIdentifier = @"Cell";
     return CGSizeMake([[UIScreen mainScreen] bounds].size.width,[[UIScreen mainScreen] bounds].size.height);
 }
 
+#pragma mark hide status bar
+
 - (BOOL)prefersStatusBarHidden {
     return YES;
+}
+
+#pragma mark Actions
+
+-(void) didTapOnCollectionView:(UIGestureRecognizer*) recognizer {
+    if (!_visibleBars) {
+        [self.view setNeedsLayout];
+        _topBarHeightConstraint.constant -= _topBar.frame.size.height;
+        _toolBarHeightConstraint.constant -= _toolBar.frame.size.height;
+        [UIView animateWithDuration: 0.4  animations:^{
+            [self.view layoutIfNeeded];
+        }];
+        [UIView commitAnimations];
+    } else  {
+        [self.view setNeedsLayout];
+        _topBarHeightConstraint.constant += _topBar.frame.size.height;
+        _toolBarHeightConstraint.constant += _toolBar.frame.size.height;
+        [UIView animateWithDuration: 0.4  animations:^{
+            [self.view layoutIfNeeded];
+        }];
+        [UIView commitAnimations];
+    }
+    _visibleBars = (_visibleBars)? NO : YES;
+}
+
+- (void) doBack:(id)sender {
+    [[NSNotificationCenter defaultCenter] postNotificationName:notificationUpdateCollection object:nil];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void) deleteImage:(id)sender {
+    NSIndexPath *visibleIndexPath = [self obtainCurrentIndexPath];
+    if (self.currentPost.arrayImages.count && _currentReasonType != MUSConnect) {
+        [self.currentPost.arrayImages  removeObjectAtIndex: visibleIndexPath.row];
+        [self.collectionView reloadData];
+        
+        if (self.currentPost.arrayImages.count && visibleIndexPath.row != 0 && visibleIndexPath.row < self.currentPost.arrayImages .count ) {
+            [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long)visibleIndexPath.row + 1, (unsigned long)[self.currentPost.arrayImages  count]]];
+        } else if (self.currentPost.arrayImages.count && visibleIndexPath.row != 0) {
+            [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long)visibleIndexPath.row, (unsigned long)[self.currentPost.arrayImages  count]]];
+        } else if (self.currentPost.arrayImages.count && visibleIndexPath.row == 0) {
+            [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long)visibleIndexPath.row + 1,(unsigned long)[self.currentPost.arrayImages  count]]];
+        } else {
+            [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long) 0, (unsigned long)[self.currentPost.arrayImages  count]]];
+            [[NSNotificationCenter defaultCenter] postNotificationName:notificationUpdateCollection object:nil];
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    }
 }
 
 @end

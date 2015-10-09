@@ -9,21 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "SocialNetwork.h"
 
-//@protocol MUSDetailPostCollectionViewControllerDelegate <NSObject>
-//@required
-//- (void) updateCollectionView;
-//@end
-
 @interface MUSMediaGalleryViewController : UIViewController
 
-//@property (nonatomic, assign) id <MUSDetailPostCollectionViewControllerDelegate> delegateDetailPostCollectionViewController;
+- (void) sendPost :(Post*) currentPost andSelectedImageIndex :(NSInteger) selectedImageIndex;
 //===
-
-//it would be changed
-- (void) setObjectsWithPost :(Post*) currentPost withCurrentSocialNetwork :(id)currentSocialNetwork andIndexPicTapped :(NSInteger) indexPicTapped;
-//it would be changed
-- (void) setObjectsWithArrayOfPhotos :(NSMutableArray*) arrayOfPhotos withCurrentSocialNetwork :(SocialNetwork*) currentSocialNetwork indexPicTapped :(NSInteger) indexPicTapped andReasonTypeOfPost : (ReasonType) reasonType;
-
 @property (assign, nonatomic) BOOL isEditableCollectionView;
 
 @end
