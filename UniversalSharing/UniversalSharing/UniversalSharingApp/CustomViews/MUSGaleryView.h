@@ -13,15 +13,14 @@
 @protocol MUSGaleryViewDelegate <NSObject>
 @required
 - (void) changeSharePhotoButtonColorAndShareButtonState: (BOOL) isPhotos;
-- (void) showImagesOnOtherVcWithArray :(NSMutableArray*) arrayPics andIndexPicTapped :(NSInteger) indexPicTapped;
+- (void) showImageBySelectedImageIndex :(NSInteger) selectedImageIndex;
 @end
 
 
 @interface MUSGaleryView : UIView 
 
 @property (nonatomic, assign) id <MUSGaleryViewDelegate> delegate;
-
-@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+//===
 @property (nonatomic, assign)  BOOL isEditableCollectionView;
 
 /*!
@@ -37,7 +36,7 @@
  */
 //- (NSArray*) obtainArrayWithChosenPics;
 
-- (void) clearCollectionAfterPosted;
+- (void) reloadCollectionView;
+- (void) setUpPost :(Post*)post;
 
-- (void) initPost :(Post*)post;
 @end

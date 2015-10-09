@@ -163,7 +163,7 @@
 //////////////////////////////////////////////////////////////////////////
     if(!self.post)
     [self createPost];
-    [self.galeryView initPost:self.post];
+    [self.galeryView setUpPost:self.post];
   
 }
 
@@ -358,6 +358,8 @@
 
 #pragma mark - Keyboard Show/Hide
 
+#warning "order [self.view layoutIfNeeded];"
+
 - (void) keyboardWillShow: (NSNotification*) notification {
     CGRect initialFrame = [[[notification userInfo] objectForKey : UIKeyboardFrameEndUserInfoKey] CGRectValue];
     CGRect convertedFrame = [self.view convertRect:initialFrame fromView:nil];
@@ -378,7 +380,7 @@
                                             self.tabBarController.tabBar.frame.size.height + self.galeryView.frame.size.height - galeryViewHeight);
     [UIView animateWithDuration: 0.3  animations:^{
         [self.view layoutIfNeeded];
-        [self.galeryView.collectionView reloadData];
+        [self.galeryView reloadCollectionView];
         [self.view setNeedsLayout];
     }];
     [UIView commitAnimations];
@@ -397,7 +399,7 @@
     
     [UIView animateWithDuration: 0.4 animations:^{
         [self.view layoutIfNeeded];
-        [self.galeryView.collectionView reloadData];
+        [self.galeryView reloadCollectionView];
         [self.view setNeedsLayout];
     }];
     [UIView commitAnimations];
@@ -644,7 +646,7 @@
 //    [self.shareLocationButton setTintColor: [UIColor blackColor]];
 //    [self.shareLocationButton setTitle: musAppButtonTitle_ShareLocation];
     //[self changeSharePhotoButtonColorAndShareButtonState:NO];
-    [self.galeryView clearCollectionAfterPosted];
+    [self.galeryView reloadCollectionView];
 }
 
 - (void) createPost { // later we would change logic , now we do for galleries)
@@ -867,9 +869,9 @@
     }
 }
 
-- (void) showImagesOnOtherVcWithArray:(NSMutableArray *)arrayPics andIndexPicTapped:(NSInteger)indexPicTapped {
+- (void) showImageBySelectedImageIndex: (NSInteger)selectedImageIndex {
     //self.arrayPicsForDetailCollectionView = arrayPics;
-    self.indexPicTapped = indexPicTapped;
+    self.indexPicTapped = selectedImageIndex;
     [self performSegueWithIdentifier: @"goToShowImages" sender:nil];
 }
 

@@ -11,10 +11,8 @@
 @interface MUSTopBarForDetailCollectionView : UIView
 
 @property (weak, nonatomic) IBOutlet UIButton *buttonBack;
-
 //===
 - (void) initializeLableCountImages:(NSString *)stringLableCountImages;
-//- (void) initializeImageView:(NSString *)stringPathImage;
 - (void) hidePropertiesWithAnimation;
 
 @end

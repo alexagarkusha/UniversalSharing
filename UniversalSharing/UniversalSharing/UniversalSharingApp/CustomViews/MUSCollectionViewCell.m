@@ -90,7 +90,7 @@
 
 
 - (IBAction)deletePhoto:(id)sender {
-    [self.delegate deletePhoto: self.indexPath];
+    [self.delegate deletePhotoBySelectedImageIndex: self.indexPath];
 }
 
 
