@@ -265,7 +265,7 @@
 #pragma Update network posts in array
 
 - (void) updateNetworkPostsInPost {
-    [[MultySharingManager sharedManager] updateNetworkPostsWithComplition:^(id result, NSError *error) {
+    [[MUSPostManager manager] updateNetworkPostsWithComplition:^(id result, NSError *error) {
         [self.tableView reloadData];
         [self.refreshControl endRefreshing];
     }];

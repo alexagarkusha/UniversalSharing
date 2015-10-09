@@ -137,8 +137,6 @@ FOUNDATION_EXPORT NSInteger const MUSApp_MUSPostLocationCell_HeightOfCell;
 #pragma mark - MUSUserDetailViewController
 
 FOUNDATION_EXPORT NSString *const MUSApp_MUSUserDetailViewController_User_Profile;
-FOUNDATION_EXPORT NSString *const MUSApp_MUSUserDetailViewController_User_DateOfBirth;
-FOUNDATION_EXPORT NSString *const MUSApp_MUSUserDetailViewController_User_City;
 FOUNDATION_EXPORT NSString *const MUSApp_MUSUserDetailViewController_User_ClientID;
 
 @end

@@ -10,6 +10,7 @@
 #import "DataBaseManager.h"
 #import "PostImagesManager.h"
 #import "MUSDatabaseRequestStringsHelper.h"
+#import "SocialManager.h"
 
 @interface MUSPostManager ()
 
@@ -46,6 +47,29 @@ static MUSPostManager *model = nil;
 - (void) updateArrayOfPost {
     [self.arrayOfPosts removeAllObjects];
     [self.arrayOfPosts addObjectsFromArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper stringForAllPosts]]];
+}
+
+- (void) updateNetworkPostsWithComplition : (Complition) block {
+    //Need to add a check isLogin socialNetwork or not in each social network?
+    
+    NSMutableArray *allSocialNetworksArray = [[SocialManager sharedManager] allNetworks];
+    __block NSUInteger numberOfActiveSocialNetworks = allSocialNetworksArray.count;
+    __block NSUInteger counterOfSocialNetworks = 0;
+    __block NSString *blockResultString = @"Result: \n";
+    
+    for (int i = 0; i < allSocialNetworksArray.count; i++) {
+        SocialNetwork *currentSocialNetwork = [allSocialNetworksArray objectAtIndex: i];
+        [currentSocialNetwork updateNetworkPostWithComplition:^(id result) {
+            counterOfSocialNetworks++;
+            //NSLog(@"counter = %d", counterOfSocialNetworks);
+            NSLog(@"%@", result);
+            
+            blockResultString = [blockResultString stringByAppendingString: [NSString stringWithFormat: @"%@, \n", result]];
+            if (counterOfSocialNetworks == numberOfActiveSocialNetworks) {
+                block (blockResultString, nil);
+            }
+        }];
+    }
 }
 
 - (void) deleteNetworkPostForNetworkType : (NetworkType) networkType {
