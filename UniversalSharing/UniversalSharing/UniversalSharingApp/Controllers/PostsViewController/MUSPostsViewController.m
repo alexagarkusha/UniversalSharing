@@ -288,7 +288,7 @@
 
 - (void) beganRefreshing {
     
-    if ([MUSPostManager manager].needToRefreshPosts || ![MUSPostManager manager].arrayOfPosts.count) {
+    if (![MUSPostManager manager].arrayOfPosts.count) {
         [self obtainArrayPosts];
         [self.refreshControl endRefreshing];
         return;

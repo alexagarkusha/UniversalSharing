@@ -27,9 +27,6 @@
 + (Place*) createFromDictionary: (NSDictionary*) dictionary andNetworkType :(NetworkType) networkType
 {
     switch (networkType) {
-        case MUSFacebook:
-            return [Place createPlaceFromFB: dictionary];
-            break;
         case MUSVKontakt:
             return [Place createPlaceFromVK: dictionary];
             break;
@@ -42,27 +39,6 @@
     return nil;
 }
 
-/*!
- @abstract return an instance of the Place for facebook network.
- @param dictionary takes dictionary from facebook network.
- */
-
-+ (Place*) createPlaceFromFB : (NSDictionary *) dictionary {
-    Place *currentPlace = [[Place alloc] init];
-    
-    currentPlace.placeID = [dictionary objectForKey: MUSFacebookParsePlace_ID];
-    currentPlace.fullName = [dictionary objectForKey: MUSFacebookParsePlace_Name];
-    currentPlace.placeType = [dictionary objectForKey: MUSFacebookParsePlace_Category];
-    
-    NSDictionary *locationFBDictionary = [dictionary objectForKey: MUSFacebookParsePlace_Location];
-    currentPlace.country = [locationFBDictionary objectForKey: MUSFacebookParsePlace_Country];
-    currentPlace.city = [locationFBDictionary objectForKey: MUSFacebookParsePlace_City];
-    currentPlace.longitude = [NSString stringWithFormat: @"%@", [locationFBDictionary objectForKey: MUSFacebookParsePlace_Longitude]];
-    currentPlace.latitude = [NSString stringWithFormat: @"%@", [locationFBDictionary objectForKey: MUSFacebookParsePlace_Latitude]];
-
-    
-    return currentPlace;
-}
 
 /*!
  @abstract return an instance of the Place for vkontakte network.

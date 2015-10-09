@@ -40,29 +40,21 @@ static PostImagesManager *model = nil;
     return arrayWithImagesUrls;
 }
 
-
-//- (void) removeAllImagesFromAllPostsByUserID :(NSString*) userID {
-//    __block NSError *error;
-//    NSArray *arrayWithPostsOfUser = [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper createStringForPostWithUserId: userID]];
-//    [arrayWithPostsOfUser enumerateObjectsUsingBlock:^(Post *post, NSUInteger idx, BOOL *stop) {
-//        
-//        if (![[post.arrayImagesUrl firstObject] isEqualToString: @""] && post.arrayImagesUrl.count > 0) {
-//            [post.arrayImagesUrl enumerateObjectsUsingBlock:^(NSString *urlImage, NSUInteger idx, BOOL *stop) {
-//                [[NSFileManager defaultManager] removeItemAtPath: [urlImage obtainPathToDocumentsFolder: urlImage] error: &error];
-//                
-//            }];
-//        }
-//    }];
-//}
-
 - (void) removeImagesFromPostByArrayOfImagesUrls : (NSMutableArray*) arrayOfImagesUrls {
     if (![[arrayOfImagesUrls firstObject] isEqualToString: @""] && arrayOfImagesUrls.count > 0) {
-        __block NSError *error;
+        //__block NSError *error;
         [arrayOfImagesUrls enumerateObjectsUsingBlock:^(NSString *urlImage, NSUInteger idx, BOOL *stop) {
-            [[NSFileManager defaultManager] removeItemAtPath: [urlImage obtainPathToDocumentsFolder: urlImage] error: &error];
+            [self removeImageFromFileManagerByImagePath: urlImage];
+            //[[NSFileManager defaultManager] removeItemAtPath: [urlImage obtainPathToDocumentsFolder: urlImage] error: &error];
         }];
     }
 }
+
+- (void) removeImageFromFileManagerByImagePath : (NSString*) imagePathString {
+    NSError *error;
+    [[NSFileManager defaultManager] removeItemAtPath: [imagePathString obtainPathToDocumentsFolder: imagePathString] error: &error];
+}
+
 
 
 

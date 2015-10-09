@@ -55,30 +55,8 @@ static TwitterNetwork *model = nil;
             [self initiationPropertiesWithoutSession];
         }
         else {
-            self.isLogin = YES;
-            //[self updatePost];
-            [self startTimerForUpdatePosts];
-            self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType:self.networkType]]firstObject];
-            // self.icon = self.currentUser.photoURL;
-            self.icon = MUSTwitterIconName;
-            self.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
-//            self.isVisible = self.currentUser.isVisible;
-//            NSInteger indexPosition = self.currentUser.indexPosition;
-            
-            //////////////////////////////////////////////////////////
-            
-            if ([[InternetConnectionManager connectionManager] isInternetConnection]){
-                
-                NSString *deleteImageFromFolder = self.currentUser.photoURL;
-                
-                [self obtainUserInfoFromNetworkWithComplition:^(SocialNetwork* result, NSError *error) {
-                    [[NSFileManager defaultManager] removeItemAtPath: [deleteImageFromFolder obtainPathToDocumentsFolder:deleteImageFromFolder] error: nil];
-//                    result.currentUser.indexPosition = indexPosition;
-//                    result.currentUser.isVisible = self.isVisible;
-                    [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUpdateUser:result.currentUser]];
-                }];
-            }
-            
+            [self initiationPropertiesWithSession];
+            [self updateUserInSocialNetwork];
         }
     }
     return self;
@@ -87,23 +65,21 @@ static TwitterNetwork *model = nil;
 /*!
  Initiation properties of TwitterNetwork without session
  */
-
 - (void) initiationPropertiesWithoutSession {
     self.title = MUSTwitterTitle;
     self.icon = MUSTwitterIconName;
     self.isLogin = NO;
-    self.isVisible = YES;
     self.currentUser = nil;
-    [self.timer invalidate];
-    self.timer = nil;
 }
 
-- (void) startTimerForUpdatePosts {
-    //    self.timer = [NSTimer scheduledTimerWithTimeInterval:600.0f
-    //                                                  target:self
-    //                                                selector:@selector(updatePost)
-    //                                                userInfo:nil
-    //                                                 repeats:YES];
+/*!
+ Initiation properties of TwitterNetwork with session
+ */
+- (void) initiationPropertiesWithSession {
+    self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType:self.networkType]]firstObject];
+    self.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
+    self.isLogin = YES;
+    self.icon = MUSTwitterIconName;
 }
 
 #pragma mark - loginInNetwork
@@ -121,9 +97,6 @@ static TwitterNetwork *model = nil;
         
         [TwitterKit logInWithCompletion:^(TWTRSession* session, NSError* error) {
             if (session) {
-                weakSell.isVisible = YES;
-                
-                
                 [weakSell obtainUserInfoFromNetworkWithComplition:block];
             } else {
                 block(nil, error);
@@ -142,8 +115,6 @@ static TwitterNetwork *model = nil;
  */
 
 - (void) logout {
-    //[TwitterKit logOut];
-    //[TwitterKit logOutGuest];
     
     [[Twitter sharedInstance] logOut];
     
@@ -155,10 +126,7 @@ static TwitterNetwork *model = nil;
     }
     
     [[MUSPostManager manager] deleteNetworkPostForNetworkType: self.networkType];
-    [MUSPostManager manager].needToRefreshPosts = YES;
-    
-    //[[Twitter sharedInstance] logOutGuest];
-    [self removeUserFromDataBaseAndImageFromDocumentsFolder:self.currentUser];
+    [self.currentUser removeUser];
     
     [self initiationPropertiesWithoutSession];
 }
@@ -175,33 +143,15 @@ static TwitterNetwork *model = nil;
          if (user) {
              weakSell.currentUser = [User createFromDictionary:user andNetworkType : weakSell.networkType];
              weakSell.title = [NSString stringWithFormat:@"%@  %@", weakSell.currentUser.firstName, weakSell.currentUser.lastName];
-             //dispatch_async(dispatch_get_main_queue(), ^{
-             //weakSell.icon = [weakSell.currentUser.photoURL saveImageOfUserToDocumentsFolder:weakSell.currentUser.photoURL];
-             //});
-             
              weakSell.currentUser.photoURL = [weakSell.currentUser.photoURL saveImageOfUserToDocumentsFolder:weakSell.currentUser.photoURL];
-             //weakSell.currentUser.photoURL = weakSell.icon;
-             //weakSell.currentUser.indexPosition = 0;
-             //weakSell.icon = weakSell.currentUser.photoURL;////
              if (!weakSell.isLogin)
                  [[DataBaseManager sharedManager] insertObjectIntoTable:weakSell.currentUser];
              
              dispatch_async(dispatch_get_main_queue(), ^{
                  weakSell.isLogin = YES;
-                 [weakSell startTimerForUpdatePosts];
                  block(weakSell,nil);
              });
-             //             weakSell.currentUser = [User createFromDictionary : user
-             //                                                andNetworkType : weakSell.networkType];
-             //
-             //             weakSell.title = [NSString stringWithFormat:@"%@  %@",
-             //                                        weakSell.currentUser.firstName, weakSell.currentUser.lastName];
-             //
-             //             weakSell.icon = weakSell.currentUser.photoURL;
-             //             dispatch_async(dispatch_get_main_queue(), ^{
-             //                 block (weakSell, nil);
-             //             });
-         } else {
+        } else {
              block (nil, [self errorTwitter]);
          }
      }];

@@ -38,4 +38,6 @@
 
 + (instancetype)create;
 
+- (void) update;
+
 @end

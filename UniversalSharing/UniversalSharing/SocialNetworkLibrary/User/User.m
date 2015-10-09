@@ -9,6 +9,10 @@
 #import "User.h"
 #import <TwitterKit/TwitterKit.h>
 #import "MUSSocialNetworkLibraryConstantsForParseObjects.h"
+#import "InternetConnectionManager.h"
+#import "MUSDatabaseRequestStringsHelper.h"
+#import "DataBaseManager.h"
+#import "PostImagesManager.h"
 
 @implementation User
 
@@ -26,7 +30,10 @@
 }
 
 
-
+- (void) removeUser {
+    [[PostImagesManager manager] removeImageFromFileManagerByImagePath: _photoURL];
+    [[DataBaseManager sharedManager] deleteObjectFromDataBaseWithRequestStrings:[MUSDatabaseRequestStringsHelper stringForDeleteUserByClientId: _clientID]];
+}
 
 
 + (User*) createFromDictionary:(id) dict andNetworkType :(NetworkType) networkType
@@ -34,9 +41,6 @@
    // User *user = [[User alloc] init];
     
     switch (networkType) {
-        case MUSFacebook:
-            return [User createUserFromFB: dict];
-            break;
         case MUSVKontakt:
            return [User createUserFromVK: dict];
             break;
@@ -47,27 +51,6 @@
             break;
     }
     return nil;
-}
-
-/*!
- @abstract return an instance of the User for facebook network.
- @param dictionary takes dictionary from facebook network.
- */
-
-+ (User*) createUserFromFB:(id)userDictionary {
-    User* currentUser = [[User alloc] init];
-    
-    if ([userDictionary isKindOfClass: [NSDictionary class]]) {
-        currentUser.clientID = [userDictionary objectForKey : MUSFacebookParseUser_ID];
-        currentUser.username = [userDictionary objectForKey : MUSFacebookParseUser_Name];
-        currentUser.firstName = [userDictionary objectForKey :MUSFacebookParseUser_First_Name];
-        currentUser.lastName = [userDictionary objectForKey : MUSFacebookParseUser_Last_Name];
-        currentUser.networkType = MUSFacebook;
-        NSDictionary *pictureDictionary = [userDictionary objectForKey : MUSFacebookParseUser_Picture];
-        NSDictionary *pictureDataDictionary = [pictureDictionary objectForKey : MUSFacebookParseUser_Data];
-        currentUser.photoURL = [pictureDataDictionary objectForKey : MUSFacebookParseUser_Photo_Url];
-    }
-    return currentUser;
 }
 
 /*!

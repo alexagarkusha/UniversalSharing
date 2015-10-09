@@ -21,6 +21,7 @@
 static SocialManager *model = nil;
 
 @implementation SocialManager
+
 + (SocialManager*) sharedManager {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -76,6 +77,13 @@ static SocialManager *model = nil;
     }
     return networksArray;
 }
+
+//- (SocialNetwork*) networkForKey: (NSNumber*) key {
+//    
+//    Class networkClass = [self.networksDictinary objectForKey:key];
+//    
+//    return (SocialNetwork*) [networkClass sharedManager];
+//}
 
 
 @end

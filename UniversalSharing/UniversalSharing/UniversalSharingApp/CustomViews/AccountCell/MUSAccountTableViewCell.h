@@ -17,9 +17,6 @@
 + (instancetype) accountTableViewCell;
 //===
 - (void) configurateCellForNetwork : (SocialNetwork*) socialNetwork;
-- (void) changeColorOfCell :(SocialNetwork *)socialNetwork;
-
-
 
 @end
 

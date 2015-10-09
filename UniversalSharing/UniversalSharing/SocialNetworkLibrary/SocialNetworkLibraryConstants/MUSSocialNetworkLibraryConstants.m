@@ -38,6 +38,7 @@ NSString *const MUSFacebookKeyOfPlaceDictionary = @"data";
 NSString *const MUSFacebookError = @"Facebook error. Please retry again.";
 NSInteger const MUSFacebookErrorCode = 1300;
 
+NSString *const MUSFacebookSuccessUpdateNetworkPost = @"Facebook update all network posts";
 
 #pragma mark Vkontakte Constants
 

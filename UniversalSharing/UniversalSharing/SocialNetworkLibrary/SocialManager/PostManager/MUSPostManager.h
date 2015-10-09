@@ -15,11 +15,11 @@
 
 - (void) updateArrayOfPost;
 
-- (void) deleteNetworkPostForNetworkType : (NetworkType) networkType;
+- (NSArray*) networkPostsArrayForNetworkType : (NetworkType) networkType;
 
 - (void) updateNetworkPostsWithComplition : (Complition) block;
 
-@property (assign, nonatomic) BOOL needToRefreshPosts;
+- (void) deleteNetworkPostForNetworkType : (NetworkType) networkType;
 
 @property (strong, nonatomic, readonly) NSMutableArray *arrayOfPosts;
 

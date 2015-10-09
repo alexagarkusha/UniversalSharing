@@ -77,6 +77,7 @@ FOUNDATION_EXPORT NSString *const MUSFacebookKeyOfPlaceDictionary;
 FOUNDATION_EXPORT NSString *const MUSFacebookError;
 FOUNDATION_EXPORT NSInteger const MUSFacebookErrorCode;
 
+FOUNDATION_EXPORT NSString *const MUSFacebookSuccessUpdateNetworkPost;
 
 #pragma mark Vkontakte Constants
 

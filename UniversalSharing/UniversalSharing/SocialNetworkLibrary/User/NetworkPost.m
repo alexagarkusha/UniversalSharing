@@ -7,6 +7,8 @@
 //
 
 #import "NetworkPost.h"
+#import "DataBaseManager.h"
+#import "MUSDatabaseRequestStringsHelper.h"
 
 @implementation NetworkPost
 
@@ -18,7 +20,7 @@
     networkPost.likesCount = 0;
     networkPost.commentsCount = 0;
     networkPost.networkType = MUSAllNetworks;
-    networkPost.reason = MUSAllReasons;
+    networkPost.reason = MUSOffline;
     networkPost.primaryKey = 0;
     networkPost.dateCreate = @"";
     networkPost.stringReasonType = @"";
@@ -45,6 +47,9 @@
     return @"";
 }
 
+- (void) update {
+    [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForUpdateNetworkPost : self]];
+}
 
 
 

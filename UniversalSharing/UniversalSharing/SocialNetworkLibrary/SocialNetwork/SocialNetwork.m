@@ -16,6 +16,7 @@
 #import "NSError+MUSError.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 #import "PostImagesManager.h"
+#import "InternetConnectionManager.h"
 
 @implementation SocialNetwork
 
@@ -46,12 +47,17 @@
     return [NSError errorWithMessage: MUSConnectionError andCodeError: MUSConnectionErrorCode];
 }
 
-//// ADD to USER ????? /////
-
-- (void) removeUserFromDataBaseAndImageFromDocumentsFolder :(User*) user {
-    [[DataBaseManager sharedManager] deleteObjectFromDataBaseWithRequestStrings:[MUSDatabaseRequestStringsHelper stringForDeleteUserByClientId:user.clientID]];
-    NSError *error;
-    [[NSFileManager defaultManager] removeItemAtPath: [user.photoURL obtainPathToDocumentsFolder: user.photoURL] error: &error];
+- (void) updateUserInSocialNetwork {
+    if ([[InternetConnectionManager connectionManager] isInternetConnection]){
+        NSString *deleteImageFromFolder = _currentUser.photoURL;
+        
+        [self obtainUserInfoFromNetworkWithComplition:^(SocialNetwork* result, NSError *error) {
+            
+            [[PostImagesManager manager] removeImageFromFileManagerByImagePath: deleteImageFromFolder];
+            [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUpdateUser: result.currentUser]];
+            
+        }];
+    }
 }
 
 

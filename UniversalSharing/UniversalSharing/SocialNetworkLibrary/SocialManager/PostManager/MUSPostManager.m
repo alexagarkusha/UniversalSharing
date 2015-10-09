@@ -14,9 +14,7 @@
 
 @interface MUSPostManager ()
 
-
 @end
-
 
 static MUSPostManager *model = nil;
 
@@ -47,6 +45,10 @@ static MUSPostManager *model = nil;
 - (void) updateArrayOfPost {
     [self.arrayOfPosts removeAllObjects];
     [self.arrayOfPosts addObjectsFromArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper stringForAllPosts]]];
+}
+
+- (NSArray*) networkPostsArrayForNetworkType : (NetworkType) networkType {
+   return [[DataBaseManager sharedManager] obtainNetworkPostsFromDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForNetworkPostWithReason: MUSConnect andNetworkType: networkType]];
 }
 
 - (void) updateNetworkPostsWithComplition : (Complition) block {

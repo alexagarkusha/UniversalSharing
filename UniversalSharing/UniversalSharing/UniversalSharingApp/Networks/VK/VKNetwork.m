@@ -61,28 +61,10 @@ static VKNetwork *model = nil;
         }
         else {
             self.isLogin = YES;
-            [self startTimerForUpdatePosts];
-            //[self updatePost];////////////////////////////////////////////////////////////
             self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType:self.networkType]]firstObject];
-            //self.icon = self.currentUser.photoURL;
             self.icon = MUSVKIconName;
             self.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
-//            self.isVisible = self.currentUser.isVisible;
-//            NSInteger indexPosition = self.currentUser.indexPosition;
-            
-            if ([[InternetConnectionManager connectionManager] isInternetConnection]){
-                
-                NSString *deleteImageFromFolder = self.currentUser.photoURL;
-                
-                [self obtainUserInfoFromNetworkWithComplition:^(SocialNetwork* result, NSError *error) {
-                    if (!error) {
-                        [[NSFileManager defaultManager] removeItemAtPath: [deleteImageFromFolder obtainPathToDocumentsFolder:deleteImageFromFolder] error: nil];
-//                        result.currentUser.isVisible = self.isVisible;
-//                        result.currentUser.indexPosition = indexPosition;
-                        [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUpdateUser:result.currentUser]];
-                    }
-                }];
-            }
+            [self updateUserInSocialNetwork];
         }
     }
     return self;
@@ -103,18 +85,8 @@ static VKNetwork *model = nil;
     self.title = MUSVKTitle;
     self.icon = MUSVKIconName;
     self.isLogin = NO;
-    self.isVisible = YES;
-    [self.timer invalidate];
-    self.timer = nil;
 }
 
-- (void) startTimerForUpdatePosts {
-    //    self.timer = [NSTimer scheduledTimerWithTimeInterval:600.0f
-    //                                                  target:self
-    //                                                selector:@selector(updatePost)
-    //                                                userInfo:nil
-    //                                                 repeats:YES];
-}
 #pragma mark - loginInNetwork
 
 /*!
@@ -140,8 +112,7 @@ static VKNetwork *model = nil;
 - (void) logout {
     [VKSdk forceLogout];
     [[MUSPostManager manager] deleteNetworkPostForNetworkType: self.networkType];
-    [MUSPostManager manager].needToRefreshPosts = YES;
-    [self removeUserFromDataBaseAndImageFromDocumentsFolder:self.currentUser];
+    [self.currentUser removeUser];
     self.currentUser = nil;
     [self initiationPropertiesWithoutSession];
 }
@@ -157,14 +128,7 @@ static VKNetwork *model = nil;
      {
          weakSell.currentUser = [User createFromDictionary:(NSDictionary*)[response.json firstObject] andNetworkType : weakSell.networkType];
          weakSell.title = [NSString stringWithFormat:@"%@  %@", weakSell.currentUser.firstName, weakSell.currentUser.lastName];
-         //dispatch_async(dispatch_get_main_queue(), ^{
-         //weakSell.icon = [weakSell.currentUser.photoURL saveImageOfUserToDocumentsFolder:weakSell.currentUser.photoURL];
-         //});
-         
          weakSell.currentUser.photoURL = [weakSell.currentUser.photoURL saveImageOfUserToDocumentsFolder:weakSell.currentUser.photoURL];
-         //weakSell.currentUser.photoURL = weakSell.icon;
-         //weakSell.currentUser.indexPosition = 0;
-         //weakSell.icon = weakSell.currentUser.photoURL;////
          if (!weakSell.isLogin)
              [[DataBaseManager sharedManager] insertObjectIntoTable:weakSell.currentUser];
          
@@ -173,11 +137,6 @@ static VKNetwork *model = nil;
              weakSell.isLogin = YES;
              block(weakSell,nil);
          });
-         //         weakSell.currentUser = [User createFromDictionary:(NSDictionary*)[response.json firstObject] andNetworkType:weakSell.networkType];
-         //         weakSell.title = [NSString stringWithFormat:@"%@ %@", weakSell.currentUser.firstName, weakSell.currentUser.lastName];
-         //         weakSell.icon = weakSell.currentUser.photoURL;
-         //             block(weakSell, nil);
-         
      } errorBlock:^(NSError * error) {
          if (error.code != VK_API_ERROR) {
              [error.vkError.request repeat];
@@ -518,7 +477,6 @@ static VKNetwork *model = nil;
 
 - (void)vkSdkReceivedNewToken:(VKAccessToken *)newToken
 {
-    [self startTimerForUpdatePosts];// check it later
     [self obtainUserInfoFromNetworkWithComplition:self.copyComplition];
 }
 
@@ -529,14 +487,11 @@ static VKNetwork *model = nil;
 
 - (void)vkSdkAcceptedUserToken:(VKAccessToken *)token
 {
-    //[self obtainDataFromVK];
 }
 
 - (void)vkSdkUserDeniedAccess:(VKError *)authorizationError
 {
-    
     self.isLogin = NO;
-    self.isVisible = YES;
     NSError *error = [NSError errorWithMessage: MUSAccessError andCodeError: MUSAccessErrorCode];
     self.copyComplition (nil, error);
     
@@ -560,18 +515,6 @@ static VKNetwork *model = nil;
 - (NSError*) errorVkontakte {
     return [NSError errorWithMessage: MUSVKError andCodeError: MUSVKErrorCode];
 }
-
-- (void)setDownloadProgressBlock:(void (^)(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead))block {
-    
-    
-    
-    
-}
-
-- (void)setUploadProgressBlock:(void (^)(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite))block {
-    
-}
-
 
 
 @end
