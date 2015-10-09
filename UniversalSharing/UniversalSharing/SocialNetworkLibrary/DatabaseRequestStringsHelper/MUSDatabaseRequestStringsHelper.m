@@ -41,7 +41,7 @@
 
 
 + (NSString*) stringForSaveUser {
-    return [NSString stringWithFormat:@"INSERT INTO '%@'('%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@')VALUES(?,?,?,?,?,?,?,?,?,?,?)",@"Users",@"username",@"firstName",@"lastName",@"dateOfBirth",@"city",@"clientID",@"photoURL",@"isVisible",@"isLogin",@"indexPosition",@"networkType"];
+    return [NSString stringWithFormat:@"INSERT INTO '%@'('%@','%@','%@','%@','%@','%@')VALUES(?,?,?,?,?,?)",@"Users",@"username",@"firstName",@"lastName",/*@"dateOfBirth",@"city",*/ @"clientID",@"photoURL",/*@"isVisible",@"isLogin",@"indexPosition",*/@"networkType"];
 }
 
 + (NSString*) stringForAllPosts {
@@ -65,17 +65,17 @@
     stringUsersForUpdate = [stringUsersForUpdate stringByAppendingString:@"username = \"%@\", "];
     stringUsersForUpdate = [stringUsersForUpdate stringByAppendingString:@"firstName = \"%@\", "];
     stringUsersForUpdate = [stringUsersForUpdate stringByAppendingString:@"lastName = \"%@\", "];
-    stringUsersForUpdate = [stringUsersForUpdate stringByAppendingString:@"dateOfBirth = \"%@\", "];
-    stringUsersForUpdate = [stringUsersForUpdate stringByAppendingString:@"city = \"%@\", "];
+    //stringUsersForUpdate = [stringUsersForUpdate stringByAppendingString:@"dateOfBirth = \"%@\", "];
+    //stringUsersForUpdate = [stringUsersForUpdate stringByAppendingString:@"city = \"%@\", "];
     stringUsersForUpdate = [stringUsersForUpdate stringByAppendingString:@"networkType = \"%d\", "];
     stringUsersForUpdate = [stringUsersForUpdate stringByAppendingString:@"clientID = \"%@\", "];
-    stringUsersForUpdate = [stringUsersForUpdate stringByAppendingString:@"photoURL = \"%@\", "];
-    stringUsersForUpdate = [stringUsersForUpdate stringByAppendingString:@"isVisible = \"%d\", "];
-    stringUsersForUpdate = [stringUsersForUpdate stringByAppendingString:@"indexPosition = \"%d\", "];
-    stringUsersForUpdate = [stringUsersForUpdate stringByAppendingString:@"isLogin = \"%d\" "];
+    stringUsersForUpdate = [stringUsersForUpdate stringByAppendingString:@"photoURL = \"%@\" "];
+    //stringUsersForUpdate = [stringUsersForUpdate stringByAppendingString:@"isVisible = \"%d\", "];
+    //stringUsersForUpdate = [stringUsersForUpdate stringByAppendingString:@"indexPosition = \"%d\", "];
+    //stringUsersForUpdate = [stringUsersForUpdate stringByAppendingString:@"isLogin = \"%d\" "];
     stringUsersForUpdate = [stringUsersForUpdate stringByAppendingString:@"WHERE networkType = \"%d\" AND clientID = \"%@\""];
     
-    NSString *finalStringUsersForUpdate = [NSString stringWithFormat:stringUsersForUpdate, user.username, user.firstName, user.lastName, user.dateOfBirth, user.city, user.networkType, user.clientID, user.photoURL, user.isVisible, user.indexPosition, user.isLogin, user.networkType, user.clientID];
+    NSString *finalStringUsersForUpdate = [NSString stringWithFormat:stringUsersForUpdate, user.username, user.firstName, user.lastName,/* user.dateOfBirth, user.city,*/ user.networkType, user.clientID, user.photoURL,/* user.isVisible, user.indexPosition, user.isLogin,*/ user.networkType, user.clientID];
     return finalStringUsersForUpdate;
 }
 
@@ -85,13 +85,13 @@
     stringUsersTable = [stringUsersTable stringByAppendingString:@"username TEXT, "];
     stringUsersTable = [stringUsersTable stringByAppendingString:@"firstName TEXT, "];
     stringUsersTable = [stringUsersTable stringByAppendingString:@"lastName TEXT, "];
-    stringUsersTable = [stringUsersTable stringByAppendingString:@"dateOfBirth TEXT, "];
-    stringUsersTable = [stringUsersTable stringByAppendingString:@"city TEXT, "];
+    //stringUsersTable = [stringUsersTable stringByAppendingString:@"dateOfBirth TEXT, "];
+    //stringUsersTable = [stringUsersTable stringByAppendingString:@"city TEXT, "];
     stringUsersTable = [stringUsersTable stringByAppendingString:@"clientID TEXT, "];
     stringUsersTable = [stringUsersTable stringByAppendingString:@"photoURL TEXT, "];
-    stringUsersTable = [stringUsersTable stringByAppendingString:@"isVisible INTEGER, "];
-    stringUsersTable = [stringUsersTable stringByAppendingString:@"isLogin INTEGER, "];
-    stringUsersTable = [stringUsersTable stringByAppendingString:@"indexPosition INTEGER, "];
+    //stringUsersTable = [stringUsersTable stringByAppendingString:@"isVisible INTEGER, "];
+    //stringUsersTable = [stringUsersTable stringByAppendingString:@"isLogin INTEGER, "];
+    //stringUsersTable = [stringUsersTable stringByAppendingString:@"indexPosition INTEGER, "];
     stringUsersTable = [stringUsersTable stringByAppendingString:@"networkType INTEGER)"];
     return stringUsersTable;
 }

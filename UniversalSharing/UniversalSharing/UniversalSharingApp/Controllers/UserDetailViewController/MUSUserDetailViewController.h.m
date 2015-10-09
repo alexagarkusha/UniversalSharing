@@ -11,6 +11,8 @@
 #import "MUSUserProfileCell.h"
 #import "MUSSocialNetworkLibraryHeader.h"
 #import "DataBaseManager.h"
+#import "ConstantsApp.h"
+
 @interface MUSUserDetailViewController () <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
 /*!
  @property
@@ -36,10 +38,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];    
-        self.logoutButton = [[UIBarButtonItem alloc] initWithTitle: @"Logout" style: 2 target:self action: @selector(logoutFromSocialNetwork)];
+        self.logoutButton = [[UIBarButtonItem alloc] initWithTitle: MUSApp_Button_Title_Logout style: 2 target:self action: @selector(logoutFromSocialNetwork)];
         self.navigationItem.rightBarButtonItem = self.logoutButton;
     [self setUpTitle];
-    self.userPropertiesArray = @[@"profile", @"dateOfBirth", @"city", @"clientID"];
+    self.userPropertiesArray = @[MUSApp_MUSUserDetailViewController_User_Profile, MUSApp_MUSUserDetailViewController_User_ClientID];
 }
 
 - (void) setUpTitle {
@@ -55,7 +57,7 @@
  @param without
  */
 - (void) logoutFromSocialNetwork {
-    [self.socialNetwork loginOut];
+    [self.socialNetwork logout];
     [self.navigationController popViewControllerAnimated:YES];
      self.navigationController.navigationBar.translucent = YES;
     }

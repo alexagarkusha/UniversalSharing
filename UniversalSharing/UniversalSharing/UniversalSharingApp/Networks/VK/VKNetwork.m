@@ -67,18 +67,18 @@ static VKNetwork *model = nil;
             //self.icon = self.currentUser.photoURL;
             self.icon = MUSVKIconName;
             self.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
-            self.isVisible = self.currentUser.isVisible;
-            NSInteger indexPosition = self.currentUser.indexPosition;
+//            self.isVisible = self.currentUser.isVisible;
+//            NSInteger indexPosition = self.currentUser.indexPosition;
             
             if ([[InternetConnectionManager connectionManager] isInternetConnection]){
                 
                 NSString *deleteImageFromFolder = self.currentUser.photoURL;
                 
-                [self obtainInfoFromNetworkWithComplition:^(SocialNetwork* result, NSError *error) {
+                [self obtainUserInfoFromNetworkWithComplition:^(SocialNetwork* result, NSError *error) {
                     if (!error) {
                         [[NSFileManager defaultManager] removeItemAtPath: [deleteImageFromFolder obtainPathToDocumentsFolder:deleteImageFromFolder] error: nil];
-                        result.currentUser.isVisible = self.isVisible;
-                        result.currentUser.indexPosition = indexPosition;
+//                        result.currentUser.isVisible = self.isVisible;
+//                        result.currentUser.indexPosition = indexPosition;
                         [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUpdateUser:result.currentUser]];
                     }
                 }];
@@ -137,7 +137,7 @@ static VKNetwork *model = nil;
  Has no effect for logout in VK app
  */
 
-- (void) loginOut {
+- (void) logout {
     [VKSdk forceLogout];
     [[MUSPostManager manager] deleteNetworkPostForNetworkType: self.networkType];
     [MUSPostManager manager].needToRefreshPosts = YES;
@@ -148,7 +148,7 @@ static VKNetwork *model = nil;
 
 #pragma mark - obtainUserFromNetwork
 
-- (void) obtainInfoFromNetworkWithComplition :(Complition) block {
+- (void) obtainUserInfoFromNetworkWithComplition :(Complition) block {
     
     __weak VKNetwork *weakSell = self;
     
@@ -189,7 +189,7 @@ static VKNetwork *model = nil;
 }
 
 
-- (void) updatePostWithComplition: (UpdateNetworkPostsComplition) block {
+- (void) updateNetworkPostWithComplition: (UpdateNetworkPostsComplition) block {
     NSArray * networksPostsIDs = [[DataBaseManager sharedManager] obtainNetworkPostsFromDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForNetworkPostWithReason: MUSConnect andNetworkType: MUSVKontakt]];
     
     if (![[InternetConnectionManager connectionManager] isInternetConnection] || !networksPostsIDs.count  || (![[InternetConnectionManager connectionManager] isInternetConnection] && networksPostsIDs.count)) {
@@ -239,7 +239,7 @@ static VKNetwork *model = nil;
 #pragma mark - obtainArrayOfPlacesFromNetwork
 
 
-- (void) obtainArrayOfPlaces: (Location *) location withComplition: (Complition) block {
+- (void) obtainPlacesArrayForLocation: (Location *) location withComplition: (Complition) block {
     self.copyComplition = block;
     
     if (!location.q || !location.latitude || !location.longitude || !location.distance || [location.latitude floatValue] < -90.0f || [location.latitude floatValue] > 90.0f || [location.longitude floatValue] < -180.0f  || [location.longitude floatValue] > 180.0f) {
@@ -308,7 +308,7 @@ static VKNetwork *model = nil;
 
 #pragma mark - sharePostToNetwork
 
-- (void) sharePost : (Post*) post withComplition : (Complition) block andProgressLoadingBlock:(ProgressLoading) blockLoading{
+- (void) sharePost : (Post*) post withComplition : (Complition) block progressLoadingBlock:(ProgressLoading) blockLoading{
     if (![[InternetConnectionManager connectionManager] isInternetConnection]){
         NetworkPost *networkPost = [NetworkPost create];
         networkPost.networkType = MUSVKontakt;
@@ -519,7 +519,7 @@ static VKNetwork *model = nil;
 - (void)vkSdkReceivedNewToken:(VKAccessToken *)newToken
 {
     [self startTimerForUpdatePosts];// check it later
-    [self obtainInfoFromNetworkWithComplition:self.copyComplition];
+    [self obtainUserInfoFromNetworkWithComplition:self.copyComplition];
 }
 
 - (void)vkSdkShouldPresentViewController:(UIViewController *)controller
@@ -576,212 +576,3 @@ static VKNetwork *model = nil;
 
 @end
 
-
-//
-//
-//#pragma mark - sharePostToNetwork
-//
-//- (void) sharePost : (Post*) post withComplition : (Complition) block {
-//    if (![[InternetConnectionManager manager] isInternetConnection]){
-//
-//
-//
-//        [self saveOrUpdatePost: post withReason: Offline];
-//        block(nil,[self errorConnection]);
-//        [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
-//        return;
-//    }
-//    self.copyComplition = block;
-//    if ([post.arrayImages count] > 0) {
-//        [self postImagesToVK: post];
-//    } else {
-//        [self postMessageToVK: post];
-//    }
-//}
-//
-///*!
-// @abstract upload message and user location (optional)
-// @param current post of @class Post
-// */
-//
-//#pragma mark - postMessageToNetwork
-//
-//- (void) postMessageToVK : (Post*) post {
-//    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-//
-//    parameters [VK_API_OWNER_ID] = [VKSdk getAccessToken].userId;
-//    parameters [VK_API_MESSAGE] = post.postDescription;
-//    if (post.place.placeID) {
-//        parameters [VK_API_PLACE_ID] = post.place.placeID;
-//    }
-//
-//    VKRequest *request = [[VKApi wall] post: parameters];
-//
-//    [request executeWithResultBlock: ^(VKResponse *response) {
-//        self.copyComplition (musPostSuccess, nil);
-//        post.postID = [[response.json objectForKey:@"post_id"] stringValue];
-//        [self saveOrUpdatePost: post withReason: Connect];
-//        [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
-//    } errorBlock: ^(NSError *error) {
-//        self.copyComplition (nil, [self errorVkontakte]);
-//        [self saveOrUpdatePost: post withReason: ErrorConnection];
-//        [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
-//    }];
-//
-//}
-//
-///*!
-// @abstract upload image(s) with message (optional) and user location (optional)
-// @param current post of @class Post
-// */
-//
-//- (void) postImagesToVK : (Post*) post {
-//    __block int numberOfImagesInPost = [post.arrayImages count];
-//    __block int counterOfImages = 0;
-//
-//    NSInteger userId = [self.currentUser.clientID integerValue];
-//    NSMutableArray *requestArray = [[NSMutableArray alloc] init]; //array of requests to add pictures in the social network
-//
-//    for (int i = 0; i < [post.arrayImages count]; i++) {
-//        ImageToPost *imageToPost = [post.arrayImages objectAtIndex: i];
-//
-//        VKRequest * request = [VKApi uploadWallPhotoRequest: imageToPost.image
-//                                                 parameters: [self imageForVKNetwork: imageToPost]
-//                                                     userId: userId
-//                                                    groupId: 0];
-//        [requestArray addObject: request];
-//    }
-//
-//    VKBatchRequest *batch = [[VKBatchRequest alloc] initWithRequestsArray: requestArray];
-//
-//    [batch executeWithResultBlock: ^(NSArray *responses) {
-//
-//        NSMutableArray *photosAttachments = [[NSMutableArray alloc] init];
-//
-//        for (VKResponse * resp in responses) {
-//            VKPhoto *photoInfo = [(VKPhotoArray*)resp.parsedModel objectAtIndex:0];
-//            [photosAttachments addObject:[NSString stringWithFormat:@"photo%@_%@",
-//                                          photoInfo.owner_id, photoInfo.id]];
-//        }
-//
-//        NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-//
-//        parameters [VK_API_OWNER_ID] = [VKSdk getAccessToken].userId;
-//        parameters [VK_API_ATTACHMENTS] = [photosAttachments componentsJoinedByString: @","];
-//        if (post.placeID) {
-//            parameters [VK_API_PLACE_ID] = post.placeID;
-//        }
-//        if (post.postDescription) {
-//            parameters [VK_API_MESSAGE] = post.postDescription;
-//        }
-//
-//        VKRequest *postRequest = [[VKApi wall] post: parameters];
-//        [postRequest executeWithResultBlock: ^(VKResponse *response) {
-//            self.copyComplition (musPostSuccess, nil);
-//            post.postID = [[response.json objectForKey:@"post_id"] stringValue];///////////////////////////////////////////
-//            [self saveOrUpdatePost: post withReason: Connect];
-//            [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
-//        } errorBlock: ^(NSError *error) {
-//            self.copyComplition (nil, [self errorVkontakte]);
-//            [self saveOrUpdatePost: post withReason: ErrorConnection];
-//            [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
-//        }];
-//    } errorBlock: ^(NSError *error) {
-//        counterOfImages++;
-//        if (counterOfImages == numberOfImagesInPost) {
-//            self.copyComplition (nil, [self errorVkontakte]);
-//            [self saveOrUpdatePost: post withReason: ErrorConnection];
-//            [self stopUpdatingPostWithObject: [NSNumber numberWithInteger: post.primaryKey]];
-//        }
-//    }];
-//}
-//
-///*!
-// @abstract settings parameters for image for uploading image into VK servers
-// @param current ImageToPost of @class ImageToPost
-// */
-//
-//- (VKImageParameters*) imageForVKNetwork : (ImageToPost*) imageToPost {
-//    switch (imageToPost.imageType) {
-//        case PNG:
-//            return [VKImageParameters pngImage];
-//            break;
-//        case JPEG:
-//            if (imageToPost.quality > 0) {
-//                return [VKImageParameters jpegImageWithQuality: imageToPost.quality];
-//                break;
-//            }
-//            return [VKImageParameters jpegImageWithQuality: 1.f];
-//            break;
-//        default:
-//            break;
-//    }
-//}
-//
-///*!
-// @abstract current root View Controller
-// */
-//
-//- (UIViewController*) vcForLoginVK {
-//    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-//    UIViewController *vc = [window rootViewController];
-//    if(vc.presentedViewController)
-//        return vc.presentedViewController;
-//    else
-//        return vc;
-//}
-//
-//#pragma mark - VK Delegate
-//
-//- (void)vkSdkTokenHasExpired:(VKAccessToken *)expiredToken
-//{
-//    // [self authorize:nil];
-//}
-//
-//- (void)vkSdkReceivedNewToken:(VKAccessToken *)newToken
-//{
-//    [self startTimerForUpdatePosts];// check it later
-//    [self obtainInfoFromNetworkWithComplition:self.copyComplition];
-//}
-//
-//- (void)vkSdkShouldPresentViewController:(UIViewController *)controller
-//{
-//    [[self vcForLoginVK] presentViewController:controller animated:YES completion:nil];
-//}
-//
-//- (void)vkSdkAcceptedUserToken:(VKAccessToken *)token
-//{
-//    //[self obtainDataFromVK];
-//}
-//
-//- (void)vkSdkUserDeniedAccess:(VKError *)authorizationError
-//{
-//    self.isLogin = NO;
-//    self.isVisible = YES;
-//    NSError *error = [NSError errorWithMessage: musErrorAccesDenied andCodeError: musErrorAccesDeniedCode];
-//    self.copyComplition (nil, error);
-//}
-//
-//
-//-(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-//{
-//    [self.navigationController popToRootViewControllerAnimated:YES];
-//}
-//
-//- (void) vkSdkNeedCaptchaEnter:(VKError *)captchaError
-//{
-//    VKCaptchaViewController *vc = [VKCaptchaViewController captchaControllerWithError:captchaError];
-//    [vc presentIn:self.navigationController.topViewController];
-//}
-//
-///*!
-// @abstract returned Vkontakte network error
-// */
-//- (NSError*) errorVkontakte {
-//    return [NSError errorWithMessage: musFacebookError andCodeError: musFacebookErrorCode];
-//}
-//
-//- (void) updatePostInfoNotification {
-//    [[NSNotificationCenter defaultCenter] postNotificationName:MUSNotificationPostsInfoWereUpDated object:nil];
-//}
-//
