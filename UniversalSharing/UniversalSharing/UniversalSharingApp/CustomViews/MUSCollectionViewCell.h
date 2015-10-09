@@ -10,7 +10,7 @@
 
 @protocol MUSCollectionViewCellDelegate <NSObject>
 @optional
-- (void) deletePhoto : (NSIndexPath*) currentInadexPath;
+- (void) deletePhotoBySelectedImageIndex : (NSIndexPath*) selectedImageIndex;
 - (void) addPhotoToCollection;
 @end
 

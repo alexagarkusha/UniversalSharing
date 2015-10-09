@@ -11,11 +11,18 @@
 #import "ImageToPost.h"
 
 @interface MUSProgressBarEndLoading()
+
 @property (strong, nonatomic) NSArray *arrayOfImageView;
+//===
+@property (weak, nonatomic) IBOutlet UIImageView *imageViewPostFirst;
+@property (weak, nonatomic) IBOutlet UIImageView *imageViewPostSecond;
+@property (weak, nonatomic) IBOutlet UIImageView *imageViewPostThird;
 
 
 @end
+
 static MUSProgressBarEndLoading *model = nil;
+
 @implementation MUSProgressBarEndLoading
 
 + (MUSProgressBarEndLoading*) sharedProgressBarEndLoading {

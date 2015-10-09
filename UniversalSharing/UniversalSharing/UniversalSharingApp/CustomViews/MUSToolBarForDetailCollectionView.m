@@ -31,8 +31,7 @@
     return self;
 }
 
-- (void) xibSetup {
-    
+- (void) xibSetup {    
     self.view = [self loadViewFromNib];
     self.view.frame = self.bounds;
     [self addSubview:self.view];
