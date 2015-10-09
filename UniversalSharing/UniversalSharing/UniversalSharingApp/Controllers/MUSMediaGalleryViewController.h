@@ -1,0 +1,29 @@
+//
+//  MUSDitailPostCollectionViewController.h
+//  UniversalSharing
+//
+//  Created by Roman on 9/4/15.
+//  Copyright (c) 2015 Mobindustry. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "SocialNetwork.h"
+
+//@protocol MUSDetailPostCollectionViewControllerDelegate <NSObject>
+//@required
+//- (void) updateCollectionView;
+//@end
+
+@interface MUSMediaGalleryViewController : UIViewController
+
+//@property (nonatomic, assign) id <MUSDetailPostCollectionViewControllerDelegate> delegateDetailPostCollectionViewController;
+//===
+
+//it would be changed
+- (void) setObjectsWithPost :(Post*) currentPost withCurrentSocialNetwork :(id)currentSocialNetwork andIndexPicTapped :(NSInteger) indexPicTapped;
+//it would be changed
+- (void) setObjectsWithArrayOfPhotos :(NSMutableArray*) arrayOfPhotos withCurrentSocialNetwork :(SocialNetwork*) currentSocialNetwork indexPicTapped :(NSInteger) indexPicTapped andReasonTypeOfPost : (ReasonType) reasonType;
+
+@property (assign, nonatomic) BOOL isEditableCollectionView;
+
+@end

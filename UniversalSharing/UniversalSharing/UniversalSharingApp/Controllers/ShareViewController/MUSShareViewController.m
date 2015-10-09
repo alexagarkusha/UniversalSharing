@@ -17,7 +17,7 @@
 #import "ReachabilityManager.h"
 #import <CoreText/CoreText.h>
 #import "DataBaseManager.h"
-#import "MUSDetailPostCollectionViewController.h"
+#import "MUSMediaGalleryViewController.h"
 #import "MUSPopUpForSharing.h"
 #import "MUSProgressBar.h"
 #import "MUSProgressBarEndLoading.h"
@@ -842,7 +842,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
     if ([[segue identifier] isEqualToString: @"goToShowImages"]) {
-        MUSDetailPostCollectionViewController *vc = [MUSDetailPostCollectionViewController new];        
+        MUSMediaGalleryViewController *vc = [MUSMediaGalleryViewController new];        
         vc = [segue destinationViewController];
         vc.isEditableCollectionView = YES;
         [vc setObjectsWithArrayOfPhotos: self.arrayPicsForDetailCollectionView withCurrentSocialNetwork: _currentSocialNetwork indexPicTapped:self.indexPicTapped andReasonTypeOfPost: MUSAllReasons];
