@@ -17,7 +17,7 @@
 #import "NSString+MUSPathToDocumentsdirectory.h"
 #import "UIImage+LoadImageFromDataBase.h"
 #import "MUSDatabaseRequestStringsHelper.h"
-#import "MUSDetailPostCollectionViewController.h"
+#import "MUSMediaGalleryViewController.h"
 #import "MUSUserDetailViewController.h"
 #import "MEExpandableHeaderView.h"
 #import "MUSPopUpForSharing.h"
@@ -339,7 +339,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([[segue identifier]isEqualToString : @"goToDitailPostCollectionViewController"]) {
-        MUSDetailPostCollectionViewController *vc = [MUSDetailPostCollectionViewController new];
+        MUSMediaGalleryViewController *vc = [MUSMediaGalleryViewController new];
         vc = [segue destinationViewController];
         [vc setObjectsWithPost: self.currentPost withCurrentSocialNetwork: self.currentSocialNetwork andIndexPicTapped: self.indexPicTapped];
     }

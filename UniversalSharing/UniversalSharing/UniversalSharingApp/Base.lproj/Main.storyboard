@@ -54,10 +54,10 @@
             </objects>
             <point key="canvasLocation" x="2072" y="0.0"/>
         </scene>
-        <!--Detail Post Collection View Controller-->
+        <!--Media Gallery View Controller-->
         <scene sceneID="p3B-0X-d4a">
             <objects>
-                <viewController id="Mqx-YE-PKH" customClass="MUSDetailPostCollectionViewController" sceneMemberID="viewController">
+                <viewController id="Mqx-YE-PKH" customClass="MUSMediaGalleryViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="N7w-GC-hmE"/>
                         <viewControllerLayoutGuide type="bottom" id="hlG-8R-qpw"/>
@@ -183,9 +183,9 @@
                     <connections>
                         <outlet property="collectionView" destination="aRM-TH-eEy" id="8Yt-Cf-xBN"/>
                         <outlet property="toolBar" destination="jtt-2I-4dm" id="Pj5-Mm-ijt"/>
-                        <outlet property="toolBarConstraint" destination="R1o-HW-tEf" id="N1G-JT-AnL"/>
+                        <outlet property="toolBarHeightConstraint" destination="R1o-HW-tEf" id="Cx2-Bx-YGO"/>
                         <outlet property="topBar" destination="8gF-Sd-Dyq" id="PRq-TX-pIf"/>
-                        <outlet property="topBarConstraint" destination="L8I-oO-Af8" id="kHN-De-j3E"/>
+                        <outlet property="topBarHeightConstraint" destination="L8I-oO-Af8" id="mfW-ph-LNf"/>
                         <segue destination="xqB-o5-zWK" kind="show" identifier="goToInfo" id="X1d-ia-zmN"/>
                     </connections>
                 </viewController>
