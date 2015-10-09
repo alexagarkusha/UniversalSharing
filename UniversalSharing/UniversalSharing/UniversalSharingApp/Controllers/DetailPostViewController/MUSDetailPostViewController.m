@@ -341,7 +341,8 @@
     if ([[segue identifier]isEqualToString : @"goToDitailPostCollectionViewController"]) {
         MUSMediaGalleryViewController *vc = [MUSMediaGalleryViewController new];
         vc = [segue destinationViewController];
-        [vc setObjectsWithPost: self.currentPost withCurrentSocialNetwork: self.currentSocialNetwork andIndexPicTapped: self.indexPicTapped];
+        //[vc setObjectsWithPost: self.currentPost withCurrentSocialNetwork: self.currentSocialNetwork andIndexPicTapped: self.indexPicTapped];
+        [vc sendPost:self.currentPost andSelectedImageIndex:self.indexPicTapped];
     }
 }
 

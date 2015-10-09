@@ -157,22 +157,19 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startProgressView) name:@"StartSharePost" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(endProgressViewWithCountConnect:) name:@"EndSharePost" object:nil ];
     
-    /////////////////////////////////////////////////////
-    //self.progressBar = [[MUSProgressBar alloc]initWithFrame:CGRectMake(0, statusBarHeight, self.view.frame.size.width, navigationBarHeight)];
-//    self.progressBarEndLoading = [[MUSProgressBarEndLoading alloc]initWithFrame:CGRectMake(0, statusBarHeight, self.view.frame.size.width, navigationBarHeight)];
-    //[self.progressBar.viewWithPicsAndLable layoutIfNeeded];
 
     self.progressBar.viewHeightConstraint.constant = 0;
     self.progressBarEndLoading.viewHeightConstraint.constant = 0;
-    //[self.progressBar.viewWithPicsAndLable setNeedsLayout];
-
-    //self.progressBar.progressView.progressTintColor = BROWN_COLOR_MIDLight;
-     //[self.navigationController.view addSubview:self.progressBar.view];
+//////////////////////////////////////////////////////////////////////////
+    if(!self.post)
+    [self createPost];
+    [self.galeryView initPost:self.post];
+  
 }
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
-    if (![self.galeryView obtainArrayWithChosenPics].count && [self.messageTextView.text isEqualToString: MUSApp_TextView_PlaceholderText] && self.messageTextView.textColor == [UIColor lightGrayColor]) {
+    if (!self.post.arrayImages.count && [self.messageTextView.text isEqualToString: MUSApp_TextView_PlaceholderText] && self.messageTextView.textColor == [UIColor lightGrayColor]) {
         self.shareButtonOutlet.enabled = NO;
         [self.sharePhotoButton setTintColor:[UIColor blackColor]];
     }
@@ -429,7 +426,7 @@
     
     
     //[self.navigationController.view addSubview:self.progressBar.view];
-    [[MUSProgressBar sharedProgressBar] configurationProgressBar:[self.galeryView obtainArrayWithChosenPics] :NO :0 :0];
+    [[MUSProgressBar sharedProgressBar] configurationProgressBar:self.post.arrayImages :NO :0 :0];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
         [weakSelf.progressBar.viewWithPicsAndLable layoutIfNeeded];
@@ -464,7 +461,7 @@
             self.progressBarEndLoading.viewHeightConstraint.constant = 0;
         });
     }];
-    [[MUSProgressBarEndLoading sharedProgressBarEndLoading] configurationProgressBar:[self.galeryView obtainArrayWithChosenPics] : [countConnect integerValue]: [numberOfChosenNetworks integerValue]];
+    [[MUSProgressBarEndLoading sharedProgressBarEndLoading] configurationProgressBar:self.post.arrayImages : [countConnect integerValue]: [numberOfChosenNetworks integerValue]];
     
 }
 
@@ -500,7 +497,7 @@
             if(!error){
                 //count++;
             }
-            weakSelf.post = nil;
+            //weakSelf.post = nil;
             //finish of post
             //        NSLog(@"RESULT %@", result);
             //        NSLog(@"ERROR %@", error);
@@ -640,16 +637,20 @@
     self.shareButtonOutlet.enabled = NO;
     self.longitude = @"";
     self.latitude = @"";
-    //self.view.userInteractionEnabled = YES;
+    if ([self.post.arrayImages count]) {
+        [self.post.arrayImages removeAllObjects];
+    }
+        //self.view.userInteractionEnabled = YES;
 //    [self.shareLocationButton setTintColor: [UIColor blackColor]];
 //    [self.shareLocationButton setTitle: musAppButtonTitle_ShareLocation];
     //[self changeSharePhotoButtonColorAndShareButtonState:NO];
     [self.galeryView clearCollectionAfterPosted];
 }
 
-- (void) createPost {
+- (void) createPost { // later we would change logic , now we do for galleries)
     if(!self.post) {
         self.post = [[Post alloc] init];
+        self.post.arrayImages = [NSMutableArray new];
     }
     self.post.place = self.place;
     if (![self.messageTextView.text isEqualToString: MUSApp_TextView_PlaceholderText]) {
@@ -663,7 +664,7 @@
     /*
      get array with chosen images from MUSGaleryView
      */
-    self.post.arrayImages = [[self.galeryView obtainArrayWithChosenPics] mutableCopy];
+    //self.post.arrayImages = [[self.galeryView obtainArrayWithChosenPics] mutableCopy];
     //self.post.userId = _currentSocialNetwork.currentUser.clientID;//or something else
     self.post.dateCreate = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970]];
     
@@ -690,7 +691,7 @@
     } else {
         [self initialParametersOfMessageTextView];
         [self.messageTextView setSelectedRange:NSMakeRange(0, 0)];
-        if ([self.galeryView obtainArrayWithChosenPics].count < 1) {
+        if (self.post.arrayImages.count < 1) {
             self.shareButtonOutlet.enabled = NO;
         }
     }
@@ -728,7 +729,7 @@
 }
 
 - (BOOL) checkingNumberPhotos {
-    if (![self.galeryView obtainArrayWithChosenPics].count) {
+    if (!self.post.arrayImages.count) {
         return NO;
     }
     return YES;
@@ -800,7 +801,7 @@
  @param without
  */
 - (void) obtainChosenImage {
-    if ([[self.galeryView obtainArrayWithChosenPics] count] == MUSApp_MUSShareViewController_NumberOfAllowedPics) {
+    if ([self.post.arrayImages count] == MUSApp_MUSShareViewController_NumberOfAllowedPics) {
         [self showAlertWithMessage : MUSApp_MUSShareViewController_Alert_Message_No_Pics_Anymore];
         return;
     }
@@ -845,7 +846,9 @@
         MUSMediaGalleryViewController *vc = [MUSMediaGalleryViewController new];        
         vc = [segue destinationViewController];
         vc.isEditableCollectionView = YES;
-        [vc setObjectsWithArrayOfPhotos: self.arrayPicsForDetailCollectionView withCurrentSocialNetwork: _currentSocialNetwork indexPicTapped:self.indexPicTapped andReasonTypeOfPost: MUSAllReasons];
+        //[vc setObjectsWithArrayOfPhotos: self.arrayPicsForDetailCollectionView withCurrentSocialNetwork: _currentSocialNetwork indexPicTapped:self.indexPicTapped andReasonTypeOfPost: MUSAllReasons];
+        //[vc setObjectsWithPost:self.post withCurrentSocialNetwork:_currentSocialNetwork andIndexPicTapped:self.indexPicTapped];
+        [vc sendPost:self.post andSelectedImageIndex:self.indexPicTapped];
     }
     
 }
@@ -865,7 +868,7 @@
 }
 
 - (void) showImagesOnOtherVcWithArray:(NSMutableArray *)arrayPics andIndexPicTapped:(NSInteger)indexPicTapped {
-    self.arrayPicsForDetailCollectionView = arrayPics;
+    //self.arrayPicsForDetailCollectionView = arrayPics;
     self.indexPicTapped = indexPicTapped;
     [self performSegueWithIdentifier: @"goToShowImages" sender:nil];
 }
