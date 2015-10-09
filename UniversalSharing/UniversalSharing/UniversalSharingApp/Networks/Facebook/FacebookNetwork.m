@@ -47,7 +47,6 @@ static FacebookNetwork *model = nil;
 /*!
  Initiation FacebookNetwork.
  */
-
 - (instancetype) init {
     self = [super init];
     if (self) {
@@ -59,8 +58,6 @@ static FacebookNetwork *model = nil;
         }
         else {
             self.isLogin = YES;
-            //[self updatePost];/////////////////////////////////////////////////////////////////////////////////////////////
-            
             [self startTimerForUpdatePosts];
             self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType:self.networkType]]firstObject]; // obtainUsersWithNetworkType:self.networkType];
             //self.icon = self.currentUser.photoURL;

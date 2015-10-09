@@ -110,8 +110,6 @@ NSInteger const MUSApp_MUSPostLocationCell_HeightOfCell = 200;
 #pragma mark - MUSUserDetailViewController
 
 NSString *const MUSApp_MUSUserDetailViewController_User_Profile = @"profile";
-NSString *const MUSApp_MUSUserDetailViewController_User_DateOfBirth = @"dateOfBirth";
-NSString *const MUSApp_MUSUserDetailViewController_User_City = @"city";
 NSString *const MUSApp_MUSUserDetailViewController_User_ClientID = @"clientID";
 
 @end
