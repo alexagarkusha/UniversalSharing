@@ -24,6 +24,8 @@
 
 - (NSMutableArray*) networksForKeys: (NSArray*) keysArray; ///
 
+//- (SocialNetwork*) networkForKey: (NSNumber*) key;
+
 - (void) configurateWithNetworkClasses: (NSDictionary*) networksWithKeys;
 
 @end

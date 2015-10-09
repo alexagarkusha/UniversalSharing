@@ -33,6 +33,11 @@ NSString *const MUSFacebookParseUser_Picture = @"picture";
 NSString *const MUSFacebookParseUser_Data = @"data";
 NSString *const MUSFacebookParseUser_Photo_Url = @"url";
 
+#pragma mark - NetworkPost
+
+NSString *const MUSFacebookNetworkPost_ID = @"id";
+
+
 ///////////////////////////////// VK Network /////////////////////////////////
 
 #pragma VKNetwork

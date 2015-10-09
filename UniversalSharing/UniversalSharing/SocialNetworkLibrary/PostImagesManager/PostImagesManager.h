@@ -16,9 +16,8 @@
 
 - (NSMutableArray*) saveImagesToDocumentsFolderAndGetArrayWithImagesUrls :(NSMutableArray*) arrayWithImages;
 
-//- (void) removeImagesFromAllPostsByUserID :(NSString*) userID;
-
 - (void) removeImagesFromPostByArrayOfImagesUrls : (NSMutableArray*) arrayOfImagesUrls;
 
+- (void) removeImageFromFileManagerByImagePath : (NSString*) imagePathString;
 
 @end

@@ -33,6 +33,10 @@ FOUNDATION_EXPORT NSString *const MUSFacebookParseUser_Picture;
 FOUNDATION_EXPORT NSString *const MUSFacebookParseUser_Data;
 FOUNDATION_EXPORT NSString *const MUSFacebookParseUser_Photo_Url;
 
+#pragma mark - NetworkPost
+
+FOUNDATION_EXPORT NSString *const MUSFacebookNetworkPost_ID;
+
 ///////////////////////////////// VK Network /////////////////////////////////
 
 #pragma VKNetwork

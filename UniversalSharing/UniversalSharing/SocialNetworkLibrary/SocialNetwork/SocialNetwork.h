@@ -19,10 +19,6 @@
 */
 @property (assign, nonatomic) BOOL isLogin;
 /*!
- @abstract lock appear in the social network application. The visibility state of Social network selects the user
-*/
-@property (assign, nonatomic) BOOL isVisible;
-/*!
  @abstract icon of Social Network
  */
 @property (strong, nonatomic) NSString *icon;
@@ -38,8 +34,6 @@
  @abstract logged user of social network
  */
 @property (strong, nonatomic) User *currentUser;
-
-@property (strong, nonatomic) NSTimer *timer;
 /*!
  @abstract type of social network (like Facebook, Twitters, Vkontakte)
  */
@@ -85,10 +79,9 @@
 
 - (void) updateNetworkPostWithComplition : (UpdateNetworkPostsComplition) block;
 
-- (NSError*) errorConnection;
+- (void) updateUserInSocialNetwork;
 
-#warning NEED TO ADD IN USER CLASS
-- (void) removeUserFromDataBaseAndImageFromDocumentsFolder :(User*) user;
+- (NSError*) errorConnection;
 
 
 @end

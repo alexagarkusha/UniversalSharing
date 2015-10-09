@@ -244,7 +244,7 @@
 
 
 - (IBAction)btnShareLocationTapped:(id)sender {
-    if (!_currentSocialNetwork || !_currentSocialNetwork.isLogin || !_currentSocialNetwork.isVisible) {
+    if (!_currentSocialNetwork || !_currentSocialNetwork.isLogin) {
         //[self showAlertWithMessage: musAppError_Logged_Into_Social_Networks];
         return;
     } else {
