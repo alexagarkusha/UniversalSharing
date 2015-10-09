@@ -38,8 +38,11 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.tabBarController.tabBar.hidden = YES;// go to private
+    [self initializeBars];    
+}
+
+- (void) initializeBars {
+    self.tabBarController.tabBar.hidden = YES;
     _visibleBars = NO;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapOnCollectionView:)];
     [self.collectionView addGestureRecognizer:tap];
@@ -57,10 +60,8 @@ static NSString * const reuseIdentifier = @"Cell";
     if (!self.isEditableCollectionView) {
         _toolBar.hidden = YES;
     }else {
-        
         _toolBar.hidden = NO;
     }
-    
 }
 
 - (void) viewWillAppear:(BOOL)animated {
