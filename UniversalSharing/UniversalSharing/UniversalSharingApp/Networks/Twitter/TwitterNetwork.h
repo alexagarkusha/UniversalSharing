@@ -11,5 +11,10 @@
 #import "SocialNetwork.h"
 
 @interface TwitterNetwork : SocialNetwork
+
+/*!
+ @abstract return an instance of the social network in a single copy. Singleton method.
+ */
 + (TwitterNetwork*) sharedManager;
+
 @end

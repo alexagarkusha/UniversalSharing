@@ -40,6 +40,15 @@ NSInteger const MUSFacebookErrorCode = 1300;
 
 NSString *const MUSFacebookSuccessUpdateNetworkPost = @"Facebook update all network posts";
 
+NSString* const MUSFacebookParameter_ObjectId = @"ObjectId";
+NSString* const MUSFacebookParameter_True = @"true";
+NSString* const MUSFacebookParameter_Summary = @"summary";
+NSString* const MUSFacebookParameter_Likes = @"likes";
+NSString* const MUSFacebookParameter_Total_Count = @"total_count";
+NSString* const MUSFacebookParameter_Comments = @"comments";
+NSString *const MUSFacebookLocation_Parameter_Type_Place = @"place";
+NSString *const MUSFacebookLocation_Parameter_Type_Distance = @"500";
+
 #pragma mark Vkontakte Constants
 
 NSString *const MUSVKAppID = @"5004830";
@@ -89,7 +98,7 @@ NSString* const MUSTwitterLocationParameter_Latitude = @"lat";
 NSString* const MUSTwitterLocationParameter_Longituge = @"long";
 
 NSString *const MUSTwitterURL_Statuses_Show = @"https://api.twitter.com/1.1/statuses/show.json";
-//NSString *const MUSTwitterURL_Users_Show = @"https://api.twitter.com/1.1/users/show.json";
+NSString *const MUSTwitterURL_Api_Url = @"https://api.twitter.com";
 NSString* const MUSTwitterURL_Geo_Search = @"https://api.twitter.com/1.1/geo/search.json";
 NSString* const MUSTwitterURL_Statuses_Update = @"https://api.twitter.com/1.1/statuses/update.json";
 NSString* const MUSTwitterURL_Media_Upload = @"https://upload.twitter.com/1.1/media/upload.json";
@@ -100,7 +109,14 @@ NSString* const MUSTwitterParameter_Status = @"status";
 NSString* const MUSTwitterParameter_MediaID = @"media_ids";
 NSString* const MUSTwitterParameter_Media = @"media";
 
+NSString* const MUSTwitterParameter_ID = @"id";
+NSString* const MUSTwitterParameter_True = @"true";
+NSString* const MUSTwitterParameter_Include_My_Retweet = @"include_my_retweet";
+NSString* const MUSTwitterParameter_Favorite_Count = @"favorite_count";
+NSString* const MUSTwitterParameter_Retweet_Count = @"retweet_count";
+
 NSString* const MUSTwitterJSONParameterForMediaID = @"media_id_string";
+NSString *const MUSTwitterSuccessUpdateNetworkPost = @"Twitter update all network posts";
 
 
 #pragma mark General Constants
@@ -140,3 +156,12 @@ NSString *const MUSNameDataBase = @"UniversalSharing.sql";
 NSString *const MUSReasonName_Shared = @"Success";
 NSString *const MUSReasonName_Offline = @"Offline";
 NSString *const MUSReasonName_Error = @"Failed";
+
+#pragma mark - General Constants
+
+NSString *const MUSNetworkPost_Update_Error_Data = @"Error data post update";
+NSString *const MUSNetworkPost_Update_Already_Update = @"Post is already updated";
+NSString *const MUSNetworkPost_Update_Error_Update = @"Error update network posts";
+NSString *const MUSNetworkPost_Update_Updated = @"Post updated";
+
+

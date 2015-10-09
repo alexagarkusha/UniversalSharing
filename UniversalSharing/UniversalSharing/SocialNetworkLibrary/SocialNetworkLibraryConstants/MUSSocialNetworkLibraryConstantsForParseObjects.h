@@ -37,6 +37,7 @@ FOUNDATION_EXPORT NSString *const MUSFacebookParseUser_Photo_Url;
 
 FOUNDATION_EXPORT NSString *const MUSFacebookNetworkPost_ID;
 
+
 ///////////////////////////////// VK Network /////////////////////////////////
 
 #pragma VKNetwork
@@ -74,6 +75,11 @@ FOUNDATION_EXPORT NSString *const MUSTwitterParsePlace_Full_Name;
 FOUNDATION_EXPORT NSString *const MUSTwitterParsePlace_Contained_Within;
 FOUNDATION_EXPORT NSString *const MUSTwitterParsePlace_Name;
 FOUNDATION_EXPORT NSString *const MUSTwitterParsePlace_Centroid;
+
+#pragma mark - ParseLocation
+
+FOUNDATION_EXPORT NSString *const MUSTwitterParseLocation_Result;
+FOUNDATION_EXPORT NSString *const MUSTwitterParseLocation_Places;
 
 
 

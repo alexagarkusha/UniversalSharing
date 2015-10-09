@@ -12,13 +12,13 @@
 #import "Place.h"
 #import "Location.h"
 #import "NSError+MUSError.h"
-#import "DataBaseManager.h"
 #import "NSString+MUSPathToDocumentsdirectory.h"
-#import "MUSDatabaseRequestStringsHelper.h"
 #import "InternetConnectionManager.h"
 #import "NetworkPost.h"
 #import "NSString+MUSCurrentDate.h"
 #import "MUSPostManager.h"
+#import "ConstantsApp.h"
+#import "MUSSocialNetworkLibraryConstantsForParseObjects.h"
 
 @interface TwitterNetwork () //<TWTRCoreOAuthSigning>
 
@@ -76,14 +76,12 @@ static TwitterNetwork *model = nil;
  Initiation properties of TwitterNetwork with session
  */
 - (void) initiationPropertiesWithSession {
-    self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType:self.networkType]]firstObject];
-    self.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
     self.isLogin = YES;
     self.icon = MUSTwitterIconName;
+    self.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
 }
 
-#pragma mark - loginInNetwork
-
+#pragma mark - login
 /*!
  Triggers user authentication with Twitter.
  This method will present UI to allow the user to log in if there are no saved Twitter login credentials.
@@ -106,7 +104,7 @@ static TwitterNetwork *model = nil;
     }
 }
 
-#pragma mark - loginOut
+#pragma mark - logout
 
 /*!
  Deletes the local Twitter user session from this app. This will not remove the system Twitter account and make a network request to invalidate the session.
@@ -117,39 +115,34 @@ static TwitterNetwork *model = nil;
 - (void) logout {
     
     [[Twitter sharedInstance] logOut];
-    
-    NSURL *url = [NSURL URLWithString:@"https://api.twitter.com"];
+    NSURL *url = [NSURL URLWithString: MUSTwitterURL_Api_Url];
     NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:url];
     for (NSHTTPCookie *cookie in cookies)
     {
         [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
     }
-    
     [[MUSPostManager manager] deleteNetworkPostForNetworkType: self.networkType];
     [self.currentUser removeUser];
-    
     [self initiationPropertiesWithoutSession];
 }
 
 
-#pragma mark - obtainUserFromNetwork
+#pragma mark - obtainUserInfoFromNetwork
 
 - (void) obtainUserInfoFromNetworkWithComplition :(Complition) block {
-    __weak TwitterNetwork *weakSell = self;
+    __weak TwitterNetwork *weakSelf = self;
     
     [[TwitterKit APIClient] loadUserWithID : [[[Twitter sharedInstance ]session] userID]
                                  completion:^(TWTRUser *user, NSError *error)
      {
          if (user) {
-             weakSell.currentUser = [User createFromDictionary:user andNetworkType : weakSell.networkType];
-             weakSell.title = [NSString stringWithFormat:@"%@  %@", weakSell.currentUser.firstName, weakSell.currentUser.lastName];
-             weakSell.currentUser.photoURL = [weakSell.currentUser.photoURL saveImageOfUserToDocumentsFolder:weakSell.currentUser.photoURL];
-             if (!weakSell.isLogin)
-                 [[DataBaseManager sharedManager] insertObjectIntoTable:weakSell.currentUser];
-             
+             [weakSelf createUser: user];
+             weakSelf.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
+             if (!weakSelf.isLogin)
+                 [weakSelf.currentUser insertToDataBase];
              dispatch_async(dispatch_get_main_queue(), ^{
-                 weakSell.isLogin = YES;
-                 block(weakSell,nil);
+                 weakSelf.isLogin = YES;
+                 block(weakSelf,nil);
              });
         } else {
              block (nil, [self errorTwitter]);
@@ -157,170 +150,39 @@ static TwitterNetwork *model = nil;
      }];
 }
 
-- (void) updateNetworkPostWithComplition: (UpdateNetworkPostsComplition) block {
-    NSArray * networksPostsIDs = [[DataBaseManager sharedManager] obtainNetworkPostsFromDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForNetworkPostWithReason: MUSConnect andNetworkType: MUSTwitters]];
-    
-    if (![[InternetConnectionManager connectionManager] isInternetConnection] || !networksPostsIDs.count || (![[InternetConnectionManager connectionManager] isInternetConnection] && networksPostsIDs.count)) {
-        block (@"Twitter, Error update network posts");
-        return;
-    }
-    
-    __block NSUInteger counterOfNetworkPosts = 0;
-    __block NSUInteger numberOfNetworkPosts = networksPostsIDs.count;
-    
-    [networksPostsIDs enumerateObjectsUsingBlock:^(NetworkPost *networkPost, NSUInteger idx, BOOL *stop) {
-        [self obtainCountOfLikesAndCommentsFromPost: networkPost withComplition:^(id result, NSError *error) {
-            counterOfNetworkPosts++;
-            if (counterOfNetworkPosts == numberOfNetworkPosts) {
-                block (@"Twitter update all network posts");
-            }
-        }];
-    }];
-    
-    
-}
-
-- (void) obtainCountOfLikesAndCommentsFromPost :(NetworkPost*) networkPost withComplition : (Complition) block {
-    NSString *statusesShowEndpoint = MUSTwitterURL_Statuses_Show;
-    
-    NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:networkPost.postID,@"id",@"true",@"include_my_retweet",nil];//,@"100",@"count"
-    NSError *clientError;
-    
-    NSURLRequest *request = [[[Twitter sharedInstance] APIClient] URLRequestWithMethod:@"GET" URL:statusesShowEndpoint parameters:params error:&clientError];
-    __block NetworkPost *networkPostCopy = networkPost;
-    
-    if (request) {
-        [[[Twitter sharedInstance] APIClient] sendTwitterRequest:request completion:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-            if (data) {
-                NSError *jsonError;
-                NSDictionary *arrayJson = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
-                if (!arrayJson.count) {
-                    block (@"Error data post update", nil);
-                    return;
-                }
-                if (networkPostCopy.likesCount == [[arrayJson  objectForKey:@"favorite_count"] integerValue] &&  networkPostCopy.commentsCount == [[arrayJson  objectForKey:@"retweet_count"] integerValue] ) {
-                    block (@"Post is already updated", nil);
-                    return;
-                }
-                
-                networkPostCopy.likesCount = [[arrayJson  objectForKey:@"favorite_count"] integerValue];
-                networkPostCopy.commentsCount = [[arrayJson objectForKey:@"retweet_count"] integerValue];
-                // NSLog(@"TW post.id = %@, post.like = %ld, post.comments = %d", networkPost.postID, (long)networkPost.likesCount, networkPost.commentsCount);
-                [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForUpdateNetworkPost : networkPostCopy]];
-                block (@"Post updated", nil);
-            }
-            else {
-                block (connectionError, nil);
-            }
-        }];
-    }
-    else {
-        block (@"Error update network posts", nil);
-    }
-}
-
-
-#pragma mark - obtainArrayOfPlacesFromNetwork
-
-- (void) obtainPlacesArrayForLocation : (Location*) location withComplition : (Complition) block {
-    self.copyComplition = block;
-    TWTRAPIClient *client = [[Twitter sharedInstance] APIClient];
-    NSError *error;
-    
-    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-    
-    if (!location.latitude || !location.longitude || [location.latitude floatValue] < -90.0f || [location.latitude floatValue] > 90.0f || [location.longitude floatValue] < -180.0f  || [location.longitude floatValue] > 180.0f) {
-        
-        NSError *error = [NSError errorWithMessage: MUSLocationPropertiesError
-                                      andCodeError: MUSLocationPropertiesErrorCode];
-        return block (nil, error);
-    } else {
-        params [MUSTwitterLocationParameter_Latitude] = location.latitude;
-        params [MUSTwitterLocationParameter_Longituge] = location.longitude;
-    }
-    
-    NSString *url = MUSTwitterURL_Geo_Search;
-    
-    
-    NSURLRequest *preparedRequest = [client URLRequestWithMethod : MUSGET
-                                                             URL : url
-                                                      parameters : params
-                                                           error : &error];
-    
-    [client sendTwitterRequest : preparedRequest
-                     completion:^(NSURLResponse *urlResponse, NSData *responseData, NSError *error){
-                         
-                         if(!error){
-                             NSError *jsonError;
-                             NSDictionary *locationJSON = [NSJSONSerialization JSONObjectWithData : responseData
-                                                                                          options : 0
-                                                                                            error : &jsonError];
-                             
-                             NSDictionary *resultSearcLocation = [locationJSON objectForKey: @"result"];
-                             NSArray *places = [resultSearcLocation objectForKey: @"places"];
-                             NSMutableArray *placesArray = [[NSMutableArray alloc] init];
-                             
-                             for (int i = 0; i < [places count]; i++) {
-                                 Place *place = [Place createFromDictionary: [places objectAtIndex: i] andNetworkType:self.networkType];
-                                 [placesArray addObject:place];
-                             }
-                             
-                             if ([placesArray count] != 0) {
-                                 block (placesArray, nil);
-                             }   else {
-                                 NSError *error = [NSError errorWithMessage: MUSLocationDistanceError andCodeError: MUSLocationDistanceErrorCode];
-                                 block (nil, error);
-                             }
-                         }else{
-                             block (nil, [self errorTwitter]);
-                         }
-                         
-                     }];
-}
-
-
-
-#pragma mark - sharePostToNetwork
+#pragma mark - sharePost
 
 - (void) sharePost:(Post *)post withComplition:(Complition)block progressLoadingBlock:(ProgressLoading)blockLoading {
-        if (![[InternetConnectionManager connectionManager] isInternetConnection]){
-            NetworkPost *networkPost = [NetworkPost create];
-            networkPost.reason = MUSOffline;
-            networkPost.networkType = MUSTwitters;
-            block(networkPost,[self errorConnection]);
-            blockLoading ([NSNumber numberWithInteger: self.networkType], 1.0f);
-            return;
-        }
+    if (![[InternetConnectionManager connectionManager] isInternetConnection]){
+        NetworkPost *networkPost = [NetworkPost create];
+        networkPost.networkType = MUSTwitters;
+        block(networkPost,[self errorConnection]);
+        blockLoading ([NSNumber numberWithInteger: self.networkType], 1.0f);
+        return;
+    }
     self.copyProgressLoading = blockLoading;
     self.copyComplition = block;
-    if ([post.arrayImages count] > 0) {
-        [self postImagesToTwitter: post];
+    if ([post.arrayImages count]) {
+        [self sharePostWithPictures: post];
     } else {
-        [self postMessageToTwitter: post];
+        [self sharePostOnlyWithPostDescription: post];
     }
 }
 
-#pragma mark - postMessageAndLocationWithoutImage
+#pragma mark - sharePostOnlyWithPostDescription
 
 /*!
  @abstract upload message and user location (optional)
  @param current post of @class Post
  */
 
-- (void) postMessageToTwitter : (Post*) post {
+- (void) sharePostOnlyWithPostDescription : (Post*) post {
     TWTRAPIClient *client = [[Twitter sharedInstance] APIClient];
     NSError *error;
     
     NSString *url = MUSTwitterURL_Statuses_Update;
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-    
-    NSString* messageText = post.postDescription;
-    
-    if (post.postDescription.length > 117) {
-        messageText = [post.postDescription substringToIndex: 117];
-    }
-    
-    params [MUSTwitterParameter_Status] = messageText;
+    params [MUSTwitterParameter_Status] = [self checkPostsDescriptionOnTheMaximumNumberOfAllowedCharacters: post];
     if (post.longitude.length > 0 && ![post.longitude isEqualToString: @"(null)"] && post.latitude.length > 0 && ![post.latitude isEqualToString: @"(null)"]) {
         params [MUSTwitterLocationParameter_Latitude] = post.latitude;
         params [MUSTwitterLocationParameter_Longituge] = post.longitude;
@@ -330,37 +192,35 @@ static TwitterNetwork *model = nil;
                                                              URL : url
                                                       parameters : params
                                                            error : &error];
-    //[preparedRequest setTimeoutInterval:10] ;
-    
     NetworkPost *networkPost = [NetworkPost create];
     networkPost.networkType = MUSTwitters;
     __block NetworkPost* networkPostCopy = networkPost;
     
     [client sendTwitterRequest:preparedRequest
                     completion:^(NSURLResponse *urlResponse, NSData *responseData, NSError *error){
-                        //self.copyComplitionProgressLoading(1);
-                        self.copyProgressLoading ([NSNumber numberWithInteger: self.networkType], 1.0f);
-                        if(!error){
-                            NSError *jsonError = nil;
-                            
-                            NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:responseData
-                                                                                     options:NSJSONReadingMutableContainers
-                                                                                       error:&jsonError];
-                            if (jsonError) {
-                                //[self errorTwitter];
-                                networkPostCopy.reason = MUSErrorConnection;
-                                self.copyComplition (networkPostCopy, [self errorTwitter]);
-                                return;
-                            }
-                            networkPostCopy.postID = [[jsonData objectForKey:@"id"]stringValue];
-                            networkPostCopy.reason = MUSConnect;
-                            networkPostCopy.dateCreate = [NSString currentDate];
-                            self.copyComplition (networkPostCopy, nil);
-                        }else{
-                            networkPostCopy.reason = MUSErrorConnection;
-                            self.copyComplition (networkPostCopy, [self errorTwitter]);
-                        }
-                    }];
+            self.copyProgressLoading ([NSNumber numberWithInteger: self.networkType], 1.0f);
+            
+                if(!error){
+                    NSError *jsonError = nil;
+                    NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:responseData
+                                                                             options:NSJSONReadingMutableContainers
+                                                                               error:&jsonError];
+                    if (jsonError) {
+                        //[self errorTwitter];
+                        networkPostCopy.reason = MUSErrorConnection;
+                        self.copyComplition (networkPostCopy, [self errorTwitter]);
+                        return;
+                    }
+                    
+                    networkPostCopy.postID = [[jsonData objectForKey:@"id"]stringValue];
+                    networkPostCopy.reason = MUSConnect;
+                    networkPostCopy.dateCreate = [NSString currentDate];
+                    self.copyComplition (networkPostCopy, nil);
+                }else{
+                    networkPostCopy.reason = MUSErrorConnection;
+                    self.copyComplition (networkPostCopy, [self errorTwitter]);
+            }
+    }];
 }
 
 #pragma mark - postMessageWithImageAndLocation
@@ -370,7 +230,7 @@ static TwitterNetwork *model = nil;
  @param current post of @class Post
  */
 
-- (void) postImagesToTwitter : (Post*) post {
+- (void) sharePostWithPictures : (Post*) post {
     NetworkPost *networkPost = [NetworkPost create];
     networkPost.networkType = MUSTwitters;
     __block NetworkPost *networkPostCopy = networkPost;
@@ -379,22 +239,13 @@ static TwitterNetwork *model = nil;
         if (!error) {
             NSArray *mediaIdsArray = (NSArray*) result;
             NSString *mediaIdsString = [mediaIdsArray componentsJoinedByString:@","];
-            
             NSString *endpoint = MUSTwitterURL_Statuses_Update;
-            
             NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
             
             params [MUSTwitterParameter_MediaID] = mediaIdsString;
-            
-            
-            NSString* messageText = post.postDescription;
-            
-            if (post.postDescription.length > 117) {
-                messageText = [post.postDescription substringToIndex: 117];
-            }
-
+        
             if (post.postDescription) {
-                params [MUSTwitterParameter_Status] = messageText;
+                params [MUSTwitterParameter_Status] = [self checkPostsDescriptionOnTheMaximumNumberOfAllowedCharacters: post];
             }
             if (post.longitude.length > 0 && ![post.longitude isEqualToString: @"(null)"] && post.latitude.length > 0 && ![post.latitude isEqualToString: @"(null)"]) {
                 params [MUSTwitterLocationParameter_Latitude] = post.latitude;
@@ -414,29 +265,28 @@ static TwitterNetwork *model = nil;
             }
             [client sendTwitterRequest : request
                             completion : ^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-                                self.copyProgressLoading ([NSNumber numberWithInteger: self.networkType], 1.0f);
-                                if (!connectionError) {
-                                    
-                                    NSError *jsonError = nil;
-                                    
-                                    NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:data
-                                                                                             options:NSJSONReadingMutableContainers
-                                                                                               error:&jsonError];
-                                    if (jsonError) {
-                                        networkPostCopy.reason = MUSErrorConnection;
-                                        self.copyComplition (networkPostCopy, [self errorTwitter]);
-                                        return;
-                                    }
-                                    networkPostCopy.postID = [[jsonData objectForKey:@"id"] stringValue];
-                                    networkPostCopy.reason = MUSConnect;
-                                    networkPost.dateCreate = [NSString currentDate];
-                                    self.copyComplition (networkPostCopy, nil);
-                                } else {
-                                    NSError *connectionError = [NSError errorWithMessage: MUSConnectionError
-                                                                            andCodeError: MUSConnectionErrorCode];
-                                    networkPostCopy.reason = MUSErrorConnection;
-                                    self.copyComplition (networkPostCopy, connectionError);
-                                    return;
+                self.copyProgressLoading ([NSNumber numberWithInteger: self.networkType], 1.0f);
+                    if (!connectionError) {
+                        NSError *jsonError = nil;
+                        NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:data
+                                                                                 options:NSJSONReadingMutableContainers
+                                                                                   error:&jsonError];
+                        if (jsonError) {
+                            networkPostCopy.reason = MUSErrorConnection;
+                            self.copyComplition (networkPostCopy, [self errorTwitter]);
+                            return;
+                        }
+                        
+                        networkPostCopy.postID = [[jsonData objectForKey:@"id"] stringValue];
+                        networkPostCopy.reason = MUSConnect;
+                        networkPost.dateCreate = [NSString currentDate];
+                        self.copyComplition (networkPostCopy, nil);
+                    } else {
+                        NSError *connectionError = [NSError errorWithMessage: MUSConnectionError
+                                                                andCodeError: MUSConnectionErrorCode];
+                        networkPostCopy.reason = MUSErrorConnection;
+                        self.copyComplition (networkPostCopy, connectionError);
+                        return;
                                 }
                             }];
         } else {
@@ -454,7 +304,7 @@ static TwitterNetwork *model = nil;
 - (void) mediaIdsForTwitter : (Post*) post withComplition : (Complition) block {
     NSMutableArray *mediaIdsArray = [[NSMutableArray alloc] init];
     __weak NSMutableArray *array = mediaIdsArray;
-    __block int numberOfIds = post.arrayImages.count;
+    __block NSInteger numberOfIds = post.arrayImages.count;
     __block int counterOfIds = 0;
     
     for (int i = 0; i < post.arrayImages.count; i++) {
@@ -474,7 +324,6 @@ static TwitterNetwork *model = nil;
     }
 }
 
-
 /*!
  @abstract return the media IDs for each image is loaded into a social network
  @param current ImageToPost of @class ImageToPost
@@ -482,9 +331,7 @@ static TwitterNetwork *model = nil;
 
 - (void) mediaIDForTwitter : (ImageToPost*) imageToPost withComplition : (Complition) block {
     NSString *endpoint = MUSTwitterURL_Media_Upload;
-    
     NSData* imageData = UIImageJPEGRepresentation(imageToPost.image, imageToPost.quality);
-    
     NSDictionary *parameters = @{ MUSTwitterParameter_Media : [imageData base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed ]};
     NSError *error = nil;
     
@@ -499,25 +346,147 @@ static TwitterNetwork *model = nil;
     }
     [client sendTwitterRequest : request
                     completion : ^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-                        if (!connectionError) {
-                            NSError *jsonError = nil;
-                            id jsonData = [NSJSONSerialization JSONObjectWithData : data
-                                                                          options : NSJSONReadingMutableContainers
-                                                                            error : &jsonError];
-                            if (jsonError) {
-                                block (nil, [self errorTwitter]);
-                                //block (nil, jsonError);
-                                return;
-                            }
-                            NSString *mediaId = jsonData [MUSTwitterJSONParameterForMediaID];
-                            block (mediaId, nil);
-                        } else {
-                            NSError *connectionError = [NSError errorWithMessage : MUSConnectionError
-                                                                    andCodeError : MUSConnectionErrorCode];
-                            block (nil, connectionError);
-                            return;
-                        }
-                    }];
+        if (!connectionError) {
+            NSError *jsonError = nil;
+            id jsonData = [NSJSONSerialization JSONObjectWithData : data
+                                                          options : NSJSONReadingMutableContainers
+                                                            error : &jsonError];
+            if (jsonError) {
+                block (nil, [self errorTwitter]);
+                return;
+            }
+            
+            NSString *mediaId = jsonData [MUSTwitterJSONParameterForMediaID];
+            block (mediaId, nil);
+        } else {
+            NSError *connectionError = [NSError errorWithMessage : MUSConnectionError
+                                                    andCodeError : MUSConnectionErrorCode];
+            block (nil, connectionError);
+            return;
+        }
+    }];
+}
+
+
+#pragma mark - obtainPlacesArrayForLocation
+
+- (void) obtainPlacesArrayForLocation : (Location*) location withComplition : (Complition) block {
+    self.copyComplition = block;
+    __weak TwitterNetwork *weakSelf = self;
+    TWTRAPIClient *client = [[Twitter sharedInstance] APIClient];
+    NSError *error;
+    
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    
+    if (!location.latitude || !location.longitude || [location.latitude floatValue] < -90.0f || [location.latitude floatValue] > 90.0f || [location.longitude floatValue] < -180.0f  || [location.longitude floatValue] > 180.0f) {
+        
+        NSError *error = [NSError errorWithMessage: MUSLocationPropertiesError
+                                      andCodeError: MUSLocationPropertiesErrorCode];
+        return block (nil, error);
+    } else {
+        params [MUSTwitterLocationParameter_Latitude] = location.latitude;
+        params [MUSTwitterLocationParameter_Longituge] = location.longitude;
+    }
+    
+    NSString *url = MUSTwitterURL_Geo_Search;
+    NSURLRequest *preparedRequest = [client URLRequestWithMethod : MUSGET
+                                                             URL : url
+                                                      parameters : params
+                                                           error : &error];
+    
+    [client sendTwitterRequest : preparedRequest
+                     completion:^(NSURLResponse *urlResponse, NSData *responseData, NSError *error){
+                         
+        if(!error){
+            NSError *jsonError;
+            NSDictionary *locationJSON = [NSJSONSerialization JSONObjectWithData : responseData
+                                                                         options : 0
+                                                                           error : &jsonError];
+                             
+            NSDictionary *resultSearcLocation = [locationJSON objectForKey: MUSTwitterParseLocation_Result];
+            NSArray *places = [resultSearcLocation objectForKey: MUSTwitterParseLocation_Places];
+            NSMutableArray *placesArray = [[NSMutableArray alloc] init];
+                             
+            for (int i = 0; i < [places count]; i++) {
+                Place *place = [weakSelf createPlaceFromTwitter: [places objectAtIndex: i]];
+                [placesArray addObject:place];
+            }
+                             
+            if ([placesArray count] != 0) {
+                block (placesArray, nil);
+            } else {
+                NSError *error = [NSError errorWithMessage: MUSLocationDistanceError andCodeError: MUSLocationDistanceErrorCode];
+                block (nil, error);
+            }
+        }else{
+            block (nil, [weakSelf errorTwitter]);
+        }
+    }];
+}
+
+#pragma mark - updateNetworkPostWithComplition
+
+- (void) updateNetworkPostWithComplition: (UpdateNetworkPostsComplition) block {
+    NSArray * networksPostsIDs = [[MUSPostManager manager] networkPostsArrayForNetworkType: self.networkType];
+    
+    if (![[InternetConnectionManager connectionManager] isInternetConnection] || !networksPostsIDs.count || (![[InternetConnectionManager connectionManager] isInternetConnection] && networksPostsIDs.count)) {
+        block (MUSTwitterError);
+        return;
+    }
+
+    __block NSUInteger counterOfNetworkPosts = 0;
+    __block NSUInteger numberOfNetworkPosts = networksPostsIDs.count;
+    
+    [networksPostsIDs enumerateObjectsUsingBlock:^(NetworkPost *networkPost, NSUInteger idx, BOOL *stop) {
+        [self obtainCountOfLikesAndCommentsFromPost: networkPost withComplition:^(id result, NSError *error) {
+            counterOfNetworkPosts++;
+            if (counterOfNetworkPosts == numberOfNetworkPosts) {
+                block (MUSTwitterSuccessUpdateNetworkPost);
+            }
+        }];
+    }];
+}
+
+- (void) obtainCountOfLikesAndCommentsFromPost :(NetworkPost*) networkPost withComplition : (Complition) block {
+    NSString *statusesShowEndpoint = MUSTwitterURL_Statuses_Show;
+    
+    NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys : networkPost.postID, MUSTwitterParameter_ID, MUSTwitterParameter_True, MUSTwitterParameter_Include_My_Retweet, nil];
+    
+    NSError *clientError;
+    
+    NSURLRequest *request = [[[Twitter sharedInstance] APIClient] URLRequestWithMethod: MUSGET
+                                                                                   URL:statusesShowEndpoint
+                                                                            parameters:params
+                                                                                 error:&clientError];
+    __block NetworkPost *networkPostCopy = networkPost;
+    
+    if (request) {
+        [[[Twitter sharedInstance] APIClient] sendTwitterRequest:request completion:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+            if (data) {
+                NSError *jsonError;
+                NSDictionary *arrayJson = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+                if (!arrayJson.count) {
+                    block (MUSNetworkPost_Update_Error_Data, nil);
+                    return;
+                }
+                if (networkPostCopy.likesCount == [[arrayJson  objectForKey:MUSTwitterParameter_Favorite_Count] integerValue] &&  networkPostCopy.commentsCount == [[arrayJson  objectForKey:MUSTwitterParameter_Retweet_Count] integerValue] ) {
+                    block (MUSNetworkPost_Update_Already_Update, nil);
+                    return;
+                }
+                
+                networkPostCopy.likesCount = [[arrayJson  objectForKey:MUSTwitterParameter_Favorite_Count] integerValue];
+                networkPostCopy.commentsCount = [[arrayJson objectForKey:MUSTwitterParameter_Retweet_Count] integerValue];
+                [networkPostCopy update];
+                block (MUSNetworkPost_Update_Updated, nil);
+            }
+            else {
+                block (connectionError, nil);
+            }
+        }];
+    }
+    else {
+        block (MUSNetworkPost_Update_Error_Update, nil);
+    }
 }
 
 /*!
@@ -526,5 +495,52 @@ static TwitterNetwork *model = nil;
 - (NSError*) errorTwitter {
     return [NSError errorWithMessage: MUSTwitterError andCodeError: MUSTwitterErrorCode];
 }
+
+#pragma mark - createUser
+/*!
+ @abstract an instance of the User for facebook network.
+ @param dictionary takes dictionary from facebook network.
+ */
+- (void) createUser : (TWTRUser*) userDictionary {
+    self.currentUser = [User create];
+    self.currentUser.clientID = userDictionary.userID;
+    self.currentUser.lastName = userDictionary.screenName;
+    self.currentUser.firstName = userDictionary.name;
+    self.currentUser.networkType = MUSTwitters;
+    NSString *photoURL_max = userDictionary.profileImageURL;
+    photoURL_max = [photoURL_max stringByReplacingOccurrencesOfString:@"_normal"
+                                                           withString:@""];
+    self.currentUser.photoURL = photoURL_max;
+    self.currentUser.photoURL = [self.currentUser.photoURL saveImageOfUserToDocumentsFolder: self.currentUser.photoURL];
+}
+
+- (NSString*) checkPostsDescriptionOnTheMaximumNumberOfAllowedCharacters : (Post*) post {
+    NSString* messageText = post.postDescription;
+    
+    if (post.postDescription.length > MUSApp_TextView_Twitter_NumberOfAllowedLetters) {
+        messageText = [post.postDescription substringToIndex: MUSApp_TextView_Twitter_NumberOfAllowedLetters];
+    }
+    return messageText;
+}
+
+- (Place*) createPlaceFromTwitter : (NSDictionary *) dictionary {
+    Place *currentPlace = [Place create];
+    
+    currentPlace.placeID   = [dictionary objectForKey: MUSTwitterParsePlace_ID];
+    currentPlace.placeType = [dictionary objectForKey: MUSTwitterParsePlace_Place_Type];
+    currentPlace.country   = [dictionary objectForKey: MUSTwitterParsePlace_Country];
+    currentPlace.fullName  = [dictionary objectForKey: MUSTwitterParsePlace_Full_Name];
+    
+    NSArray *centroid = [dictionary objectForKey: MUSTwitterParsePlace_Centroid];
+    currentPlace.latitude = [NSString stringWithFormat: @"%@", [centroid lastObject]];
+    currentPlace.longitude = [NSString stringWithFormat: @"%@", [centroid firstObject]];
+    
+    NSArray *containedWithinArray = [dictionary objectForKey: MUSTwitterParsePlace_Contained_Within];
+    NSDictionary *locationTwitterDictionary = [containedWithinArray firstObject];
+    currentPlace.city = [locationTwitterDictionary objectForKey: MUSTwitterParsePlace_Name];
+    
+    return currentPlace;
+}
+
 
 @end

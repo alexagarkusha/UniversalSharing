@@ -13,7 +13,6 @@
 /*!
  @abstract return an instance of the social network in a single copy. Singleton method.
  */
-
 + (FacebookNetwork*) sharedManager;
 
 @end
