@@ -95,15 +95,15 @@ static TwitterNetwork *model = nil;
 - (void) loginWithComplition :(Complition) block {
     if (!self.doubleTouchFlag) {
         self.doubleTouchFlag = YES;
-        __weak TwitterNetwork *weakSell = self;
+        __weak TwitterNetwork *weakSelf = self;
         
         [TwitterKit logInWithCompletion:^(TWTRSession* session, NSError* error) {
             if (session) {
-                [weakSell obtainUserInfoFromNetworkWithComplition:block];
+                [weakSelf obtainUserInfoFromNetworkWithComplition:block];
             } else {
                 block(nil, error);
             }
-            weakSell.doubleTouchFlag = NO;
+            weakSelf.doubleTouchFlag = NO;
         }];
     }
 }
@@ -181,6 +181,7 @@ static TwitterNetwork *model = nil;
  */
 
 - (void) sharePostOnlyWithPostDescription : (Post*) post {
+    __weak TwitterNetwork *weakSelf = self;
     TWTRAPIClient *client = [[Twitter sharedInstance] APIClient];
     NSError *error;
     
@@ -202,7 +203,7 @@ static TwitterNetwork *model = nil;
     
     [client sendTwitterRequest:preparedRequest
                     completion:^(NSURLResponse *urlResponse, NSData *responseData, NSError *error){
-            self.copyProgressLoading ([NSNumber numberWithInteger: self.networkType], 1.0f);
+            weakSelf.copyProgressLoading ([NSNumber numberWithInteger: self.networkType], 1.0f);
             
                 if(!error){
                     NSError *jsonError = nil;
@@ -212,17 +213,17 @@ static TwitterNetwork *model = nil;
                     if (jsonError) {
                         //[self errorTwitter];
                         networkPostCopy.reason = MUSErrorConnection;
-                        self.copyComplition (networkPostCopy, [self errorTwitter]);
+                        weakSelf.copyComplition (networkPostCopy, [self errorTwitter]);
                         return;
                     }
                     
                     networkPostCopy.postID = [[jsonData objectForKey:@"id"]stringValue];
                     networkPostCopy.reason = MUSConnect;
                     networkPostCopy.dateCreate = [NSString currentDate];
-                    self.copyComplition (networkPostCopy, nil);
+                    weakSelf.copyComplition (networkPostCopy, nil);
                 }else{
                     networkPostCopy.reason = MUSErrorConnection;
-                    self.copyComplition (networkPostCopy, [self errorTwitter]);
+                    weakSelf.copyComplition (networkPostCopy, [self errorTwitter]);
             }
     }];
 }
@@ -235,6 +236,7 @@ static TwitterNetwork *model = nil;
  */
 
 - (void) sharePostWithPictures : (Post*) post {
+    __weak TwitterNetwork *weakSelf = self;
     NetworkPost *networkPost = [NetworkPost create];
     networkPost.networkType = MUSTwitters;
     __block NetworkPost *networkPostCopy = networkPost;
@@ -264,12 +266,12 @@ static TwitterNetwork *model = nil;
                                                            error: &error];
             if (error) {
                 networkPostCopy.reason = MUSErrorConnection;
-                self.copyComplition (networkPostCopy, [self errorTwitter]);
+                weakSelf.copyComplition (networkPostCopy, [self errorTwitter]);
                 return;
             }
             [client sendTwitterRequest : request
                             completion : ^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-                self.copyProgressLoading ([NSNumber numberWithInteger: self.networkType], 1.0f);
+                weakSelf.copyProgressLoading ([NSNumber numberWithInteger: self.networkType], 1.0f);
                     if (!connectionError) {
                         NSError *jsonError = nil;
                         NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:data
@@ -277,25 +279,25 @@ static TwitterNetwork *model = nil;
                                                                                    error:&jsonError];
                         if (jsonError) {
                             networkPostCopy.reason = MUSErrorConnection;
-                            self.copyComplition (networkPostCopy, [self errorTwitter]);
+                            weakSelf.copyComplition (networkPostCopy, [self errorTwitter]);
                             return;
                         }
                         
                         networkPostCopy.postID = [[jsonData objectForKey:@"id"] stringValue];
                         networkPostCopy.reason = MUSConnect;
                         networkPost.dateCreate = [NSString currentDate];
-                        self.copyComplition (networkPostCopy, nil);
+                        weakSelf.copyComplition (networkPostCopy, nil);
                     } else {
                         NSError *connectionError = [NSError errorWithMessage: MUSConnectionError
                                                                 andCodeError: MUSConnectionErrorCode];
                         networkPostCopy.reason = MUSErrorConnection;
-                        self.copyComplition (networkPostCopy, connectionError);
+                        weakSelf.copyComplition (networkPostCopy, connectionError);
                         return;
                                 }
                             }];
         } else {
             networkPostCopy.reason = MUSErrorConnection;
-            self.copyComplition (networkPostCopy, error);
+            weakSelf.copyComplition (networkPostCopy, error);
         }
     }];
 }
@@ -412,7 +414,7 @@ static TwitterNetwork *model = nil;
             NSMutableArray *placesArray = [[NSMutableArray alloc] init];
                              
             for (int i = 0; i < [places count]; i++) {
-                Place *place = [weakSelf createPlaceFromTwitter: [places objectAtIndex: i]];
+                Place *place = [weakSelf createPlace: [places objectAtIndex: i]];
                 [placesArray addObject:place];
             }
                              
@@ -502,8 +504,8 @@ static TwitterNetwork *model = nil;
 
 #pragma mark - createUser
 /*!
- @abstract an instance of the User for facebook network.
- @param dictionary takes dictionary from facebook network.
+ @abstract an instance of the User for twitter network.
+ @param dictionary takes dictionary from twitter network.
  */
 - (void) createUser : (TWTRUser*) userDictionary {
     self.currentUser = [User create];
@@ -518,6 +520,8 @@ static TwitterNetwork *model = nil;
     self.currentUser.photoURL = [self.currentUser.photoURL saveImageOfUserToDocumentsFolder: self.currentUser.photoURL];
 }
 
+
+
 - (NSString*) checkPostsDescriptionOnTheMaximumNumberOfAllowedCharacters : (Post*) post {
     NSString* messageText = post.postDescription;
     
@@ -527,7 +531,13 @@ static TwitterNetwork *model = nil;
     return messageText;
 }
 
-- (Place*) createPlaceFromTwitter : (NSDictionary *) dictionary {
+#pragma mark - createPlace
+
+/*!
+ @abstract an instance of the Place for twitter network.
+ @param dictionary takes dictionary from twitter network.
+ */
+- (Place*) createPlace : (NSDictionary *) dictionary {
     Place *currentPlace = [Place create];
     
     currentPlace.placeID   = [dictionary objectForKey: MUSTwitterParsePlace_ID];

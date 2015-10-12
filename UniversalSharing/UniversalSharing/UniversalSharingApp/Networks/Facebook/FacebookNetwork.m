@@ -29,8 +29,6 @@
 @property (copy, nonatomic) UpdateNetworkPostsComplition copyComplitionUpdateNetworkPosts;
 @property (copy, nonatomic) ProgressLoading copyProgressLoading;
 
-@property (strong, nonatomic) NSString *firstPlaceId;
-
 @end
 
 static FacebookNetwork *model = nil;
@@ -89,9 +87,8 @@ static FacebookNetwork *model = nil;
 #pragma mark - login
 
 - (void) loginWithComplition :(Complition) block {
-    FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
     __weak FacebookNetwork *weakSelf = self;
-    
+    FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];    
     [login logInWithReadPermissions: @[MUSFacebookPermission_Email] fromViewController: nil handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
         if (error) {
             block(nil, [weakSelf errorFacebook]);
@@ -214,6 +211,7 @@ static FacebookNetwork *model = nil;
     NetworkPost *networkPost = [NetworkPost create];
     networkPost.networkType = MUSFacebook;
     __block NetworkPost *networkPostCopy = networkPost;
+    __weak FacebookNetwork *weakSelf = self;
     
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
     params[MUSFacebookParameter_Message] = post.postDescription;
@@ -231,14 +229,14 @@ static FacebookNetwork *model = nil;
         if (!error) {
             networkPostCopy.reason = MUSConnect;
             networkPostCopy.dateCreate = [NSString currentDate];
-            networkPostCopy.postID = [result objectForKey: MUSFacebookNetworkPost_ID];
-            self.copyComplition (networkPostCopy, nil);
+            networkPostCopy.postID = [result objectForKey: MUSFacebookParseNetworkPost_ID];
+            weakSelf.copyComplition (networkPostCopy, nil);
         } else {
             networkPostCopy.reason = MUSErrorConnection;
             if ([error code] != 8){
-                self.copyComplition (networkPostCopy, [self errorFacebook]);
+                weakSelf.copyComplition (networkPostCopy, [self errorFacebook]);
             } else {
-                self.copyComplition (networkPostCopy, [self errorFacebook]);
+                weakSelf.copyComplition (networkPostCopy, [self errorFacebook]);
             }
         }
         
@@ -262,6 +260,8 @@ static FacebookNetwork *model = nil;
     }
     __block NSInteger numberOfPostImagesArray = post.arrayImages.count;
     __block int counterOfImages = 0;
+    __weak FacebookNetwork *weakSelf = self;
+
     NetworkPost *networkPost = [NetworkPost create];
     networkPost.networkType = MUSFacebook;
     __block NetworkPost *networkPostCopy = networkPost;
@@ -283,13 +283,13 @@ static FacebookNetwork *model = nil;
                      if (counterOfImages == numberOfPostImagesArray) {
                          networkPostCopy.reason = MUSConnect;
                          networkPostCopy.dateCreate = [NSString currentDate];
-                         self.copyComplition (networkPostCopy, nil);
+                         weakSelf.copyComplition (networkPostCopy, nil);
                      }
                      networkPostCopy.postID = [networkPostCopy.postID stringByAppendingString: @","];
                  } else {
                      if (counterOfImages == numberOfPostImagesArray) {
                          networkPostCopy.reason = MUSErrorConnection;
-                         self.copyComplition (networkPostCopy, [self errorFacebook]);
+                         weakSelf.copyComplition (networkPostCopy, [self errorFacebook]);
                      }
                  }
              }];
@@ -420,10 +420,9 @@ static FacebookNetwork *model = nil;
                                                                   HTTPMethod: MUSGET];
     [connection addRequest:request
          completionHandler:^(FBSDKGraphRequestConnection *innerConnection, NSDictionary *result, NSError *error) {
-             
+    
              block ([[result objectForKey:MUSFacebookParameter_Summary]objectForKey:MUSFacebookParameter_Total_Count], nil);
-             
-         }];
+    }];
 }
 
 #pragma mark - obtainNumberOfCommentsForPostIdsArray
@@ -457,6 +456,7 @@ static FacebookNetwork *model = nil;
     FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]initWithGraphPath: stringPath
                                                                   parameters: params
                                                                   HTTPMethod: MUSGET];
+    
     [connection addRequest:request
          completionHandler:^(FBSDKGraphRequestConnection *innerConnection, NSDictionary *result, NSError *error) {
              

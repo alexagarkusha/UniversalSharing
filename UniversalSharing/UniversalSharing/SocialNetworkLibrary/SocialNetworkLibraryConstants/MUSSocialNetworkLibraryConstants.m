@@ -58,6 +58,10 @@ NSString *const MUSVKIconName = @"VK_icon.png";
 NSString *const MUSVKName = @"VKontakt";
 
 NSString *const MUSVKMethodPlacesSearch = @"places.search";
+NSString *const MUSVKMethodWallGetById = @"wall.getById";
+
+NSString *const MUSVKParameter_Photo = @"photo";
+NSString *const MUSVKParameter_Posts = @"posts";
 
 NSString *const MUSVKLocationParameter_Q = @"q";
 NSString *const MUSVKLocationParameter_Latitude = @"latitude";
@@ -69,6 +73,8 @@ NSString *const MUSVKKeyOfPlaceDictionary = @"items";
 NSInteger const MUSVKDistanceEqual300 = 300;
 NSInteger const MUSVKDistanceEqual2400 = 2400;
 NSInteger const MUSVKDistanceEqual18000 = 18000;
+
+NSString *const MUSVKSuccessUpdateNetworkPost = @"VK update all network posts";
 
 NSString *const MUSVKError = @"Vkontakte error. Please retry again.";
 NSInteger const MUSVKErrorCode = 1100;
@@ -160,8 +166,8 @@ NSString *const MUSReasonName_Error = @"Failed";
 #pragma mark - General Constants
 
 NSString *const MUSNetworkPost_Update_Error_Data = @"Error data post update";
-NSString *const MUSNetworkPost_Update_Already_Update = @"Post is already updated";
+NSString *const MUSNetworkPost_Update_Already_Update = @"NetworkPost is already updated";
 NSString *const MUSNetworkPost_Update_Error_Update = @"Error update network posts";
-NSString *const MUSNetworkPost_Update_Updated = @"Post updated";
+NSString *const MUSNetworkPost_Update_Updated = @"NetworkPost updated";
 
 
