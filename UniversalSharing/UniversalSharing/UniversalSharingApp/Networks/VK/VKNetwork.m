@@ -11,9 +11,7 @@
 #import "Place.h"
 #import <VKSdk.h>
 #import "NSError+MUSError.h"
-#import "DataBaseManager.h"
 #import "NSString+MUSPathToDocumentsdirectory.h"
-#import "MUSDatabaseRequestStringsHelper.h"
 #import "InternetConnectionManager.h"
 #import "NetworkPost.h"
 #import "NSString+MUSCurrentDate.h"
@@ -439,7 +437,7 @@ static VKNetwork *model = nil;
             networkPost.networkType = MUSVKontakt;
             networkPost.likesCount = [[[response.json[i] objectForKey: MUSVKParseNetworkPost_Likes] objectForKey: MUSVKParseNetworkPost_Count] integerValue];
             networkPost.commentsCount = [[[response.json[i] objectForKey: MUSVKParseNetworkPost_Comments] objectForKey:MUSVKParseNetworkPost_Count] integerValue];
-            [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForVKUpdateNetworkPost: networkPost]];
+            [networkPost update];
         }
         block (MUSVKSuccessUpdateNetworkPost);
     } errorBlock: ^(NSError *error) {
