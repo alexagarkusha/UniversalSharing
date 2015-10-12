@@ -14,7 +14,6 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *commentsAndLikesPostTableView;
 
-
 @end
 
 @implementation MUSCommentsAndLikesCell
@@ -25,7 +24,6 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
     // Configure the view for the selected state
 }
 
@@ -44,8 +42,8 @@
 
 #pragma mark - height for CommentsAndLikesCell
 
-+ (CGFloat) heightForCommentsAndLikesCell : (NSArray*) arrayWithNetworkPosts {
-    return [MUSReasonCommentsAndLikesCell heightForReasonCommentsAndLikesCell] * arrayWithNetworkPosts.count;
++ (CGFloat) heightForCommentsAndLikesCell : (NSArray*) networkPostsArray {
+    return [MUSReasonCommentsAndLikesCell heightForReasonCommentsAndLikesCell] * networkPostsArray.count;
 }
 
 #pragma mark - configuration CommentsAndLikesCellByPost
@@ -57,7 +55,7 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.arrayWithNetworkPosts.count;
+    return self.networkPostsArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -70,7 +68,7 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     MUSReasonCommentsAndLikesCell *reasonCommentsAndLikesCell = (MUSReasonCommentsAndLikesCell*) cell;
-    [reasonCommentsAndLikesCell configurationReasonCommentsAndLikesCell: [self.arrayWithNetworkPosts objectAtIndex: indexPath.row]];
+    [reasonCommentsAndLikesCell configurationReasonCommentsAndLikesCell: [self.networkPostsArray objectAtIndex: indexPath.row]];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

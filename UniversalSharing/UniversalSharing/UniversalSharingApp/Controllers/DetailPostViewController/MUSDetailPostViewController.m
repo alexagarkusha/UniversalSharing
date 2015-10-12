@@ -167,7 +167,7 @@
     switch (detailPostVC_CellType) {
         case CommentsAndLikesCellType: {
             MUSCommentsAndLikesCell *commentsAndLikesCell = (MUSCommentsAndLikesCell*) cell;
-            commentsAndLikesCell.arrayWithNetworkPosts = self.currentPost.arrayWithNetworkPosts;
+            commentsAndLikesCell.networkPostsArray = self.currentPost.arrayWithNetworkPosts;
             [commentsAndLikesCell configurationCommentsAndLikesCell];
             break;
         }

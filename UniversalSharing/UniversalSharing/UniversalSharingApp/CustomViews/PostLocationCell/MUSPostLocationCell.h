@@ -12,12 +12,11 @@
 @interface MUSPostLocationCell : UITableViewCell
 
 + (NSString*) cellID;
+
 + (instancetype) postLocationCell;
+
 + (CGFloat) heightForPostLocationCell: (Post*) currentPost;
 
 - (void) configurationPostLocationCellByPostPlace: (Post *) currentPost;
-
-@property (assign, nonatomic) BOOL isEditableCell;
-
 
 @end
