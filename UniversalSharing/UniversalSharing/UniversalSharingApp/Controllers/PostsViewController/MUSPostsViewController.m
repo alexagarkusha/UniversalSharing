@@ -17,36 +17,10 @@
 #import "SSARefreshControl.h"
 #import "MUSReasonCommentsAndLikesCell.h"
 
-@interface MUSPostsViewController () <UITableViewDataSource, UITableViewDelegate, MUSDetailPostViewControllerDelegate, UIActionSheetDelegate, UIGestureRecognizerDelegate, SSARefreshControlDelegate>
+@interface MUSPostsViewController () <UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, UIGestureRecognizerDelegate, SSARefreshControlDelegate>
 
-@property (nonatomic, strong) NSMutableArray *arrayOfLoginSocialNetworks;
-///*!
-// @abstract array of posts. Getting an array of posts from the database
-// */
-//@property (nonatomic, strong) NSMutableArray *arrayPosts;
-/*!
- @abstract array of users. Getting an array of users from the database
- */
-@property (nonatomic, strong) NSArray *arrayOfUsers;
-/*!
- @abstract array of share reasons.
- */
-@property (nonatomic, strong) NSArray *arrayOfShareReason;
-/*!
- @abstract table view for presenting array of posts.
- */
+
 @property (nonatomic, strong) UITableView *tableView;
-/*!
- @abstract predicate Network Type.
- */
-@property (nonatomic, assign) NSInteger predicateNetworkType;
-/*!
- @abstract predicate Reason Type.
- */
-@property (nonatomic, assign) NSInteger predicateReason;
-
-@property (strong, nonatomic) NSMutableSet *setWithUniquePrimaryKeysOfPost ;
-
 @property (nonatomic, strong) SSARefreshControl *refreshControl;
 
 @end
@@ -57,11 +31,8 @@
     // Do any additional setup after loading the view.
     [self initiationTableView];
     [self initiationSSARefreshControl];
-    self.setWithUniquePrimaryKeysOfPost = [[NSMutableSet alloc] init];
-    [self.navigationController.navigationBar setTintColor: DARK_BROWN_COLOR];
-    [self.navigationController.navigationBar setTitleTextAttributes:
-         @{NSForegroundColorAttributeName: DARK_BROWN_COLOR}];
-    self.title = MUSApp_MUSPostsViewController_NavigationBar_Title;
+    [self setUpColors];
+    
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -76,21 +47,18 @@
                                  object : nil];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-}
-
 - (void) viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear: YES];
     [self.refreshControl endRefreshing];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - initiation SSARefreshControl
+- (void) setUpColors {
+    [self.navigationController.navigationBar setTintColor: DARK_BROWN_COLOR];
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     @{NSForegroundColorAttributeName: DARK_BROWN_COLOR}];
+    self.title = MUSApp_MUSPostsViewController_NavigationBar_Title;    
+}
 
 - (void) initiationSSARefreshControl {
     self.refreshControl = [[SSARefreshControl alloc] initWithScrollView:self.tableView andRefreshViewLayerType:SSARefreshViewLayerTypeOnScrollView];
@@ -98,9 +66,6 @@
     self.refreshControl.delegate = self;
     [self.refreshControl beginRefreshing];
 }
-
-#pragma mark - initiation LongPressGestureRecognizer
-
 
 #pragma mark initiation UITableView
 /*!
@@ -121,7 +86,6 @@
     });
 }
 
-
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -134,9 +98,6 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     MUSPostCell *postCell = (MUSPostCell*) cell;
-//    Post *currentPost = [self.arrayPosts objectAtIndex: indexPath.section];
-//    [currentPost updateAllNetworkPostsFromDataBaseForCurrentPost];
-//    postCell.arrayWithNetworkPosts = currentPost.arrayWithNetworkPosts;
     [postCell configurationPostCell : [[MUSPostManager manager].arrayOfPosts objectAtIndex: indexPath.section]];
 }
 
@@ -162,22 +123,18 @@
     return [MUSPostCell heightForPostCell: currentPost];
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
-{
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
     view.tintColor = [UIColor clearColor];
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 3;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     Post *post = [[MUSPostManager manager].arrayOfPosts objectAtIndex: indexPath.section];
     self.view.userInteractionEnabled = NO;
-//    if (![self.setWithUniquePrimaryKeysOfPost containsObject: [NSString stringWithFormat: @"%ld", (long)post.primaryKey]]) {
     [self performSegueWithIdentifier: MUSApp_SegueIdentifier_GoToDetailPostViewController sender: post];
-//    }
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -187,37 +144,29 @@
 - (void)tableView:(UITableView *)tableView didHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.tableView.contentOffset.y >= 0) {
         MUSPostCell *cell = (MUSPostCell *)[tableView cellForRowAtIndexPath:indexPath];
-        //cell.backgroundViewOfCell.backgroundColor = BROWN_COLOR_Light;
         [self setCellColor: BROWN_COLOR_WITH_ALPHA_05 ForCell: cell];
     }
 }
 
 - (void)tableView:(UITableView *)tableView didUnhighlightRowAtIndexPath:(NSIndexPath *)indexPath {
     MUSPostCell *cell = (MUSPostCell *)[tableView cellForRowAtIndexPath:indexPath];
-    //cell.backgroundViewOfCell.backgroundColor = BROWN_COLOR_Light;
     [self setCellColor: [UIColor clearColor] ForCell: cell];
 }
 
 - (void) setCellColor: (UIColor *) color ForCell: (MUSPostCell *) cell {
     [UIView animateWithDuration: 0.3 animations:^{
         cell.backgroundViewOfCell.backgroundColor = color;
-        //cell.contentView.backgroundColor = color;
     }];
     [UIView commitAnimations];
 }
 
-
-
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([[segue identifier] isEqualToString:MUSApp_SegueIdentifier_GoToDetailPostViewController]) {
         MUSDetailPostViewController * detailPostViewController = (MUSDetailPostViewController*)[segue destinationViewController];
-        detailPostViewController.delegate = self;
         detailPostViewController = [segue destinationViewController];
         [detailPostViewController setCurrentPost: sender];
     }
 }
-
 
 #pragma mark - NetworkTypeFromMenuTitle
 /*!
@@ -225,15 +174,15 @@
  @abstract return a Network type of the drop down menu title.
  @param string takes title of the drop down menu.
  */
-- (NSInteger) networkTypeFromTitle : (NSString*) title {
-    if ([title isEqual: MUSVKName]) {
-        return MUSVKontakt;
-    } else if ([title isEqual: MUSFacebookName]) {
-        return MUSFacebook;
-    } else {
-        return MUSTwitters;
-    }
-}
+//- (NSInteger) networkTypeFromTitle : (NSString*) title {
+//    if ([title isEqual: MUSVKName]) {
+//        return MUSVKontakt;
+//    } else if ([title isEqual: MUSFacebookName]) {
+//        return MUSFacebook;
+//    } else {
+//        return MUSTwitters;
+//    }
+//}
 
 /*!
  @method
@@ -257,7 +206,6 @@
 
 - (void) updateArrayPosts {
     [[MUSPostManager manager] updateArrayOfPost];
-    //self.arrayPosts = [[[MUSPostManager manager] arrayOfAllPosts] mutableCopy];
     [self checkArrayOfPosts];
     [self.tableView reloadData];
 }
@@ -271,23 +219,9 @@
     }];
 }
 
-- (BOOL) isArrayOfPostsNotEmpty {
-    if (![MUSPostManager manager].arrayOfPosts.count) {
-        return NO;
-    } else {
-        return YES;
-    }
-}
-
-- (void) updatePostByPrimaryKey:(NSString *)primaryKey {
-    [self.setWithUniquePrimaryKeysOfPost addObject: primaryKey];
-}
-
-
 #pragma mark - SSARefreshControlDelegate
 
 - (void) beganRefreshing {
-    
     if (![MUSPostManager manager].arrayOfPosts.count) {
         [self obtainArrayPosts];
         [self.refreshControl endRefreshing];
