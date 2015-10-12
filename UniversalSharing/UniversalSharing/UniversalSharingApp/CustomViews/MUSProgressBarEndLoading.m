@@ -12,12 +12,16 @@
 
 @interface MUSProgressBarEndLoading()
 
-@property (strong, nonatomic) NSArray *arrayOfImageView;
+@property (strong, nonatomic) NSArray *imageViewsArray;
 //===
+@property (weak, nonatomic) IBOutlet UIProgressView *progressView;
 @property (weak, nonatomic) IBOutlet UIImageView *imageViewPostFirst;
 @property (weak, nonatomic) IBOutlet UIImageView *imageViewPostSecond;
 @property (weak, nonatomic) IBOutlet UIImageView *imageViewPostThird;
-
+@property (weak, nonatomic) IBOutlet UILabel *labelStutus;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint* lableWidthConstraint;
+@property (weak, nonatomic) IBOutlet UIView *viewWithPicsAndLable;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint* viewHeightConstraint;
 
 @end
 
@@ -33,8 +37,7 @@ static MUSProgressBarEndLoading *model = nil;
     return  model;
 }
 
--(id) initWithFrame:(CGRect)frame
-{
+-(id) initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         self.view = [self loadViewFromNib];
@@ -44,8 +47,7 @@ static MUSProgressBarEndLoading *model = nil;
     return self;
 }
 
--(id) initWithCoder:(NSCoder*)coder
-{
+-(id) initWithCoder:(NSCoder*)coder {
     self = [super initWithCoder:coder];
     if (self) {
         self.view = [self loadViewFromNib];
@@ -54,13 +56,12 @@ static MUSProgressBarEndLoading *model = nil;
     return self;
 }
 
-
 -(UIView*)loadViewFromNib {
     NSArray *nibObjects = [[NSBundle mainBundle]loadNibNamed:@"MUSProgressBarEndLoading" owner:self options:nil];
     self.progressView.progressTintColor = DARK_BROWN_COLOR_WITH_ALPHA_07;
     self.progressView.progress = 1;
-    self.arrayOfImageView = [[NSArray alloc] initWithObjects: self.imageViewPostThird, self.imageViewPostSecond, self.imageViewPostFirst, nil];
-    //[self initiationGestureRecognizer];
+     self.viewHeightConstraint.constant = 0;
+    self.imageViewsArray = [[NSArray alloc] initWithObjects: self.imageViewPostThird, self.imageViewPostSecond, self.imageViewPostFirst, nil];
     return [nibObjects firstObject];
 }
 
@@ -68,8 +69,7 @@ static MUSProgressBarEndLoading *model = nil;
     
 }
 
-- (void) configurationProgressBar: (NSArray*) arrayImages  :(NSInteger) countSuccessPosted :(NSInteger) countNetworks {
-   
+- (void) configurationProgressBar: (NSArray*) postImagesArray  :(NSInteger) countSuccessPosted :(NSInteger) countNetworks {   
         if (countSuccessPosted == countNetworks) {
             self.labelStutus.text = @"Published";
         }else if(countSuccessPosted == 0){
@@ -84,13 +84,13 @@ static MUSProgressBarEndLoading *model = nil;
     
     
     [self clearImageViews];
-    if(arrayImages.count){
+    if(postImagesArray.count){
         ImageToPost *image;
-        self.lableConstraint.constant = 50;
-        for (int i = 0; i < arrayImages.count; i++) {
-            image = arrayImages[i];
+        self.lableWidthConstraint.constant = 50;
+        for (int i = 0; i < postImagesArray.count; i++) {
+            image = postImagesArray[i];
             if (i < 3) {
-                UIImageView *currentImage =  self.arrayOfImageView[i];
+                UIImageView *currentImage =  self.imageViewsArray[i];
                 currentImage.image = image.image;
             }
             
@@ -98,18 +98,27 @@ static MUSProgressBarEndLoading *model = nil;
         
     } else {
         //self.progressBar.imageViewPost.image = nil;
-        self.lableConstraint.constant = 8;
+        self.lableWidthConstraint.constant = 8;
         
     }
-    
-    
-    
+}
+
+- (void) setHeightView {
+    [self.viewWithPicsAndLable layoutIfNeeded];
+    self.viewHeightConstraint.constant = 42;
+    [UIView animateWithDuration:2 animations:^{
+        [self.viewWithPicsAndLable layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        self.viewHeightConstraint.constant = 0;
+        });
+    }];
 }
 
 - (void) clearImageViews {
-    for (int i = 0; i < self.arrayOfImageView.count; i++) {
+    for (int i = 0; i < self.imageViewsArray.count; i++) {
         
-        UIImageView *currentImage =  self.arrayOfImageView[i];
+        UIImageView *currentImage =  self.imageViewsArray[i];
         currentImage.image = nil;
     }
 }

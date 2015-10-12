@@ -10,13 +10,10 @@
 
 @interface MUSProgressBarEndLoading : UIView
 
-@property (weak, nonatomic) IBOutlet UILabel *labelStutus;
-@property (weak, nonatomic) IBOutlet UIProgressView *progressView;
-//@property (strong, nonatomic) IBOutlet UIView *view;
 @property (strong, nonatomic)  UIView *view;
-@property (weak, nonatomic)     IBOutlet    NSLayoutConstraint* lableConstraint;
-@property (weak, nonatomic) IBOutlet UIView *viewWithPicsAndLable;
-@property (weak, nonatomic)     IBOutlet    NSLayoutConstraint* viewHeightConstraint;
+//===
 + (MUSProgressBarEndLoading*) sharedProgressBarEndLoading;
-- (void) configurationProgressBar: (NSArray*) arrayImages  :(NSInteger) countSuccessPosted :(NSInteger) countNetworks;
+- (void) configurationProgressBar: (NSArray*) postImagesArray  :(NSInteger) countSuccessPosted :(NSInteger) countNetworks;
+- (void) setHeightView;
+
 @end
