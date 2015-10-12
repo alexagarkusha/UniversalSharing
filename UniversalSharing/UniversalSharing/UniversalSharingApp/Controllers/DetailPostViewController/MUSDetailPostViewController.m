@@ -11,59 +11,29 @@
 #import "MUSPostDescriptionCell.h"
 #import "MUSPostLocationCell.h"
 #import "ConstantsApp.h"
-#import "MUSPhotoManager.h"
-#import <CoreLocation/CoreLocation.h>
-#import "DataBaseManager.h"
-#import "NSString+MUSPathToDocumentsdirectory.h"
-#import "UIImage+LoadImageFromDataBase.h"
-#import "MUSDatabaseRequestStringsHelper.h"
 #import "MUSMediaGalleryViewController.h"
-#import "MUSUserDetailViewController.h"
 #import "MEExpandableHeaderView.h"
 #import "MUSPopUpForSharing.h"
-#import "MUSProgressBar.h"
-#import "MUSProgressBarEndLoading.h"
 
 @interface MUSDetailPostViewController () <UITableViewDataSource, UITableViewDelegate,  UIActionSheetDelegate, UIAlertViewDelegate, MEExpandableHeaderViewDelegate, UIScrollViewDelegate, MUSPopUpForSharingDelegate>
 /*!
  @abstract tableview frame size of the detail post
  */
 @property (nonatomic, assign) CGRect tableViewFrame;
-///*!
-// @abstract social network of the current post
-// */
-@property (nonatomic, strong) SocialNetwork *currentSocialNetwork;
-
-@property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 
 @property (nonatomic, strong) UIBarButtonItem *shareButton;
-/*!
- @abstract user of the current post
- */
-@property (nonatomic, strong) User *currentUser;
 /*!
  @abstract table view of detail post
  */
 @property (nonatomic, strong) UITableView *tableView;
-/*!
- @abstract number of rows in Detail Table View
- */
-@property (nonatomic, assign) NSInteger numberOfRowsInTable;
 
 @property (nonatomic, assign) NSInteger indexPicTapped;
-
-@property (nonatomic, strong) NSIndexPath *postDescriptionCellIndexPath;
 
 @property (nonatomic, strong) MEExpandableHeaderView *headerView;
 
 @property (nonatomic, strong) MUSPopUpForSharing *popUpForSharing;
 
-@property (strong, nonatomic)                MUSProgressBar * progressBar ;
-@property (strong, nonatomic)                MUSProgressBarEndLoading * progressBarEndLoading ;
-
-
 @end
-
 
 @implementation MUSDetailPostViewController
 
@@ -71,25 +41,15 @@
     // Do any additional setup after loading the view.
     [self.currentPost updateAllNetworkPostsFromDataBaseForCurrentPost];
     [self initiationTableView];
-    [self setupHeaderView];
-    //[self initiationCurrentSocialNetwork];
+    [self initiationHeaderView];
     [self initiationNavigationBar];
-    [self initiationActivityIndicator];
-    [self initiationProgressBar];
     
-    
-    self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType: self.currentSocialNetwork.networkType]] firstObject];
     self.tableViewFrame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height);
 }
 
 - (void) viewWillAppear:(BOOL)animated {
-    [self.tableView reloadData];
     [super viewWillAppear : YES];
-}
-
-- (void) viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear: YES];
-    [[NSNotificationCenter defaultCenter]removeObserver:self];
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -115,38 +75,36 @@
     //self.isEditableTableView = NO;
 }
 
-#pragma mark - SetupHeaderForTableView
+#pragma mark - initiationHeaderViewForTableView
 
-- (void)setupHeaderView
+- (void) initiationHeaderView
 {
     ImageToPost *firstImage = [self.currentPost.arrayImages firstObject];
     
     if (!self.currentPost.arrayImages.count || !firstImage.image) {
         self.currentPost.arrayImages = nil;
     } else {
-        NSMutableArray *arrayOfPagesForHeader = [[NSMutableArray alloc] init];
+        NSMutableArray *pagesArray = [[NSMutableArray alloc] init];
         for (int i = 0; i < self.currentPost.arrayImages.count; i++) {
-            [arrayOfPagesForHeader addObject: [self createPageViewWithText: [self.currentPost.arrayImages objectAtIndex: i]]];
+            [pagesArray addObject: [self createPageViewWithImageView: [self.currentPost.arrayImages objectAtIndex: i]]];
         }
-        CGSize headerViewSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, 250);
+        CGSize headerViewSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, MUSApp_MUSDetailPostViewController_HeightOfHeader);
         MEExpandableHeaderView *headerView = [[MEExpandableHeaderView alloc]
                                               initWithSize : headerViewSize
                                               backgroundImage : nil
-                                              contentPages : arrayOfPagesForHeader];
+                                              contentPages : pagesArray];
         headerView.delegate = self;
         self.tableView.tableHeaderView = headerView;
         self.headerView = headerView;
     }
 }
 
-- (UIView*)createPageViewWithText:(ImageToPost*) imageToPost
+- (UIView*) createPageViewWithImageView: (ImageToPost*) imageToPost
 {
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame: CGRectMake (0, 0, [UIScreen mainScreen].bounds.size.width, 250)];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame: CGRectMake (0, 0, [UIScreen mainScreen].bounds.size.width, MUSApp_MUSDetailPostViewController_HeightOfHeader)];
     imageView.image = imageToPost.image;
     imageView.clipsToBounds = YES;
-    
-    
-    if (imageView.image.size.height < 250.0f || imageView.image.size.width <  [UIScreen mainScreen].bounds.size.width ) {
+    if (imageView.image.size.height < MUSApp_MUSDetailPostViewController_HeightOfHeader || imageView.image.size.width <  [UIScreen mainScreen].bounds.size.width ) {
         [imageView setContentMode: UIViewContentModeScaleAspectFill];
     } else {
         [imageView setContentMode: UIViewContentModeTop];
@@ -168,76 +126,17 @@
     }
     
     if (!isPostConnect && ![[MultySharingManager sharedManager] queueOfPosts: self.currentPost.primaryKey]) {
-        self.shareButton = [[UIBarButtonItem alloc] initWithTitle : MUSApp_Button_Title_Share style:2 target:self action: @selector(sendPost)];
+        self.shareButton = [[UIBarButtonItem alloc] initWithTitle : MUSApp_Button_Title_Share style:2 target:self action: @selector(sharePost)];
         self.navigationItem.rightBarButtonItem = self.shareButton;
     }
 }
 
-#pragma mark initiation CurrentSocialNetwork
-/*!
- @method
- @abstract initiation Current social network
- */
-//- (void) initiationCurrentSocialNetwork {
-//    self.currentSocialNetwork = //[SocialNetwork sharedManagerWithType:self.currentPost.networkType];
-//}
-
-- (void) showPhotosOnCollectionView :(NSNotification *)notification{
-    _indexPicTapped = [[[notification userInfo] objectForKey:@"index"] integerValue];
-    [self performSegueWithIdentifier: @"goToDitailPostCollectionViewController" sender:nil];
-
-}
-
-#pragma mark  initiation Activity Indicator
-/*!
- @method
- @abstract initiation activity indicator
- */
-- (void) initiationActivityIndicator {
-    self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    self.activityIndicator.hidesWhenStopped = YES;
-    [self.view addSubview:self.activityIndicator];
-}
-
-- (void) initiationProgressBar {
-    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
-    CGFloat navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
-    self.progressBar = [[MUSProgressBar alloc]initWithFrame:CGRectMake(0, statusBarHeight, self.view.frame.size.width, navigationBarHeight)];
-    self.progressBarEndLoading = [[MUSProgressBarEndLoading alloc]initWithFrame:CGRectMake(0, statusBarHeight, self.view.frame.size.width, navigationBarHeight)];
-   // self.progressBar.viewHeightConstraint.constant = 0;
-    //self.progressBarEndLoading.viewHeightConstraint.constant = 0;
-}
-
-#pragma mark  start Activity Indicator Animating
-/*!
- @method
- @abstract start activity indicator animating
- */
-- (void) startActivityIndicatorAnimating {
-    self.activityIndicator.color = DARK_BROWN_COLOR;
-    [self.shareButton setCustomView : self.activityIndicator];
-    [self.activityIndicator startAnimating];
-    self.shareButton.enabled = NO;
-}
-
-#pragma mark  stop Activity Indicator Animating
-/*!
- @method
- @abstract stop activity indicator animating
- */
-- (void) stopActivityIndicatorAnimating {
-    [self.activityIndicator stopAnimating];
-    [self.shareButton setCustomView : nil];
-    self.shareButton.enabled = YES;
-}
-
-
-#pragma mark SendPost
+#pragma mark sharePost
 /*!
  @method
  @abstract send post to social network
  */
-- (void) sendPost {
+- (void) sharePost {
     self.popUpForSharing = [MUSPopUpForSharing new];
     self.popUpForSharing.arrayOfNetworksPost = self.currentPost.arrayWithNetworkPosts;
     self.popUpForSharing.delegate = self;
@@ -248,6 +147,11 @@
     [self.view endEditing:YES];
 }
 
+- (void) closePopUpForSharing {
+    [self.popUpForSharing removeFromParentViewController];
+    [self.popUpForSharing.view removeFromSuperview];
+    self.popUpForSharing = nil;
+}
 
 #pragma mark - UITableViewDataSource
 
@@ -258,29 +162,26 @@
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     DetailPostVC_CellType detailPostVC_CellType = indexPath.row;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     switch (detailPostVC_CellType) {
         case CommentsAndLikesCellType: {
             MUSCommentsAndLikesCell *commentsAndLikesCell = (MUSCommentsAndLikesCell*) cell;
             commentsAndLikesCell.arrayWithNetworkPosts = self.currentPost.arrayWithNetworkPosts;
             [commentsAndLikesCell configurationCommentsAndLikesCell];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             break;
         }
         case PostDescriptionCellType: {
             MUSPostDescriptionCell *postDescriptionCell = (MUSPostDescriptionCell*) cell;
             [postDescriptionCell configurationPostDescriptionCell: self.currentPost.postDescription];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             break;
         }
         default: {
             MUSPostLocationCell *postLocationCell = (MUSPostLocationCell*) cell;
             [postLocationCell configurationPostLocationCellByPostPlace: self.currentPost];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             break;
         }
     }
-    
 }
 
 
@@ -293,7 +194,6 @@
             if(!cell) {
                 cell = [MUSCommentsAndLikesCell commentsAndLikesCell];
             }
-            cell.arrayWithNetworkPosts = self.currentPost.arrayWithNetworkPosts;
             return cell;
             break;
         }
@@ -338,34 +238,12 @@
 
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([[segue identifier]isEqualToString : @"goToDitailPostCollectionViewController"]) {
+    if ([[segue identifier]isEqualToString : MUSApp_SegueIdentifier_GoToMediaGalleryViewController]) {
         MUSMediaGalleryViewController *vc = [MUSMediaGalleryViewController new];
         vc = [segue destinationViewController];
-        //[vc setObjectsWithPost: self.currentPost withCurrentSocialNetwork: self.currentSocialNetwork andIndexPicTapped: self.indexPicTapped];
         [vc sendPost:self.currentPost andSelectedImageIndex:self.indexPicTapped];
     }
 }
-
-#pragma mark - error alert with error and alert with message
-
-- (void) showErrorAlertWithError : (NSError*) error {
-    UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle : MUSApp_Error_With_Domain_Universal_Sharing
-                                                         message : [error localizedFailureReason]
-                                                        delegate : nil
-                                               cancelButtonTitle : MUSApp_Button_Title_OK
-                                               otherButtonTitles : nil];
-    [errorAlert show];
-}
-
-- (void) showAlertWithMessage : (NSString*) message {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle : MUSApp_Error_With_Domain_Universal_Sharing
-                                                    message : message
-                                                   delegate : nil
-                                          cancelButtonTitle : MUSApp_Button_Title_OK
-                                          otherButtonTitles : nil];
-    [alert show];
-}
-
 
 #pragma mark - UIScrollViewDelegate
 
@@ -381,128 +259,35 @@
 
 - (void) currentPageIndex:(NSInteger)currentIndex {
     _indexPicTapped = currentIndex;
-    [self performSegueWithIdentifier: @"goToDitailPostCollectionViewController" sender:nil];
+    [self performSegueWithIdentifier: MUSApp_SegueIdentifier_GoToMediaGalleryViewController sender:nil];
 }
 
 #pragma mark - Share Post to Social network
 - (void) sharePosts : (NSMutableArray*) arrayChosenNetworksForPost andFlagTwitter :(BOOL) flagTwitter {
+    [self closePopUpForSharing];
     
-    
-    [self.tabBarController.view addSubview:self.progressBar.view];
-    //self.progressBar.progressView.progress = 0;
-    //[self.progressBar.viewWithPicsAndLable layoutIfNeeded];
-    
-    [self.popUpForSharing removeFromParentViewController];
-    [self.popUpForSharing.view removeFromSuperview];
-    self.popUpForSharing = nil;
-    
-    self.shareButton.enabled = NO;
-    __weak MUSDetailPostViewController *weakSelf = self;
-    
-    
-//    weakSelf.progressBar.viewHeightConstraint.constant = 42;
-//    [UIView animateWithDuration:1 animations:^{
-//        
-//        [weakSelf.progressBar.viewWithPicsAndLable layoutIfNeeded];
-//    }];
-//    [UIView commitAnimations];
-    
-    [self.progressBar configurationProgressBar: nil];
-    [self.progressBar setHeightView];
     if (arrayChosenNetworksForPost) {
-        
-    [[MultySharingManager sharedManager] sharePost: self.currentPost toSocialNetworks: arrayChosenNetworksForPost withComplition:^(id result, NSError *error) {
+        __weak MUSDetailPostViewController *weakSelf = self;
+        self.shareButton.enabled = NO;
+        [[MultySharingManager sharedManager] sharePost: self.currentPost toSocialNetworks: arrayChosenNetworksForPost withComplition:^(id result, NSError *error) {
 
-        [weakSelf.currentPost updateAllNetworkPostsFromDataBaseForCurrentPost];
+            [weakSelf.currentPost updateAllNetworkPostsFromDataBaseForCurrentPost];
+            [weakSelf.tableView reloadData];
 
-        [weakSelf.tableView reloadData];
-
-        for (NetworkPost *networkPost in weakSelf.currentPost.arrayWithNetworkPosts) {
-            if (networkPost.reason != MUSConnect) {
-                weakSelf.shareButton.enabled = YES;
-            } else {
-                [weakSelf.navigationItem.rightBarButtonItem setTintColor:[UIColor clearColor]];
-                [weakSelf.navigationItem.rightBarButtonItem setEnabled:NO];
-            }
-            
-            
-//            [weakSelf.progressBar.viewWithPicsAndLable layoutIfNeeded];
-//            
-//            weakSelf.progressBar.viewHeightConstraint.constant = 0;
-//            [UIView animateWithDuration:1 animations:^{
-//                
-//                [weakSelf.progressBar.viewWithPicsAndLable layoutIfNeeded];
-//            }];
-//            [UIView commitAnimations];
-            
-            [weakSelf.tabBarController.view addSubview:weakSelf.progressBarEndLoading.view];
-            [weakSelf.progressBarEndLoading configurationProgressBar: nil :[result intValue] :arrayChosenNetworksForPost.count];
-            [self.progressBarEndLoading setHeightView];
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 4 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                    [weakSelf.progressBar.view removeFromSuperview];
-                    [weakSelf.progressBarEndLoading.view removeFromSuperview];
-                   
-                });
-          
-           
- 
-            
+            for (NetworkPost *networkPost in weakSelf.currentPost.arrayWithNetworkPosts) {
+                if (networkPost.reason != MUSConnect) {
+                    weakSelf.shareButton.enabled = YES;
+                } else {
+                    [weakSelf.navigationItem.rightBarButtonItem setTintColor:[UIColor clearColor]];
+                    [weakSelf.navigationItem.rightBarButtonItem setEnabled:NO];
+                }
             }
         } andProgressLoadingComplition:^(float result) {
-            [weakSelf.progressBar setProgressViewSize:result];
+#warning CHANGE METHOD - PROGRESS BAR SHOULD BE SINGLETON
+            //[weakSelf.progressBar setProgressViewSize:result];
         }];
     }
 }
 
 
-
-
 @end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//#pragma mark initiation current postDescription, arrayOfUsersPictures, postLocation
-///*!
-// @method
-// @abstract initiation post description, array of pictures and location of the current post
-// */
-//- (void) initiationCurrentPostCopy {
-//    
-//    self.currentPostCopy = [self.currentPost copy];
-//    self.currentPost.arrayImages = [[NSMutableArray alloc] init];
-//    if (![[self.currentPost.arrayImagesUrl firstObject] isEqualToString: @""]) {
-//        for (int i = 0; i < self.currentPost.arrayImagesUrl.count; i++) {
-//            ImageToPost *currentImageToPost = [[ImageToPost alloc] init];
-//            UIImage *image = [[UIImage alloc] init];
-//            image = [image loadImageFromDataBase: [self.currentPost.arrayImagesUrl objectAtIndex: i]];
-//            currentImageToPost.image = image;
-//            currentImageToPost.imageType = JPEG;
-//            currentImageToPost.quality = 1.0f;
-//            [self.currentPost.arrayImages addObject: currentImageToPost];
-//        }
-//    }
-//    self.currentPostCopy.arrayImages = [[NSMutableArray alloc] initWithArray: self.currentPost.arrayImages];
-//    //    if (self.currentPostCopy.reason != Connect) {
-//    //        self.isEditableTableView = YES;
-//    //    }
-//}
-
-
-
-
-
-
-

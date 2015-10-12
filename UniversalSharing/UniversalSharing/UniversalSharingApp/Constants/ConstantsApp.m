@@ -15,6 +15,7 @@
 
 NSString *const MUSApp_SegueIdentifier_GoToUserDetailViewController = @"goToInfo";
 NSString *const MUSApp_SegueIdentifier_GoToDetailPostViewController = @"DetailPostViewController";
+NSString *const MUSApp_SegueIdentifier_GoToMediaGalleryViewController = @"goToDitailPostCollectionViewController";
 
 #pragma mark TextView
 
@@ -102,6 +103,7 @@ NSInteger const MUSApp_MUSPostDescriptionCell_TextView_Font_Size = 20;
 #pragma mark - MUSDetailPostViewController
 
 NSInteger const MUSApp_MUSDetailPostViewController_NumberOfRowsInTableView = 3;
+CGFloat const MUSApp_MUSDetailPostViewController_HeightOfHeader = 250.0f;
 
 #pragma mark - MUSPostLocationCell
 
