@@ -30,9 +30,6 @@
         case MUSVKontakt:
             return [Place createPlaceFromVK: dictionary];
             break;
-        case MUSTwitters:
-            return [Place createPlaceFromTwitter: dictionary];
-            break;
         default:
             break;
     }
@@ -64,24 +61,6 @@
  @param dictionary takes dictionary from twitter network.
  */
 
-+ (Place*) createPlaceFromTwitter : (NSDictionary *) dictionary {
-    Place *currentPlace = [[Place alloc] init];
-    
-    currentPlace.placeID   = [dictionary objectForKey: MUSTwitterParsePlace_ID];
-    currentPlace.placeType = [dictionary objectForKey: MUSTwitterParsePlace_Place_Type];
-    currentPlace.country   = [dictionary objectForKey: MUSTwitterParsePlace_Country];
-    currentPlace.fullName  = [dictionary objectForKey: MUSTwitterParsePlace_Full_Name];
-    
-    NSArray *centroid = [dictionary objectForKey: MUSTwitterParsePlace_Centroid];
-    currentPlace.latitude = [NSString stringWithFormat: @"%@", [centroid lastObject]];
-    currentPlace.longitude = [NSString stringWithFormat: @"%@", [centroid firstObject]];
-    
-    NSArray *containedWithinArray = [dictionary objectForKey: MUSTwitterParsePlace_Contained_Within];
-    NSDictionary *locationTwitterDictionary = [containedWithinArray firstObject];
-    currentPlace.city = [locationTwitterDictionary objectForKey: MUSTwitterParsePlace_Name];
-    
-    return currentPlace;
-}
 
 - (id) copy {
     Place *copyPlace = [Place new];

@@ -76,4 +76,8 @@ NSString *const MUSTwitterParsePlace_Contained_Within = @"contained_within";
 NSString *const MUSTwitterParsePlace_Name = @"name";
 NSString *const MUSTwitterParsePlace_Centroid = @"centroid";
 
+#pragma mark - ParseLocation
+
+NSString *const MUSTwitterParseLocation_Result = @"result";
+NSString *const MUSTwitterParseLocation_Places = @"places";
 

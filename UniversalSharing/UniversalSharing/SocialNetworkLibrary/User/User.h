@@ -44,6 +44,8 @@
 
 + (instancetype) create;
 
+- (void) insertToDataBase;
+
 - (void) removeUser;
 
 + (User*) createFromDictionary:(id) dict andNetworkType :(NetworkType) networkType;

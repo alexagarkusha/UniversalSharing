@@ -29,6 +29,10 @@
     return user;
 }
 
+- (void) insertIntoDataBase {
+    [[DataBaseManager sharedManager] insertObjectIntoTable: self];
+}
+
 
 - (void) removeUser {
     [[PostImagesManager manager] removeImageFromFileManagerByImagePath: _photoURL];
@@ -43,9 +47,6 @@
     switch (networkType) {
         case MUSVKontakt:
            return [User createUserFromVK: dict];
-            break;
-        case MUSTwitters:
-            return [User createUserFromTwitter: dict];
             break;
         default:
             break;
@@ -69,26 +70,6 @@
     }
     return currentUser;
 }
-
-/*!
- @abstract return an instance of the User for twitter network.
- @param dictionary takes dictionary from twitter network.
- */
-
-+ (User*) createUserFromTwitter:(TWTRUser*)userDictionary {
-    User *currentUser = [[User alloc] init];
-    currentUser.clientID = userDictionary.userID;
-    currentUser.lastName = userDictionary.screenName;
-    currentUser.firstName = userDictionary.name;
-    currentUser.networkType = MUSTwitters;
-    NSString *photoURL_max = userDictionary.profileImageURL;
-    photoURL_max = [photoURL_max stringByReplacingOccurrencesOfString:@"_normal"
-                                                           withString:@""];
-    currentUser.photoURL = photoURL_max;
-    return currentUser;
-    
-}
-
 
 #pragma mark - GETTERS
 

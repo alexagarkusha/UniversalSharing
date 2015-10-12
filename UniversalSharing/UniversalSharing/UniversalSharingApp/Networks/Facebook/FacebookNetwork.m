@@ -12,9 +12,7 @@
 #import <FBSDKShareKit/FBSDKShareKit.h>
 #import "Place.h"
 #import "NSError+MUSError.h"
-#import "DataBaseManager.h"
 #import "NSString+MUSPathToDocumentsdirectory.h"
-#import "MUSDatabaseRequestStringsHelper.h"
 #import "InternetConnectionManager.h"
 #import "NetworkPost.h"
 #import "NSString+MUSCurrentDate.h"
@@ -70,9 +68,8 @@ static FacebookNetwork *model = nil;
  Initiation properties of FacebookNetwork with session
  */
 - (void) initiationPropertiesWithSession {
-    self.icon = MUSFacebookIconName;
     self.isLogin = YES;
-    self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType:self.networkType]]firstObject];
+    self.icon = MUSFacebookIconName;
     self.title = [NSString stringWithFormat:@"%@ %@", self.currentUser.firstName, self.currentUser.lastName];
 }
 
@@ -130,12 +127,10 @@ static FacebookNetwork *model = nil;
                                           id result,
                                           NSError *error) {
         [weakSelf createUser: result];
-        
-        
+        weakSelf.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
         if (!weakSelf.isLogin) {
-            [[DataBaseManager sharedManager] insertObjectIntoTable: weakSelf.currentUser];
+            [weakSelf.currentUser insertToDataBase];
         }
-        
         dispatch_async(dispatch_get_main_queue(), ^{
             weakSelf.isLogin = YES;
             block(weakSelf, nil);
@@ -261,7 +256,7 @@ static FacebookNetwork *model = nil;
     if (post.place.placeID)  {
         params[MUSFacebookParameter_Place] = post.place.placeID;
     }
-    __block int numberOfPostImagesArray = post.arrayImages.count;
+    __block NSInteger numberOfPostImagesArray = post.arrayImages.count;
     __block int counterOfImages = 0;
     NetworkPost *networkPost = [NetworkPost create];
     networkPost.networkType = MUSFacebook;
@@ -414,15 +409,15 @@ static FacebookNetwork *model = nil;
 #pragma mark - obtainCountOfLikesFromPost
 
 - (void) obtainCountOfLikesFromPost :(NSString*) postID andConnection:(FBSDKGraphRequestConnection*)connection withComplition : (Complition) block {
-    NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys: postID,@"ObjectId",@"true",@"summary",nil];
-    NSString *stringPath = [NSString stringWithFormat:@"/%@/likes",postID];
+    NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys: postID, MUSFacebookParameter_ObjectId, MUSFacebookParameter_True, MUSFacebookParameter_Summary,nil];
+    NSString *stringPath = [NSString stringWithFormat:@"/%@/%@", postID, MUSFacebookParameter_Likes];
     FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]initWithGraphPath: stringPath
                                                                   parameters: params
                                                                   HTTPMethod: MUSGET];
     [connection addRequest:request
          completionHandler:^(FBSDKGraphRequestConnection *innerConnection, NSDictionary *result, NSError *error) {
              
-             block ([[result objectForKey:@"summary"]objectForKey:@"total_count"], nil);
+             block ([[result objectForKey:MUSFacebookParameter_Summary]objectForKey:MUSFacebookParameter_Total_Count], nil);
              
          }];
 }
@@ -453,15 +448,15 @@ static FacebookNetwork *model = nil;
 #pragma mark - obtainCountOfCommentsFromPost
 
 - (void) obtainCountOfCommentsFromPost :(NSString*) postID andConnection:(FBSDKGraphRequestConnection*)connection withComplition : (Complition) block {
-    NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys: postID,@"ObjectId",@"true",@"summary",nil];
-    NSString *stringPath = [NSString stringWithFormat:@"/%@/comments", postID];
+    NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys: postID, MUSFacebookParameter_ObjectId, MUSFacebookParameter_True, MUSFacebookParameter_Summary,nil];
+    NSString *stringPath = [NSString stringWithFormat:@"/%@/%@", postID, MUSFacebookParameter_Comments];
     FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]initWithGraphPath: stringPath
                                                                   parameters: params
                                                                   HTTPMethod: MUSGET];
     [connection addRequest:request
          completionHandler:^(FBSDKGraphRequestConnection *innerConnection, NSDictionary *result, NSError *error) {
              
-             block ([[result objectForKey:@"summary"]objectForKey:@"total_count"], nil);
+             block ([[result objectForKey:MUSFacebookParameter_Summary]objectForKey:MUSFacebookParameter_Total_Count], nil);
              
          }];
 }
@@ -512,7 +507,6 @@ static FacebookNetwork *model = nil;
         NSDictionary *pictureDataDictionary = [pictureDictionary objectForKey : MUSFacebookParseUser_Data];
         self.currentUser.photoURL = [pictureDataDictionary objectForKey : MUSFacebookParseUser_Photo_Url];
         self.currentUser.photoURL = [self.currentUser.photoURL saveImageOfUserToDocumentsFolder: self.currentUser.photoURL];
-        self.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
     }
 }
 
@@ -543,8 +537,8 @@ static FacebookNetwork *model = nil;
     Location *location = [Location create];
     location.latitude = post.latitude;
     location.longitude = post.longitude;
-    location.type = @"place";
-    location.distance = @"500";
+    location.type = MUSFacebookLocation_Parameter_Type_Place;
+    location.distance = MUSFacebookLocation_Parameter_Type_Distance;
     return location;
 }
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -11,7 +11,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="186"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="185"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jEZ-9P-yWB">
@@ -19,6 +19,7 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Lnb-3R-X5o">
                                 <rect key="frame" x="12" y="9" width="66" height="66"/>
+                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="66" id="ajI-KG-Esw"/>
                                     <constraint firstAttribute="height" constant="66" id="rtJ-pW-fMA"/>
@@ -26,6 +27,7 @@
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1e1-QQ-AH4">
                                 <rect key="frame" x="10" y="12" width="70" height="70"/>
+                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="70" id="Sn6-3y-g5P"/>
                                     <constraint firstAttribute="height" constant="70" id="ztz-Wl-L9F"/>
@@ -33,6 +35,7 @@
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lob-KA-c90">
                                 <rect key="frame" x="8" y="15" width="74" height="74"/>
+                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="74" id="adf-Xt-jvp"/>
                                     <constraint firstAttribute="width" constant="74" id="vfT-fQ-DDL"/>
@@ -40,6 +43,7 @@
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="slgdkfjnkjnkfdsjhkvjdnfkdknfkgdkfnkdnfkgndkfngkndfkgnkdfnkgnkdfkdffjsdbfjandasdjaksjndkasndknaskjdkansdknaksd" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="none" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9a0-JS-qNj">
                                 <rect key="frame" x="90" y="12" width="210" height="75"/>
+                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="75" id="xax-Ku-55G"/>
                                 </constraints>
@@ -49,6 +53,7 @@
                             </label>
                             <tableView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="TLI-6d-IsR">
                                 <rect key="frame" x="1" y="95" width="306" height="92"/>
+                                <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="dataSource" destination="KGk-i7-Jjw" id="GBW-bS-ZkQ"/>
@@ -56,6 +61,7 @@
                                 </connections>
                             </tableView>
                         </subviews>
+                        <animations/>
                         <color key="backgroundColor" red="0.63736122529999995" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="TLI-6d-IsR" firstAttribute="top" secondItem="jEZ-9P-yWB" secondAttribute="top" constant="95" id="6zD-Gi-zlg"/>
@@ -74,6 +80,7 @@
                         </constraints>
                     </view>
                 </subviews>
+                <animations/>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="jEZ-9P-yWB" secondAttribute="trailing" constant="6" id="IV7-5G-p3I"/>
                     <constraint firstAttribute="bottom" secondItem="jEZ-9P-yWB" secondAttribute="bottom" constant="-1" id="RV8-CF-Xtt"/>
@@ -81,6 +88,7 @@
                     <constraint firstItem="jEZ-9P-yWB" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="g4n-6t-cac"/>
                 </constraints>
             </tableViewCellContentView>
+            <animations/>
             <connections>
                 <outlet property="backgroundViewOfCell" destination="jEZ-9P-yWB" id="glY-3y-gKJ"/>
                 <outlet property="commentsAndLikesPostTableView" destination="TLI-6d-IsR" id="MGl-YP-Oe6"/>

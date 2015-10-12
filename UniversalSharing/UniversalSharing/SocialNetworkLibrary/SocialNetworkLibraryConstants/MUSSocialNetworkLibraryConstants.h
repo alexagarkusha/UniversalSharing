@@ -79,6 +79,17 @@ FOUNDATION_EXPORT NSInteger const MUSFacebookErrorCode;
 
 FOUNDATION_EXPORT NSString *const MUSFacebookSuccessUpdateNetworkPost;
 
+FOUNDATION_EXPORT NSString* const MUSFacebookParameter_ObjectId;
+FOUNDATION_EXPORT NSString* const MUSFacebookParameter_True;
+FOUNDATION_EXPORT NSString* const MUSFacebookParameter_Summary;
+FOUNDATION_EXPORT NSString* const MUSFacebookParameter_Likes;
+FOUNDATION_EXPORT NSString* const MUSFacebookParameter_Total_Count;
+FOUNDATION_EXPORT NSString* const MUSFacebookParameter_Comments;
+
+FOUNDATION_EXPORT NSString *const MUSFacebookLocation_Parameter_Type_Place;
+FOUNDATION_EXPORT NSString *const MUSFacebookLocation_Parameter_Type_Distance;
+
+
 #pragma mark Vkontakte Constants
 
 FOUNDATION_EXPORT NSString *const MUSVKAppID;
@@ -120,7 +131,7 @@ FOUNDATION_EXPORT NSString *const MUSTwitterLocationParameter_Latitude;
 FOUNDATION_EXPORT NSString *const MUSTwitterLocationParameter_Longituge;
 
 FOUNDATION_EXPORT NSString *const MUSTwitterURL_Statuses_Show;
-//FOUNDATION_EXPORT NSString *const MUSTwitterURL_Users_Show;
+FOUNDATION_EXPORT NSString *const MUSTwitterURL_Api_Url;
 FOUNDATION_EXPORT NSString *const MUSTwitterURL_Geo_Search;
 FOUNDATION_EXPORT NSString *const MUSTwitterURL_Statuses_Update;
 FOUNDATION_EXPORT NSString *const MUSTwitterURL_Media_Upload;
@@ -130,7 +141,15 @@ FOUNDATION_EXPORT NSString *const MUSTwitterParameter_Status;
 FOUNDATION_EXPORT NSString *const MUSTwitterParameter_MediaID;
 FOUNDATION_EXPORT NSString *const MUSTwitterParameter_Media;
 
+FOUNDATION_EXPORT NSString* const MUSTwitterParameter_ID;
+FOUNDATION_EXPORT NSString* const MUSTwitterParameter_True;
+FOUNDATION_EXPORT NSString* const MUSTwitterParameter_Include_My_Retweet;
+FOUNDATION_EXPORT NSString* const MUSTwitterParameter_Favorite_Count;
+FOUNDATION_EXPORT NSString* const MUSTwitterParameter_Retweet_Count;
+
+
 FOUNDATION_EXPORT NSString *const MUSTwitterJSONParameterForMediaID;
+FOUNDATION_EXPORT NSString *const MUSTwitterSuccessUpdateNetworkPost;
 
 
 #pragma mark General Constants
@@ -169,5 +188,11 @@ FOUNDATION_EXPORT NSString *const MUSReasonName_Shared;
 FOUNDATION_EXPORT NSString *const MUSReasonName_Offline;
 FOUNDATION_EXPORT NSString *const MUSReasonName_Error;
 
+#pragma mark - General Constants
+
+FOUNDATION_EXPORT NSString *const MUSNetworkPost_Update_Error_Data;
+FOUNDATION_EXPORT NSString *const MUSNetworkPost_Update_Already_Update;
+FOUNDATION_EXPORT NSString *const MUSNetworkPost_Update_Error_Update;
+FOUNDATION_EXPORT NSString *const MUSNetworkPost_Update_Updated;
 
 

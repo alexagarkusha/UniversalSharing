@@ -24,6 +24,14 @@
     _networkType = networkType;
 }
 
+- (User*) currentUser {
+    if (!_isLogin) {
+        return nil;
+    } else {
+        return [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType: _networkType]] firstObject];
+    }
+}
+
 - (void) loginWithComplition :(Complition) block {
 }
 
@@ -43,10 +51,6 @@
     
 }
 
-- (NSError*) errorConnection {
-    return [NSError errorWithMessage: MUSConnectionError andCodeError: MUSConnectionErrorCode];
-}
-
 - (void) updateUserInSocialNetwork {
     if ([[InternetConnectionManager connectionManager] isInternetConnection]){
         NSString *deleteImageFromFolder = _currentUser.photoURL;
@@ -59,6 +63,12 @@
         }];
     }
 }
+
+
+- (NSError*) errorConnection {
+    return [NSError errorWithMessage: MUSConnectionError andCodeError: MUSConnectionErrorCode];
+}
+
 
 
 
