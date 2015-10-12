@@ -155,7 +155,7 @@ static MultySharingManager *model = nil;
     __block NSString *blockResultString = @"Result updating: \n";
     __weak MultySharingManager *weakMultySharingManager = self;
     __block int countConnectPosts = 0;
-
+    __block NSDictionary *resultDictionary;
     for (SocialNetwork *socialNetwork in arrayWithNetworks) {
         [socialNetwork sharePost: post withComplition:^(id result, NSError *error) {
             
@@ -173,17 +173,20 @@ static MultySharingManager *model = nil;
             }
             if (counterOfSocialNetwork == numberOfSocialNetworks) {
                 
-                NSDictionary *resultDictionary = [[NSDictionary alloc] initWithObjectsAndKeys: [NSNumber numberWithInt:counterOfSocialNetwork], @"numberOfSocialNetworks", [NSNumber numberWithInt:countConnectPosts], @"countConnectPosts", nil];
+                resultDictionary = [[NSDictionary alloc] initWithObjectsAndKeys: [NSNumber numberWithInt:counterOfSocialNetwork], @"numberOfSocialNetworks", [NSNumber numberWithInt:countConnectPosts], @"countConnectPosts", nil];
                [[MUSProgressBarEndLoading sharedProgressBarEndLoading] endProgressViewWithCountConnect:resultDictionary andImagesArray:post.arrayImages];
                 weakMultySharingManager.copyComplition ([NSNumber numberWithInt:countConnectPosts], error);
                 [weakMultySharingManager checkArrayWithQueueOfPosts];
             }
 
         } progressLoadingBlock:^(id currentNetworkType, float result) {
-            //NSLog(@"OBJECT = %@, result = %f", currentNetworkType, result);
             float totalProgress = [weakMultySharingManager totalResultOfLoadingToSocialNetworks: arrayOfLoadingObjects withCurrentObject: currentNetworkType andResult: result];
+            [[MUSProgressBar sharedProgressBar] setProgressViewSize:totalProgress / numberOfSocialNetworks];
             weakMultySharingManager.copyProgressLoading(totalProgress / numberOfSocialNetworks);
-            NSLog(@"UPDATE RESULT = %f", totalProgress / numberOfSocialNetworks);
+            if (totalProgress / numberOfSocialNetworks == 1) {
+                [[MUSProgressBarEndLoading sharedProgressBarEndLoading] endProgressViewWithCountConnect:resultDictionary andImagesArray:post.arrayImages];
+                weakMultySharingManager.copyComplition ([NSNumber numberWithInt:countConnectPosts], nil);
+            }
         }];
     }
 }
