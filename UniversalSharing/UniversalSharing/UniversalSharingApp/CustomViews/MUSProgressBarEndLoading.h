@@ -15,5 +15,5 @@
 + (MUSProgressBarEndLoading*) sharedProgressBarEndLoading;
 - (void) configurationProgressBar: (NSArray*) postImagesArray  :(NSInteger) countSuccessPosted :(NSInteger) countNetworks;
 - (void) setHeightView;
-
+- (void) endProgressViewWithCountConnect :(NSDictionary *) dictionary andImagesArray : (NSArray*) imagesArray;
 @end

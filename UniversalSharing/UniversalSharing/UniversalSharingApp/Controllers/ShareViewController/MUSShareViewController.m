@@ -145,17 +145,17 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self initiationMUSShareViewController];
     
-    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
-    CGFloat navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
+//    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+//    CGFloat navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
     ////////////////////////
     self.progressBar = [MUSProgressBar sharedProgressBar];
-    [self.progressBar.view setFrame:CGRectMake(0, statusBarHeight, self.view.frame.size.width, navigationBarHeight)];
+    //[self.progressBar.view setFrame:CGRectMake(0, statusBarHeight, self.view.frame.size.width, navigationBarHeight)];
     /////////////////////////////////////////////////
     self.progressBarEndLoading = [MUSProgressBarEndLoading sharedProgressBarEndLoading];
-    [self.progressBarEndLoading.view setFrame:CGRectMake(0, statusBarHeight, self.view.frame.size.width, navigationBarHeight)];
+    //[self.progressBarEndLoading.view setFrame:CGRectMake(0, statusBarHeight, self.view.frame.size.width, navigationBarHeight)];
     
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startProgressView) name:@"StartSharePost" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(endProgressViewWithCountConnect:) name:@"EndSharePost" object:nil ];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(endProgressViewWithCountConnect:) name:@"EndSharePost" object:nil ];
     
 
    // self.progressBar.viewHeightConstraint.constant = 0;
@@ -418,35 +418,35 @@
 //    [self.progressBar setHeightView];
 //}
 
-- (void) endProgressViewWithCountConnect :(NSNotification *) notification {
-    NSDictionary *dictionary = [notification object];
-    NSNumber *countConnect = [dictionary objectForKey: @"countConnectPosts"];
-    NSNumber *numberOfChosenNetworks = [dictionary objectForKey: @"numberOfSocialNetworks"];
-
-    //NSInteger numberOfChosenNetworks = [object] numberOfSocialNetworks
-    
-    [self.tabBarController.view addSubview:self.progressBarEndLoading.view];
-    [[MUSProgressBarEndLoading sharedProgressBarEndLoading] configurationProgressBar:self.post.arrayImages : [countConnect integerValue]: [numberOfChosenNetworks integerValue]];
-    [self.progressBarEndLoading setHeightView];
-//    [self.progressBarEndLoading.viewWithPicsAndLable layoutIfNeeded];
-//    self.progressBarEndLoading.viewHeightConstraint.constant = 42;
-//    [UIView animateWithDuration:2 animations:^{
-//        [self.progressBarEndLoading.viewWithPicsAndLable layoutIfNeeded];
-//    } completion:^(BOOL finished) {
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-//            [self.progressBar.view removeFromSuperview];
-//            [self.progressBarEndLoading.view removeFromSuperview];
-//            self.progressBarEndLoading.viewHeightConstraint.constant = 0;
-//        });
-//    }];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 4 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                    [self.progressBar.view removeFromSuperview];
-                    [self.progressBarEndLoading.view removeFromSuperview];
-                    //self.progressBarEndLoading.viewHeightConstraint.constant = 0;
-                });
-    
-    
-}
+//- (void) endProgressViewWithCountConnect :(NSNotification *) notification {
+//    NSDictionary *dictionary = [notification object];
+//    NSNumber *countConnect = [dictionary objectForKey: @"countConnectPosts"];
+//    NSNumber *numberOfChosenNetworks = [dictionary objectForKey: @"numberOfSocialNetworks"];
+//
+//    //NSInteger numberOfChosenNetworks = [object] numberOfSocialNetworks
+//    
+//    [self.tabBarController.view addSubview:self.progressBarEndLoading.view];
+//    [[MUSProgressBarEndLoading sharedProgressBarEndLoading] configurationProgressBar:self.post.arrayImages : [countConnect integerValue]: [numberOfChosenNetworks integerValue]];
+//    [self.progressBarEndLoading setHeightView];
+////    [self.progressBarEndLoading.viewWithPicsAndLable layoutIfNeeded];
+////    self.progressBarEndLoading.viewHeightConstraint.constant = 42;
+////    [UIView animateWithDuration:2 animations:^{
+////        [self.progressBarEndLoading.viewWithPicsAndLable layoutIfNeeded];
+////    } completion:^(BOOL finished) {
+////        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+////            [self.progressBar.view removeFromSuperview];
+////            [self.progressBarEndLoading.view removeFromSuperview];
+////            self.progressBarEndLoading.viewHeightConstraint.constant = 0;
+////        });
+////    }];
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 4 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+//                    //[self.progressBar.view removeFromSuperview];
+//                    [self.progressBarEndLoading.view removeFromSuperview];
+//                    //self.progressBarEndLoading.viewHeightConstraint.constant = 0;
+//                });
+//    
+//    
+//}
 
 
 #pragma mark - Share Post to Social network
@@ -495,7 +495,7 @@
             //            });
             
         } andProgressLoadingComplition:^(float result) {
-            [weakSelf.progressBar setProgressViewSize:result];
+           // [weakSelf.progressBar setProgressViewSize:result];
         }];
     }
 }

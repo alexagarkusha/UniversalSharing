@@ -41,7 +41,10 @@ static MUSProgressBarEndLoading *model = nil;
     self = [super initWithFrame:frame];
     if (self) {
         self.view = [self loadViewFromNib];
-        self.view.frame = frame;
+        CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+        //CGFloat navigationBarHeight = [UIApplication sharedApplication]. //window.rootViewController.size.height;
+        self.view.frame = CGRectMake(0, statusBarHeight, self.view.frame.size.width, 44);
+        //self.view.frame = frame;
         [self addSubview:self.view];
     }
     return self;
@@ -61,6 +64,7 @@ static MUSProgressBarEndLoading *model = nil;
     self.progressView.progressTintColor = DARK_BROWN_COLOR_WITH_ALPHA_07;
     self.progressView.progress = 1;
      self.viewHeightConstraint.constant = 0;
+//     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(endProgressViewWithCountConnect:) name:@"EndSharePost" object:nil ];
     self.imageViewsArray = [[NSArray alloc] initWithObjects: self.imageViewPostThird, self.imageViewPostSecond, self.imageViewPostFirst, nil];
     return [nibObjects firstObject];
 }
@@ -102,14 +106,25 @@ static MUSProgressBarEndLoading *model = nil;
     }
 }
 
+- (void) endProgressViewWithCountConnect :(NSDictionary *) dictionary andImagesArray : (NSArray*) imagesArray {
+    //NSDictionary *dictionary = [dictionary object];
+    NSNumber *countConnect = [dictionary objectForKey: @"countConnectPosts"];
+    NSNumber *numberOfChosenNetworks = [dictionary objectForKey: @"numberOfSocialNetworks"];
+    
+       
+   [[UIApplication sharedApplication].keyWindow addSubview:self.view];
+    [self configurationProgressBar:imagesArray : [countConnect integerValue]: [numberOfChosenNetworks integerValue]];
+    [self setHeightView];
+}
 - (void) setHeightView {
     [self.viewWithPicsAndLable layoutIfNeeded];
     self.viewHeightConstraint.constant = 42;
     [UIView animateWithDuration:2 animations:^{
         [self.viewWithPicsAndLable layoutIfNeeded];
     } completion:^(BOOL finished) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
         self.viewHeightConstraint.constant = 0;
+            [self.view removeFromSuperview];
         });
     }];
 }

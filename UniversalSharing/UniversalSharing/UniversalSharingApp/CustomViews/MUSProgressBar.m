@@ -41,7 +41,9 @@ static MUSProgressBar *model = nil;
     self = [super initWithFrame:frame];
     if (self) {
         self.view = [self loadViewFromNib];
-        self.view.frame = frame;
+        CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+        //CGFloat navigationBarHeight = [UIApplication sharedApplication]. //window.rootViewController.size.height;
+        self.view.frame = CGRectMake(0, statusBarHeight, self.view.frame.size.width, 44);
         [self addSubview:self.view];
     }
     return self;
@@ -61,8 +63,7 @@ static MUSProgressBar *model = nil;
     self.progressView.progressTintColor = DARK_BROWN_COLOR_WITH_ALPHA_07;
     self.progressView.progress = 0;
     self.viewHeightConstraint.constant = 0;
-//    /////
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startProgressView) name:@"StartSharePost" object:nil];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startProgressViewWithImages:) name:@"StartSharePost" object:nil];
 //    ////////
      self.imageViewsArray = [[NSArray alloc] initWithObjects: self.thirdImageView, self.secondImageView, self.firstImageView, nil];
     return [nibObjects firstObject];
@@ -110,18 +111,22 @@ static MUSProgressBar *model = nil;
         [UIView animateWithDuration:1 animations:^{
             
             [weakSelf.contentView layoutIfNeeded];
+            //[self.view removeFromSuperview];
         }];
         [UIView commitAnimations];
     });
 }
 
-- (void) startProgressView {
+- (void) startProgressViewWithImages :(NSArray*) postImagesArray {
     [[UIApplication sharedApplication].keyWindow addSubview:self.view];
-    [self configurationProgressBar:nil];
+    [self configurationProgressBar:postImagesArray];
     [self setHeightView];
 }
 - (void) setProgressViewSize :(float) progress {
     self.progressView.progress = progress;
+    if (progress == 1) {
+        [self.view removeFromSuperview];
+    }
 }
 
 - (void) clearImageViews {

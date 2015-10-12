@@ -16,6 +16,8 @@
 #import "SocialManager.h"
 #import "MUSPostManager.h"
 #import "NSString+MUSCurrentDate.h"
+#import "MUSProgressBar.h"
+#import "MUSProgressBarEndLoading.h"
 
 @interface MultySharingManager ()
 
@@ -68,7 +70,7 @@ static MultySharingManager *model = nil;
 
 - (void) sharePost: (Post*) post toSocialNetworks: (NSArray *) arrayWithNetworks {
     NSLog(@"New OBJECT");
-    [self startSharePostNotification];
+    [[MUSProgressBar sharedProgressBar] startProgressViewWithImages:post.arrayImages];
     if (!post.primaryKey) {
         [self shareNewPost: post toSocialNetworks: arrayWithNetworks];
     } else {
@@ -81,13 +83,13 @@ static MultySharingManager *model = nil;
     __block NSMutableArray *arrayOfLoadingObjects = [self arrayOfLoadingObjectsFromNetworks: arrayWithNetworks];
     self.isPostLoading = YES;
     newPost.arrayWithNetworkPostsId = [NSMutableArray new];
-
     __block Post *postCopy = newPost;
     __block NSUInteger numberOfSocialNetworks = arrayWithNetworks.count;
     __block int counterOfSocialNetwork = 0;
     __block NSString *blockResultString = @"Result: \n";
     __weak MultySharingManager *weakMultySharingManager = self;
     __block int countConnectPosts = 0;
+    __block NSDictionary *resultDictionary;
     //dispatch_group_t group = dispatch_group_create();
     //dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     for (SocialNetwork *socialNetwork in arrayWithNetworks) {
@@ -115,9 +117,11 @@ static MultySharingManager *model = nil;
                 [weakMultySharingManager updatePostInfoNotification];
                 NSLog(@"END LOAD");
                 
-                weakMultySharingManager.copyComplition ([NSNumber numberWithInt:countConnectPosts], error);
-                NSDictionary *resultDictionary = [[NSDictionary alloc] initWithObjectsAndKeys: [NSNumber numberWithInt:counterOfSocialNetwork], @"numberOfSocialNetworks", [NSNumber numberWithInt:countConnectPosts], @"countConnectPosts", nil];
-                [weakMultySharingManager endSharePostNotificationWithObject: resultDictionary];
+                                resultDictionary = [[NSDictionary alloc] initWithObjectsAndKeys: [NSNumber numberWithInt:counterOfSocialNetwork], @"numberOfSocialNetworks", [NSNumber numberWithInt:countConnectPosts], @"countConnectPosts", nil];
+//                [[MUSProgressBarEndLoading sharedProgressBarEndLoading] endProgressViewWithCountConnect:resultDictionary andImagesArray:newPost.arrayImages];
+//                weakMultySharingManager.copyComplition ([NSNumber numberWithInt:countConnectPosts], error);
+
+                //[weakMultySharingManager endSharePostNotificationWithObject: resultDictionary];
 //
 //                
 //                [weakMultySharingManager endSharePostNotificationWithObject: [NSNumber numberWithInt:countConnectPosts]];
@@ -127,7 +131,12 @@ static MultySharingManager *model = nil;
         } progressLoadingBlock:^(id currentNetworkType, float result) {
             
             float totalProgress = [weakMultySharingManager totalResultOfLoadingToSocialNetworks: arrayOfLoadingObjects withCurrentObject: currentNetworkType andResult: result];
+             [[MUSProgressBar sharedProgressBar] setProgressViewSize:totalProgress / numberOfSocialNetworks];
             weakMultySharingManager.copyProgressLoading(totalProgress / numberOfSocialNetworks);
+            if (totalProgress / numberOfSocialNetworks == 1) {
+                [[MUSProgressBarEndLoading sharedProgressBarEndLoading] endProgressViewWithCountConnect:resultDictionary andImagesArray:newPost.arrayImages];
+                weakMultySharingManager.copyComplition ([NSNumber numberWithInt:countConnectPosts], nil);
+            }
         }];
         
         //});
@@ -163,9 +172,10 @@ static MultySharingManager *model = nil;
                 }
             }
             if (counterOfSocialNetwork == numberOfSocialNetworks) {
-                weakMultySharingManager.copyComplition ([NSNumber numberWithInt:countConnectPosts], error);
+                
                 NSDictionary *resultDictionary = [[NSDictionary alloc] initWithObjectsAndKeys: [NSNumber numberWithInt:counterOfSocialNetwork], @"numberOfSocialNetworks", [NSNumber numberWithInt:countConnectPosts], @"countConnectPosts", nil];
-                [weakMultySharingManager endSharePostNotificationWithObject: resultDictionary];
+               [[MUSProgressBarEndLoading sharedProgressBarEndLoading] endProgressViewWithCountConnect:resultDictionary andImagesArray:post.arrayImages];
+                weakMultySharingManager.copyComplition ([NSNumber numberWithInt:countConnectPosts], error);
                 [weakMultySharingManager checkArrayWithQueueOfPosts];
             }
 
@@ -231,13 +241,13 @@ static MultySharingManager *model = nil;
     [[NSNotificationCenter defaultCenter] postNotificationName:MUSInfoPostsDidUpDateNotification object:nil];
 }
 
-- (void) startSharePostNotification {
-    [[NSNotificationCenter defaultCenter] postNotificationName: @"StartSharePost" object:nil];
-}
-
-- (void) endSharePostNotificationWithObject : (NSDictionary*) resultDictionary {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"EndSharePost" object: resultDictionary];
-}
+//- (void) startSharePostNotification {
+//    [[NSNotificationCenter defaultCenter] postNotificationName: @"StartSharePost" object:nil];
+//}
+//
+//- (void) endSharePostNotificationWithObject : (NSDictionary*) resultDictionary {
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"EndSharePost" object: resultDictionary];
+//}
 
 
 

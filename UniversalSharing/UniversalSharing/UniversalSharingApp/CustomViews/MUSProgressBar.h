@@ -16,5 +16,5 @@
 - (void) configurationProgressBar: (NSArray*) postImagesArray;
 - (void) setHeightView;
 - (void) setProgressViewSize :(float) progress;
-
+- (void) startProgressViewWithImages :(NSArray*) postImagesArray;
 @end
