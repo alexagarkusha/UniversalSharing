@@ -24,13 +24,13 @@
     _networkType = networkType;
 }
 
-- (User*) currentUser {
-    if (!_isLogin) {
-        return nil;
-    } else {
-        return [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType: _networkType]] firstObject];
-    }
-}
+//- (User*) currentUser {
+//    if (!_isLogin) {
+//        return nil;
+//    } else {
+//        return [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType: _networkType]] firstObject];
+//    }
+//}
 
 - (void) loginWithComplition :(Complition) block {
 }

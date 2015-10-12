@@ -26,11 +26,14 @@
     user.photoURL = @"";
     user.networkType = MUSAllNetworks;
     user.primaryKey = 0;
+   
     return user;
 }
 
 - (void) insertIntoDataBase {
+    
     [[DataBaseManager sharedManager] insertObjectIntoTable: self];
+    
 }
 
 
@@ -39,37 +42,6 @@
     [[DataBaseManager sharedManager] deleteObjectFromDataBaseWithRequestStrings:[MUSDatabaseRequestStringsHelper stringForDeleteUserByClientId: _clientID]];
 }
 
-
-+ (User*) createFromDictionary:(id) dict andNetworkType :(NetworkType) networkType
-{
-   // User *user = [[User alloc] init];
-    
-    switch (networkType) {
-        case MUSVKontakt:
-           return [User createUserFromVK: dict];
-            break;
-        default:
-            break;
-    }
-    return nil;
-}
-
-/*!
- @abstract return an instance of the User for vkontakte network.
- @param dictionary takes dictionary from vkontakte network.
- */
-
-+ (User*) createUserFromVK : (id) userDictionary {
-    User *currentUser = [[User alloc] init];
-    if ([userDictionary isKindOfClass:[NSDictionary class]]){
-        currentUser.firstName = [userDictionary objectForKey : MUSVKParseUser_First_Name];
-        currentUser.lastName = [userDictionary objectForKey : MUSVKParseUser_Last_Name];
-        currentUser.networkType = MUSVKontakt;
-        currentUser.clientID = [NSString stringWithFormat: @"%@", [userDictionary objectForKey : MUSVKParseUser_ID]];
-        currentUser.photoURL = [userDictionary objectForKey : MUSVKParseUser_Photo_Url];
-    }
-    return currentUser;
-}
 
 #pragma mark - GETTERS
 

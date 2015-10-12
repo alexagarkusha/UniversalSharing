@@ -20,14 +20,14 @@
 #import <FBSDKCoreKit/FBSDKMacros.h>
 #import "MUSSocialNetworkLibraryConstantsForParseObjects.h"
 #import "MUSPostManager.h"
+#import "MUSDatabaseRequestStringsHelper.h"
+#import "DataBaseManager.h"
 
 @interface FacebookNetwork()<FBSDKGraphRequestConnectionDelegate>
 
 @property (copy, nonatomic) Complition copyComplition;
 @property (copy, nonatomic) UpdateNetworkPostsComplition copyComplitionUpdateNetworkPosts;
 @property (copy, nonatomic) ProgressLoading copyProgressLoading;
-
-@property (strong, nonatomic) NSString *firstPlaceId;
 
 @end
 
@@ -70,6 +70,7 @@ static FacebookNetwork *model = nil;
 - (void) initiationPropertiesWithSession {
     self.isLogin = YES;
     self.icon = MUSFacebookIconName;
+    self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType: self.networkType]]firstObject];
     self.title = [NSString stringWithFormat:@"%@ %@", self.currentUser.firstName, self.currentUser.lastName];
 }
 
@@ -86,11 +87,11 @@ static FacebookNetwork *model = nil;
 #pragma mark - login
 
 - (void) loginWithComplition :(Complition) block {
-    FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
-    __weak FacebookNetwork *weakSell = self;
-    [login logInWithReadPermissions:@[MUSFacebookPermission_Email] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+    __weak FacebookNetwork *weakSelf = self;
+    FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];    
+    [login logInWithReadPermissions: @[MUSFacebookPermission_Email] fromViewController: nil handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
         if (error) {
-            block(nil, [self errorFacebook]);
+            block(nil, [weakSelf errorFacebook]);
         } else if (result.isCancelled) {
             NSError *accessError = [NSError errorWithMessage: MUSAccessError andCodeError:MUSAccessErrorCode];
             block(nil, accessError);
@@ -98,7 +99,7 @@ static FacebookNetwork *model = nil;
             // If you ask for multiple permissions at once, you
             // should check if specific permissions missing
             if ([result.grantedPermissions containsObject: MUSFacebookPermission_Email]) {
-                [weakSell obtainUserInfoFromNetworkWithComplition:block];
+                [weakSelf obtainUserInfoFromNetworkWithComplition:block];
             }
         }
     }];
@@ -127,9 +128,9 @@ static FacebookNetwork *model = nil;
                                           id result,
                                           NSError *error) {
         [weakSelf createUser: result];
-        weakSelf.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
-        if (!weakSelf.isLogin) {
-            [weakSelf.currentUser insertToDataBase];
+        weakSelf.title = [NSString stringWithFormat:@"%@  %@", weakSelf.currentUser.firstName, weakSelf.currentUser.lastName];
+        if (!weakSelf.isLogin) {            
+            [weakSelf.currentUser insertIntoDataBase];
         }
         dispatch_async(dispatch_get_main_queue(), ^{
             weakSelf.isLogin = YES;
@@ -155,7 +156,7 @@ static FacebookNetwork *model = nil;
         [self sharePostToFacebookNetwork: post];
     } else {
         FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
-        [loginManager logInWithPublishPermissions:@[MUSFacebookPermission_Publish_Actions] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+        [loginManager logInWithPublishPermissions: @[MUSFacebookPermission_Publish_Actions] fromViewController: nil handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
             if (!error) {
                 [self sharePostToFacebookNetwork: post];
             } else {
@@ -210,6 +211,7 @@ static FacebookNetwork *model = nil;
     NetworkPost *networkPost = [NetworkPost create];
     networkPost.networkType = MUSFacebook;
     __block NetworkPost *networkPostCopy = networkPost;
+    __weak FacebookNetwork *weakSelf = self;
     
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
     params[MUSFacebookParameter_Message] = post.postDescription;
@@ -227,14 +229,14 @@ static FacebookNetwork *model = nil;
         if (!error) {
             networkPostCopy.reason = MUSConnect;
             networkPostCopy.dateCreate = [NSString currentDate];
-            networkPostCopy.postID = [result objectForKey: MUSFacebookNetworkPost_ID];
-            self.copyComplition (networkPostCopy, nil);
+            networkPostCopy.postID = [result objectForKey: MUSFacebookParseNetworkPost_ID];
+            weakSelf.copyComplition (networkPostCopy, nil);
         } else {
             networkPostCopy.reason = MUSErrorConnection;
             if ([error code] != 8){
-                self.copyComplition (networkPostCopy, [self errorFacebook]);
+                weakSelf.copyComplition (networkPostCopy, [self errorFacebook]);
             } else {
-                self.copyComplition (networkPostCopy, [self errorFacebook]);
+                weakSelf.copyComplition (networkPostCopy, [self errorFacebook]);
             }
         }
         
@@ -258,6 +260,8 @@ static FacebookNetwork *model = nil;
     }
     __block NSInteger numberOfPostImagesArray = post.arrayImages.count;
     __block int counterOfImages = 0;
+    __weak FacebookNetwork *weakSelf = self;
+
     NetworkPost *networkPost = [NetworkPost create];
     networkPost.networkType = MUSFacebook;
     __block NetworkPost *networkPostCopy = networkPost;
@@ -279,13 +283,13 @@ static FacebookNetwork *model = nil;
                      if (counterOfImages == numberOfPostImagesArray) {
                          networkPostCopy.reason = MUSConnect;
                          networkPostCopy.dateCreate = [NSString currentDate];
-                         self.copyComplition (networkPostCopy, nil);
+                         weakSelf.copyComplition (networkPostCopy, nil);
                      }
                      networkPostCopy.postID = [networkPostCopy.postID stringByAppendingString: @","];
                  } else {
                      if (counterOfImages == numberOfPostImagesArray) {
                          networkPostCopy.reason = MUSErrorConnection;
-                         self.copyComplition (networkPostCopy, [self errorFacebook]);
+                         weakSelf.copyComplition (networkPostCopy, [self errorFacebook]);
                      }
                  }
              }];
@@ -416,10 +420,9 @@ static FacebookNetwork *model = nil;
                                                                   HTTPMethod: MUSGET];
     [connection addRequest:request
          completionHandler:^(FBSDKGraphRequestConnection *innerConnection, NSDictionary *result, NSError *error) {
-             
+    
              block ([[result objectForKey:MUSFacebookParameter_Summary]objectForKey:MUSFacebookParameter_Total_Count], nil);
-             
-         }];
+    }];
 }
 
 #pragma mark - obtainNumberOfCommentsForPostIdsArray
@@ -453,6 +456,7 @@ static FacebookNetwork *model = nil;
     FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]initWithGraphPath: stringPath
                                                                   parameters: params
                                                                   HTTPMethod: MUSGET];
+    
     [connection addRequest:request
          completionHandler:^(FBSDKGraphRequestConnection *innerConnection, NSDictionary *result, NSError *error) {
              
@@ -497,6 +501,7 @@ static FacebookNetwork *model = nil;
  */
 - (void) createUser : (NSDictionary*) result {
     self.currentUser = [User create];
+    
     if ([result isKindOfClass: [NSDictionary class]]) {
         self.currentUser.clientID = [result objectForKey : MUSFacebookParseUser_ID];
         self.currentUser.username = [result objectForKey : MUSFacebookParseUser_Name];

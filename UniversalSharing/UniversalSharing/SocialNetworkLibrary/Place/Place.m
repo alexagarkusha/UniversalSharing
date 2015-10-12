@@ -23,45 +23,6 @@
     return place;
 }
 
-
-+ (Place*) createFromDictionary: (NSDictionary*) dictionary andNetworkType :(NetworkType) networkType
-{
-    switch (networkType) {
-        case MUSVKontakt:
-            return [Place createPlaceFromVK: dictionary];
-            break;
-        default:
-            break;
-    }
-    return nil;
-}
-
-
-/*!
- @abstract return an instance of the Place for vkontakte network.
- @param dictionary takes dictionary from vkontakte network.
- */
-
-+ (Place*) createPlaceFromVK : (NSDictionary *) dictionary {
-    Place *currentPlace = [[Place alloc] init];
-    
-    currentPlace.placeID = [NSString stringWithFormat: @"%@", [dictionary objectForKey: MUSVKParsePlace_ID]];
-    currentPlace.fullName = [dictionary objectForKey: MUSVKParsePlace_Title];
-    currentPlace.placeType = [dictionary objectForKey: MUSVKParsePlace_Type];
-    currentPlace.country = [dictionary objectForKey: MUSVKParsePlace_Country];
-    currentPlace.city = [dictionary objectForKey: MUSVKParsePlace_City];
-    currentPlace.longitude = [NSString stringWithFormat: @"%@", [dictionary objectForKey: MUSVKParsePlace_Longitude]];
-    currentPlace.latitude = [NSString stringWithFormat: @"%@", [dictionary objectForKey: MUSVKParsePlace_Latitude]];
-    
-    return currentPlace;
-}
-
-/*!
- @abstract return an instance of the Place for twitter network.
- @param dictionary takes dictionary from twitter network.
- */
-
-
 - (id) copy {
     Place *copyPlace = [Place new];
     copyPlace.fullName = [self.fullName copy];

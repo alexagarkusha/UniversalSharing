@@ -99,6 +99,10 @@ FOUNDATION_EXPORT NSString *const MUSVKIconName;
 FOUNDATION_EXPORT NSString *const MUSVKName;
 
 FOUNDATION_EXPORT NSString *const MUSVKMethodPlacesSearch;
+FOUNDATION_EXPORT NSString *const MUSVKMethodWallGetById;
+
+FOUNDATION_EXPORT NSString *const MUSVKParameter_Photo;
+FOUNDATION_EXPORT NSString *const MUSVKParameter_Posts;
 
 FOUNDATION_EXPORT NSString *const MUSVKLocationParameter_Q;
 FOUNDATION_EXPORT NSString *const MUSVKLocationParameter_Latitude;
@@ -110,6 +114,8 @@ FOUNDATION_EXPORT NSString *const MUSVKKeyOfPlaceDictionary;
 FOUNDATION_EXPORT NSInteger const MUSVKDistanceEqual300;
 FOUNDATION_EXPORT NSInteger const MUSVKDistanceEqual2400;
 FOUNDATION_EXPORT NSInteger const MUSVKDistanceEqual18000;
+
+FOUNDATION_EXPORT NSString *const MUSVKSuccessUpdateNetworkPost;
 
 FOUNDATION_EXPORT NSString *const MUSVKError;
 FOUNDATION_EXPORT NSInteger const MUSVKErrorCode;

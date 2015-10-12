@@ -35,7 +35,7 @@ NSString *const MUSFacebookParseUser_Photo_Url = @"url";
 
 #pragma mark - NetworkPost
 
-NSString *const MUSFacebookNetworkPost_ID = @"id";
+NSString *const MUSFacebookParseNetworkPost_ID = @"id";
 
 
 ///////////////////////////////// VK Network /////////////////////////////////
@@ -61,6 +61,14 @@ NSString *const MUSVKParseUser_First_Name = @"first_name";
 NSString *const MUSVKParseUser_Last_Name = @"last_name";
 NSString *const MUSVKParseUser_ID = @"id";
 NSString *const MUSVKParseUser_Photo_Url = @"photo_200_orig";
+
+#pragma mark - NetworkPost
+
+NSString *const MUSVKParsePost_ID = @"post_id";
+NSString *const MUSVKParseNetworkPost_ID = @"id";
+NSString *const MUSVKParseNetworkPost_Likes = @"likes";
+NSString *const MUSVKParseNetworkPost_Comments = @"comments";
+NSString *const MUSVKParseNetworkPost_Count = @"count";
 
 ////////////////////////////// Twitter Network ////////////////////////////////
 

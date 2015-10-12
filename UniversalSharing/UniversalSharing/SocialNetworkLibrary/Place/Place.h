@@ -42,13 +42,6 @@
 
 + (instancetype) create;
 
-/*!
- @abstract return an instance of the Place.
- @param dictionary takes dictionary from social network.
- @param networkType takes the type of social network (like Facebook, Twitters, Vkontakte)
- */
-+ (Place*) createFromDictionary: (NSDictionary*) dictionary andNetworkType : (NetworkType) networkType;
-
 - (id) copy;
 
 @end

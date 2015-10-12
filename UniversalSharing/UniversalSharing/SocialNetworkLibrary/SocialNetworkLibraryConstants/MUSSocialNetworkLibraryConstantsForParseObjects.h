@@ -35,7 +35,7 @@ FOUNDATION_EXPORT NSString *const MUSFacebookParseUser_Photo_Url;
 
 #pragma mark - NetworkPost
 
-FOUNDATION_EXPORT NSString *const MUSFacebookNetworkPost_ID;
+FOUNDATION_EXPORT NSString *const MUSFacebookParseNetworkPost_ID;
 
 
 ///////////////////////////////// VK Network /////////////////////////////////
@@ -61,6 +61,14 @@ FOUNDATION_EXPORT NSString *const MUSVKParseUser_First_Name;
 FOUNDATION_EXPORT NSString *const MUSVKParseUser_Last_Name;
 FOUNDATION_EXPORT NSString *const MUSVKParseUser_ID;
 FOUNDATION_EXPORT NSString *const MUSVKParseUser_Photo_Url;
+
+#pragma mark - NetworkPost
+
+FOUNDATION_EXPORT NSString *const MUSVKParsePost_ID;
+FOUNDATION_EXPORT NSString *const MUSVKParseNetworkPost_ID;
+FOUNDATION_EXPORT NSString *const MUSVKParseNetworkPost_Likes;
+FOUNDATION_EXPORT NSString *const MUSVKParseNetworkPost_Comments;
+FOUNDATION_EXPORT NSString *const MUSVKParseNetworkPost_Count;
 
 ////////////////////////////// Twitter Network ////////////////////////////////
 
