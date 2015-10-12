@@ -10,9 +10,9 @@
                 <outlet property="imageViewPostFirst" destination="hoo-QD-dXf" id="4FA-Cf-MoE"/>
                 <outlet property="imageViewPostSecond" destination="AZ8-fj-yU0" id="8fC-Q3-AuY"/>
                 <outlet property="imageViewPostThird" destination="Wsg-Dq-VYf" id="Pea-AZ-7Va"/>
-                <outlet property="labelStutus" destination="hg7-rV-erH" id="eZE-5D-2wI"/>
                 <outlet property="lableWidthConstraint" destination="lfd-qz-df5" id="ZSw-RH-y58"/>
                 <outlet property="progressView" destination="aWg-yl-qRd" id="EdP-re-59Z"/>
+                <outlet property="statusLabel" destination="hg7-rV-erH" id="6HT-oL-6lP"/>
                 <outlet property="viewHeightConstraint" destination="aBB-6Z-S8K" id="UD1-Iq-hoR"/>
                 <outlet property="viewWithPicsAndLable" destination="ggm-bY-nei" id="zoQ-zF-6TJ"/>
             </connections>
