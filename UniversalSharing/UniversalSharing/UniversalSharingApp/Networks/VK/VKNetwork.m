@@ -20,6 +20,9 @@
 #import "MUSPostManager.h"
 #import "VKOperation.h"
 #import "VKUploadImage.h"
+#import "MUSDatabaseRequestStringsHelper.h"
+#import "DataBaseManager.h"
+
 
 @interface VKNetwork () <VKSdkDelegate>
 @property (strong, nonatomic) UINavigationController *navigationController;
@@ -60,10 +63,7 @@ static VKNetwork *model = nil;
             [self initiationPropertiesWithoutSession];
         }
         else {
-            self.isLogin = YES;
-            self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType:self.networkType]]firstObject];
-            self.icon = MUSVKIconName;
-            self.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
+            [self initiationPropertiesWithSession];
             [self updateUserInSocialNetwork];
         }
     }
@@ -87,7 +87,18 @@ static VKNetwork *model = nil;
     self.isLogin = NO;
 }
 
-#pragma mark - loginInNetwork
+/*!
+ Initiation properties of VKNetwork with session
+ */
+- (void) initiationPropertiesWithSession {
+    self.isLogin = YES;
+    self.icon = MUSVKIconName;
+    self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType: self.networkType]]firstObject];
+    self.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
+}
+
+
+#pragma mark - login
 
 /*!
  Starts authorization process. If VKapp is available in system, it will opens and requests access from user.
@@ -102,7 +113,7 @@ static VKNetwork *model = nil;
     }
 }
 
-#pragma mark - logoutInNetwork
+#pragma mark - logout
 
 /*!
  Forces logout using OAuth (with VKAuthorizeController). Removes all cookies for *.vk.com.
@@ -117,25 +128,24 @@ static VKNetwork *model = nil;
     [self initiationPropertiesWithoutSession];
 }
 
-#pragma mark - obtainUserFromNetwork
+#pragma mark - obtainUserInfoFromNetwork
 
 - (void) obtainUserInfoFromNetworkWithComplition :(Complition) block {
     
-    __weak VKNetwork *weakSell = self;
+    __weak VKNetwork *weakSelf = self;
     
     VKRequest * request = [[VKApi users] get:@{ VK_API_FIELDS : MUSVKAllUserFields }];
     [request executeWithResultBlock:^(VKResponse * response)
      {
-         weakSell.currentUser = [User createFromDictionary:(NSDictionary*)[response.json firstObject] andNetworkType : weakSell.networkType];
-         weakSell.title = [NSString stringWithFormat:@"%@  %@", weakSell.currentUser.firstName, weakSell.currentUser.lastName];
-         weakSell.currentUser.photoURL = [weakSell.currentUser.photoURL saveImageOfUserToDocumentsFolder:weakSell.currentUser.photoURL];
-         if (!weakSell.isLogin)
-             [[DataBaseManager sharedManager] insertObjectIntoTable:weakSell.currentUser];
-         
+         weakSelf.currentUser = [User createFromDictionary:(NSDictionary*)[response.json firstObject] andNetworkType : weakSelf.networkType];
+         weakSelf.title = [NSString stringWithFormat:@"%@  %@", weakSelf.currentUser.firstName, weakSelf.currentUser.lastName];
+         weakSelf.currentUser.photoURL = [weakSelf.currentUser.photoURL saveImageOfUserToDocumentsFolder:weakSelf.currentUser.photoURL];
+         if (!weakSelf.isLogin) {
+             [weakSelf.currentUser insertIntoDataBase];
+         }
          dispatch_async(dispatch_get_main_queue(), ^{
-             //[weakSell startTimerForUpdatePosts];
-             weakSell.isLogin = YES;
-             block(weakSell,nil);
+             weakSelf.isLogin = YES;
+             block(weakSelf,nil);
          });
      } errorBlock:^(NSError * error) {
          if (error.code != VK_API_ERROR) {
@@ -146,6 +156,208 @@ static VKNetwork *model = nil;
          }
      }];
 }
+
+
+#pragma mark - sharePost
+
+- (void) sharePost : (Post*) post withComplition : (Complition) block progressLoadingBlock:(ProgressLoading) blockLoading{
+    if (![[InternetConnectionManager connectionManager] isInternetConnection]){
+        NetworkPost *networkPost = [NetworkPost create];
+        networkPost.networkType = MUSVKontakt;
+        blockLoading ([NSNumber numberWithInteger: self.networkType], 1.0f);
+        block(networkPost,[self errorConnection]);
+        return;
+    }
+    
+    self.copyComplition = block;
+    self.copyProgressLoading = blockLoading;
+    
+    if ([post.arrayImages count]) {
+        __block NSUInteger numberOfImagesInPost = [post.arrayImages count];
+        __block NSMutableArray *arrayOfLoadingObjects = [[NSMutableArray alloc] init];
+        for (int i = 0; i < [post.arrayImages count]; i++) {
+            NSNumber *loadingObject = [[NSNumber alloc] init];
+            loadingObject = [NSNumber numberWithFloat: 0.0000001];
+            [arrayOfLoadingObjects addObject: loadingObject];
+        }
+        [self sharePostWithPictures: post withProgressLoadingImagesToVK:^(int objectOfLoading, long long bytesLoaded, long long bytesTotal) {
+            if (arrayOfLoadingObjects.count > objectOfLoading) {
+                NSNumber *currentObject = [arrayOfLoadingObjects objectAtIndex:objectOfLoading];
+                currentObject = [NSNumber numberWithFloat: (bytesLoaded * 1.0f / bytesTotal)];
+                [arrayOfLoadingObjects replaceObjectAtIndex: objectOfLoading withObject:currentObject];
+            }
+            
+            float totalProgress = 0;
+            
+            for (int i = 0; i < [arrayOfLoadingObjects count]; i ++) {
+                NSNumber *currentObject = [arrayOfLoadingObjects objectAtIndex: i];
+                totalProgress += [currentObject floatValue];
+            }
+            blockLoading ([NSNumber numberWithInteger: self.networkType], totalProgress / numberOfImagesInPost);
+        }];
+    } else {
+        [self sharePostOnlyWithPostDescription: post];
+    }
+}
+
+/*!
+ @abstract upload message and user location (optional)
+ @param current post of @class Post
+ */
+
+#pragma mark - postMessageToNetwork
+
+- (void) sharePostOnlyWithPostDescription : (Post*) post {
+    NetworkPost *networkPost = [NetworkPost create];
+    networkPost.networkType = MUSVKontakt;
+    __block NetworkPost *networkPostCopy = networkPost;
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    
+    parameters [VK_API_OWNER_ID] = [VKSdk getAccessToken].userId;
+    parameters [VK_API_MESSAGE] = post.postDescription;
+    if (post.longitude.length > 0 && ![post.longitude isEqualToString: @"(null)"] && post.latitude.length > 0 && ![post.latitude isEqualToString: @"(null)"]) {
+        parameters [VK_API_LONG] = post.longitude;
+        parameters [VK_API_LAT] = post.latitude;
+    }
+    
+    
+    VKRequest *request = [[VKApi wall] post: parameters];
+    
+    [request setProgressBlock:^(VKProgressType progressType, long long bytesLoaded, long long bytesTotal) {
+        if (bytesTotal < 0) {
+            return;
+        }
+        float totalProgress = (bytesLoaded * 1.0f / bytesTotal);
+        self.copyProgressLoading ([NSNumber numberWithInteger: self.networkType], totalProgress);
+    }];
+    
+    [request executeWithResultBlock: ^(VKResponse *response) {
+        networkPostCopy.reason = MUSConnect;
+        networkPostCopy.dateCreate = [NSString currentDate];
+        networkPostCopy.postID = [[response.json objectForKey:@"post_id"] stringValue];
+        self.copyComplition (networkPostCopy, nil);
+    } errorBlock: ^(NSError *error) {
+        networkPostCopy.reason = MUSErrorConnection;
+        self.copyComplition (networkPostCopy, [self errorVkontakte]);
+    }];
+    
+}
+
+/*!
+ @abstract upload image(s) with message (optional) and user location (optional)
+ @param current post of @class Post
+ */
+
+- (void) sharePostWithPictures : (Post*) post withProgressLoadingImagesToVK : (ProgressLoadingImagesToVK) progressLoadingImagesToVK {
+    __block NSUInteger numberOfImagesInPost = [post.arrayImages count];
+    __block int counterOfImages = 0;
+    NetworkPost *networkPost = [NetworkPost create];
+    networkPost.networkType = MUSVKontakt;
+    __block NetworkPost *networkPostCopy = networkPost;
+    
+    NSInteger userId = [self.currentUser.clientID integerValue];
+    NSMutableArray *requestArray = [[NSMutableArray alloc] init]; //array of requests to add pictures in the social network
+    for (int i = 0; i < [post.arrayImages count]; i++) {
+        ImageToPost *imageToPost = [post.arrayImages objectAtIndex: i];
+        VKRequest * request = [VKApi uploadWallPhotoRequest: imageToPost.image
+                                                 parameters: [self imageForVKNetwork: imageToPost]
+                                                     userId: userId
+                                                    groupId: 0];
+        __block int object = i;
+        [request setProgressBlock:^(VKProgressType progressType, long long bytesLoaded, long long bytesTotal) {
+            if (bytesTotal < 0) {
+                return;
+            }
+            progressLoadingImagesToVK (object, bytesLoaded, bytesTotal);
+        }];
+        [requestArray addObject: request];
+    }
+    
+    VKBatchRequest *batch = [[VKBatchRequest alloc] initWithRequestsArray: requestArray];
+    [batch executeWithResultBlock: ^(NSArray *responses) {
+        
+        NSMutableArray *photosAttachments = [[NSMutableArray alloc] init];
+        
+        for (VKResponse * resp in responses) {
+            VKPhoto *photoInfo = [(VKPhotoArray*)resp.parsedModel objectAtIndex:0];
+            [photosAttachments addObject:[NSString stringWithFormat:@"photo%@_%@",
+                                          photoInfo.owner_id, photoInfo.id]];
+        }
+        
+        NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+        
+        parameters [VK_API_OWNER_ID] = [VKSdk getAccessToken].userId;
+        parameters [VK_API_ATTACHMENTS] = [photosAttachments componentsJoinedByString: @","];
+        if (post.longitude.length > 0 && ![post.longitude isEqualToString: @"(null)"] && post.latitude.length > 0 && ![post.latitude isEqualToString: @"(null)"]) {
+            parameters [VK_API_LONG] = post.longitude;
+            parameters [VK_API_LAT] = post.latitude;
+        }
+        if (post.postDescription) {
+            parameters [VK_API_MESSAGE] = post.postDescription;
+        }
+        
+        VKRequest *postRequest = [[VKApi wall] post: parameters];
+        [postRequest executeWithResultBlock: ^(VKResponse *response) {
+            networkPostCopy.postID = [[response.json objectForKey:@"post_id"] stringValue];
+            networkPostCopy.reason = MUSConnect;
+            networkPostCopy.dateCreate = [NSString currentDate];
+            self.copyComplition (networkPostCopy, nil);
+        } errorBlock: ^(NSError *error) {
+            networkPostCopy.reason = MUSErrorConnection;
+            self.copyComplition (networkPostCopy, [self errorVkontakte]);
+        }];
+    } errorBlock: ^(NSError *error) {
+        counterOfImages++;
+        if (counterOfImages == numberOfImagesInPost) {
+            networkPostCopy.reason = MUSErrorConnection;
+            self.copyComplition (networkPostCopy, [self errorVkontakte]);
+        }
+    }];
+}
+
+/*!
+ @abstract settings parameters for image for uploading image into VK servers
+ @param current ImageToPost of @class ImageToPost
+ */
+
+- (VKImageParameters*) imageForVKNetwork : (ImageToPost*) imageToPost {
+    switch (imageToPost.imageType) {
+        case MUSPNG:
+            return [VKImageParameters pngImage];
+            break;
+        case MUSJPEG:
+            if (imageToPost.quality > 0) {
+                return [VKImageParameters jpegImageWithQuality: imageToPost.quality];
+                break;
+            }
+            return [VKImageParameters jpegImageWithQuality: 1.f];
+            break;
+        default:
+            break;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 - (void) updateNetworkPostWithComplition: (UpdateNetworkPostsComplition) block {
@@ -265,195 +477,6 @@ static VKNetwork *model = nil;
 }
 
 
-#pragma mark - sharePostToNetwork
-
-- (void) sharePost : (Post*) post withComplition : (Complition) block progressLoadingBlock:(ProgressLoading) blockLoading{
-    if (![[InternetConnectionManager connectionManager] isInternetConnection]){
-        NetworkPost *networkPost = [NetworkPost create];
-        networkPost.networkType = MUSVKontakt;
-        networkPost.reason = MUSOffline;
-        blockLoading ([NSNumber numberWithInteger: self.networkType], 1.0f);
-        block(networkPost,[self errorConnection]);
-        return;
-    }
-    
-    self.copyComplition = block;
-    self.copyProgressLoading = blockLoading;
-
-    if ([post.arrayImages count] > 0) {
-        __block NSUInteger numberOfImagesInPost = [post.arrayImages count];
-        __block NSMutableArray *arrayOfLoadingObjects = [[NSMutableArray alloc] init];
-        for (int i = 0; i < [post.arrayImages count]; i++) {
-            NSNumber *loadingObject = [[NSNumber alloc] init];
-            loadingObject = [NSNumber numberWithFloat: 0.0000001];
-            [arrayOfLoadingObjects addObject: loadingObject];
-        }    
-        [self postImagesToVK: post withProgressLoadingImagesToVK:^(int objectOfLoading, long long bytesLoaded, long long bytesTotal) {
-            if (arrayOfLoadingObjects.count > objectOfLoading) {
-                NSNumber *currentObject = [arrayOfLoadingObjects objectAtIndex:objectOfLoading];
-                currentObject = [NSNumber numberWithFloat: (bytesLoaded * 1.0f / bytesTotal)];
-                [arrayOfLoadingObjects replaceObjectAtIndex: objectOfLoading withObject:currentObject];
-            }
-            
-            float totalProgress = 0;
-            
-            for (int i = 0; i < [arrayOfLoadingObjects count]; i ++) {
-                NSNumber *currentObject = [arrayOfLoadingObjects objectAtIndex: i];
-                totalProgress += [currentObject floatValue];
-            }
-            blockLoading ([NSNumber numberWithInteger: self.networkType], totalProgress / numberOfImagesInPost);
-            //NSLog(@"total progress = %f", totalProgress / numberOfImagesInPost);
-        }];
-    } else {
-        [self postMessageToVK: post];
-    }
-}
-
-/*!
- @abstract upload message and user location (optional)
- @param current post of @class Post
- */
-
-#pragma mark - postMessageToNetwork
-
-- (void) postMessageToVK : (Post*) post {
-    NetworkPost *networkPost = [NetworkPost create];
-    networkPost.networkType = MUSVKontakt;
-    __block NetworkPost *networkPostCopy = networkPost;
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-    
-    parameters [VK_API_OWNER_ID] = [VKSdk getAccessToken].userId;
-    parameters [VK_API_MESSAGE] = post.postDescription;
-    if (post.longitude.length > 0 && ![post.longitude isEqualToString: @"(null)"] && post.latitude.length > 0 && ![post.latitude isEqualToString: @"(null)"]) {
-        parameters [VK_API_LONG] = post.longitude;
-        parameters [VK_API_LAT] = post.latitude;
-    }
-    
-    
-    VKRequest *request = [[VKApi wall] post: parameters];
-//////<<<<<<< HEAD
-//=======
-    
-    [request setProgressBlock:^(VKProgressType progressType, long long bytesLoaded, long long bytesTotal) {
-        if (bytesTotal < 0) {
-            return;
-        }
-        float totalProgress = (bytesLoaded * 1.0f / bytesTotal);
-        self.copyProgressLoading ([NSNumber numberWithInteger: self.networkType], totalProgress);
-    }];
-
-//>>>>>>> b977834042062c2a59ebac2d636324646a88f47f
-    [request executeWithResultBlock: ^(VKResponse *response) {
-        networkPostCopy.reason = MUSConnect;
-        networkPostCopy.dateCreate = [NSString currentDate];
-        networkPostCopy.postID = [[response.json objectForKey:@"post_id"] stringValue];
-        self.copyComplition (networkPostCopy, nil);
-    } errorBlock: ^(NSError *error) {
-        networkPostCopy.reason = MUSErrorConnection;
-        self.copyComplition (networkPostCopy, [self errorVkontakte]);
-    }];
-    
-}
-
-/*!
- @abstract upload image(s) with message (optional) and user location (optional)
- @param current post of @class Post
- */
-
-- (void) postImagesToVK : (Post*) post withProgressLoadingImagesToVK : (ProgressLoadingImagesToVK) progressLoadingImagesToVK {
-    __block NSUInteger numberOfImagesInPost = [post.arrayImages count];
-    __block int counterOfImages = 0;
-    NetworkPost *networkPost = [NetworkPost create];
-    networkPost.networkType = MUSVKontakt;
-    __block NetworkPost *networkPostCopy = networkPost;
-    
-    NSInteger userId = [self.currentUser.clientID integerValue];
-    NSMutableArray *requestArray = [[NSMutableArray alloc] init]; //array of requests to add pictures in the social network
-    for (int i = 0; i < [post.arrayImages count]; i++) {
-        ImageToPost *imageToPost = [post.arrayImages objectAtIndex: i];
-
-        VKRequest * request = [VKApi uploadWallPhotoRequest: imageToPost.image
-                                                 parameters: [self imageForVKNetwork: imageToPost]
-                                                     userId: userId
-                                                    groupId: 0];
-        __block int object = i;
-        [request setProgressBlock:^(VKProgressType progressType, long long bytesLoaded, long long bytesTotal) {
-            if (bytesTotal < 0) {
-                return;
-            }
-            progressLoadingImagesToVK (object, bytesLoaded, bytesTotal);
-        }];
-        [requestArray addObject: request];
-    }
-    
-    VKBatchRequest *batch = [[VKBatchRequest alloc] initWithRequestsArray: requestArray];
-    
-    [batch executeWithResultBlock: ^(NSArray *responses) {
-        
-        NSMutableArray *photosAttachments = [[NSMutableArray alloc] init];
-        
-        for (VKResponse * resp in responses) {
-            VKPhoto *photoInfo = [(VKPhotoArray*)resp.parsedModel objectAtIndex:0];
-            [photosAttachments addObject:[NSString stringWithFormat:@"photo%@_%@",
-                                          photoInfo.owner_id, photoInfo.id]];
-        }
-        
-        NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-        
-        parameters [VK_API_OWNER_ID] = [VKSdk getAccessToken].userId;
-        parameters [VK_API_ATTACHMENTS] = [photosAttachments componentsJoinedByString: @","];
-        if (post.longitude.length > 0 && ![post.longitude isEqualToString: @"(null)"] && post.latitude.length > 0 && ![post.latitude isEqualToString: @"(null)"]) {
-            parameters [VK_API_LONG] = post.longitude;
-            parameters [VK_API_LAT] = post.latitude;
-        }
-        if (post.postDescription) {
-            parameters [VK_API_MESSAGE] = post.postDescription;
-        }
-        
-        
-        VKRequest *postRequest = [[VKApi wall] post: parameters];
-                
-        [postRequest executeWithResultBlock: ^(VKResponse *response) {
-            
-            
-            networkPostCopy.postID = [[response.json objectForKey:@"post_id"] stringValue];
-            networkPostCopy.reason = MUSConnect;
-            networkPostCopy.dateCreate = [NSString currentDate];
-            self.copyComplition (networkPostCopy, nil);
-        } errorBlock: ^(NSError *error) {
-            networkPostCopy.reason = MUSErrorConnection;
-            self.copyComplition (networkPostCopy, [self errorVkontakte]);
-        }];
-    } errorBlock: ^(NSError *error) {
-        counterOfImages++;
-        if (counterOfImages == numberOfImagesInPost) {
-            networkPostCopy.reason = MUSErrorConnection;
-            self.copyComplition (networkPostCopy, [self errorVkontakte]);
-        }
-    }];
-}
-
-/*!
- @abstract settings parameters for image for uploading image into VK servers
- @param current ImageToPost of @class ImageToPost
- */
-
-- (VKImageParameters*) imageForVKNetwork : (ImageToPost*) imageToPost {
-    switch (imageToPost.imageType) {
-        case MUSPNG:
-            return [VKImageParameters pngImage];
-            break;
-        case MUSJPEG:
-            if (imageToPost.quality > 0) {
-                return [VKImageParameters jpegImageWithQuality: imageToPost.quality];
-                break;
-            }
-            return [VKImageParameters jpegImageWithQuality: 1.f];
-            break;
-        default:
-            break;
-    }
-}
 
 /*!
  @abstract current root View Controller

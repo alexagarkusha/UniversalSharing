@@ -19,6 +19,9 @@
 #import "MUSPostManager.h"
 #import "ConstantsApp.h"
 #import "MUSSocialNetworkLibraryConstantsForParseObjects.h"
+#import "MUSDatabaseRequestStringsHelper.h"
+#import "DataBaseManager.h"
+
 
 @interface TwitterNetwork () //<TWTRCoreOAuthSigning>
 
@@ -78,6 +81,7 @@ static TwitterNetwork *model = nil;
 - (void) initiationPropertiesWithSession {
     self.isLogin = YES;
     self.icon = MUSTwitterIconName;
+    self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType: self.networkType]]firstObject];
     self.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
 }
 
@@ -139,7 +143,7 @@ static TwitterNetwork *model = nil;
              [weakSelf createUser: user];
              weakSelf.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
              if (!weakSelf.isLogin)
-                 [weakSelf.currentUser insertToDataBase];
+                 [weakSelf.currentUser insertIntoDataBase];
              dispatch_async(dispatch_get_main_queue(), ^{
                  weakSelf.isLogin = YES;
                  block(weakSelf,nil);

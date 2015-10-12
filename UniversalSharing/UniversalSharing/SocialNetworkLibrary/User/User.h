@@ -44,7 +44,7 @@
 
 + (instancetype) create;
 
-- (void) insertToDataBase;
+- (void) insertIntoDataBase;
 
 - (void) removeUser;
 

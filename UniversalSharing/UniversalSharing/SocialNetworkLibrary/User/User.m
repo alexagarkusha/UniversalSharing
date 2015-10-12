@@ -26,11 +26,14 @@
     user.photoURL = @"";
     user.networkType = MUSAllNetworks;
     user.primaryKey = 0;
+   
     return user;
 }
 
 - (void) insertIntoDataBase {
+    
     [[DataBaseManager sharedManager] insertObjectIntoTable: self];
+    
 }
 
 
