@@ -18,7 +18,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imageViewPostFirst;
 @property (weak, nonatomic) IBOutlet UIImageView *imageViewPostSecond;
 @property (weak, nonatomic) IBOutlet UIImageView *imageViewPostThird;
-@property (weak, nonatomic) IBOutlet UILabel *labelStutus;
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint* lableWidthConstraint;
 @property (weak, nonatomic) IBOutlet UIView *viewWithPicsAndLable;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint* viewHeightConstraint;
@@ -71,15 +71,14 @@ static MUSProgressBarEndLoading *model = nil;
 
 - (void) configurationProgressBar: (NSArray*) postImagesArray  :(NSInteger) countSuccessPosted :(NSInteger) countNetworks {   
         if (countSuccessPosted == countNetworks) {
-            self.labelStutus.text = @"Published";
+            self.statusLabel.text = @"Published";
         }else if(countSuccessPosted == 0){
-            self.labelStutus.text = @"Failed";
+            self.statusLabel.text = @"Failed";
         }else if(countSuccessPosted == 1) {
             
-            self.labelStutus.text = [NSString stringWithFormat:@"1 from %ld was published",(long)countNetworks];
+            self.statusLabel.text = [NSString stringWithFormat:@"1 from %ld was published",(long)countNetworks];
         } else {
-            self.labelStutus.text = [NSString stringWithFormat:@"%ld from %ld were published",(long)countSuccessPosted,(long)countNetworks];
-            
+            self.statusLabel.text = [NSString stringWithFormat:@"%ld from %ld were published",(long)countSuccessPosted,(long)countNetworks];            
         }
     
     

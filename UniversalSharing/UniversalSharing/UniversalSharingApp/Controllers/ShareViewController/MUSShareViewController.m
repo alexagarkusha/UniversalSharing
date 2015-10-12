@@ -154,7 +154,7 @@
     self.progressBarEndLoading = [MUSProgressBarEndLoading sharedProgressBarEndLoading];
     [self.progressBarEndLoading.view setFrame:CGRectMake(0, statusBarHeight, self.view.frame.size.width, navigationBarHeight)];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startProgressView) name:@"StartSharePost" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startProgressView) name:@"StartSharePost" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(endProgressViewWithCountConnect:) name:@"EndSharePost" object:nil ];
     
 
@@ -412,11 +412,11 @@
     
 }
 
-- (void) startProgressView {
-    [self.tabBarController.view addSubview:self.progressBar.view];
-    [[MUSProgressBar sharedProgressBar] configurationProgressBar:self.post.arrayImages];
-    [self.progressBar setHeightView];
-}
+//- (void) startProgressView {
+//    [self.tabBarController.view addSubview:self.progressBar.view];
+//    [[MUSProgressBar sharedProgressBar] configurationProgressBar:self.post.arrayImages];
+//    [self.progressBar setHeightView];
+//}
 
 - (void) endProgressViewWithCountConnect :(NSNotification *) notification {
     NSDictionary *dictionary = [notification object];

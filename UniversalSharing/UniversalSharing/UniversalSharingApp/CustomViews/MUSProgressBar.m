@@ -61,6 +61,9 @@ static MUSProgressBar *model = nil;
     self.progressView.progressTintColor = DARK_BROWN_COLOR_WITH_ALPHA_07;
     self.progressView.progress = 0;
     self.viewHeightConstraint.constant = 0;
+//    /////
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startProgressView) name:@"StartSharePost" object:nil];
+//    ////////
      self.imageViewsArray = [[NSArray alloc] initWithObjects: self.thirdImageView, self.secondImageView, self.firstImageView, nil];
     return [nibObjects firstObject];
 }
@@ -112,6 +115,11 @@ static MUSProgressBar *model = nil;
     });
 }
 
+- (void) startProgressView {
+    [[UIApplication sharedApplication].keyWindow addSubview:self.view];
+    [self configurationProgressBar:nil];
+    [self setHeightView];
+}
 - (void) setProgressViewSize :(float) progress {
     self.progressView.progress = progress;
 }
@@ -123,4 +131,7 @@ static MUSProgressBar *model = nil;
     }
 }
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 @end
