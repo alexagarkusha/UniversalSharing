@@ -158,8 +158,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(endProgressViewWithCountConnect:) name:@"EndSharePost" object:nil ];
     
 
-    self.progressBar.viewHeightConstraint.constant = 0;
-    self.progressBarEndLoading.viewHeightConstraint.constant = 0;
+   // self.progressBar.viewHeightConstraint.constant = 0;
+   // self.progressBarEndLoading.viewHeightConstraint.constant = 0;
 //////////////////////////////////////////////////////////////////////////
     if(!self.post)
     [self createPost];
@@ -414,34 +414,8 @@
 
 - (void) startProgressView {
     [self.tabBarController.view addSubview:self.progressBar.view];
-    self.progressBar.progressView.progress = 0;
-    [self.progressBar.viewWithPicsAndLable layoutIfNeeded];
-    
-    __weak MUSShareViewController *weakSelf = self;
-    weakSelf.progressBar.viewHeightConstraint.constant = 42;
-    [UIView animateWithDuration:1 animations:^{
-        
-        [weakSelf.progressBar.viewWithPicsAndLable layoutIfNeeded];
-    }];
-    [UIView commitAnimations];
-    
-    
-    
-    //[self.navigationController.view addSubview:self.progressBar.view];
-    [[MUSProgressBar sharedProgressBar] configurationProgressBar:self.post.arrayImages :NO :0 :0];
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-        [weakSelf.progressBar.viewWithPicsAndLable layoutIfNeeded];
-        
-        weakSelf.progressBar.viewHeightConstraint.constant = 0;
-        [UIView animateWithDuration:1 animations:^{
-            
-            [weakSelf.progressBar.viewWithPicsAndLable layoutIfNeeded];
-        }];
-        [UIView commitAnimations];
-    });
-
-    
+    [[MUSProgressBar sharedProgressBar] configurationProgressBar:self.post.arrayImages];
+    [self.progressBar setHeightView];
 }
 
 - (void) endProgressViewWithCountConnect :(NSNotification *) notification {
@@ -452,18 +426,25 @@
     //NSInteger numberOfChosenNetworks = [object] numberOfSocialNetworks
     
     [self.tabBarController.view addSubview:self.progressBarEndLoading.view];
-    [self.progressBarEndLoading.viewWithPicsAndLable layoutIfNeeded];
-    self.progressBarEndLoading.viewHeightConstraint.constant = 42;
-    [UIView animateWithDuration:2 animations:^{
-        [self.progressBarEndLoading.viewWithPicsAndLable layoutIfNeeded];
-    } completion:^(BOOL finished) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-            [self.progressBar.view removeFromSuperview];
-            [self.progressBarEndLoading.view removeFromSuperview];
-            self.progressBarEndLoading.viewHeightConstraint.constant = 0;
-        });
-    }];
     [[MUSProgressBarEndLoading sharedProgressBarEndLoading] configurationProgressBar:self.post.arrayImages : [countConnect integerValue]: [numberOfChosenNetworks integerValue]];
+    [self.progressBarEndLoading setHeightView];
+//    [self.progressBarEndLoading.viewWithPicsAndLable layoutIfNeeded];
+//    self.progressBarEndLoading.viewHeightConstraint.constant = 42;
+//    [UIView animateWithDuration:2 animations:^{
+//        [self.progressBarEndLoading.viewWithPicsAndLable layoutIfNeeded];
+//    } completion:^(BOOL finished) {
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+//            [self.progressBar.view removeFromSuperview];
+//            [self.progressBarEndLoading.view removeFromSuperview];
+//            self.progressBarEndLoading.viewHeightConstraint.constant = 0;
+//        });
+//    }];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 4 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                    [self.progressBar.view removeFromSuperview];
+                    [self.progressBarEndLoading.view removeFromSuperview];
+                    //self.progressBarEndLoading.viewHeightConstraint.constant = 0;
+                });
+    
     
 }
 
@@ -514,28 +495,9 @@
             //            });
             
         } andProgressLoadingComplition:^(float result) {
-            
-            
-            //summa += result * (1 / arrayChosenNetworksForPost.count);
-            weakSelf.progressBar.progressView.progress = result;// arrayChosenNetworksForPost.count;
-            //if (result >= 1) {
-            //weakSelf.progressBar.labelStutus.text = @"Published";
-            
-            //            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 10 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-            //                [weakSelf.progressBar.view removeFromSuperview];
-            //            });
-            //}
+            [weakSelf.progressBar setProgressViewSize:result];
         }];
     }
-    
-    //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-    //        CGRect frame = self.progressBar.view.frame;
-    //        frame.size.height = self.progressBar.progressView.frame.size.height;
-    //        [self.progressBar.view setFrame:frame];
-    //        //[self.progressBar.view removeFromSuperview];
-    //    });
-
-    
 }
 
 - (void) sharePosts : (NSMutableArray*) arrayChosenNetworksForPost andFlagTwitter:(BOOL)flagTwitter {//////////////////////////

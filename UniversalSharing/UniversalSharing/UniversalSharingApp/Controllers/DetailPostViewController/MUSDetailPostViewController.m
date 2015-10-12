@@ -204,8 +204,8 @@
     CGFloat navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
     self.progressBar = [[MUSProgressBar alloc]initWithFrame:CGRectMake(0, statusBarHeight, self.view.frame.size.width, navigationBarHeight)];
     self.progressBarEndLoading = [[MUSProgressBarEndLoading alloc]initWithFrame:CGRectMake(0, statusBarHeight, self.view.frame.size.width, navigationBarHeight)];
-    self.progressBar.viewHeightConstraint.constant = 0;
-    self.progressBarEndLoading.viewHeightConstraint.constant = 0;
+   // self.progressBar.viewHeightConstraint.constant = 0;
+    //self.progressBarEndLoading.viewHeightConstraint.constant = 0;
 }
 
 #pragma mark  start Activity Indicator Animating
@@ -389,8 +389,8 @@
     
     
     [self.tabBarController.view addSubview:self.progressBar.view];
-    self.progressBar.progressView.progress = 0;
-    [self.progressBar.viewWithPicsAndLable layoutIfNeeded];
+    //self.progressBar.progressView.progress = 0;
+    //[self.progressBar.viewWithPicsAndLable layoutIfNeeded];
     
     [self.popUpForSharing removeFromParentViewController];
     [self.popUpForSharing.view removeFromSuperview];
@@ -400,15 +400,15 @@
     __weak MUSDetailPostViewController *weakSelf = self;
     
     
-    weakSelf.progressBar.viewHeightConstraint.constant = 42;
-    [UIView animateWithDuration:1 animations:^{
-        
-        [weakSelf.progressBar.viewWithPicsAndLable layoutIfNeeded];
-    }];
-    [UIView commitAnimations];
+//    weakSelf.progressBar.viewHeightConstraint.constant = 42;
+//    [UIView animateWithDuration:1 animations:^{
+//        
+//        [weakSelf.progressBar.viewWithPicsAndLable layoutIfNeeded];
+//    }];
+//    [UIView commitAnimations];
     
-    [self.progressBar configurationProgressBar: nil :NO :0 :0];
-    
+    [self.progressBar configurationProgressBar: nil];
+    [self.progressBar setHeightView];
     if (arrayChosenNetworksForPost) {
         
     [[MultySharingManager sharedManager] sharePost: self.currentPost toSocialNetworks: arrayChosenNetworksForPost withComplition:^(id result, NSError *error) {
@@ -426,34 +426,30 @@
             }
             
             
-            [weakSelf.progressBar.viewWithPicsAndLable layoutIfNeeded];
-            
-            weakSelf.progressBar.viewHeightConstraint.constant = 0;
-            [UIView animateWithDuration:1 animations:^{
-                
-                [weakSelf.progressBar.viewWithPicsAndLable layoutIfNeeded];
-            }];
-            [UIView commitAnimations];
+//            [weakSelf.progressBar.viewWithPicsAndLable layoutIfNeeded];
+//            
+//            weakSelf.progressBar.viewHeightConstraint.constant = 0;
+//            [UIView animateWithDuration:1 animations:^{
+//                
+//                [weakSelf.progressBar.viewWithPicsAndLable layoutIfNeeded];
+//            }];
+//            [UIView commitAnimations];
             
             [weakSelf.tabBarController.view addSubview:weakSelf.progressBarEndLoading.view];
-            [weakSelf.progressBarEndLoading.viewWithPicsAndLable layoutIfNeeded];
-            weakSelf.progressBarEndLoading.viewHeightConstraint.constant = 42;
-            [UIView animateWithDuration:2 animations:^{
-                [weakSelf.progressBarEndLoading.viewWithPicsAndLable layoutIfNeeded];
-            } completion:^(BOOL finished) {
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            [weakSelf.progressBarEndLoading configurationProgressBar: nil :[result intValue] :arrayChosenNetworksForPost.count];
+            [self.progressBarEndLoading setHeightView];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 4 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
                     [weakSelf.progressBar.view removeFromSuperview];
                     [weakSelf.progressBarEndLoading.view removeFromSuperview];
-                    weakSelf.progressBarEndLoading.viewHeightConstraint.constant = 0;
+                   
                 });
-            }];
-            [weakSelf.progressBarEndLoading configurationProgressBar: nil :[result intValue] :arrayChosenNetworksForPost.count];
+          
+           
  
             
             }
         } andProgressLoadingComplition:^(float result) {
-            weakSelf.progressBar.progressView.progress = result;// arrayChosenNetworksForPost.count;
-            //NSLog(@"result");
+            [weakSelf.progressBar setProgressViewSize:result];
         }];
     }
 }

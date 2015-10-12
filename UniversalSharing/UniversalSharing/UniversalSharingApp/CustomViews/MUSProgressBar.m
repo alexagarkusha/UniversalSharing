@@ -11,8 +11,17 @@
 #import "ImageToPost.h"
 
 @interface MUSProgressBar()
-@property (strong, nonatomic) NSArray *arrayOfImageView;
 
+@property (strong, nonatomic) NSArray *imageViewsArray;
+//===
+@property (weak, nonatomic) IBOutlet UIProgressView *progressView;
+@property (weak, nonatomic) IBOutlet UIImageView *firstImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *secondImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *thirdImageView;
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint* lableWidthConstraint;
+@property (weak, nonatomic) IBOutlet UIView *contentView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint* viewHeightConstraint;
 
 @end
 
@@ -28,8 +37,7 @@ static MUSProgressBar *model = nil;
     return  model;
 }
 
--(id) initWithFrame:(CGRect)frame
-{
+-(id) initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         self.view = [self loadViewFromNib];
@@ -39,8 +47,7 @@ static MUSProgressBar *model = nil;
     return self;
 }
 
--(id) initWithCoder:(NSCoder*)coder
-{
+-(id) initWithCoder:(NSCoder*)coder {
     self = [super initWithCoder:coder];
     if (self) {
         self.view = [self loadViewFromNib];
@@ -49,13 +56,12 @@ static MUSProgressBar *model = nil;
     return self;
 }
 
-
 -(UIView*)loadViewFromNib {
     NSArray *nibObjects = [[NSBundle mainBundle]loadNibNamed:@"MUSProgressBar" owner:self options:nil];
     self.progressView.progressTintColor = DARK_BROWN_COLOR_WITH_ALPHA_07;
     self.progressView.progress = 0;
-     self.arrayOfImageView = [[NSArray alloc] initWithObjects: self.imageViewPostThird, self.imageViewPostSecond, self.imageViewPostFirst, nil];
-    //[self initiationGestureRecognizer];
+    self.viewHeightConstraint.constant = 0;
+     self.imageViewsArray = [[NSArray alloc] initWithObjects: self.thirdImageView, self.secondImageView, self.firstImageView, nil];
     return [nibObjects firstObject];
 }
 
@@ -63,51 +69,58 @@ static MUSProgressBar *model = nil;
    
 }
 
-- (void) configurationProgressBar: (NSArray*) arrayImages :(BOOL) flag :(NSInteger) countSuccessPosted :(NSInteger) countNetworks {
-    if (flag  == NO) {
-         self.labelStutus.text = @"Publishing";
-    } else {
-        if (countSuccessPosted == countNetworks) {
-            self.labelStutus.text = @"Published";
-        }else if(countSuccessPosted == 0){
-            self.labelStutus.text    = @"Failed";
-        }else if(countSuccessPosted == 1) {
-            
-            self.labelStutus.text = [NSString stringWithFormat:@"1 from %ld was published",(long)countNetworks];
-        } else {
-            self.labelStutus.text = [NSString stringWithFormat:@"%ld from %ld were published",(long)countSuccessPosted,(long)countNetworks];
-            
-        }
-    }
+- (void) configurationProgressBar: (NSArray*) postImagesArray{
+         self.statusLabel.text = @"Publishing";
    
     [self clearImageViews];
-    if(arrayImages.count){
+    if(postImagesArray.count){
         ImageToPost *image;
-        self.lableConstraint.constant = 50;
-        for (int i = 0; i < arrayImages.count; i++) {
-            image = arrayImages[i];
+        self.lableWidthConstraint.constant = 50;
+        for (int i = 0; i < postImagesArray.count; i++) {
+            image = postImagesArray[i];
             if (i < 3) {
-                UIImageView *currentImage =  self.arrayOfImageView[i];
+                UIImageView *currentImage =  self.imageViewsArray[i];
                 currentImage.image = image.image;
             }
-            
         }
-        
     } else {
-        //self.progressBar.imageViewPost.image = nil;
-        self.lableConstraint.constant = 8;
-        
+        self.lableWidthConstraint.constant = 8;
     }
-    
+}
 
+- (void) setHeightView {
+    self.progressView.progress = 0;
+    [self.contentView layoutIfNeeded];
     
+    __weak MUSProgressBar *weakSelf = self;
+   self.viewHeightConstraint.constant = 42;
+    [UIView animateWithDuration:1 animations:^{
+        
+        [weakSelf.contentView layoutIfNeeded];
+    }];
+    [UIView commitAnimations];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [weakSelf.contentView layoutIfNeeded];
+        
+        weakSelf.viewHeightConstraint.constant = 0;
+        [UIView animateWithDuration:1 animations:^{
+            
+            [weakSelf.contentView layoutIfNeeded];
+        }];
+        [UIView commitAnimations];
+    });
+}
+
+- (void) setProgressViewSize :(float) progress {
+    self.progressView.progress = progress;
 }
 
 - (void) clearImageViews {
-    for (int i = 0; i < self.arrayOfImageView.count; i++) {
-        
-            UIImageView *currentImage =  self.arrayOfImageView[i];
+    for (int i = 0; i < self.imageViewsArray.count; i++) {
+            UIImageView *currentImage =  self.imageViewsArray[i];
             currentImage.image = nil;
     }
 }
+
 @end

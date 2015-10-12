@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -12,7 +11,7 @@
                 <outlet property="imageViewPostSecond" destination="AZ8-fj-yU0" id="8fC-Q3-AuY"/>
                 <outlet property="imageViewPostThird" destination="Wsg-Dq-VYf" id="Pea-AZ-7Va"/>
                 <outlet property="labelStutus" destination="hg7-rV-erH" id="eZE-5D-2wI"/>
-                <outlet property="lableConstraint" destination="lfd-qz-df5" id="CZQ-mK-EXT"/>
+                <outlet property="lableWidthConstraint" destination="lfd-qz-df5" id="ZSw-RH-y58"/>
                 <outlet property="progressView" destination="aWg-yl-qRd" id="EdP-re-59Z"/>
                 <outlet property="viewHeightConstraint" destination="aBB-6Z-S8K" id="UD1-Iq-hoR"/>
                 <outlet property="viewWithPicsAndLable" destination="ggm-bY-nei" id="zoQ-zF-6TJ"/>
