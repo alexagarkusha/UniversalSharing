@@ -23,6 +23,7 @@
  @abstract description of post.
  */
 @property (nonatomic, strong) NSString *postDescription;
+#warning NEED TO RENAME
 /*!
  @abstract array of Images to post (@class ImageToPost)
  */
@@ -46,6 +47,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////
 @property (nonatomic, assign) NSInteger primaryKey;
+#warning NEED TO RENAME
 @property (nonatomic, strong) NSMutableArray *arrayImagesUrl;
 @property (nonatomic, strong) NSString *userId;
 @property (nonatomic, strong) NSString *dateCreate;
@@ -55,7 +57,9 @@
 /////////////////////////////////////////////////////////////////////////////////////////
 
 @property (strong, nonatomic) NetworkPost *networkPost;
+#warning NEED TO RENAME
 @property (strong, nonatomic) NSMutableArray *arrayWithNetworkPosts;
+#warning NEED TO RENAME
 @property (strong, nonatomic) NSMutableArray *arrayWithNetworkPostsId;
 @property (strong, nonatomic) NSString *longitude;
 @property (strong, nonatomic) NSString *latitude;

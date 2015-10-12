@@ -12,11 +12,13 @@
 @interface MUSCommentsAndLikesCell : UITableViewCell
 
 + (NSString*) cellID;
+
 + (instancetype) commentsAndLikesCell;
-+ (CGFloat) heightForCommentsAndLikesCell : (NSArray*) arrayWithNetworkPosts;
+
++ (CGFloat) heightForCommentsAndLikesCell : (NSArray*) networkPostsArray;
 
 - (void) configurationCommentsAndLikesCell;
 
-@property (nonatomic, strong) NSMutableArray *arrayWithNetworkPosts;
+@property (nonatomic, strong) NSMutableArray *networkPostsArray;
 
 @end

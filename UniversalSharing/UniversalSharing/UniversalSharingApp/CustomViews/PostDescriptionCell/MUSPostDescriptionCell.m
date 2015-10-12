@@ -9,6 +9,12 @@
 #import "MUSPostDescriptionCell.h"
 #import "ConstantsApp.h"
 
+@interface MUSPostDescriptionCell ()
+
+@property (nonatomic, weak) IBOutlet UITextView *postDescriptionTextView;
+
+@end
+
 
 @implementation MUSPostDescriptionCell
 

@@ -12,11 +12,11 @@
 @interface MUSPostDescriptionCell : UITableViewCell
 
 + (NSString*) cellID;
+
 + (instancetype) postDescriptionCell;
+
 + (CGFloat) heightForPostDescriptionCell : (NSString*) postDescription;
 
 - (void) configurationPostDescriptionCell: (NSString*) postDescription;
-
-@property (nonatomic, weak) IBOutlet UITextView *postDescriptionTextView;
 
 @end

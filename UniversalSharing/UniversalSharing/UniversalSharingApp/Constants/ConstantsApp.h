@@ -31,6 +31,7 @@ typedef void (^Complition)(id result, NSError *error);
 
 FOUNDATION_EXPORT NSString *const MUSApp_SegueIdentifier_GoToUserDetailViewController;
 FOUNDATION_EXPORT NSString *const MUSApp_SegueIdentifier_GoToDetailPostViewController;
+FOUNDATION_EXPORT NSString *const MUSApp_SegueIdentifier_GoToMediaGalleryViewController;
 
 #pragma mark TextView
 
@@ -129,6 +130,7 @@ FOUNDATION_EXPORT NSInteger const MUSApp_MUSPostDescriptionCell_TextView_Font_Si
 #pragma mark - MUSDetailPostViewController
 
 FOUNDATION_EXPORT NSInteger const MUSApp_MUSDetailPostViewController_NumberOfRowsInTableView;
+FOUNDATION_EXPORT CGFloat const MUSApp_MUSDetailPostViewController_HeightOfHeader;
 
 #pragma mark - MUSPostLocationCell
 

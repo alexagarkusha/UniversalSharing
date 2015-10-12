@@ -55,16 +55,6 @@
     } else {
         return MUSApp_MUSPostLocationCell_HeightOfCell;
     }
-
-    
-    
-    
-    
-//    if (!place && !isEditableCell) {
-//        return 0;
-//    } else {
-//        return musAppDetailPostVC_HeightOfPostLocationCell;
-//    }
 }
 
 #pragma mark - configuration PostLocationCell
@@ -77,14 +67,9 @@
 
 - (void) initialMapViewForCurrentPlace: (Post*) currentPost {
     [self.mapView removeAnnotations: self.mapView.annotations];
-//    if (currentPlace.fullName.length > 0) {
-//        self.placeNameLabel.hidden = NO;
-//        self.placeNameLabel.text = [NSString stringWithFormat: @"%@", currentPlace.fullName];
-//    }
     CLLocationCoordinate2D currentCityLocation = CLLocationCoordinate2DMake([currentPost.latitude floatValue], [currentPost.longitude floatValue]);
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(currentCityLocation, 500, 500);
     MUSAnnotation *pin = [[MUSAnnotation alloc] init];
-    //pin.title = currentPost.fullName;
     pin.coordinate = currentCityLocation;
     [self.mapView setRegion : region animated:YES];
     [self.mapView addAnnotation : pin];
