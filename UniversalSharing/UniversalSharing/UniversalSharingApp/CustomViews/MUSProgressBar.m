@@ -116,11 +116,11 @@ static MUSProgressBar *model = nil;
             
             [weakSelf.contentView layoutIfNeeded];
             //[self.view removeFromSuperview];
-            if (self.progressView.progress == 1) {
-                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                        [self.view removeFromSuperview];
-                         });
-            }
+//            if (self.progressView.progress == 1) {
+//                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+//                        [self.view removeFromSuperview];
+//                         });
+//            }
         }];
         [UIView commitAnimations];
     });
@@ -133,10 +133,10 @@ static MUSProgressBar *model = nil;
 }
 - (void) setProgressViewSize :(float) progress {
     self.progressView.progress = progress;
-    if (progress == 1) {
-//         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-//        [self.view removeFromSuperview];
-//         });
+    if (self.progressView.progress == 1) {
+         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [self.view removeFromSuperview];
+         });
     }
 }
 
