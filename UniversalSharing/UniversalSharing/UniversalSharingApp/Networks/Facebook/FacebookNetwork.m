@@ -471,7 +471,6 @@ static FacebookNetwork *model = nil;
 
     if (self.copyProgressLoading) {
         self.copyProgressLoading ([NSNumber numberWithInteger: self.networkType], (float)totalBytesWritten / totalBytesExpectedToWrite);
-        NSLog(@"RESULT FACEBOOK = %f", (float)totalBytesWritten / totalBytesExpectedToWrite );
     }
 }
 
