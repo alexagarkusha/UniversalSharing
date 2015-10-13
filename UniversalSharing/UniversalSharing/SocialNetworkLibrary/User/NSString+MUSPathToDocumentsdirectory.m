@@ -26,22 +26,12 @@
     filePath = [filePath stringByAppendingString:@".png"];
     NSString *finalFilePath = [documentsPath stringByAppendingPathComponent:filePath];
     
-    
-    //    dispatch_queue_t q = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
-    //    dispatch_async(q, ^{
-    /* Fetch the image from the server... */
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString: photoURL]];
     UIImage *image = [[UIImage alloc] initWithData:data];
-    // dispatch_async(dispatch_get_main_queue(), ^{
-    //            dispatch_async(dispatch_get_main_queue(), ^{
     NSData *dataFolder = UIImagePNGRepresentation(image);
     
     
     [dataFolder writeToFile:finalFilePath atomically:YES]; //Write the file
-    
-    //});
-    //});
-    //});
     return filePath;
 }
 @end
