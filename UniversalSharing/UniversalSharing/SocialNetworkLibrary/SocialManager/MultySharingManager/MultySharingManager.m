@@ -22,7 +22,7 @@
 @interface MultySharingManager ()
 
 @property (copy, nonatomic) Complition complition;
-@property (copy, nonatomic) ProgressLoadingComplition progressLoading;
+@property (copy, nonatomic) ProgressLoadingBlock progressLoadingBlock;
 @end
 
 
@@ -51,12 +51,12 @@ static MultySharingManager *model = nil;
 }
 
 
-- (void) sharePost : (Post*) post toSocialNetworks : (NSArray*) arrayOfNetworksType withComplition : (Complition) block andProgressLoadingComplition :(ProgressLoadingComplition) blockLoading {
+- (void) sharePost : (Post*) post toSocialNetworks : (NSArray*) arrayOfNetworksType withComplition : (Complition) block progressLoadingBlock :(ProgressLoadingBlock) progressLoadingBlock {
     
     NSMutableArray *arrayWithNetworks = [[SocialManager sharedManager]networksForKeys:arrayOfNetworksType];
     
     self.complition = block;
-    self.progressLoading = blockLoading;
+    self.progressLoadingBlock = progressLoadingBlock;
     
     NSDictionary *postDictionary = [NSDictionary
                                     dictionaryWithObjectsAndKeys: [post copy], @"post",
@@ -136,7 +136,8 @@ static MultySharingManager *model = nil;
             
             [[MUSProgressBar sharedProgressBar] setProgressViewSize: totalProgress / numberOfSocialNetworks];
             
-            weakMultySharingManager.progressLoading (totalProgress / numberOfSocialNetworks);
+            weakMultySharingManager.progressLoadingBlock (totalProgress / numberOfSocialNetworks);
+            NSLog(@"%f", totalProgress / numberOfSocialNetworks);
         }];
     }
 }

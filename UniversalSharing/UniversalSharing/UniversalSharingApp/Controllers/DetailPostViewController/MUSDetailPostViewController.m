@@ -269,11 +269,10 @@
     if (arrayChosenNetworksForPost) {
         __weak MUSDetailPostViewController *weakSelf = self;
         self.shareButton.enabled = NO;
-        [[MultySharingManager sharedManager] sharePost: self.currentPost toSocialNetworks: arrayChosenNetworksForPost withComplition:^(id result, NSError *error) {
-
+        [[MultySharingManager sharedManager] sharePost:self.currentPost toSocialNetworks:arrayChosenNetworksForPost withComplition:^(id result, NSError *error) {
             [weakSelf.currentPost updateAllNetworkPostsFromDataBaseForCurrentPost];
             [weakSelf.tableView reloadData];
-
+            
             for (NetworkPost *networkPost in weakSelf.currentPost.networkPostsArray) {
                 if (networkPost.reason != MUSConnect) {
                     weakSelf.shareButton.enabled = YES;
@@ -282,9 +281,8 @@
                     [weakSelf.navigationItem.rightBarButtonItem setEnabled:NO];
                 }
             }
-        } andProgressLoadingComplition:^(float result) {
+        } progressLoadingBlock:^(float result) {
 #warning CHANGE METHOD - PROGRESS BAR SHOULD BE SINGLETON
-            //[weakSelf.progressBar setProgressViewSize:result];
         }];
     }
 }

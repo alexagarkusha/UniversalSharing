@@ -13,10 +13,13 @@
 @interface MultySharingManager : NSObject
 
 + (MultySharingManager*) sharedManager;
-- (void) sharePost : (Post*) post toSocialNetworks : (NSArray*) arrayOfNetworksType withComplition : (Complition) block andProgressLoadingComplition :(ProgressLoadingComplition) blockLoading;
+
+- (void) sharePost : (Post*) post toSocialNetworks : (NSArray*) arrayOfNetworksType withComplition : (Complition) block progressLoadingBlock :(ProgressLoadingBlock) progressLoadingBlock;
+
 - (BOOL) queueOfPosts : (NSInteger) primaryKeyOfPost;
 //===
 @property (strong, nonatomic) NSMutableArray *postsQueue;
+
 @property (assign, nonatomic) BOOL isPostLoading;
 
 @end

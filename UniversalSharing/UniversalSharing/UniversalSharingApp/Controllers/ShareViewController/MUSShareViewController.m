@@ -494,7 +494,7 @@
             //                //[weakSelf.progressBar.view removeFromSuperview];
             //            });
             
-        } andProgressLoadingComplition:^(float result) {
+        } progressLoadingBlock:^(float result) {
            // [weakSelf.progressBar setProgressViewSize:result];
         }];
     }
