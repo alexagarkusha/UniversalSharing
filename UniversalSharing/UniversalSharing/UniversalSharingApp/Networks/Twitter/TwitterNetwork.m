@@ -166,7 +166,7 @@ static TwitterNetwork *model = nil;
     }
     self.copyProgressLoading = blockLoading;
     self.copyComplition = block;
-    if ([post.arrayImages count]) {
+    if ([post.imagesArray count]) {
         [self sharePostWithPictures: post];
     } else {
         [self sharePostOnlyWithPostDescription: post];
@@ -310,11 +310,11 @@ static TwitterNetwork *model = nil;
 - (void) mediaIdsForTwitter : (Post*) post withComplition : (Complition) block {
     NSMutableArray *mediaIdsArray = [[NSMutableArray alloc] init];
     __weak NSMutableArray *array = mediaIdsArray;
-    __block NSInteger numberOfIds = post.arrayImages.count;
+    __block NSInteger numberOfIds = post.imagesArray.count;
     __block int counterOfIds = 0;
     
-    for (int i = 0; i < post.arrayImages.count; i++) {
-        [self mediaIDForTwitter : [post.arrayImages objectAtIndex: i] withComplition:^(id result, NSError *error) {
+    for (int i = 0; i < post.imagesArray.count; i++) {
+        [self mediaIDForTwitter : [post.imagesArray objectAtIndex: i] withComplition:^(id result, NSError *error) {
             counterOfIds ++;
             if (!error) {
                 [array addObject: result];

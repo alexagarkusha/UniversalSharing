@@ -52,7 +52,7 @@ static NSString * const reuseIdentifier = @"Cell";
     [_topBar.buttonBack addTarget:self
                            action:@selector(doBack:)
                  forControlEvents:UIControlEventTouchUpInside];
-    [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long) _selectedImageIndex + 1, (unsigned long)[self.currentPost.arrayImages count]]];
+    [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long) _selectedImageIndex + 1, (unsigned long)[self.currentPost.imagesArray count]]];
     
     [_toolBar.buttonToolBar addTarget:self
                                action:@selector(deleteImage:)
@@ -94,13 +94,13 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return [self.currentPost.arrayImages  count];
+    return [self.currentPost.imagesArray  count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:
 (NSIndexPath *)indexPath {
     MUSCollectionViewCellForDetailView *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"detailCell" forIndexPath:indexPath];
-    ImageToPost *imageToPost = [self.currentPost.arrayImages  objectAtIndex: indexPath.row];
+    ImageToPost *imageToPost = [self.currentPost.imagesArray  objectAtIndex: indexPath.row];
     [cell.scrollView displayImage: imageToPost.image];
     return cell;
 }
@@ -113,7 +113,7 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     NSIndexPath *visibleIndexPath = [self obtainCurrentIndexPath];
-    [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long)visibleIndexPath.row + 1, (unsigned long)[self.currentPost.arrayImages  count]]];
+    [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long)visibleIndexPath.row + 1, (unsigned long)[self.currentPost.imagesArray  count]]];
     _deletedImageIndex = visibleIndexPath.row;
 }
 
@@ -157,18 +157,18 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (void) deleteImage:(id)sender {
     NSIndexPath *visibleIndexPath = [self obtainCurrentIndexPath];
-    if (self.currentPost.arrayImages.count && _currentReasonType != MUSConnect) {
-        [self.currentPost.arrayImages  removeObjectAtIndex: visibleIndexPath.row];
+    if (self.currentPost.imagesArray.count && _currentReasonType != MUSConnect) {
+        [self.currentPost.imagesArray  removeObjectAtIndex: visibleIndexPath.row];
         [self.collectionView reloadData];
         
-        if (self.currentPost.arrayImages.count && visibleIndexPath.row != 0 && visibleIndexPath.row < self.currentPost.arrayImages .count ) {
-            [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long)visibleIndexPath.row + 1, (unsigned long)[self.currentPost.arrayImages  count]]];
-        } else if (self.currentPost.arrayImages.count && visibleIndexPath.row != 0) {
-            [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long)visibleIndexPath.row, (unsigned long)[self.currentPost.arrayImages  count]]];
-        } else if (self.currentPost.arrayImages.count && visibleIndexPath.row == 0) {
-            [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long)visibleIndexPath.row + 1,(unsigned long)[self.currentPost.arrayImages  count]]];
+        if (self.currentPost.imagesArray.count && visibleIndexPath.row != 0 && visibleIndexPath.row < self.currentPost.imagesArray .count ) {
+            [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long)visibleIndexPath.row + 1, (unsigned long)[self.currentPost.imagesArray  count]]];
+        } else if (self.currentPost.imagesArray.count && visibleIndexPath.row != 0) {
+            [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long)visibleIndexPath.row, (unsigned long)[self.currentPost.imagesArray  count]]];
+        } else if (self.currentPost.imagesArray.count && visibleIndexPath.row == 0) {
+            [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long)visibleIndexPath.row + 1,(unsigned long)[self.currentPost.imagesArray  count]]];
         } else {
-            [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long) 0, (unsigned long)[self.currentPost.arrayImages  count]]];
+            [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long) 0, (unsigned long)[self.currentPost.imagesArray  count]]];
             [[NSNotificationCenter defaultCenter] postNotificationName:notificationUpdateCollection object:nil];
             [self.navigationController popViewControllerAnimated:YES];
         }

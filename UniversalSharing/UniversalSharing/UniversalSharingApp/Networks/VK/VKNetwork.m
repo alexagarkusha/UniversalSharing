@@ -169,10 +169,10 @@ static VKNetwork *model = nil;
     self.copyComplition = block;
     self.copyProgressLoading = blockLoading;
     
-    if ([post.arrayImages count]) {
-        __block NSUInteger numberOfImagesInPost = [post.arrayImages count];
+    if ([post.imagesArray count]) {
+        __block NSUInteger numberOfImagesInPost = [post.imagesArray count];
         __block NSMutableArray *arrayOfLoadingObjects = [[NSMutableArray alloc] init];
-        for (int i = 0; i < [post.arrayImages count]; i++) {
+        for (int i = 0; i < [post.imagesArray count]; i++) {
             NSNumber *loadingObject = [[NSNumber alloc] init];
             loadingObject = [NSNumber numberWithFloat: 0.0000001];
             [arrayOfLoadingObjects addObject: loadingObject];
@@ -249,7 +249,7 @@ static VKNetwork *model = nil;
 
 - (void) sharePostWithPictures : (Post*) post withProgressLoadingImagesToVK : (ProgressLoadingImagesToVK) progressLoadingImagesToVK {
     __weak VKNetwork *weakSelf = self;
-    __block NSUInteger numberOfImagesInPost = [post.arrayImages count];
+    __block NSUInteger numberOfImagesInPost = [post.imagesArray count];
     __block int counterOfImages = 0;
     NetworkPost *networkPost = [NetworkPost create];
     networkPost.networkType = MUSVKontakt;
@@ -257,8 +257,8 @@ static VKNetwork *model = nil;
     
     NSInteger userId = [self.currentUser.clientID integerValue];
     NSMutableArray *requestArray = [[NSMutableArray alloc] init]; //array of requests to add pictures in the social network
-    for (int i = 0; i < [post.arrayImages count]; i++) {
-        ImageToPost *imageToPost = [post.arrayImages objectAtIndex: i];
+    for (int i = 0; i < [post.imagesArray count]; i++) {
+        ImageToPost *imageToPost = [post.imagesArray objectAtIndex: i];
         VKRequest * request = [VKApi uploadWallPhotoRequest: imageToPost.image
                                                  parameters: [self imageForVKNetwork: imageToPost]
                                                      userId: userId

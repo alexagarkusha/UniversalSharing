@@ -169,7 +169,7 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
-    if (!self.post.arrayImages.count && [self.messageTextView.text isEqualToString: MUSApp_TextView_PlaceholderText] && self.messageTextView.textColor == [UIColor lightGrayColor]) {
+    if (!self.post.imagesArray.count && [self.messageTextView.text isEqualToString: MUSApp_TextView_PlaceholderText] && self.messageTextView.textColor == [UIColor lightGrayColor]) {
         self.shareButtonOutlet.enabled = NO;
         [self.sharePhotoButton setTintColor:[UIColor blackColor]];
     }
@@ -601,8 +601,8 @@
     self.shareButtonOutlet.enabled = NO;
     self.longitude = @"";
     self.latitude = @"";
-    if ([self.post.arrayImages count]) {
-        [self.post.arrayImages removeAllObjects];
+    if ([self.post.imagesArray count]) {
+        [self.post.imagesArray removeAllObjects];
     }
         //self.view.userInteractionEnabled = YES;
 //    [self.shareLocationButton setTintColor: [UIColor blackColor]];
@@ -614,7 +614,7 @@
 - (void) createPost { // later we would change logic , now we do for galleries)
     if(!self.post) {
         self.post = [[Post alloc] init];
-        self.post.arrayImages = [NSMutableArray new];
+        self.post.imagesArray = [NSMutableArray new];
     }
     self.post.place = self.place;
     if (![self.messageTextView.text isEqualToString: MUSApp_TextView_PlaceholderText]) {
@@ -655,7 +655,7 @@
     } else {
         [self initialParametersOfMessageTextView];
         [self.messageTextView setSelectedRange:NSMakeRange(0, 0)];
-        if (self.post.arrayImages.count < 1) {
+        if (self.post.imagesArray.count < 1) {
             self.shareButtonOutlet.enabled = NO;
         }
     }
@@ -693,7 +693,7 @@
 }
 
 - (BOOL) checkingNumberPhotos {
-    if (!self.post.arrayImages.count) {
+    if (!self.post.imagesArray.count) {
         return NO;
     }
     return YES;
@@ -765,7 +765,7 @@
  @param without
  */
 - (void) obtainChosenImage {
-    if ([self.post.arrayImages count] == MUSApp_MUSShareViewController_NumberOfAllowedPics) {
+    if ([self.post.imagesArray count] == MUSApp_MUSShareViewController_NumberOfAllowedPics) {
         [self showAlertWithMessage : MUSApp_MUSShareViewController_Alert_Message_No_Pics_Anymore];
         return;
     }

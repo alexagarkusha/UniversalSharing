@@ -13,7 +13,7 @@
 
 + (MUSPostManager*) manager;
 
-- (void) updateArrayOfPost;
+- (void) updatePostsArray;
 
 - (NSArray*) networkPostsArrayForNetworkType : (NetworkType) networkType;
 
@@ -21,6 +21,6 @@
 
 - (void) deleteNetworkPostForNetworkType : (NetworkType) networkType;
 
-@property (strong, nonatomic, readonly) NSMutableArray *arrayOfPosts;
+@property (strong, nonatomic, readonly) NSMutableArray *postsArray;
 
 @end

@@ -18,21 +18,21 @@
     
     post.postID = @"";
     post.postDescription = @"";
-    post.arrayImages = [[NSMutableArray alloc] init];
+    post.imagesArray = [[NSMutableArray alloc] init];
     post.likesCount = 0;
     post.commentsCount = 0;
     post.placeID = @"";
     post.networkType = MUSAllNetworks;
     post.primaryKey = 0;
-    post.arrayImagesUrl = [[NSMutableArray alloc] init];
+    post.imageUrlsArray = [[NSMutableArray alloc] init];
     post.userId = @"";
     post.dateCreate = @"";
     post.reason = MUSAllReasons;
     post.locationId = @"";
     post.place = [Place create];
     post.networkPost = [NetworkPost create];
-    post.arrayWithNetworkPosts = [[NSMutableArray alloc] init];
-    post.arrayWithNetworkPostsId = [[NSMutableArray alloc] init];
+    post.networkPostsArray = [[NSMutableArray alloc] init];
+    post.networkPostIdsArray = [[NSMutableArray alloc] init];
     post.longitude = @"";
     post.latitude = @"";
     
@@ -46,43 +46,43 @@
     Post *copyPost = [Post new];
     copyPost.postID = [self.postID copy];
     copyPost.postDescription = [self.postDescription copy];
-    copyPost.arrayImages = [self.arrayImages mutableCopy];
+    copyPost.imagesArray = [self.imagesArray mutableCopy];
     copyPost.likesCount = self.likesCount;
     copyPost.commentsCount = self.commentsCount;
     copyPost.placeID = self.placeID;
     copyPost.networkType = self.networkType;
     copyPost.primaryKey = self.primaryKey;
-    copyPost.arrayImagesUrl = [self.arrayImagesUrl mutableCopy];
+    copyPost.imageUrlsArray = [self.imageUrlsArray mutableCopy];
     copyPost.userId = [self.userId copy];
     copyPost.dateCreate = [self.dateCreate copy];
     copyPost.reason = self.reason;
     copyPost.locationId = [self.locationId copy];
     copyPost.place = [self.place copy];
     //copyPost.networkPost = [self.networkPost copy];
-    copyPost.arrayWithNetworkPosts = [self.arrayWithNetworkPosts mutableCopy];
-    copyPost.arrayWithNetworkPostsId = [self.arrayWithNetworkPostsId mutableCopy];
+    copyPost.networkPostsArray = [self.networkPostsArray mutableCopy];
+    copyPost.networkPostIdsArray = [self.networkPostIdsArray mutableCopy];
     copyPost.longitude = self.longitude;
     copyPost.latitude = self.latitude;
     return copyPost;
 }
 
 - (void) updateAllNetworkPostsFromDataBaseForCurrentPost {
-    if (!_arrayWithNetworkPosts) {
-        _arrayWithNetworkPosts = [[NSMutableArray alloc] init];
+    if (!_networkPostsArray) {
+        _networkPostsArray = [[NSMutableArray alloc] init];
     }
-    [_arrayWithNetworkPosts removeAllObjects];
-    [_arrayWithNetworkPostsId enumerateObjectsUsingBlock:^(NSString *primaryKeyNetPost, NSUInteger idx, BOOL *stop) {
-        [_arrayWithNetworkPosts addObject: [[DataBaseManager sharedManager] obtainNetworkPostFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForNetworkPostWithPrimaryKey:[primaryKeyNetPost integerValue]]]];
+    [_networkPostsArray removeAllObjects];
+    [_networkPostIdsArray enumerateObjectsUsingBlock:^(NSString *primaryKeyNetPost, NSUInteger idx, BOOL *stop) {
+        [_networkPostsArray addObject: [[DataBaseManager sharedManager] obtainNetworkPostFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForNetworkPostWithPrimaryKey:[primaryKeyNetPost integerValue]]]];
     }];
     
-    [_arrayWithNetworkPosts sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"networkType" ascending:YES]]];
+    [_networkPostsArray sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"networkType" ascending:YES]]];
 }
 
 - (NSString*) convertArrayImagesUrlToString {
     NSString *url = @"";
-    for (int i = 0; i < self.arrayImagesUrl.count; i++) {
-        url = [url stringByAppendingString:self.arrayImagesUrl[i]];
-        if(self.arrayImagesUrl.count - 1 != i)
+    for (int i = 0; i < self.imageUrlsArray.count; i++) {
+        url = [url stringByAppendingString:self.imageUrlsArray[i]];
+        if(self.imageUrlsArray.count - 1 != i)
             url = [url stringByAppendingString:@", "];
     }
     return url;
@@ -90,9 +90,9 @@
 
 - (NSString *) convertArrayWithNetworkPostsIdsToString {
     _postID = @"";
-    for (int i = 0; i < _arrayWithNetworkPostsId.count; i++) {
-        _postID = [_postID stringByAppendingString: [_arrayWithNetworkPostsId objectAtIndex:i]];
-        if (i != _arrayWithNetworkPostsId.count - 1) {
+    for (int i = 0; i < _networkPostIdsArray.count; i++) {
+        _postID = [_postID stringByAppendingString: [_networkPostIdsArray objectAtIndex:i]];
+        if (i != _networkPostIdsArray.count - 1) {
             _postID = [_postID stringByAppendingString: @","];
         }
     }
@@ -100,17 +100,17 @@
 }
 
 - (NSMutableArray*) convertArrayOfImagesUrlToArrayImagesWithObjectsImageToPost {
-    _arrayImages = [NSMutableArray new];
-    for (int i = 0; i < _arrayImagesUrl.count; i++) {
+    _imagesArray = [NSMutableArray new];
+    for (int i = 0; i < _imageUrlsArray.count; i++) {
         UIImage *image = [UIImage new];
-        image = [image loadImageFromDataBase: [_arrayImagesUrl objectAtIndex: i]];
+        image = [image loadImageFromDataBase: [_imageUrlsArray objectAtIndex: i]];
         ImageToPost *imageToPost = [[ImageToPost alloc] init];
         imageToPost.image = image;
         imageToPost.quality = 1.0f;
         imageToPost.imageType = MUSJPEG;
-        [_arrayImages addObject: imageToPost];
+        [_imagesArray addObject: imageToPost];
     }
-    return _arrayImages;
+    return _imagesArray;
 }
 
 #pragma mark - GETTERS
