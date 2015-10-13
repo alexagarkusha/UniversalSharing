@@ -72,7 +72,7 @@
 }
 
 + (CGFloat) heightForPostCell : (Post*) post {
-    return MUSApp_MUSPostCell_HeightOfCell + [MUSReasonCommentsAndLikesCell heightForReasonCommentsAndLikesCell] * post.arrayWithNetworkPosts.count;
+    return MUSApp_MUSPostCell_HeightOfCell + [MUSReasonCommentsAndLikesCell heightForReasonCommentsAndLikesCell] * post.networkPostsArray.count;
 }
 
 - (void) configurationPostCell: (Post*) currentPost {
@@ -138,7 +138,7 @@
     
     self.backgroundViewOfCell.backgroundColor = BROWN_COLOR_WITH_ALPHA_01;
     
-    CGRect rect = CGRectMake(0, 0, self.backgroundViewOfCell.frame.size.width, MUSApp_MUSPostCell_HeightOfCell + [MUSReasonCommentsAndLikesCell heightForReasonCommentsAndLikesCell] * post.arrayWithNetworkPosts.count);
+    CGRect rect = CGRectMake(0, 0, self.backgroundViewOfCell.frame.size.width, MUSApp_MUSPostCell_HeightOfCell + [MUSReasonCommentsAndLikesCell heightForReasonCommentsAndLikesCell] * post.networkPostsArray.count);
     
     UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect: rect byRoundingCorners:(UIRectCornerBottomLeft | UIRectCornerBottomRight | UIRectCornerTopLeft | UIRectCornerTopRight) cornerRadii:CGSizeMake(0, 0)];
     

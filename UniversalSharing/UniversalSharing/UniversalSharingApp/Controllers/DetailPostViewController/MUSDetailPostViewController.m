@@ -119,7 +119,7 @@
  */
 - (void) initiationNavigationBar {
     BOOL isPostConnect = YES;
-    for (NetworkPost *currentNetworkPost in self.currentPost.arrayWithNetworkPosts) {
+    for (NetworkPost *currentNetworkPost in self.currentPost.networkPostsArray) {
         if (currentNetworkPost.reason != MUSConnect) {
             isPostConnect = NO;
         }
@@ -138,7 +138,7 @@
  */
 - (void) sharePost {
     self.popUpForSharing = [MUSPopUpForSharing new];
-    self.popUpForSharing.arrayOfNetworksPost = self.currentPost.arrayWithNetworkPosts;
+    self.popUpForSharing.arrayOfNetworksPost = self.currentPost.networkPostsArray;
     self.popUpForSharing.delegate = self;
     [self.navigationController addChildViewController: self.popUpForSharing];
     self.popUpForSharing.view.frame = self.view.bounds;//CGRectMake(0, 100, 200, 200);//
@@ -167,7 +167,7 @@
     switch (detailPostVC_CellType) {
         case CommentsAndLikesCellType: {
             MUSCommentsAndLikesCell *commentsAndLikesCell = (MUSCommentsAndLikesCell*) cell;
-            commentsAndLikesCell.networkPostsArray = self.currentPost.arrayWithNetworkPosts;
+            commentsAndLikesCell.networkPostsArray = self.currentPost.networkPostsArray;
             [commentsAndLikesCell configurationCommentsAndLikesCell];
             break;
         }
@@ -223,7 +223,7 @@
     DetailPostVC_CellType  detailPostVC_CellType = indexPath.row;
     switch (detailPostVC_CellType) {
         case CommentsAndLikesCellType:
-            return [MUSCommentsAndLikesCell heightForCommentsAndLikesCell: self.currentPost.arrayWithNetworkPosts];;
+            return [MUSCommentsAndLikesCell heightForCommentsAndLikesCell: self.currentPost.networkPostsArray];;
             break;
         case PostDescriptionCellType:
         {
@@ -274,7 +274,7 @@
             [weakSelf.currentPost updateAllNetworkPostsFromDataBaseForCurrentPost];
             [weakSelf.tableView reloadData];
 
-            for (NetworkPost *networkPost in weakSelf.currentPost.arrayWithNetworkPosts) {
+            for (NetworkPost *networkPost in weakSelf.currentPost.networkPostsArray) {
                 if (networkPost.reason != MUSConnect) {
                     weakSelf.shareButton.enabled = YES;
                 } else {

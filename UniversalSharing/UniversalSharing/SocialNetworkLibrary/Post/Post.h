@@ -46,7 +46,6 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////
 @property (nonatomic, assign) NSInteger primaryKey;
-#warning NEED TO RENAME
 @property (nonatomic, strong) NSMutableArray *imageUrlsArray;
 @property (nonatomic, strong) NSString *userId;
 @property (nonatomic, strong) NSString *dateCreate;
@@ -56,10 +55,8 @@
 /////////////////////////////////////////////////////////////////////////////////////////
 
 @property (strong, nonatomic) NetworkPost *networkPost;
-#warning NEED TO RENAME
-@property (strong, nonatomic) NSMutableArray *arrayWithNetworkPosts;
-#warning NEED TO RENAME
-@property (strong, nonatomic) NSMutableArray *arrayWithNetworkPostsId;
+@property (strong, nonatomic) NSMutableArray *networkPostsArray;
+@property (strong, nonatomic) NSMutableArray *networkPostIdsArray;
 @property (strong, nonatomic) NSString *longitude;
 @property (strong, nonatomic) NSString *latitude;
 

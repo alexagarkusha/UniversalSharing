@@ -470,6 +470,7 @@ static FacebookNetwork *model = nil;
 - (void) requestConnection:	(FBSDKGraphRequestConnection *)connection didSendBodyData:	(NSInteger)bytesWritten totalBytesWritten:	(NSInteger)totalBytesWritten totalBytesExpectedToWrite:	(NSInteger)totalBytesExpectedToWrite {
     if (self.copyProgressLoading) {
         self.copyProgressLoading ([NSNumber numberWithInteger: self.networkType], (float)totalBytesWritten / totalBytesExpectedToWrite);
+        NSLog(@"RESULT FACEBOOK = %f", (float)totalBytesWritten / totalBytesExpectedToWrite );
     }
 }
 

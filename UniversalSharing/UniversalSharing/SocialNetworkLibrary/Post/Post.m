@@ -31,8 +31,8 @@
     post.locationId = @"";
     post.place = [Place create];
     post.networkPost = [NetworkPost create];
-    post.arrayWithNetworkPosts = [[NSMutableArray alloc] init];
-    post.arrayWithNetworkPostsId = [[NSMutableArray alloc] init];
+    post.networkPostsArray = [[NSMutableArray alloc] init];
+    post.networkPostIdsArray = [[NSMutableArray alloc] init];
     post.longitude = @"";
     post.latitude = @"";
     
@@ -59,23 +59,23 @@
     copyPost.locationId = [self.locationId copy];
     copyPost.place = [self.place copy];
     //copyPost.networkPost = [self.networkPost copy];
-    copyPost.arrayWithNetworkPosts = [self.arrayWithNetworkPosts mutableCopy];
-    copyPost.arrayWithNetworkPostsId = [self.arrayWithNetworkPostsId mutableCopy];
+    copyPost.networkPostsArray = [self.networkPostsArray mutableCopy];
+    copyPost.networkPostIdsArray = [self.networkPostIdsArray mutableCopy];
     copyPost.longitude = self.longitude;
     copyPost.latitude = self.latitude;
     return copyPost;
 }
 
 - (void) updateAllNetworkPostsFromDataBaseForCurrentPost {
-    if (!_arrayWithNetworkPosts) {
-        _arrayWithNetworkPosts = [[NSMutableArray alloc] init];
+    if (!_networkPostsArray) {
+        _networkPostsArray = [[NSMutableArray alloc] init];
     }
-    [_arrayWithNetworkPosts removeAllObjects];
-    [_arrayWithNetworkPostsId enumerateObjectsUsingBlock:^(NSString *primaryKeyNetPost, NSUInteger idx, BOOL *stop) {
-        [_arrayWithNetworkPosts addObject: [[DataBaseManager sharedManager] obtainNetworkPostFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForNetworkPostWithPrimaryKey:[primaryKeyNetPost integerValue]]]];
+    [_networkPostsArray removeAllObjects];
+    [_networkPostIdsArray enumerateObjectsUsingBlock:^(NSString *primaryKeyNetPost, NSUInteger idx, BOOL *stop) {
+        [_networkPostsArray addObject: [[DataBaseManager sharedManager] obtainNetworkPostFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForNetworkPostWithPrimaryKey:[primaryKeyNetPost integerValue]]]];
     }];
     
-    [_arrayWithNetworkPosts sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"networkType" ascending:YES]]];
+    [_networkPostsArray sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"networkType" ascending:YES]]];
 }
 
 - (NSString*) convertArrayImagesUrlToString {
@@ -90,9 +90,9 @@
 
 - (NSString *) convertArrayWithNetworkPostsIdsToString {
     _postID = @"";
-    for (int i = 0; i < _arrayWithNetworkPostsId.count; i++) {
-        _postID = [_postID stringByAppendingString: [_arrayWithNetworkPostsId objectAtIndex:i]];
-        if (i != _arrayWithNetworkPostsId.count - 1) {
+    for (int i = 0; i < _networkPostIdsArray.count; i++) {
+        _postID = [_postID stringByAppendingString: [_networkPostIdsArray objectAtIndex:i]];
+        if (i != _networkPostIdsArray.count - 1) {
             _postID = [_postID stringByAppendingString: @","];
         }
     }
