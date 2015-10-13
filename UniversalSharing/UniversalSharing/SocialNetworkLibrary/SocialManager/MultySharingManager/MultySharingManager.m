@@ -60,22 +60,24 @@ static MultySharingManager *model = nil;
     self.copyProgressLoading = blockLoading;
     
     NSDictionary *postDictionary = [NSDictionary
-                                    dictionaryWithObjectsAndKeys: post, @"post",
+                                    dictionaryWithObjectsAndKeys: [post copy], @"post",
                                     arrayWithNetworks, @"arrayWithNetworks", nil];
     [self.arrayWithQueueOfPosts addObject: postDictionary];
     if (!self.isPostLoading /*&& self.arrayWithQueueOfPosts.count == 1*/) {
-        [self sharePost: post toSocialNetworks: arrayWithNetworks];
+        NSDictionary *firstPostDictionary = [self.arrayWithQueueOfPosts firstObject];
+        [self sharePostDictionary: firstPostDictionary];
     }
 }
 
-- (void) sharePost: (Post*) post toSocialNetworks: (NSArray *) arrayWithNetworks {
+- (void) sharePostDictionary: (NSDictionary*) postDictionary {
+    NSLog(@"New OBJECT");
+    Post *currentPost =  [postDictionary objectForKey: @"post"];
     
-    [[MUSProgressBar sharedProgressBar] startProgressViewWithImages:post.imagesArray];
-    
-    if (!post.primaryKey) {
-        [self shareNewPost: post toSocialNetworks: arrayWithNetworks];
+    [[MUSProgressBar sharedProgressBar] startProgressViewWithImages: currentPost.imagesArray];
+    if (!currentPost.primaryKey) {
+        [self shareNewPost: currentPost toSocialNetworks: [postDictionary objectForKey: @"arrayWithNetworks"]];
     } else {
-        [self updatePost: post toSocialNetworks: arrayWithNetworks];
+        [self updatePost: currentPost toSocialNetworks: [postDictionary objectForKey: @"arrayWithNetworks"]];
     }
 }
 
@@ -204,7 +206,7 @@ static MultySharingManager *model = nil;
     [self.arrayWithQueueOfPosts removeObjectAtIndex: 0];
     if (self.arrayWithQueueOfPosts.count > 0) {
         NSDictionary *postDictionary = [self.arrayWithQueueOfPosts firstObject];
-        [self sharePost: [postDictionary objectForKey: @"post"] toSocialNetworks: [postDictionary objectForKey: @"arrayWithNetworks"]];
+        [self sharePostDictionary: postDictionary];
     } else {
         self.isPostLoading = NO;
     }
