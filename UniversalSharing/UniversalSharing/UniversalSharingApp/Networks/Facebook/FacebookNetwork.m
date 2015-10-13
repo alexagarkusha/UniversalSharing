@@ -468,9 +468,7 @@ static FacebookNetwork *model = nil;
 #pragma mark - FBSDKGraphRequestConnectionDelegate
 
 - (void) requestConnection:	(FBSDKGraphRequestConnection *)connection didSendBodyData:	(NSInteger)bytesWritten totalBytesWritten:	(NSInteger)totalBytesWritten totalBytesExpectedToWrite:	(NSInteger)totalBytesExpectedToWrite {
-    
-    NSLog(@"Facebook result = %f", (float)totalBytesWritten / totalBytesExpectedToWrite);
-    
+
     if (self.copyProgressLoading) {
         self.copyProgressLoading ([NSNumber numberWithInteger: self.networkType], (float)totalBytesWritten / totalBytesExpectedToWrite);
     }
