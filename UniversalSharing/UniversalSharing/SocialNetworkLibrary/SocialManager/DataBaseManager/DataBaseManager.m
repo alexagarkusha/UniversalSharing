@@ -194,7 +194,7 @@ static DataBaseManager *databaseManager;
             Post *post = [Post new];
             post.primaryKey = sqlite3_column_int(statement, 0);
             post.postDescription = [[NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 1)] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-            post.arrayImagesUrl = [[[NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 2)] componentsSeparatedByString: @", "]mutableCopy];
+            post.imageUrlsArray = [[[NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 2)] componentsSeparatedByString: @", "]mutableCopy];
             post.arrayWithNetworkPostsId = [[[NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 3)] componentsSeparatedByString: @","]mutableCopy];
             post.longitude = [[NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 4)] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
             post.latitude = [[NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 5)] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];

@@ -23,11 +23,10 @@
  @abstract description of post.
  */
 @property (nonatomic, strong) NSString *postDescription;
-#warning NEED TO RENAME
 /*!
  @abstract array of Images to post (@class ImageToPost)
  */
-@property (nonatomic, strong) NSMutableArray *arrayImages;
+@property (nonatomic, strong) NSMutableArray *imagesArray;
 /*!
  @abstract number of likes received after sending post
  */
@@ -48,7 +47,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////
 @property (nonatomic, assign) NSInteger primaryKey;
 #warning NEED TO RENAME
-@property (nonatomic, strong) NSMutableArray *arrayImagesUrl;
+@property (nonatomic, strong) NSMutableArray *imageUrlsArray;
 @property (nonatomic, strong) NSString *userId;
 @property (nonatomic, strong) NSString *dateCreate;
 @property (nonatomic, assign) ReasonType reason;

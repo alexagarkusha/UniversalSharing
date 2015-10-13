@@ -97,7 +97,7 @@
 }
 
 - (void) configurateFirstImageOfPost : (Post*) currentPost {
-    if (![[currentPost.arrayImagesUrl firstObject] isEqualToString: @""] || ![currentPost.arrayImagesUrl firstObject]) {
+    if (![[currentPost.imageUrlsArray firstObject] isEqualToString: @""] || ![currentPost.imageUrlsArray firstObject]) {
         //[self showAllImageView];
         self.postDescriptionLabelLeftConstraint.constant = MUSApp_MUSPostCell_PostDescriptionLabel_LeftConstraint_WithUserPhotos;
         [self loadImageFromPostToImageView: currentPost];
@@ -120,9 +120,9 @@
 }
 
 - (void) loadImageFromPostToImageView : (Post*) post  {
-    for (int i = 0; i < MIN(post.arrayImages.count, self.arrayOfImageView.count); i++) {
+    for (int i = 0; i < MIN(post.imagesArray.count, self.arrayOfImageView.count); i++) {
         UIImageView *imageView = [self.arrayOfImageView objectAtIndex: i];
-        ImageToPost *imageToPost = [post.arrayImages objectAtIndex: i];
+        ImageToPost *imageToPost = [post.imagesArray objectAtIndex: i];
         imageView.image = imageToPost.image;
         imageView.hidden = NO;
         //[imageView loadImageFromDataBase: [po.arrayImagesUrl objectAtIndex: i]];

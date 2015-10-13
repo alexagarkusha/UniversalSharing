@@ -88,7 +88,7 @@ static MUSPostManager *model = nil;
         
         if (!currentPost.arrayWithNetworkPostsId.count) {
             // Delete all images from documents
-            [[PostImagesManager manager] removeImagesFromPostByArrayOfImagesUrls : currentPost.arrayImagesUrl];
+            [[PostImagesManager manager] removeImagesFromPostByArrayOfImagesUrls : currentPost.imageUrlsArray];
             // Delete post from Data Base
             [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForDeletePostByPrimaryKey: currentPost.primaryKey]];
         } else {

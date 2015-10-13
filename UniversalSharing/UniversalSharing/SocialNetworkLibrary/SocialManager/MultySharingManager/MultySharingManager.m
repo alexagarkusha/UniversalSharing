@@ -70,7 +70,7 @@ static MultySharingManager *model = nil;
 
 - (void) sharePost: (Post*) post toSocialNetworks: (NSArray *) arrayWithNetworks {
     NSLog(@"New OBJECT");
-    [[MUSProgressBar sharedProgressBar] startProgressViewWithImages:post.arrayImages];
+    [[MUSProgressBar sharedProgressBar] startProgressViewWithImages:post.imagesArray];
     if (!post.primaryKey) {
         [self shareNewPost: post toSocialNetworks: arrayWithNetworks];
     } else {
@@ -134,7 +134,7 @@ static MultySharingManager *model = nil;
              [[MUSProgressBar sharedProgressBar] setProgressViewSize:totalProgress / numberOfSocialNetworks];
             weakMultySharingManager.copyProgressLoading(totalProgress / numberOfSocialNetworks);
             if (totalProgress / numberOfSocialNetworks == 1) {
-                [[MUSProgressBarEndLoading sharedProgressBarEndLoading] endProgressViewWithCountConnect:resultDictionary andImagesArray:newPost.arrayImages];
+                [[MUSProgressBarEndLoading sharedProgressBarEndLoading] endProgressViewWithCountConnect:resultDictionary andImagesArray:newPost.imagesArray];
                 weakMultySharingManager.copyComplition ([NSNumber numberWithInt:countConnectPosts], nil);
             }
         }];
@@ -174,7 +174,7 @@ static MultySharingManager *model = nil;
             if (counterOfSocialNetwork == numberOfSocialNetworks) {
                 
                 resultDictionary = [[NSDictionary alloc] initWithObjectsAndKeys: [NSNumber numberWithInt:counterOfSocialNetwork], @"numberOfSocialNetworks", [NSNumber numberWithInt:countConnectPosts], @"countConnectPosts", nil];
-               [[MUSProgressBarEndLoading sharedProgressBarEndLoading] endProgressViewWithCountConnect:resultDictionary andImagesArray:post.arrayImages];
+               [[MUSProgressBarEndLoading sharedProgressBarEndLoading] endProgressViewWithCountConnect:resultDictionary andImagesArray:post.imagesArray];
                 weakMultySharingManager.copyComplition ([NSNumber numberWithInt:countConnectPosts], error);
                 [weakMultySharingManager checkArrayWithQueueOfPosts];
             }
@@ -184,7 +184,7 @@ static MultySharingManager *model = nil;
             [[MUSProgressBar sharedProgressBar] setProgressViewSize:totalProgress / numberOfSocialNetworks];
             weakMultySharingManager.copyProgressLoading(totalProgress / numberOfSocialNetworks);
             if (totalProgress / numberOfSocialNetworks == 1) {
-                [[MUSProgressBarEndLoading sharedProgressBarEndLoading] endProgressViewWithCountConnect:resultDictionary andImagesArray:post.arrayImages];
+                [[MUSProgressBarEndLoading sharedProgressBarEndLoading] endProgressViewWithCountConnect:resultDictionary andImagesArray:post.imagesArray];
                 weakMultySharingManager.copyComplition ([NSNumber numberWithInt:countConnectPosts], nil);
             }
         }];
@@ -232,12 +232,12 @@ static MultySharingManager *model = nil;
 //}
 
 - (void) savePostImagesToDocument: (Post*) post {
-    if (!post.arrayImagesUrl) {
-        post.arrayImagesUrl = [NSMutableArray new];
+    if (!post.imageUrlsArray) {
+        post.imageUrlsArray = [NSMutableArray new];
     } else {
-        [post.arrayImagesUrl removeAllObjects];
+        [post.imageUrlsArray removeAllObjects];
     }
-    post.arrayImagesUrl = [[PostImagesManager manager] saveImagesToDocumentsFolderAndGetArrayWithImagesUrls: post.arrayImages];
+    post.imageUrlsArray = [[PostImagesManager manager] saveImagesToDocumentsFolderAndGetArrayWithImagesUrls: post.imagesArray];
 }
 
 - (void) updatePostInfoNotification {

@@ -79,14 +79,14 @@
 
 - (void) initiationHeaderView
 {
-    ImageToPost *firstImage = [self.currentPost.arrayImages firstObject];
+    ImageToPost *firstImage = [self.currentPost.imagesArray firstObject];
     
-    if (!self.currentPost.arrayImages.count || !firstImage.image) {
-        self.currentPost.arrayImages = nil;
+    if (!self.currentPost.imagesArray.count || !firstImage.image) {
+        self.currentPost.imagesArray = nil;
     } else {
         NSMutableArray *pagesArray = [[NSMutableArray alloc] init];
-        for (int i = 0; i < self.currentPost.arrayImages.count; i++) {
-            [pagesArray addObject: [self createPageViewWithImageView: [self.currentPost.arrayImages objectAtIndex: i]]];
+        for (int i = 0; i < self.currentPost.imagesArray.count; i++) {
+            [pagesArray addObject: [self createPageViewWithImageView: [self.currentPost.imagesArray objectAtIndex: i]]];
         }
         CGSize headerViewSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, MUSApp_MUSDetailPostViewController_HeightOfHeader);
         MEExpandableHeaderView *headerView = [[MEExpandableHeaderView alloc]

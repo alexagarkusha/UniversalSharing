@@ -79,14 +79,14 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     if (section == 0) {
-        if ([self.currentPost.arrayImages count] < 4) {
+        if ([self.currentPost.imagesArray count] < 4) {
             return 1;
         } else {
             return 0;
 
         }
             }
-    return  [self.currentPost.arrayImages count];
+    return  [self.currentPost.imagesArray count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -96,10 +96,10 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
     
     ImageToPost *image;
 
-    if (indexPath.section == 0 && [self.currentPost.arrayImages count] != 4) {
+    if (indexPath.section == 0 && [self.currentPost.imagesArray count] != 4) {
         [cell configurationCellForFirstSection];
     }else {
-        image = self.currentPost.arrayImages[indexPath.row];
+        image = self.currentPost.imagesArray[indexPath.row];
     [cell configurationCellWithPhoto:image.image andEditableState:YES];
     }
     return  cell;
@@ -125,12 +125,12 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
 #pragma mark - passChosenImageForCollection
 
 - (void) passChosenImageForCollection :(ImageToPost*) imageForPost {
-    if (!self.currentPost.arrayImages) {
-        self.currentPost.arrayImages = [[NSMutableArray alloc] init];
+    if (!self.currentPost.imagesArray) {
+        self.currentPost.imagesArray = [[NSMutableArray alloc] init];
     }
-    [self.currentPost.arrayImages addObject: imageForPost];
+    [self.currentPost.imagesArray addObject: imageForPost];
     
-    if ([self.currentPost.arrayImages count] == 1) {
+    if ([self.currentPost.imagesArray count] == 1) {
         [self.delegate changeSharePhotoButtonColorAndShareButtonState : YES];
     }
     self.isEditableCollectionView = NO;
@@ -157,7 +157,7 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     switch (buttonIndex) {
         case YES:
-            [self.currentPost.arrayImages removeObjectAtIndex: self.deleteImageIndex.row];
+            [self.currentPost.imagesArray removeObjectAtIndex: self.deleteImageIndex.row];
             [self.collectionView reloadData];
             break;
         case NO:

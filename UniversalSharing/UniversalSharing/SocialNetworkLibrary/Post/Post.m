@@ -18,13 +18,13 @@
     
     post.postID = @"";
     post.postDescription = @"";
-    post.arrayImages = [[NSMutableArray alloc] init];
+    post.imagesArray = [[NSMutableArray alloc] init];
     post.likesCount = 0;
     post.commentsCount = 0;
     post.placeID = @"";
     post.networkType = MUSAllNetworks;
     post.primaryKey = 0;
-    post.arrayImagesUrl = [[NSMutableArray alloc] init];
+    post.imageUrlsArray = [[NSMutableArray alloc] init];
     post.userId = @"";
     post.dateCreate = @"";
     post.reason = MUSAllReasons;
@@ -46,13 +46,13 @@
     Post *copyPost = [Post new];
     copyPost.postID = [self.postID copy];
     copyPost.postDescription = [self.postDescription copy];
-    copyPost.arrayImages = [self.arrayImages mutableCopy];
+    copyPost.imagesArray = [self.imagesArray mutableCopy];
     copyPost.likesCount = self.likesCount;
     copyPost.commentsCount = self.commentsCount;
     copyPost.placeID = self.placeID;
     copyPost.networkType = self.networkType;
     copyPost.primaryKey = self.primaryKey;
-    copyPost.arrayImagesUrl = [self.arrayImagesUrl mutableCopy];
+    copyPost.imageUrlsArray = [self.imageUrlsArray mutableCopy];
     copyPost.userId = [self.userId copy];
     copyPost.dateCreate = [self.dateCreate copy];
     copyPost.reason = self.reason;
@@ -80,9 +80,9 @@
 
 - (NSString*) convertArrayImagesUrlToString {
     NSString *url = @"";
-    for (int i = 0; i < self.arrayImagesUrl.count; i++) {
-        url = [url stringByAppendingString:self.arrayImagesUrl[i]];
-        if(self.arrayImagesUrl.count - 1 != i)
+    for (int i = 0; i < self.imageUrlsArray.count; i++) {
+        url = [url stringByAppendingString:self.imageUrlsArray[i]];
+        if(self.imageUrlsArray.count - 1 != i)
             url = [url stringByAppendingString:@", "];
     }
     return url;
@@ -100,17 +100,17 @@
 }
 
 - (NSMutableArray*) convertArrayOfImagesUrlToArrayImagesWithObjectsImageToPost {
-    _arrayImages = [NSMutableArray new];
-    for (int i = 0; i < _arrayImagesUrl.count; i++) {
+    _imagesArray = [NSMutableArray new];
+    for (int i = 0; i < _imageUrlsArray.count; i++) {
         UIImage *image = [UIImage new];
-        image = [image loadImageFromDataBase: [_arrayImagesUrl objectAtIndex: i]];
+        image = [image loadImageFromDataBase: [_imageUrlsArray objectAtIndex: i]];
         ImageToPost *imageToPost = [[ImageToPost alloc] init];
         imageToPost.image = image;
         imageToPost.quality = 1.0f;
         imageToPost.imageType = MUSJPEG;
-        [_arrayImages addObject: imageToPost];
+        [_imagesArray addObject: imageToPost];
     }
-    return _arrayImages;
+    return _imagesArray;
 }
 
 #pragma mark - GETTERS

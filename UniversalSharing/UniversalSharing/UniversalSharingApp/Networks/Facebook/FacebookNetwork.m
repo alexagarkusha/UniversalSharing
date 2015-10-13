@@ -192,7 +192,7 @@ static FacebookNetwork *model = nil;
 }
 
 - (void) sharePost : (Post*) post {
-    if (post.arrayImages.count) {
+    if (post.imagesArray.count) {
         [self sharePostWithPictures: post];
     } else {
         [self sharePostOnlyWithPostDescription: post];
@@ -258,7 +258,7 @@ static FacebookNetwork *model = nil;
     if (post.place.placeID)  {
         params[MUSFacebookParameter_Place] = post.place.placeID;
     }
-    __block NSInteger numberOfPostImagesArray = post.arrayImages.count;
+    __block NSInteger numberOfPostImagesArray = post.imagesArray.count;
     __block int counterOfImages = 0;
     __weak FacebookNetwork *weakSelf = self;
 
@@ -266,8 +266,8 @@ static FacebookNetwork *model = nil;
     networkPost.networkType = MUSFacebook;
     __block NetworkPost *networkPostCopy = networkPost;
     
-    for (int i = 0; i < post.arrayImages.count; i++) {
-        ImageToPost *imageToPost = [post.arrayImages objectAtIndex: i];
+    for (int i = 0; i < post.imagesArray.count; i++) {
+        ImageToPost *imageToPost = [post.imagesArray objectAtIndex: i];
         params[MUSFacebookParameter_Picture] = imageToPost.image;
         FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]
                                       initWithGraphPath: MUSFacebookGraphPath_Me_Photos
