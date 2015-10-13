@@ -106,8 +106,8 @@
 @property (strong, nonatomic)                MUSPopUpForSharing * popVC ;
 //<<<<<<< HEAD
 @property (strong, nonatomic)                NSString *address;
-@property (strong, nonatomic)                MUSProgressBar * progressBar ;
-@property (strong, nonatomic)                MUSProgressBarEndLoading * progressBarEndLoading ;
+//@property (strong, nonatomic)                MUSProgressBar * progressBar ;
+//@property (strong, nonatomic)                MUSProgressBarEndLoading * progressBarEndLoading ;
 //=======
 //@property (strong, nonatomic)                NSString* address;
 
@@ -148,10 +148,10 @@
 //    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
 //    CGFloat navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
     ////////////////////////
-    self.progressBar = [MUSProgressBar sharedProgressBar];
+    //self.progressBar = [MUSProgressBar sharedProgressBar];
     //[self.progressBar.view setFrame:CGRectMake(0, statusBarHeight, self.view.frame.size.width, navigationBarHeight)];
     /////////////////////////////////////////////////
-    self.progressBarEndLoading = [MUSProgressBarEndLoading sharedProgressBarEndLoading];
+    //self.progressBarEndLoading = [MUSProgressBarEndLoading sharedProgressBarEndLoading];
     //[self.progressBarEndLoading.view setFrame:CGRectMake(0, statusBarHeight, self.view.frame.size.width, navigationBarHeight)];
     
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startProgressView) name:@"StartSharePost" object:nil];

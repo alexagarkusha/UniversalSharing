@@ -42,8 +42,10 @@ static MUSProgressBarEndLoading *model = nil;
     if (self) {
         self.view = [self loadViewFromNib];
         CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
-        //CGFloat navigationBarHeight = [UIApplication sharedApplication]. //window.rootViewController.size.height;
-        self.view.frame = CGRectMake(0, statusBarHeight, self.view.frame.size.width, 44);
+        UITabBarController *tabBarController = (UITabBarController *)[UIApplication sharedApplication].keyWindow.rootViewController;
+        UINavigationController *navigationController = (UINavigationController *)tabBarController.selectedViewController;
+        CGFloat navigationBarHeight = navigationController.navigationBar.frame.size.height;
+        self.view.frame = CGRectMake(0, statusBarHeight, self.view.frame.size.width, navigationBarHeight);
         //self.view.frame = frame;
         [self addSubview:self.view];
     }
