@@ -7,6 +7,7 @@
 //
 
 #import "MUSProgressBarEndLoading.h"
+#import "MUSSocialNetworkLibraryHeader.h"
 #import "ConstantsApp.h"
 #import "ImageToPost.h"
 
@@ -109,13 +110,17 @@ static MUSProgressBarEndLoading *model = nil;
 }
 
 - (void) endProgressViewWithCountConnect :(NSDictionary *) dictionary andImagesArray : (NSArray*) imagesArray {
-    //NSDictionary *dictionary = [dictionary object];
-    NSNumber *countConnect = [dictionary objectForKey: @"countConnectPosts"];
-    NSNumber *numberOfChosenNetworks = [dictionary objectForKey: @"numberOfSocialNetworks"];
     
-       
+    NSArray *allValuesArray = [dictionary allValues];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"Result == %d", MUSConnect];
+    NSArray *successArray =[allValuesArray filteredArrayUsingPredicate:predicate];
+    
    [[UIApplication sharedApplication].keyWindow addSubview:self.view];
-    [self configurationProgressBar:imagesArray : [countConnect integerValue]: [numberOfChosenNetworks integerValue]];
+
+    [self configurationProgressBar : imagesArray : successArray.count: allValuesArray.count];
+    
+    //[self configurationProgressBar:imagesArray : [countConnect integerValue]: [numberOfChosenNetworks integerValue]];
+    
     [self setHeightView];
 }
 - (void) setHeightView {

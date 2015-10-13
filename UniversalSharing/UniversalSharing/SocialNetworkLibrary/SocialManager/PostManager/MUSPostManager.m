@@ -45,6 +45,7 @@ static MUSPostManager *model = nil;
 - (void) updatePostsArray {
     [self.postsArray removeAllObjects];
     [self.postsArray addObjectsFromArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper stringForAllPosts]]];
+    [self updatePostInfoNotification];
 }
 
 - (NSArray*) networkPostsArrayForNetworkType : (NetworkType) networkType {
@@ -99,6 +100,9 @@ static MUSPostManager *model = nil;
     [self updatePostsArray];
 }
 
+- (void) updatePostInfoNotification {
+    [[NSNotificationCenter defaultCenter] postNotificationName:MUSInfoPostsDidUpDateNotification object:nil];
+}
 
 
 @end

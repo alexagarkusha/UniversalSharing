@@ -25,12 +25,12 @@
     post.networkType = MUSAllNetworks;
     post.primaryKey = 0;
     post.imageUrlsArray = [[NSMutableArray alloc] init];
-    post.userId = @"";
+    //post.userId = @"";
     post.dateCreate = @"";
-    post.reason = MUSAllReasons;
-    post.locationId = @"";
+    //post.reason = MUSAllReasons;
+    //post.locationId = @"";
     post.place = [Place create];
-    post.networkPost = [NetworkPost create];
+    //post.networkPost = [NetworkPost create];
     post.networkPostsArray = [[NSMutableArray alloc] init];
     post.networkPostIdsArray = [[NSMutableArray alloc] init];
     post.longitude = @"";
@@ -53,10 +53,10 @@
     copyPost.networkType = self.networkType;
     copyPost.primaryKey = self.primaryKey;
     copyPost.imageUrlsArray = [self.imageUrlsArray mutableCopy];
-    copyPost.userId = [self.userId copy];
+    //copyPost.userId = [self.userId copy];
     copyPost.dateCreate = [self.dateCreate copy];
-    copyPost.reason = self.reason;
-    copyPost.locationId = [self.locationId copy];
+    //copyPost.reason = self.reason;
+    //copyPost.locationId = [self.locationId copy];
     copyPost.place = [self.place copy];
     //copyPost.networkPost = [self.networkPost copy];
     copyPost.networkPostsArray = [self.networkPostsArray mutableCopy];
@@ -77,6 +77,22 @@
     
     [_networkPostsArray sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"networkType" ascending:YES]]];
 }
+
+- (void) saveIntoDataBase {
+    [self savePostImagesToDocument];
+    [[DataBaseManager sharedManager] insertObjectIntoTable : self];
+    [[MUSPostManager manager] updatePostsArray];
+}
+
+- (void) savePostImagesToDocument {
+    if (!_imageUrlsArray) {
+        _imageUrlsArray = [NSMutableArray new];
+    } else {
+        [_imageUrlsArray removeAllObjects];
+    }
+    _imageUrlsArray = [[PostImagesManager manager] saveImagesToDocumentsFolderAndGetArrayWithImagesUrls: _imagesArray];
+}
+
 
 - (NSString*) convertArrayImagesUrlToString {
     NSString *url = @"";
