@@ -21,7 +21,8 @@
 
 @interface MultySharingManager ()
 
-@property (copy, nonatomic) Complition complition;
+//@property (copy, nonatomic) Complition complition;
+@property (copy, nonatomic) MultySharingResultBlock multySharingResultBlock;
 @property (copy, nonatomic) ProgressLoadingBlock progressLoadingBlock;
 @property (copy, nonatomic) StartLoadingBlock startLoadingBlock;
 
@@ -53,11 +54,11 @@ static MultySharingManager *model = nil;
 }
 
 
-- (void) sharePost : (Post*) post toSocialNetworks : (NSArray*) arrayOfNetworksType withComplition : (Complition) block startLoadingBlock : (StartLoadingBlock) startLoadingBlock progressLoadingBlock :(ProgressLoadingBlock) progressLoadingBlock {
+- (void) sharePost : (Post*) post toSocialNetworks : (NSArray*) arrayOfNetworksType withMultySharingResultBlock : (MultySharingResultBlock) multySharingResultBlock startLoadingBlock : (StartLoadingBlock) startLoadingBlock progressLoadingBlock :(ProgressLoadingBlock) progressLoadingBlock {
     
     NSMutableArray *arrayWithNetworks = [[SocialManager sharedManager]networksForKeys:arrayOfNetworksType];
     
-    self.complition = block;
+    self.multySharingResultBlock = multySharingResultBlock;
     self.progressLoadingBlock = progressLoadingBlock;
     self.startLoadingBlock = startLoadingBlock;
     
@@ -121,50 +122,18 @@ static MultySharingManager *model = nil;
             }
 
             if (counterOfSocialNetwork == numberOfSocialNetworks) {
-<<<<<<< HEAD
-                
                 if (!postCopy.primaryKey) {
                     [postCopy saveIntoDataBase];
                 }
-                
                 //[[MUSProgressBarEndLoading sharedProgressBarEndLoading] endProgressViewWithCountConnect: multyResultDictionary andImagesArray: postCopy.imagesArray];
-                
-                weakMultySharingManager.complition (multyResultDictionary, nil);
-=======
-//<<<<<<< HEAD
-//                [weakMultySharingManager savePostImagesToDocument: postCopy];
-//                [[DataBaseManager sharedManager] insertObjectIntoTable : postCopy];
-//                [[MUSPostManager manager] updatePostsArray];
-//                [weakMultySharingManager updatePostInfoNotification];
-//                NSLog(@"END LOAD");
-//                
-//                                resultDictionary = [[NSDictionary alloc] initWithObjectsAndKeys: [NSNumber numberWithInt:counterOfSocialNetwork], @"numberOfSocialNetworks", [NSNumber numberWithInt:countConnectPosts], @"countConnectPosts", nil];
-//                ////////////////////////////////////////////////////////
-//                [[MUSProgressBar sharedProgressBar] stopProgress];
-//                [[MUSProgressBarEndLoading sharedProgressBarEndLoading] endProgressViewWithCountConnect:resultDictionary andImagesArray:newPost.imagesArray];
-//                //////////////////////////////////////////////////////////////////////
-//                weakMultySharingManager.copyComplition ([NSNumber numberWithInt:countConnectPosts], error);
-//=======
-//                
-//                if (!postCopy.primaryKey) {
-//                    [postCopy saveIntoDataBase];
-//                }
-//                
-//                [[MUSProgressBarEndLoading sharedProgressBarEndLoading] endProgressViewWithCountConnect: multyResultDictionary andImagesArray: postCopy.imagesArray];
-//                
-//                weakMultySharingManager.complition (multyResultDictionary, nil);
-//>>>>>>> 1c3fdb345ad077a7041612a6685a19e93b2ea9d6
->>>>>>> 1713877b2264b37990d6284d5bef58c8d7412c7d
-
+                //weakMultySharingManager.complition (multyResultDictionary, nil);
+                weakMultySharingManager.multySharingResultBlock (multyResultDictionary, postCopy);
                 [weakMultySharingManager checkPostsQueue];
             }
 
         } progressLoadingBlock:^(id currentNetworkType, float result) {
             
             float totalProgress = [weakMultySharingManager totalResultOfLoadingToSocialNetworks: loadingObjectsDictionary withCurrentObject: currentNetworkType andResult: result];
-            
-            [[MUSProgressBar sharedProgressBar] setProgressViewSize: totalProgress / numberOfSocialNetworks];
-            
             weakMultySharingManager.progressLoadingBlock (totalProgress / numberOfSocialNetworks);
             NSLog(@"%f", totalProgress / numberOfSocialNetworks);
         }];

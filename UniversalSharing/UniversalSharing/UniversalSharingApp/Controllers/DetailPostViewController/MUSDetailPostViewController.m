@@ -269,7 +269,7 @@
     if (arrayChosenNetworksForPost) {
         __weak MUSDetailPostViewController *weakSelf = self;
         self.shareButton.enabled = NO;
-        [[MultySharingManager sharedManager] sharePost:self.currentPost toSocialNetworks:arrayChosenNetworksForPost withComplition:^(id result, NSError *error) {
+        [[MultySharingManager sharedManager] sharePost:self.currentPost toSocialNetworks:arrayChosenNetworksForPost withMultySharingResultBlock:^(NSDictionary *multyResultDictionary, Post *post) {
             [weakSelf.currentPost updateAllNetworkPostsFromDataBaseForCurrentPost];
             [weakSelf.tableView reloadData];
             
@@ -283,10 +283,8 @@
             }
         } startLoadingBlock:^(Post *post) {
             
-            
         } progressLoadingBlock:^(float result) {
             
-#warning CHANGE METHOD - PROGRESS BAR SHOULD BE SINGLETON
         }];
     }
 }

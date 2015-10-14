@@ -11,13 +11,14 @@
 #import "Post.h"
 
 typedef void (^StartLoadingBlock)(Post *post);
+typedef void (^MultySharingResultBlock)(NSDictionary *multyResultDictionary, Post *post);
 
 
 @interface MultySharingManager : NSObject
 
 + (MultySharingManager*) sharedManager;
 
-- (void) sharePost : (Post*) post toSocialNetworks : (NSArray*) arrayOfNetworksType withComplition : (Complition) block startLoadingBlock : (StartLoadingBlock) startLoadingBlock progressLoadingBlock :(ProgressLoadingBlock) progressLoadingBlock;
+- (void) sharePost : (Post*) post toSocialNetworks : (NSArray*) arrayOfNetworksType withMultySharingResultBlock : (MultySharingResultBlock) multySharingResultBlock startLoadingBlock : (StartLoadingBlock) startLoadingBlock progressLoadingBlock :(ProgressLoadingBlock) progressLoadingBlock;
 
 - (BOOL) queueOfPosts : (NSInteger) primaryKeyOfPost;
 //===

@@ -475,18 +475,14 @@
     if (_arrayChosenNetworksForPost) {
         [self createPost];
         
-        [[MultySharingManager sharedManager] sharePost: self.post toSocialNetworks: _arrayChosenNetworksForPost withComplition:^(id result, NSError *error) {
-            
-            if(!error){
-          
-            }
+        [[MultySharingManager sharedManager] sharePost: self.post toSocialNetworks: _arrayChosenNetworksForPost withMultySharingResultBlock:^(NSDictionary *multyResultDictionary, Post *post)  {
             [[MUSProgressBar sharedProgressBar] stopProgress];
-            [[MUSProgressBarEndLoading sharedProgressBarEndLoading] endProgressViewWithCountConnect:resultDictionary andImagesArray: newPost.imagesArray];
+            [[MUSProgressBarEndLoading sharedProgressBarEndLoading] endProgressViewWithCountConnect:multyResultDictionary andImagesArray: post.imagesArray];
         } startLoadingBlock:^(Post *post) {
             [[MUSProgressBar sharedProgressBar] startProgressViewWithImages: post.imagesArray];
         } progressLoadingBlock:^(float result) {
-           
-            
+            [[MUSProgressBar sharedProgressBar] setProgressViewSize: result];
+            NSLog(@"result =%f", result);
             // [weakSelf.progressBar setProgressViewSize:result];
         }];
     }
