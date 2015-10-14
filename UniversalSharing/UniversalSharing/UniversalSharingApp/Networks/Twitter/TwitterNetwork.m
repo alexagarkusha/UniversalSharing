@@ -298,6 +298,7 @@ static TwitterNetwork *model = nil;
         } else {
             networkPostCopy.reason = MUSErrorConnection;
             weakSelf.copyComplition (networkPostCopy, error);
+            weakSelf.copyProgressLoading ([NSNumber numberWithInteger: self.networkType], 1.0f);
         }
     }];
 }

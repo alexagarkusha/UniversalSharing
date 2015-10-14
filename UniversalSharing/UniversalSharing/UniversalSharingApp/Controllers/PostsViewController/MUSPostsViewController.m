@@ -62,7 +62,7 @@
 
 - (void) initiationSSARefreshControl {
     self.refreshControl = [[SSARefreshControl alloc] initWithScrollView:self.tableView andRefreshViewLayerType:SSARefreshViewLayerTypeOnScrollView];
-    self.refreshControl.circleViewColor = [UIColor lightGrayColor];
+    self.refreshControl.circleViewColor = DARK_BROWN_COLOR;
     self.refreshControl.delegate = self;
     [self.refreshControl beginRefreshing];
 }

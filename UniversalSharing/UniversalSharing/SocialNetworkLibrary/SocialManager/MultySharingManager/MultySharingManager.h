@@ -10,13 +10,19 @@
 #import "MUSSocialNetworkLibraryConstants.h"
 #import "Post.h"
 
+typedef void (^StartLoadingBlock)(Post *post);
+
+
 @interface MultySharingManager : NSObject
 
 + (MultySharingManager*) sharedManager;
-- (void) sharePost : (Post*) post toSocialNetworks : (NSArray*) arrayOfNetworksType withComplition : (Complition) block andProgressLoadingComplition :(ProgressLoadingComplition) blockLoading;
+
+- (void) sharePost : (Post*) post toSocialNetworks : (NSArray*) arrayOfNetworksType withComplition : (Complition) block startLoadingBlock : (StartLoadingBlock) startLoadingBlock progressLoadingBlock :(ProgressLoadingBlock) progressLoadingBlock;
+
 - (BOOL) queueOfPosts : (NSInteger) primaryKeyOfPost;
 //===
-@property (strong, nonatomic) NSMutableArray *arrayWithQueueOfPosts;
+@property (strong, nonatomic) NSMutableArray *postsQueue;
+
 @property (assign, nonatomic) BOOL isPostLoading;
 
 @end

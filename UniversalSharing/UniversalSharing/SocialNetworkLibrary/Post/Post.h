@@ -43,21 +43,29 @@
  @abstract type of Social network. (like Facebook, Twitters, Vkontakte)
  */
 @property (nonatomic, assign) NetworkType networkType;
-
-///////////////////////////////////////////////////////////////////////////////////////
+/*!
+ @abstract unique identifier of the post in DataBase
+ */
 @property (nonatomic, assign) NSInteger primaryKey;
+/*!
+ @abstract array of urls images for documents folder
+ */
 @property (nonatomic, strong) NSMutableArray *imageUrlsArray;
-@property (nonatomic, strong) NSString *userId;
+/*!
+ @abstract date create of post object
+ */
 @property (nonatomic, strong) NSString *dateCreate;
-@property (nonatomic, assign) ReasonType reason;
-@property (strong, nonatomic) NSString *locationId;
+/*!
+ @abstract place
+ */
 @property (strong, nonatomic) Place *place;
-/////////////////////////////////////////////////////////////////////////////////////////
 
-@property (strong, nonatomic) NetworkPost *networkPost;
 @property (strong, nonatomic) NSMutableArray *networkPostsArray;
+
 @property (strong, nonatomic) NSMutableArray *networkPostIdsArray;
+
 @property (strong, nonatomic) NSString *longitude;
+
 @property (strong, nonatomic) NSString *latitude;
 
 //===
@@ -66,6 +74,8 @@
 - (id)copy;
 
 - (void) updateAllNetworkPostsFromDataBaseForCurrentPost;
+
+- (void) saveIntoDataBase;
 
 - (NSString*) convertArrayImagesUrlToString;
 

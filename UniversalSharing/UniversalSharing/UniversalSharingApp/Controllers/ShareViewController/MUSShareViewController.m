@@ -494,8 +494,12 @@
             //                //[weakSelf.progressBar.view removeFromSuperview];
             //            });
             
-        } andProgressLoadingComplition:^(float result) {
-           // [weakSelf.progressBar setProgressViewSize:result];
+        } startLoadingBlock:^(Post *post) {
+            [[MUSProgressBar sharedProgressBar] startProgressViewWithImages: post.imagesArray];
+        } progressLoadingBlock:^(float result) {
+           
+            
+            // [weakSelf.progressBar setProgressViewSize:result];
         }];
     }
 }
