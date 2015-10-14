@@ -281,7 +281,11 @@
                     [weakSelf.navigationItem.rightBarButtonItem setEnabled:NO];
                 }
             }
+        } startLoadingBlock:^(Post *post) {
+            
+            
         } progressLoadingBlock:^(float result) {
+            
 #warning CHANGE METHOD - PROGRESS BAR SHOULD BE SINGLETON
         }];
     }

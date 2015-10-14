@@ -23,6 +23,8 @@
 
 @property (copy, nonatomic) Complition complition;
 @property (copy, nonatomic) ProgressLoadingBlock progressLoadingBlock;
+@property (copy, nonatomic) StartLoadingBlock startLoadingBlock;
+
 @end
 
 
@@ -51,12 +53,13 @@ static MultySharingManager *model = nil;
 }
 
 
-- (void) sharePost : (Post*) post toSocialNetworks : (NSArray*) arrayOfNetworksType withComplition : (Complition) block progressLoadingBlock :(ProgressLoadingBlock) progressLoadingBlock {
+- (void) sharePost : (Post*) post toSocialNetworks : (NSArray*) arrayOfNetworksType withComplition : (Complition) block startLoadingBlock : (StartLoadingBlock) startLoadingBlock progressLoadingBlock :(ProgressLoadingBlock) progressLoadingBlock {
     
     NSMutableArray *arrayWithNetworks = [[SocialManager sharedManager]networksForKeys:arrayOfNetworksType];
     
     self.complition = block;
     self.progressLoadingBlock = progressLoadingBlock;
+    self.startLoadingBlock = startLoadingBlock;
     
     NSDictionary *postDictionary = [NSDictionary
                                     dictionaryWithObjectsAndKeys: [post copy], @"post",
@@ -72,8 +75,8 @@ static MultySharingManager *model = nil;
 
 - (void) sharePostDictionary: (NSDictionary*) postDictionary {
     Post *currentPost =  [postDictionary objectForKey: @"post"];
-#warning Start Posting Notification
-    [[MUSProgressBar sharedProgressBar] startProgressViewWithImages: currentPost.imagesArray];
+    //[[MUSProgressBar sharedProgressBar] startProgressViewWithImages: currentPost.imagesArray];
+    self.startLoadingBlock (currentPost);
     [self sharePost: currentPost toSocialNetworks: [postDictionary objectForKey: @"arrayWithNetworks"]];
 }
 
