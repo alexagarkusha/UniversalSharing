@@ -205,7 +205,7 @@
 #pragma Update all posts in array
 
 - (void) updateArrayPosts {
-    [[MUSPostManager manager] updatePostsArray];
+    //[[MUSPostManager manager] updatePostsArray];
     [self checkArrayOfPosts];
     [self.tableView reloadData];
 }

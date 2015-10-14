@@ -21,10 +21,11 @@
 
 @interface MultySharingManager ()
 
-//@property (copy, nonatomic) Complition complition;
 @property (copy, nonatomic) MultySharingResultBlock multySharingResultBlock;
 @property (copy, nonatomic) ProgressLoadingBlock progressLoadingBlock;
 @property (copy, nonatomic) StartLoadingBlock startLoadingBlock;
+@property (assign, nonatomic) BOOL isPostLoading;
+@property (strong, nonatomic) NSMutableArray *postsQueue;
 
 @end
 
@@ -54,9 +55,9 @@ static MultySharingManager *model = nil;
 }
 
 
-- (void) sharePost : (Post*) post toSocialNetworks : (NSArray*) arrayOfNetworksType withMultySharingResultBlock : (MultySharingResultBlock) multySharingResultBlock startLoadingBlock : (StartLoadingBlock) startLoadingBlock progressLoadingBlock :(ProgressLoadingBlock) progressLoadingBlock {
+- (void) sharePost : (Post*) post toSocialNetworks : (NSArray*) networksTypesArray withMultySharingResultBlock : (MultySharingResultBlock) multySharingResultBlock startLoadingBlock : (StartLoadingBlock) startLoadingBlock progressLoadingBlock :(ProgressLoadingBlock) progressLoadingBlock {
     
-    NSMutableArray *arrayWithNetworks = [[SocialManager sharedManager]networksForKeys:arrayOfNetworksType];
+    NSMutableArray *arrayWithNetworks = [[SocialManager sharedManager]networksForKeys:networksTypesArray];
     
     self.multySharingResultBlock = multySharingResultBlock;
     self.progressLoadingBlock = progressLoadingBlock;
@@ -76,13 +77,11 @@ static MultySharingManager *model = nil;
 
 - (void) sharePostDictionary: (NSDictionary*) postDictionary {
     Post *currentPost =  [postDictionary objectForKey: @"post"];
-    //[[MUSProgressBar sharedProgressBar] startProgressViewWithImages: currentPost.imagesArray];
     self.startLoadingBlock (currentPost);
     [self sharePost: currentPost toSocialNetworks: [postDictionary objectForKey: @"arrayWithNetworks"]];
 }
 
 - (void) sharePost : (Post*) post toSocialNetworks : (NSArray*) arrayWithNetworks {
-    //__block NSMutableArray *arrayOfLoadingObjects = [self arrayOfLoadingObjectsFromNetworks: arrayWithNetworks];
     __block NSMutableDictionary *loadingObjectsDictionary = [self dictionaryOfLoadingObjectsFromNetworks: arrayWithNetworks];
     
     self.isPostLoading = YES;
@@ -125,8 +124,6 @@ static MultySharingManager *model = nil;
                 if (!postCopy.primaryKey) {
                     [postCopy saveIntoDataBase];
                 }
-                //[[MUSProgressBarEndLoading sharedProgressBarEndLoading] endProgressViewWithCountConnect: multyResultDictionary andImagesArray: postCopy.imagesArray];
-                //weakMultySharingManager.complition (multyResultDictionary, nil);
                 weakMultySharingManager.multySharingResultBlock (multyResultDictionary, postCopy);
                 [weakMultySharingManager checkPostsQueue];
             }
@@ -140,7 +137,6 @@ static MultySharingManager *model = nil;
     }
 }
 
-// add to network post
 
 - (void) updateCurrentNetworkPost : (NetworkPost*) newNetworkPost andArrayOfOldNetworkPosts : (NSMutableArray*) arrayOfOldPosts {
     for (NetworkPost *currentNetworkPost in arrayOfOldPosts) {
@@ -153,7 +149,7 @@ static MultySharingManager *model = nil;
                 currentNetworkPost.likesCount = newNetworkPost.likesCount;
                 currentNetworkPost.commentsCount = newNetworkPost.commentsCount;
                 currentNetworkPost.dateCreate = [NSString currentDate];
-                [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForUpdateNetworkPost: currentNetworkPost]];
+                [currentNetworkPost update];
             }
         }
     }
@@ -169,7 +165,7 @@ static MultySharingManager *model = nil;
     }
 }
 
-- (BOOL) queueOfPosts:(NSInteger)primaryKeyOfPost {
+- (BOOL) isQueueContainsPost: (NSInteger)primaryKeyOfPost {
     for (NSDictionary *dictionary in self.postsQueue) {
         Post *currentPost = [dictionary objectForKey: @"post"];
         if (currentPost.primaryKey == primaryKeyOfPost) {

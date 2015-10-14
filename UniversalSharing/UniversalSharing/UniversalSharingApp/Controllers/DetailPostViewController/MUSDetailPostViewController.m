@@ -14,6 +14,8 @@
 #import "MUSMediaGalleryViewController.h"
 #import "MEExpandableHeaderView.h"
 #import "MUSPopUpForSharing.h"
+#import "MUSProgressBar.h"
+#import "MUSProgressBarEndLoading.h"
 
 @interface MUSDetailPostViewController () <UITableViewDataSource, UITableViewDelegate,  UIActionSheetDelegate, UIAlertViewDelegate, MEExpandableHeaderViewDelegate, UIScrollViewDelegate, MUSPopUpForSharingDelegate>
 /*!
@@ -125,7 +127,7 @@
         }
     }
     
-    if (!isPostConnect && ![[MultySharingManager sharedManager] queueOfPosts: self.currentPost.primaryKey]) {
+    if (!isPostConnect && ![[MultySharingManager sharedManager] isQueueContainsPost: self.currentPost.primaryKey]) {
         self.shareButton = [[UIBarButtonItem alloc] initWithTitle : MUSApp_Button_Title_Share style:2 target:self action: @selector(sharePost)];
         self.navigationItem.rightBarButtonItem = self.shareButton;
     }
@@ -281,10 +283,12 @@
                     [weakSelf.navigationItem.rightBarButtonItem setEnabled:NO];
                 }
             }
+            [[MUSProgressBar sharedProgressBar] stopProgress];
+            [[MUSProgressBarEndLoading sharedProgressBarEndLoading] endProgressViewWithCountConnect:multyResultDictionary andImagesArray: post.imagesArray];
         } startLoadingBlock:^(Post *post) {
-            
+            [[MUSProgressBar sharedProgressBar] startProgressViewWithImages: post.imagesArray];
         } progressLoadingBlock:^(float result) {
-            
+            [[MUSProgressBar sharedProgressBar] setProgressViewSize: result];
         }];
     }
 }

@@ -18,12 +18,9 @@ typedef void (^MultySharingResultBlock)(NSDictionary *multyResultDictionary, Pos
 
 + (MultySharingManager*) sharedManager;
 
-- (void) sharePost : (Post*) post toSocialNetworks : (NSArray*) arrayOfNetworksType withMultySharingResultBlock : (MultySharingResultBlock) multySharingResultBlock startLoadingBlock : (StartLoadingBlock) startLoadingBlock progressLoadingBlock :(ProgressLoadingBlock) progressLoadingBlock;
+- (void) sharePost : (Post*) post toSocialNetworks : (NSArray*) networksTypesArray withMultySharingResultBlock : (MultySharingResultBlock) multySharingResultBlock startLoadingBlock : (StartLoadingBlock) startLoadingBlock progressLoadingBlock :(ProgressLoadingBlock) progressLoadingBlock;
 
-- (BOOL) queueOfPosts : (NSInteger) primaryKeyOfPost;
-//===
-@property (strong, nonatomic) NSMutableArray *postsQueue;
+- (BOOL) isQueueContainsPost : (NSInteger) primaryKeyOfPost;
 
-@property (assign, nonatomic) BOOL isPostLoading;
 
 @end

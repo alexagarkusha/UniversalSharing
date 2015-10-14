@@ -58,19 +58,21 @@ static MUSPostManager *model = nil;
     NSMutableArray *allSocialNetworksArray = [[SocialManager sharedManager] allNetworks];
     __block NSUInteger numberOfActiveSocialNetworks = allSocialNetworksArray.count;
     __block NSUInteger counterOfSocialNetworks = 0;
-    __block NSString *blockResultString = @"Result: \n";
+    __block NSMutableDictionary *resultDictionary = [[NSMutableDictionary alloc] init];
+
+    //__block NSString *blockResultString = @"Result: \n";
     
     for (int i = 0; i < allSocialNetworksArray.count; i++) {
         SocialNetwork *currentSocialNetwork = [allSocialNetworksArray objectAtIndex: i];
         [currentSocialNetwork updateNetworkPostWithComplition:^(id result) {
             counterOfSocialNetworks++;
-            //NSLog(@"counter = %d", counterOfSocialNetworks);
-            NSLog(@"%@", result);
             
-            blockResultString = [blockResultString stringByAppendingString: [NSString stringWithFormat: @"%@, \n", result]];
+            [resultDictionary setObject: result forKey: @(currentSocialNetwork.networkType)];
+            
             if (counterOfSocialNetworks == numberOfActiveSocialNetworks) {
-                block (blockResultString, nil);
+                block (resultDictionary, nil);
             }
+            
         }];
     }
 }
