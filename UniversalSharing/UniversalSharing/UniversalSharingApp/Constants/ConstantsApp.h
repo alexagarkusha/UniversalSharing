@@ -141,4 +141,18 @@ FOUNDATION_EXPORT NSInteger const MUSApp_MUSPostLocationCell_HeightOfCell;
 FOUNDATION_EXPORT NSString *const MUSApp_MUSUserDetailViewController_User_Profile;
 FOUNDATION_EXPORT NSString *const MUSApp_MUSUserDetailViewController_User_ClientID;
 
+#pragma mark - MUSProgressBar
+
+FOUNDATION_EXPORT NSString *const MUSApp_MUSProgressBar_NibName;
+FOUNDATION_EXPORT NSString *const MUSApp_MUSProgressBarEndLoading_NibName;
+FOUNDATION_EXPORT NSInteger const MUSApp_MUSProgressBar_DefaultValueProgress;
+FOUNDATION_EXPORT NSInteger const MUSApp_MUSProgressBar_ValueProgress;
+FOUNDATION_EXPORT NSInteger const MUSApp_MUSProgressBar_View_DefaultHeightConstraint;
+FOUNDATION_EXPORT NSInteger const MUSApp_MUSProgressBar_View_HeightConstraint;
+FOUNDATION_EXPORT NSInteger const MUSApp_MUSProgressBar_Label_DefaultWidthConstraint;
+FOUNDATION_EXPORT NSInteger const MUSApp_MUSProgressBar_Label_WidthConstraint;
+
+
+
+
 @end

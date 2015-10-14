@@ -121,6 +121,7 @@ static MultySharingManager *model = nil;
             }
 
             if (counterOfSocialNetwork == numberOfSocialNetworks) {
+<<<<<<< HEAD
                 
                 if (!postCopy.primaryKey) {
                     [postCopy saveIntoDataBase];
@@ -129,6 +130,31 @@ static MultySharingManager *model = nil;
                 //[[MUSProgressBarEndLoading sharedProgressBarEndLoading] endProgressViewWithCountConnect: multyResultDictionary andImagesArray: postCopy.imagesArray];
                 
                 weakMultySharingManager.complition (multyResultDictionary, nil);
+=======
+//<<<<<<< HEAD
+//                [weakMultySharingManager savePostImagesToDocument: postCopy];
+//                [[DataBaseManager sharedManager] insertObjectIntoTable : postCopy];
+//                [[MUSPostManager manager] updatePostsArray];
+//                [weakMultySharingManager updatePostInfoNotification];
+//                NSLog(@"END LOAD");
+//                
+//                                resultDictionary = [[NSDictionary alloc] initWithObjectsAndKeys: [NSNumber numberWithInt:counterOfSocialNetwork], @"numberOfSocialNetworks", [NSNumber numberWithInt:countConnectPosts], @"countConnectPosts", nil];
+//                ////////////////////////////////////////////////////////
+//                [[MUSProgressBar sharedProgressBar] stopProgress];
+//                [[MUSProgressBarEndLoading sharedProgressBarEndLoading] endProgressViewWithCountConnect:resultDictionary andImagesArray:newPost.imagesArray];
+//                //////////////////////////////////////////////////////////////////////
+//                weakMultySharingManager.copyComplition ([NSNumber numberWithInt:countConnectPosts], error);
+//=======
+//                
+//                if (!postCopy.primaryKey) {
+//                    [postCopy saveIntoDataBase];
+//                }
+//                
+//                [[MUSProgressBarEndLoading sharedProgressBarEndLoading] endProgressViewWithCountConnect: multyResultDictionary andImagesArray: postCopy.imagesArray];
+//                
+//                weakMultySharingManager.complition (multyResultDictionary, nil);
+//>>>>>>> 1c3fdb345ad077a7041612a6685a19e93b2ea9d6
+>>>>>>> 1713877b2264b37990d6284d5bef58c8d7412c7d
 
                 [weakMultySharingManager checkPostsQueue];
             }

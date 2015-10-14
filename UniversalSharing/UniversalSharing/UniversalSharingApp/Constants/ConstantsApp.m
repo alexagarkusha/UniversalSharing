@@ -114,4 +114,15 @@ NSInteger const MUSApp_MUSPostLocationCell_HeightOfCell = 200;
 NSString *const MUSApp_MUSUserDetailViewController_User_Profile = @"profile";
 NSString *const MUSApp_MUSUserDetailViewController_User_ClientID = @"clientID";
 
+#pragma mark - MUSProgressBar
+
+NSString *const MUSApp_MUSProgressBar_NibName = @"MUSProgressBar";
+NSString *const MUSApp_MUSProgressBarEndLoading_NibName = @"MUSProgressBarEndLoading";
+NSInteger const MUSApp_MUSProgressBar_DefaultValueProgress = 0;
+NSInteger const MUSApp_MUSProgressBar_ValueProgress = 1;
+NSInteger const MUSApp_MUSProgressBar_View_DefaultHeightConstraint = 0;
+NSInteger const MUSApp_MUSProgressBar_View_HeightConstraint = 42;
+NSInteger const MUSApp_MUSProgressBar_Label_DefaultWidthConstraint = 50;
+NSInteger const MUSApp_MUSProgressBar_Label_WidthConstraint = 8;
+
 @end
