@@ -478,22 +478,10 @@
         [[MultySharingManager sharedManager] sharePost: self.post toSocialNetworks: _arrayChosenNetworksForPost withComplition:^(id result, NSError *error) {
             
             if(!error){
-                //count++;
+          
             }
-            //weakSelf.post = nil;
-            //finish of post
-            //        NSLog(@"RESULT %@", result);
-            //        NSLog(@"ERROR %@", error);
-            
-            
-            
-           
-            [weakSelf refreshShareScreen];
-            //
-            //                });
-            //                //[weakSelf.progressBar.view removeFromSuperview];
-            //            });
-            
+            [[MUSProgressBar sharedProgressBar] stopProgress];
+            [[MUSProgressBarEndLoading sharedProgressBarEndLoading] endProgressViewWithCountConnect:resultDictionary andImagesArray: newPost.imagesArray];
         } startLoadingBlock:^(Post *post) {
             [[MUSProgressBar sharedProgressBar] startProgressViewWithImages: post.imagesArray];
         } progressLoadingBlock:^(float result) {
@@ -502,6 +490,9 @@
             // [weakSelf.progressBar setProgressViewSize:result];
         }];
     }
+    [self refreshShareScreen];
+
+    
 }
 
 - (void) sharePosts : (NSMutableArray*) arrayChosenNetworksForPost andFlagTwitter:(BOOL)flagTwitter {//////////////////////////

@@ -126,7 +126,7 @@ static MultySharingManager *model = nil;
                     [postCopy saveIntoDataBase];
                 }
                 
-                [[MUSProgressBarEndLoading sharedProgressBarEndLoading] endProgressViewWithCountConnect: multyResultDictionary andImagesArray: postCopy.imagesArray];
+                //[[MUSProgressBarEndLoading sharedProgressBarEndLoading] endProgressViewWithCountConnect: multyResultDictionary andImagesArray: postCopy.imagesArray];
                 
                 weakMultySharingManager.complition (multyResultDictionary, nil);
 
