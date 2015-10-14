@@ -138,7 +138,7 @@
  */
 - (void) sharePost {
     self.popUpForSharing = [MUSPopUpForSharing new];
-    self.popUpForSharing.arrayOfNetworksPost = self.currentPost.networkPostsArray;
+    self.popUpForSharing.networksPostArray = self.currentPost.networkPostsArray;
     self.popUpForSharing.delegate = self;
     [self.navigationController addChildViewController: self.popUpForSharing];
     self.popUpForSharing.view.frame = self.view.bounds;//CGRectMake(0, 100, 200, 200);//

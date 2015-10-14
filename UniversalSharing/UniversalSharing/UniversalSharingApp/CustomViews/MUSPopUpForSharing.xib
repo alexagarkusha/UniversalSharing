@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MUSPopUpForSharing">
             <connections>
-                <outlet property="buttonShare" destination="VEi-dn-xAC" id="3rs-Qo-Lva"/>
+                <outlet property="contentView" destination="MZT-0H-Szw" id="qgx-o0-IJW"/>
                 <outlet property="imageView" destination="udI-2I-7e5" id="Y0Z-kP-WGf"/>
-                <outlet property="secondView" destination="MZT-0H-Szw" id="VZA-3S-0LL"/>
+                <outlet property="shareButton" destination="VEi-dn-xAC" id="usj-Nx-NEp"/>
                 <outlet property="tableView" destination="Nfj-Ud-QsH" id="hRd-YL-D4A"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -34,7 +33,7 @@
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
-                                <action selector="buttonShareTapped:" destination="-1" eventType="touchUpInside" id="SZz-c3-eIF"/>
+                                <action selector="shareButtonTapped:" destination="-1" eventType="touchUpInside" id="Cg4-p8-8n4"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DVC-bS-NnW" customClass="MUSPopUpDeleteButton">
@@ -43,7 +42,7 @@
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
-                                <action selector="ButtonCloseTapped:" destination="-1" eventType="touchUpInside" id="h9z-ho-nlY"/>
+                                <action selector="closeButtonTapped:" destination="-1" eventType="touchUpInside" id="90d-Lh-N6Q"/>
                             </connections>
                         </button>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="56" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Nfj-Ud-QsH">

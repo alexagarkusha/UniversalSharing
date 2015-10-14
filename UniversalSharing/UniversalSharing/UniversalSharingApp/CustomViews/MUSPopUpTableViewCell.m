@@ -10,7 +10,7 @@
 
 @interface MUSPopUpTableViewCell ()
 
-@property (weak, nonatomic) IBOutlet UIImageView *imageViewNetwork;
+@property (weak, nonatomic) IBOutlet UIImageView *networkImageView;
 @property (weak, nonatomic) IBOutlet UISwitch *switchButton;
 
 @end
@@ -39,7 +39,7 @@
 }
 
 - (void) configurationPopUpTableViewCellWith: (SocialNetwork*) socialNetwork andReason:(ReasonType) currentReason {
-    self.imageViewNetwork.image = [UIImage imageNamed:socialNetwork.icon];
+    self.networkImageView.image = [UIImage imageNamed:socialNetwork.icon];
     self.switchButton.tag = socialNetwork.networkType;
     if (!socialNetwork.isLogin || currentReason == MUSConnect) {
         [self.switchButton setOn:NO animated:YES];

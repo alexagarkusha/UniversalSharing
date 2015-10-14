@@ -9,15 +9,15 @@
 #import <UIKit/UIKit.h>
 @protocol MUSPopUpForSharingDelegate <NSObject>
 @optional
-- (void) sharePosts : (NSMutableArray*) arrayChosenNetworksForPost andFlagTwitter :(BOOL) flagTwitter;
+
+- (void) sharePosts : (NSMutableArray*) chosenNetworksPostArray andFlagTwitter :(BOOL) flagTwitter;
+
 @end
 
 
 @interface MUSPopUpForSharing : UIViewController
+
 @property (nonatomic, assign) id <MUSPopUpForSharingDelegate> delegate;
-
-@property (nonatomic, strong) NSArray *arrayOfNetworksPost;
-
-//@property (weak, nonatomic) IBOutlet UIView *popUpView;
+@property (nonatomic, strong) NSArray *networksPostArray;
 
 @end
