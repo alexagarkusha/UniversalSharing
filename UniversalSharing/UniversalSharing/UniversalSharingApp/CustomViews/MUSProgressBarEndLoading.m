@@ -23,8 +23,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint* lableWidthConstraint;
 @property (weak, nonatomic) IBOutlet UIView *contentView;
-//@property (weak, nonatomic) IBOutlet NSLayoutConstraint* viewHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint* viewBottomOffsetConstraint;
+
 @end
 
 static MUSProgressBarEndLoading *model = nil;
@@ -43,7 +43,7 @@ static MUSProgressBarEndLoading *model = nil;
     self = [super initWithFrame:frame];
     if (self) {
         self.view = [self loadViewFromNib];
-       self.view.frame = [self setUpFrame];
+        self.view.frame = [self setUpFrame];
         [self addSubview:self.view];
     }
     return self;
@@ -62,8 +62,7 @@ static MUSProgressBarEndLoading *model = nil;
 -(UIView*)loadViewFromNib {
     NSArray *nibObjects = [[NSBundle mainBundle]loadNibNamed:MUSApp_MUSProgressBarEndLoading_NibName owner:self options:nil];
     self.progressView.progressTintColor = DARK_BROWN_COLOR_WITH_ALPHA_07;
-    //self.progressView.progress = MUSApp_MUSProgressBar_DefaultValueProgress;
-     self.viewBottomOffsetConstraint.constant = MUSApp_MUSProgressBar_View_HeightConstraint;
+    self.viewBottomOffsetConstraint.constant = MUSApp_MUSProgressBar_View_HeightConstraint;
     self.imageViewsArray = [[NSArray alloc] initWithObjects: self.thirdImageView, self.secondImageView, self.firstImageView, nil];
     return [nibObjects firstObject];
 }
@@ -84,83 +83,62 @@ static MUSProgressBarEndLoading *model = nil;
     }
 }
 
-- (void) configurationProgressBarWithImages: (NSArray*) postImagesArray  countSuccessPosted:(NSInteger) countSuccessPosted andCountNetworks:(NSInteger) countNetworks {   
-        if (countSuccessPosted == countNetworks) {
-            self.statusLabel.text = @"Published";
-        }else if(countSuccessPosted == 0){
-            self.statusLabel.text = @"Failed";
-        }else if(countSuccessPosted == 1) {            
-            self.statusLabel.text = [NSString stringWithFormat:@"1 from %ld was published",(long)countNetworks];
-        } else {
-            self.statusLabel.text = [NSString stringWithFormat:@"%ld from %ld were published",(long)countSuccessPosted,(long)countNetworks];            
-        }
-    
+- (void) configurationProgressBarWithImages: (NSArray*) postImagesArray  countSuccessPosted:(NSInteger) countSuccessPosted andCountNetworks:(NSInteger) countNetworks {
+    if (countSuccessPosted == countNetworks) {
+        self.statusLabel.text = MUSApp_MUSProgressBarEndLoading_Label_Title_Published;
+    }else if(countSuccessPosted == 0){
+        self.statusLabel.text = MUSApp_MUSProgressBarEndLoading_Label_Title_Failed;
+    }else if(countSuccessPosted == 1) {
+        self.statusLabel.text = [NSString stringWithFormat:@"1 from %ld was published",(long)countNetworks];
+    } else {
+        self.statusLabel.text = [NSString stringWithFormat:@"%ld from %ld were published",(long)countSuccessPosted,(long)countNetworks];
+    }
     
     [self clearImageViews];
     if(postImagesArray.count){
-        ImageToPost *image;
         self.lableWidthConstraint.constant = MUSApp_MUSProgressBar_Label_DefaultWidthConstraint;
-        for (int i = 0; i < postImagesArray.count; i++) {
-            image = postImagesArray[i];
-            if (i < [self.imageViewsArray count]) {
+        for (int i = 0; i < self.imageViewsArray.count; i++) {
+            if (postImagesArray.count > i) {
+                ImageToPost *image = postImagesArray[i];
                 UIImageView *currentImage =  self.imageViewsArray[i];
                 currentImage.image = image.image;
             }
-            
         }
-        
     } else {
         self.lableWidthConstraint.constant = MUSApp_MUSProgressBar_Label_WidthConstraint;
     }
 }
 
 - (void) endProgressViewWithCountConnect :(NSDictionary *) dictionary andImagesArray : (NSArray*) imagesArray {
-//<<<<<<< HEAD
-//    NSNumber *countConnect = [dictionary objectForKey: @"countConnectPosts"];
-//    NSNumber *numberOfChosenNetworks = [dictionary objectForKey: @"numberOfSocialNetworks"];
-//   [[UIApplication sharedApplication].keyWindow addSubview:self.view];
-//    [self configurationProgressBarWithImages:imagesArray countSuccessPosted: [countConnect integerValue]andCountNetworks: [numberOfChosenNetworks integerValue]];
-//=======
-    
     NSArray *allValuesArray = [dictionary allValues];
     NSPredicate *predicate = [NSPredicate predicateWithFormat: @"Result == %d", MUSConnect];
     NSArray *successArray =[allValuesArray filteredArrayUsingPredicate:predicate];
-    
-   [[UIApplication sharedApplication].keyWindow addSubview:self.view];
-[self configurationProgressBarWithImages:imagesArray countSuccessPosted: successArray.count andCountNetworks: allValuesArray.count];
-    //[self configurationProgressBar : imagesArray : successArray.count: allValuesArray.count];
-    
-    //[self configurationProgressBar:imagesArray : [countConnect integerValue]: [numberOfChosenNetworks integerValue]];
-    
-//>>>>>>> 1c3fdb345ad077a7041612a6685a19e93b2ea9d6
-    [self setHeightView];
+    [self configurationProgressBarWithImages:imagesArray countSuccessPosted: successArray.count andCountNetworks: allValuesArray.count];
+    [[UIApplication sharedApplication].keyWindow addSubview:self.view];
+    [self startProgress];
 }
-- (void) setHeightView {
+
+- (void) startProgress {
     [self.contentView layoutIfNeeded];
     self.viewBottomOffsetConstraint.constant = MUSApp_MUSProgressBar_View_DefaultHeightConstraint;
     [UIView animateWithDuration:2 animations:^{
         [self.contentView layoutIfNeeded];
     } completion:^(BOOL finished) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-            [self.contentView layoutIfNeeded];
-            
+            [self.contentView layoutIfNeeded];            
             self.viewBottomOffsetConstraint.constant = MUSApp_MUSProgressBar_View_HeightConstraint;
             [UIView animateWithDuration:1 animations:^{
-                
                 [self.contentView layoutIfNeeded];
             } completion:^(BOOL finished) {
                 [self.view removeFromSuperview];
-
             }];
         });
     }];
 }
 
 - (void) clearImageViews {
-    for (int i = 0; i < self.imageViewsArray.count; i++) {
-        
-        UIImageView *currentImage =  self.imageViewsArray[i];
-        currentImage.image = nil;
+    for (UIImageView *imageView in self.imageViewsArray) {
+        imageView.image = nil;
     }
 }
 

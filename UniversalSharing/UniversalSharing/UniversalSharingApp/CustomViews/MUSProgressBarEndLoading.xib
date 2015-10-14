@@ -2,23 +2,22 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MUSProgressBarEndLoading">
             <connections>
-                <outlet property="contentView" destination="ggm-bY-nei" id="hjU-jG-emX"/>
+                <outlet property="contentView" destination="ggm-bY-nei" id="g04-QW-tCA"/>
                 <outlet property="firstImageView" destination="hoo-QD-dXf" id="tMo-0p-12E"/>
                 <outlet property="lableWidthConstraint" destination="lfd-qz-df5" id="ZSw-RH-y58"/>
                 <outlet property="progressView" destination="aWg-yl-qRd" id="EdP-re-59Z"/>
                 <outlet property="secondImageView" destination="AZ8-fj-yU0" id="OoR-q0-Rgm"/>
                 <outlet property="statusLabel" destination="hg7-rV-erH" id="6HT-oL-6lP"/>
                 <outlet property="thirdImageView" destination="Wsg-Dq-VYf" id="KxA-qM-bLd"/>
-                <outlet property="viewBottomOffsetConstraint" destination="Bvh-DU-OQJ" id="ZaU-k6-0tF"/>
+                <outlet property="viewBottomOffsetConstraint" destination="Irc-sc-003" id="LRU-7A-eao"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB">
+        <view clipsSubviews="YES" contentMode="scaleToFill" id="iN0-l3-epB">
             <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -65,24 +64,18 @@
                         <constraint firstAttribute="trailing" secondItem="4aF-tY-zub" secondAttribute="trailing" id="4xz-9u-oRH"/>
                         <constraint firstAttribute="bottom" secondItem="4aF-tY-zub" secondAttribute="bottom" id="7PS-2I-ncV"/>
                         <constraint firstItem="hoo-QD-dXf" firstAttribute="leading" secondItem="ggm-bY-nei" secondAttribute="leading" constant="8" id="8ih-dO-fxg"/>
+                        <constraint firstAttribute="height" constant="42" id="CQK-Py-dfY"/>
                         <constraint firstItem="AZ8-fj-yU0" firstAttribute="leading" secondItem="ggm-bY-nei" secondAttribute="leading" constant="7" id="EB9-Tq-jvt"/>
                         <constraint firstItem="AZ8-fj-yU0" firstAttribute="top" secondItem="ggm-bY-nei" secondAttribute="top" constant="5" id="EWg-yo-EHT"/>
-                        <constraint firstItem="hg7-rV-erH" firstAttribute="leading" secondItem="ggm-bY-nei" secondAttribute="leadingMargin" id="GgV-be-zIN"/>
                         <constraint firstItem="hg7-rV-erH" firstAttribute="top" secondItem="ggm-bY-nei" secondAttribute="top" constant="6" id="HQC-XM-bzQ"/>
                         <constraint firstItem="Wsg-Dq-VYf" firstAttribute="top" secondItem="ggm-bY-nei" secondAttribute="top" constant="7" id="OXx-WD-5lX"/>
                         <constraint firstItem="hoo-QD-dXf" firstAttribute="top" secondItem="ggm-bY-nei" secondAttribute="top" constant="3" id="QA4-yU-WnK"/>
                         <constraint firstAttribute="trailing" secondItem="hg7-rV-erH" secondAttribute="trailing" constant="8" id="ZyA-sA-vHI"/>
-                        <constraint firstAttribute="height" constant="42" id="aBB-6Z-S8K"/>
                         <constraint firstItem="Wsg-Dq-VYf" firstAttribute="leading" secondItem="ggm-bY-nei" secondAttribute="leading" constant="6" id="b7o-5R-bsB"/>
                         <constraint firstItem="4aF-tY-zub" firstAttribute="leading" secondItem="ggm-bY-nei" secondAttribute="leading" id="dbq-tj-pk3"/>
                         <constraint firstItem="4aF-tY-zub" firstAttribute="top" secondItem="ggm-bY-nei" secondAttribute="top" id="djv-Cj-wEa"/>
                         <constraint firstItem="hg7-rV-erH" firstAttribute="leading" secondItem="ggm-bY-nei" secondAttribute="leading" constant="47" id="lfd-qz-df5"/>
                     </constraints>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="GgV-be-zIN"/>
-                        </mask>
-                    </variation>
                 </view>
                 <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="1" translatesAutoresizingMaskIntoConstraints="NO" id="aWg-yl-qRd">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="2"/>
@@ -93,22 +86,16 @@
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="ggm-bY-nei" secondAttribute="bottom" id="Bvh-DU-OQJ"/>
                 <constraint firstItem="aWg-yl-qRd" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="GNO-X5-Xwx"/>
                 <constraint firstAttribute="trailing" secondItem="ggm-bY-nei" secondAttribute="trailing" id="H2F-WP-eSu"/>
+                <constraint firstAttribute="bottom" secondItem="ggm-bY-nei" secondAttribute="bottom" id="Irc-sc-003"/>
                 <constraint firstItem="ggm-bY-nei" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="QDp-9m-Gce"/>
-                <constraint firstItem="ggm-bY-nei" firstAttribute="top" secondItem="aWg-yl-qRd" secondAttribute="bottom" id="f6g-eq-Njq"/>
                 <constraint firstItem="aWg-yl-qRd" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="hXv-r7-b9t"/>
                 <constraint firstAttribute="trailing" secondItem="aWg-yl-qRd" secondAttribute="trailing" id="zuQ-EO-77O"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="f6g-eq-Njq"/>
-                </mask>
-            </variation>
-            <point key="canvasLocation" x="259" y="244"/>
+            <point key="canvasLocation" x="414" y="180"/>
         </view>
     </objects>
 </document>
