@@ -127,7 +127,7 @@ static MUSProgressBarEndLoading *model = nil;
     NSArray *successArray =[allValuesArray filteredArrayUsingPredicate:predicate];
     
    [[UIApplication sharedApplication].keyWindow addSubview:self.view];
-[self configurationProgressBarWithImages:imagesArray countSuccessPosted: successArray.countandCountNetworks: allValuesArray.count];
+[self configurationProgressBarWithImages:imagesArray countSuccessPosted: successArray.count andCountNetworks: allValuesArray.count];
     //[self configurationProgressBar : imagesArray : successArray.count: allValuesArray.count];
     
     //[self configurationProgressBar:imagesArray : [countConnect integerValue]: [numberOfChosenNetworks integerValue]];
