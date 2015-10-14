@@ -7,14 +7,14 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MUSProgressBarEndLoading">
             <connections>
-                <outlet property="imageViewPostFirst" destination="hoo-QD-dXf" id="4FA-Cf-MoE"/>
-                <outlet property="imageViewPostSecond" destination="AZ8-fj-yU0" id="8fC-Q3-AuY"/>
-                <outlet property="imageViewPostThird" destination="Wsg-Dq-VYf" id="Pea-AZ-7Va"/>
+                <outlet property="contentView" destination="ggm-bY-nei" id="hjU-jG-emX"/>
+                <outlet property="firstImageView" destination="hoo-QD-dXf" id="tMo-0p-12E"/>
                 <outlet property="lableWidthConstraint" destination="lfd-qz-df5" id="ZSw-RH-y58"/>
                 <outlet property="progressView" destination="aWg-yl-qRd" id="EdP-re-59Z"/>
+                <outlet property="secondImageView" destination="AZ8-fj-yU0" id="OoR-q0-Rgm"/>
                 <outlet property="statusLabel" destination="hg7-rV-erH" id="6HT-oL-6lP"/>
-                <outlet property="viewHeightConstraint" destination="aBB-6Z-S8K" id="UD1-Iq-hoR"/>
-                <outlet property="viewWithPicsAndLable" destination="ggm-bY-nei" id="zoQ-zF-6TJ"/>
+                <outlet property="thirdImageView" destination="Wsg-Dq-VYf" id="KxA-qM-bLd"/>
+                <outlet property="viewBottomOffsetConstraint" destination="Bvh-DU-OQJ" id="ZaU-k6-0tF"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -22,12 +22,6 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="1" translatesAutoresizingMaskIntoConstraints="NO" id="aWg-yl-qRd">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="2"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="2" id="KdD-9a-3XK"/>
-                    </constraints>
-                </progressView>
                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ggm-bY-nei">
                     <rect key="frame" x="0.0" y="2" width="600" height="42"/>
                     <subviews>
@@ -90,9 +84,16 @@
                         </mask>
                     </variation>
                 </view>
+                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="1" translatesAutoresizingMaskIntoConstraints="NO" id="aWg-yl-qRd">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="2"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="2" id="KdD-9a-3XK"/>
+                    </constraints>
+                </progressView>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="ggm-bY-nei" secondAttribute="bottom" id="Bvh-DU-OQJ"/>
                 <constraint firstItem="aWg-yl-qRd" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="GNO-X5-Xwx"/>
                 <constraint firstAttribute="trailing" secondItem="ggm-bY-nei" secondAttribute="trailing" id="H2F-WP-eSu"/>
                 <constraint firstItem="ggm-bY-nei" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="QDp-9m-Gce"/>
@@ -102,6 +103,11 @@
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="f6g-eq-Njq"/>
+                </mask>
+            </variation>
             <point key="canvasLocation" x="259" y="244"/>
         </view>
     </objects>

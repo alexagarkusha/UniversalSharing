@@ -13,7 +13,7 @@
                 <outlet property="secondImageView" destination="uL9-v1-Pyi" id="wc2-52-KAf"/>
                 <outlet property="statusLabel" destination="jR6-a5-0uL" id="Gbj-Am-IfC"/>
                 <outlet property="thirdImageView" destination="KwB-cm-djc" id="Heh-Aj-nbI"/>
-                <outlet property="viewHeightConstraint" destination="Igk-Oc-xL2" id="MPY-et-4VC"/>
+                <outlet property="viewBottomOffsetConstraint" destination="CH1-oh-yYA" id="wA6-nu-JKA"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -21,13 +21,6 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ItA-W5-AYK">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="2"/>
-                    <animations/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="2" id="cMI-J8-imY"/>
-                    </constraints>
-                </progressView>
                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wsw-cr-JEV">
                     <rect key="frame" x="0.0" y="2" width="600" height="42"/>
                     <subviews>
@@ -58,7 +51,7 @@
                                 <constraint firstAttribute="width" constant="35" id="sgO-uS-8hz"/>
                             </constraints>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jR6-a5-0uL">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Publishing" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jR6-a5-0uL">
                             <rect key="frame" x="47" y="6" width="545" height="29"/>
                             <animations/>
                             <constraints>
@@ -80,6 +73,7 @@
                         <constraint firstItem="jR6-a5-0uL" firstAttribute="leading" secondItem="KwB-cm-djc" secondAttribute="trailing" constant="6" id="Omq-pu-GpC"/>
                         <constraint firstItem="KwB-cm-djc" firstAttribute="top" secondItem="Wsw-cr-JEV" secondAttribute="top" constant="7" id="QNO-yU-Sc5"/>
                         <constraint firstItem="uL9-v1-Pyi" firstAttribute="top" secondItem="Wsw-cr-JEV" secondAttribute="top" constant="5" id="RPj-Yc-mwl"/>
+                        <constraint firstAttribute="height" constant="42" id="Ra7-dg-soY"/>
                         <constraint firstItem="i1h-iQ-bkh" firstAttribute="top" secondItem="Wsw-cr-JEV" secondAttribute="top" constant="3" id="RoL-Up-DZL"/>
                         <constraint firstAttribute="trailing" secondItem="jR6-a5-0uL" secondAttribute="trailing" constant="8" id="cdT-2c-D5M"/>
                         <constraint firstAttribute="trailing" secondItem="Au9-no-tud" secondAttribute="trailing" id="hJ8-lY-LR8"/>
@@ -90,15 +84,24 @@
                     </constraints>
                     <variation key="default">
                         <mask key="constraints">
+                            <exclude reference="Igk-Oc-xL2"/>
                             <exclude reference="1ka-d4-xN6"/>
                             <exclude reference="Omq-pu-GpC"/>
                         </mask>
                     </variation>
                 </view>
+                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ItA-W5-AYK">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="2"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="2" id="cMI-J8-imY"/>
+                    </constraints>
+                </progressView>
             </subviews>
             <animations/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="Wsw-cr-JEV" secondAttribute="bottom" id="CH1-oh-yYA"/>
                 <constraint firstItem="Wsw-cr-JEV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="UnZ-dM-sJt"/>
                 <constraint firstAttribute="trailing" secondItem="ItA-W5-AYK" secondAttribute="trailing" id="b39-UC-Nzh"/>
                 <constraint firstItem="Wsw-cr-JEV" firstAttribute="top" secondItem="ItA-W5-AYK" secondAttribute="bottom" id="hMw-Yv-VwI"/>
@@ -108,6 +111,11 @@
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="hMw-Yv-VwI"/>
+                </mask>
+            </variation>
             <point key="canvasLocation" x="25" y="164"/>
         </view>
     </objects>

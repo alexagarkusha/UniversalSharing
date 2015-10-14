@@ -113,16 +113,16 @@ static MultySharingManager *model = nil;
             //NSLog(@"Current post ID = %@, networktype =%ld", networkPost.postID, (long)networkPost.networkType);
             if (counterOfSocialNetwork == numberOfSocialNetworks) {
                 [weakMultySharingManager savePostImagesToDocument: postCopy];
-                //NSLog(@"Current post IDs = %@", postCopy.arrayWithNetworkPostsId);
                 [[DataBaseManager sharedManager] insertObjectIntoTable : postCopy];
-                //NSLog(@"%@", blockResultString);
                 [[MUSPostManager manager] updatePostsArray];
                 [weakMultySharingManager updatePostInfoNotification];
                 NSLog(@"END LOAD");
                 
                                 resultDictionary = [[NSDictionary alloc] initWithObjectsAndKeys: [NSNumber numberWithInt:counterOfSocialNetwork], @"numberOfSocialNetworks", [NSNumber numberWithInt:countConnectPosts], @"countConnectPosts", nil];
-                
+                ////////////////////////////////////////////////////////
+                [[MUSProgressBar sharedProgressBar] stopProgress];
                 [[MUSProgressBarEndLoading sharedProgressBarEndLoading] endProgressViewWithCountConnect:resultDictionary andImagesArray:newPost.imagesArray];
+                //////////////////////////////////////////////////////////////////////
                 weakMultySharingManager.copyComplition ([NSNumber numberWithInt:countConnectPosts], error);
 
                 [weakMultySharingManager checkArrayWithQueueOfPosts];

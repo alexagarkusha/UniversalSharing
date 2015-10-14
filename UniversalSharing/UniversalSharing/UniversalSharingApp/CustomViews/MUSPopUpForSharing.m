@@ -13,12 +13,7 @@
 #import "MUSPopUpTableViewCell.h"
 
 @interface MUSPopUpForSharing ()<UITableViewDelegate, UITableViewDataSource, MUSPopUpTableViewCellDelegate>
-@property (weak, nonatomic) IBOutlet UISwitch *switchFacebook;
-@property (weak, nonatomic) IBOutlet UISwitch *switchTwitter;
-@property (weak, nonatomic) IBOutlet UISwitch *switchVK;
-@property (weak, nonatomic) IBOutlet UIImageView *imageViewFaebook;
-@property (weak, nonatomic) IBOutlet UIImageView *imageViewTwitter;
-@property (weak, nonatomic) IBOutlet UIImageView *imageViewVK;
+
 @property (weak, nonatomic) IBOutlet UIView *secondView;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UIButton *buttonShare;
@@ -26,6 +21,7 @@
 //===
 @property (strong, nonatomic) NSArray *arrayWithNetworksObj;
 @property (strong, nonatomic) NSMutableDictionary *stateSwitchButons;
+
 @end
 
 @implementation MUSPopUpForSharing
@@ -36,7 +32,7 @@
     self.tableView.delegate = self;
    // self.switchFacebook.tintColor = [UIColor redColor];
     [self setColorAndRudius];
-    [self createArraySwirtchButtons];
+    [self createSwitchButtonsArray];
     //[self setSwitches];
 //    NSArray *arrayWithNetworks = @[@(Twitters), @(VKontakt), @(Facebook)];
 //    self.arrayWithNetworksObj = [[SocialManager sharedManager] networks : arrayWithNetworks];
@@ -48,14 +44,14 @@
     //[self setSwitches];
     //[self viewDidLoad];
     //[self.view setNeedsDisplay];
-    [self createArraySwirtchButtons];
+    [self createSwitchButtonsArray];
     
     [self.tableView reloadData];
     [super viewWillAppear:animated];
     
 }
 
-- (void) createArraySwirtchButtons {
+- (void) createSwitchButtonsArray {
     self.arrayWithNetworksObj = [[SocialManager sharedManager] allNetworks];
     __block NSInteger count = 0;
     if (_stateSwitchButons) {

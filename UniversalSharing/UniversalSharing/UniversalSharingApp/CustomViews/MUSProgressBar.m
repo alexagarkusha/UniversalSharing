@@ -12,6 +12,7 @@
 
 @interface MUSProgressBar()
 
+@property (strong, nonatomic)  UIView *view;
 @property (strong, nonatomic) NSArray *imageViewsArray;
 //===
 @property (weak, nonatomic) IBOutlet UIProgressView *progressView;
@@ -21,8 +22,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint* lableWidthConstraint;
 @property (weak, nonatomic) IBOutlet UIView *contentView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint* viewHeightConstraint;
+//@property (weak, nonatomic) IBOutlet NSLayoutConstraint* viewHeightConstraint;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint* viewBottomOffsetConstraint;
 @end
 
 static MUSProgressBar *model = nil;
@@ -41,13 +43,7 @@ static MUSProgressBar *model = nil;
     self = [super initWithFrame:frame];
     if (self) {
         self.view = [self loadViewFromNib];
-        CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
-        ///////////////////////////////////////////////////////////////////
-        UITabBarController *tabBarController = (UITabBarController *)[UIApplication sharedApplication].keyWindow.rootViewController;
-        UINavigationController *navigationController = (UINavigationController *)tabBarController.selectedViewController;
-        CGFloat navigationBarHeight = navigationController.navigationBar.frame.size.height;
-        self.view.frame = CGRectMake(0, statusBarHeight, self.view.frame.size.width, navigationBarHeight);
-        //////////////////////////////////////////////////////////////////
+        self.view.frame = [self setUpFrame];
         [self addSubview:self.view];
     }
     return self;
@@ -57,97 +53,138 @@ static MUSProgressBar *model = nil;
     self = [super initWithCoder:coder];
     if (self) {
         self.view = [self loadViewFromNib];
+        self.view.frame = [self setUpFrame];
         [self addSubview:self.view];
     }
     return self;
 }
 
 -(UIView*)loadViewFromNib {
-    NSArray *nibObjects = [[NSBundle mainBundle]loadNibNamed:@"MUSProgressBar" owner:self options:nil];
+    NSArray *nibObjects = [[NSBundle mainBundle]loadNibNamed: MUSApp_MUSProgressBar_NibName owner:self options:nil];
     self.progressView.progressTintColor = DARK_BROWN_COLOR_WITH_ALPHA_07;
-    self.progressView.progress = 0;
-    self.viewHeightConstraint.constant = 0;
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startProgressViewWithImages:) name:@"StartSharePost" object:nil];
-//    ////////
+    self.progressView.progress = MUSApp_MUSProgressBar_DefaultValueProgress;
+    self.viewBottomOffsetConstraint.constant = MUSApp_MUSProgressBar_View_HeightConstraint;
      self.imageViewsArray = [[NSArray alloc] initWithObjects: self.thirdImageView, self.secondImageView, self.firstImageView, nil];
     return [nibObjects firstObject];
 }
 
-- (void) awakeFromNib {
-   
-}
-
-- (void) configurationProgressBar: (NSArray*) postImagesArray{
-         self.statusLabel.text = @"Publishing";
-   
-    [self clearImageViews];
-    if(postImagesArray.count){
-        ImageToPost *image;
-        self.lableWidthConstraint.constant = 50;
-        for (int i = 0; i < postImagesArray.count; i++) {
-            image = postImagesArray[i];
-            if (i < 3) {
-                UIImageView *currentImage =  self.imageViewsArray[i];
-                currentImage.image = image.image;
-            }
-        }
+- (CGRect) setUpFrame {
+    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+    if ([[UIApplication sharedApplication].keyWindow.rootViewController isKindOfClass:[UITabBarController class]]) {
+        UITabBarController *tabBarController = (UITabBarController *)[UIApplication sharedApplication].keyWindow.rootViewController;
+        UINavigationController *navigationController = (UINavigationController *)tabBarController.selectedViewController;
+        CGFloat navigationBarHeight = navigationController.navigationBar.frame.size.height;
+        return  CGRectMake(0, statusBarHeight, self.view.frame.size.width, navigationBarHeight);
     } else {
-        self.lableWidthConstraint.constant = 8;
+        return  CGRectMake(0, statusBarHeight, self.view.frame.size.width, 44);
     }
 }
 
-- (void) setHeightView {
-    self.progressView.progress = 0;
+- (void) configurationProgressBar: (NSArray*) postImagesArray {   
+    [self clearImageViews];
+    
+    if(postImagesArray.count){
+        //ImageToPost *image;
+        self.lableWidthConstraint.constant = MUSApp_MUSProgressBar_Label_DefaultWidthConstraint;
+        
+        for (int i = 0; i< self.imageViewsArray.count; i++) {
+            if (postImagesArray.count > i) {
+                ImageToPost *image = postImagesArray[i];
+                
+                UIImageView *currentImage =  self.imageViewsArray[i];
+                currentImage.image = image.image;
+                
+            }
+        }
+        
+//        for (ImageToPost *image in postImagesArray) {
+//            
+//            //if (i < [self.imageViewsArray count]) {
+//                UIImageView *currentImage =  self.imageViewsArray[i];
+//                currentImage.image = image.image;
+//            //}
+//        }
+//        
+//        
+//        for (int i = 0; i < postImagesArray.count; i++) {
+//            
+//        }
+    } else {
+        self.lableWidthConstraint.constant = MUSApp_MUSProgressBar_Label_WidthConstraint;
+    }
+}
+
+- (void) startProgress {
+    self.progressView.progress = MUSApp_MUSProgressBar_DefaultValueProgress;
     [self.contentView layoutIfNeeded];
     
     __weak MUSProgressBar *weakSelf = self;
-   self.viewHeightConstraint.constant = 42;
+    self.viewBottomOffsetConstraint.constant = MUSApp_MUSProgressBar_View_DefaultHeightConstraint;
     [UIView animateWithDuration:1 animations:^{
         
         [weakSelf.contentView layoutIfNeeded];
     }];
     [UIView commitAnimations];
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
         [weakSelf.contentView layoutIfNeeded];
         
-        weakSelf.viewHeightConstraint.constant = 0;
-        [UIView animateWithDuration:1 animations:^{
-            
-            [weakSelf.contentView layoutIfNeeded];
-            //[self.view removeFromSuperview];
-//            if (self.progressView.progress == 1) {
-//                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-//                        [self.view removeFromSuperview];
-//                         });
+        weakSelf.viewBottomOffsetConstraint.constant = MUSApp_MUSProgressBar_View_HeightConstraint;
+
+      [UIView animateWithDuration:1 animations:^{
+       [weakSelf.contentView layoutIfNeeded];
+        } completion:^(BOOL finished) {
+//            _flag = YES;
+//            if (self.progressView.progress == MUSApp_MUSProgressBar_ValueProgress) {
+//                _flagRemoveView = NO;
+//               // dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.8 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+//                    [self.view removeFromSuperview];
+//                //});
 //            }
         }];
-        [UIView commitAnimations];
     });
 }
 
 - (void) startProgressViewWithImages :(NSArray*) postImagesArray {
-    [[UIApplication sharedApplication].keyWindow addSubview:self.view];
+    
     [self configurationProgressBar:postImagesArray];
-    [self setHeightView];
+    [[UIApplication sharedApplication].keyWindow addSubview:self.view];
+    [self startProgress];
 }
+
 - (void) setProgressViewSize :(float) progress {
     self.progressView.progress = progress;
-    if (self.progressView.progress == 1) {
-         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-        [self.view removeFromSuperview];
-         });
-    }
+//    if (self.progressView.progress == MUSApp_MUSProgressBar_ValueProgress && _flagRemoveView == YES && _flag == YES) {
+//         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+//        [self.view removeFromSuperview];
+//         });
+//    }
+}
+
+-(void)stopProgress{
+    __weak MUSProgressBar *weakSelf = self;
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [weakSelf.contentView layoutIfNeeded];
+        
+        weakSelf.viewBottomOffsetConstraint.constant = MUSApp_MUSProgressBar_View_HeightConstraint;
+        
+        
+        [UIView animateWithDuration:1 animations:^{
+            [weakSelf.contentView layoutIfNeeded];
+        } completion:^(BOOL finished) {
+                [self.view removeFromSuperview];
+             
+        }];
+    });
 }
 
 - (void) clearImageViews {
-    for (int i = 0; i < self.imageViewsArray.count; i++) {
-            UIImageView *currentImage =  self.imageViewsArray[i];
-            currentImage.image = nil;
+    
+    for (UIImageView *imageView in self.imageViewsArray) {
+        imageView.image = nil;
     }
 }
 
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
 @end

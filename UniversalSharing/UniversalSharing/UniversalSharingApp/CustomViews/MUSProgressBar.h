@@ -10,11 +10,8 @@
 
 @interface MUSProgressBar : UIView
 
-@property (strong, nonatomic)  UIView *view;
-//===
 + (MUSProgressBar*) sharedProgressBar;
-- (void) configurationProgressBar: (NSArray*) postImagesArray;
-- (void) setHeightView;
 - (void) setProgressViewSize :(float) progress;
 - (void) startProgressViewWithImages :(NSArray*) postImagesArray;
+- (void) stopProgress;
 @end
