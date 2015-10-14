@@ -14,4 +14,5 @@
 - (void) setProgressViewSize :(float) progress;
 - (void) startProgressViewWithImages :(NSArray*) postImagesArray;
 - (void) stopProgress;
+
 @end

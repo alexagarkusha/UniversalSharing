@@ -118,6 +118,8 @@ NSString *const MUSApp_MUSUserDetailViewController_User_ClientID = @"clientID";
 
 NSString *const MUSApp_MUSProgressBar_NibName = @"MUSProgressBar";
 NSString *const MUSApp_MUSProgressBarEndLoading_NibName = @"MUSProgressBarEndLoading";
+NSString *const MUSApp_MUSProgressBarEndLoading_Label_Title_Published = @"Published";
+NSString *const MUSApp_MUSProgressBarEndLoading_Label_Title_Failed = @"Failed";
 NSInteger const MUSApp_MUSProgressBar_DefaultValueProgress = 0;
 NSInteger const MUSApp_MUSProgressBar_ValueProgress = 1;
 NSInteger const MUSApp_MUSProgressBar_View_DefaultHeightConstraint = 0;
