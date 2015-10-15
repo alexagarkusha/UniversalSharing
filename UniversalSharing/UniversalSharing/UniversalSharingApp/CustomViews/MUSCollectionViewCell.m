@@ -87,12 +87,49 @@
 }
 
 - (void)addPhotoToCollectionForFirstSection:(id)sender {
-    [[NSNotificationCenter defaultCenter] postNotificationName:notificationImagePickerForCollection object:nil];
-    
+    [[NSNotificationCenter defaultCenter] postNotificationName:MUSShowImagePickerForAddImageInCollectionView object:nil];
 }
 
 - (IBAction)deletePhoto:(id)sender {
     [self.delegate deletePhotoBySelectedImageIndex: self.indexPath];
 }
+
+
+
+/*
+ - (void) editableCellConfiguration {
+    self.deleteIconImageView.hidden = NO;
+    self.deletePhotoButtonOutlet.hidden = NO;
+    self.deleteIconBackgroungImageView.hidden = NO;
+    [self startQuivering];
+ }
+ 
+ - (void) notEditableCellConfiguration {
+    [self stopQuivering];
+    self.deleteIconImageView.hidden = YES;
+    self.deletePhotoButtonOutlet.hidden = YES;
+    self.deleteIconBackgroungImageView.hidden = YES;
+ }
+
+ - (void) startQuivering {
+    CABasicAnimation *quiverAnim = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
+    float startAngle = (-4) * M_PI/180.0;
+    float stopAngle = -startAngle;
+    quiverAnim.fromValue = [NSNumber numberWithFloat:startAngle];
+    quiverAnim.toValue = [NSNumber numberWithFloat:3 * stopAngle];
+    quiverAnim.autoreverses = YES;
+    quiverAnim.duration = 0.2;
+    quiverAnim.repeatCount = HUGE_VALF;
+    float timeOffset = (float)(arc4random() % 100)/100 - 0.50;
+    quiverAnim.timeOffset = timeOffset;
+    CALayer *layerDeleteIconIV = self.deleteIconImageView.layer;
+    CALayer *layerDeleteIconBackgroundIV = self.deleteIconBackgroungImageView.layer;
+=======
+    [[NSNotificationCenter defaultCenter] postNotificationName:notificationImagePickerForCollection object:nil];
+>>>>>>> 5aba6b074a89608b7bd9b2f4506418c85f9fccf9
+    
+}
+
+*/
 
 @end

@@ -150,7 +150,11 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 
 - (void) doBack:(id)sender {
-    [[NSNotificationCenter defaultCenter] postNotificationName:MUSUpdateCollectionNotification object:nil];
+//<<<<<<< HEAD
+//    [[NSNotificationCenter defaultCenter] postNotificationName:MUSUpdateCollectionNotification object:nil];
+//=======
+    [[NSNotificationCenter defaultCenter] postNotificationName:MUSUpdateCollectionViewNotification object:nil];
+//>>>>>>> 45cecca7282086d89dc88b190980f2512a190ad6
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -168,7 +172,11 @@ static NSString * const reuseIdentifier = @"Cell";
             [_topBar initializeCounterImages: [NSString stringWithFormat:@"%ld from %lu",(long)visibleIndexPath.row + 1,(unsigned long)[self.currentPost.imagesArray  count]]];
         } else {
             [_topBar initializeCounterImages: [NSString stringWithFormat:@"%ld from %lu",(long) 0, (unsigned long)[self.currentPost.imagesArray  count]]];
-            [[NSNotificationCenter defaultCenter] postNotificationName:MUSUpdateCollectionNotification object:nil];
+//<<<<<<< HEAD
+//            [[NSNotificationCenter defaultCenter] postNotificationName:MUSUpdateCollectionNotification object:nil];
+//=======
+            [[NSNotificationCenter defaultCenter] postNotificationName:MUSUpdateCollectionViewNotification object:nil];
+//>>>>>>> 45cecca7282086d89dc88b190980f2512a190ad6
             [self.navigationController popViewControllerAnimated:YES];
         }
     }

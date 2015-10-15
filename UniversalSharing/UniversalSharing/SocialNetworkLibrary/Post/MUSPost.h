@@ -73,6 +73,8 @@
 
 - (id)copy;
 
+- (void) clear;
+
 - (void) updateAllNetworkPostsFromDataBaseForCurrentPost;
 
 - (void) saveIntoDataBase;

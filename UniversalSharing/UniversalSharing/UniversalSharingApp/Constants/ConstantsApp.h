@@ -35,6 +35,7 @@ FOUNDATION_EXPORT NSString *const MUSApp_SegueIdentifier_GoToUserDetailViewContr
 FOUNDATION_EXPORT NSString *const MUSApp_SegueIdentifier_GoToDetailPostViewController;
 FOUNDATION_EXPORT NSString *const MUSApp_SegueIdentifier_GoToMediaGalleryViewController;
 
+
 #pragma mark TextView
 
 FOUNDATION_EXPORT NSString *const MUSApp_TextView_PlaceholderText;
@@ -93,13 +94,21 @@ FOUNDATION_EXPORT NSInteger const MUSApp_MUSPhotoManager_Error_NO_Camera_Code;
 
 FOUNDATION_EXPORT NSString *const MUSApp_MUSPhotoManager_Alert_Title_Share_Photo;
 
+//<<<<<<< HEAD
 #pragma mark - Notifications
-
-FOUNDATION_EXPORT NSString *const MUSUpdateCollectionNotification;
-#warning "change"
-
-FOUNDATION_EXPORT NSString *const notificationImagePickerForCollection;
-
+//=======
+FOUNDATION_EXPORT NSString *const MUSShowImagePickerForAddImageInCollectionView;
+FOUNDATION_EXPORT NSString *const MUSUpdateCollectionViewNotification;
+//>>>>>>> 45cecca7282086d89dc88b190980f2512a190ad6
+//
+//FOUNDATION_EXPORT NSString *const MUSUpdateCollectionNotification;
+//#warning "change"
+//
+//<<<<<<< HEAD
+//FOUNDATION_EXPORT NSString *const notificationImagePickerForCollection;
+//
+//=======
+//>>>>>>> 45cecca7282086d89dc88b190980f2512a190ad6
 #pragma mark - MUSGaleryView
 
 FOUNDATION_EXPORT NSString *const MUSApp_MUSGaleryView_NibName;
