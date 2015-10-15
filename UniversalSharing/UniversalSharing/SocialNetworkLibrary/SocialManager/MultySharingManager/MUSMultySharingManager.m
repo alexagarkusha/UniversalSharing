@@ -126,7 +126,7 @@ static MUSMultySharingManager *model = nil;
                 [weakMultySharingManager checkPostsQueue];
             }
 
-        } progressLoadingBlock:^(id currentNetworkType, float result) {
+        } loadingBlock : ^(id currentNetworkType, float result) {
             
             float totalProgress = [weakMultySharingManager totalResultOfLoadingToSocialNetworks: loadingObjectsDictionary withCurrentObject: currentNetworkType andResult: result];
             weakMultySharingManager.progressLoadingBlock (totalProgress / numberOfSocialNetworks);

@@ -25,6 +25,8 @@ typedef NS_ENUM(NSInteger, DetailPostVC_CellType) {
     PostLocationCellType,
 };
 
+typedef void (^ProgressLoadingImagesToVK)(int objectOfLoading, long long bytesLoaded, long long bytesTotal);
+
 typedef void (^Complition)(id result, NSError *error);
 
 #pragma mark SegueIdentifier

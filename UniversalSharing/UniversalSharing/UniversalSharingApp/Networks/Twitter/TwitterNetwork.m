@@ -30,7 +30,7 @@
 @property (strong, nonatomic) NSArray *accountsArray;
 @property (strong, nonatomic) ACAccount *twitterAccount;
 @property (assign, nonatomic) BOOL doubleTouchFlag;
-@property (copy, nonatomic) ProgressLoading copyProgressLoading;
+@property (copy, nonatomic) LoadingBlock loadingBlock;
 
 @end
 
@@ -157,15 +157,15 @@ static TwitterNetwork *model = nil;
 
 #pragma mark - sharePost
 
-- (void) sharePost:(MUSPost *)post withComplition:(Complition)block progressLoadingBlock:(ProgressLoading)blockLoading {
+- (void) sharePost:(MUSPost *)post withComplition:(Complition)block loadingBlock: (LoadingBlock)loadingBlock {
     if (![[MUSInternetConnectionManager connectionManager] isInternetConnection]){
         MUSNetworkPost *networkPost = [MUSNetworkPost create];
         networkPost.networkType = MUSTwitters;
         block(networkPost,[self errorConnection]);
-        blockLoading ([NSNumber numberWithInteger: self.networkType], 1.0f);
+        loadingBlock ([NSNumber numberWithInteger: self.networkType], 1.0f);
         return;
     }
-    self.copyProgressLoading = blockLoading;
+    self.loadingBlock = loadingBlock;
     self.copyComplition = block;
     if ([post.imagesArray count]) {
         [self sharePostWithPictures: post];
@@ -204,7 +204,7 @@ static TwitterNetwork *model = nil;
     
     [client sendTwitterRequest:preparedRequest
                     completion:^(NSURLResponse *urlResponse, NSData *responseData, NSError *error){
-            weakSelf.copyProgressLoading ([NSNumber numberWithInteger: self.networkType], 1.0f);
+            weakSelf.loadingBlock ([NSNumber numberWithInteger: self.networkType], 1.0f);
             
                 if(!error){
                     NSError *jsonError = nil;
@@ -272,7 +272,7 @@ static TwitterNetwork *model = nil;
             }
             [client sendTwitterRequest : request
                             completion : ^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-                weakSelf.copyProgressLoading ([NSNumber numberWithInteger: self.networkType], 1.0f);
+                weakSelf.loadingBlock ([NSNumber numberWithInteger: self.networkType], 1.0f);
                     if (!connectionError) {
                         NSError *jsonError = nil;
                         NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:data
@@ -299,7 +299,7 @@ static TwitterNetwork *model = nil;
         } else {
             networkPostCopy.reason = MUSErrorConnection;
             weakSelf.copyComplition (networkPostCopy, error);
-            weakSelf.copyProgressLoading ([NSNumber numberWithInteger: self.networkType], 1.0f);
+            weakSelf.loadingBlock ([NSNumber numberWithInteger: self.networkType], 1.0f);
         }
     }];
 }
@@ -434,11 +434,11 @@ static TwitterNetwork *model = nil;
 
 #pragma mark - updateNetworkPostWithComplition
 
-- (void) updateNetworkPostWithComplition: (UpdateNetworkPostsComplition) block {
+- (void) updateNetworkPostWithComplition: (UpdateNetworkPostsBlock) updateNetworkPostsBlock {
     NSArray * networksPostsIDs = [[MUSPostManager manager] networkPostsArrayForNetworkType: self.networkType];
     
     if (![[MUSInternetConnectionManager connectionManager] isInternetConnection] || !networksPostsIDs.count || (![[MUSInternetConnectionManager connectionManager] isInternetConnection] && networksPostsIDs.count)) {
-        block (MUSTwitterError);
+        updateNetworkPostsBlock (MUSTwitterError);
         return;
     }
 
@@ -449,7 +449,7 @@ static TwitterNetwork *model = nil;
         [self obtainCountOfLikesAndCommentsFromPost: networkPost withComplition:^(id result, NSError *error) {
             counterOfNetworkPosts++;
             if (counterOfNetworkPosts == numberOfNetworkPosts) {
-                block (MUSTwitterSuccessUpdateNetworkPost);
+                updateNetworkPostsBlock (MUSTwitterSuccessUpdateNetworkPost);
             }
         }];
     }];

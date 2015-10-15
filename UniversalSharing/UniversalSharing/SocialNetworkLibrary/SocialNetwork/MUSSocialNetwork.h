@@ -68,7 +68,7 @@
  @params current post of @class Post
  @warning This method requires that you have been login in Social Network.
 */
-- (void) sharePost : (MUSPost*) post withComplition : (Complition) block progressLoadingBlock :(ProgressLoading) blockLoading;
+- (void) sharePost : (MUSPost*) post withComplition : (Complition) block loadingBlock :(LoadingBlock) loadingBlock;
 
 /*!
  @abstract return a list of objects like @class Place found by the search params.
@@ -77,7 +77,7 @@
  */
 - (void) obtainPlacesArrayForLocation : (MUSLocation*) location withComplition : (Complition) block;
 
-- (void) updateNetworkPostWithComplition : (UpdateNetworkPostsComplition) block;
+- (void) updateNetworkPostWithComplition : (UpdateNetworkPostsBlock) updateNetworkPostsBlock;
 
 - (void) updateUserInSocialNetwork;
 
