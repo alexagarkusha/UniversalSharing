@@ -10,9 +10,9 @@
 
 @interface MUSTopBarForMediaGalleryViewController : UIView
 
-@property (weak, nonatomic) IBOutlet UIButton *buttonBack;
+@property (weak, nonatomic) IBOutlet UIButton *backButton;
 //===
-- (void) initializeLableCountImages:(NSString *)stringLableCountImages;
+- (void) initializeCounterImages:(NSString *)stringFiguredOutCounterImages;
 - (void) hidePropertiesWithAnimation;
 
 @end

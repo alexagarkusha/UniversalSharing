@@ -154,7 +154,12 @@ FOUNDATION_EXPORT NSInteger const MUSApp_MUSProgressBar_View_HeightConstraint;
 FOUNDATION_EXPORT NSInteger const MUSApp_MUSProgressBar_Label_DefaultWidthConstraint;
 FOUNDATION_EXPORT NSInteger const MUSApp_MUSProgressBar_Label_WidthConstraint;
 
+#pragma mark - MUSToolBarForMediaGalleryViewController
 
+FOUNDATION_EXPORT NSString *const MUSApp_MUSToolBarForMediaGalleryViewController_NibName;
 
+#pragma mark - MUSTopBarForMediaGalleryViewController
+
+FOUNDATION_EXPORT NSString *const MUSApp_MUSTopBarForMediaGalleryViewController_NibName;
 
 @end

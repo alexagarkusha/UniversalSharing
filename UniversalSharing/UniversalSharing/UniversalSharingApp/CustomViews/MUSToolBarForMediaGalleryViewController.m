@@ -7,6 +7,7 @@
 //
 
 #import "MUSToolBarForMediaGalleryViewController.h"
+#import "ConstantsApp.h"
 
 @interface MUSToolBarForMediaGalleryViewController()
 
@@ -39,7 +40,7 @@
 }
 
 -(UIView*)loadViewFromNib {
-    NSArray *nibObjects = [[NSBundle mainBundle]loadNibNamed:@"MUSToolBarForMediaGalleryViewController" owner:self options:nil];
+    NSArray *nibObjects = [[NSBundle mainBundle]loadNibNamed:MUSApp_MUSToolBarForMediaGalleryViewController_NibName owner:self options:nil];
     return [nibObjects firstObject];
 }
 
