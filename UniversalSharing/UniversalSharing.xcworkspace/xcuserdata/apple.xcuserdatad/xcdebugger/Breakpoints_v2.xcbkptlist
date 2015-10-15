@@ -127,14 +127,14 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "741"
             endingLineNumber = "741"
-            landmarkName = "-prepareForSegue:sender:"
-            landmarkType = "5">
+            landmarkName = "@implementation MUSShareViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "UniversalSharing/UniversalSharingApp/Controllers/ShareViewController/MUSShareViewController.m"
@@ -143,7 +143,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "157"
             endingLineNumber = "157"
-            landmarkName = "-viewWillAppear:"
+            landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -159,7 +159,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "254"
             endingLineNumber = "254"
-            landmarkName = "-initiationMUSShareViewController"
+            landmarkName = "-btnShareLocationTapped:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -175,7 +175,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "456"
             endingLineNumber = "456"
-            landmarkName = "-shareToSocialNetwork:"
+            landmarkName = "-endProgressViewWithCountConnect:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -191,7 +191,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "390"
             endingLineNumber = "390"
-            landmarkName = "-sharePosts:"
+            landmarkName = "-keyboardWillShow:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -207,8 +207,40 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "426"
             endingLineNumber = "426"
-            landmarkName = "-sharePosts:"
+            landmarkName = "-startProgressView"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[MUSShareViewController startProgressView]"
+                  moduleName = "UniversalSharing"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/universalsharing/UniversalSharing/UniversalSharing/UniversalSharingApp/Controllers/ShareViewController/MUSShareViewController.m"
+                  timestampString = "465906022.752763"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "426"
+                  endingLineNumber = "426"
+                  offsetFromSymbolStart = "713">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__43-[MUSShareViewController startProgressView]_block_invoke"
+                  moduleName = "UniversalSharing"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/universalsharing/UniversalSharing/UniversalSharing/UniversalSharingApp/Controllers/ShareViewController/MUSShareViewController.m"
+                  timestampString = "465906022.752919"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "428"
+                  endingLineNumber = "428"
+                  offsetFromSymbolStart = "16">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -223,7 +255,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "435"
             endingLineNumber = "435"
-            landmarkName = "-sharePosts:"
+            landmarkName = "-startProgressView"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -255,7 +287,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "447"
             endingLineNumber = "447"
-            landmarkName = "-sharePosts:"
+            landmarkName = "-startProgressView"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -271,37 +303,52 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "429"
             endingLineNumber = "429"
-            landmarkName = "-sharePosts:"
+            landmarkName = "-startProgressView"
             landmarkType = "5">
             <Locations>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "__37-[MUSShareViewController sharePosts:]_block_invoke"
+                  symbolName = "__43-[MUSShareViewController startProgressView]_block_invoke"
                   moduleName = "UniversalSharing"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/apple/universalsharing/UniversalSharing/UniversalSharing/UniversalSharingApp/Controllers/ShareViewController/MUSShareViewController.m"
-                  timestampString = "465675585.105566"
+                  timestampString = "465906022.754597"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "429"
                   endingLineNumber = "429"
-                  offsetFromSymbolStart = "170">
+                  offsetFromSymbolStart = "137">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "__37-[MUSShareViewController sharePosts:]_block_invoke_2"
+                  symbolName = "__copy_helper_block_303"
                   moduleName = "UniversalSharing"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/apple/universalsharing/UniversalSharing/UniversalSharing/UniversalSharingApp/Controllers/ShareViewController/MUSShareViewController.m"
-                  timestampString = "465675585.105723"
+                  timestampString = "465906022.754761"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "429"
-                  endingLineNumber = "429"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "16">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__destroy_helper_block_304"
+                  moduleName = "UniversalSharing"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/universalsharing/UniversalSharing/UniversalSharing/UniversalSharingApp/Controllers/ShareViewController/MUSShareViewController.m"
+                  timestampString = "465906022.754908"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
                   offsetFromSymbolStart = "12">
                </Location>
             </Locations>
