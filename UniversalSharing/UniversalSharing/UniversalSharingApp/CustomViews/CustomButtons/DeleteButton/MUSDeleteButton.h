@@ -10,5 +10,4 @@
 
 @interface MUSDeleteButton : UIButton
 
-
 @end

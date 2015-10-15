@@ -137,6 +137,9 @@ NSString *const MUSApp_MUSToolBarForMediaGalleryViewController_NibName = @"MUSTo
 
 NSString *const MUSApp_MUSTopBarForMediaGalleryViewController_NibName = @"MUSTopBarForMediaGalleryViewController";
 
+#pragma mark - MUSDeleteButton
+
+NSString *const MUSApp_MUSDeleteButton_Image_Name = @"Button_Delete.png";
 
 
 @end

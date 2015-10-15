@@ -164,7 +164,9 @@ FOUNDATION_EXPORT NSString *const MUSApp_MUSToolBarForMediaGalleryViewController
 
 FOUNDATION_EXPORT NSString *const MUSApp_MUSTopBarForMediaGalleryViewController_NibName;
 
+#pragma mark - MUSDeleteButton
 
+FOUNDATION_EXPORT NSString *const MUSApp_MUSDeleteButton_Image_Name;
 
 
 
