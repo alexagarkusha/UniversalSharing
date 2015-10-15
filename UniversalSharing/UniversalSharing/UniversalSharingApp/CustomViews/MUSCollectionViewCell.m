@@ -90,6 +90,10 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:MUSShowImagePickerForAddImageInCollectionView object:nil];
 }
 
+- (IBAction)deletePhoto:(id)sender {
+    [self.delegate deletePhotoBySelectedImageIndex: self.indexPath];
+}
+
 
 
 /*
@@ -126,8 +130,6 @@
     
 }
 
-- (IBAction)deletePhoto:(id)sender {
-    [self.delegate deletePhotoBySelectedImageIndex: self.indexPath];
-}
+*/
 
 @end
