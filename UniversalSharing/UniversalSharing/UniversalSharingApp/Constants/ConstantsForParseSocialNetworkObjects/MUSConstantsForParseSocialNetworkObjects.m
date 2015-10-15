@@ -1,12 +1,12 @@
 //
-//  MUSSocialNetworkLibraryConstantsForParseObjects.m
+//  MUSConstantsForParseSocialNetworkObjects.m
 //  UniversalSharing
 //
-//  Created by U 2 on 06.08.15.
-//  Copyright (c) 2015 Mobindustry. All rights reserved.
+//  Created by U 2 on 15.10.15.
+//  Copyright © 2015 Mobindustry. All rights reserved.
 //
 
-#import "MUSSocialNetworkLibraryConstantsForParseObjects.h"
+#import "MUSConstantsForParseSocialNetworkObjects.h"
 
 ////////////////////////////// Facebook Network ////////////////////////////////
 

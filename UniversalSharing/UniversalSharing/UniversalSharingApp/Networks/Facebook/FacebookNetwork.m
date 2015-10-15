@@ -18,7 +18,8 @@
 #import "NSString+MUSCurrentDate.h"
 #import "MUSPostManager.h"
 #import <FBSDKCoreKit/FBSDKMacros.h>
-#import "MUSSocialNetworkLibraryConstantsForParseObjects.h"
+#import "MUSConstantsForParseSocialNetworkObjects.h"
+#import "MUSConstantsForSocialNetworks.h"
 #import "MUSPostManager.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 #import "MUSDataBaseManager.h"

@@ -18,9 +18,10 @@
 #import "NSString+MUSCurrentDate.h"
 #import "MUSPostManager.h"
 #import "ConstantsApp.h"
-#import "MUSSocialNetworkLibraryConstantsForParseObjects.h"
+#import "MUSConstantsForParseSocialNetworkObjects.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 #import "MUSDataBaseManager.h"
+#import "MUSConstantsForSocialNetworks.h"
 
 
 @interface TwitterNetwork () //<TWTRCoreOAuthSigning>

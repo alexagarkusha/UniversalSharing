@@ -1,9 +1,9 @@
 //
-//  MUSSocialNetworkLibraryConstantsForParseObjects.h
+//  MUSConstantsForParseSocialNetworkObjects.h
 //  UniversalSharing
 //
-//  Created by U 2 on 06.08.15.
-//  Copyright (c) 2015 Mobindustry. All rights reserved.
+//  Created by U 2 on 15.10.15.
+//  Copyright © 2015 Mobindustry. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -88,11 +88,3 @@ FOUNDATION_EXPORT NSString *const MUSTwitterParsePlace_Centroid;
 
 FOUNDATION_EXPORT NSString *const MUSTwitterParseLocation_Result;
 FOUNDATION_EXPORT NSString *const MUSTwitterParseLocation_Places;
-
-
-
-
-
-
-
-

@@ -7,7 +7,6 @@
 //
 
 #import "MUSPlace.h"
-#import "MUSSocialNetworkLibraryConstantsForParseObjects.h"
 
 @implementation MUSPlace
 

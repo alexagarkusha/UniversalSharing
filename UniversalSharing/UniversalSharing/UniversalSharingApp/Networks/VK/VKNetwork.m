@@ -20,8 +20,8 @@
 #import "VKUploadImage.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 #import "MUSDataBaseManager.h"
-#import "MUSSocialNetworkLibraryConstantsForParseObjects.h"
-
+#import "MUSConstantsForParseSocialNetworkObjects.h"
+#import  "MUSConstantsForSocialNetworks.h"
 
 @interface VKNetwork () <VKSdkDelegate>
 @property (strong, nonatomic) UINavigationController *navigationController;
