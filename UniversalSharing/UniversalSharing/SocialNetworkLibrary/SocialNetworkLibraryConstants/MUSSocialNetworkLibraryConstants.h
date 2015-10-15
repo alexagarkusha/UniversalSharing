@@ -12,9 +12,8 @@
 
 typedef void (^Complition)(id result, NSError *error);
 typedef void (^ProgressLoadingBlock)(float result);
-typedef void (^ProgressLoadingImagesToVK)(int objectOfLoading, long long bytesLoaded, long long bytesTotal);
-typedef void (^ProgressLoading)(id currentNetworkType, float result);
-typedef void (^UpdateNetworkPostsComplition)(id result);
+typedef void (^LoadingBlock)(id currentNetworkType, float result);
+typedef void (^UpdateNetworkPostsBlock)(id result);
 
 #pragma mark Types
 

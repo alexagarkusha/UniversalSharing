@@ -21,12 +21,13 @@
 #import "MUSDatabaseRequestStringsHelper.h"
 #import "MUSDataBaseManager.h"
 #import "MUSConstantsForParseSocialNetworkObjects.h"
-#import  "MUSConstantsForSocialNetworks.h"
+#import "MUSConstantsForSocialNetworks.h"
+#import "ConstantsApp.h"
 
 @interface VKNetwork () <VKSdkDelegate>
 @property (strong, nonatomic) UINavigationController *navigationController;
 @property (copy, nonatomic) Complition copyComplition;
-@property (copy, nonatomic) ProgressLoading copyProgressLoading;
+@property (copy, nonatomic) LoadingBlock loadingBlock;
 
 @end
 
@@ -157,17 +158,17 @@ static VKNetwork *model = nil;
 
 #pragma mark - sharePost
 
-- (void) sharePost : (MUSPost*) post withComplition : (Complition) block progressLoadingBlock:(ProgressLoading) blockLoading{
+- (void) sharePost : (MUSPost*) post withComplition : (Complition) block loadingBlock:(LoadingBlock)loadingBlock{
     if (![[MUSInternetConnectionManager connectionManager] isInternetConnection]){
         MUSNetworkPost *networkPost = [MUSNetworkPost create];
         networkPost.networkType = MUSVKontakt;
-        blockLoading ([NSNumber numberWithInteger: self.networkType], 1.0f);
-        block(networkPost,[self errorConnection]);
+        loadingBlock ([NSNumber numberWithInteger: self.networkType], 1.0f);
+        block (networkPost,[self errorConnection]);
         return;
     }
     
     self.copyComplition = block;
-    self.copyProgressLoading = blockLoading;
+    self.loadingBlock = loadingBlock;
     
     if ([post.imagesArray count]) {
         __block NSUInteger numberOfImagesInPost = [post.imagesArray count];
@@ -190,7 +191,7 @@ static VKNetwork *model = nil;
                 NSNumber *currentObject = [arrayOfLoadingObjects objectAtIndex: i];
                 totalProgress += [currentObject floatValue];
             }
-            blockLoading ([NSNumber numberWithInteger: self.networkType], totalProgress / numberOfImagesInPost);
+            loadingBlock ([NSNumber numberWithInteger: self.networkType], totalProgress / numberOfImagesInPost);
         }];
     } else {
         [self sharePostOnlyWithPostDescription: post];
@@ -225,7 +226,7 @@ static VKNetwork *model = nil;
             return;
         }
         float totalProgress = (bytesLoaded * 1.0f / bytesTotal);
-        weakSelf.copyProgressLoading ([NSNumber numberWithInteger: weakSelf.networkType], totalProgress);
+        weakSelf.loadingBlock ([NSNumber numberWithInteger: weakSelf.networkType], totalProgress);
     }];
     
     [request executeWithResultBlock: ^(VKResponse *response) {
@@ -408,11 +409,11 @@ static VKNetwork *model = nil;
 
 #pragma mark - updateNetworkPost
 
-- (void) updateNetworkPostWithComplition: (UpdateNetworkPostsComplition) block {
+- (void) updateNetworkPostWithComplition: (UpdateNetworkPostsBlock) updateNetworkPostsBlock {
     NSArray * networksPostsIDs = [[MUSPostManager manager] networkPostsArrayForNetworkType: self.networkType];
     
     if (![[MUSInternetConnectionManager connectionManager] isInternetConnection] || !networksPostsIDs.count  || (![[MUSInternetConnectionManager connectionManager] isInternetConnection] && networksPostsIDs.count)) {
-        block (MUSVKError);
+        updateNetworkPostsBlock (MUSVKError);
         return;
     }
     __block NSString *stringPostsWithUserIdAndPostId = @"";
@@ -437,11 +438,12 @@ static VKNetwork *model = nil;
             networkPost.networkType = MUSVKontakt;
             networkPost.likesCount = [[[response.json[i] objectForKey: MUSVKParseNetworkPost_Likes] objectForKey: MUSVKParseNetworkPost_Count] integerValue];
             networkPost.commentsCount = [[[response.json[i] objectForKey: MUSVKParseNetworkPost_Comments] objectForKey:MUSVKParseNetworkPost_Count] integerValue];
-            [networkPost update];
+            [[MUSDataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForVKUpdateNetworkPost: networkPost]];
+            //[networkPost update];
         }
-        block (MUSVKSuccessUpdateNetworkPost);
+        updateNetworkPostsBlock (MUSVKSuccessUpdateNetworkPost);
     } errorBlock: ^(NSError *error) {
-        block (MUSNetworkPost_Update_Error_Update);
+        updateNetworkPostsBlock (MUSNetworkPost_Update_Error_Update);
     }];
 }
 

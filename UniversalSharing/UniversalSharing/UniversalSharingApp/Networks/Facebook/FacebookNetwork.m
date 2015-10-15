@@ -27,8 +27,8 @@
 @interface FacebookNetwork()<FBSDKGraphRequestConnectionDelegate>
 
 @property (copy, nonatomic) Complition copyComplition;
-@property (copy, nonatomic) UpdateNetworkPostsComplition copyComplitionUpdateNetworkPosts;
-@property (copy, nonatomic) ProgressLoading copyProgressLoading;
+@property (copy, nonatomic) UpdateNetworkPostsBlock updateNetworkPostsBlock;
+@property (copy, nonatomic) LoadingBlock loadingBlock;
 
 @end
 
@@ -143,7 +143,7 @@ static FacebookNetwork *model = nil;
 
 #pragma mark - sharePost
 
-- (void) sharePost: (MUSPost *)post withComplition:(Complition)block progressLoadingBlock:(ProgressLoading)blockLoading {
+- (void) sharePost: (MUSPost *)post withComplition:(Complition)block loadingBlock:(LoadingBlock)loadingBlock {
     
     if (![[MUSInternetConnectionManager connectionManager] isInternetConnection]){
         MUSNetworkPost *networkPost = [MUSNetworkPost create];
@@ -152,7 +152,7 @@ static FacebookNetwork *model = nil;
         return;
     }
     self.copyComplition = block;
-    self.copyProgressLoading = blockLoading;
+    self.loadingBlock = loadingBlock;
     if ([[FBSDKAccessToken currentAccessToken] hasGranted: MUSFacebookPermission_Publish_Actions]) {
         [self sharePostToFacebookNetwork: post];
     } else {
@@ -345,12 +345,12 @@ static FacebookNetwork *model = nil;
 
 #pragma mark - UpdateNetworkPost
 
-- (void) updateNetworkPostWithComplition : (UpdateNetworkPostsComplition) block {
-    self.copyComplitionUpdateNetworkPosts = block;
+- (void) updateNetworkPostWithComplition : (UpdateNetworkPostsBlock) updateNetworkPostsBlock {
+    self.updateNetworkPostsBlock = updateNetworkPostsBlock;
     NSArray * networksPostsIDs = [[MUSPostManager manager] networkPostsArrayForNetworkType: self.networkType];
     
     if (![[MUSInternetConnectionManager connectionManager] isInternetConnection] || !networksPostsIDs.count  || (![[MUSInternetConnectionManager connectionManager] isInternetConnection] && networksPostsIDs.count)) {
-        block (MUSFacebookError);
+        updateNetworkPostsBlock (MUSFacebookError);
         return;
     }
     
@@ -470,8 +470,8 @@ static FacebookNetwork *model = nil;
 
 - (void) requestConnection:	(FBSDKGraphRequestConnection *)connection didSendBodyData:	(NSInteger)bytesWritten totalBytesWritten:	(NSInteger)totalBytesWritten totalBytesExpectedToWrite:	(NSInteger)totalBytesExpectedToWrite {
 
-    if (self.copyProgressLoading) {
-        self.copyProgressLoading ([NSNumber numberWithInteger: self.networkType], (float)totalBytesWritten / totalBytesExpectedToWrite);
+    if (self.loadingBlock) {
+        self.loadingBlock ([NSNumber numberWithInteger: self.networkType], (float)totalBytesWritten / totalBytesExpectedToWrite);
     }
 }
 
@@ -480,8 +480,8 @@ static FacebookNetwork *model = nil;
 }
 
 - (void)requestConnectionDidFinishLoading:(FBSDKGraphRequestConnection *)connection {
-    if (self.copyComplitionUpdateNetworkPosts) {
-        self.copyComplitionUpdateNetworkPosts (MUSFacebookSuccessUpdateNetworkPost);
+    if (self.updateNetworkPostsBlock) {
+        self.updateNetworkPostsBlock (MUSFacebookSuccessUpdateNetworkPost);
     }
 }
 
