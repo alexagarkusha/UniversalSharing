@@ -111,7 +111,7 @@
         }
         MUSPost *currentPost = [[MUSPostManager manager].postsArray objectAtIndex: indexPath.section];
         [currentPost updateAllNetworkPostsFromDataBaseForCurrentPost];
-        cell.arrayWithNetworkPosts = currentPost.networkPostsArray;
+        cell.networkPostsArray = currentPost.networkPostsArray;
         cell.selectionStyle = UITableViewCellSelectionStyleNone; // disable the cell selection highlighting
         return cell;
 }
