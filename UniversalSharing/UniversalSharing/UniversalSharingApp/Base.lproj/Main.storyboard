@@ -108,7 +108,7 @@
                                     <outlet property="delegate" destination="Mqx-YE-PKH" id="MZt-Ug-5Fo"/>
                                 </connections>
                             </collectionView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8gF-Sd-Dyq" customClass="MUSTopBarForDetailCollectionView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8gF-Sd-Dyq" customClass="MUSTopBarForMediaGalleryViewController">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" alpha="0.49999999999999961" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="g8N-26-IK8">
@@ -128,7 +128,7 @@
                                     <constraint firstAttribute="bottom" secondItem="g8N-26-IK8" secondAttribute="bottom" id="vSP-xV-3fw"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jtt-2I-4dm" customClass="MUSToolBarForDetailCollectionView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jtt-2I-4dm" customClass="MUSToolBarForMediaGalleryViewController">
                                 <rect key="frame" x="0.0" y="550" width="600" height="50"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" alpha="0.49999999999999961" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WV8-OJ-Xuy">
@@ -182,7 +182,7 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="collectionView" destination="aRM-TH-eEy" id="8Yt-Cf-xBN"/>
-                        <outlet property="toolBar" destination="jtt-2I-4dm" id="Pj5-Mm-ijt"/>
+                        <outlet property="toolBar" destination="jtt-2I-4dm" id="msx-Ts-kT2"/>
                         <outlet property="toolBarHeightConstraint" destination="R1o-HW-tEf" id="Cx2-Bx-YGO"/>
                         <outlet property="topBar" destination="8gF-Sd-Dyq" id="PRq-TX-pIf"/>
                         <outlet property="topBarHeightConstraint" destination="L8I-oO-Af8" id="mfW-ph-LNf"/>

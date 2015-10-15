@@ -8,8 +8,8 @@
 
 #import "MUSMediaGalleryViewController.h"
 #import "MUSCollectionViewCellForDetailView.h"
-#import "MUSTopBarForDetailCollectionView.h"
-#import "MUSToolBarForDetailCollectionView.h"
+#import "MUSTopBarForMediaGalleryViewController.h"
+#import "MUSToolBarForMediaGalleryViewController.h"
 #import "UIImage+LoadImageFromDataBase.h"
 #import "MUSDataBaseManager.h"
 #import "MUSDatabaseRequestStringsHelper.h"
@@ -25,8 +25,8 @@
 @property (assign, nonatomic, getter=isVisibleBars) BOOL visibleBars;
 //===
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-@property (weak, nonatomic) IBOutlet MUSTopBarForDetailCollectionView *topBar;
-@property (weak, nonatomic) IBOutlet MUSToolBarForDetailCollectionView *toolBar;
+@property (weak, nonatomic) IBOutlet MUSTopBarForMediaGalleryViewController *topBar;
+@property (weak, nonatomic) IBOutlet MUSToolBarForMediaGalleryViewController *toolBar;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topBarHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *toolBarHeightConstraint;
 
