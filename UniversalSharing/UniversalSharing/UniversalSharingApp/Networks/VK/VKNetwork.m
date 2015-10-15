@@ -12,7 +12,7 @@
 #import <VKSdk.h>
 #import "NSError+MUSError.h"
 #import "NSString+MUSPathToDocumentsdirectory.h"
-#import "InternetConnectionManager.h"
+#import "MUSInternetConnectionManager.h"
 #import "MUSNetworkPost.h"
 #import "NSString+MUSCurrentDate.h"
 #import "MUSPostManager.h"
@@ -158,7 +158,7 @@ static VKNetwork *model = nil;
 #pragma mark - sharePost
 
 - (void) sharePost : (MUSPost*) post withComplition : (Complition) block progressLoadingBlock:(ProgressLoading) blockLoading{
-    if (![[InternetConnectionManager connectionManager] isInternetConnection]){
+    if (![[MUSInternetConnectionManager connectionManager] isInternetConnection]){
         MUSNetworkPost *networkPost = [MUSNetworkPost create];
         networkPost.networkType = MUSVKontakt;
         blockLoading ([NSNumber numberWithInteger: self.networkType], 1.0f);

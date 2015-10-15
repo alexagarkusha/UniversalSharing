@@ -16,7 +16,7 @@
 #import "NSError+MUSError.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 #import "PostImagesManager.h"
-#import "InternetConnectionManager.h"
+#import "MUSInternetConnectionManager.h"
 
 @implementation MUSSocialNetwork
 
@@ -52,7 +52,7 @@
 }
 
 - (void) updateUserInSocialNetwork {
-    if ([[InternetConnectionManager connectionManager] isInternetConnection]){
+    if ([[MUSInternetConnectionManager connectionManager] isInternetConnection]){
         NSString *deleteImageFromFolder = _currentUser.photoURL;
         
         [self obtainUserInfoFromNetworkWithComplition:^(MUSSocialNetwork* result, NSError *error) {

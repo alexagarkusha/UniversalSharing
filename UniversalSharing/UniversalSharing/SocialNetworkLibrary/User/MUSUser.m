@@ -9,7 +9,7 @@
 #import "MUSUser.h"
 #import <TwitterKit/TwitterKit.h>
 #import "MUSSocialNetworkLibraryConstantsForParseObjects.h"
-#import "InternetConnectionManager.h"
+#import "MUSInternetConnectionManager.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 #import "DataBaseManager.h"
 #import "PostImagesManager.h"

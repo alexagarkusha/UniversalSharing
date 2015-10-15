@@ -13,7 +13,7 @@
 #import "MUSPlace.h"
 #import "NSError+MUSError.h"
 #import "NSString+MUSPathToDocumentsdirectory.h"
-#import "InternetConnectionManager.h"
+#import "MUSInternetConnectionManager.h"
 #import "MUSNetworkPost.h"
 #import "NSString+MUSCurrentDate.h"
 #import "MUSPostManager.h"
@@ -144,7 +144,7 @@ static FacebookNetwork *model = nil;
 
 - (void) sharePost: (MUSPost *)post withComplition:(Complition)block progressLoadingBlock:(ProgressLoading)blockLoading {
     
-    if (![[InternetConnectionManager connectionManager] isInternetConnection]){
+    if (![[MUSInternetConnectionManager connectionManager] isInternetConnection]){
         MUSNetworkPost *networkPost = [MUSNetworkPost create];
         networkPost.networkType = MUSFacebook;
         block(networkPost,[self errorConnection]);

@@ -6,17 +6,17 @@
 //  Copyright (c) 2015 Mobindustry. All rights reserved.
 //
 
-#import "InternetConnectionManager.h"
+#import "MUSInternetConnectionManager.h"
 #import "ReachabilityManager.h"
 
-static InternetConnectionManager *model = nil;
+static MUSInternetConnectionManager *model = nil;
 
-@implementation InternetConnectionManager
+@implementation MUSInternetConnectionManager
 
-+ (InternetConnectionManager*) connectionManager {
++ (MUSInternetConnectionManager*) connectionManager {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        model = [[InternetConnectionManager alloc] init];
+        model = [[MUSInternetConnectionManager alloc] init];
     });
     return  model;
 }
