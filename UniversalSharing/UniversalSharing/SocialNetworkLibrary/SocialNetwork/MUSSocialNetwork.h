@@ -13,7 +13,7 @@
 #import "MUSLocation.h"
 #import "MUSSocialNetworkLibraryConstants.h"
 
-@interface SocialNetwork : NSObject
+@interface MUSSocialNetwork : NSObject
 /*!
  @abstract whether the user is logged into a social network or not
 */

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SocialNetwork.h"
+#import "MUSSocialNetwork.h"
 
 @protocol MUSPopUpTableViewCellDelegate <NSObject>
 
@@ -21,6 +21,6 @@
 //===
 + (NSString*) cellID;
 + (instancetype) popUpTableViewCell;
-- (void) configurationPopUpTableViewCellWith: (SocialNetwork*) socialNetwork andReason: (ReasonType) currentReason;
+- (void) configurationPopUpTableViewCellWith: (MUSSocialNetwork*) socialNetwork andReason: (ReasonType) currentReason;
 
 @end

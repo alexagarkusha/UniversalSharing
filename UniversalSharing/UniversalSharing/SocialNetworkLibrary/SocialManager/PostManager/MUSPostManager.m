@@ -63,7 +63,7 @@ static MUSPostManager *model = nil;
     //__block NSString *blockResultString = @"Result: \n";
     
     for (int i = 0; i < allSocialNetworksArray.count; i++) {
-        SocialNetwork *currentSocialNetwork = [allSocialNetworksArray objectAtIndex: i];
+        MUSSocialNetwork *currentSocialNetwork = [allSocialNetworksArray objectAtIndex: i];
         [currentSocialNetwork updateNetworkPostWithComplition:^(id result) {
             counterOfSocialNetworks++;
             

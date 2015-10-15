@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		187FC4FD1B651D9500A3916C /* UniversalSharingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 187FC4FC1B651D9500A3916C /* UniversalSharingTests.m */; };
 		187FC5271B65222D00A3916C /* SocialManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 187FC5191B65222D00A3916C /* SocialManager.m */; };
-		187FC5281B65222D00A3916C /* SocialNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 187FC51C1B65222D00A3916C /* SocialNetwork.m */; };
+		187FC5281B65222D00A3916C /* MUSSocialNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 187FC51C1B65222D00A3916C /* MUSSocialNetwork.m */; };
 		187FC52A1B65222D00A3916C /* MUSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 187FC5221B65222D00A3916C /* MUSUser.m */; };
 		18BB29AD1B67E3F000B498AC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB29741B67E3F000B498AC /* AppDelegate.m */; };
 		18BB29AE1B67E3F000B498AC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18BB29751B67E3F000B498AC /* LaunchScreen.xib */; };
@@ -148,8 +148,8 @@
 		187FC4FC1B651D9500A3916C /* UniversalSharingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UniversalSharingTests.m; sourceTree = "<group>"; };
 		187FC5181B65222D00A3916C /* SocialManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialManager.h; sourceTree = "<group>"; };
 		187FC5191B65222D00A3916C /* SocialManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocialManager.m; sourceTree = "<group>"; };
-		187FC51B1B65222D00A3916C /* SocialNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialNetwork.h; sourceTree = "<group>"; };
-		187FC51C1B65222D00A3916C /* SocialNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocialNetwork.m; sourceTree = "<group>"; };
+		187FC51B1B65222D00A3916C /* MUSSocialNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSSocialNetwork.h; sourceTree = "<group>"; };
+		187FC51C1B65222D00A3916C /* MUSSocialNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSSocialNetwork.m; sourceTree = "<group>"; };
 		187FC51D1B65222D00A3916C /* MUSSocialNetworkLibraryHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSSocialNetworkLibraryHeader.h; sourceTree = "<group>"; };
 		187FC5211B65222D00A3916C /* MUSUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSUser.h; sourceTree = "<group>"; };
 		187FC5221B65222D00A3916C /* MUSUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSUser.m; sourceTree = "<group>"; };
@@ -439,8 +439,8 @@
 		187FC51A1B65222D00A3916C /* SocialNetwork */ = {
 			isa = PBXGroup;
 			children = (
-				187FC51B1B65222D00A3916C /* SocialNetwork.h */,
-				187FC51C1B65222D00A3916C /* SocialNetwork.m */,
+				187FC51B1B65222D00A3916C /* MUSSocialNetwork.h */,
+				187FC51C1B65222D00A3916C /* MUSSocialNetwork.m */,
 			);
 			path = SocialNetwork;
 			sourceTree = "<group>";
@@ -1460,7 +1460,7 @@
 				97CAF56A1BAC001F00F16F6B /* SSACircleView.m in Sources */,
 				18BB29C31B67E3F000B498AC /* MUSLocationManager.m in Sources */,
 				97C05FA51BB553AC00EF6079 /* PostImagesManager.m in Sources */,
-				187FC5281B65222D00A3916C /* SocialNetwork.m in Sources */,
+				187FC5281B65222D00A3916C /* MUSSocialNetwork.m in Sources */,
 				18BB29B61B67E3F000B498AC /* MUSAccountsViewController.m in Sources */,
 				97CB10DB1B904D7B0061F851 /* UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.m in Sources */,
 				18BB29B51B67E3F000B498AC /* ConstantsApp.m in Sources */,

@@ -71,7 +71,7 @@
  @abstract  in order to save origin position textView and return back when the keyboard disappears
  */
 @property (assign, nonatomic)               CGFloat messageTextViewLayoutConstraintOrigin;
-@property (strong, nonatomic)               SocialNetwork *currentSocialNetwork;
+@property (strong, nonatomic)               MUSSocialNetwork *currentSocialNetwork;
 /*!
  @property
  @abstract  use this array for actionsheet to show networks which are login and isVisible(we can do network unvisible in account controller) and for change currentusernetwork after a user chose other network

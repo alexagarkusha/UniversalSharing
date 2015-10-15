@@ -28,7 +28,7 @@
 #import "MUSPost.h"
 
 #import "SocialManager.h"
-#import "SocialNetwork.h"
+#import "MUSSocialNetwork.h"
 
 #import "MUSUser.h"
 

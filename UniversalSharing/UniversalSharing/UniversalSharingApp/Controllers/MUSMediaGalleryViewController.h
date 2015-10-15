@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SocialNetwork.h"
+#import "MUSSocialNetwork.h"
 
 @interface MUSMediaGalleryViewController : UIViewController
 

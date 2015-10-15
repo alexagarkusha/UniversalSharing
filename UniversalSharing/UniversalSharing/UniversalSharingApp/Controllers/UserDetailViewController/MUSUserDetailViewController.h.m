@@ -23,7 +23,7 @@
  @property
  @abstract initialization by socialnetwork(facebook or twitter or VK) getting from AccountViewController
  */
-@property (nonatomic, strong) SocialNetwork *socialNetwork;
+@property (nonatomic, strong) MUSSocialNetwork *socialNetwork;
 /*!
  @property
  @abstract initialization by current info of current user

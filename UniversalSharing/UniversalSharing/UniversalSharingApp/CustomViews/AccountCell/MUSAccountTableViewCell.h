@@ -16,7 +16,7 @@
 + (NSString*) cellID;
 + (instancetype) accountTableViewCell;
 //===
-- (void) configurateCellForNetwork : (SocialNetwork*) socialNetwork;
+- (void) configurateCellForNetwork : (MUSSocialNetwork*) socialNetwork;
 
 @end
 

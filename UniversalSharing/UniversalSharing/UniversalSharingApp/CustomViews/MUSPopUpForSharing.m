@@ -96,7 +96,7 @@
 }
 
 - (void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    SocialNetwork *socialNetwork = self.networksArray[indexPath.row];
+    MUSSocialNetwork *socialNetwork = self.networksArray[indexPath.row];
     MUSPopUpTableViewCell *popUpTableViewCell = (MUSPopUpTableViewCell*) cell;
     [popUpTableViewCell configurationPopUpTableViewCellWith: socialNetwork andReason: [self currentReasonForSocialNetwork: socialNetwork]];
 }
@@ -127,7 +127,7 @@
     [self.delegate sharePosts:arrayWithNetworksForPost andFlagTwitter:flagTwitter];
 }
 
-- (ReasonType) currentReasonForSocialNetwork : (SocialNetwork*) socialNetwork {
+- (ReasonType) currentReasonForSocialNetwork : (MUSSocialNetwork*) socialNetwork {
     ReasonType currentReason = MUSAllReasons;
     for (MUSNetworkPost *currentNetworkPost in self.networksPostArray) {
         if (currentNetworkPost.networkType == socialNetwork.networkType) {

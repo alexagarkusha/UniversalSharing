@@ -7,7 +7,7 @@
 //
 
 #import "MultySharingManager.h"
-#import "SocialNetwork.h"
+#import "MUSSocialNetwork.h"
 #import "DataBaseManager.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 #import "PostImagesManager.h"
@@ -97,7 +97,7 @@ static MultySharingManager *model = nil;
 
     __block NSMutableDictionary *multyResultDictionary = [[NSMutableDictionary alloc] init];
     
-    for (SocialNetwork *socialNetwork in arrayWithNetworks) {
+    for (MUSSocialNetwork *socialNetwork in arrayWithNetworks) {
         [socialNetwork sharePost: post withComplition:^(id result, NSError *error) {
 
             counterOfSocialNetwork++;
@@ -178,7 +178,7 @@ static MultySharingManager *model = nil;
 - (NSMutableDictionary*) dictionaryOfLoadingObjectsFromNetworks : (NSArray*) arrayWithNetworks {
     NSMutableDictionary *loadingObjectsDictionary = [[NSMutableDictionary alloc] init];
     
-    for (SocialNetwork *socialNetwork in arrayWithNetworks) {
+    for (MUSSocialNetwork *socialNetwork in arrayWithNetworks) {
         [loadingObjectsDictionary setObject: [NSNumber numberWithFloat: 0.000001] forKey: [NSNumber numberWithInt: socialNetwork.networkType]];
     }
     

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SocialNetwork.h"
+#import "MUSSocialNetwork.h"
 
 @interface SocialManager : NSObject
 

@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Roman. All rights reserved.
 //
 
-#import "SocialNetwork.h"
+#import "MUSSocialNetwork.h"
 #import "SocialManager.h"
 #import "FacebookNetwork.h"
 #import "VKNetwork.h"
@@ -18,7 +18,7 @@
 #import "PostImagesManager.h"
 #import "InternetConnectionManager.h"
 
-@implementation SocialNetwork
+@implementation MUSSocialNetwork
 
 - (void)setNetworkType:(NetworkType)networkType {
     _networkType = networkType;
@@ -55,7 +55,7 @@
     if ([[InternetConnectionManager connectionManager] isInternetConnection]){
         NSString *deleteImageFromFolder = _currentUser.photoURL;
         
-        [self obtainUserInfoFromNetworkWithComplition:^(SocialNetwork* result, NSError *error) {
+        [self obtainUserInfoFromNetworkWithComplition:^(MUSSocialNetwork* result, NSError *error) {
             
             [[PostImagesManager manager] removeImageFromFileManagerByImagePath: deleteImageFromFolder];
             [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUpdateUser: result.currentUser]];

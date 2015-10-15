@@ -7,7 +7,7 @@
 //
 
 #import "DataBaseManager.h"
-#import "SocialNetwork.h"
+#import "MUSSocialNetwork.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 #import <sqlite3.h>
 

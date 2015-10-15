@@ -41,7 +41,7 @@
     return [MUSAccountTableViewCell cellID];
 }
 
-- (void) configurateCellForNetwork:(SocialNetwork *)socialNetwork {
+- (void) configurateCellForNetwork:(MUSSocialNetwork *)socialNetwork {
         self.networkIconImageView.image = [UIImage imageNamed:socialNetwork.icon];
         self.loginLabel.text = socialNetwork.title;
         self.loginLabel.textColor = [UIColor blackColor];
