@@ -14,19 +14,17 @@
 #import "MUSImageToPost.h"
 #import "UIImage+Scale.h"
 
-
 @interface MUSPhotoManager () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate>
 
 @property (copy, nonatomic) Complition copyComplition;
 @property (strong, nonatomic) UIImagePickerController *imagePickerController;
 @property (strong, nonatomic) UIViewController *viewController;
+
 @end
 
 static MUSPhotoManager* sharedManager = nil;
 
 @implementation MUSPhotoManager
-
-//#warning "init UIImagePickerController just ones in shareManager"
 
 + (MUSPhotoManager*) sharedManager {
     static dispatch_once_t onceTaken;
@@ -44,13 +42,13 @@ static MUSPhotoManager* sharedManager = nil;
     return self;
 }
 
-- (void) photoShowFromViewController :(UIViewController*) viewController withComplition: (Complition) block {
+- (void) showPhotoFromViewController :(UIViewController*) viewController withComplition: (Complition) block {
     self.copyComplition = block;
     self.viewController = viewController;
-    [self photoAlertShow];
+    [self showPhotoAlert];
 }
 
-- (void) photoAlertShow {
+- (void) showPhotoAlert {
     UIAlertView *photoAlert = [[UIAlertView alloc]
                                initWithTitle : MUSApp_MUSPhotoManager_Alert_Title_Share_Photo
                                message : nil
@@ -85,7 +83,6 @@ static MUSPhotoManager* sharedManager = nil;
 }
 
 - (void) takePhotoFromCamera {
-    
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         self.copyComplition (nil, [self cameraError]);
     } else {
@@ -105,13 +102,11 @@ static MUSPhotoManager* sharedManager = nil;
 #pragma mark UIImagePickerControllerDelegate
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    UIImage *image = [info objectForKey: UIImagePickerControllerOriginalImage]; // If you want to show editable photo - you need to set UIImagePickerControllerEditedImage
-    
+    UIImage *image = [info objectForKey: UIImagePickerControllerOriginalImage];
     if (image != nil) {
         MUSImageToPost *imageToPost = [[MUSImageToPost alloc] init];
         UIImage *compressedImage = [UIImage scaleImage: image toSize: CGSizeMake(MUSApp_MUSPhotoManager_CompressionSizePicture_By_Width, MUSApp_MUSPhotoManager_CompressionSizePicture_By_Height)];
@@ -119,8 +114,7 @@ static MUSPhotoManager* sharedManager = nil;
         imageToPost.imageType = MUSJPEG;
         imageToPost.quality = 1.0f;
         self.copyComplition (imageToPost, nil);
-    }
-    
+    }    
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 

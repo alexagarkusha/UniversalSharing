@@ -17,9 +17,7 @@
 
 @end
 
-
 @implementation MUSAccountTableViewCell
-
 
 + (NSString*) cellID {
     return NSStringFromClass([self class]);
@@ -28,9 +26,6 @@
 + (instancetype) accountTableViewCell {
     NSArray* nibArray = [[NSBundle mainBundle]loadNibNamed:[self cellID] owner:nil options:nil];
     return nibArray[0];
-}
-
-- (void)awakeFromNib {
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -42,9 +37,9 @@
 }
 
 - (void) configurateCellForNetwork:(MUSSocialNetwork *)socialNetwork {
-        self.networkIconImageView.image = [UIImage imageNamed:socialNetwork.icon];
-        self.loginLabel.text = socialNetwork.title;
-        self.loginLabel.textColor = [UIColor blackColor];
+    self.networkIconImageView.image = [UIImage imageNamed:socialNetwork.icon];
+    self.loginLabel.text = socialNetwork.title;
+    self.loginLabel.textColor = [UIColor blackColor];
 }
 
 @end

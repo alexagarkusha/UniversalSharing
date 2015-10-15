@@ -11,7 +11,7 @@
 #import "MUSSocialNetworkLibraryHeader.h"
 #import <AFMSlidingCell.h>
 
-@interface MUSAccountTableViewCell : UITableViewCell//AFMSlidingCell
+@interface MUSAccountTableViewCell : UITableViewCell
 
 + (NSString*) cellID;
 + (instancetype) accountTableViewCell;

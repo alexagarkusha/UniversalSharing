@@ -7,7 +7,7 @@
 //
 
 #import "ReachabilityManager.h"
-
+#import "ConstantsApp.h"
 
 @implementation ReachabilityManager
 
@@ -15,19 +15,27 @@
 
 + (ReachabilityManager *)sharedManager {
     static ReachabilityManager *_sharedManager = nil;
-    
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _sharedManager = [[self alloc] init];
     });
-    
     return _sharedManager;
+}
+
+#pragma mark Private Initialization
+
+- (id)init {
+    self = [super init];
+    if (self) {
+        self.reachability = [Reachability reachabilityWithHostname:MUSApp_ReachabilityManager_Host_Name];
+        [self.reachability startNotifier];
+    }
+    return self;
 }
 
 #pragma mark Memory Management
 
 - (void)dealloc {
-    // Stop Notifier
     if (_reachability) {
         [_reachability stopNotifier];
     }
@@ -49,23 +57,6 @@
 
 + (BOOL) isReachableViaWiFi {
     return [[[ReachabilityManager sharedManager] reachability] isReachableViaWiFi];
-}
-
-#pragma mark Private Initialization
-
-- (id)init {
-    self = [super init];
-    
-    if (self) {
-        // Initialize Reachability
-        self.reachability = [Reachability reachabilityWithHostname:@"www.google.com"];
-        //self.reachability.isReachable
-        //self.reachability.reachableOnWWAN = NO;
-        // Start Monitoring
-        [self.reachability startNotifier];
-    }
-    
-    return self;
 }
 
 @end

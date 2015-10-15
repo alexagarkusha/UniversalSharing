@@ -141,5 +141,12 @@ NSString *const MUSApp_MUSTopBarForMediaGalleryViewController_NibName = @"MUSTop
 
 NSString *const MUSApp_MUSDeleteButton_Image_Name = @"Button_Delete.png";
 
+#pragma mark - ReachabilityManager
+
+NSString *const MUSApp_ReachabilityManager_Host_Name = @"www.google.com";
+
+#pragma mark - MUSLocationManager
+
+NSString *const MUSApp_MUSLocationManager_Address_Unknown = @"Location is not defined";
 
 @end

@@ -439,7 +439,7 @@
         return;
     }
     __weak MUSShareViewController *weakSelf = self;
-    [[MUSPhotoManager sharedManager] photoShowFromViewController:self withComplition:^(id result, NSError *error) {
+    [[MUSPhotoManager sharedManager] showPhotoFromViewController:self withComplition:^(id result, NSError *error) {
         if(!error) {
             [weakSelf.galeryView passChosenImageForCollection:result];
         } else {

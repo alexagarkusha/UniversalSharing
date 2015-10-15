@@ -13,16 +13,10 @@
 
 @property (strong, nonatomic) Reachability *reachability;
 
-#pragma mark Shared Manager
 + (ReachabilityManager *)sharedManager;
-
-#pragma mark Class Methods
-
 + (BOOL)isReachable;
 + (BOOL)isUnreachable;
 + (BOOL)isReachableViaWWAN;
 + (BOOL)isReachableViaWiFi;
-
-
 
 @end

@@ -21,8 +21,16 @@
 
 @implementation MUSTopUserProfileCell
 
++ (NSString*) cellID {
+    return NSStringFromClass([self class]);
+}
+
++ (instancetype) profileUserTableViewCell {
+    NSArray* nibArray = [[NSBundle mainBundle]loadNibNamed:[self cellID] owner:nil options:nil];
+    return nibArray[0];
+}
+
 - (void)awakeFromNib {
-    // Initialization code
     [self.userImageView roundImageView];
 }
 
@@ -34,24 +42,11 @@
     return [MUSTopUserProfileCell cellID];
 }
 
-+ (NSString*) cellID {
-    return NSStringFromClass([self class]);
-}
-
-+ (instancetype) profileUserTableViewCell {
-    NSArray* nibArray = [[NSBundle mainBundle]loadNibNamed:[self cellID] owner:nil options:nil];
-    return nibArray[0];
-}
-
-- (void) configurationProfileUserTableViewCellWithUser: (MUSUser*) currentUser {
+- (void) configurationProfileUserTableViewCell: (MUSUser*) currentUser {
     self.userNameLabel.text = currentUser.firstName;
     self.userLastNameLabel.text = currentUser.lastName;
     NSData *data = [NSData dataWithContentsOfFile:[self obtainPathToDocumentsFolder:currentUser.photoURL]];
     self.self.userImageView.image = [UIImage imageWithData:data];
-    //[self.userImageView loadImageFromUrl: [NSURL URLWithString: currentUser.photoURL]];
-    //weakSell.icon = [weakSell.currentUser.photoURL saveImageOfUserToDocumentsFolder:weakSell.currentUser.photoURL];
-
-    
 }
 
 - (NSString*) obtainPathToDocumentsFolder :(NSString*) pathFromDataBase {
@@ -59,4 +54,5 @@
     NSString *documentsPath = [paths objectAtIndex:0];
     return [documentsPath stringByAppendingPathComponent:pathFromDataBase];
 }
+
 @end

@@ -14,10 +14,7 @@
 + (NSString*) cellID;
 + (instancetype) generalUserInfoTableViewCell;
 + (CGFloat) heightForGeneralUserInfoWithCurrentPropertyOfUser : (NSString*) userProperty;
-
-
-- (void) configurationGeneralUserInfoTableViewCellWithUser: (MUSUser*) currentUser andCurrentProperty : (NSString*) userProperty;
-
-
+//===
+- (void) configurationUserTableViewCell: (MUSUser*) currentUser withInfo : (NSString*) userInfo;
 
 @end

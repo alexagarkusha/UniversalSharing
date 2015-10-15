@@ -77,7 +77,7 @@
         if (!cell) {
             cell = [MUSTopUserProfileCell profileUserTableViewCell];
         }
-        [cell configurationProfileUserTableViewCellWithUser: self.socialNetwork.currentUser];
+        [cell configurationProfileUserTableViewCell: self.socialNetwork.currentUser];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
         
@@ -86,7 +86,7 @@
         if (!cell) {
             cell = [MUSUserProfileCell generalUserInfoTableViewCell];
         }
-        [cell configurationGeneralUserInfoTableViewCellWithUser: self.socialNetwork.currentUser andCurrentProperty: [self.userPropertiesArray objectAtIndex: indexPath.row]];
+        [cell configurationUserTableViewCell: self.socialNetwork.currentUser withInfo: [self.userPropertiesArray objectAtIndex: indexPath.row]];
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
