@@ -12,6 +12,7 @@
 
 + (NSString*) customCellID;
 + (instancetype) musDetailPostCollectionViewCell;
+//===
 - (void) configurationCellWithPhoto: (UIImage*) photoImageView;
 
 
