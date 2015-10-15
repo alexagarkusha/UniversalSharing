@@ -170,7 +170,9 @@ FOUNDATION_EXPORT NSString *const MUSApp_MUSTopBarForMediaGalleryViewController_
 
 FOUNDATION_EXPORT NSString *const MUSApp_MUSDeleteButton_Image_Name;
 
+#pragma mark - ReachabilityManager
 
+FOUNDATION_EXPORT NSString *const MUSApp_ReachabilityManager_Host_Name;
 
 
 

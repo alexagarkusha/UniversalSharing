@@ -13,6 +13,7 @@
 @interface MUSPhotoManager : NSObject
 
 + (MUSPhotoManager*) sharedManager;
+//===
 - (void) photoShowFromViewController : (UIViewController*) viewController withComplition: (Complition) block;
 
 @end

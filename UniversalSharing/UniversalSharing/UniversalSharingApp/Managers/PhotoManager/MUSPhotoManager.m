@@ -14,7 +14,6 @@
 #import "MUSImageToPost.h"
 #import "UIImage+Scale.h"
 
-
 @interface MUSPhotoManager () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate>
 
 @property (copy, nonatomic) Complition copyComplition;
