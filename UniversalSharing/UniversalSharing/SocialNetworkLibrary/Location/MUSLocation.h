@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Location : NSObject
+@interface MUSLocation : NSObject
 
 /*!
  @abstract latitude point within a radius of where you want to search for, given in degrees (-90 to 90) .

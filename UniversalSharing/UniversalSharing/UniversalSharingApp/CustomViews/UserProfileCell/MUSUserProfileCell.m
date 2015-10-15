@@ -50,7 +50,7 @@
 }
 
 
-- (void) configurationGeneralUserInfoTableViewCellWithUser: (User*) currentUser andCurrentProperty : (NSString*) userProperty {
+- (void) configurationGeneralUserInfoTableViewCellWithUser: (MUSUser*) currentUser andCurrentProperty : (NSString*) userProperty {
     
     //self.userPropertyLabel.text = [userProperty uppercaseString];
    

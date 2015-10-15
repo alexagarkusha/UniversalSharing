@@ -8,10 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import "MUSSocialNetworkLibraryConstants.h"
-#import "User.h"
-#import "Post.h"
-#import "Place.h"
-#import "NetworkPost.h"
+#import "MUSUser.h"
+#import "MUSPost.h"
+#import "MUSPlace.h"
+#import "MUSNetworkPost.h"
 
 
 @interface DataBaseManager : NSObject 
@@ -27,7 +27,7 @@
 - (NSMutableArray*)obtainUsersFromDataBaseWithRequestString : (NSString*) requestString;
 //===
 - (NSMutableArray*)obtainNetworkPostsFromDataBaseWithRequestString : (NSString*) requestString;
-- (NetworkPost*)obtainNetworkPostFromDataBaseWithRequestString : (NSString*) requestString;
+- (MUSNetworkPost*)obtainNetworkPostFromDataBaseWithRequestString : (NSString*) requestString;
 //===
-- (NSInteger) saveNetworkPost :(NetworkPost*) networkPost;
+- (NSInteger) saveNetworkPost :(MUSNetworkPost*) networkPost;
 @end

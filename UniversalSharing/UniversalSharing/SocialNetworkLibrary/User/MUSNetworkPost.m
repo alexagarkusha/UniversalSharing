@@ -6,15 +6,15 @@
 //  Copyright (c) 2015 Mobindustry. All rights reserved.
 //
 
-#import "NetworkPost.h"
+#import "MUSNetworkPost.h"
 #import "DataBaseManager.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 
-@implementation NetworkPost
+@implementation MUSNetworkPost
 
 + (instancetype)create
 {
-    NetworkPost *networkPost = [[NetworkPost alloc] init];
+    MUSNetworkPost *networkPost = [[MUSNetworkPost alloc] init];
    
     networkPost.postID = @"";
     networkPost.likesCount = 0;

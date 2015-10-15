@@ -7,13 +7,13 @@
 //
 
 #import "VKNetwork.h"
-#import "Location.h"
-#import "Place.h"
+#import "MUSLocation.h"
+#import "MUSPlace.h"
 #import <VKSdk.h>
 #import "NSError+MUSError.h"
 #import "NSString+MUSPathToDocumentsdirectory.h"
 #import "InternetConnectionManager.h"
-#import "NetworkPost.h"
+#import "MUSNetworkPost.h"
 #import "NSString+MUSCurrentDate.h"
 #import "MUSPostManager.h"
 #import "VKOperation.h"
@@ -157,9 +157,9 @@ static VKNetwork *model = nil;
 
 #pragma mark - sharePost
 
-- (void) sharePost : (Post*) post withComplition : (Complition) block progressLoadingBlock:(ProgressLoading) blockLoading{
+- (void) sharePost : (MUSPost*) post withComplition : (Complition) block progressLoadingBlock:(ProgressLoading) blockLoading{
     if (![[InternetConnectionManager connectionManager] isInternetConnection]){
-        NetworkPost *networkPost = [NetworkPost create];
+        MUSNetworkPost *networkPost = [MUSNetworkPost create];
         networkPost.networkType = MUSVKontakt;
         blockLoading ([NSNumber numberWithInteger: self.networkType], 1.0f);
         block(networkPost,[self errorConnection]);
@@ -204,10 +204,10 @@ static VKNetwork *model = nil;
  @param current post of @class Post
  */
 
-- (void) sharePostOnlyWithPostDescription : (Post*) post {
-    NetworkPost *networkPost = [NetworkPost create];
+- (void) sharePostOnlyWithPostDescription : (MUSPost*) post {
+    MUSNetworkPost *networkPost = [MUSNetworkPost create];
     networkPost.networkType = MUSVKontakt;
-    __block NetworkPost *networkPostCopy = networkPost;
+    __block MUSNetworkPost *networkPostCopy = networkPost;
     __weak VKNetwork *weakSelf = self;
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     
@@ -247,18 +247,18 @@ static VKNetwork *model = nil;
  @param current post of @class Post
  */
 
-- (void) sharePostWithPictures : (Post*) post withProgressLoadingImagesToVK : (ProgressLoadingImagesToVK) progressLoadingImagesToVK {
+- (void) sharePostWithPictures : (MUSPost*) post withProgressLoadingImagesToVK : (ProgressLoadingImagesToVK) progressLoadingImagesToVK {
     __weak VKNetwork *weakSelf = self;
     __block NSUInteger numberOfImagesInPost = [post.imagesArray count];
     __block int counterOfImages = 0;
-    NetworkPost *networkPost = [NetworkPost create];
+    MUSNetworkPost *networkPost = [MUSNetworkPost create];
     networkPost.networkType = MUSVKontakt;
-    __block NetworkPost *networkPostCopy = networkPost;
+    __block MUSNetworkPost *networkPostCopy = networkPost;
     
     NSInteger userId = [self.currentUser.clientID integerValue];
     NSMutableArray *requestArray = [[NSMutableArray alloc] init]; //array of requests to add pictures in the social network
     for (int i = 0; i < [post.imagesArray count]; i++) {
-        ImageToPost *imageToPost = [post.imagesArray objectAtIndex: i];
+        MUSImageToPost *imageToPost = [post.imagesArray objectAtIndex: i];
         VKRequest * request = [VKApi uploadWallPhotoRequest: imageToPost.image
                                                  parameters: [self imageForVKNetwork: imageToPost]
                                                      userId: userId
@@ -320,7 +320,7 @@ static VKNetwork *model = nil;
  @param current ImageToPost of @class ImageToPost
  */
 
-- (VKImageParameters*) imageForVKNetwork : (ImageToPost*) imageToPost {
+- (VKImageParameters*) imageForVKNetwork : (MUSImageToPost*) imageToPost {
     switch (imageToPost.imageType) {
         case MUSPNG:
             return [VKImageParameters pngImage];
@@ -339,7 +339,7 @@ static VKNetwork *model = nil;
 
 #pragma mark - obtainPlacesArrayForLocation
 
-- (void) obtainPlacesArrayForLocation: (Location *) location withComplition: (Complition) block {
+- (void) obtainPlacesArrayForLocation: (MUSLocation *) location withComplition: (Complition) block {
     self.copyComplition = block;
     
     if (!location.q || !location.latitude || !location.longitude || !location.distance || [location.latitude floatValue] < -90.0f || [location.latitude floatValue] > 90.0f || [location.longitude floatValue] < -180.0f  || [location.longitude floatValue] > 180.0f) {
@@ -368,7 +368,7 @@ static VKNetwork *model = nil;
          NSMutableArray *placesArray = [[NSMutableArray alloc] init];
          
          for (int i = 0; i < [places count]; i++) {
-             Place *place = [weakSelf createPlace: [places objectAtIndex: i]];
+             MUSPlace *place = [weakSelf createPlace: [places objectAtIndex: i]];
              [placesArray addObject:place];
          }
          
@@ -416,7 +416,7 @@ static VKNetwork *model = nil;
         return;
     }
     __block NSString *stringPostsWithUserIdAndPostId = @"";
-    [networksPostsIDs enumerateObjectsUsingBlock:^(NetworkPost *networkPost, NSUInteger index, BOOL *stop) {
+    [networksPostsIDs enumerateObjectsUsingBlock:^(MUSNetworkPost *networkPost, NSUInteger index, BOOL *stop) {
         stringPostsWithUserIdAndPostId = [stringPostsWithUserIdAndPostId stringByAppendingString:[NSString stringWithFormat:@"%@_%@", [VKSdk getAccessToken].userId, networkPost.postID]];
         if (networksPostsIDs.count != ++index) {
             stringPostsWithUserIdAndPostId = [stringPostsWithUserIdAndPostId stringByAppendingString:@","];
@@ -431,7 +431,7 @@ static VKNetwork *model = nil;
         NSArray *arrayCount = response.json;
         //for (VKResponse * response in responses) {
         for (int i = 0; i < arrayCount.count;  i++) {
-            NetworkPost *networkPost = [NetworkPost create];
+            MUSNetworkPost *networkPost = [MUSNetworkPost create];
             networkPost.postID = [response.json[i] objectForKey: MUSVKParseNetworkPost_ID];
             networkPost.reason = MUSConnect;
             networkPost.networkType = MUSVKontakt;
@@ -522,7 +522,7 @@ static VKNetwork *model = nil;
  @param dictionary takes dictionary from VK network.
  */
 - (void) createUser : (NSDictionary*) result {
-    self.currentUser = [User create];
+    self.currentUser = [MUSUser create];
     
     if ([result isKindOfClass: [NSDictionary class]]) {
         self.currentUser.firstName = [result objectForKey : MUSVKParseUser_First_Name];
@@ -540,8 +540,8 @@ static VKNetwork *model = nil;
  @param dictionary takes dictionary from VK network.
  */
 
-- (Place*) createPlace : (NSDictionary *) dictionary {
-    Place *currentPlace = [[Place alloc] init];
+- (MUSPlace*) createPlace : (NSDictionary *) dictionary {
+    MUSPlace *currentPlace = [[MUSPlace alloc] init];
     
     currentPlace.placeID = [NSString stringWithFormat: @"%@", [dictionary objectForKey: MUSVKParsePlace_ID]];
     currentPlace.fullName = [dictionary objectForKey: MUSVKParsePlace_Title];

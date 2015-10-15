@@ -129,7 +129,7 @@
 
 - (ReasonType) currentReasonForSocialNetwork : (SocialNetwork*) socialNetwork {
     ReasonType currentReason = MUSAllReasons;
-    for (NetworkPost *currentNetworkPost in self.networksPostArray) {
+    for (MUSNetworkPost *currentNetworkPost in self.networksPostArray) {
         if (currentNetworkPost.networkType == socialNetwork.networkType) {
             currentReason = currentNetworkPost.reason;
         }

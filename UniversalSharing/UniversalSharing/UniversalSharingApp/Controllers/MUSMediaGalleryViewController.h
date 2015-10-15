@@ -11,7 +11,7 @@
 
 @interface MUSMediaGalleryViewController : UIViewController
 
-- (void) sendPost :(Post*) currentPost andSelectedImageIndex :(NSInteger) selectedImageIndex;
+- (void) sendPost :(MUSPost*) currentPost andSelectedImageIndex :(NSInteger) selectedImageIndex;
 //===
 @property (assign, nonatomic) BOOL isEditableCollectionView;
 

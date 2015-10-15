@@ -41,10 +41,10 @@
 - (void) obtainUserInfoFromNetworkWithComplition :(Complition) block {
 }
 
-- (void) sharePost : (Post*) post withComplition : (Complition) block progressLoadingBlock :(ProgressLoading) blockLoading{
+- (void) sharePost : (MUSPost*) post withComplition : (Complition) block progressLoadingBlock :(ProgressLoading) blockLoading{
 }
 
-- (void) obtainPlacesArrayForLocation : (Location*) location withComplition : (Complition) block {
+- (void) obtainPlacesArrayForLocation : (MUSLocation*) location withComplition : (Complition) block {
 }
 
 - (void) updateNetworkPostWithComplition : (UpdateNetworkPostsComplition) block {

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "User.h"
+#import "MUSUser.h"
 #import "MUSSocialNetworkLibraryHeader.h"
 #import <AFMSlidingCell.h>
 

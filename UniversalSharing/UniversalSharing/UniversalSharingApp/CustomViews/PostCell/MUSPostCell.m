@@ -10,7 +10,7 @@
 
 #import "MUSPostCell.h"
 #import "ConstantsApp.h"
-#import "ImageToPost.h"
+#import "MUSImageToPost.h"
 #import "UIImageView+RoundImage.h"
 #import "UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.h"
 #import "UIImage+LoadImageFromDataBase.h"
@@ -71,11 +71,11 @@
     return nibArray[0];
 }
 
-+ (CGFloat) heightForPostCell : (Post*) post {
++ (CGFloat) heightForPostCell : (MUSPost*) post {
     return MUSApp_MUSPostCell_HeightOfCell + [MUSReasonCommentsAndLikesCell heightForReasonCommentsAndLikesCell] * post.networkPostsArray.count;
 }
 
-- (void) configurationPostCell: (Post*) currentPost {
+- (void) configurationPostCell: (MUSPost*) currentPost {
     [self hideAllImageView];
     [self.commentsAndLikesPostTableView reloadData];
     [self configurateBordersOfCell: currentPost];
@@ -85,7 +85,7 @@
     self.commentsAndLikesPostTableView.backgroundColor = BROWN_COLOR_WITH_ALPHA_025;
 }
 
-- (void) configuratePostDescriptionLabelForPost: (Post*) post {
+- (void) configuratePostDescriptionLabelForPost: (MUSPost*) post {
     //self.postDescriptionLabel.backgroundColor = BROWN_COLOR_Lightly;
     if (!post.postDescription.length) {
         self.postDescriptionLabel.text = @"No text...";
@@ -96,7 +96,7 @@
     }
 }
 
-- (void) configurateFirstImageOfPost : (Post*) currentPost {
+- (void) configurateFirstImageOfPost : (MUSPost*) currentPost {
     if (![[currentPost.imageUrlsArray firstObject] isEqualToString: @""] || ![currentPost.imageUrlsArray firstObject]) {
         //[self showAllImageView];
         self.postDescriptionLabelLeftConstraint.constant = MUSApp_MUSPostCell_PostDescriptionLabel_LeftConstraint_WithUserPhotos;
@@ -119,10 +119,10 @@
     self.thirdImageOfPostImageView.hidden = NO;
 }
 
-- (void) loadImageFromPostToImageView : (Post*) post  {
+- (void) loadImageFromPostToImageView : (MUSPost*) post  {
     for (int i = 0; i < MIN(post.imagesArray.count, self.arrayOfImageView.count); i++) {
         UIImageView *imageView = [self.arrayOfImageView objectAtIndex: i];
-        ImageToPost *imageToPost = [post.imagesArray objectAtIndex: i];
+        MUSImageToPost *imageToPost = [post.imagesArray objectAtIndex: i];
         imageView.image = imageToPost.image;
         imageView.hidden = NO;
         //[imageView loadImageFromDataBase: [po.arrayImagesUrl objectAtIndex: i]];
@@ -130,7 +130,7 @@
 }
 
 
-- (void) configurateBordersOfCell : (Post*) post {
+- (void) configurateBordersOfCell : (MUSPost*) post {
     
     if (self.shapeLayer) {
         [self.shapeLayer removeFromSuperlayer];

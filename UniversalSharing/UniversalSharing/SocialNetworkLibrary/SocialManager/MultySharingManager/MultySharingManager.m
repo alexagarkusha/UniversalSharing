@@ -55,7 +55,7 @@ static MultySharingManager *model = nil;
 }
 
 
-- (void) sharePost : (Post*) post toSocialNetworks : (NSArray*) networksTypesArray withMultySharingResultBlock : (MultySharingResultBlock) multySharingResultBlock startLoadingBlock : (StartLoadingBlock) startLoadingBlock progressLoadingBlock :(ProgressLoadingBlock) progressLoadingBlock {
+- (void) sharePost : (MUSPost*) post toSocialNetworks : (NSArray*) networksTypesArray withMultySharingResultBlock : (MultySharingResultBlock) multySharingResultBlock startLoadingBlock : (StartLoadingBlock) startLoadingBlock progressLoadingBlock :(ProgressLoadingBlock) progressLoadingBlock {
     
     NSMutableArray *arrayWithNetworks = [[SocialManager sharedManager]networksForKeys:networksTypesArray];
     
@@ -76,12 +76,12 @@ static MultySharingManager *model = nil;
 }
 
 - (void) sharePostDictionary: (NSDictionary*) postDictionary {
-    Post *currentPost =  [postDictionary objectForKey: @"post"];
+    MUSPost *currentPost =  [postDictionary objectForKey: @"post"];
     self.startLoadingBlock (currentPost);
     [self sharePost: currentPost toSocialNetworks: [postDictionary objectForKey: @"arrayWithNetworks"]];
 }
 
-- (void) sharePost : (Post*) post toSocialNetworks : (NSArray*) arrayWithNetworks {
+- (void) sharePost : (MUSPost*) post toSocialNetworks : (NSArray*) arrayWithNetworks {
     __block NSMutableDictionary *loadingObjectsDictionary = [self dictionaryOfLoadingObjectsFromNetworks: arrayWithNetworks];
     
     self.isPostLoading = YES;
@@ -90,7 +90,7 @@ static MultySharingManager *model = nil;
         post.networkPostIdsArray = [NSMutableArray new];
     }
     
-    __block Post *postCopy = post;
+    __block MUSPost *postCopy = post;
     __block NSUInteger numberOfSocialNetworks = arrayWithNetworks.count;
     __block int counterOfSocialNetwork = 0;
     __weak MultySharingManager *weakMultySharingManager = self;
@@ -102,10 +102,10 @@ static MultySharingManager *model = nil;
 
             counterOfSocialNetwork++;
             
-            NetworkPost *networkPost;
+            MUSNetworkPost *networkPost;
             
-            if ([result isKindOfClass: [NetworkPost class]]) {
-                networkPost = (NetworkPost*) result;
+            if ([result isKindOfClass: [MUSNetworkPost class]]) {
+                networkPost = (MUSNetworkPost*) result;
                 
                 NSDictionary* resultDictionary = @{
                                           @"Result" : [NSNumber numberWithInt: networkPost.reason],
@@ -138,8 +138,8 @@ static MultySharingManager *model = nil;
 }
 
 
-- (void) updateCurrentNetworkPost : (NetworkPost*) newNetworkPost andArrayOfOldNetworkPosts : (NSMutableArray*) arrayOfOldPosts {
-    for (NetworkPost *currentNetworkPost in arrayOfOldPosts) {
+- (void) updateCurrentNetworkPost : (MUSNetworkPost*) newNetworkPost andArrayOfOldNetworkPosts : (NSMutableArray*) arrayOfOldPosts {
+    for (MUSNetworkPost *currentNetworkPost in arrayOfOldPosts) {
         if (currentNetworkPost.networkType == newNetworkPost.networkType) {
             if (newNetworkPost.reason != MUSConnect) {
                 return;
@@ -167,7 +167,7 @@ static MultySharingManager *model = nil;
 
 - (BOOL) isQueueContainsPost: (NSInteger)primaryKeyOfPost {
     for (NSDictionary *dictionary in self.postsQueue) {
-        Post *currentPost = [dictionary objectForKey: @"post"];
+        MUSPost *currentPost = [dictionary objectForKey: @"post"];
         if (currentPost.primaryKey == primaryKeyOfPost) {
             return YES;
         }

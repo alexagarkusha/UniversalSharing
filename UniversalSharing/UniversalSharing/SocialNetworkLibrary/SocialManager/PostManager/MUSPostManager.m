@@ -78,9 +78,9 @@ static MUSPostManager *model = nil;
 }
 
 - (void) deleteNetworkPostForNetworkType : (NetworkType) networkType {
-    for (Post *currentPost in self.postsArray) {
+    for (MUSPost *currentPost in self.postsArray) {
         [currentPost updateAllNetworkPostsFromDataBaseForCurrentPost];
-        for (NetworkPost *networkPost in currentPost.networkPostsArray) {
+        for (MUSNetworkPost *networkPost in currentPost.networkPostsArray) {
             if (networkPost.networkType == networkType) {
                 // Delete NetworkPost ID from post
                 [currentPost.networkPostIdsArray removeObject: [NSString stringWithFormat: @"%ld", (long)networkPost.primaryKey]];

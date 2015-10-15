@@ -12,7 +12,7 @@
 #import "MUSPhotoManager.h"
 #import "MUSLocationManager.h"
 #import "MUSCollectionViewCell.h"
-#import "Place.h"
+#import "MUSPlace.h"
 #import "MUSGaleryView.h"
 #import "ReachabilityManager.h"
 #import <CoreText/CoreText.h>
@@ -21,7 +21,7 @@
 #import "MUSPopUpForSharing.h"
 #import "MUSProgressBar.h"
 #import "MUSProgressBarEndLoading.h"
-#import "ImageToPost.h"
+#import "MUSImageToPost.h"
 
 @interface MUSShareViewController () <UITextViewDelegate, UIActionSheetDelegate, UIAlertViewDelegate, UINavigationControllerDelegate, UIToolbarDelegate, MUSGaleryViewDelegate, MUSPopUpForSharingDelegate>
 
@@ -82,14 +82,14 @@
  @abstract  in order to add  existed networks in our app
  */
 @property (strong, nonatomic)               NSArray *arrayWithNetworks;
-@property (strong, nonatomic)               Post *post;
+@property (strong, nonatomic)               MUSPost *post;
 @property (strong, nonatomic)               UIButton *changeSocialNetworkButton;
 /*!
  @property
  @abstract in order to get place id from locationViewController and pass to network for location of a user
  */
 //@property (strong, nonatomic)               NSString *placeID;
-@property (strong, nonatomic)               Place *place;
+@property (strong, nonatomic)               MUSPlace *place;
 
 @property (strong, nonatomic)               UIBezierPath *exclusivePath;
 @property (strong, nonatomic)               UITextView *messageTextView;
@@ -475,10 +475,10 @@
     if (_arrayChosenNetworksForPost) {
         [self createPost];
         
-        [[MultySharingManager sharedManager] sharePost: self.post toSocialNetworks: _arrayChosenNetworksForPost withMultySharingResultBlock:^(NSDictionary *multyResultDictionary, Post *post)  {
+        [[MultySharingManager sharedManager] sharePost: self.post toSocialNetworks: _arrayChosenNetworksForPost withMultySharingResultBlock:^(NSDictionary *multyResultDictionary, MUSPost *post)  {
             [[MUSProgressBar sharedProgressBar] stopProgress];
             [[MUSProgressBarEndLoading sharedProgressBarEndLoading] endProgressViewWithCountConnect:multyResultDictionary andImagesArray: post.imagesArray];
-        } startLoadingBlock:^(Post *post) {
+        } startLoadingBlock:^(MUSPost *post) {
             [[MUSProgressBar sharedProgressBar] startProgressViewWithImages: post.imagesArray];
         } progressLoadingBlock:^(float result) {
             [[MUSProgressBar sharedProgressBar] setProgressViewSize: result];

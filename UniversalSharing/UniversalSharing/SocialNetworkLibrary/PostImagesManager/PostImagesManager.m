@@ -8,7 +8,7 @@
 
 #import "PostImagesManager.h"
 #import "NSString+MUSPathToDocumentsdirectory.h"
-#import "ImageToPost.h"
+#import "MUSImageToPost.h"
 #import "DataBaseManager.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 
@@ -28,7 +28,7 @@ static PostImagesManager *model = nil;
 - (NSMutableArray*) saveImagesToDocumentsFolderAndGetArrayWithImagesUrls :(NSMutableArray*) arrayWithImages {
     
     NSMutableArray *arrayWithImagesUrls = [[NSMutableArray alloc] init];
-    [arrayWithImages enumerateObjectsUsingBlock:^(ImageToPost *image, NSUInteger index, BOOL *stop) {
+    [arrayWithImages enumerateObjectsUsingBlock:^(MUSImageToPost *image, NSUInteger index, BOOL *stop) {
         NSData *data = UIImagePNGRepresentation(image.image);
         //Get the docs directory
         NSString *filePath = @"image";

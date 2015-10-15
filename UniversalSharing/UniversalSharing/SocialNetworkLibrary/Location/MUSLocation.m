@@ -6,12 +6,12 @@
 //  Copyright (c) 2015 Mobindustry. All rights reserved.
 //
 
-#import "Location.h"
+#import "MUSLocation.h"
 
-@implementation Location
+@implementation MUSLocation
 
 + (instancetype) create {
-    Location *location = [[Location alloc] init];
+    MUSLocation *location = [[MUSLocation alloc] init];
     location.longitude = @"";
     location.latitude = @"";
     location.distance = @"";

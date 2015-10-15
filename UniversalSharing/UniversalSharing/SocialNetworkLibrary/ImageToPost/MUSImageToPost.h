@@ -10,7 +10,7 @@
 #import "MUSSocialNetworkLibraryConstants.h"
 #import <UIKit/UIKit.h>
 
-@interface ImageToPost : NSObject
+@interface MUSImageToPost : NSObject
 
 /*!
  @abstract type image for posting in social network,  Like 'PNG' or 'JPEG'

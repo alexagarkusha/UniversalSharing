@@ -10,7 +10,7 @@
 		187FC4FD1B651D9500A3916C /* UniversalSharingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 187FC4FC1B651D9500A3916C /* UniversalSharingTests.m */; };
 		187FC5271B65222D00A3916C /* SocialManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 187FC5191B65222D00A3916C /* SocialManager.m */; };
 		187FC5281B65222D00A3916C /* SocialNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 187FC51C1B65222D00A3916C /* SocialNetwork.m */; };
-		187FC52A1B65222D00A3916C /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 187FC5221B65222D00A3916C /* User.m */; };
+		187FC52A1B65222D00A3916C /* MUSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 187FC5221B65222D00A3916C /* MUSUser.m */; };
 		18BB29AD1B67E3F000B498AC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB29741B67E3F000B498AC /* AppDelegate.m */; };
 		18BB29AE1B67E3F000B498AC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18BB29751B67E3F000B498AC /* LaunchScreen.xib */; };
 		18BB29AF1B67E3F000B498AC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18BB29771B67E3F000B498AC /* Main.storyboard */; };
@@ -71,7 +71,7 @@
 		30C9DDAE1BA973E400F3266A /* MUSTopBarForDetailCollectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30C9DDAD1BA973E400F3266A /* MUSTopBarForDetailCollectionView.xib */; };
 		30C9DDB21BABFA7300F3266A /* MUSToolBarForDetailCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C9DDB11BABFA7300F3266A /* MUSToolBarForDetailCollectionView.m */; };
 		30C9DDB61BABFAD900F3266A /* MUSToolBarForDetailCollectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30C9DDB51BABFAD900F3266A /* MUSToolBarForDetailCollectionView.xib */; };
-		30C9DDBC1BB55C3100F3266A /* NetworkPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C9DDBB1BB55C3100F3266A /* NetworkPost.m */; };
+		30C9DDBC1BB55C3100F3266A /* MUSNetworkPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C9DDBB1BB55C3100F3266A /* MUSNetworkPost.m */; };
 		30C9DDC11BB93E0500F3266A /* MUSPopUpForSharing.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C9DDBF1BB93E0500F3266A /* MUSPopUpForSharing.m */; };
 		30C9DDC21BB93E0500F3266A /* MUSPopUpForSharing.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30C9DDC01BB93E0500F3266A /* MUSPopUpForSharing.xib */; };
 		30C9DDCB1BB99A9F00F3266A /* MUSPopUpTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C9DDC91BB99A9F00F3266A /* MUSPopUpTableViewCell.m */; };
@@ -83,7 +83,7 @@
 		30C9DDF11BC2F99B00F3266A /* MUSProgressBarEndLoading.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30C9DDF01BC2F99B00F3266A /* MUSProgressBarEndLoading.xib */; };
 		30D73BFD1BA715A2001B2FE8 /* MUSImageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30D73BFC1BA715A2001B2FE8 /* MUSImageScrollView.m */; };
 		30DBFD931B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD921B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.m */; };
-		973D67AE1B69114C00A20D00 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 973D67AD1B69114C00A20D00 /* Post.m */; };
+		973D67AE1B69114C00A20D00 /* MUSPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 973D67AD1B69114C00A20D00 /* MUSPost.m */; };
 		97903B581B7B983600FF24E7 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97903B571B7B983600FF24E7 /* CoreText.framework */; };
 		979164A81B8C60F500DFCE64 /* NSString+DateStringFromUNIXTimestamp.m in Sources */ = {isa = PBXBuildFile; fileRef = 979164A71B8C60F500DFCE64 /* NSString+DateStringFromUNIXTimestamp.m */; };
 		979164B41B8CADDA00DFCE64 /* UIImage+LoadImageFromDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 979164B31B8CADDA00DFCE64 /* UIImage+LoadImageFromDataBase.m */; };
@@ -115,8 +115,8 @@
 		97C7D79F1B73889B004DC83D /* MUSSocialNetworkLibraryConstantsForParseObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C7D79E1B73889B004DC83D /* MUSSocialNetworkLibraryConstantsForParseObjects.m */; };
 		97C8A9DE1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C8A9DC1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.m */; };
 		97C8A9DF1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97C8A9DD1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.xib */; };
-		97CA63CA1B6F66D300F9F0C1 /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CA63C91B6F66D300F9F0C1 /* Place.m */; };
-		97CA63CF1B6F737A00F9F0C1 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CA63CE1B6F737A00F9F0C1 /* Location.m */; };
+		97CA63CA1B6F66D300F9F0C1 /* MUSPlace.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CA63C91B6F66D300F9F0C1 /* MUSPlace.m */; };
+		97CA63CF1B6F737A00F9F0C1 /* MUSLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CA63CE1B6F737A00F9F0C1 /* MUSLocation.m */; };
 		97CAF5691BAC001F00F16F6B /* Ressources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 97CAF5621BAC001F00F16F6B /* Ressources.bundle */; };
 		97CAF56A1BAC001F00F16F6B /* SSACircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CAF5641BAC001F00F16F6B /* SSACircleView.m */; };
 		97CAF56B1BAC001F00F16F6B /* SSAPullToRefreshAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CAF5661BAC001F00F16F6B /* SSAPullToRefreshAnimator.m */; };
@@ -127,7 +127,7 @@
 		97D1C43A1B81CF5100009BCF /* MUSPostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D1C4391B81CF5100009BCF /* MUSPostsViewController.m */; };
 		97D1C43F1B81D0A200009BCF /* MUSPostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D1C43D1B81D0A200009BCF /* MUSPostCell.m */; };
 		97D1C4401B81D0A200009BCF /* MUSPostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97D1C43E1B81D0A200009BCF /* MUSPostCell.xib */; };
-		97D967CD1B6A14FF0060B2BC /* ImageToPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D967CC1B6A14FF0060B2BC /* ImageToPost.m */; };
+		97D967CD1B6A14FF0060B2BC /* MUSImageToPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D967CC1B6A14FF0060B2BC /* MUSImageToPost.m */; };
 		FC79868BAD5DBAA5D3BB123C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 294811F54E6400CFBFD3EBDD /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -151,8 +151,8 @@
 		187FC51B1B65222D00A3916C /* SocialNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialNetwork.h; sourceTree = "<group>"; };
 		187FC51C1B65222D00A3916C /* SocialNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocialNetwork.m; sourceTree = "<group>"; };
 		187FC51D1B65222D00A3916C /* MUSSocialNetworkLibraryHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSSocialNetworkLibraryHeader.h; sourceTree = "<group>"; };
-		187FC5211B65222D00A3916C /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
-		187FC5221B65222D00A3916C /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		187FC5211B65222D00A3916C /* MUSUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSUser.h; sourceTree = "<group>"; };
+		187FC5221B65222D00A3916C /* MUSUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSUser.m; sourceTree = "<group>"; };
 		18B505471B726FAF00679F9D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		18BB29731B67E3F000B498AC /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		18BB29741B67E3F000B498AC /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -239,8 +239,8 @@
 		30C9DDB01BABFA7300F3266A /* MUSToolBarForDetailCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSToolBarForDetailCollectionView.h; sourceTree = "<group>"; };
 		30C9DDB11BABFA7300F3266A /* MUSToolBarForDetailCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSToolBarForDetailCollectionView.m; sourceTree = "<group>"; };
 		30C9DDB51BABFAD900F3266A /* MUSToolBarForDetailCollectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MUSToolBarForDetailCollectionView.xib; sourceTree = "<group>"; };
-		30C9DDBA1BB55C3100F3266A /* NetworkPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkPost.h; sourceTree = "<group>"; };
-		30C9DDBB1BB55C3100F3266A /* NetworkPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkPost.m; sourceTree = "<group>"; };
+		30C9DDBA1BB55C3100F3266A /* MUSNetworkPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSNetworkPost.h; sourceTree = "<group>"; };
+		30C9DDBB1BB55C3100F3266A /* MUSNetworkPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSNetworkPost.m; sourceTree = "<group>"; };
 		30C9DDBE1BB93E0500F3266A /* MUSPopUpForSharing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSPopUpForSharing.h; sourceTree = "<group>"; };
 		30C9DDBF1BB93E0500F3266A /* MUSPopUpForSharing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSPopUpForSharing.m; sourceTree = "<group>"; };
 		30C9DDC01BB93E0500F3266A /* MUSPopUpForSharing.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MUSPopUpForSharing.xib; sourceTree = "<group>"; };
@@ -261,8 +261,8 @@
 		30DBFD921B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSSocialNetworkLibraryConstants.m; sourceTree = "<group>"; };
 		61D95135D2C19CD52D3B0709 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		7930E9BF698DEF5E51379530 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		973D67AC1B69114C00A20D00 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Post.h; path = UniversalSharing/SocialNetworkLibrary/Post/Post.h; sourceTree = SOURCE_ROOT; };
-		973D67AD1B69114C00A20D00 /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Post.m; path = UniversalSharing/SocialNetworkLibrary/Post/Post.m; sourceTree = SOURCE_ROOT; };
+		973D67AC1B69114C00A20D00 /* MUSPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUSPost.h; path = UniversalSharing/SocialNetworkLibrary/Post/MUSPost.h; sourceTree = SOURCE_ROOT; };
+		973D67AD1B69114C00A20D00 /* MUSPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUSPost.m; path = UniversalSharing/SocialNetworkLibrary/Post/MUSPost.m; sourceTree = SOURCE_ROOT; };
 		97903B571B7B983600FF24E7 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		979164A61B8C60F500DFCE64 /* NSString+DateStringFromUNIXTimestamp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+DateStringFromUNIXTimestamp.h"; path = "UniversalSharing/UniversalSharingApp/Categories/NSString+DateStringFromUNIXTimestamp/NSString+DateStringFromUNIXTimestamp.h"; sourceTree = SOURCE_ROOT; };
 		979164A71B8C60F500DFCE64 /* NSString+DateStringFromUNIXTimestamp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+DateStringFromUNIXTimestamp.m"; path = "UniversalSharing/UniversalSharingApp/Categories/NSString+DateStringFromUNIXTimestamp/NSString+DateStringFromUNIXTimestamp.m"; sourceTree = SOURCE_ROOT; };
@@ -315,10 +315,10 @@
 		97C8A9DB1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUSDetailPostCollectionViewCell.h; path = DetailPostCollectionViewCell/MUSDetailPostCollectionViewCell.h; sourceTree = "<group>"; };
 		97C8A9DC1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUSDetailPostCollectionViewCell.m; path = DetailPostCollectionViewCell/MUSDetailPostCollectionViewCell.m; sourceTree = "<group>"; };
 		97C8A9DD1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MUSDetailPostCollectionViewCell.xib; path = DetailPostCollectionViewCell/MUSDetailPostCollectionViewCell.xib; sourceTree = "<group>"; };
-		97CA63C81B6F66D300F9F0C1 /* Place.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Place.h; path = UniversalSharing/SocialNetworkLibrary/Place/Place.h; sourceTree = SOURCE_ROOT; };
-		97CA63C91B6F66D300F9F0C1 /* Place.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Place.m; path = UniversalSharing/SocialNetworkLibrary/Place/Place.m; sourceTree = SOURCE_ROOT; };
-		97CA63CD1B6F737A00F9F0C1 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Location.h; path = UniversalSharing/SocialNetworkLibrary/Location/Location.h; sourceTree = SOURCE_ROOT; };
-		97CA63CE1B6F737A00F9F0C1 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Location.m; path = UniversalSharing/SocialNetworkLibrary/Location/Location.m; sourceTree = SOURCE_ROOT; };
+		97CA63C81B6F66D300F9F0C1 /* MUSPlace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUSPlace.h; path = UniversalSharing/SocialNetworkLibrary/Place/MUSPlace.h; sourceTree = SOURCE_ROOT; };
+		97CA63C91B6F66D300F9F0C1 /* MUSPlace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUSPlace.m; path = UniversalSharing/SocialNetworkLibrary/Place/MUSPlace.m; sourceTree = SOURCE_ROOT; };
+		97CA63CD1B6F737A00F9F0C1 /* MUSLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUSLocation.h; path = UniversalSharing/SocialNetworkLibrary/Location/MUSLocation.h; sourceTree = SOURCE_ROOT; };
+		97CA63CE1B6F737A00F9F0C1 /* MUSLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUSLocation.m; path = UniversalSharing/SocialNetworkLibrary/Location/MUSLocation.m; sourceTree = SOURCE_ROOT; };
 		97CAF5621BAC001F00F16F6B /* Ressources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Ressources.bundle; sourceTree = "<group>"; };
 		97CAF5631BAC001F00F16F6B /* SSACircleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSACircleView.h; sourceTree = "<group>"; };
 		97CAF5641BAC001F00F16F6B /* SSACircleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSACircleView.m; sourceTree = "<group>"; };
@@ -338,8 +338,8 @@
 		97D1C43D1B81D0A200009BCF /* MUSPostCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUSPostCell.m; path = PostCell/MUSPostCell.m; sourceTree = "<group>"; };
 		97D1C43E1B81D0A200009BCF /* MUSPostCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MUSPostCell.xib; path = PostCell/MUSPostCell.xib; sourceTree = "<group>"; };
 		97D3C4BE1B958A4F0092776B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		97D967CB1B6A14FF0060B2BC /* ImageToPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageToPost.h; path = UniversalSharing/SocialNetworkLibrary/ImageToPost/ImageToPost.h; sourceTree = SOURCE_ROOT; };
-		97D967CC1B6A14FF0060B2BC /* ImageToPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageToPost.m; path = UniversalSharing/SocialNetworkLibrary/ImageToPost/ImageToPost.m; sourceTree = SOURCE_ROOT; };
+		97D967CB1B6A14FF0060B2BC /* MUSImageToPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUSImageToPost.h; path = UniversalSharing/SocialNetworkLibrary/ImageToPost/MUSImageToPost.h; sourceTree = SOURCE_ROOT; };
+		97D967CC1B6A14FF0060B2BC /* MUSImageToPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUSImageToPost.m; path = UniversalSharing/SocialNetworkLibrary/ImageToPost/MUSImageToPost.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -448,8 +448,8 @@
 		187FC5201B65222D00A3916C /* User */ = {
 			isa = PBXGroup;
 			children = (
-				187FC5211B65222D00A3916C /* User.h */,
-				187FC5221B65222D00A3916C /* User.m */,
+				187FC5211B65222D00A3916C /* MUSUser.h */,
+				187FC5221B65222D00A3916C /* MUSUser.m */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -812,8 +812,8 @@
 		30C9DDB91BB55B8600F3266A /* NetworkPost */ = {
 			isa = PBXGroup;
 			children = (
-				30C9DDBA1BB55C3100F3266A /* NetworkPost.h */,
-				30C9DDBB1BB55C3100F3266A /* NetworkPost.m */,
+				30C9DDBA1BB55C3100F3266A /* MUSNetworkPost.h */,
+				30C9DDBB1BB55C3100F3266A /* MUSNetworkPost.m */,
 			);
 			name = NetworkPost;
 			sourceTree = "<group>";
@@ -915,8 +915,8 @@
 		973D67AB1B69110400A20D00 /* Post */ = {
 			isa = PBXGroup;
 			children = (
-				973D67AC1B69114C00A20D00 /* Post.h */,
-				973D67AD1B69114C00A20D00 /* Post.m */,
+				973D67AC1B69114C00A20D00 /* MUSPost.h */,
+				973D67AD1B69114C00A20D00 /* MUSPost.m */,
 			);
 			name = Post;
 			sourceTree = "<group>";
@@ -1164,8 +1164,8 @@
 		97CA63C71B6F668C00F9F0C1 /* Place */ = {
 			isa = PBXGroup;
 			children = (
-				97CA63C81B6F66D300F9F0C1 /* Place.h */,
-				97CA63C91B6F66D300F9F0C1 /* Place.m */,
+				97CA63C81B6F66D300F9F0C1 /* MUSPlace.h */,
+				97CA63C91B6F66D300F9F0C1 /* MUSPlace.m */,
 			);
 			name = Place;
 			sourceTree = "<group>";
@@ -1173,8 +1173,8 @@
 		97CA63CB1B6F734500F9F0C1 /* Location */ = {
 			isa = PBXGroup;
 			children = (
-				97CA63CD1B6F737A00F9F0C1 /* Location.h */,
-				97CA63CE1B6F737A00F9F0C1 /* Location.m */,
+				97CA63CD1B6F737A00F9F0C1 /* MUSLocation.h */,
+				97CA63CE1B6F737A00F9F0C1 /* MUSLocation.m */,
 			);
 			name = Location;
 			sourceTree = "<group>";
@@ -1249,8 +1249,8 @@
 		97D967CA1B6A146E0060B2BC /* ImageToPost */ = {
 			isa = PBXGroup;
 			children = (
-				97D967CB1B6A14FF0060B2BC /* ImageToPost.h */,
-				97D967CC1B6A14FF0060B2BC /* ImageToPost.m */,
+				97D967CB1B6A14FF0060B2BC /* MUSImageToPost.h */,
+				97D967CC1B6A14FF0060B2BC /* MUSImageToPost.m */,
 			);
 			name = ImageToPost;
 			sourceTree = "<group>";
@@ -1472,12 +1472,12 @@
 				97C2E2A21BBA900000C82D58 /* MEExpandableHeaderView.m in Sources */,
 				97C273DF1BB6B76A0016D15B /* MUSReasonCommentsAndLikesCell.m in Sources */,
 				97CB301E1BB7DCE000185AC9 /* NSString+MUSSocialNetworkNameOfPost.m in Sources */,
-				973D67AE1B69114C00A20D00 /* Post.m in Sources */,
+				973D67AE1B69114C00A20D00 /* MUSPost.m in Sources */,
 				97C63BD91B7246B6006E99C6 /* NSError+MUSError.m in Sources */,
 				97C460CF1B68B6AD00C010DE /* MUSPhotoManager.m in Sources */,
 				18BF75D81BC185E100A05625 /* DataBaseManager.m in Sources */,
 				97C1F9331BC661CF00FD0FD7 /* UIImage+SocialNetworkIcons.m in Sources */,
-				187FC52A1B65222D00A3916C /* User.m in Sources */,
+				187FC52A1B65222D00A3916C /* MUSUser.m in Sources */,
 				97C2AA131BBD731500D076CB /* NSString+MUSCurrentDate.m in Sources */,
 				18BB29BB1B67E3F000B498AC /* MUSTopUserProfileCell.m in Sources */,
 				97C8A9DE1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.m in Sources */,
@@ -1486,14 +1486,14 @@
 				97C4ACC91B997512008B93B3 /* MUSDeleteButton.m in Sources */,
 				97CAF56C1BAC001F00F16F6B /* SSARefreshControl.m in Sources */,
 				97C3303A1BB73E2B0014C90A /* NSString+MUSReasonNameOfPost.m in Sources */,
-				97CA63CF1B6F737A00F9F0C1 /* Location.m in Sources */,
+				97CA63CF1B6F737A00F9F0C1 /* MUSLocation.m in Sources */,
 				18BF75D01BC1843F00A05625 /* InternetConnectionManager.m in Sources */,
 				18BB29B81B67E3F000B498AC /* MUSUserDetailViewController.h.m in Sources */,
-				30C9DDBC1BB55C3100F3266A /* NetworkPost.m in Sources */,
+				30C9DDBC1BB55C3100F3266A /* MUSNetworkPost.m in Sources */,
 				97C49E711B832103005241CE /* MUSDetailPostViewController.m in Sources */,
 				97D1C43A1B81CF5100009BCF /* MUSPostsViewController.m in Sources */,
 				300444381BA6B40A00BC5342 /* MUSCollectionViewCellForDetailView.m in Sources */,
-				97D967CD1B6A14FF0060B2BC /* ImageToPost.m in Sources */,
+				97D967CD1B6A14FF0060B2BC /* MUSImageToPost.m in Sources */,
 				97C49E7F1B83512F005241CE /* MUSCommentsAndLikesCell.m in Sources */,
 				18BB29BD1B67E3F000B498AC /* MUSUserProfileCell.m in Sources */,
 				18BF75C41BC1837300A05625 /* FacebookNetwork.m in Sources */,
@@ -1525,7 +1525,7 @@
 				30C9DDDF1BBC23C600F3266A /* MUSPopUpDeleteButton.m in Sources */,
 				979164B41B8CADDA00DFCE64 /* UIImage+LoadImageFromDataBase.m in Sources */,
 				97CAF56B1BAC001F00F16F6B /* SSAPullToRefreshAnimator.m in Sources */,
-				97CA63CA1B6F66D300F9F0C1 /* Place.m in Sources */,
+				97CA63CA1B6F66D300F9F0C1 /* MUSPlace.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

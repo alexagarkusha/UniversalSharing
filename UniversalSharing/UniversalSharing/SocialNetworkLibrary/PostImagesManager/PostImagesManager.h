@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Post.h"
+#import "MUSPost.h"
 
 @interface PostImagesManager : NSObject
 

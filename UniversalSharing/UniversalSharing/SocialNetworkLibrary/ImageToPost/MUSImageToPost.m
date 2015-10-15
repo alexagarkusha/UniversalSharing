@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 Mobindustry. All rights reserved.
 //
 
-#import "ImageToPost.h"
+#import "MUSImageToPost.h"
 
-@implementation ImageToPost
+@implementation MUSImageToPost
 
 
 @end

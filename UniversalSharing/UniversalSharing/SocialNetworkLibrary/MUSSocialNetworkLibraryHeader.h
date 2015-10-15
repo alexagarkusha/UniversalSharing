@@ -20,17 +20,17 @@
 
 #import "DataBaseManager.h"
 
-#import "Location.h"
+#import "MUSLocation.h"
 
 #import "MUSSocialNetworkLibraryConstants.h"
 
-#import "Place.h"
-#import "Post.h"
+#import "MUSPlace.h"
+#import "MUSPost.h"
 
 #import "SocialManager.h"
 #import "SocialNetwork.h"
 
-#import "User.h"
+#import "MUSUser.h"
 
 #import "PostImagesManager.h"
 

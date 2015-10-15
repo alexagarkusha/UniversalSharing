@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Roman. All rights reserved.
 //
 
-#import "User.h"
+#import "MUSUser.h"
 #import <TwitterKit/TwitterKit.h>
 #import "MUSSocialNetworkLibraryConstantsForParseObjects.h"
 #import "InternetConnectionManager.h"
@@ -14,11 +14,11 @@
 #import "DataBaseManager.h"
 #import "PostImagesManager.h"
 
-@implementation User
+@implementation MUSUser
 
 
 + (instancetype) create {
-    User *user = [[User alloc] init];
+    MUSUser *user = [[MUSUser alloc] init];
     user.username = @"";
     user.firstName = @"";
     user.lastName = @"";

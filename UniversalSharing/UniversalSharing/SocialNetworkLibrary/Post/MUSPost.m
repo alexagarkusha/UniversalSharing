@@ -6,15 +6,15 @@
 //  Copyright (c) 2015 Mobindustry. All rights reserved.
 //
 
-#import "Post.h"
+#import "MUSPost.h"
 #import "DataBaseManager.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 #import "UIImage+LoadImageFromDataBase.h"
 
-@implementation Post
+@implementation MUSPost
 
 + (instancetype)create {
-    Post *post = [[Post alloc] init];
+    MUSPost *post = [[MUSPost alloc] init];
     
     post.postID = @"";
     post.postDescription = @"";
@@ -29,7 +29,7 @@
     post.dateCreate = @"";
     //post.reason = MUSAllReasons;
     //post.locationId = @"";
-    post.place = [Place create];
+    post.place = [MUSPlace create];
     //post.networkPost = [NetworkPost create];
     post.networkPostsArray = [[NSMutableArray alloc] init];
     post.networkPostIdsArray = [[NSMutableArray alloc] init];
@@ -43,7 +43,7 @@
 
 - (id)copy
 {
-    Post *copyPost = [Post new];
+    MUSPost *copyPost = [MUSPost new];
     copyPost.postID = [self.postID copy];
     copyPost.postDescription = [self.postDescription copy];
     copyPost.imagesArray = [self.imagesArray mutableCopy];
@@ -120,7 +120,7 @@
     for (int i = 0; i < _imageUrlsArray.count; i++) {
         UIImage *image = [UIImage new];
         image = [image loadImageFromDataBase: [_imageUrlsArray objectAtIndex: i]];
-        ImageToPost *imageToPost = [[ImageToPost alloc] init];
+        MUSImageToPost *imageToPost = [[MUSImageToPost alloc] init];
         imageToPost.image = image;
         imageToPost.quality = 1.0f;
         imageToPost.imageType = MUSJPEG;

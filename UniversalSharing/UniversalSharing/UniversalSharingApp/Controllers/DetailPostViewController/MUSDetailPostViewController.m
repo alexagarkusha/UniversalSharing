@@ -81,7 +81,7 @@
 
 - (void) initiationHeaderView
 {
-    ImageToPost *firstImage = [self.currentPost.imagesArray firstObject];
+    MUSImageToPost *firstImage = [self.currentPost.imagesArray firstObject];
     
     if (!self.currentPost.imagesArray.count || !firstImage.image) {
         self.currentPost.imagesArray = nil;
@@ -101,7 +101,7 @@
     }
 }
 
-- (UIView*) createPageViewWithImageView: (ImageToPost*) imageToPost
+- (UIView*) createPageViewWithImageView: (MUSImageToPost*) imageToPost
 {
     UIImageView *imageView = [[UIImageView alloc] initWithFrame: CGRectMake (0, 0, [UIScreen mainScreen].bounds.size.width, MUSApp_MUSDetailPostViewController_HeightOfHeader)];
     imageView.image = imageToPost.image;
@@ -121,7 +121,7 @@
  */
 - (void) initiationNavigationBar {
     BOOL isPostConnect = YES;
-    for (NetworkPost *currentNetworkPost in self.currentPost.networkPostsArray) {
+    for (MUSNetworkPost *currentNetworkPost in self.currentPost.networkPostsArray) {
         if (currentNetworkPost.reason != MUSConnect) {
             isPostConnect = NO;
         }
@@ -271,11 +271,11 @@
     if (arrayChosenNetworksForPost) {
         __weak MUSDetailPostViewController *weakSelf = self;
         self.shareButton.enabled = NO;
-        [[MultySharingManager sharedManager] sharePost:self.currentPost toSocialNetworks:arrayChosenNetworksForPost withMultySharingResultBlock:^(NSDictionary *multyResultDictionary, Post *post) {
+        [[MultySharingManager sharedManager] sharePost:self.currentPost toSocialNetworks:arrayChosenNetworksForPost withMultySharingResultBlock:^(NSDictionary *multyResultDictionary, MUSPost *post) {
             [weakSelf.currentPost updateAllNetworkPostsFromDataBaseForCurrentPost];
             [weakSelf.tableView reloadData];
             
-            for (NetworkPost *networkPost in weakSelf.currentPost.networkPostsArray) {
+            for (MUSNetworkPost *networkPost in weakSelf.currentPost.networkPostsArray) {
                 if (networkPost.reason != MUSConnect) {
                     weakSelf.shareButton.enabled = YES;
                 } else {
@@ -285,7 +285,7 @@
             }
             [[MUSProgressBar sharedProgressBar] stopProgress];
             [[MUSProgressBarEndLoading sharedProgressBarEndLoading] endProgressViewWithCountConnect:multyResultDictionary andImagesArray: post.imagesArray];
-        } startLoadingBlock:^(Post *post) {
+        } startLoadingBlock:^(MUSPost *post) {
             [[MUSProgressBar sharedProgressBar] startProgressViewWithImages: post.imagesArray];
         } progressLoadingBlock:^(float result) {
             [[MUSProgressBar sharedProgressBar] setProgressViewSize: result];

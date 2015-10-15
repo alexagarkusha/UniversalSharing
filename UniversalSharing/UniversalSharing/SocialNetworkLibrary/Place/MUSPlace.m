@@ -6,13 +6,13 @@
 //  Copyright (c) 2015 Mobindustry. All rights reserved.
 //
 
-#import "Place.h"
+#import "MUSPlace.h"
 #import "MUSSocialNetworkLibraryConstantsForParseObjects.h"
 
-@implementation Place
+@implementation MUSPlace
 
 + (instancetype) create {
-    Place *place = [[Place alloc] init];
+    MUSPlace *place = [[MUSPlace alloc] init];
     place.fullName = @"";
     place.placeID = @"";
     place.country = @"";
@@ -24,7 +24,7 @@
 }
 
 - (id) copy {
-    Place *copyPlace = [Place new];
+    MUSPlace *copyPlace = [MUSPlace new];
     copyPlace.fullName = [self.fullName copy];
     copyPlace.placeID = [self.placeID copy];
     copyPlace.country = [self.country copy];

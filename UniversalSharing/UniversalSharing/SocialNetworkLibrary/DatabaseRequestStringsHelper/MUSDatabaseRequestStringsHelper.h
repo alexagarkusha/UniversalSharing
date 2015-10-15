@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "MUSSocialNetworkLibraryConstants.h"
-#import "User.h"
-#import "Post.h"
+#import "MUSUser.h"
+#import "MUSPost.h"
 
 
 ////use
@@ -19,7 +19,7 @@
 @interface MUSDatabaseRequestStringsHelper : NSObject
 
 + (NSString*) stringForAllPosts;
-+ (NSString*) stringForUpdateUser :(User*) user;
++ (NSString*) stringForUpdateUser :(MUSUser*) user;
 + (NSString*) stringCreateTableOfUsers;
 + (NSString*) stringCreateTableOfPosts;
 ///////////////////////////////////////////////
@@ -28,7 +28,7 @@
 + (NSString*) stringSaveNetworkPost;
 + (NSString*) stringForNetworkPostWithPrimaryKey :(NSInteger) primaryKey;
 + (NSString*) stringForNetworkPostWithReason :(ReasonType) reason andNetworkType :(NetworkType) networkType;
-+ (NSString*) stringForUpdateNetworkPost :(NetworkPost*) networkPost;
++ (NSString*) stringForUpdateNetworkPost :(MUSNetworkPost*) networkPost;
 
 ///////////////////////////////////////////////////////
 
@@ -37,8 +37,8 @@
 + (NSString*) stringForUserWithNetworkType :(NSInteger) networkType;
 + (NSString*) stringForDeleteUserByClientId :(NSString*) clientId;
 + (NSString*) stringForDeletePostByPrimaryKey :(NSInteger) primaryKey;
-+ (NSString*) stringForVKUpdateNetworkPost :(NetworkPost*) networkPost;
-+ (NSString*) stringForDeleteNetworkPost : (NetworkPost*) networkPost;
-+ (NSString*) stringForUpdatePost :(Post*) post;
++ (NSString*) stringForVKUpdateNetworkPost :(MUSNetworkPost*) networkPost;
++ (NSString*) stringForDeleteNetworkPost : (MUSNetworkPost*) networkPost;
++ (NSString*) stringForUpdatePost :(MUSPost*) post;
 
 @end

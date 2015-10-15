@@ -15,8 +15,8 @@
 
 + (instancetype) postLocationCell;
 
-+ (CGFloat) heightForPostLocationCell: (Post*) currentPost;
++ (CGFloat) heightForPostLocationCell: (MUSPost*) currentPost;
 
-- (void) configurationPostLocationCellByPostPlace: (Post *) currentPost;
+- (void) configurationPostLocationCellByPostPlace: (MUSPost *) currentPost;
 
 @end

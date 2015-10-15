@@ -8,17 +8,17 @@
 
 #import <Foundation/Foundation.h>
 #import "MUSSocialNetworkLibraryConstants.h"
-#import "Post.h"
+#import "MUSPost.h"
 
-typedef void (^StartLoadingBlock)(Post *post);
-typedef void (^MultySharingResultBlock)(NSDictionary *multyResultDictionary, Post *post);
+typedef void (^StartLoadingBlock)(MUSPost *post);
+typedef void (^MultySharingResultBlock)(NSDictionary *multyResultDictionary, MUSPost *post);
 
 
 @interface MultySharingManager : NSObject
 
 + (MultySharingManager*) sharedManager;
 
-- (void) sharePost : (Post*) post toSocialNetworks : (NSArray*) networksTypesArray withMultySharingResultBlock : (MultySharingResultBlock) multySharingResultBlock startLoadingBlock : (StartLoadingBlock) startLoadingBlock progressLoadingBlock :(ProgressLoadingBlock) progressLoadingBlock;
+- (void) sharePost : (MUSPost*) post toSocialNetworks : (NSArray*) networksTypesArray withMultySharingResultBlock : (MultySharingResultBlock) multySharingResultBlock startLoadingBlock : (StartLoadingBlock) startLoadingBlock progressLoadingBlock :(ProgressLoadingBlock) progressLoadingBlock;
 
 - (BOOL) isQueueContainsPost : (NSInteger) primaryKeyOfPost;
 

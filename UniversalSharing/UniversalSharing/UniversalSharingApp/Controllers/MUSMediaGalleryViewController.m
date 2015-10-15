@@ -20,7 +20,7 @@
 
 @property (assign, nonatomic) NSInteger selectedImageIndex;
 @property (assign, nonatomic) NSInteger deletedImageIndex;
-@property (strong, nonatomic) Post *currentPost;
+@property (strong, nonatomic) MUSPost *currentPost;
 @property (assign, nonatomic) ReasonType currentReasonType;
 @property (assign, nonatomic, getter=isVisibleBars) BOOL visibleBars;
 //===
@@ -79,7 +79,7 @@ static NSString * const reuseIdentifier = @"Cell";
 
 #pragma mark get current post
 
-- (void) sendPost :(Post*) currentPost andSelectedImageIndex :(NSInteger) selectedImageIndex {
+- (void) sendPost :(MUSPost*) currentPost andSelectedImageIndex :(NSInteger) selectedImageIndex {
     self.currentPost = currentPost;
     self.selectedImageIndex = selectedImageIndex;
     //self.currentReasonType = currentPost.reason;
@@ -100,7 +100,7 @@ static NSString * const reuseIdentifier = @"Cell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:
 (NSIndexPath *)indexPath {
     MUSCollectionViewCellForDetailView *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"detailCell" forIndexPath:indexPath];
-    ImageToPost *imageToPost = [self.currentPost.imagesArray  objectAtIndex: indexPath.row];
+    MUSImageToPost *imageToPost = [self.currentPost.imagesArray  objectAtIndex: indexPath.row];
     [cell.scrollView displayImage: imageToPost.image];
     return cell;
 }

@@ -43,7 +43,7 @@
     return nibArray[0];
 }
 
-- (void) configurationProfileUserTableViewCellWithUser: (User*) currentUser {
+- (void) configurationProfileUserTableViewCellWithUser: (MUSUser*) currentUser {
     self.userNameLabel.text = currentUser.firstName;
     self.userLastNameLabel.text = currentUser.lastName;
     NSData *data = [NSData dataWithContentsOfFile:[self obtainPathToDocumentsFolder:currentUser.photoURL]];

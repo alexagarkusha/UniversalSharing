@@ -9,7 +9,7 @@
 #import "MUSProgressBarEndLoading.h"
 #import "MUSSocialNetworkLibraryHeader.h"
 #import "ConstantsApp.h"
-#import "ImageToPost.h"
+#import "MUSImageToPost.h"
 
 @interface MUSProgressBarEndLoading()
 
@@ -99,7 +99,7 @@ static MUSProgressBarEndLoading *model = nil;
         self.lableWidthConstraint.constant = MUSApp_MUSProgressBar_Label_DefaultWidthConstraint;
         for (int i = 0; i < self.imageViewsArray.count; i++) {
             if (postImagesArray.count > i) {
-                ImageToPost *image = postImagesArray[i];
+                MUSImageToPost *image = postImagesArray[i];
                 UIImageView *currentImage =  self.imageViewsArray[i];
                 currentImage.image = image.image;
             }
