@@ -19,13 +19,12 @@
 @property (copy, nonatomic) Complition copyComplition;
 @property (strong, nonatomic) UIImagePickerController *imagePickerController;
 @property (strong, nonatomic) UIViewController *viewController;
+
 @end
 
 static MUSPhotoManager* sharedManager = nil;
 
 @implementation MUSPhotoManager
-
-//#warning "init UIImagePickerController just ones in shareManager"
 
 + (MUSPhotoManager*) sharedManager {
     static dispatch_once_t onceTaken;
@@ -43,13 +42,13 @@ static MUSPhotoManager* sharedManager = nil;
     return self;
 }
 
-- (void) photoShowFromViewController :(UIViewController*) viewController withComplition: (Complition) block {
+- (void) showPhotoFromViewController :(UIViewController*) viewController withComplition: (Complition) block {
     self.copyComplition = block;
     self.viewController = viewController;
-    [self photoAlertShow];
+    [self showPhotoAlert];
 }
 
-- (void) photoAlertShow {
+- (void) showPhotoAlert {
     UIAlertView *photoAlert = [[UIAlertView alloc]
                                initWithTitle : MUSApp_MUSPhotoManager_Alert_Title_Share_Photo
                                message : nil
@@ -83,8 +82,7 @@ static MUSPhotoManager* sharedManager = nil;
     [self.viewController presentViewController:_imagePickerController animated:YES completion:nil];
 }
 
-- (void) takePhotoFromCamera {
-    
+- (void) takePhotoFromCamera {    
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         self.copyComplition (nil, [self cameraError]);
     } else {
