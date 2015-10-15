@@ -82,7 +82,7 @@ static MUSPhotoManager* sharedManager = nil;
     [self.viewController presentViewController:_imagePickerController animated:YES completion:nil];
 }
 
-- (void) takePhotoFromCamera {    
+- (void) takePhotoFromCamera {
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         self.copyComplition (nil, [self cameraError]);
     } else {
@@ -102,13 +102,11 @@ static MUSPhotoManager* sharedManager = nil;
 #pragma mark UIImagePickerControllerDelegate
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    UIImage *image = [info objectForKey: UIImagePickerControllerOriginalImage]; // If you want to show editable photo - you need to set UIImagePickerControllerEditedImage
-    
+    UIImage *image = [info objectForKey: UIImagePickerControllerOriginalImage];
     if (image != nil) {
         MUSImageToPost *imageToPost = [[MUSImageToPost alloc] init];
         UIImage *compressedImage = [UIImage scaleImage: image toSize: CGSizeMake(MUSApp_MUSPhotoManager_CompressionSizePicture_By_Width, MUSApp_MUSPhotoManager_CompressionSizePicture_By_Height)];
@@ -116,8 +114,7 @@ static MUSPhotoManager* sharedManager = nil;
         imageToPost.imageType = MUSJPEG;
         imageToPost.quality = 1.0f;
         self.copyComplition (imageToPost, nil);
-    }
-    
+    }    
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
