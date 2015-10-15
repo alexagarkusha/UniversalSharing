@@ -42,9 +42,9 @@
     return [MUSUserProfileCell cellID];
 }
 
-- (void) configurationGeneralUserInfoTableViewCellWithUser: (MUSUser*) currentUser andCurrentProperty : (NSString*) userProperty {
-    self.userPropertyLabel.text = [userProperty stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:[[userProperty substringToIndex:1] uppercaseString]];
-    NSString *userPropertyInfoString = [currentUser valueForKey:userProperty];
+- (void) configurationUserTableViewCell: (MUSUser*) currentUser withInfo : (NSString*) userInfo {
+    self.userPropertyLabel.text = [userInfo stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:[[userInfo substringToIndex:1] uppercaseString]];
+    NSString *userPropertyInfoString = [currentUser valueForKey:userInfo];
     
     if (userPropertyInfoString.length > 0) {
         self.userPropertyInfoLabel.text = userPropertyInfoString;
