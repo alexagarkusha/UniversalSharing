@@ -84,6 +84,8 @@
 		30D73BFD1BA715A2001B2FE8 /* MUSImageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30D73BFC1BA715A2001B2FE8 /* MUSImageScrollView.m */; };
 		30DBFD931B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBFD921B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.m */; };
 		973D67AE1B69114C00A20D00 /* MUSPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 973D67AD1B69114C00A20D00 /* MUSPost.m */; };
+		978959331BCFCE110049B7E9 /* MUSConstantsForParseSocialNetworkObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 978959321BCFCE110049B7E9 /* MUSConstantsForParseSocialNetworkObjects.m */; settings = {ASSET_TAGS = (); }; };
+		978959371BCFCF770049B7E9 /* MUSConstantsForSocialNetworks.m in Sources */ = {isa = PBXBuildFile; fileRef = 978959361BCFCF770049B7E9 /* MUSConstantsForSocialNetworks.m */; settings = {ASSET_TAGS = (); }; };
 		97903B581B7B983600FF24E7 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97903B571B7B983600FF24E7 /* CoreText.framework */; };
 		979164A81B8C60F500DFCE64 /* NSString+DateStringFromUNIXTimestamp.m in Sources */ = {isa = PBXBuildFile; fileRef = 979164A71B8C60F500DFCE64 /* NSString+DateStringFromUNIXTimestamp.m */; };
 		979164B41B8CADDA00DFCE64 /* UIImage+LoadImageFromDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 979164B31B8CADDA00DFCE64 /* UIImage+LoadImageFromDataBase.m */; };
@@ -111,7 +113,6 @@
 		97C4ACC91B997512008B93B3 /* MUSDeleteButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C4ACC81B997512008B93B3 /* MUSDeleteButton.m */; };
 		97C4ACD71B99ABDE008B93B3 /* MUSAddPhotoButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C4ACD61B99ABDE008B93B3 /* MUSAddPhotoButton.m */; };
 		97C63BD91B7246B6006E99C6 /* NSError+MUSError.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C63BD81B7246B6006E99C6 /* NSError+MUSError.m */; };
-		97C7D79F1B73889B004DC83D /* MUSSocialNetworkLibraryConstantsForParseObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C7D79E1B73889B004DC83D /* MUSSocialNetworkLibraryConstantsForParseObjects.m */; };
 		97C8A9DE1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C8A9DC1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.m */; };
 		97C8A9DF1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97C8A9DD1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.xib */; };
 		97CA63CA1B6F66D300F9F0C1 /* MUSPlace.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CA63C91B6F66D300F9F0C1 /* MUSPlace.m */; };
@@ -261,6 +262,10 @@
 		7930E9BF698DEF5E51379530 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		973D67AC1B69114C00A20D00 /* MUSPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUSPost.h; path = UniversalSharing/SocialNetworkLibrary/Post/MUSPost.h; sourceTree = SOURCE_ROOT; };
 		973D67AD1B69114C00A20D00 /* MUSPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUSPost.m; path = UniversalSharing/SocialNetworkLibrary/Post/MUSPost.m; sourceTree = SOURCE_ROOT; };
+		978959311BCFCE110049B7E9 /* MUSConstantsForParseSocialNetworkObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUSConstantsForParseSocialNetworkObjects.h; path = ConstantsForParseSocialNetworkObjects/MUSConstantsForParseSocialNetworkObjects.h; sourceTree = "<group>"; };
+		978959321BCFCE110049B7E9 /* MUSConstantsForParseSocialNetworkObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUSConstantsForParseSocialNetworkObjects.m; path = ConstantsForParseSocialNetworkObjects/MUSConstantsForParseSocialNetworkObjects.m; sourceTree = "<group>"; };
+		978959351BCFCF770049B7E9 /* MUSConstantsForSocialNetworks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUSConstantsForSocialNetworks.h; path = ConstantsForSocialNetworks/MUSConstantsForSocialNetworks.h; sourceTree = "<group>"; };
+		978959361BCFCF770049B7E9 /* MUSConstantsForSocialNetworks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUSConstantsForSocialNetworks.m; path = ConstantsForSocialNetworks/MUSConstantsForSocialNetworks.m; sourceTree = "<group>"; };
 		97903B571B7B983600FF24E7 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		979164A61B8C60F500DFCE64 /* NSString+DateStringFromUNIXTimestamp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+DateStringFromUNIXTimestamp.h"; path = "UniversalSharing/UniversalSharingApp/Categories/NSString+DateStringFromUNIXTimestamp/NSString+DateStringFromUNIXTimestamp.h"; sourceTree = SOURCE_ROOT; };
 		979164A71B8C60F500DFCE64 /* NSString+DateStringFromUNIXTimestamp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+DateStringFromUNIXTimestamp.m"; path = "UniversalSharing/UniversalSharingApp/Categories/NSString+DateStringFromUNIXTimestamp/NSString+DateStringFromUNIXTimestamp.m"; sourceTree = SOURCE_ROOT; };
@@ -306,8 +311,6 @@
 		97C4ACD61B99ABDE008B93B3 /* MUSAddPhotoButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUSAddPhotoButton.m; path = UniversalSharing/UniversalSharingApp/CustomViews/CustomButtons/AddPhotoButton/MUSAddPhotoButton.m; sourceTree = SOURCE_ROOT; };
 		97C63BD71B7246B6006E99C6 /* NSError+MUSError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSError+MUSError.h"; path = "UniversalSharing/SocialNetworkLibrary/Categories/NSError+MUSError.h"; sourceTree = SOURCE_ROOT; };
 		97C63BD81B7246B6006E99C6 /* NSError+MUSError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSError+MUSError.m"; path = "UniversalSharing/SocialNetworkLibrary/Categories/NSError+MUSError.m"; sourceTree = SOURCE_ROOT; };
-		97C7D79D1B73889B004DC83D /* MUSSocialNetworkLibraryConstantsForParseObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSSocialNetworkLibraryConstantsForParseObjects.h; sourceTree = "<group>"; };
-		97C7D79E1B73889B004DC83D /* MUSSocialNetworkLibraryConstantsForParseObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSSocialNetworkLibraryConstantsForParseObjects.m; sourceTree = "<group>"; };
 		97C8A9DB1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUSDetailPostCollectionViewCell.h; path = DetailPostCollectionViewCell/MUSDetailPostCollectionViewCell.h; sourceTree = "<group>"; };
 		97C8A9DC1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUSDetailPostCollectionViewCell.m; path = DetailPostCollectionViewCell/MUSDetailPostCollectionViewCell.m; sourceTree = "<group>"; };
 		97C8A9DD1B944BCA00031CB0 /* MUSDetailPostCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MUSDetailPostCollectionViewCell.xib; path = DetailPostCollectionViewCell/MUSDetailPostCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -503,8 +506,9 @@
 		18BB29881B67E3F000B498AC /* Constants */ = {
 			isa = PBXGroup;
 			children = (
-				18BB29891B67E3F000B498AC /* ConstantsApp.h */,
-				18BB298A1B67E3F000B498AC /* ConstantsApp.m */,
+				9789592F1BCFCCCE0049B7E9 /* ConstantsForParseSocialNetworkObjects */,
+				978959301BCFCD3A0049B7E9 /* ConstantsForSocialNetworks */,
+				978959381BCFD2AC0049B7E9 /* ConstantsGeneral */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -875,8 +879,6 @@
 			children = (
 				30DBFD911B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.h */,
 				30DBFD921B677B27002F83D0 /* MUSSocialNetworkLibraryConstants.m */,
-				97C7D79D1B73889B004DC83D /* MUSSocialNetworkLibraryConstantsForParseObjects.h */,
-				97C7D79E1B73889B004DC83D /* MUSSocialNetworkLibraryConstantsForParseObjects.m */,
 			);
 			path = SocialNetworkLibraryConstants;
 			sourceTree = "<group>";
@@ -913,6 +915,33 @@
 				973D67AD1B69114C00A20D00 /* MUSPost.m */,
 			);
 			name = Post;
+			sourceTree = "<group>";
+		};
+		9789592F1BCFCCCE0049B7E9 /* ConstantsForParseSocialNetworkObjects */ = {
+			isa = PBXGroup;
+			children = (
+				978959311BCFCE110049B7E9 /* MUSConstantsForParseSocialNetworkObjects.h */,
+				978959321BCFCE110049B7E9 /* MUSConstantsForParseSocialNetworkObjects.m */,
+			);
+			name = ConstantsForParseSocialNetworkObjects;
+			sourceTree = "<group>";
+		};
+		978959301BCFCD3A0049B7E9 /* ConstantsForSocialNetworks */ = {
+			isa = PBXGroup;
+			children = (
+				978959351BCFCF770049B7E9 /* MUSConstantsForSocialNetworks.h */,
+				978959361BCFCF770049B7E9 /* MUSConstantsForSocialNetworks.m */,
+			);
+			name = ConstantsForSocialNetworks;
+			sourceTree = "<group>";
+		};
+		978959381BCFD2AC0049B7E9 /* ConstantsGeneral */ = {
+			isa = PBXGroup;
+			children = (
+				18BB29891B67E3F000B498AC /* ConstantsApp.h */,
+				18BB298A1B67E3F000B498AC /* ConstantsApp.m */,
+			);
+			name = ConstantsGeneral;
 			sourceTree = "<group>";
 		};
 		979164A51B8C5FE000DFCE64 /* NSString+DateStringFromUNIXTimestamp */ = {
@@ -1434,6 +1463,7 @@
 				97CAF56A1BAC001F00F16F6B /* SSACircleView.m in Sources */,
 				18BB29C31B67E3F000B498AC /* MUSLocationManager.m in Sources */,
 				97C05FA51BB553AC00EF6079 /* MUSPostImagesManager.m in Sources */,
+				978959371BCFCF770049B7E9 /* MUSConstantsForSocialNetworks.m in Sources */,
 				187FC5281B65222D00A3916C /* MUSSocialNetwork.m in Sources */,
 				18BB29B61B67E3F000B498AC /* MUSAccountsViewController.m in Sources */,
 				97CB10DB1B904D7B0061F851 /* UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.m in Sources */,
@@ -1442,7 +1472,6 @@
 				979164A81B8C60F500DFCE64 /* NSString+DateStringFromUNIXTimestamp.m in Sources */,
 				18BF75D41BC1845D00A05625 /* MUSDatabaseRequestStringsHelper.m in Sources */,
 				30C9DDE91BBEA64800F3266A /* MUSProgressBar.m in Sources */,
-				97C7D79F1B73889B004DC83D /* MUSSocialNetworkLibraryConstantsForParseObjects.m in Sources */,
 				97C2E2A21BBA900000C82D58 /* MEExpandableHeaderView.m in Sources */,
 				97C273DF1BB6B76A0016D15B /* MUSReasonCommentsAndLikesCell.m in Sources */,
 				973D67AE1B69114C00A20D00 /* MUSPost.m in Sources */,
@@ -1463,6 +1492,7 @@
 				18BB29B81B67E3F000B498AC /* MUSUserDetailViewController.h.m in Sources */,
 				30C9DDBC1BB55C3100F3266A /* MUSNetworkPost.m in Sources */,
 				97C49E711B832103005241CE /* MUSDetailPostViewController.m in Sources */,
+				978959331BCFCE110049B7E9 /* MUSConstantsForParseSocialNetworkObjects.m in Sources */,
 				97D1C43A1B81CF5100009BCF /* MUSPostsViewController.m in Sources */,
 				300444381BA6B40A00BC5342 /* MUSCollectionViewCellForDetailView.m in Sources */,
 				97D967CD1B6A14FF0060B2BC /* MUSImageToPost.m in Sources */,
