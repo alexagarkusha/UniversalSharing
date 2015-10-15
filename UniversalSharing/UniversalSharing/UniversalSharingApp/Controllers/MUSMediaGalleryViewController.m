@@ -11,7 +11,7 @@
 #import "MUSTopBarForDetailCollectionView.h"
 #import "MUSToolBarForDetailCollectionView.h"
 #import "UIImage+LoadImageFromDataBase.h"
-#import "DataBaseManager.h"
+#import "MUSDataBaseManager.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 #import "ConstantsApp.h"
 #import "MUSUserDetailViewController.h"

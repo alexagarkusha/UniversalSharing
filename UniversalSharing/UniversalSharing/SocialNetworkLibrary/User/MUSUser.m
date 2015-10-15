@@ -11,7 +11,7 @@
 #import "MUSSocialNetworkLibraryConstantsForParseObjects.h"
 #import "MUSInternetConnectionManager.h"
 #import "MUSDatabaseRequestStringsHelper.h"
-#import "DataBaseManager.h"
+#import "MUSDataBaseManager.h"
 #import "MUSPostImagesManager.h"
 
 @implementation MUSUser
@@ -30,13 +30,13 @@
 }
 
 - (void) insertIntoDataBase {
-    [[DataBaseManager sharedManager] insertObjectIntoTable: self];
+    [[MUSDataBaseManager sharedManager] insertObjectIntoTable: self];
 }
 
 
 - (void) removeUser {
     [[MUSPostImagesManager manager] removeImageFromFileManagerByImagePath: _photoURL];
-    [[DataBaseManager sharedManager] deleteObjectFromDataBaseWithRequestStrings:[MUSDatabaseRequestStringsHelper stringForDeleteUserByClientId: _clientID]];
+    [[MUSDataBaseManager sharedManager] deleteObjectFromDataBaseWithRequestStrings:[MUSDatabaseRequestStringsHelper stringForDeleteUserByClientId: _clientID]];
 }
 
 

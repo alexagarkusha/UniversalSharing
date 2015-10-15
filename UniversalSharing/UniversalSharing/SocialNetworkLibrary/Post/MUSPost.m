@@ -7,7 +7,7 @@
 //
 
 #import "MUSPost.h"
-#import "DataBaseManager.h"
+#import "MUSDataBaseManager.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 #import "UIImage+LoadImageFromDataBase.h"
 
@@ -72,7 +72,7 @@
     }
     [_networkPostsArray removeAllObjects];
     [_networkPostIdsArray enumerateObjectsUsingBlock:^(NSString *primaryKeyNetPost, NSUInteger idx, BOOL *stop) {
-        [_networkPostsArray addObject: [[DataBaseManager sharedManager] obtainNetworkPostFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForNetworkPostWithPrimaryKey:[primaryKeyNetPost integerValue]]]];
+        [_networkPostsArray addObject: [[MUSDataBaseManager sharedManager] obtainNetworkPostFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForNetworkPostWithPrimaryKey:[primaryKeyNetPost integerValue]]]];
     }];
     
     [_networkPostsArray sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"networkType" ascending:YES]]];
@@ -80,7 +80,7 @@
 
 - (void) saveIntoDataBase {
     [self savePostImagesToDocument];
-    [[DataBaseManager sharedManager] insertObjectIntoTable : self];
+    [[MUSDataBaseManager sharedManager] insertObjectIntoTable : self];
     [[MUSPostManager manager] updatePostsArray];
 }
 

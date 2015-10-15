@@ -9,7 +9,7 @@
 #import "MUSPostImagesManager.h"
 #import "NSString+MUSPathToDocumentsdirectory.h"
 #import "MUSImageToPost.h"
-#import "DataBaseManager.h"
+#import "MUSDataBaseManager.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 
 

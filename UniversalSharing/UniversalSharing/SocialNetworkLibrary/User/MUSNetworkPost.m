@@ -7,7 +7,7 @@
 //
 
 #import "MUSNetworkPost.h"
-#import "DataBaseManager.h"
+#import "MUSDataBaseManager.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 
 @implementation MUSNetworkPost
@@ -48,7 +48,7 @@
 }
 
 - (void) update {
-    [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForUpdateNetworkPost : self]];
+    [[MUSDataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForUpdateNetworkPost : self]];
 }
 
 

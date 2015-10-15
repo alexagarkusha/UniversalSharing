@@ -10,7 +10,7 @@
 #import "MUSTopUserProfileCell.h"
 #import "MUSUserProfileCell.h"
 #import "MUSSocialNetworkLibraryHeader.h"
-#import "DataBaseManager.h"
+#import "MUSDataBaseManager.h"
 #import "ConstantsApp.h"
 
 @interface MUSUserDetailViewController () <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>

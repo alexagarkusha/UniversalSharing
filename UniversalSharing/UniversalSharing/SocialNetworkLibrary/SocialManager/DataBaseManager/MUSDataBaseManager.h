@@ -14,9 +14,9 @@
 #import "MUSNetworkPost.h"
 
 
-@interface DataBaseManager : NSObject 
+@interface MUSDataBaseManager : NSObject 
 
-+ (DataBaseManager*)sharedManager;
++ (MUSDataBaseManager*)sharedManager;
 //===
 - (void)insertObjectIntoTable:(id) object;
 //===

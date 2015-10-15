@@ -11,7 +11,7 @@
 #import "MUSPostCell.h"
 #import "ConstantsApp.h"
 #import "MUSSocialManager.h"
-#import "DataBaseManager.h"
+#import "MUSDataBaseManager.h"
 #import "MUSDetailPostViewController.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 #import "SSARefreshControl.h"

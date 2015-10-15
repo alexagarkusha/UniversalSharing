@@ -8,7 +8,7 @@
 
 #import "MUSMultySharingManager.h"
 #import "MUSSocialNetwork.h"
-#import "DataBaseManager.h"
+#import "MUSDataBaseManager.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 #import "MUSPostImagesManager.h"
 #import "NSString+MUSReasonNameOfPost.h"
@@ -114,7 +114,7 @@ static MUSMultySharingManager *model = nil;
                 [multyResultDictionary setObject: resultDictionary forKey: @(networkPost.networkType)];
                 
                 if (!postCopy.primaryKey) {
-                    [postCopy.networkPostIdsArray addObject: [NSString stringWithFormat: @"%ld", (long)[[DataBaseManager sharedManager] saveNetworkPost: networkPost]]];
+                    [postCopy.networkPostIdsArray addObject: [NSString stringWithFormat: @"%ld", (long)[[MUSDataBaseManager sharedManager] saveNetworkPost: networkPost]]];
                 } else {
                     [weakMultySharingManager updateCurrentNetworkPost: networkPost andArrayOfOldNetworkPosts: postCopy.networkPostsArray];
                 }

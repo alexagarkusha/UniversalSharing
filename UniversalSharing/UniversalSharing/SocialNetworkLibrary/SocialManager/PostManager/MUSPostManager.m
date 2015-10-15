@@ -7,7 +7,7 @@
 //
 
 #import "MUSPostManager.h"
-#import "DataBaseManager.h"
+#import "MUSDataBaseManager.h"
 #import "MUSPostImagesManager.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 #import "MUSSocialManager.h"
@@ -32,7 +32,7 @@ static MUSPostManager *model = nil;
     self = [super init];
     if (self) {
         self.postsArray = [[NSMutableArray alloc] init];
-        [self.postsArray addObjectsFromArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper stringForAllPosts]]];
+        [self.postsArray addObjectsFromArray: [[MUSDataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper stringForAllPosts]]];
         
     }
     return self;
@@ -44,12 +44,12 @@ static MUSPostManager *model = nil;
 
 - (void) updatePostsArray {
     [self.postsArray removeAllObjects];
-    [self.postsArray addObjectsFromArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper stringForAllPosts]]];
+    [self.postsArray addObjectsFromArray: [[MUSDataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper stringForAllPosts]]];
     [self updatePostInfoNotification];
 }
 
 - (NSArray*) networkPostsArrayForNetworkType : (NetworkType) networkType {
-   return [[DataBaseManager sharedManager] obtainNetworkPostsFromDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForNetworkPostWithReason: MUSConnect andNetworkType: networkType]];
+   return [[MUSDataBaseManager sharedManager] obtainNetworkPostsFromDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForNetworkPostWithReason: MUSConnect andNetworkType: networkType]];
 }
 
 - (void) updateNetworkPostsWithComplition : (Complition) block {
@@ -85,7 +85,7 @@ static MUSPostManager *model = nil;
                 // Delete NetworkPost ID from post
                 [currentPost.networkPostIdsArray removeObject: [NSString stringWithFormat: @"%ld", (long)networkPost.primaryKey]];
                 // Delete NetworkPost from Data Base
-                [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForDeleteNetworkPost: networkPost]];
+                [[MUSDataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForDeleteNetworkPost: networkPost]];
             }
         }
         
@@ -93,10 +93,10 @@ static MUSPostManager *model = nil;
             // Delete all images from documents
             [[MUSPostImagesManager manager] removeImagesFromPostByArrayOfImagesUrls : currentPost.imageUrlsArray];
             // Delete post from Data Base
-            [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForDeletePostByPrimaryKey: currentPost.primaryKey]];
+            [[MUSDataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForDeletePostByPrimaryKey: currentPost.primaryKey]];
         } else {
             //Update post in Data Base
-            [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForUpdatePost: currentPost]];
+            [[MUSDataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForUpdatePost: currentPost]];
         }
     }
     [self updatePostsArray];

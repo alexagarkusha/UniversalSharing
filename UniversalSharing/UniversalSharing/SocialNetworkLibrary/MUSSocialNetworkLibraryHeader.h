@@ -18,7 +18,7 @@
 
 #pragma mark SocialNetworkLibrary
 
-#import "DataBaseManager.h"
+#import "MUSDataBaseManager.h"
 
 #import "MUSLocation.h"
 

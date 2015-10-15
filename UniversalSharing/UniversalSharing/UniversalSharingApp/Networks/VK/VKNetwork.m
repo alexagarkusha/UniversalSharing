@@ -19,7 +19,7 @@
 #import "VKOperation.h"
 #import "VKUploadImage.h"
 #import "MUSDatabaseRequestStringsHelper.h"
-#import "DataBaseManager.h"
+#import "MUSDataBaseManager.h"
 #import "MUSSocialNetworkLibraryConstantsForParseObjects.h"
 
 
@@ -92,7 +92,7 @@ static VKNetwork *model = nil;
 - (void) initiationPropertiesWithSession {
     self.isLogin = YES;
     self.icon = MUSVKIconName;
-    self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType: self.networkType]]firstObject];
+    self.currentUser = [[[MUSDataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType: self.networkType]]firstObject];
     self.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
 }
 

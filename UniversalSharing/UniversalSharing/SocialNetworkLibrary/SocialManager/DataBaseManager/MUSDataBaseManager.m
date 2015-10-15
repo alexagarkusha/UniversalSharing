@@ -6,24 +6,24 @@
 //  Copyright (c) 2015 Mobindustry. All rights reserved.
 //
 
-#import "DataBaseManager.h"
+#import "MUSDataBaseManager.h"
 #import "MUSSocialNetwork.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 #import <sqlite3.h>
 
-@interface DataBaseManager() {
+@interface MUSDataBaseManager() {
     sqlite3 *_database;
 }
 @end
 
-@implementation DataBaseManager
+@implementation MUSDataBaseManager
 
-static DataBaseManager *databaseManager;
+static MUSDataBaseManager *databaseManager;
 
-+ (DataBaseManager*)sharedManager {
++ (MUSDataBaseManager*)sharedManager {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        databaseManager = [[DataBaseManager alloc] init];
+        databaseManager = [[MUSDataBaseManager alloc] init];
     });
     return databaseManager;
 }

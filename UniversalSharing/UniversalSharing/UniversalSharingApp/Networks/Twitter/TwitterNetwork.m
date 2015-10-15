@@ -20,7 +20,7 @@
 #import "ConstantsApp.h"
 #import "MUSSocialNetworkLibraryConstantsForParseObjects.h"
 #import "MUSDatabaseRequestStringsHelper.h"
-#import "DataBaseManager.h"
+#import "MUSDataBaseManager.h"
 
 
 @interface TwitterNetwork () //<TWTRCoreOAuthSigning>
@@ -81,7 +81,7 @@ static TwitterNetwork *model = nil;
 - (void) initiationPropertiesWithSession {
     self.isLogin = YES;
     self.icon = MUSTwitterIconName;
-    self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType: self.networkType]]firstObject];
+    self.currentUser = [[[MUSDataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType: self.networkType]]firstObject];
     self.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
 }
 

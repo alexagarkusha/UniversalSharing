@@ -8,7 +8,7 @@
 
 #import "MUSSocialManager.h"
 #import "MUSSocialNetworkLibraryConstants.h"
-#import "DataBaseManager.h"
+#import "MUSDataBaseManager.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 
 @interface MUSSocialManager()

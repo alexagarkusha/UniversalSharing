@@ -21,7 +21,7 @@
 #import "MUSSocialNetworkLibraryConstantsForParseObjects.h"
 #import "MUSPostManager.h"
 #import "MUSDatabaseRequestStringsHelper.h"
-#import "DataBaseManager.h"
+#import "MUSDataBaseManager.h"
 
 @interface FacebookNetwork()<FBSDKGraphRequestConnectionDelegate>
 
@@ -70,7 +70,7 @@ static FacebookNetwork *model = nil;
 - (void) initiationPropertiesWithSession {
     self.isLogin = YES;
     self.icon = MUSFacebookIconName;
-    self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType: self.networkType]]firstObject];
+    self.currentUser = [[[MUSDataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType: self.networkType]]firstObject];
     self.title = [NSString stringWithFormat:@"%@ %@", self.currentUser.firstName, self.currentUser.lastName];
 }
 

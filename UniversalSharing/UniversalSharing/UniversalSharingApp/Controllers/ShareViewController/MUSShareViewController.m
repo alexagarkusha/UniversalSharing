@@ -16,7 +16,7 @@
 #import "MUSGaleryView.h"
 #import "ReachabilityManager.h"
 #import <CoreText/CoreText.h>
-#import "DataBaseManager.h"
+#import "MUSDataBaseManager.h"
 #import "MUSMediaGalleryViewController.h"
 #import "MUSPopUpForSharing.h"
 #import "MUSProgressBar.h"

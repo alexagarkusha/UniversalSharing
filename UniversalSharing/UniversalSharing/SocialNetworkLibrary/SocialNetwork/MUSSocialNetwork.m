@@ -11,7 +11,7 @@
 #import "FacebookNetwork.h"
 #import "VKNetwork.h"
 #import "TwitterNetwork.h"
-#import "DataBaseManager.h"
+#import "MUSDataBaseManager.h"
 #import "NSString+MUSPathToDocumentsdirectory.h"
 #import "NSError+MUSError.h"
 #import "MUSDatabaseRequestStringsHelper.h"
@@ -58,7 +58,7 @@
         [self obtainUserInfoFromNetworkWithComplition:^(MUSSocialNetwork* result, NSError *error) {
             
             [[MUSPostImagesManager manager] removeImageFromFileManagerByImagePath: deleteImageFromFolder];
-            [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUpdateUser: result.currentUser]];
+            [[MUSDataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUpdateUser: result.currentUser]];
             
         }];
     }
