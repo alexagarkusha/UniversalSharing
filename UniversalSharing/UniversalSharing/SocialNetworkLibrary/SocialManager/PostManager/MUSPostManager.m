@@ -7,16 +7,14 @@
 //
 
 #import "MUSPostManager.h"
-#import "DataBaseManager.h"
-#import "PostImagesManager.h"
+#import "MUSDataBaseManager.h"
+#import "MUSPostImagesManager.h"
 #import "MUSDatabaseRequestStringsHelper.h"
+#import "MUSSocialManager.h"
 
 @interface MUSPostManager ()
 
-@property (strong, nonatomic) NSArray *arrayOfPosts;
-
 @end
-
 
 static MUSPostManager *model = nil;
 
@@ -33,51 +31,79 @@ static MUSPostManager *model = nil;
 - (instancetype) init {
     self = [super init];
     if (self) {
-        self.arrayOfPosts = [[NSArray alloc] initWithArray: [[[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper createStringForAllPosts]] mutableCopy]];
+        self.postsArray = [[NSMutableArray alloc] init];
+        [self.postsArray addObjectsFromArray: [[MUSDataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper stringForAllPosts]]];
+        
     }
     return self;
 }
 
-- (NSArray*) arrayOfAllPosts {
-    return self.arrayOfPosts;
+- (void)setPostsArray:(NSMutableArray *)postsArray {
+    _postsArray = postsArray;
 }
 
-- (NSArray*) updateArrayOfPost {
-    self.arrayOfPosts = [[NSArray alloc] initWithArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper createStringForAllPosts]]];
-    return self.arrayOfPosts;
-}
-
-- (void) updateNetworkPosts {
-    
-}
-
-- (void) deleteNetworkPostFromPostsOfSocialNetworkType : (NetworkType) networkType {
-    for (Post *currentPost in self.arrayOfPosts) {
-        [currentPost updateAllNetworkPostsFromDataBaseForCurrentPost];
-        for (NetworkPost *networkPost in currentPost.arrayWithNetworkPosts) {
-            if (networkPost.networkType == networkType) {
-                // Delete NetworkPost ID from post
-                [currentPost.arrayWithNetworkPostsId removeObject: [NSString stringWithFormat: @"%d", networkPost.primaryKey]];
-                // Delete NetworkPost from Data Base
-                [[DataBaseManager sharedManager] deleteObjectFromDataDase: [MUSDatabaseRequestStringsHelper createStringForDeleteNetworkPost: networkPost]];
-            }
-        }
-        
-        if (!currentPost.arrayWithNetworkPostsId.count) {
-            // Delete all images from documents
-            [[PostImagesManager manager] removeAllImagesFromPostByArrayOfImagesUrls : currentPost.arrayImagesUrl];
-            // Delete post from Data Base
-            [[DataBaseManager sharedManager] deleteObjectFromDataDase: [MUSDatabaseRequestStringsHelper createStringForDeletePostWithPrimaryKey: currentPost.primaryKey]];
-        } else {
-            //Update post in Data Base
-            [[DataBaseManager sharedManager] deleteObjectFromDataDase: [MUSDatabaseRequestStringsHelper createStringForUpdateNetworkPostIdsInPost: currentPost]];
-        }
-    }
+- (void) updatePostsArray {
+    [self.postsArray removeAllObjects];
+    [self.postsArray addObjectsFromArray: [[MUSDataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper stringForAllPosts]]];
     [self updatePostInfoNotification];
 }
 
+- (NSArray*) networkPostsArrayForNetworkType : (NetworkType) networkType {
+   return [[MUSDataBaseManager sharedManager] obtainNetworkPostsFromDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForNetworkPostWithReason: MUSConnect andNetworkType: networkType]];
+}
+
+- (void) updateNetworkPostsWithComplition : (Complition) block {
+    //Need to add a check isLogin socialNetwork or not in each social network?
+    
+    NSMutableArray *allSocialNetworksArray = [[MUSSocialManager sharedManager] allNetworks];
+    __block NSUInteger numberOfActiveSocialNetworks = allSocialNetworksArray.count;
+    __block NSUInteger counterOfSocialNetworks = 0;
+    __block NSMutableDictionary *resultDictionary = [[NSMutableDictionary alloc] init];
+
+    //__block NSString *blockResultString = @"Result: \n";
+    
+    for (int i = 0; i < allSocialNetworksArray.count; i++) {
+        MUSSocialNetwork *currentSocialNetwork = [allSocialNetworksArray objectAtIndex: i];
+        [currentSocialNetwork updateNetworkPostWithComplition:^(id result) {
+            counterOfSocialNetworks++;
+            
+            [resultDictionary setObject: result forKey: @(currentSocialNetwork.networkType)];
+            
+            if (counterOfSocialNetworks == numberOfActiveSocialNetworks) {
+                block (resultDictionary, nil);
+            }
+            
+        }];
+    }
+}
+
+- (void) deleteNetworkPostForNetworkType : (NetworkType) networkType {
+    for (MUSPost *currentPost in self.postsArray) {
+        [currentPost updateAllNetworkPostsFromDataBaseForCurrentPost];
+        for (MUSNetworkPost *networkPost in currentPost.networkPostsArray) {
+            if (networkPost.networkType == networkType) {
+                // Delete NetworkPost ID from post
+                [currentPost.networkPostIdsArray removeObject: [NSString stringWithFormat: @"%ld", (long)networkPost.primaryKey]];
+                // Delete NetworkPost from Data Base
+                [[MUSDataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForDeleteNetworkPost: networkPost]];
+            }
+        }
+        
+        if (!currentPost.networkPostIdsArray.count) {
+            // Delete all images from documents
+            [[MUSPostImagesManager manager] removeImagesFromPostByArrayOfImagesUrls : currentPost.imageUrlsArray];
+            // Delete post from Data Base
+            [[MUSDataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForDeletePostByPrimaryKey: currentPost.primaryKey]];
+        } else {
+            //Update post in Data Base
+            [[MUSDataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForUpdatePost: currentPost]];
+        }
+    }
+    [self updatePostsArray];
+}
+
 - (void) updatePostInfoNotification {
-    [[NSNotificationCenter defaultCenter] postNotificationName:MUSNotificationPostsInfoWereUpDated object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:MUSInfoPostsDidUpDateNotification object:nil];
 }
 
 

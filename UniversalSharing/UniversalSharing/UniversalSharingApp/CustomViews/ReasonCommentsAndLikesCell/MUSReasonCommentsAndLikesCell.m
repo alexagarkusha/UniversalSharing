@@ -8,10 +8,7 @@
 
 #import "MUSReasonCommentsAndLikesCell.h"
 #import "ConstantsApp.h"
-#import "UIImage+IconOfSocialNetwork.h"
-#import "NSString+ReasonTypeInString.h"
-#import "UIImage+LikeIconOfSocialNetwork.h"
-#import "UIImage+CommentIconOfSocialNetwork.h"
+#import "UIImage+SocialNetworkIcons.h"
 #import <QuartzCore/QuartzCore.h>
 #import "NSString+DateStringFromUNIXTimestamp.h"
 
@@ -21,70 +18,58 @@
 @interface MUSReasonCommentsAndLikesCell ()
 
 @property (weak, nonatomic) IBOutlet UIImageView *iconOfSocialNetworkImageView;
-
 @property (weak, nonatomic) IBOutlet UIImageView *commentImageView;
-
 @property (weak, nonatomic) IBOutlet UILabel *numberOfCommentsLabel;
-
 @property (weak, nonatomic) IBOutlet UIImageView *likeImageView;
-
 @property (weak, nonatomic) IBOutlet UILabel *numberOfLikesLabel;
-
 @property (weak, nonatomic) IBOutlet UILabel *reasonOfPostLabel;
-
-@property (weak, nonatomic) IBOutlet UIView *backgroundViewOfCell;
 
 @end
 
 
 @implementation MUSReasonCommentsAndLikesCell
 
-- (void)awakeFromNib {
-    // Initialization code
++ (NSString*) cellID {
+    return NSStringFromClass([self class]);
+}
+
++ (instancetype) reasonCommentsAndLikesCell {
+    NSArray* nibArray = [[NSBundle mainBundle]loadNibNamed:[self cellID] owner:nil options:nil];
+    return nibArray[0];
+}
+
++ (CGFloat) heightForReasonCommentsAndLikesCell {
+    return MUSApp_ReasonCommentsAndLikesCell_HeightOfRow;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-    //self.backgroundViewOfCell.backgroundColor = BROWN_COLOR_Light;
-    //self.backgroundColor = BROWN_COLOR_Light;
-    // Configure the view for the selected state
 }
 
 - (NSString *)reuseIdentifier{
     return [MUSReasonCommentsAndLikesCell cellID];
 }
 
-+ (NSString*) cellID {
-    return NSStringFromClass([self class]);
-}
-+ (instancetype) reasonCommentsAndLikesCell {
-    NSArray* nibArray = [[NSBundle mainBundle]loadNibNamed:[self cellID] owner:nil options:nil];
-    return nibArray[0];
-}
-+ (CGFloat) heightForReasonCommentsAndLikesCell {
-    return musAppCommentsAndLikesCell_HeightOfRow;
-}
-
-- (void) configurationReasonCommentsAndLikesCell: (NetworkPost*) networkPost {
+- (void) configurationReasonCommentsAndLikesCell: (MUSNetworkPost*) networkPost {
     [self configurateCommentsImageAndLabel: networkPost];
     [self configurateLikesImageAndLabel: networkPost];
     [self configurateReasonOfPostLabel: networkPost];
     [self configurateIconOfSocialNetworkImageViewForPost: networkPost];
 }
 
-- (void) configurateCommentsImageAndLabel : (NetworkPost*) networkPost {
-    self.commentImageView.image = [UIImage commentIconOfSocialNetwork: networkPost.networkType];
+- (void) configurateCommentsImageAndLabel : (MUSNetworkPost*) networkPost {
+    self.commentImageView.image = [UIImage commentsIconByTypeOfSocialNetwork: networkPost.networkType];
     self.numberOfCommentsLabel.text = [NSString stringWithFormat: @"%ld", (long) networkPost.commentsCount];
 }
 
-- (void) configurateLikesImageAndLabel : (NetworkPost*) networkPost {
-    self.likeImageView.image = [UIImage likeIconOfSocialNetwork: networkPost.networkType];
+- (void) configurateLikesImageAndLabel : (MUSNetworkPost*) networkPost {
+    self.likeImageView.image = [UIImage likesIconByTypeOfSocialNetwork: networkPost.networkType];
     self.numberOfLikesLabel.text = [NSString stringWithFormat: @"%ld", (long)networkPost.likesCount];
 }
 
-- (void) configurateReasonOfPostLabel : (NetworkPost*) networkPost {
-    NSString *reasonString = [NSString reasonTypeInString: networkPost.reason];
-    if (networkPost.reason == Connect) {
+- (void) configurateReasonOfPostLabel : (MUSNetworkPost*) networkPost {
+    NSString *reasonString = networkPost.stringReasonType;
+    if (networkPost.reason == MUSConnect) {
         NSString *dateCreate = [NSString dateStringFromUNIXTimestamp: [networkPost.dateCreate doubleValue]];
         reasonString = [reasonString stringByAppendingString: @" "];
         reasonString = [reasonString stringByAppendingString: dateCreate];
@@ -92,15 +77,9 @@
     self.reasonOfPostLabel.text = reasonString;
 }
 
-- (void) configurateIconOfSocialNetworkImageViewForPost: (NetworkPost*) networkPost {
-    self.iconOfSocialNetworkImageView.image = [UIImage iconOfSocialNetworkForNetworkPost: networkPost];
+- (void) configurateIconOfSocialNetworkImageViewForPost: (MUSNetworkPost*) networkPost {
+    self.iconOfSocialNetworkImageView.image = [UIImage greyIconOfSocialNetworkByTypeOfSocialNetwork: networkPost.networkType];
 }
 
-- (void) leftBorder {
-    CALayer *leftBorder = [CALayer layer];
-    leftBorder.backgroundColor = [BROWN_COLOR_MIDLight CGColor];
-    leftBorder.frame = CGRectMake(0, 0, 3.0f, CGRectGetHeight (self.backgroundViewOfCell.frame) + 1);
-    [self.backgroundViewOfCell.layer addSublayer: leftBorder];
-}
 
 @end

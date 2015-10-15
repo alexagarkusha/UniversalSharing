@@ -7,17 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "User.h"
+#import "MUSUser.h"
 
 @interface MUSUserProfileCell : UITableViewCell
 
 + (NSString*) cellID;
 + (instancetype) generalUserInfoTableViewCell;
 + (CGFloat) heightForGeneralUserInfoWithCurrentPropertyOfUser : (NSString*) userProperty;
-
-
-- (void) configurationGeneralUserInfoTableViewCellWithUser: (User*) currentUser andCurrentProperty : (NSString*) userProperty;
-
-
+//===
+- (void) configurationUserTableViewCell: (MUSUser*) currentUser withInfo : (NSString*) userInfo;
 
 @end

@@ -7,19 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "User.h"
+#import "MUSUser.h"
 #import "MUSSocialNetworkLibraryHeader.h"
 #import <AFMSlidingCell.h>
 
-@interface MUSAccountTableViewCell : UITableViewCell//AFMSlidingCell
+@interface MUSAccountTableViewCell : UITableViewCell
 
 + (NSString*) cellID;
 + (instancetype) accountTableViewCell;
 //===
-- (void) configurateCellForNetwork : (SocialNetwork*) socialNetwork;
-- (void) changeColorOfCell :(SocialNetwork *)socialNetwork;
-
-
+- (void) configurateCellForNetwork : (MUSSocialNetwork*) socialNetwork;
 
 @end
 

@@ -11,7 +11,7 @@
 @implementation NSError (MUSError)
 
 + (NSError*) errorWithMessage : (NSString*) message andCodeError : (NSInteger) code {
-    return [NSError errorWithDomain: musErrorWithDomainUniversalSharing code: code userInfo: @{ NSLocalizedFailureReasonErrorKey: message} ];
+    return [NSError errorWithDomain: MUSErrorWithDomainUniversalSharing code: code userInfo: @{ NSLocalizedFailureReasonErrorKey: message} ];
 }
 
 

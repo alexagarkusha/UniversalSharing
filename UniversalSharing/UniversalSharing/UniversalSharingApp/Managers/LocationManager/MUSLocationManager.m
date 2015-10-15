@@ -13,20 +13,11 @@
 @interface MUSLocationManager () <CLLocationManagerDelegate>
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
-@property (nonatomic, copy)   Complition copyLocationBLock;
+@property (nonatomic, copy)   Complition copyComplition;
 
 @end
 
 @implementation MUSLocationManager
-
-- (id) init {
-    self = [super init];
-    if (self) {
-        self.locationManager = [[CLLocationManager alloc]init];
-        [self setupLocationManager];
-    }
-    return self;
-}
 
 + (MUSLocationManager*) sharedManager {
     static MUSLocationManager* sharedManager = nil;
@@ -37,6 +28,15 @@
         sharedManager = [MUSLocationManager new];
     });
     return sharedManager;
+}
+
+- (id) init {
+    self = [super init];
+    if (self) {
+        self.locationManager = [[CLLocationManager alloc]init];
+        [self setupLocationManager];
+    }
+    return self;
 }
 
 - (void) setupLocationManager {
@@ -54,14 +54,13 @@
 }
 
 - (void) startTrackLocationWithComplition : (Complition) block {
-    self.copyLocationBLock = block;
+    self.copyComplition = block;
     [self.locationManager startUpdatingLocation];
 }
-- (void) stopAndGetCurrentLocation {
+
+- (void) stopTrackLocation {
     [self.locationManager stopUpdatingLocation];
-    
-    
-    self.copyLocationBLock (self.locationManager.location, nil);
+    self.copyComplition (self.locationManager.location, nil);
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
@@ -69,9 +68,8 @@
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
-    //NSLog(@"%@", [locations lastObject]);
     if (locations) {
-        [self stopAndGetCurrentLocation];
+        [self stopTrackLocation];
     }
 }
 
@@ -86,17 +84,17 @@
          {
              placemark = [placemarks lastObject];
              if (placemark.name) {
-                  address = [NSString stringWithFormat:@"%@", placemark.name];
+                 address = [NSString stringWithFormat:@"%@", placemark.name];
              } else if (placemark.locality) {
                  address = [NSString stringWithFormat:@"%@", placemark.locality];
              } else if (placemark.country){
-                  address = [NSString stringWithFormat:@"%@", placemark.country];
+                 address = [NSString stringWithFormat:@"%@", placemark.country];
              } else {
-                 address = @"Location is not defined";//[NSString stringWithFormat:@"%@", placemark.country];
+                 address = MUSApp_MUSLocationManager_Address_Unknown;
              }
-             //address = [NSString stringWithFormat:@"%@, %@ %@", placemark.name, placemark.locality, placemark.country];
              block(address, error);
          }
      }];
 }
+
 @end

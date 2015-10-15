@@ -13,11 +13,8 @@
 
 + (NSString*) cellID;
 + (instancetype) postLocationCell;
-+ (CGFloat) heightForPostLocationCell: (Post*) currentPost;
-
-- (void) configurationPostLocationCellByPostPlace: (Post *) currentPost;
-
-@property (assign, nonatomic) BOOL isEditableCell;
-
++ (CGFloat) heightForPostLocationCell: (MUSPost*) currentPost;
+//===
+- (void) configurationPostLocationCellByPostPlace: (MUSPost *) currentPost;
 
 @end

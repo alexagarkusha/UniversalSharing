@@ -13,30 +13,14 @@
 
 @interface MUSPostLocationCell () <MKMapViewDelegate>
 
-
 @property (weak, nonatomic) IBOutlet    MKMapView  *mapView;
 @property (weak, nonatomic) IBOutlet    UILabel    *placeNameLabel;
-
+//===
 @property (nonatomic, strong) id<MKAnnotation> lastAnnotation;
 
 @end
 
 @implementation MUSPostLocationCell
-
-- (void)awakeFromNib {
-    // Initialization code
-    self.placeNameLabel.hidden = YES;
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-    // Configure the view for the selected state
-}
-
-
-- (NSString *)reuseIdentifier{
-    return [MUSPostLocationCell cellID];
-}
 
 + (NSString*) cellID {
     return NSStringFromClass([self class]);
@@ -49,47 +33,42 @@
 
 #pragma mark - height for PostLocationCell
 
-+ (CGFloat) heightForPostLocationCell : (Post*) currentPost {
-    if (!currentPost.longitude.length > 0 || [currentPost.longitude isEqualToString: @"(null)"] || !currentPost.latitude.length > 0 || [currentPost.latitude isEqualToString: @"(null)"]) {
++ (CGFloat) heightForPostLocationCell : (MUSPost*) currentPost {
+    if (!currentPost.longitude.length > 0 || [currentPost.longitude isEqualToString: MUSApp_MUSPostLocationCell_StringNull] || !currentPost.latitude.length > 0 || [currentPost.latitude isEqualToString: MUSApp_MUSPostLocationCell_StringNull]) {
         return 0;
     } else {
-        return musAppDetailPostVC_HeightOfPostLocationCell;
+        return MUSApp_MUSPostLocationCell_HeightOfCell;
     }
+}
 
-    
-    
-    
-    
-//    if (!place && !isEditableCell) {
-//        return 0;
-//    } else {
-//        return musAppDetailPostVC_HeightOfPostLocationCell;
-//    }
+- (void)awakeFromNib {
+    self.placeNameLabel.hidden = YES;
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+}
+
+- (NSString *)reuseIdentifier{
+    return [MUSPostLocationCell cellID];
 }
 
 #pragma mark - configuration PostLocationCell
 
-- (void) configurationPostLocationCellByPostPlace: (Post *) currentPost {
-    [self initialMapViewForCurrentPlace: currentPost];
+- (void) configurationPostLocationCellByPostPlace: (MUSPost *) currentPost {
+    [self initializeMapViewForCurrentPlace: currentPost];
 }
 
 #pragma mark initiation MapView for the currentPlace
 
-- (void) initialMapViewForCurrentPlace: (Post*) currentPost {
+- (void) initializeMapViewForCurrentPlace: (MUSPost*) currentPost {
     [self.mapView removeAnnotations: self.mapView.annotations];
-//    if (currentPlace.fullName.length > 0) {
-//        self.placeNameLabel.hidden = NO;
-//        self.placeNameLabel.text = [NSString stringWithFormat: @"%@", currentPlace.fullName];
-//    }
     CLLocationCoordinate2D currentCityLocation = CLLocationCoordinate2DMake([currentPost.latitude floatValue], [currentPost.longitude floatValue]);
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(currentCityLocation, 500, 500);
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(currentCityLocation, MUSApp_MUSPostLocationCell_CLLocationDistance, MUSApp_MUSPostLocationCell_CLLocationDistance);
     MUSAnnotation *pin = [[MUSAnnotation alloc] init];
-    //pin.title = currentPost.fullName;
     pin.coordinate = currentCityLocation;
     [self.mapView setRegion : region animated:YES];
     [self.mapView addAnnotation : pin];
 }
-
-
 
 @end

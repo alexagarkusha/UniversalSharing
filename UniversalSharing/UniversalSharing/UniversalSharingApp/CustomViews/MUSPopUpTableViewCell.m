@@ -9,7 +9,8 @@
 #import "MUSPopUpTableViewCell.h"
 
 @interface MUSPopUpTableViewCell ()
-@property (weak, nonatomic) IBOutlet UIImageView *imageViewNetwork;
+
+@property (weak, nonatomic) IBOutlet UIImageView *networkImageView;
 @property (weak, nonatomic) IBOutlet UISwitch *switchButton;
 
 @end
@@ -18,7 +19,6 @@
 
 - (void)awakeFromNib {
     // Initialization code
-    //[self.userImageView roundImageView];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -38,11 +38,10 @@
     return nibArray[0];
 }
 
-- (void) configurationPopUpTableViewCellWith: (SocialNetwork*) socialNetwork andReason:(ReasonType) currentReason {
-    self.imageViewNetwork.image = [UIImage imageNamed:socialNetwork.icon];
+- (void) configurationPopUpTableViewCellWith: (MUSSocialNetwork*) socialNetwork andReason:(ReasonType) currentReason {
+    self.networkImageView.image = [UIImage imageNamed:socialNetwork.icon];
     self.switchButton.tag = socialNetwork.networkType;
-    
-    if (!socialNetwork.isLogin || currentReason == Connect) {
+    if (!socialNetwork.isLogin || currentReason == MUSConnect) {
         [self.switchButton setOn:NO animated:YES];
         self.switchButton.enabled = NO;
         self.switchButton.backgroundColor = [UIColor whiteColor];
@@ -52,6 +51,7 @@
         self.switchButton.enabled = YES;
     }
 }
+
 - (IBAction)switchEvent:(UISwitch*)sender {
     if (!sender.isOn) {
         sender.backgroundColor = [UIColor whiteColor];

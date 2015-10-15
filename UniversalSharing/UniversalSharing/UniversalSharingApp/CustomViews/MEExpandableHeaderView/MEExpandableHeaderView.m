@@ -16,8 +16,6 @@
 @property(nonatomic, strong) UIImage *originalImage;
 @property(nonatomic, assign) CGPoint previousContentOffset;
 @property(nonatomic, assign) CGFloat originalHeight;
-
-//@property(nonatomic, strong, readwrite) UIImageView *backgroundImageView;
 @property(nonatomic, strong, readwrite) UIScrollView *pagesScrollView;
 @property(nonatomic, strong, readwrite) UIPageControl *pageControl;
 
@@ -102,7 +100,7 @@
         [pageControl setNumberOfPages:pagesCount];
         [pageControl setCurrentPage:0];
    
-        UIColor *backgroundColor = BROWN_COLOR_LightMID;
+        UIColor *backgroundColor = BROWN_COLOR_WITH_ALPHA_05;
         [pageControl setBackgroundColor:backgroundColor];
         
         CGSize pageControlSize = [pageControl sizeForNumberOfPages:pagesCount];

@@ -48,7 +48,6 @@
 #import <Foundation/Foundation.h>
 
 #import "MUSImageScrollView.h"
-//#import "TilingView.h"
 
 #define TILE_IMAGES 1  // turn on to use tiled images, if off, we use whole images
 
@@ -145,8 +144,6 @@
     
     [self configureForImageSize:image.size];
 }
-
-//#endif // TILE_IMAGES
 
 - (void)configureForImageSize:(CGSize)imageSize
 {

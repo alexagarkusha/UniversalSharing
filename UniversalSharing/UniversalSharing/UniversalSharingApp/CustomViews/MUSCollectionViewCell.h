@@ -10,7 +10,7 @@
 
 @protocol MUSCollectionViewCellDelegate <NSObject>
 @optional
-- (void) deletePhoto : (NSIndexPath*) currentInadexPath;
+- (void) deletePhotoBySelectedImageIndex : (NSIndexPath*) selectedImageIndex;
 - (void) addPhotoToCollection;
 @end
 
@@ -18,18 +18,13 @@
 
 + (NSString*) customCellID;
 + (instancetype) musCollectionViewCell;
-//- (void) configurationCellWithPhoto: (UIImage*) photoImageView;
-//- (void) configurationCellWithoutPhoto;
-//- (void) configurationNotEditableCell: (UIImage*) photoImageView;
-
+//===
 - (void) configurationCellWithPhoto:(UIImage *) photoImageView andEditableState : (BOOL) isEditable;
 - (void) configurationCellForFirstSection;
-
+//===
 @property (assign, nonatomic) id <MUSCollectionViewCellDelegate> delegate;
 @property (strong, nonatomic) NSIndexPath *indexPath;
-//@property (assign, nonatomic) BOOL isEditable;
-
-
+//===
 @property (weak, nonatomic) IBOutlet UIImageView *photoImageViewCell;
 @property (weak, nonatomic) IBOutlet UIButton *deletePhotoButtonOutlet;
 

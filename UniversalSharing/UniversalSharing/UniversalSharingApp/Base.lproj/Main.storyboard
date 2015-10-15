@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -47,7 +46,7 @@
                     </view>
                     <connections>
                         <segue destination="57R-w2-ySy" kind="show" identifier="Location" id="IAC-iQ-XMw"/>
-                        <segue destination="Mqx-YE-PKH" kind="show" identifier="goToDitailPostCollectionViewController" id="2bR-Rr-0pP"/>
+                        <segue destination="Mqx-YE-PKH" kind="show" identifier="goToMediaGalleryViewController" id="2bR-Rr-0pP"/>
                         <segue destination="xqB-o5-zWK" kind="show" identifier="goToInfo" id="95f-aa-OgA"/>
                     </connections>
                 </viewController>
@@ -55,10 +54,10 @@
             </objects>
             <point key="canvasLocation" x="2072" y="0.0"/>
         </scene>
-        <!--Detail Post Collection View Controller-->
+        <!--Media Gallery View Controller-->
         <scene sceneID="p3B-0X-d4a">
             <objects>
-                <viewController id="Mqx-YE-PKH" customClass="MUSDetailPostCollectionViewController" sceneMemberID="viewController">
+                <viewController id="Mqx-YE-PKH" customClass="MUSMediaGalleryViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="N7w-GC-hmE"/>
                         <viewControllerLayoutGuide type="bottom" id="hlG-8R-qpw"/>
@@ -109,7 +108,7 @@
                                     <outlet property="delegate" destination="Mqx-YE-PKH" id="MZt-Ug-5Fo"/>
                                 </connections>
                             </collectionView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8gF-Sd-Dyq" customClass="MUSTopBarForDetailCollectionView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8gF-Sd-Dyq" customClass="MUSTopBarForMediaGalleryViewController">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" alpha="0.49999999999999961" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="g8N-26-IK8">
@@ -129,7 +128,7 @@
                                     <constraint firstAttribute="bottom" secondItem="g8N-26-IK8" secondAttribute="bottom" id="vSP-xV-3fw"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jtt-2I-4dm" customClass="MUSToolBarForDetailCollectionView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jtt-2I-4dm" customClass="MUSToolBarForMediaGalleryViewController">
                                 <rect key="frame" x="0.0" y="550" width="600" height="50"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" alpha="0.49999999999999961" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WV8-OJ-Xuy">
@@ -183,10 +182,10 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="collectionView" destination="aRM-TH-eEy" id="8Yt-Cf-xBN"/>
-                        <outlet property="toolBar" destination="jtt-2I-4dm" id="Pj5-Mm-ijt"/>
-                        <outlet property="toolBarConstraint" destination="R1o-HW-tEf" id="N1G-JT-AnL"/>
+                        <outlet property="toolBar" destination="jtt-2I-4dm" id="msx-Ts-kT2"/>
+                        <outlet property="toolBarHeightConstraint" destination="R1o-HW-tEf" id="Cx2-Bx-YGO"/>
                         <outlet property="topBar" destination="8gF-Sd-Dyq" id="PRq-TX-pIf"/>
-                        <outlet property="topBarConstraint" destination="L8I-oO-Af8" id="kHN-De-j3E"/>
+                        <outlet property="topBarHeightConstraint" destination="L8I-oO-Af8" id="mfW-ph-LNf"/>
                         <segue destination="xqB-o5-zWK" kind="show" identifier="goToInfo" id="X1d-ia-zmN"/>
                     </connections>
                 </viewController>
@@ -333,7 +332,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="buttonUseAnyWayTapped:" destination="sDs-sX-TUf" eventType="touchUpInside" id="QsJ-Sq-V8P"/>
+                                            <action selector="useAnywayButtonTapped:" destination="sDs-sX-TUf" eventType="touchUpInside" id="gEa-ep-nXZ"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OR" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hcg-gL-usD">
@@ -383,10 +382,10 @@
                     </view>
                     <navigationItem key="navigationItem" title="Networks" id="CXT-1l-WE6"/>
                     <connections>
-                        <outlet property="buttonUseAnywayOutlet" destination="s3b-v5-BFs" id="a6f-oy-Ho9"/>
                         <outlet property="errorView" destination="4DR-Db-4eE" id="acr-xg-AAm"/>
                         <outlet property="tableView" destination="ICe-7s-J4T" id="Dua-2r-x8s"/>
-                        <outlet property="updateNetworkConnectionOutlet" destination="h9f-nw-3rM" id="4RX-TQ-P5u"/>
+                        <outlet property="updateNetworkConnectionButton" destination="h9f-nw-3rM" id="GFN-XH-OKd"/>
+                        <outlet property="useAnywayButton" destination="s3b-v5-BFs" id="f6h-PK-Rco"/>
                         <segue destination="xqB-o5-zWK" kind="show" identifier="goToInfo" id="JM6-Xs-4G9"/>
                     </connections>
                 </viewController>
@@ -506,12 +505,13 @@
                     <connections>
                         <outlet property="buttonLocation" destination="25b-FR-Yj7" id="ch9-nc-jya"/>
                         <outlet property="galeryView" destination="O2b-Bf-7wZ" id="alu-vP-TdG"/>
+                        <outlet property="heightGaleryViewLayoutConstraint" destination="LuJ-fo-3YT" id="i8D-Gu-BPU"/>
                         <outlet property="iconImageView" destination="4kG-OY-BXB" id="hvZ-1l-PJt"/>
                         <outlet property="mainGestureRecognizer" destination="Q3Z-Zc-VoA" id="hSm-6a-V0c"/>
                         <outlet property="shareButtonOutlet" destination="pvH-Dt-bbm" id="uqW-1D-Imf"/>
                         <outlet property="toolBarLayoutConstraint" destination="EYT-lS-seF" id="ZVx-Dh-kc3"/>
                         <segue destination="57R-w2-ySy" kind="show" identifier="Location" id="GpK-3N-ETI"/>
-                        <segue destination="Mqx-YE-PKH" kind="show" identifier="goToShowImages" id="ujR-wZ-DmO"/>
+                        <segue destination="Mqx-YE-PKH" kind="show" identifier="goToMediaGalleryViewController" id="ujR-wZ-DmO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
@@ -637,8 +637,8 @@
         <image name="upload_icon" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ujR-wZ-DmO"/>
-        <segue reference="GpK-3N-ETI"/>
+        <segue reference="2bR-Rr-0pP"/>
+        <segue reference="IAC-iQ-XMw"/>
         <segue reference="X1d-ia-zmN"/>
     </inferredMetricsTieBreakers>
 </document>

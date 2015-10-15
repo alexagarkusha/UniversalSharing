@@ -15,22 +15,7 @@
 
 @end
 
-
 @implementation MUSUserProfileCell
-
-- (void)awakeFromNib {
-    // Initialization code
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-    
-    // Configure the view for the selected state
-}
-
-- (NSString *)reuseIdentifier{
-    return [MUSUserProfileCell cellID];
-}
 
 + (NSString*) cellID {
     return NSStringFromClass([self class]);
@@ -49,19 +34,17 @@
     }
 }
 
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+}
 
-- (void) configurationGeneralUserInfoTableViewCellWithUser: (User*) currentUser andCurrentProperty : (NSString*) userProperty {
-    
-    //self.userPropertyLabel.text = [userProperty uppercaseString];
-   
-    self.userPropertyLabel.text = [userProperty stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:[[userProperty substringToIndex:1] uppercaseString]];
-    
-    
-    NSString *userPropertyInfoString = [currentUser valueForKey:userProperty];
-    
-    if ([userProperty isEqualToString:@"dateOfBirth"]) {
-        self.userPropertyLabel.text = @"Date of birthday";
-    }
+- (NSString *)reuseIdentifier{
+    return [MUSUserProfileCell cellID];
+}
+
+- (void) configurationUserTableViewCell: (MUSUser*) currentUser withInfo : (NSString*) userInfo {
+    self.userPropertyLabel.text = [userInfo stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:[[userInfo substringToIndex:1] uppercaseString]];
+    NSString *userPropertyInfoString = [currentUser valueForKey:userInfo];
     
     if (userPropertyInfoString.length > 0) {
         self.userPropertyInfoLabel.text = userPropertyInfoString;

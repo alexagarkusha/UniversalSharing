@@ -10,7 +10,9 @@
 #import "MUSTopUserProfileCell.h"
 #import "MUSUserProfileCell.h"
 #import "MUSSocialNetworkLibraryHeader.h"
-#import "DataBaseManager.h"
+#import "MUSDataBaseManager.h"
+#import "ConstantsApp.h"
+
 @interface MUSUserDetailViewController () <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
 /*!
  @property
@@ -21,12 +23,12 @@
  @property
  @abstract initialization by socialnetwork(facebook or twitter or VK) getting from AccountViewController
  */
-@property (nonatomic, strong) SocialNetwork *socialNetwork;
+@property (nonatomic, strong) MUSSocialNetwork *socialNetwork;
 /*!
  @property
  @abstract initialization by current info of current user
  */
-@property (strong, nonatomic) NSArray *userPropertyArray;
+@property (strong, nonatomic) NSArray *userPropertiesArray;
 //===
 @property (weak, nonatomic) IBOutlet UITableView *userTableView;
 
@@ -35,24 +37,15 @@
 @implementation MUSUserDetailViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    if (!self.isLogoutButtonHide) {
-        self.logoutButton = [[UIBarButtonItem alloc] initWithTitle: @"Logout" style: 2 target:self action: @selector(logoutFromSocialNetwork)];
+    [super viewDidLoad];    
+        self.logoutButton = [[UIBarButtonItem alloc] initWithTitle: MUSApp_Button_Title_Logout style: 2 target:self action: @selector(logoutFromSocialNetwork)];
         self.navigationItem.rightBarButtonItem = self.logoutButton;
-    }
-    
-//    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle: @"Back" style: 1 target:self action: @selector(backToNetworks)];
-//    self.navigationItem.leftBarButtonItem = backButton;
-    
-    if (self.socialNetwork.networkType == Facebook) {
-        self.navigationItem.title = @"Facebook";
-    } else if (self.socialNetwork.networkType == Twitters) {
-        self.navigationItem.title = @"Twitter";
-    } else {
-        self.navigationItem.title = @"VKontakt";
-    }
-    
-    self.userPropertyArray = @[@"profile", @"dateOfBirth", @"city", @"clientID"];
+    [self setUpTitle];
+    self.userPropertiesArray = @[MUSApp_MUSUserDetailViewController_User_Profile, MUSApp_MUSUserDetailViewController_User_ClientID];
+}
+
+- (void) setUpTitle {
+    self.navigationController.title = self.socialNetwork.name;
 }
 
 - (void)setNetwork:(id)socialNetwork {
@@ -64,22 +57,15 @@
  @param without
  */
 - (void) logoutFromSocialNetwork {
-    [self.socialNetwork loginOut];
+    [self.socialNetwork logout];
     [self.navigationController popViewControllerAnimated:YES];
      self.navigationController.navigationBar.translucent = YES;
-    [self.delegate changeArrays:self.socialNetwork];
     }
-
-- (void) backToNetworks {
-    [self.navigationController popViewControllerAnimated:YES];
-    self.navigationController.navigationBar.translucent = YES;
-    
-}
 
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.userPropertyArray count];
+    return [self.userPropertiesArray count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -91,7 +77,7 @@
         if (!cell) {
             cell = [MUSTopUserProfileCell profileUserTableViewCell];
         }
-        [cell configurationProfileUserTableViewCellWithUser: self.socialNetwork.currentUser];
+        [cell configurationProfileUserTableViewCell: self.socialNetwork.currentUser];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
         
@@ -100,7 +86,7 @@
         if (!cell) {
             cell = [MUSUserProfileCell generalUserInfoTableViewCell];
         }
-        [cell configurationGeneralUserInfoTableViewCellWithUser: self.socialNetwork.currentUser andCurrentProperty: [self.userPropertyArray objectAtIndex: indexPath.row]];
+        [cell configurationUserTableViewCell: self.socialNetwork.currentUser withInfo: [self.userPropertiesArray objectAtIndex: indexPath.row]];
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
@@ -113,7 +99,7 @@
     if (indexPath.row == 0) {
         return 80;
     }
-    NSString *valueOfUserPropertyInfo = [self.socialNetwork.currentUser valueForKey: [self.userPropertyArray objectAtIndex: indexPath.row]];
+    NSString *valueOfUserPropertyInfo = [self.socialNetwork.currentUser valueForKey: [self.userPropertiesArray objectAtIndex: indexPath.row]];
     return [MUSUserProfileCell heightForGeneralUserInfoWithCurrentPropertyOfUser:valueOfUserPropertyInfo];
 }
 

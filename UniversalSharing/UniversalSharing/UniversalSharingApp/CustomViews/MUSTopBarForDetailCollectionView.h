@@ -7,16 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MUSUserProfileButton.h"
 
 @interface MUSTopBarForDetailCollectionView : UIView
 
 @property (weak, nonatomic) IBOutlet UIButton *buttonBack;
-//@property (weak, nonatomic) IBOutlet MUSUserProfileButton *showUserProfileButton;
-
 //===
 - (void) initializeLableCountImages:(NSString *)stringLableCountImages;
-//- (void) initializeImageView:(NSString *)stringPathImage;
 - (void) hidePropertiesWithAnimation;
 
 @end

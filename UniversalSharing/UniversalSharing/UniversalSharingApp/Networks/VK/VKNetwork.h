@@ -8,9 +8,13 @@
 
 #warning "Create folder for this class"
 
-#import "SocialNetwork.h"
+#import "MUSSocialNetwork.h"
 
-@interface VKNetwork : SocialNetwork
+@interface VKNetwork : MUSSocialNetwork
+
+/*!
+ @abstract return an instance of the social network in a single copy. Singleton method.
+ */
 + (VKNetwork*) sharedManager;
 
 @end

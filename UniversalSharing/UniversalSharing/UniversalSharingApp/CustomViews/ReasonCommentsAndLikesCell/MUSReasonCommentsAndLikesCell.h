@@ -14,9 +14,7 @@
 + (NSString*) cellID;
 + (instancetype) reasonCommentsAndLikesCell;
 + (CGFloat) heightForReasonCommentsAndLikesCell;
-
-- (void) configurationReasonCommentsAndLikesCell: (NetworkPost*) networkPost;
-
-//@property (weak, nonatomic) IBOutlet UIView *separatorView;
+//===
+- (void) configurationReasonCommentsAndLikesCell: (MUSNetworkPost*) networkPost;
 
 @end

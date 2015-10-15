@@ -22,32 +22,16 @@
                             <outlet property="delegate" destination="KGk-i7-Jjw" id="iGU-pZ-dCf"/>
                         </connections>
                     </textView>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dTH-iF-XTO" customClass="MUSChangeButton">
-                        <rect key="frame" x="270" y="0.0" width="50" height="50"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="50" id="CEt-rI-X5A"/>
-                            <constraint firstAttribute="width" constant="50" id="ovS-sA-pF8"/>
-                        </constraints>
-                        <state key="normal">
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                        <connections>
-                            <action selector="changeButtonTouch:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="3Mz-2c-Rbx"/>
-                        </connections>
-                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="3Xp-we-H9A" secondAttribute="trailing" constant="8" id="FyU-aq-Ton"/>
                     <constraint firstItem="3Xp-we-H9A" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="Yx4-sq-qLe"/>
                     <constraint firstItem="3Xp-we-H9A" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="nxI-ig-cjG"/>
-                    <constraint firstAttribute="trailing" secondItem="dTH-iF-XTO" secondAttribute="trailing" id="qK6-Ln-kmj"/>
-                    <constraint firstItem="dTH-iF-XTO" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="sas-T3-OFJ"/>
                     <constraint firstAttribute="bottom" secondItem="3Xp-we-H9A" secondAttribute="bottom" constant="7" id="whH-XV-oj6"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <connections>
-                <outlet property="changeButtonOutlet" destination="dTH-iF-XTO" id="BHT-vz-IHC"/>
                 <outlet property="postDescriptionTextView" destination="3Xp-we-H9A" id="vb5-Gq-YVP"/>
             </connections>
         </tableViewCell>

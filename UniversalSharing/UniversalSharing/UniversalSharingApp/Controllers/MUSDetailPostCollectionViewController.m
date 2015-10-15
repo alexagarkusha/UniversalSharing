@@ -57,9 +57,6 @@ static NSString * const reuseIdentifier = @"Cell";
     [_topBar.buttonBack addTarget:self
                            action:@selector(backButton:)
                  forControlEvents:UIControlEventTouchUpInside];
-//    [_topBar.showUserProfileButton addTarget:self
-//                           action:@selector(showUserProfile)
-//                 forControlEvents:UIControlEventTouchUpInside];
     [_topBar initializeLableCountImages: [NSString stringWithFormat:@"%ld from %lu",(long) _indexPicTapped + 1, (unsigned long)[self.arrayOfPics count]]];
 //    [_topBar initializeImageView:_currentSocialNetwork.icon];
     
@@ -115,27 +112,30 @@ static NSString * const reuseIdentifier = @"Cell";
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void) showUserProfile {
-    if (self.currentSocialNetwork.isLogin && self.currentSocialNetwork.isVisible) {
-        [self performSegueWithIdentifier: goToUserDetailViewControllerSegueIdentifier sender:nil];
-    }
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([[segue identifier]isEqualToString : goToUserDetailViewControllerSegueIdentifier]) {
-        MUSUserDetailViewController *userDetailViewController = [MUSUserDetailViewController new];
-        userDetailViewController = [segue destinationViewController];
-        userDetailViewController.isLogoutButtonHide = YES;
-        [userDetailViewController setNetwork: self.currentSocialNetwork];
-    }
-}
-
+//<<<<<<< HEAD
+//=======
+//- (void) showUserProfile {
+//    if (self.currentSocialNetwork.isLogin && self.currentSocialNetwork.isVisible) {
+//        [self performSegueWithIdentifier: goToUserDetailViewControllerSegueIdentifier sender:nil];
+//    }
+//}
+//
+//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+//    if ([[segue identifier]isEqualToString : goToUserDetailViewControllerSegueIdentifier]) {
+//        MUSUserDetailViewController *userDetailViewController = [MUSUserDetailViewController new];
+//        userDetailViewController = [segue destinationViewController];
+//        //userDetailViewController.isLogoutButtonHide = YES;
+//        [userDetailViewController setNetwork: self.currentSocialNetwork];
+//    }
+//}
+//
+//>>>>>>> 5bd6c6602c204d1b3f4d55a65875cd2f25f340de
 - (void) trashButton:(id)sender {
     
     CGRect visibleRect = (CGRect){.origin = self.collectionView.contentOffset, .size = self.collectionView.bounds.size};
     CGPoint visiblePoint = CGPointMake(CGRectGetMidX(visibleRect), CGRectGetMidY(visibleRect));
     NSIndexPath *visibleIndexPath = [self.collectionView indexPathForItemAtPoint:visiblePoint];
-    if (_arrayOfPics.count && _currentReasonType != Connect) {
+    if (_arrayOfPics.count && _currentReasonType != MUSConnect) {
         [_arrayOfPics removeObjectAtIndex: visibleIndexPath.row];
         
         if (_arrayOfPics.count && visibleIndexPath.row != 0) {

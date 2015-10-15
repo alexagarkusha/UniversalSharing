@@ -7,25 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Post.h"
-
-//@protocol MUSPostCellDelegate <NSObject>
-//@required
-//- (void) addIndexToIndexSetWithCell :(id) cell ;
-//@end
+#import "MUSPost.h"
 
 @interface MUSPostCell : UITableViewCell
-//@property (nonatomic, assign) id <MUSPostCellDelegate> delegate;
 
 + (NSString*) cellID;
 + (instancetype) postCell;
-+ (CGFloat) heightForPostCell : (Post*) post;
-
-//- (void) configurationUpdatingPostCell: (Post*) currentPost;
-- (void) configurationPostCell: (Post*) currentPost;
++ (CGFloat) heightForPostCell : (MUSPost*) post;
+//===
+- (void) configurationPostCell: (MUSPost*) currentPost;
+//===
 @property (weak, nonatomic) IBOutlet UIView *backgroundViewOfCell;
-//- (void) configurateFirstImageOfPost : (Post*) currentPost;
-
-@property (nonatomic, strong) NSMutableArray *arrayWithNetworkPosts;
+//===
+@property (nonatomic, strong) NSMutableArray *networkPostsArray;
 
 @end

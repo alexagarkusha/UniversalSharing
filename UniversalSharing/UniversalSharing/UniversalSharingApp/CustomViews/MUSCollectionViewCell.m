@@ -7,26 +7,19 @@
 //
 
 #import "MUSCollectionViewCell.h"
-#import "UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.h"
 #import "ConstantsApp.h"
 #import "MUSAddPhotoButton.h"
 
 @interface MUSCollectionViewCell()
 
-- (IBAction)deletePhoto:(id)sender;
 @property (strong, nonatomic) MUSAddPhotoButton *addPhotoButton;
 @property (strong, nonatomic) MUSAddPhotoButton *addPhotoButtonForFirstSection;
+//===
+- (IBAction)deletePhoto:(id)sender;
 
 @end
+
 @implementation MUSCollectionViewCell
-
-- (void)awakeFromNib {
-    // Initialization code
-}
-
-- (NSString *)reuseIdentifier{
-    return [MUSCollectionViewCell customCellID];
-}
 
 + (NSString*) customCellID {
     return NSStringFromClass([MUSCollectionViewCell class]);
@@ -37,10 +30,13 @@
     return nibArray[0];
 }
 
+- (NSString *)reuseIdentifier{
+    return [MUSCollectionViewCell customCellID];
+}
+
 - (void) configurationCellWithPhoto:(UIImage *)photoImageView andEditableState: (BOOL)isEditable {
     [self.addPhotoButton removeFromSuperview];
     [self.addPhotoButtonForFirstSection removeFromSuperview];
-    //[self.deletePhotoButtonOutlet setImage:[UIImage imageNamed: @"Button_Delete.png"] forState:UIControlStateNormal];
     
     if (!photoImageView && isEditable) {
         [self hideDeleteButton];
@@ -65,21 +61,18 @@
 }
 
 - (void) showAddPhotoButtonForFirstSection {
-    
     self.addPhotoButtonForFirstSection = [[MUSAddPhotoButton alloc] initWithFrame: CGRectMake( 0, 0, self.frame.size.width, self.frame.size.height)];
     [self addSubview: self.addPhotoButtonForFirstSection];
     [self.addPhotoButtonForFirstSection addTarget:self
-                            action:@selector(addPhotoToCollectionForFirstSection:)forControlEvents:UIControlEventTouchUpInside];
+                                           action:@selector(addPhotoToCollectionForFirstSection:)forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void) showAddPhotoButton {
-   
     self.addPhotoButton = [[MUSAddPhotoButton alloc] initWithFrame: CGRectMake( 50, 20, self.frame.size.width - 100, self.frame.size.height - 40)];
     [self addSubview: self.addPhotoButton];
     [self.addPhotoButton addTarget:self
-               action:@selector(addPhotoToCollectionTouch:)forControlEvents:UIControlEventTouchUpInside];
+                            action:@selector(addPhotoToCollectionTouch:)forControlEvents:UIControlEventTouchUpInside];
 }
-
 
 - (void) hideDeleteButton {
     self.deletePhotoButtonOutlet.hidden = YES;
@@ -89,19 +82,16 @@
     self.deletePhotoButtonOutlet.hidden = NO;
 }
 
-
-- (IBAction)deletePhoto:(id)sender {
-    [self.delegate deletePhoto: self.indexPath];
-}
-
-
 - (void)addPhotoToCollectionTouch:(id)sender {
     [self.delegate addPhotoToCollection];
 }
 
 - (void)addPhotoToCollectionForFirstSection:(id)sender {
-    [[NSNotificationCenter defaultCenter] postNotificationName:notificationImagePickerForCollection object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:MUSShowImagePickerForAddImageInCollectionView object:nil];
+}
 
+- (IBAction)deletePhoto:(id)sender {
+    [self.delegate deletePhotoBySelectedImageIndex: self.indexPath];
 }
 
 
@@ -134,14 +124,12 @@
     quiverAnim.timeOffset = timeOffset;
     CALayer *layerDeleteIconIV = self.deleteIconImageView.layer;
     CALayer *layerDeleteIconBackgroundIV = self.deleteIconBackgroungImageView.layer;
+=======
+    [[NSNotificationCenter defaultCenter] postNotificationName:notificationImagePickerForCollection object:nil];
+>>>>>>> 5aba6b074a89608b7bd9b2f4506418c85f9fccf9
     
-    [layerDeleteIconIV addAnimation:quiverAnim forKey:@"quivering"];
-    [layerDeleteIconBackgroundIV addAnimation:quiverAnim forKey:@"quivering"];
 }
 
-- (void)stopQuivering {
-    CALayer *layer = self.layer;
-    [layer removeAnimationForKey:@"quivering"];
-}
 */
+
 @end

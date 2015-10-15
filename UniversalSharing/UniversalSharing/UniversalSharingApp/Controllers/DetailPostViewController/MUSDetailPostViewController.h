@@ -9,17 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "MUSSocialNetworkLibraryHeader.h"
 
-@protocol MUSDetailPostViewControllerDelegate <NSObject>
-
-- (void) updatePostByPrimaryKey : (NSString*) primaryKey;
-
-@end
-
-
 @interface MUSDetailPostViewController : UIViewController
 
-@property (assign, nonatomic) id <MUSDetailPostViewControllerDelegate> delegate;
-
-@property (nonatomic, strong) Post *currentPost;
+@property (nonatomic, strong) MUSPost *currentPost;
 
 @end

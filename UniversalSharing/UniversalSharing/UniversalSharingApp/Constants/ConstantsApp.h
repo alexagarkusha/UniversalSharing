@@ -11,11 +11,6 @@
 
 @interface ConstantsApp : NSObject
 
-typedef NS_ENUM(NSInteger, TabBarItemIndex) {
-    Share_photo,
-    Share_location,
-};
-
 typedef NS_ENUM(NSInteger, AlertButtonIndex) {
     Cancel,
     Album,
@@ -23,205 +18,169 @@ typedef NS_ENUM(NSInteger, AlertButtonIndex) {
     Remove,
 };
 
-typedef NS_ENUM(NSInteger, FilterInColumnType) {
-    ByNetworkType,
-    ByShareReason,
-};
 
 typedef NS_ENUM(NSInteger, DetailPostVC_CellType) {
-    //GalleryOfPhotosCellType,
     PostDescriptionCellType,
     CommentsAndLikesCellType,
     PostLocationCellType,
 };
 
-
-#pragma mark AccountsViewController Constants
-
-FOUNDATION_EXPORT NSString *const goToUserDetailViewControllerSegueIdentifier;
-
-#pragma mark MUSShareViewController Constants
-
-FOUNDATION_EXPORT NSString *const kPlaceholderText;
-FOUNDATION_EXPORT NSString *const goToLocationViewControllerSegueIdentifier;
-FOUNDATION_EXPORT NSString *const goToDetailPostViewControllerSegueIdentifier;
-FOUNDATION_EXPORT NSString *const collectionViewCellIdentifier;
-FOUNDATION_EXPORT NSString *const distanceEqual100;
-FOUNDATION_EXPORT NSString *const distanceEqual1000;
-FOUNDATION_EXPORT NSString *const distanceEqual25000;
-FOUNDATION_EXPORT NSString *const titleActionSheet;
-FOUNDATION_EXPORT NSString *const musAppAlertTitle_NO_Pics_Anymore;
-FOUNDATION_EXPORT NSString *const titleCongratulatoryAlert;
-FOUNDATION_EXPORT NSString *const changePlaceholderWhenStartEditing;
-
-//===
-FOUNDATION_EXPORT NSInteger const countOfAllowedPics;
-FOUNDATION_EXPORT NSInteger const countOfAllowedLettersInTextView;
-FOUNDATION_EXPORT NSInteger const musApp_TextView_CountOfAllowedLetters_ForTwitter;
-FOUNDATION_EXPORT NSInteger const musApp_TextView_CountOfAllowedLetters_ForTwitterWithoutPhoto;
-
-
-#pragma mark - Errors
-
-FOUNDATION_EXPORT NSString *const musAppError_With_Domain_Universal_Sharing;
-FOUNDATION_EXPORT NSString *const musAppError_Internet_Connection;
-FOUNDATION_EXPORT NSString *const musAppError_Logged_Into_Social_Networks;
-FOUNDATION_EXPORT NSString *const musAppError_Internet_Connection_Location;
-FOUNDATION_EXPORT NSString *const musAppError_Empty_Post;
-
-#pragma mark - MUSPhotoManager
-
-FOUNDATION_EXPORT NSInteger const musAppCompressionSizePicture_By_Height;
-FOUNDATION_EXPORT NSInteger const musAppCompressionSizePicture_By_Width;
-
-FOUNDATION_EXPORT NSString *const musAppError_NO_Camera;
-FOUNDATION_EXPORT NSInteger const musAppError_NO_Camera_Code;
-
-FOUNDATION_EXPORT NSString *const musAppAlertTitle_Share_Photo;
-
-#pragma mark MUSPhotoManager Constants
+typedef void (^ProgressLoadingImagesToVK)(int objectOfLoading, long long bytesLoaded, long long bytesTotal);
 
 typedef void (^Complition)(id result, NSError *error);
 
-#pragma mark MUSAccountViewController Constants
+#pragma mark SegueIdentifier
 
-FOUNDATION_EXPORT NSString *const editButtonTitle;
-FOUNDATION_EXPORT NSString *const doneButtonTitle;
-FOUNDATION_EXPORT NSString *const showButtonTitle;
-FOUNDATION_EXPORT NSString *const hideButtonTitle;
-
-#pragma mark - General constants
-
-#define BROWN_COLOR_Lightly [UIColor colorWithRed: 199.0/255.0 green: 176.0/255.0 blue: 163.0/255.0 alpha: 0.1]
-#define BROWN_COLOR_Light [UIColor colorWithRed: 199.0/255.0 green: 176.0/255.0 blue: 163.0/255.0 alpha: 0.25]
-#define BROWN_COLOR_LightMID [UIColor colorWithRed: 199.0/255.0 green: 176.0/255.0 blue: 163.0/255.0 alpha: 0.5]
-#define BROWN_COLOR_LightHIGHT [UIColor colorWithRed: 199.0/255.0 green: 176.0/255.0 blue: 163.0/255.0 alpha: 1.0]
-
-#define BROWN_COLOR_MIDLight [UIColor colorWithRed: 155.0/255.0 green: 101.0/255.0 blue: 79.0/255.0 alpha: 0.7]
-#define BROWN_COLOR_MIDLightHIGHT [UIColor colorWithRed: 155.0/255.0 green: 101.0/255.0 blue: 79.0/255.0 alpha: 1.0]
+FOUNDATION_EXPORT NSString *const MUSApp_SegueIdentifier_GoToUserDetailViewController;
+FOUNDATION_EXPORT NSString *const MUSApp_SegueIdentifier_GoToDetailPostViewController;
+FOUNDATION_EXPORT NSString *const MUSApp_SegueIdentifier_GoToMediaGalleryViewController;
 
 
-//#define YELLOW_COLOR_Light [UIColor colorWithRed: 255.0/255.0 green: 255.0/255.0 blue: 220.0/255.0 alpha: 1.0]
-//#define YELLOW_COLOR_MidLight [UIColor colorWithRed: 255.0/255.0 green: 255.0/255.0 blue: 190.0/255.0 alpha: 1.0]
-//#define YELLOW_COLOR_UpperMid [UIColor colorWithRed: 255.0/255.0 green: 255.0/255.0 blue: 100.0/255.0 alpha: 1.0]
-FOUNDATION_EXPORT NSString *const musAppButtonTitle_Cancel;
-FOUNDATION_EXPORT NSString *const notificationUpdateCollection;
-FOUNDATION_EXPORT NSString *const musAppButtonTitle_OK;
-FOUNDATION_EXPORT NSString *const musAppButtonTitle_Album;
-FOUNDATION_EXPORT NSString *const musAppButtonTitle_Camera;
-FOUNDATION_EXPORT NSString *const musAppButtonTitle_Edit;
-FOUNDATION_EXPORT NSString *const musAppButtonTitle_Share;
-FOUNDATION_EXPORT NSString *const musAppButtonTitle_Action;
-FOUNDATION_EXPORT NSString *const musAppButtonTitle_Back;
-FOUNDATION_EXPORT NSString *const musAppButtonTitle_ShareLocation;
-FOUNDATION_EXPORT NSString *const Error;
-FOUNDATION_EXPORT NSString *const notificationImagePickerForCollection;
+#pragma mark TextView
 
+FOUNDATION_EXPORT NSString *const MUSApp_TextView_PlaceholderText;
+FOUNDATION_EXPORT NSString *const MUSApp_TextView_PlaceholderWhenStartEditingTextView;
+FOUNDATION_EXPORT NSInteger const MUSApp_TextView_Twitter_NumberOfAllowedLetters;
+
+#pragma mark - UIImage+SocialNetworkIcons
+
+FOUNDATION_EXPORT NSString *const MUSApp_Image_Name_VKIconImage_grey;
+FOUNDATION_EXPORT NSString *const MUSApp_Image_Name_FBIconImage_grey;
+FOUNDATION_EXPORT NSString *const MUSApp_Image_Name_TwitterIconImage_grey;
+FOUNDATION_EXPORT NSString *const MUSApp_Image_Name_VKLikeImage_grey;
+FOUNDATION_EXPORT NSString *const MUSApp_Image_Name_FBLikeImage_grey;
+FOUNDATION_EXPORT NSString *const MUSApp_Image_Name_TwitterLikeImage_grey;
+FOUNDATION_EXPORT NSString *const MUSApp_Image_Name_TwitterCommentsImage_grey;
+FOUNDATION_EXPORT NSString *const MUSApp_Image_Name_CommentsImage_grey;
+FOUNDATION_EXPORT NSString *const MUSApp_Image_Name_AddPhoto;
+
+#pragma mark - UIButton
+
+FOUNDATION_EXPORT NSString *const MUSApp_Button_Title_Cancel;
+FOUNDATION_EXPORT NSString *const MUSApp_Button_Title_OK;
+FOUNDATION_EXPORT NSString *const MUSApp_Button_Title_Album;
+FOUNDATION_EXPORT NSString *const MUSApp_Button_Title_Camera;
+FOUNDATION_EXPORT NSString *const MUSApp_Button_Title_Share;
+FOUNDATION_EXPORT NSString *const MUSApp_Button_Title_NO;
+FOUNDATION_EXPORT NSString *const MUSApp_Button_Title_YES;
+FOUNDATION_EXPORT NSString *const MUSApp_Button_Title_Logout;
+
+#pragma mark - Errors
+
+FOUNDATION_EXPORT NSString *const MUSApp_Error_With_Domain_Universal_Sharing;
+
+#pragma mark - Color
+
+#define BROWN_COLOR_WITH_ALPHA_01 [UIColor colorWithRed: 199.0/255.0 green: 176.0/255.0 blue: 163.0/255.0 alpha: 0.1]
+#define BROWN_COLOR_WITH_ALPHA_025 [UIColor colorWithRed: 199.0/255.0 green: 176.0/255.0 blue: 163.0/255.0 alpha: 0.25]
+#define BROWN_COLOR_WITH_ALPHA_05 [UIColor colorWithRed: 199.0/255.0 green: 176.0/255.0 blue: 163.0/255.0 alpha: 0.5]
+#define BROWN_COLOR [UIColor colorWithRed: 199.0/255.0 green: 176.0/255.0 blue: 163.0/255.0 alpha: 1.0]
+#define DARK_BROWN_COLOR_WITH_ALPHA_07 [UIColor colorWithRed: 155.0/255.0 green: 101.0/255.0 blue: 79.0/255.0 alpha: 0.7]
+#define DARK_BROWN_COLOR [UIColor colorWithRed: 155.0/255.0 green: 101.0/255.0 blue: 79.0/255.0 alpha: 1.0]
+
+#pragma mark - MUSShareViewController
+
+FOUNDATION_EXPORT NSString *const MUSApp_MUSShareViewController_Alert_Message_No_Pics_Anymore;
+FOUNDATION_EXPORT NSInteger const MUSApp_MUSShareViewController_NumberOfAllowedPics;
+FOUNDATION_EXPORT NSInteger const MUSApp_MUSShareViewController_NumberOfAllowedLettersInTextView;
+
+#pragma mark - MUSPhotoManager
+
+FOUNDATION_EXPORT NSInteger const MUSApp_MUSPhotoManager_CompressionSizePicture_By_Height;
+FOUNDATION_EXPORT NSInteger const MUSApp_MUSPhotoManager_CompressionSizePicture_By_Width;
+
+FOUNDATION_EXPORT NSString *const MUSApp_MUSPhotoManager_Error_NO_Camera;
+FOUNDATION_EXPORT NSInteger const MUSApp_MUSPhotoManager_Error_NO_Camera_Code;
+
+FOUNDATION_EXPORT NSString *const MUSApp_MUSPhotoManager_Alert_Title_Share_Photo;
+
+
+#pragma mark - Notifications
+
+FOUNDATION_EXPORT NSString *const MUSShowImagePickerForAddImageInCollectionView;
+FOUNDATION_EXPORT NSString *const MUSUpdateCollectionViewNotification;
 
 #pragma mark - MUSGaleryView
 
-FOUNDATION_EXPORT NSString *const loadNibNamed;
-FOUNDATION_EXPORT NSString *const nibWithNibName;
-FOUNDATION_EXPORT NSString *const titleAlertDeletePicShow;
-FOUNDATION_EXPORT NSString *const messageAlertDeletePicShow;
-FOUNDATION_EXPORT NSString *const cancelButtonTitleAlertDeletePicShow;
-FOUNDATION_EXPORT NSString *const otherButtonTitlesAlertDeletePicShow;
-
-#pragma mark - UIButton+MUSSocialNetwork
-
-FOUNDATION_EXPORT NSString *const musAppButton_ImageName_UnknownUser;
-
+FOUNDATION_EXPORT NSString *const MUSApp_MUSGaleryView_NibName;
+FOUNDATION_EXPORT NSString *const MUSApp_MUSGaleryView_Alert_Title_DeletePic;
+FOUNDATION_EXPORT NSString *const MUSApp_MUSGaleryView_Alert_Message_DeletePic;
 
 #pragma mark - MUSPostsViewController
 
-FOUNDATION_EXPORT NSString *const musApp_PostsViewController_NavigationBar_Title;
-FOUNDATION_EXPORT NSString *const musApp_PostsViewController_AllShareReasons;
-FOUNDATION_EXPORT NSString *const musApp_PostsViewController_AllSocialNetworks;
-FOUNDATION_EXPORT NSInteger const musApp_DropDownMenu_Height;
+FOUNDATION_EXPORT NSString *const MUSApp_MUSPostsViewController_NavigationBar_Title;
 
 #pragma mark - MUSPostCell
 
-//FOUNDATION_EXPORT NSString *const musAppImage_Name_Comment;
-//FOUNDATION_EXPORT NSString *const musAppImage_Name_Like;
-FOUNDATION_EXPORT NSString *const musAppImage_Name_VKIconImage;
-FOUNDATION_EXPORT NSString *const musAppImage_Name_FBIconImage;
-FOUNDATION_EXPORT NSString *const musAppImage_Name_TwitterIconImage;
-
-FOUNDATION_EXPORT NSString *const musAppImage_Name_VKLikeImage;
-FOUNDATION_EXPORT NSString *const musAppImage_Name_FBLikeImage;
-FOUNDATION_EXPORT NSString *const musAppImage_Name_TwitterLikeImage;
-FOUNDATION_EXPORT NSString *const musAppImage_Name_TwitterCommentsImage;
-FOUNDATION_EXPORT NSString *const musAppImage_Name_CommentsImage;
-
-
-FOUNDATION_EXPORT NSString *const musAppImage_Name_VKIconImage_grey;
-FOUNDATION_EXPORT NSString *const musAppImage_Name_FBIconImage_grey;
-FOUNDATION_EXPORT NSString *const musAppImage_Name_TwitterIconImage_grey;
-
-FOUNDATION_EXPORT NSString *const musAppImage_Name_VKLikeImage_grey;
-FOUNDATION_EXPORT NSString *const musAppImage_Name_FBLikeImage_grey;
-FOUNDATION_EXPORT NSString *const musAppImage_Name_TwitterLikeImage_grey;
-FOUNDATION_EXPORT NSString *const musAppImage_Name_TwitterCommentsImage_grey;
-FOUNDATION_EXPORT NSString *const musAppImage_Name_CommentsImage_grey;
-
-
-FOUNDATION_EXPORT NSString *const musAppFilter_Title_Shared;
-FOUNDATION_EXPORT NSString *const musAppFilter_Title_Offline;
-FOUNDATION_EXPORT NSString *const musAppFilter_Title_Error;
-FOUNDATION_EXPORT NSInteger const musAppPostsVC_HeightOfPostCell;
-FOUNDATION_EXPORT NSString *const musApp_ActionSheet_Title_ChooseAction;
-FOUNDATION_EXPORT NSInteger const musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithoutUserPhotos;
-FOUNDATION_EXPORT NSInteger const musApp_PostCell_PostDescriptionLabel_LeftConstraint_WithUserPhotos;
-FOUNDATION_EXPORT NSString *const musApp_PostCell_Image_Name_CheckMarkTaken;
-FOUNDATION_EXPORT NSString *const musApp_PostCell_Image_Name_CheckMark;
+FOUNDATION_EXPORT NSInteger const MUSApp_MUSPostCell_HeightOfCell;
+FOUNDATION_EXPORT NSInteger const MUSApp_MUSPostCell_PostDescriptionLabel_LeftConstraint_WithoutUserPhotos;
+FOUNDATION_EXPORT NSInteger const MUSApp_MUSPostCell_PostDescriptionLabel_LeftConstraint_WithUserPhotos;
 
 #pragma mark - MUSReasonCommentsAndLikesCell
 
-FOUNDATION_EXPORT NSInteger const musAppCommentsAndLikesCell_HeightOfRow;
-
-#pragma mark - MUSGalleryViewOfPhotos
-
-FOUNDATION_EXPORT NSString *const musApp_GalleryOfPhotos_NibName;
-FOUNDATION_EXPORT NSString *const notificationShowImagesInCollectionView;
-
-#pragma mark - MUSGalleryOfPhotosCell
-
-FOUNDATION_EXPORT NSString *const musAppButton_ImageName_ButtonAdd;
-FOUNDATION_EXPORT NSString *const musAppButton_ImageName_AddPhoto;
-
-FOUNDATION_EXPORT NSInteger const musApp_GalleryOfPhotosCell_addButton_ButtomConstraint_WithoutPhotos;
-FOUNDATION_EXPORT NSInteger const musApp_GalleryOfPhotosCell_addButton_ButtomConstraint_WithPhotos;
+FOUNDATION_EXPORT NSInteger const MUSApp_ReasonCommentsAndLikesCell_HeightOfRow;
 
 #pragma mark - MUSPostDescriptionCell
 
-FOUNDATION_EXPORT NSInteger const musApp_PostDescriptionCell_TextView_TopConstraint;
-FOUNDATION_EXPORT NSInteger const musApp_PostDescriptionCell_TextView_BottomConstraint;
-FOUNDATION_EXPORT NSInteger const musApp_PostDescriptionCell_TextView_LeftConstraint;
-FOUNDATION_EXPORT NSInteger const musApp_PostDescriptionCell_TextView_RightConstraint;
-
-FOUNDATION_EXPORT NSString *const musApp_PostDescriptionCell_TextView_Font_Name;
-FOUNDATION_EXPORT NSInteger const musApp_PostDescriptionCell_TextView_Font_Size;
-
+FOUNDATION_EXPORT NSInteger const MUSApp_MUSPostDescriptionCell_TextView_TopConstraint;
+FOUNDATION_EXPORT NSInteger const MUSApp_MUSPostDescriptionCell_TextView_BottomConstraint;
+FOUNDATION_EXPORT NSInteger const MUSApp_MUSPostDescriptionCell_TextView_LeftConstraint;
+FOUNDATION_EXPORT NSInteger const MUSApp_MUSPostDescriptionCell_TextView_RightConstraint;
+FOUNDATION_EXPORT NSString *const MUSApp_MUSPostDescriptionCell_TextView_Font_Name;
+FOUNDATION_EXPORT NSInteger const MUSApp_MUSPostDescriptionCell_TextView_Font_Size;
 
 #pragma mark - MUSDetailPostViewController
 
-FOUNDATION_EXPORT NSInteger const musAppDetailPostVC_HeightOfCommentsAndLikesCell;
-FOUNDATION_EXPORT NSInteger const musAppDetailPostVC_HeightOfPostLocationCell;
-FOUNDATION_EXPORT NSInteger const musAppDetailPostVC_HeightOfGalleryOfPhotosCell_WithoutPhotos;
-FOUNDATION_EXPORT NSInteger const musAppDetailPostVC_HeightOfGalleryOfPhotosCell_WithPhotos;
-FOUNDATION_EXPORT NSString *const musAppDetailPostVC_UpdatePostAlert;
-FOUNDATION_EXPORT NSInteger const musAppDetailPostVC_NumberOfRows;
+FOUNDATION_EXPORT NSInteger const MUSApp_MUSDetailPostViewController_NumberOfRowsInTableView;
+FOUNDATION_EXPORT CGFloat const MUSApp_MUSDetailPostViewController_HeightOfHeader;
 
-#pragma mark - MUSCustomMapView
+#pragma mark - MUSPostLocationCell
 
-FOUNDATION_EXPORT NSInteger const musAppCustomMapView_maxZoomDistance;
-FOUNDATION_EXPORT NSString *const musAppButton_ImageName_ButtonDeleteLocation;
-FOUNDATION_EXPORT NSString *const musAppCustomMapView_PinAnnotationViewIdentifier;
+FOUNDATION_EXPORT NSInteger const MUSApp_MUSPostLocationCell_HeightOfCell;
+FOUNDATION_EXPORT double const MUSApp_MUSPostLocationCell_CLLocationDistance;
+FOUNDATION_EXPORT NSString *const MUSApp_MUSPostLocationCell_StringNull;
 
-#pragma mark - MUSLocationCell
+#pragma mark - MUSUserDetailViewController
 
-FOUNDATION_EXPORT NSInteger const musAppLocationCell_LeftConstraintOfLabel;
-FOUNDATION_EXPORT NSInteger const musAppLocationCell_RightConstraintOfLabel;
-FOUNDATION_EXPORT NSInteger const musAppLocationCell_RightConstraintOfLabelWithDeletePlaceButton;
+FOUNDATION_EXPORT NSString *const MUSApp_MUSUserDetailViewController_User_Profile;
+FOUNDATION_EXPORT NSString *const MUSApp_MUSUserDetailViewController_User_ClientID;
+
+#pragma mark - MUSProgressBar
+
+FOUNDATION_EXPORT NSString *const MUSApp_MUSProgressBar_NibName;
+FOUNDATION_EXPORT NSString *const MUSApp_MUSProgressBarEndLoading_NibName;
+FOUNDATION_EXPORT NSString *const MUSApp_MUSProgressBarEndLoading_Label_Title_Published;
+FOUNDATION_EXPORT NSString *const MUSApp_MUSProgressBarEndLoading_Label_Title_Failed;
+FOUNDATION_EXPORT NSInteger const MUSApp_MUSProgressBar_DefaultValueProgress;
+FOUNDATION_EXPORT NSInteger const MUSApp_MUSProgressBar_ValueProgress;
+FOUNDATION_EXPORT NSInteger const MUSApp_MUSProgressBar_View_DefaultHeightConstraint;
+FOUNDATION_EXPORT NSInteger const MUSApp_MUSProgressBar_View_HeightConstraint;
+FOUNDATION_EXPORT NSInteger const MUSApp_MUSProgressBar_Label_DefaultWidthConstraint;
+FOUNDATION_EXPORT NSInteger const MUSApp_MUSProgressBar_Label_WidthConstraint;
+
+#pragma mark - MUSToolBarForMediaGalleryViewController
+
+FOUNDATION_EXPORT NSString *const MUSApp_MUSToolBarForMediaGalleryViewController_NibName;
+
+#pragma mark - MUSTopBarForMediaGalleryViewController
+
+FOUNDATION_EXPORT NSString *const MUSApp_MUSTopBarForMediaGalleryViewController_NibName;
+
+#pragma mark - MUSDeleteButton
+
+FOUNDATION_EXPORT NSString *const MUSApp_MUSDeleteButton_Image_Name;
+
+#pragma mark - ReachabilityManager
+
+FOUNDATION_EXPORT NSString *const MUSApp_ReachabilityManager_Host_Name;
+
+#pragma mark - MUSLocationManager
+
+FOUNDATION_EXPORT NSString *const MUSApp_MUSLocationManager_Address_Unknown;
+
+#pragma mark - AppDelegate
+
+FOUNDATION_EXPORT NSString *const MUSApp_AppDelegate_Url_Facebook;
+FOUNDATION_EXPORT NSString *const MUSApp_AppDelegate_Url_Vk;
 
 @end
