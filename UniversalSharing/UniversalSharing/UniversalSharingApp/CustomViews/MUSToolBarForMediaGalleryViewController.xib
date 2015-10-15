@@ -6,7 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MUSToolBarForMediaGalleryViewController">
             <connections>
-                <outlet property="buttonToolBar" destination="VIX-jK-WLZ" id="X8X-kT-2q9"/>
+                <outlet property="toolBarButton" destination="VIX-jK-WLZ" id="W4o-WZ-Z16"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

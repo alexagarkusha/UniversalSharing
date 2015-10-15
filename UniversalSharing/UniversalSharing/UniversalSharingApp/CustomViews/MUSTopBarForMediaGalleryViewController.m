@@ -52,12 +52,12 @@
 }
 
 - (void) awakeFromNib {
-    [self.buttonBack setTitleColor: BROWN_COLOR forState:UIControlStateNormal];
+    [self.backButton setTitleColor: BROWN_COLOR forState:UIControlStateNormal];
 }
 
-- (void) initializeLableCountImages:(NSString *)stringLableCountImages {
+- (void) initializeCounterImages:(NSString *)stringFiguredOutCounterImages {
     self.counterImagesLabel.textColor = BROWN_COLOR;
-    self.counterImagesLabel.text = stringLableCountImages;
+    self.counterImagesLabel.text = stringFiguredOutCounterImages;
 }
 
 - (void) hidePropertiesWithAnimation {

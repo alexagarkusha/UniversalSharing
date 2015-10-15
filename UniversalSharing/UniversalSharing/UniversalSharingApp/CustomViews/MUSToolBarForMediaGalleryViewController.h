@@ -10,6 +10,6 @@
 
 @interface MUSToolBarForMediaGalleryViewController : UIView
 
-@property (weak, nonatomic) IBOutlet UIButton *buttonToolBar;
+@property (weak, nonatomic) IBOutlet UIButton *toolBarButton;
 
 @end

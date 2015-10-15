@@ -6,7 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MUSTopBarForMediaGalleryViewController">
             <connections>
-                <outlet property="buttonBack" destination="scf-Qr-vop" id="g8K-vB-jBd"/>
+                <outlet property="backButton" destination="scf-Qr-vop" id="apt-lt-JCN"/>
                 <outlet property="buttonTopConstraint" destination="AVw-1z-mVZ" id="syD-Sw-8K5"/>
                 <outlet property="counterImagesLabel" destination="WNj-F9-7A7" id="Aab-Ec-EIL"/>
                 <outlet property="labelTopConstraint" destination="CG3-dQ-izO" id="WfO-yi-MsV"/>

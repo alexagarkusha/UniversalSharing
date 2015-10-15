@@ -13,6 +13,5 @@
 @property (nonatomic) NSUInteger index;
 
 - (void)displayImage:(UIImage *)image;
-//+ (NSUInteger)imageCount;
 
 @end
