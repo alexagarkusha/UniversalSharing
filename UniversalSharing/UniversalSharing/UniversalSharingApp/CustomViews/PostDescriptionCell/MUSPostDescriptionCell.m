@@ -18,20 +18,6 @@
 
 @implementation MUSPostDescriptionCell
 
-- (void)awakeFromNib {
-    // Initialization code
-    self.backgroundColor = BROWN_COLOR_WITH_ALPHA_01;
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-    // Configure the view for the selected state
-}
-
-- (NSString *)reuseIdentifier{
-    return [MUSPostDescriptionCell cellID];
-}
-
 + (NSString*) cellID {
     return NSStringFromClass([self class]);
 }
@@ -49,8 +35,8 @@
     }
     UITextView *calculationView = [[UITextView alloc] init];
     NSDictionary *options = @{ NSFontAttributeName: [UIFont
-                            fontWithName : MUSApp_MUSPostDescriptionCell_TextView_Font_Name
-                                    size : MUSApp_MUSPostDescriptionCell_TextView_Font_Size]};
+                                                     fontWithName : MUSApp_MUSPostDescriptionCell_TextView_Font_Name
+                                                     size : MUSApp_MUSPostDescriptionCell_TextView_Font_Size]};
     NSAttributedString* attrString = [[NSAttributedString alloc] initWithString : postDescription
                                                                      attributes : options];
     [calculationView setAttributedText : attrString];
@@ -58,6 +44,21 @@
     CGFloat heightOfRow = size.height + MUSApp_MUSPostDescriptionCell_TextView_BottomConstraint + MUSApp_MUSPostDescriptionCell_TextView_TopConstraint;
     return heightOfRow;
 }
+
+- (void)awakeFromNib {
+    // Initialization code
+    self.backgroundColor = BROWN_COLOR_WITH_ALPHA_01;
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+    // Configure the view for the selected state
+}
+
+- (NSString *)reuseIdentifier{
+    return [MUSPostDescriptionCell cellID];
+}
+
 
 #pragma mark - configuration PostDescriptionCell
 
