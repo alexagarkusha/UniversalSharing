@@ -12,20 +12,14 @@
 
 @interface MUSCollectionViewCell()
 
-- (IBAction)deletePhoto:(id)sender;
 @property (strong, nonatomic) MUSAddPhotoButton *addPhotoButton;
 @property (strong, nonatomic) MUSAddPhotoButton *addPhotoButtonForFirstSection;
+//===
+- (IBAction)deletePhoto:(id)sender;
 
 @end
+
 @implementation MUSCollectionViewCell
-
-- (void)awakeFromNib {
-    // Initialization code
-}
-
-- (NSString *)reuseIdentifier{
-    return [MUSCollectionViewCell customCellID];
-}
 
 + (NSString*) customCellID {
     return NSStringFromClass([MUSCollectionViewCell class]);
@@ -36,10 +30,13 @@
     return nibArray[0];
 }
 
+- (NSString *)reuseIdentifier{
+    return [MUSCollectionViewCell customCellID];
+}
+
 - (void) configurationCellWithPhoto:(UIImage *)photoImageView andEditableState: (BOOL)isEditable {
     [self.addPhotoButton removeFromSuperview];
     [self.addPhotoButtonForFirstSection removeFromSuperview];
-    //[self.deletePhotoButtonOutlet setImage:[UIImage imageNamed: @"Button_Delete.png"] forState:UIControlStateNormal];
     
     if (!photoImageView && isEditable) {
         [self hideDeleteButton];
@@ -64,21 +61,18 @@
 }
 
 - (void) showAddPhotoButtonForFirstSection {
-    
     self.addPhotoButtonForFirstSection = [[MUSAddPhotoButton alloc] initWithFrame: CGRectMake( 0, 0, self.frame.size.width, self.frame.size.height)];
     [self addSubview: self.addPhotoButtonForFirstSection];
     [self.addPhotoButtonForFirstSection addTarget:self
-                            action:@selector(addPhotoToCollectionForFirstSection:)forControlEvents:UIControlEventTouchUpInside];
+                                           action:@selector(addPhotoToCollectionForFirstSection:)forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void) showAddPhotoButton {
-   
     self.addPhotoButton = [[MUSAddPhotoButton alloc] initWithFrame: CGRectMake( 50, 20, self.frame.size.width - 100, self.frame.size.height - 40)];
     [self addSubview: self.addPhotoButton];
     [self.addPhotoButton addTarget:self
-               action:@selector(addPhotoToCollectionTouch:)forControlEvents:UIControlEventTouchUpInside];
+                            action:@selector(addPhotoToCollectionTouch:)forControlEvents:UIControlEventTouchUpInside];
 }
-
 
 - (void) hideDeleteButton {
     self.deletePhotoButtonOutlet.hidden = YES;
@@ -88,59 +82,17 @@
     self.deletePhotoButtonOutlet.hidden = NO;
 }
 
-
-- (IBAction)deletePhoto:(id)sender {
-    [self.delegate deletePhotoBySelectedImageIndex: self.indexPath];
-}
-
-
 - (void)addPhotoToCollectionTouch:(id)sender {
     [self.delegate addPhotoToCollection];
 }
 
 - (void)addPhotoToCollectionForFirstSection:(id)sender {
     [[NSNotificationCenter defaultCenter] postNotificationName:notificationImagePickerForCollection object:nil];
-
-}
-
-
-
-/*
- - (void) editableCellConfiguration {
-    self.deleteIconImageView.hidden = NO;
-    self.deletePhotoButtonOutlet.hidden = NO;
-    self.deleteIconBackgroungImageView.hidden = NO;
-    [self startQuivering];
- }
- 
- - (void) notEditableCellConfiguration {
-    [self stopQuivering];
-    self.deleteIconImageView.hidden = YES;
-    self.deletePhotoButtonOutlet.hidden = YES;
-    self.deleteIconBackgroungImageView.hidden = YES;
- }
-
- - (void) startQuivering {
-    CABasicAnimation *quiverAnim = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
-    float startAngle = (-4) * M_PI/180.0;
-    float stopAngle = -startAngle;
-    quiverAnim.fromValue = [NSNumber numberWithFloat:startAngle];
-    quiverAnim.toValue = [NSNumber numberWithFloat:3 * stopAngle];
-    quiverAnim.autoreverses = YES;
-    quiverAnim.duration = 0.2;
-    quiverAnim.repeatCount = HUGE_VALF;
-    float timeOffset = (float)(arc4random() % 100)/100 - 0.50;
-    quiverAnim.timeOffset = timeOffset;
-    CALayer *layerDeleteIconIV = self.deleteIconImageView.layer;
-    CALayer *layerDeleteIconBackgroundIV = self.deleteIconBackgroungImageView.layer;
     
-    [layerDeleteIconIV addAnimation:quiverAnim forKey:@"quivering"];
-    [layerDeleteIconBackgroundIV addAnimation:quiverAnim forKey:@"quivering"];
 }
 
-- (void)stopQuivering {
-    CALayer *layer = self.layer;
-    [layer removeAnimationForKey:@"quivering"];
+- (IBAction)deletePhoto:(id)sender {
+    [self.delegate deletePhotoBySelectedImageIndex: self.indexPath];
 }
-*/
+
 @end
