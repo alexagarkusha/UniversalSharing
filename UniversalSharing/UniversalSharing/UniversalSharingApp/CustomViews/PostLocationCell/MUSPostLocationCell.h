@@ -12,11 +12,9 @@
 @interface MUSPostLocationCell : UITableViewCell
 
 + (NSString*) cellID;
-
 + (instancetype) postLocationCell;
-
 + (CGFloat) heightForPostLocationCell: (MUSPost*) currentPost;
-
+//===
 - (void) configurationPostLocationCellByPostPlace: (MUSPost *) currentPost;
 
 @end

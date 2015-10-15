@@ -108,6 +108,8 @@ CGFloat const MUSApp_MUSDetailPostViewController_HeightOfHeader = 250.0f;
 #pragma mark - MUSPostLocationCell
 
 NSInteger const MUSApp_MUSPostLocationCell_HeightOfCell = 200;
+double const MUSApp_MUSPostLocationCell_CLLocationDistance = 500;
+NSString *const MUSApp_MUSPostLocationCell_StringNull = @"(null)";
 
 #pragma mark - MUSUserDetailViewController
 

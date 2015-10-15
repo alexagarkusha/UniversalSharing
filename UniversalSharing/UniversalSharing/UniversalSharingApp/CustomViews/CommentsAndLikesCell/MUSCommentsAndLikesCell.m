@@ -18,19 +18,6 @@
 
 @implementation MUSCommentsAndLikesCell
 
-- (void)awakeFromNib {
-    // Initialization code
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-    // Configure the view for the selected state
-}
-
-- (NSString *)reuseIdentifier{
-    return [MUSCommentsAndLikesCell cellID];
-}
-
 + (NSString*) cellID {
     return NSStringFromClass([self class]);
 }
@@ -44,6 +31,19 @@
 
 + (CGFloat) heightForCommentsAndLikesCell : (NSArray*) networkPostsArray {
     return [MUSReasonCommentsAndLikesCell heightForReasonCommentsAndLikesCell] * networkPostsArray.count;
+}
+
+- (void)awakeFromNib {
+    // Initialization code
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+    // Configure the view for the selected state
+}
+
+- (NSString *)reuseIdentifier{
+    return [MUSCommentsAndLikesCell cellID];
 }
 
 #pragma mark - configuration CommentsAndLikesCellByPost

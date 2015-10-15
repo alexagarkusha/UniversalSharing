@@ -82,7 +82,6 @@ static NSString * const reuseIdentifier = @"Cell";
 - (void) sendPost :(MUSPost*) currentPost andSelectedImageIndex :(NSInteger) selectedImageIndex {
     self.currentPost = currentPost;
     self.selectedImageIndex = selectedImageIndex;
-    //self.currentReasonType = currentPost.reason;
 }
 
 #pragma mark <UICollectionViewDataSource>
