@@ -18,48 +18,36 @@
 @interface MUSReasonCommentsAndLikesCell ()
 
 @property (weak, nonatomic) IBOutlet UIImageView *iconOfSocialNetworkImageView;
-
 @property (weak, nonatomic) IBOutlet UIImageView *commentImageView;
-
 @property (weak, nonatomic) IBOutlet UILabel *numberOfCommentsLabel;
-
 @property (weak, nonatomic) IBOutlet UIImageView *likeImageView;
-
 @property (weak, nonatomic) IBOutlet UILabel *numberOfLikesLabel;
-
 @property (weak, nonatomic) IBOutlet UILabel *reasonOfPostLabel;
-
-@property (weak, nonatomic) IBOutlet UIView *backgroundViewOfCell;
 
 @end
 
 
 @implementation MUSReasonCommentsAndLikesCell
 
-- (void)awakeFromNib {
-    // Initialization code
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-    //self.backgroundViewOfCell.backgroundColor = BROWN_COLOR_Light;
-    //self.backgroundColor = BROWN_COLOR_Light;
-    // Configure the view for the selected state
-}
-
-- (NSString *)reuseIdentifier{
-    return [MUSReasonCommentsAndLikesCell cellID];
-}
-
 + (NSString*) cellID {
     return NSStringFromClass([self class]);
 }
+
 + (instancetype) reasonCommentsAndLikesCell {
     NSArray* nibArray = [[NSBundle mainBundle]loadNibNamed:[self cellID] owner:nil options:nil];
     return nibArray[0];
 }
+
 + (CGFloat) heightForReasonCommentsAndLikesCell {
     return MUSApp_ReasonCommentsAndLikesCell_HeightOfRow;
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+}
+
+- (NSString *)reuseIdentifier{
+    return [MUSReasonCommentsAndLikesCell cellID];
 }
 
 - (void) configurationReasonCommentsAndLikesCell: (MUSNetworkPost*) networkPost {
@@ -93,11 +81,5 @@
     self.iconOfSocialNetworkImageView.image = [UIImage greyIconOfSocialNetworkByTypeOfSocialNetwork: networkPost.networkType];
 }
 
-- (void) leftBorder {
-    CALayer *leftBorder = [CALayer layer];
-    leftBorder.backgroundColor = [DARK_BROWN_COLOR_WITH_ALPHA_07 CGColor];
-    leftBorder.frame = CGRectMake(0, 0, 3.0f, CGRectGetHeight (self.backgroundViewOfCell.frame) + 1);
-    [self.backgroundViewOfCell.layer addSublayer: leftBorder];
-}
 
 @end
