@@ -11,7 +11,7 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <MobileCoreServices/UTCoreTypes.h>
 #import "ConstantsApp.h"
-#import "ImageToPost.h"
+#import "MUSImageToPost.h"
 #import "UIImage+Scale.h"
 
 
@@ -113,7 +113,7 @@ static MUSPhotoManager* sharedManager = nil;
     UIImage *image = [info objectForKey: UIImagePickerControllerOriginalImage]; // If you want to show editable photo - you need to set UIImagePickerControllerEditedImage
     
     if (image != nil) {
-        ImageToPost *imageToPost = [[ImageToPost alloc] init];
+        MUSImageToPost *imageToPost = [[MUSImageToPost alloc] init];
         UIImage *compressedImage = [UIImage scaleImage: image toSize: CGSizeMake(MUSApp_MUSPhotoManager_CompressionSizePicture_By_Width, MUSApp_MUSPhotoManager_CompressionSizePicture_By_Height)];
         imageToPost.image = compressedImage;
         imageToPost.imageType = MUSJPEG;

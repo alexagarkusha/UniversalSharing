@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import "MUSSocialNetworkLibraryHeader.h"
 #import "ReachabilityManager.h"
-#import "SocialManager.h"
+#import "MUSSocialManager.h"
 #import "ConstantsApp.h"
 
 #import "FacebookNetwork.h"
@@ -30,7 +30,7 @@
                                          @(MUSTwitters) : [TwitterNetwork class],
                                          @(MUSVKontakt) : [VKNetwork class]};
     
-    [[SocialManager sharedManager] configurateWithNetworkClasses: networksDictionary];
+    [[MUSSocialManager sharedManager] configurateWithNetworkClasses: networksDictionary];
     
     [MUSPostManager manager];
     

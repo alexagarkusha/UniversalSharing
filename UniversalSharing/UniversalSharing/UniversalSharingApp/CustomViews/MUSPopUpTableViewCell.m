@@ -38,7 +38,7 @@
     return nibArray[0];
 }
 
-- (void) configurationPopUpTableViewCellWith: (SocialNetwork*) socialNetwork andReason:(ReasonType) currentReason {
+- (void) configurationPopUpTableViewCellWith: (MUSSocialNetwork*) socialNetwork andReason:(ReasonType) currentReason {
     self.networkImageView.image = [UIImage imageNamed:socialNetwork.icon];
     self.switchButton.tag = socialNetwork.networkType;
     if (!socialNetwork.isLogin || currentReason == MUSConnect) {

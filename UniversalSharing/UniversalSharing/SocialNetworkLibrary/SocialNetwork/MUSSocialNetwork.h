@@ -8,12 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-#import "User.h"
-#import "Post.h"
-#import "Location.h"
+#import "MUSUser.h"
+#import "MUSPost.h"
+#import "MUSLocation.h"
 #import "MUSSocialNetworkLibraryConstants.h"
 
-@interface SocialNetwork : NSObject
+@interface MUSSocialNetwork : NSObject
 /*!
  @abstract whether the user is logged into a social network or not
 */
@@ -33,7 +33,7 @@
 /*!
  @abstract logged user of social network
  */
-@property (strong, nonatomic) User *currentUser;
+@property (strong, nonatomic) MUSUser *currentUser;
 /*!
  @abstract type of social network (like Facebook, Twitters, Vkontakte)
  */
@@ -68,14 +68,14 @@
  @params current post of @class Post
  @warning This method requires that you have been login in Social Network.
 */
-- (void) sharePost : (Post*) post withComplition : (Complition) block progressLoadingBlock :(ProgressLoading) blockLoading;
+- (void) sharePost : (MUSPost*) post withComplition : (Complition) block progressLoadingBlock :(ProgressLoading) blockLoading;
 
 /*!
  @abstract return a list of objects like @class Place found by the search params.
  @params object of @class Location (current location of user)
  @warning This method requires that you have been login in Social Network.
  */
-- (void) obtainPlacesArrayForLocation : (Location*) location withComplition : (Complition) block;
+- (void) obtainPlacesArrayForLocation : (MUSLocation*) location withComplition : (Complition) block;
 
 - (void) updateNetworkPostWithComplition : (UpdateNetworkPostsComplition) block;
 

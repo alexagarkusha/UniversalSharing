@@ -10,7 +10,7 @@
 #import <UIKit/UIKit.h>
 #import "MUSSocialNetworkLibraryConstants.h"
 
-@interface NetworkPost : NSObject
+@interface MUSNetworkPost : NSObject
 /*!
  @abstract unique post id is assigned after sending post to the social network.
  */

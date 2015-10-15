@@ -88,7 +88,7 @@
  @param without
  */
 - (void) obtainSocialNetworks {
-    self.socialNetworksArray = [[SocialManager sharedManager] allNetworks];
+    self.socialNetworksArray = [[MUSSocialManager sharedManager] allNetworks];
 }
 
 #pragma mark UITableViewDataSource
@@ -102,7 +102,7 @@
      XIB
      */
     MUSAccountTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[MUSAccountTableViewCell cellID]];
-    SocialNetwork *socialNetwork = [self obtainCurrentSocialNetwork:indexPath];
+    MUSSocialNetwork *socialNetwork = [self obtainCurrentSocialNetwork:indexPath];
     if(!cell) {
         cell = [MUSAccountTableViewCell accountTableViewCell];
     }
@@ -111,7 +111,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    SocialNetwork *socialNetwork = [self obtainCurrentSocialNetwork:indexPath];
+    MUSSocialNetwork *socialNetwork = [self obtainCurrentSocialNetwork:indexPath];
     
     /*!
      when cell is tapped we check this social network is login and existed a currentuser object  if YES we go to ditailviewcontroller, else to do login than go to ditailviewcontroller
@@ -122,7 +122,7 @@
         
     } else {
         __weak MUSAccountsViewController *weakSelf = self;
-        [socialNetwork loginWithComplition:^(SocialNetwork* result, NSError *error) {
+        [socialNetwork loginWithComplition:^(MUSSocialNetwork* result, NSError *error) {
             if (result) {
                 [weakSelf.tableView reloadData];
             }
@@ -149,7 +149,7 @@
     [self checkInternetConnection];
 }
 
-- (SocialNetwork*) obtainCurrentSocialNetwork : (NSIndexPath*) indexPath {
+- (MUSSocialNetwork*) obtainCurrentSocialNetwork : (NSIndexPath*) indexPath {
     return self.socialNetworksArray[indexPath.row];
 }
 

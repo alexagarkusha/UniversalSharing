@@ -9,18 +9,18 @@
 #import "TwitterNetwork.h"
 #import <TwitterKit/TwitterKit.h>
 #import <Fabric/Fabric.h>
-#import "Place.h"
-#import "Location.h"
+#import "MUSPlace.h"
+#import "MUSLocation.h"
 #import "NSError+MUSError.h"
 #import "NSString+MUSPathToDocumentsdirectory.h"
-#import "InternetConnectionManager.h"
-#import "NetworkPost.h"
+#import "MUSInternetConnectionManager.h"
+#import "MUSNetworkPost.h"
 #import "NSString+MUSCurrentDate.h"
 #import "MUSPostManager.h"
 #import "ConstantsApp.h"
 #import "MUSSocialNetworkLibraryConstantsForParseObjects.h"
 #import "MUSDatabaseRequestStringsHelper.h"
-#import "DataBaseManager.h"
+#import "MUSDataBaseManager.h"
 
 
 @interface TwitterNetwork () //<TWTRCoreOAuthSigning>
@@ -81,7 +81,7 @@ static TwitterNetwork *model = nil;
 - (void) initiationPropertiesWithSession {
     self.isLogin = YES;
     self.icon = MUSTwitterIconName;
-    self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType: self.networkType]]firstObject];
+    self.currentUser = [[[MUSDataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType: self.networkType]]firstObject];
     self.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
 }
 
@@ -156,9 +156,9 @@ static TwitterNetwork *model = nil;
 
 #pragma mark - sharePost
 
-- (void) sharePost:(Post *)post withComplition:(Complition)block progressLoadingBlock:(ProgressLoading)blockLoading {
-    if (![[InternetConnectionManager connectionManager] isInternetConnection]){
-        NetworkPost *networkPost = [NetworkPost create];
+- (void) sharePost:(MUSPost *)post withComplition:(Complition)block progressLoadingBlock:(ProgressLoading)blockLoading {
+    if (![[MUSInternetConnectionManager connectionManager] isInternetConnection]){
+        MUSNetworkPost *networkPost = [MUSNetworkPost create];
         networkPost.networkType = MUSTwitters;
         block(networkPost,[self errorConnection]);
         blockLoading ([NSNumber numberWithInteger: self.networkType], 1.0f);
@@ -180,7 +180,7 @@ static TwitterNetwork *model = nil;
  @param current post of @class Post
  */
 
-- (void) sharePostOnlyWithPostDescription : (Post*) post {
+- (void) sharePostOnlyWithPostDescription : (MUSPost*) post {
     __weak TwitterNetwork *weakSelf = self;
     TWTRAPIClient *client = [[Twitter sharedInstance] APIClient];
     NSError *error;
@@ -197,9 +197,9 @@ static TwitterNetwork *model = nil;
                                                              URL : url
                                                       parameters : params
                                                            error : &error];
-    NetworkPost *networkPost = [NetworkPost create];
+    MUSNetworkPost *networkPost = [MUSNetworkPost create];
     networkPost.networkType = MUSTwitters;
-    __block NetworkPost* networkPostCopy = networkPost;
+    __block MUSNetworkPost* networkPostCopy = networkPost;
     
     [client sendTwitterRequest:preparedRequest
                     completion:^(NSURLResponse *urlResponse, NSData *responseData, NSError *error){
@@ -235,11 +235,11 @@ static TwitterNetwork *model = nil;
  @param current post of @class Post
  */
 
-- (void) sharePostWithPictures : (Post*) post {
+- (void) sharePostWithPictures : (MUSPost*) post {
     __weak TwitterNetwork *weakSelf = self;
-    NetworkPost *networkPost = [NetworkPost create];
+    MUSNetworkPost *networkPost = [MUSNetworkPost create];
     networkPost.networkType = MUSTwitters;
-    __block NetworkPost *networkPostCopy = networkPost;
+    __block MUSNetworkPost *networkPostCopy = networkPost;
     [self mediaIdsForTwitter : post withComplition:^(id result, NSError *error) {
         
         if (!error) {
@@ -308,7 +308,7 @@ static TwitterNetwork *model = nil;
  @param current post of @class Post
  */
 
-- (void) mediaIdsForTwitter : (Post*) post withComplition : (Complition) block {
+- (void) mediaIdsForTwitter : (MUSPost*) post withComplition : (Complition) block {
     NSMutableArray *mediaIdsArray = [[NSMutableArray alloc] init];
     __weak NSMutableArray *array = mediaIdsArray;
     __block NSInteger numberOfIds = post.imagesArray.count;
@@ -336,7 +336,7 @@ static TwitterNetwork *model = nil;
  @param current ImageToPost of @class ImageToPost
  */
 
-- (void) mediaIDForTwitter : (ImageToPost*) imageToPost withComplition : (Complition) block {
+- (void) mediaIDForTwitter : (MUSImageToPost*) imageToPost withComplition : (Complition) block {
     NSString *endpoint = MUSTwitterURL_Media_Upload;
     NSData* imageData = UIImageJPEGRepresentation(imageToPost.image, imageToPost.quality);
     NSDictionary *parameters = @{ MUSTwitterParameter_Media : [imageData base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed ]};
@@ -377,7 +377,7 @@ static TwitterNetwork *model = nil;
 
 #pragma mark - obtainPlacesArrayForLocation
 
-- (void) obtainPlacesArrayForLocation : (Location*) location withComplition : (Complition) block {
+- (void) obtainPlacesArrayForLocation : (MUSLocation*) location withComplition : (Complition) block {
     self.copyComplition = block;
     __weak TwitterNetwork *weakSelf = self;
     TWTRAPIClient *client = [[Twitter sharedInstance] APIClient];
@@ -415,7 +415,7 @@ static TwitterNetwork *model = nil;
             NSMutableArray *placesArray = [[NSMutableArray alloc] init];
                              
             for (int i = 0; i < [places count]; i++) {
-                Place *place = [weakSelf createPlace: [places objectAtIndex: i]];
+                MUSPlace *place = [weakSelf createPlace: [places objectAtIndex: i]];
                 [placesArray addObject:place];
             }
                              
@@ -436,7 +436,7 @@ static TwitterNetwork *model = nil;
 - (void) updateNetworkPostWithComplition: (UpdateNetworkPostsComplition) block {
     NSArray * networksPostsIDs = [[MUSPostManager manager] networkPostsArrayForNetworkType: self.networkType];
     
-    if (![[InternetConnectionManager connectionManager] isInternetConnection] || !networksPostsIDs.count || (![[InternetConnectionManager connectionManager] isInternetConnection] && networksPostsIDs.count)) {
+    if (![[MUSInternetConnectionManager connectionManager] isInternetConnection] || !networksPostsIDs.count || (![[MUSInternetConnectionManager connectionManager] isInternetConnection] && networksPostsIDs.count)) {
         block (MUSTwitterError);
         return;
     }
@@ -444,7 +444,7 @@ static TwitterNetwork *model = nil;
     __block NSUInteger counterOfNetworkPosts = 0;
     __block NSUInteger numberOfNetworkPosts = networksPostsIDs.count;
     
-    [networksPostsIDs enumerateObjectsUsingBlock:^(NetworkPost *networkPost, NSUInteger idx, BOOL *stop) {
+    [networksPostsIDs enumerateObjectsUsingBlock:^(MUSNetworkPost *networkPost, NSUInteger idx, BOOL *stop) {
         [self obtainCountOfLikesAndCommentsFromPost: networkPost withComplition:^(id result, NSError *error) {
             counterOfNetworkPosts++;
             if (counterOfNetworkPosts == numberOfNetworkPosts) {
@@ -454,7 +454,7 @@ static TwitterNetwork *model = nil;
     }];
 }
 
-- (void) obtainCountOfLikesAndCommentsFromPost :(NetworkPost*) networkPost withComplition : (Complition) block {
+- (void) obtainCountOfLikesAndCommentsFromPost :(MUSNetworkPost*) networkPost withComplition : (Complition) block {
     NSString *statusesShowEndpoint = MUSTwitterURL_Statuses_Show;
     
     NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys : networkPost.postID, MUSTwitterParameter_ID, MUSTwitterParameter_True, MUSTwitterParameter_Include_My_Retweet, nil];
@@ -465,7 +465,7 @@ static TwitterNetwork *model = nil;
                                                                                    URL:statusesShowEndpoint
                                                                             parameters:params
                                                                                  error:&clientError];
-    __block NetworkPost *networkPostCopy = networkPost;
+    __block MUSNetworkPost *networkPostCopy = networkPost;
     
     if (request) {
         [[[Twitter sharedInstance] APIClient] sendTwitterRequest:request completion:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
@@ -509,7 +509,7 @@ static TwitterNetwork *model = nil;
  @param dictionary takes dictionary from twitter network.
  */
 - (void) createUser : (TWTRUser*) userDictionary {
-    self.currentUser = [User create];
+    self.currentUser = [MUSUser create];
     self.currentUser.clientID = userDictionary.userID;
     self.currentUser.lastName = userDictionary.screenName;
     self.currentUser.firstName = userDictionary.name;
@@ -523,7 +523,7 @@ static TwitterNetwork *model = nil;
 
 
 
-- (NSString*) checkPostsDescriptionOnTheMaximumNumberOfAllowedCharacters : (Post*) post {
+- (NSString*) checkPostsDescriptionOnTheMaximumNumberOfAllowedCharacters : (MUSPost*) post {
     NSString* messageText = post.postDescription;
     
     if (post.postDescription.length > MUSApp_TextView_Twitter_NumberOfAllowedLetters) {
@@ -538,8 +538,8 @@ static TwitterNetwork *model = nil;
  @abstract an instance of the Place for twitter network.
  @param dictionary takes dictionary from twitter network.
  */
-- (Place*) createPlace : (NSDictionary *) dictionary {
-    Place *currentPlace = [Place create];
+- (MUSPlace*) createPlace : (NSDictionary *) dictionary {
+    MUSPlace *currentPlace = [MUSPlace create];
     
     currentPlace.placeID   = [dictionary objectForKey: MUSTwitterParsePlace_ID];
     currentPlace.placeType = [dictionary objectForKey: MUSTwitterParsePlace_Place_Type];

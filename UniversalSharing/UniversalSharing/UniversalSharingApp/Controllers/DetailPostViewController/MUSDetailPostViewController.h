@@ -11,6 +11,6 @@
 
 @interface MUSDetailPostViewController : UIViewController
 
-@property (nonatomic, strong) Post *currentPost;
+@property (nonatomic, strong) MUSPost *currentPost;
 
 @end

@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SocialNetwork.h"
+#import "MUSSocialNetwork.h"
 
 @interface MUSMediaGalleryViewController : UIViewController
 
-- (void) sendPost :(Post*) currentPost andSelectedImageIndex :(NSInteger) selectedImageIndex;
+- (void) sendPost :(MUSPost*) currentPost andSelectedImageIndex :(NSInteger) selectedImageIndex;
 //===
 @property (assign, nonatomic) BOOL isEditableCollectionView;
 

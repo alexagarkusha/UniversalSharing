@@ -8,9 +8,9 @@
 
 #warning "Create folder for this class"
 
-#import "SocialNetwork.h"
+#import "MUSSocialNetwork.h"
 
-@interface TwitterNetwork : SocialNetwork
+@interface TwitterNetwork : MUSSocialNetwork
 
 /*!
  @abstract return an instance of the social network in a single copy. Singleton method.

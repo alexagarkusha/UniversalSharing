@@ -10,18 +10,18 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <FBSDKShareKit/FBSDKShareKit.h>
-#import "Place.h"
+#import "MUSPlace.h"
 #import "NSError+MUSError.h"
 #import "NSString+MUSPathToDocumentsdirectory.h"
-#import "InternetConnectionManager.h"
-#import "NetworkPost.h"
+#import "MUSInternetConnectionManager.h"
+#import "MUSNetworkPost.h"
 #import "NSString+MUSCurrentDate.h"
 #import "MUSPostManager.h"
 #import <FBSDKCoreKit/FBSDKMacros.h>
 #import "MUSSocialNetworkLibraryConstantsForParseObjects.h"
 #import "MUSPostManager.h"
 #import "MUSDatabaseRequestStringsHelper.h"
-#import "DataBaseManager.h"
+#import "MUSDataBaseManager.h"
 
 @interface FacebookNetwork()<FBSDKGraphRequestConnectionDelegate>
 
@@ -70,7 +70,7 @@ static FacebookNetwork *model = nil;
 - (void) initiationPropertiesWithSession {
     self.isLogin = YES;
     self.icon = MUSFacebookIconName;
-    self.currentUser = [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType: self.networkType]]firstObject];
+    self.currentUser = [[[MUSDataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType: self.networkType]]firstObject];
     self.title = [NSString stringWithFormat:@"%@ %@", self.currentUser.firstName, self.currentUser.lastName];
 }
 
@@ -142,10 +142,10 @@ static FacebookNetwork *model = nil;
 
 #pragma mark - sharePost
 
-- (void) sharePost: (Post *)post withComplition:(Complition)block progressLoadingBlock:(ProgressLoading)blockLoading {
+- (void) sharePost: (MUSPost *)post withComplition:(Complition)block progressLoadingBlock:(ProgressLoading)blockLoading {
     
-    if (![[InternetConnectionManager connectionManager] isInternetConnection]){
-        NetworkPost *networkPost = [NetworkPost create];
+    if (![[MUSInternetConnectionManager connectionManager] isInternetConnection]){
+        MUSNetworkPost *networkPost = [MUSNetworkPost create];
         networkPost.networkType = MUSFacebook;
         block(networkPost,[self errorConnection]);
         return;
@@ -171,15 +171,15 @@ static FacebookNetwork *model = nil;
  @param current post of @class Post
  */
 
-- (void) sharePostToFacebookNetwork : (Post*) post  {
-    __block Post *postCopy = post;
+- (void) sharePostToFacebookNetwork : (MUSPost*) post  {
+    __block MUSPost *postCopy = post;
     __weak FacebookNetwork *weakSelf = self;
     
     if (post.longitude.length > 0 && ![post.longitude isEqualToString: @"(null)"] && post.latitude.length > 0 && ![post.latitude isEqualToString: @"(null)"]) {
-        Location *location = [self createLocationForPost: post];
+        MUSLocation *location = [self createLocationForPost: post];
         [self obtainPlacesArrayForLocation: location withComplition:^(id result, NSError *error) {
             if (!error) {
-                Place *firstPlace = (Place*) [result firstObject];
+                MUSPlace *firstPlace = (MUSPlace*) [result firstObject];
                 if (firstPlace) {
                     postCopy.place = firstPlace;
                 }
@@ -191,7 +191,7 @@ static FacebookNetwork *model = nil;
     }
 }
 
-- (void) sharePost : (Post*) post {
+- (void) sharePost : (MUSPost*) post {
     if (post.imagesArray.count) {
         [self sharePostWithPictures: post];
     } else {
@@ -205,12 +205,12 @@ static FacebookNetwork *model = nil;
  @param current post of @class Post
  */
 
-- (void) sharePostOnlyWithPostDescription : (Post*) post {
+- (void) sharePostOnlyWithPostDescription : (MUSPost*) post {
     FBSDKGraphRequestConnection *connection = [[FBSDKGraphRequestConnection alloc] init];
     connection.delegate = self;
-    NetworkPost *networkPost = [NetworkPost create];
+    MUSNetworkPost *networkPost = [MUSNetworkPost create];
     networkPost.networkType = MUSFacebook;
-    __block NetworkPost *networkPostCopy = networkPost;
+    __block MUSNetworkPost *networkPostCopy = networkPost;
     __weak FacebookNetwork *weakSelf = self;
     
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
@@ -250,7 +250,7 @@ static FacebookNetwork *model = nil;
  @abstract upload image(s) with message (optional) and user location (optional)
  @param current post of @class Post
  */
--(void) sharePostWithPictures: (Post *) post {
+-(void) sharePostWithPictures: (MUSPost *) post {
     FBSDKGraphRequestConnection *connection = [[FBSDKGraphRequestConnection alloc] init];
     connection.delegate = self;
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
@@ -262,12 +262,12 @@ static FacebookNetwork *model = nil;
     __block int counterOfImages = 0;
     __weak FacebookNetwork *weakSelf = self;
 
-    NetworkPost *networkPost = [NetworkPost create];
+    MUSNetworkPost *networkPost = [MUSNetworkPost create];
     networkPost.networkType = MUSFacebook;
-    __block NetworkPost *networkPostCopy = networkPost;
+    __block MUSNetworkPost *networkPostCopy = networkPost;
     
     for (int i = 0; i < post.imagesArray.count; i++) {
-        ImageToPost *imageToPost = [post.imagesArray objectAtIndex: i];
+        MUSImageToPost *imageToPost = [post.imagesArray objectAtIndex: i];
         params[MUSFacebookParameter_Picture] = imageToPost.image;
         FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]
                                       initWithGraphPath: MUSFacebookGraphPath_Me_Photos
@@ -299,7 +299,7 @@ static FacebookNetwork *model = nil;
 
 #pragma mark - obtainPlacesArrayForLocation
 
-- (void) obtainPlacesArrayForLocation: (Location *)location withComplition: (Complition) block {
+- (void) obtainPlacesArrayForLocation: (MUSLocation *)location withComplition: (Complition) block {
     if (!location.q || !location.latitude || !location.longitude || !location.distance || [location.latitude floatValue] < -90.0f || [location.latitude floatValue] > 90.0f || [location.longitude floatValue] < -180.0f  || [location.longitude floatValue] > 180.0f) {
         NSError *error = [NSError errorWithMessage: MUSLocationPropertiesError andCodeError: MUSLocationPropertiesErrorCode];
         return block (nil, error);
@@ -326,7 +326,7 @@ static FacebookNetwork *model = nil;
             NSMutableArray *placesArray = [[NSMutableArray alloc] init];
             
             for (int i = 0; i < places.count; i++) {
-                Place *place = [self createPlace: [places objectAtIndex: i]];
+                MUSPlace *place = [self createPlace: [places objectAtIndex: i]];
                 [placesArray addObject:place];
             }
             
@@ -348,13 +348,13 @@ static FacebookNetwork *model = nil;
     self.copyComplitionUpdateNetworkPosts = block;
     NSArray * networksPostsIDs = [[MUSPostManager manager] networkPostsArrayForNetworkType: self.networkType];
     
-    if (![[InternetConnectionManager connectionManager] isInternetConnection] || !networksPostsIDs.count  || (![[InternetConnectionManager connectionManager] isInternetConnection] && networksPostsIDs.count)) {
+    if (![[MUSInternetConnectionManager connectionManager] isInternetConnection] || !networksPostsIDs.count  || (![[MUSInternetConnectionManager connectionManager] isInternetConnection] && networksPostsIDs.count)) {
         block (MUSFacebookError);
         return;
     }
     
     FBSDKGraphRequestConnection *connection = [[FBSDKGraphRequestConnection alloc] init];
-    [networksPostsIDs enumerateObjectsUsingBlock:^(NetworkPost *networkPost, NSUInteger index, BOOL *stop) {
+    [networksPostsIDs enumerateObjectsUsingBlock:^(MUSNetworkPost *networkPost, NSUInteger index, BOOL *stop) {
         
         NSArray *arrayOfIdPost = [networkPost.postID componentsSeparatedByString: @","];
         [self obtainNumberOfLikesForPostIdsArray: arrayOfIdPost andConnection : connection withComplition:^(id result, NSError *error) {
@@ -501,7 +501,7 @@ static FacebookNetwork *model = nil;
  @param dictionary takes dictionary from facebook network.
  */
 - (void) createUser : (NSDictionary*) result {
-    self.currentUser = [User create];
+    self.currentUser = [MUSUser create];
     
     if ([result isKindOfClass: [NSDictionary class]]) {
         self.currentUser.clientID = [result objectForKey : MUSFacebookParseUser_ID];
@@ -522,8 +522,8 @@ static FacebookNetwork *model = nil;
  @abstract an instance of the Place for facebook network.
  @param dictionary takes dictionary from facebook network.
  */
-- (Place*) createPlace : (NSDictionary *) result {
-    Place *currentPlace = [Place create];
+- (MUSPlace*) createPlace : (NSDictionary *) result {
+    MUSPlace *currentPlace = [MUSPlace create];
     currentPlace.placeID = [result objectForKey: MUSFacebookParsePlace_ID];
     currentPlace.fullName = [result objectForKey: MUSFacebookParsePlace_Name];
     currentPlace.placeType = [result objectForKey: MUSFacebookParsePlace_Category];
@@ -539,8 +539,8 @@ static FacebookNetwork *model = nil;
 
 #pragma mark - createLocation
 
-- (Location*) createLocationForPost : (Post*) post {
-    Location *location = [Location create];
+- (MUSLocation*) createLocationForPost : (MUSPost*) post {
+    MUSLocation *location = [MUSLocation create];
     location.latitude = post.latitude;
     location.longitude = post.longitude;
     location.type = MUSFacebookLocation_Parameter_Type_Place;

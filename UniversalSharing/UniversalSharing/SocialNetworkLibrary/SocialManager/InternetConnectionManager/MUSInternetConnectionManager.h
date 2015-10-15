@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface InternetConnectionManager : NSObject
+@interface MUSInternetConnectionManager : NSObject
 
-+ (InternetConnectionManager*) connectionManager;
++ (MUSInternetConnectionManager*) connectionManager;
 
 - (BOOL) isInternetConnection;
 

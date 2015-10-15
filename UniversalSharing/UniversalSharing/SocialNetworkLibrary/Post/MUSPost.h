@@ -9,11 +9,11 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "MUSSocialNetworkLibraryConstants.h"
-#import "ImageToPost.h"
-#import "Place.h"
-#import "NetworkPost.h"
+#import "MUSImageToPost.h"
+#import "MUSPlace.h"
+#import "MUSNetworkPost.h"
 
-@interface Post : NSObject
+@interface MUSPost : NSObject
 
 /*!
  @abstract unique post id is assigned after sending post to the social network.
@@ -58,7 +58,7 @@
 /*!
  @abstract place
  */
-@property (strong, nonatomic) Place *place;
+@property (strong, nonatomic) MUSPlace *place;
 
 @property (strong, nonatomic) NSMutableArray *networkPostsArray;
 

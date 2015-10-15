@@ -60,7 +60,7 @@
     return [NSString stringWithFormat:@"DELETE from Posts WHERE id = \"%ld\"",(long)primaryKey];
 }
 
-+ (NSString *) stringForUpdateUser:(User *)user {
++ (NSString *) stringForUpdateUser:(MUSUser *)user {
     NSString *stringUsersForUpdate = @"UPDATE Users set ";
     stringUsersForUpdate = [stringUsersForUpdate stringByAppendingString:@"username = \"%@\", "];
     stringUsersForUpdate = [stringUsersForUpdate stringByAppendingString:@"firstName = \"%@\", "];
@@ -117,7 +117,7 @@
     return [NSString stringWithFormat:@"SELECT * FROM NetworkPosts WHERE id = %ld", (long)primaryKey];
 }
 
-+ (NSString*) stringForVKUpdateNetworkPost :(NetworkPost*) networkPost {
++ (NSString*) stringForVKUpdateNetworkPost :(MUSNetworkPost*) networkPost {
     NSString *stringPostsForUpdate = @"UPDATE NetworkPosts set ";
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"likesCount = \"%d\", "];
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"commentsCount = \"%d\" "];
@@ -128,7 +128,7 @@
     return finalStringPostsForUpdate;
 }
 
-+ (NSString*) stringForUpdateNetworkPost :(NetworkPost*) networkPost {
++ (NSString*) stringForUpdateNetworkPost :(MUSNetworkPost*) networkPost {
     NSString *stringPostsForUpdate = @"UPDATE NetworkPosts set ";
     
     stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"likesCount = \"%d\", "];
@@ -144,11 +144,11 @@
     return finalStringPostsForUpdate;
 }
 
-+ (NSString*) stringForDeleteNetworkPost : (NetworkPost*) networkPost {
++ (NSString*) stringForDeleteNetworkPost : (MUSNetworkPost*) networkPost {
     return [NSString stringWithFormat:@"DELETE from NetworkPosts WHERE id = \"%ld\"",(long)networkPost.primaryKey];
 }
 
-+ (NSString*) stringForUpdatePost :(Post*) post {
++ (NSString*) stringForUpdatePost :(MUSPost*) post {
     NSString *stringPostsForUpdate = @"UPDATE Posts set ";
         stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"networkPostsId = \"%@\" "];
         stringPostsForUpdate = [stringPostsForUpdate stringByAppendingString:@"WHERE id = \"%d\""];

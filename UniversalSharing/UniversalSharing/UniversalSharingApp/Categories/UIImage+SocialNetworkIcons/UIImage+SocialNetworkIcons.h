@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "NetworkPost.h"
+#import "MUSNetworkPost.h"
 
 @interface UIImage (SocialNetworkIcons)
 

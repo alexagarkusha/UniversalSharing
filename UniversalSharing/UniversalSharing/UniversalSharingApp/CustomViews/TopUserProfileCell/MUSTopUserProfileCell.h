@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "User.h"
+#import "MUSUser.h"
 
 @interface MUSTopUserProfileCell : UITableViewCell
 
 + (NSString*) cellID;
 + (instancetype) profileUserTableViewCell;
 //===
-- (void) configurationProfileUserTableViewCellWithUser: (User*) currentUser;
+- (void) configurationProfileUserTableViewCellWithUser: (MUSUser*) currentUser;
 
 @end

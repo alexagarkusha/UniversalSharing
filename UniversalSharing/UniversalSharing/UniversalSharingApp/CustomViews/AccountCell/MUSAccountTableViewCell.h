@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "User.h"
+#import "MUSUser.h"
 #import "MUSSocialNetworkLibraryHeader.h"
 #import <AFMSlidingCell.h>
 
@@ -16,7 +16,7 @@
 + (NSString*) cellID;
 + (instancetype) accountTableViewCell;
 //===
-- (void) configurateCellForNetwork : (SocialNetwork*) socialNetwork;
+- (void) configurateCellForNetwork : (MUSSocialNetwork*) socialNetwork;
 
 @end
 

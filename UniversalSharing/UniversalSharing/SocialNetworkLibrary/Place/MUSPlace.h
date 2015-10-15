@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "MUSSocialNetworkLibraryConstants.h"
 
-@interface Place : NSObject
+@interface MUSPlace : NSObject
 
 /*!
  @abstract full place name. Like 'The Circus hostel'

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Post.h"
+#import "MUSPost.h"
 
 //@protocol MUSPostCellDelegate <NSObject>
 //@required
@@ -19,10 +19,10 @@
 
 + (NSString*) cellID;
 + (instancetype) postCell;
-+ (CGFloat) heightForPostCell : (Post*) post;
++ (CGFloat) heightForPostCell : (MUSPost*) post;
 
 //- (void) configurationUpdatingPostCell: (Post*) currentPost;
-- (void) configurationPostCell: (Post*) currentPost;
+- (void) configurationPostCell: (MUSPost*) currentPost;
 @property (weak, nonatomic) IBOutlet UIView *backgroundViewOfCell;
 //- (void) configurateFirstImageOfPost : (Post*) currentPost;
 

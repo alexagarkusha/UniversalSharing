@@ -24,3 +24,7 @@
 @property (strong, nonatomic, readonly) NSMutableArray *postsArray;
 
 @end
+
+
+
+

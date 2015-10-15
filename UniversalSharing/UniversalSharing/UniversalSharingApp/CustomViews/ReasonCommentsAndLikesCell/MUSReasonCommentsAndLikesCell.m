@@ -62,24 +62,24 @@
     return MUSApp_ReasonCommentsAndLikesCell_HeightOfRow;
 }
 
-- (void) configurationReasonCommentsAndLikesCell: (NetworkPost*) networkPost {
+- (void) configurationReasonCommentsAndLikesCell: (MUSNetworkPost*) networkPost {
     [self configurateCommentsImageAndLabel: networkPost];
     [self configurateLikesImageAndLabel: networkPost];
     [self configurateReasonOfPostLabel: networkPost];
     [self configurateIconOfSocialNetworkImageViewForPost: networkPost];
 }
 
-- (void) configurateCommentsImageAndLabel : (NetworkPost*) networkPost {
+- (void) configurateCommentsImageAndLabel : (MUSNetworkPost*) networkPost {
     self.commentImageView.image = [UIImage commentsIconByTypeOfSocialNetwork: networkPost.networkType];
     self.numberOfCommentsLabel.text = [NSString stringWithFormat: @"%ld", (long) networkPost.commentsCount];
 }
 
-- (void) configurateLikesImageAndLabel : (NetworkPost*) networkPost {
+- (void) configurateLikesImageAndLabel : (MUSNetworkPost*) networkPost {
     self.likeImageView.image = [UIImage likesIconByTypeOfSocialNetwork: networkPost.networkType];
     self.numberOfLikesLabel.text = [NSString stringWithFormat: @"%ld", (long)networkPost.likesCount];
 }
 
-- (void) configurateReasonOfPostLabel : (NetworkPost*) networkPost {
+- (void) configurateReasonOfPostLabel : (MUSNetworkPost*) networkPost {
     NSString *reasonString = networkPost.stringReasonType;
     if (networkPost.reason == MUSConnect) {
         NSString *dateCreate = [NSString dateStringFromUNIXTimestamp: [networkPost.dateCreate doubleValue]];
@@ -89,7 +89,7 @@
     self.reasonOfPostLabel.text = reasonString;
 }
 
-- (void) configurateIconOfSocialNetworkImageViewForPost: (NetworkPost*) networkPost {
+- (void) configurateIconOfSocialNetworkImageViewForPost: (MUSNetworkPost*) networkPost {
     self.iconOfSocialNetworkImageView.image = [UIImage greyIconOfSocialNetworkByTypeOfSocialNetwork: networkPost.networkType];
 }
 

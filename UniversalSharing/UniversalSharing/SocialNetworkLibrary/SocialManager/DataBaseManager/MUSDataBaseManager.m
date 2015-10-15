@@ -6,24 +6,24 @@
 //  Copyright (c) 2015 Mobindustry. All rights reserved.
 //
 
-#import "DataBaseManager.h"
-#import "SocialNetwork.h"
+#import "MUSDataBaseManager.h"
+#import "MUSSocialNetwork.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 #import <sqlite3.h>
 
-@interface DataBaseManager() {
+@interface MUSDataBaseManager() {
     sqlite3 *_database;
 }
 @end
 
-@implementation DataBaseManager
+@implementation MUSDataBaseManager
 
-static DataBaseManager *databaseManager;
+static MUSDataBaseManager *databaseManager;
 
-+ (DataBaseManager*)sharedManager {
++ (MUSDataBaseManager*)sharedManager {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        databaseManager = [[DataBaseManager alloc] init];
+        databaseManager = [[MUSDataBaseManager alloc] init];
     });
     return databaseManager;
 }
@@ -73,7 +73,7 @@ static DataBaseManager *databaseManager;
 
 #pragma mark - save objects to dataBase
 
-- (sqlite3_stmt*) savePost :(Post*) post {
+- (sqlite3_stmt*) savePost :(MUSPost*) post {
     sqlite3_stmt *statement = nil;
     const char *sql = [[MUSDatabaseRequestStringsHelper stringForSavePost] UTF8String];
     [post convertArrayWithNetworkPostsIdsToString];
@@ -91,7 +91,7 @@ static DataBaseManager *databaseManager;
     return statement;
 }
 
-- (NSInteger) saveNetworkPost :(NetworkPost*) networkPost {//networkPOst
+- (NSInteger) saveNetworkPost :(MUSNetworkPost*) networkPost {//networkPOst
     NSInteger lastRowId;
     sqlite3_stmt *statement = nil;
     const char *sql = [[MUSDatabaseRequestStringsHelper stringSaveNetworkPost] UTF8String];
@@ -111,7 +111,7 @@ static DataBaseManager *databaseManager;
     return lastRowId;
 }
 
-- (sqlite3_stmt*) saveUser :(User*) user {
+- (sqlite3_stmt*) saveUser :(MUSUser*) user {
     sqlite3_stmt *statement = nil;
     const char *sql = [[MUSDatabaseRequestStringsHelper stringForSaveUser] UTF8String];
     
@@ -142,7 +142,7 @@ static DataBaseManager *databaseManager;
 
 -(void)insertObjectIntoTable:(id) object {
     sqlite3_stmt *selectStmt = nil;
-    if ([object isKindOfClass:[User class]]) {
+    if ([object isKindOfClass:[MUSUser class]]) {
         selectStmt = [self saveUser:object];
     } else {
         selectStmt = [self savePost:object];
@@ -164,7 +164,7 @@ static DataBaseManager *databaseManager;
     {
         while (sqlite3_step(statement) == SQLITE_ROW)
         {
-            User *user = [User new];
+            MUSUser *user = [MUSUser new];
             user.primaryKey = sqlite3_column_int(statement, 0);//perhaps it will be needed
             user.username = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 1)];
             user.firstName = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 2)];
@@ -191,7 +191,7 @@ static DataBaseManager *databaseManager;
     
     if(sqlite3_prepare_v2(_database, [requestString UTF8String], -1, &statement, nil) == SQLITE_OK) {
         while (sqlite3_step(statement) == SQLITE_ROW) {
-            Post *post = [Post new];
+            MUSPost *post = [MUSPost new];
             post.primaryKey = sqlite3_column_int(statement, 0);
             post.postDescription = [[NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 1)] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
             post.imageUrlsArray = [[[NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 2)] componentsSeparatedByString: @", "]mutableCopy];
@@ -206,9 +206,9 @@ static DataBaseManager *databaseManager;
     return arrayWithPosts;
 }
 
-- (NetworkPost*)obtainNetworkPostFromDataBaseWithRequestString : (NSString*) requestString {
+- (MUSNetworkPost*)obtainNetworkPostFromDataBaseWithRequestString : (NSString*) requestString {
     sqlite3_stmt *statement = nil;
-    NetworkPost *networkPost = [NetworkPost create];
+    MUSNetworkPost *networkPost = [MUSNetworkPost create];
     if(sqlite3_prepare_v2(_database, [requestString UTF8String], -1, &statement, nil) == SQLITE_OK) {
         while (sqlite3_step(statement) == SQLITE_ROW) {
             networkPost.primaryKey = sqlite3_column_int(statement, 0);
@@ -229,7 +229,7 @@ static DataBaseManager *databaseManager;
     
     if(sqlite3_prepare_v2(_database, [requestString UTF8String], -1, &statement, nil) == SQLITE_OK) {
         while (sqlite3_step(statement) == SQLITE_ROW) {
-            NetworkPost *networkPost = [NetworkPost create];
+            MUSNetworkPost *networkPost = [MUSNetworkPost create];
             networkPost.primaryKey = sqlite3_column_int(statement, 0);
             networkPost.likesCount = sqlite3_column_int(statement, 1);
             networkPost.commentsCount = sqlite3_column_int(statement, 2);

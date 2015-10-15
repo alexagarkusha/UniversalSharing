@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 Roman. All rights reserved.
 //
 
-#import "SocialNetwork.h"
+#import "MUSSocialNetwork.h"
 
-@interface FacebookNetwork : SocialNetwork
+@interface FacebookNetwork : MUSSocialNetwork
 
 /*!
  @abstract return an instance of the social network in a single copy. Singleton method.

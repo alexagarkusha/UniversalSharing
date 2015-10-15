@@ -49,7 +49,7 @@
 
 #pragma mark - height for PostLocationCell
 
-+ (CGFloat) heightForPostLocationCell : (Post*) currentPost {
++ (CGFloat) heightForPostLocationCell : (MUSPost*) currentPost {
     if (!currentPost.longitude.length > 0 || [currentPost.longitude isEqualToString: @"(null)"] || !currentPost.latitude.length > 0 || [currentPost.latitude isEqualToString: @"(null)"]) {
         return 0;
     } else {
@@ -59,13 +59,13 @@
 
 #pragma mark - configuration PostLocationCell
 
-- (void) configurationPostLocationCellByPostPlace: (Post *) currentPost {
+- (void) configurationPostLocationCellByPostPlace: (MUSPost *) currentPost {
     [self initialMapViewForCurrentPlace: currentPost];
 }
 
 #pragma mark initiation MapView for the currentPlace
 
-- (void) initialMapViewForCurrentPlace: (Post*) currentPost {
+- (void) initialMapViewForCurrentPlace: (MUSPost*) currentPost {
     [self.mapView removeAnnotations: self.mapView.annotations];
     CLLocationCoordinate2D currentCityLocation = CLLocationCoordinate2DMake([currentPost.latitude floatValue], [currentPost.longitude floatValue]);
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(currentCityLocation, 500, 500);

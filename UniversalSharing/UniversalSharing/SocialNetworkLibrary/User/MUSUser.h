@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "MUSSocialNetworkLibraryConstants.h"
 
-@interface User : NSObject
+@interface MUSUser : NSObject
 
 /*!
  @abstract username received after user logged in SocialNetwork. Like 'Tom Smith'

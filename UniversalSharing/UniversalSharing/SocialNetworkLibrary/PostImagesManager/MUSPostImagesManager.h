@@ -7,12 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Post.h"
+#import "MUSPost.h"
 
-@interface PostImagesManager : NSObject
+@interface MUSPostImagesManager : NSObject
 
 
-+ (PostImagesManager*) manager;
++ (MUSPostImagesManager*) manager;
 
 - (NSMutableArray*) saveImagesToDocumentsFolderAndGetArrayWithImagesUrls :(NSMutableArray*) arrayWithImages;
 

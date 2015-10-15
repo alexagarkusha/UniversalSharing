@@ -18,23 +18,23 @@
 
 #pragma mark SocialNetworkLibrary
 
-#import "DataBaseManager.h"
+#import "MUSDataBaseManager.h"
 
-#import "Location.h"
+#import "MUSLocation.h"
 
 #import "MUSSocialNetworkLibraryConstants.h"
 
-#import "Place.h"
-#import "Post.h"
+#import "MUSPlace.h"
+#import "MUSPost.h"
 
-#import "SocialManager.h"
-#import "SocialNetwork.h"
+#import "MUSSocialManager.h"
+#import "MUSSocialNetwork.h"
 
-#import "User.h"
+#import "MUSUser.h"
 
-#import "PostImagesManager.h"
+#import "MUSPostImagesManager.h"
 
-#import "MultySharingManager.h"
+#import "MUSMultySharingManager.h"
 
 #import "MUSPostManager.h"
 

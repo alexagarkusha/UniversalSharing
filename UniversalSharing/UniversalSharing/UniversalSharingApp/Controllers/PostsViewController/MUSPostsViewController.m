@@ -10,8 +10,8 @@
 #import "MUSDetailPostViewController.h"
 #import "MUSPostCell.h"
 #import "ConstantsApp.h"
-#import "SocialManager.h"
-#import "DataBaseManager.h"
+#import "MUSSocialManager.h"
+#import "MUSDataBaseManager.h"
 #import "MUSDetailPostViewController.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 #import "SSARefreshControl.h"
@@ -109,7 +109,7 @@
         if(!cell) {
             cell = [MUSPostCell postCell];
         }
-        Post *currentPost = [[MUSPostManager manager].postsArray objectAtIndex: indexPath.section];
+        MUSPost *currentPost = [[MUSPostManager manager].postsArray objectAtIndex: indexPath.section];
         [currentPost updateAllNetworkPostsFromDataBaseForCurrentPost];
         cell.arrayWithNetworkPosts = currentPost.networkPostsArray;
         cell.selectionStyle = UITableViewCellSelectionStyleNone; // disable the cell selection highlighting
@@ -119,7 +119,7 @@
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    Post *currentPost = [[MUSPostManager manager].postsArray objectAtIndex: indexPath.section];
+    MUSPost *currentPost = [[MUSPostManager manager].postsArray objectAtIndex: indexPath.section];
     return [MUSPostCell heightForPostCell: currentPost];
 }
 
@@ -132,7 +132,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    Post *post = [[MUSPostManager manager].postsArray objectAtIndex: indexPath.section];
+    MUSPost *post = [[MUSPostManager manager].postsArray objectAtIndex: indexPath.section];
     self.view.userInteractionEnabled = NO;
     [self performSegueWithIdentifier: MUSApp_SegueIdentifier_GoToDetailPostViewController sender: post];
 }
@@ -205,7 +205,7 @@
 #pragma Update all posts in array
 
 - (void) updateArrayPosts {
-    [[MUSPostManager manager] updatePostsArray];
+    //[[MUSPostManager manager] updatePostsArray];
     [self checkArrayOfPosts];
     [self.tableView reloadData];
 }

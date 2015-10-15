@@ -6,38 +6,39 @@
 //  Copyright (c) 2015 Mobindustry. All rights reserved.
 //
 
-#import "MultySharingManager.h"
-#import "SocialNetwork.h"
-#import "DataBaseManager.h"
+#import "MUSMultySharingManager.h"
+#import "MUSSocialNetwork.h"
+#import "MUSDataBaseManager.h"
 #import "MUSDatabaseRequestStringsHelper.h"
-#import "PostImagesManager.h"
+#import "MUSPostImagesManager.h"
 #import "NSString+MUSReasonNameOfPost.h"
 #import "NSString+MUSSocialNetworkNameOfPost.h"
-#import "SocialManager.h"
+#import "MUSSocialManager.h"
 #import "MUSPostManager.h"
 #import "NSString+MUSCurrentDate.h"
 #import "MUSProgressBar.h"
 #import "MUSProgressBarEndLoading.h"
 
-@interface MultySharingManager ()
+@interface MUSMultySharingManager ()
 
-//@property (copy, nonatomic) Complition complition;
 @property (copy, nonatomic) MultySharingResultBlock multySharingResultBlock;
 @property (copy, nonatomic) ProgressLoadingBlock progressLoadingBlock;
 @property (copy, nonatomic) StartLoadingBlock startLoadingBlock;
+@property (assign, nonatomic) BOOL isPostLoading;
+@property (strong, nonatomic) NSMutableArray *postsQueue;
 
 @end
 
 
-static MultySharingManager *model = nil;
+static MUSMultySharingManager *model = nil;
 
 
-@implementation MultySharingManager
+@implementation MUSMultySharingManager
 
-+ (MultySharingManager*) sharedManager {
++ (MUSMultySharingManager*) sharedManager {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        model = [[MultySharingManager alloc] init];
+        model = [[MUSMultySharingManager alloc] init];
     });
     return  model;
 }
@@ -54,9 +55,9 @@ static MultySharingManager *model = nil;
 }
 
 
-- (void) sharePost : (Post*) post toSocialNetworks : (NSArray*) arrayOfNetworksType withMultySharingResultBlock : (MultySharingResultBlock) multySharingResultBlock startLoadingBlock : (StartLoadingBlock) startLoadingBlock progressLoadingBlock :(ProgressLoadingBlock) progressLoadingBlock {
+- (void) sharePost : (MUSPost*) post toSocialNetworks : (NSArray*) networksTypesArray withMultySharingResultBlock : (MultySharingResultBlock) multySharingResultBlock startLoadingBlock : (StartLoadingBlock) startLoadingBlock progressLoadingBlock :(ProgressLoadingBlock) progressLoadingBlock {
     
-    NSMutableArray *arrayWithNetworks = [[SocialManager sharedManager]networksForKeys:arrayOfNetworksType];
+    NSMutableArray *arrayWithNetworks = [[MUSSocialManager sharedManager]networksForKeys:networksTypesArray];
     
     self.multySharingResultBlock = multySharingResultBlock;
     self.progressLoadingBlock = progressLoadingBlock;
@@ -75,14 +76,12 @@ static MultySharingManager *model = nil;
 }
 
 - (void) sharePostDictionary: (NSDictionary*) postDictionary {
-    Post *currentPost =  [postDictionary objectForKey: @"post"];
-    //[[MUSProgressBar sharedProgressBar] startProgressViewWithImages: currentPost.imagesArray];
+    MUSPost *currentPost =  [postDictionary objectForKey: @"post"];
     self.startLoadingBlock (currentPost);
     [self sharePost: currentPost toSocialNetworks: [postDictionary objectForKey: @"arrayWithNetworks"]];
 }
 
-- (void) sharePost : (Post*) post toSocialNetworks : (NSArray*) arrayWithNetworks {
-    //__block NSMutableArray *arrayOfLoadingObjects = [self arrayOfLoadingObjectsFromNetworks: arrayWithNetworks];
+- (void) sharePost : (MUSPost*) post toSocialNetworks : (NSArray*) arrayWithNetworks {
     __block NSMutableDictionary *loadingObjectsDictionary = [self dictionaryOfLoadingObjectsFromNetworks: arrayWithNetworks];
     
     self.isPostLoading = YES;
@@ -91,22 +90,22 @@ static MultySharingManager *model = nil;
         post.networkPostIdsArray = [NSMutableArray new];
     }
     
-    __block Post *postCopy = post;
+    __block MUSPost *postCopy = post;
     __block NSUInteger numberOfSocialNetworks = arrayWithNetworks.count;
     __block int counterOfSocialNetwork = 0;
-    __weak MultySharingManager *weakMultySharingManager = self;
+    __weak MUSMultySharingManager *weakMultySharingManager = self;
 
     __block NSMutableDictionary *multyResultDictionary = [[NSMutableDictionary alloc] init];
     
-    for (SocialNetwork *socialNetwork in arrayWithNetworks) {
+    for (MUSSocialNetwork *socialNetwork in arrayWithNetworks) {
         [socialNetwork sharePost: post withComplition:^(id result, NSError *error) {
 
             counterOfSocialNetwork++;
             
-            NetworkPost *networkPost;
+            MUSNetworkPost *networkPost;
             
-            if ([result isKindOfClass: [NetworkPost class]]) {
-                networkPost = (NetworkPost*) result;
+            if ([result isKindOfClass: [MUSNetworkPost class]]) {
+                networkPost = (MUSNetworkPost*) result;
                 
                 NSDictionary* resultDictionary = @{
                                           @"Result" : [NSNumber numberWithInt: networkPost.reason],
@@ -115,7 +114,7 @@ static MultySharingManager *model = nil;
                 [multyResultDictionary setObject: resultDictionary forKey: @(networkPost.networkType)];
                 
                 if (!postCopy.primaryKey) {
-                    [postCopy.networkPostIdsArray addObject: [NSString stringWithFormat: @"%ld", (long)[[DataBaseManager sharedManager] saveNetworkPost: networkPost]]];
+                    [postCopy.networkPostIdsArray addObject: [NSString stringWithFormat: @"%ld", (long)[[MUSDataBaseManager sharedManager] saveNetworkPost: networkPost]]];
                 } else {
                     [weakMultySharingManager updateCurrentNetworkPost: networkPost andArrayOfOldNetworkPosts: postCopy.networkPostsArray];
                 }
@@ -125,8 +124,6 @@ static MultySharingManager *model = nil;
                 if (!postCopy.primaryKey) {
                     [postCopy saveIntoDataBase];
                 }
-                //[[MUSProgressBarEndLoading sharedProgressBarEndLoading] endProgressViewWithCountConnect: multyResultDictionary andImagesArray: postCopy.imagesArray];
-                //weakMultySharingManager.complition (multyResultDictionary, nil);
                 weakMultySharingManager.multySharingResultBlock (multyResultDictionary, postCopy);
                 [weakMultySharingManager checkPostsQueue];
             }
@@ -140,10 +137,9 @@ static MultySharingManager *model = nil;
     }
 }
 
-// add to network post
 
-- (void) updateCurrentNetworkPost : (NetworkPost*) newNetworkPost andArrayOfOldNetworkPosts : (NSMutableArray*) arrayOfOldPosts {
-    for (NetworkPost *currentNetworkPost in arrayOfOldPosts) {
+- (void) updateCurrentNetworkPost : (MUSNetworkPost*) newNetworkPost andArrayOfOldNetworkPosts : (NSMutableArray*) arrayOfOldPosts {
+    for (MUSNetworkPost *currentNetworkPost in arrayOfOldPosts) {
         if (currentNetworkPost.networkType == newNetworkPost.networkType) {
             if (newNetworkPost.reason != MUSConnect) {
                 return;
@@ -153,7 +149,7 @@ static MultySharingManager *model = nil;
                 currentNetworkPost.likesCount = newNetworkPost.likesCount;
                 currentNetworkPost.commentsCount = newNetworkPost.commentsCount;
                 currentNetworkPost.dateCreate = [NSString currentDate];
-                [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForUpdateNetworkPost: currentNetworkPost]];
+                [currentNetworkPost update];
             }
         }
     }
@@ -169,9 +165,9 @@ static MultySharingManager *model = nil;
     }
 }
 
-- (BOOL) queueOfPosts:(NSInteger)primaryKeyOfPost {
+- (BOOL) isQueueContainsPost: (NSInteger)primaryKeyOfPost {
     for (NSDictionary *dictionary in self.postsQueue) {
-        Post *currentPost = [dictionary objectForKey: @"post"];
+        MUSPost *currentPost = [dictionary objectForKey: @"post"];
         if (currentPost.primaryKey == primaryKeyOfPost) {
             return YES;
         }
@@ -182,7 +178,7 @@ static MultySharingManager *model = nil;
 - (NSMutableDictionary*) dictionaryOfLoadingObjectsFromNetworks : (NSArray*) arrayWithNetworks {
     NSMutableDictionary *loadingObjectsDictionary = [[NSMutableDictionary alloc] init];
     
-    for (SocialNetwork *socialNetwork in arrayWithNetworks) {
+    for (MUSSocialNetwork *socialNetwork in arrayWithNetworks) {
         [loadingObjectsDictionary setObject: [NSNumber numberWithFloat: 0.000001] forKey: [NSNumber numberWithInt: socialNetwork.networkType]];
     }
     

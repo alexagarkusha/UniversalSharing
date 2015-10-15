@@ -7,10 +7,10 @@
 //
 
 #import "MUSPostManager.h"
-#import "DataBaseManager.h"
-#import "PostImagesManager.h"
+#import "MUSDataBaseManager.h"
+#import "MUSPostImagesManager.h"
 #import "MUSDatabaseRequestStringsHelper.h"
-#import "SocialManager.h"
+#import "MUSSocialManager.h"
 
 @interface MUSPostManager ()
 
@@ -32,7 +32,7 @@ static MUSPostManager *model = nil;
     self = [super init];
     if (self) {
         self.postsArray = [[NSMutableArray alloc] init];
-        [self.postsArray addObjectsFromArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper stringForAllPosts]]];
+        [self.postsArray addObjectsFromArray: [[MUSDataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper stringForAllPosts]]];
         
     }
     return self;
@@ -44,57 +44,59 @@ static MUSPostManager *model = nil;
 
 - (void) updatePostsArray {
     [self.postsArray removeAllObjects];
-    [self.postsArray addObjectsFromArray: [[DataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper stringForAllPosts]]];
+    [self.postsArray addObjectsFromArray: [[MUSDataBaseManager sharedManager] obtainPostsFromDataBaseWithRequestString : [MUSDatabaseRequestStringsHelper stringForAllPosts]]];
     [self updatePostInfoNotification];
 }
 
 - (NSArray*) networkPostsArrayForNetworkType : (NetworkType) networkType {
-   return [[DataBaseManager sharedManager] obtainNetworkPostsFromDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForNetworkPostWithReason: MUSConnect andNetworkType: networkType]];
+   return [[MUSDataBaseManager sharedManager] obtainNetworkPostsFromDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForNetworkPostWithReason: MUSConnect andNetworkType: networkType]];
 }
 
 - (void) updateNetworkPostsWithComplition : (Complition) block {
     //Need to add a check isLogin socialNetwork or not in each social network?
     
-    NSMutableArray *allSocialNetworksArray = [[SocialManager sharedManager] allNetworks];
+    NSMutableArray *allSocialNetworksArray = [[MUSSocialManager sharedManager] allNetworks];
     __block NSUInteger numberOfActiveSocialNetworks = allSocialNetworksArray.count;
     __block NSUInteger counterOfSocialNetworks = 0;
-    __block NSString *blockResultString = @"Result: \n";
+    __block NSMutableDictionary *resultDictionary = [[NSMutableDictionary alloc] init];
+
+    //__block NSString *blockResultString = @"Result: \n";
     
     for (int i = 0; i < allSocialNetworksArray.count; i++) {
-        SocialNetwork *currentSocialNetwork = [allSocialNetworksArray objectAtIndex: i];
+        MUSSocialNetwork *currentSocialNetwork = [allSocialNetworksArray objectAtIndex: i];
         [currentSocialNetwork updateNetworkPostWithComplition:^(id result) {
             counterOfSocialNetworks++;
-            //NSLog(@"counter = %d", counterOfSocialNetworks);
-            NSLog(@"%@", result);
             
-            blockResultString = [blockResultString stringByAppendingString: [NSString stringWithFormat: @"%@, \n", result]];
+            [resultDictionary setObject: result forKey: @(currentSocialNetwork.networkType)];
+            
             if (counterOfSocialNetworks == numberOfActiveSocialNetworks) {
-                block (blockResultString, nil);
+                block (resultDictionary, nil);
             }
+            
         }];
     }
 }
 
 - (void) deleteNetworkPostForNetworkType : (NetworkType) networkType {
-    for (Post *currentPost in self.postsArray) {
+    for (MUSPost *currentPost in self.postsArray) {
         [currentPost updateAllNetworkPostsFromDataBaseForCurrentPost];
-        for (NetworkPost *networkPost in currentPost.networkPostsArray) {
+        for (MUSNetworkPost *networkPost in currentPost.networkPostsArray) {
             if (networkPost.networkType == networkType) {
                 // Delete NetworkPost ID from post
                 [currentPost.networkPostIdsArray removeObject: [NSString stringWithFormat: @"%ld", (long)networkPost.primaryKey]];
                 // Delete NetworkPost from Data Base
-                [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForDeleteNetworkPost: networkPost]];
+                [[MUSDataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForDeleteNetworkPost: networkPost]];
             }
         }
         
         if (!currentPost.networkPostIdsArray.count) {
             // Delete all images from documents
-            [[PostImagesManager manager] removeImagesFromPostByArrayOfImagesUrls : currentPost.imageUrlsArray];
+            [[MUSPostImagesManager manager] removeImagesFromPostByArrayOfImagesUrls : currentPost.imageUrlsArray];
             // Delete post from Data Base
-            [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForDeletePostByPrimaryKey: currentPost.primaryKey]];
+            [[MUSDataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForDeletePostByPrimaryKey: currentPost.primaryKey]];
         } else {
             //Update post in Data Base
-            [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForUpdatePost: currentPost]];
+            [[MUSDataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForUpdatePost: currentPost]];
         }
     }
     [self updatePostsArray];

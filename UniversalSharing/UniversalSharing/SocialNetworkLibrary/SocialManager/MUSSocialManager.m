@@ -6,26 +6,26 @@
 //  Copyright (c) 2015 Roman. All rights reserved.
 //
 
-#import "SocialManager.h"
+#import "MUSSocialManager.h"
 #import "MUSSocialNetworkLibraryConstants.h"
-#import "DataBaseManager.h"
+#import "MUSDataBaseManager.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 
-@interface SocialManager()
+@interface MUSSocialManager()
 
 @property (strong, nonatomic)   NSArray           *accountsArray;
 @property (strong, nonatomic)   NSDictionary      *networksDictinary;
 
 @end
 
-static SocialManager *model = nil;
+static MUSSocialManager *model = nil;
 
-@implementation SocialManager
+@implementation MUSSocialManager
 
-+ (SocialManager*) sharedManager {
++ (MUSSocialManager*) sharedManager {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        model = [[SocialManager alloc] init];
+        model = [[MUSSocialManager alloc] init];
     });
     return  model;
 }

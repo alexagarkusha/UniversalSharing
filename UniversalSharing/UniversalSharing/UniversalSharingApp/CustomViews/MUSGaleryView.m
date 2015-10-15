@@ -25,7 +25,7 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
  */
 @property (assign, nonatomic)  NSIndexPath * deleteImageIndex;
 @property (strong, nonatomic) MUSAddPhotoButton *addPhotoButton;
-@property (strong, nonatomic) Post *currentPost;
+@property (strong, nonatomic) MUSPost *currentPost;
 //===
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
@@ -67,7 +67,7 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
     self.collectionView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
 }
 
-- (void) setUpPost :(Post*)post {    
+- (void) setUpPost :(MUSPost*)post {    
     self.currentPost = post;
 }
 
@@ -94,7 +94,7 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
         cell.delegate = self;
         cell.indexPath = indexPath;
     
-    ImageToPost *image;
+    MUSImageToPost *image;
 
     if (indexPath.section == 0 && [self.currentPost.imagesArray count] != 4) {
         [cell configurationCellForFirstSection];
@@ -124,7 +124,7 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
 
 #pragma mark - passChosenImageForCollection
 
-- (void) passChosenImageForCollection :(ImageToPost*) imageForPost {
+- (void) passChosenImageForCollection :(MUSImageToPost*) imageForPost {
     if (!self.currentPost.imagesArray) {
         self.currentPost.imagesArray = [[NSMutableArray alloc] init];
     }

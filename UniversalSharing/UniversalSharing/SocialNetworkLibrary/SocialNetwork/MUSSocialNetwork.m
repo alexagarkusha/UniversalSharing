@@ -6,19 +6,19 @@
 //  Copyright (c) 2015 Roman. All rights reserved.
 //
 
-#import "SocialNetwork.h"
-#import "SocialManager.h"
+#import "MUSSocialNetwork.h"
+#import "MUSSocialManager.h"
 #import "FacebookNetwork.h"
 #import "VKNetwork.h"
 #import "TwitterNetwork.h"
-#import "DataBaseManager.h"
+#import "MUSDataBaseManager.h"
 #import "NSString+MUSPathToDocumentsdirectory.h"
 #import "NSError+MUSError.h"
 #import "MUSDatabaseRequestStringsHelper.h"
-#import "PostImagesManager.h"
-#import "InternetConnectionManager.h"
+#import "MUSPostImagesManager.h"
+#import "MUSInternetConnectionManager.h"
 
-@implementation SocialNetwork
+@implementation MUSSocialNetwork
 
 - (void)setNetworkType:(NetworkType)networkType {
     _networkType = networkType;
@@ -41,10 +41,10 @@
 - (void) obtainUserInfoFromNetworkWithComplition :(Complition) block {
 }
 
-- (void) sharePost : (Post*) post withComplition : (Complition) block progressLoadingBlock :(ProgressLoading) blockLoading{
+- (void) sharePost : (MUSPost*) post withComplition : (Complition) block progressLoadingBlock :(ProgressLoading) blockLoading{
 }
 
-- (void) obtainPlacesArrayForLocation : (Location*) location withComplition : (Complition) block {
+- (void) obtainPlacesArrayForLocation : (MUSLocation*) location withComplition : (Complition) block {
 }
 
 - (void) updateNetworkPostWithComplition : (UpdateNetworkPostsComplition) block {
@@ -52,13 +52,13 @@
 }
 
 - (void) updateUserInSocialNetwork {
-    if ([[InternetConnectionManager connectionManager] isInternetConnection]){
+    if ([[MUSInternetConnectionManager connectionManager] isInternetConnection]){
         NSString *deleteImageFromFolder = _currentUser.photoURL;
         
-        [self obtainUserInfoFromNetworkWithComplition:^(SocialNetwork* result, NSError *error) {
+        [self obtainUserInfoFromNetworkWithComplition:^(MUSSocialNetwork* result, NSError *error) {
             
-            [[PostImagesManager manager] removeImageFromFileManagerByImagePath: deleteImageFromFolder];
-            [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUpdateUser: result.currentUser]];
+            [[MUSPostImagesManager manager] removeImageFromFileManagerByImagePath: deleteImageFromFolder];
+            [[MUSDataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUpdateUser: result.currentUser]];
             
         }];
     }

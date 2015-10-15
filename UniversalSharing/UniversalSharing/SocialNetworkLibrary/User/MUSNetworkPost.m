@@ -6,15 +6,15 @@
 //  Copyright (c) 2015 Mobindustry. All rights reserved.
 //
 
-#import "NetworkPost.h"
-#import "DataBaseManager.h"
+#import "MUSNetworkPost.h"
+#import "MUSDataBaseManager.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 
-@implementation NetworkPost
+@implementation MUSNetworkPost
 
 + (instancetype)create
 {
-    NetworkPost *networkPost = [[NetworkPost alloc] init];
+    MUSNetworkPost *networkPost = [[MUSNetworkPost alloc] init];
    
     networkPost.postID = @"";
     networkPost.likesCount = 0;
@@ -48,7 +48,7 @@
 }
 
 - (void) update {
-    [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForUpdateNetworkPost : self]];
+    [[MUSDataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForUpdateNetworkPost : self]];
 }
 
 

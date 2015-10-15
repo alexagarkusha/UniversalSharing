@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ImageToPost.h"
-#import "Post.h"
+#import "MUSImageToPost.h"
+#import "MUSPost.h"
 
 @protocol MUSGaleryViewDelegate <NSObject>
 @required
@@ -28,7 +28,7 @@
  @abstract call from shareviewcontroller
  @param object ImageToPost with current image in order to add to arrayWithChosenImages
  */
-- (void) passChosenImageForCollection :(ImageToPost*) imageForPost;
+- (void) passChosenImageForCollection :(MUSImageToPost*) imageForPost;
 /*!
  @method
  @abstract call from shareviewcontroller in order to get array with chosen pics by a user
@@ -37,6 +37,6 @@
 //- (NSArray*) obtainArrayWithChosenPics;
 
 - (void) reloadCollectionView;
-- (void) setUpPost :(Post*)post;
+- (void) setUpPost :(MUSPost*)post;
 
 @end

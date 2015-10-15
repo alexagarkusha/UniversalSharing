@@ -6,19 +6,19 @@
 //  Copyright (c) 2015 Roman. All rights reserved.
 //
 
-#import "User.h"
+#import "MUSUser.h"
 #import <TwitterKit/TwitterKit.h>
 #import "MUSSocialNetworkLibraryConstantsForParseObjects.h"
-#import "InternetConnectionManager.h"
+#import "MUSInternetConnectionManager.h"
 #import "MUSDatabaseRequestStringsHelper.h"
-#import "DataBaseManager.h"
-#import "PostImagesManager.h"
+#import "MUSDataBaseManager.h"
+#import "MUSPostImagesManager.h"
 
-@implementation User
+@implementation MUSUser
 
 
 + (instancetype) create {
-    User *user = [[User alloc] init];
+    MUSUser *user = [[MUSUser alloc] init];
     user.username = @"";
     user.firstName = @"";
     user.lastName = @"";
@@ -30,13 +30,13 @@
 }
 
 - (void) insertIntoDataBase {
-    [[DataBaseManager sharedManager] insertObjectIntoTable: self];
+    [[MUSDataBaseManager sharedManager] insertObjectIntoTable: self];
 }
 
 
 - (void) removeUser {
-    [[PostImagesManager manager] removeImageFromFileManagerByImagePath: _photoURL];
-    [[DataBaseManager sharedManager] deleteObjectFromDataBaseWithRequestStrings:[MUSDatabaseRequestStringsHelper stringForDeleteUserByClientId: _clientID]];
+    [[MUSPostImagesManager manager] removeImageFromFileManagerByImagePath: _photoURL];
+    [[MUSDataBaseManager sharedManager] deleteObjectFromDataBaseWithRequestStrings:[MUSDatabaseRequestStringsHelper stringForDeleteUserByClientId: _clientID]];
 }
 
 

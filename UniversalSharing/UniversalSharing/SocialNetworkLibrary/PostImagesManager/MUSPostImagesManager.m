@@ -6,21 +6,21 @@
 //  Copyright (c) 2015 Mobindustry. All rights reserved.
 //
 
-#import "PostImagesManager.h"
+#import "MUSPostImagesManager.h"
 #import "NSString+MUSPathToDocumentsdirectory.h"
-#import "ImageToPost.h"
-#import "DataBaseManager.h"
+#import "MUSImageToPost.h"
+#import "MUSDataBaseManager.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 
 
-static PostImagesManager *model = nil;
+static MUSPostImagesManager *model = nil;
 
-@implementation PostImagesManager
+@implementation MUSPostImagesManager
 
-+ (PostImagesManager*) manager {
++ (MUSPostImagesManager*) manager {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        model = [[PostImagesManager alloc] init];
+        model = [[MUSPostImagesManager alloc] init];
     });
     return  model;
 }
@@ -28,7 +28,7 @@ static PostImagesManager *model = nil;
 - (NSMutableArray*) saveImagesToDocumentsFolderAndGetArrayWithImagesUrls :(NSMutableArray*) arrayWithImages {
     
     NSMutableArray *arrayWithImagesUrls = [[NSMutableArray alloc] init];
-    [arrayWithImages enumerateObjectsUsingBlock:^(ImageToPost *image, NSUInteger index, BOOL *stop) {
+    [arrayWithImages enumerateObjectsUsingBlock:^(MUSImageToPost *image, NSUInteger index, BOOL *stop) {
         NSData *data = UIImagePNGRepresentation(image.image);
         //Get the docs directory
         NSString *filePath = @"image";
