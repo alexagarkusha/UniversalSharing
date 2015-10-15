@@ -127,4 +127,9 @@ NSInteger const MUSApp_MUSProgressBar_View_HeightConstraint = 42;
 NSInteger const MUSApp_MUSProgressBar_Label_DefaultWidthConstraint = 50;
 NSInteger const MUSApp_MUSProgressBar_Label_WidthConstraint = 8;
 
+#pragma mark - MUSToolBarForMediaGalleryViewController
+
+NSString *const MUSApp_MUSToolBarForMediaGalleryViewController_NibName = @"MUSToolBarForMediaGalleryViewController";
+
+
 @end
