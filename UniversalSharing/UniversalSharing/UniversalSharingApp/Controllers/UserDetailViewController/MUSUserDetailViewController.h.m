@@ -77,7 +77,7 @@
         if (!cell) {
             cell = [MUSTopUserProfileCell profileUserTableViewCell];
         }
-        [cell configurationProfileUserTableViewCellWithUser: self.socialNetwork.currentUser];
+        [cell configurationProfileUserTableViewCell: self.socialNetwork.currentUser];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
         

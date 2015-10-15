@@ -17,7 +17,6 @@
 
 @end
 
-
 @implementation MUSAccountTableViewCell
 
 
@@ -28,9 +27,6 @@
 + (instancetype) accountTableViewCell {
     NSArray* nibArray = [[NSBundle mainBundle]loadNibNamed:[self cellID] owner:nil options:nil];
     return nibArray[0];
-}
-
-- (void)awakeFromNib {
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
