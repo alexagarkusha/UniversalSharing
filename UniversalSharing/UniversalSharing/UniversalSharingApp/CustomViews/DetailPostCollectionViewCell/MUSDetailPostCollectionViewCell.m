@@ -9,19 +9,12 @@
 #import "MUSDetailPostCollectionViewCell.h"
 
 @interface MUSDetailPostCollectionViewCell ()
+
 @property (weak, nonatomic) IBOutlet UIImageView *photoImageView;
 
 @end
 
 @implementation MUSDetailPostCollectionViewCell
-
-- (void)awakeFromNib {
-    // Initialization code
-}
-
-- (NSString *)reuseIdentifier{
-    return [MUSDetailPostCollectionViewCell customCellID];
-}
 
 + (NSString*) customCellID {
     return NSStringFromClass([MUSDetailPostCollectionViewCell class]);
@@ -32,10 +25,12 @@
     return nibArray[0];
 }
 
+- (NSString *)reuseIdentifier{
+    return [MUSDetailPostCollectionViewCell customCellID];
+}
+
 - (void) configurationCellWithPhoto: (UIImage*) photoImageView {
     self.photoImageView.image = photoImageView;
 }
-
-
 
 @end
