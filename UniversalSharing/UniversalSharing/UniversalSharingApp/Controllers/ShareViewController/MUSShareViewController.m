@@ -604,7 +604,7 @@
 
 - (void) createPost { // later we would change logic , now we do for galleries)
     if(!self.post) {
-        self.post = [[Post alloc] init];
+        self.post = [[MUSPost alloc] init];
         self.post.imagesArray = [NSMutableArray new];
     }
     self.post.place = self.place;

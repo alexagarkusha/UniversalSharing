@@ -88,7 +88,7 @@
  @param without
  */
 - (void) obtainSocialNetworks {
-    self.socialNetworksArray = [[SocialManager sharedManager] allNetworks];
+    self.socialNetworksArray = [[MUSSocialManager sharedManager] allNetworks];
 }
 
 #pragma mark UITableViewDataSource

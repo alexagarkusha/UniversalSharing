@@ -41,14 +41,14 @@
 }
 
 - (void) createSwitchButtonsArray {
-    self.networksArray = [[SocialManager sharedManager] allNetworks];
+    self.networksArray = [[MUSSocialManager sharedManager] allNetworks];
     __block NSInteger count = 0;
     if (_stateSwitchButtonsDictionary) {
         [_stateSwitchButtonsDictionary removeAllObjects];
     }else {
         _stateSwitchButtonsDictionary = [NSMutableDictionary new];
     }
-    [self.networksArray enumerateObjectsUsingBlock:^(SocialNetwork *socialNetwork, NSUInteger idx, BOOL *stop) {
+    [self.networksArray enumerateObjectsUsingBlock:^(MUSSocialNetwork *socialNetwork, NSUInteger idx, BOOL *stop) {
         if (!socialNetwork.isLogin || [self currentReasonForSocialNetwork: socialNetwork] == MUSConnect) {
             [_stateSwitchButtonsDictionary setValue:[NSNumber numberWithBool:NO] forKey:[NSString stringWithFormat:@"%ld",(long)socialNetwork.networkType]];
             count++;
