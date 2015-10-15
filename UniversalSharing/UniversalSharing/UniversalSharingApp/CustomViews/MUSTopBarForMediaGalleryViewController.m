@@ -47,14 +47,12 @@
 }
 
 -(UIView*)loadViewFromNib {
-    NSArray *nibObjects = [[NSBundle mainBundle]loadNibNamed:@"MUSTopBarForMediaGalleryViewController" owner:self options:nil];
+    NSArray *nibObjects = [[NSBundle mainBundle]loadNibNamed:MUSApp_MUSTopBarForMediaGalleryViewController_NibName owner:self options:nil];
     return [nibObjects firstObject];
 }
 
 - (void) awakeFromNib {
-    //self.buttonBack.tintColor = BROWN_COLOR_LightHIGHT;
     [self.buttonBack setTitleColor: BROWN_COLOR forState:UIControlStateNormal];
-
 }
 
 - (void) initializeLableCountImages:(NSString *)stringLableCountImages {

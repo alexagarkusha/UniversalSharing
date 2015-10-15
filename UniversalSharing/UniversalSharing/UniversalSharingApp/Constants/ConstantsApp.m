@@ -131,5 +131,10 @@ NSInteger const MUSApp_MUSProgressBar_Label_WidthConstraint = 8;
 
 NSString *const MUSApp_MUSToolBarForMediaGalleryViewController_NibName = @"MUSToolBarForMediaGalleryViewController";
 
+#pragma mark - MUSTopBarForMediaGalleryViewController
+
+NSString *const MUSApp_MUSTopBarForMediaGalleryViewController_NibName = @"MUSTopBarForMediaGalleryViewController";
+
+
 
 @end
