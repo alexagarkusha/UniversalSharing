@@ -475,7 +475,7 @@
     if (_arrayChosenNetworksForPost) {
         [self createPost];
         
-        [[MultySharingManager sharedManager] sharePost: self.post toSocialNetworks: _arrayChosenNetworksForPost withMultySharingResultBlock:^(NSDictionary *multyResultDictionary, MUSPost *post)  {
+        [[MUSMultySharingManager sharedManager] sharePost: self.post toSocialNetworks: _arrayChosenNetworksForPost withMultySharingResultBlock:^(NSDictionary *multyResultDictionary, MUSPost *post)  {
             [[MUSProgressBar sharedProgressBar] stopProgress];
             [[MUSProgressBarEndLoading sharedProgressBarEndLoading] endProgressViewWithCountConnect:multyResultDictionary andImagesArray: post.imagesArray];
         } startLoadingBlock:^(MUSPost *post) {

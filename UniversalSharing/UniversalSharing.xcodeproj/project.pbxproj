@@ -55,7 +55,7 @@
 		18BF75C41BC1837300A05625 /* FacebookNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BF75BD1BC1837300A05625 /* FacebookNetwork.m */; };
 		18BF75C51BC1837300A05625 /* TwitterNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BF75C01BC1837300A05625 /* TwitterNetwork.m */; };
 		18BF75C61BC1837300A05625 /* VKNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BF75C31BC1837300A05625 /* VKNetwork.m */; };
-		18BF75CC1BC1842B00A05625 /* MultySharingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BF75CB1BC1842B00A05625 /* MultySharingManager.m */; };
+		18BF75CC1BC1842B00A05625 /* MUSMultySharingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BF75CB1BC1842B00A05625 /* MUSMultySharingManager.m */; };
 		18BF75D01BC1843F00A05625 /* MUSInternetConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BF75CF1BC1843F00A05625 /* MUSInternetConnectionManager.m */; };
 		18BF75D41BC1845D00A05625 /* MUSDatabaseRequestStringsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BF75D31BC1845D00A05625 /* MUSDatabaseRequestStringsHelper.m */; };
 		18BF75D81BC185E100A05625 /* DataBaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BF75D71BC185E100A05625 /* DataBaseManager.m */; };
@@ -211,8 +211,8 @@
 		18BF75C01BC1837300A05625 /* TwitterNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterNetwork.m; sourceTree = "<group>"; };
 		18BF75C21BC1837300A05625 /* VKNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VKNetwork.h; sourceTree = "<group>"; };
 		18BF75C31BC1837300A05625 /* VKNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VKNetwork.m; sourceTree = "<group>"; };
-		18BF75CA1BC1842B00A05625 /* MultySharingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultySharingManager.h; sourceTree = "<group>"; };
-		18BF75CB1BC1842B00A05625 /* MultySharingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultySharingManager.m; sourceTree = "<group>"; };
+		18BF75CA1BC1842B00A05625 /* MUSMultySharingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSMultySharingManager.h; sourceTree = "<group>"; };
+		18BF75CB1BC1842B00A05625 /* MUSMultySharingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSMultySharingManager.m; sourceTree = "<group>"; };
 		18BF75CE1BC1843F00A05625 /* MUSInternetConnectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSInternetConnectionManager.h; sourceTree = "<group>"; };
 		18BF75CF1BC1843F00A05625 /* MUSInternetConnectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSInternetConnectionManager.m; sourceTree = "<group>"; };
 		18BF75D21BC1845D00A05625 /* MUSDatabaseRequestStringsHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSDatabaseRequestStringsHelper.h; sourceTree = "<group>"; };
@@ -719,8 +719,8 @@
 		18BF75C91BC1842B00A05625 /* MultySharingManager */ = {
 			isa = PBXGroup;
 			children = (
-				18BF75CA1BC1842B00A05625 /* MultySharingManager.h */,
-				18BF75CB1BC1842B00A05625 /* MultySharingManager.m */,
+				18BF75CA1BC1842B00A05625 /* MUSMultySharingManager.h */,
+				18BF75CB1BC1842B00A05625 /* MUSMultySharingManager.m */,
 			);
 			path = MultySharingManager;
 			sourceTree = "<group>";
@@ -1464,7 +1464,7 @@
 				18BB29B61B67E3F000B498AC /* MUSAccountsViewController.m in Sources */,
 				97CB10DB1B904D7B0061F851 /* UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.m in Sources */,
 				18BB29B51B67E3F000B498AC /* ConstantsApp.m in Sources */,
-				18BF75CC1BC1842B00A05625 /* MultySharingManager.m in Sources */,
+				18BF75CC1BC1842B00A05625 /* MUSMultySharingManager.m in Sources */,
 				979164A81B8C60F500DFCE64 /* NSString+DateStringFromUNIXTimestamp.m in Sources */,
 				18BF75D41BC1845D00A05625 /* MUSDatabaseRequestStringsHelper.m in Sources */,
 				30C9DDE91BBEA64800F3266A /* MUSProgressBar.m in Sources */,

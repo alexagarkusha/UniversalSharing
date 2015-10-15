@@ -127,7 +127,7 @@
         }
     }
     
-    if (!isPostConnect && ![[MultySharingManager sharedManager] isQueueContainsPost: self.currentPost.primaryKey]) {
+    if (!isPostConnect && ![[MUSMultySharingManager sharedManager] isQueueContainsPost: self.currentPost.primaryKey]) {
         self.shareButton = [[UIBarButtonItem alloc] initWithTitle : MUSApp_Button_Title_Share style:2 target:self action: @selector(sharePost)];
         self.navigationItem.rightBarButtonItem = self.shareButton;
     }
@@ -271,7 +271,7 @@
     if (arrayChosenNetworksForPost) {
         __weak MUSDetailPostViewController *weakSelf = self;
         self.shareButton.enabled = NO;
-        [[MultySharingManager sharedManager] sharePost:self.currentPost toSocialNetworks:arrayChosenNetworksForPost withMultySharingResultBlock:^(NSDictionary *multyResultDictionary, MUSPost *post) {
+        [[MUSMultySharingManager sharedManager] sharePost:self.currentPost toSocialNetworks:arrayChosenNetworksForPost withMultySharingResultBlock:^(NSDictionary *multyResultDictionary, MUSPost *post) {
             [weakSelf.currentPost updateAllNetworkPostsFromDataBaseForCurrentPost];
             [weakSelf.tableView reloadData];
             

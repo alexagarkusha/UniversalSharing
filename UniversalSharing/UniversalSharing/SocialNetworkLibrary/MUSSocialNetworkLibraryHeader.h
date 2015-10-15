@@ -34,7 +34,7 @@
 
 #import "PostImagesManager.h"
 
-#import "MultySharingManager.h"
+#import "MUSMultySharingManager.h"
 
 #import "MUSPostManager.h"
 

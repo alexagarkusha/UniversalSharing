@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Mobindustry. All rights reserved.
 //
 
-#import "MultySharingManager.h"
+#import "MUSMultySharingManager.h"
 #import "MUSSocialNetwork.h"
 #import "DataBaseManager.h"
 #import "MUSDatabaseRequestStringsHelper.h"
@@ -19,7 +19,7 @@
 #import "MUSProgressBar.h"
 #import "MUSProgressBarEndLoading.h"
 
-@interface MultySharingManager ()
+@interface MUSMultySharingManager ()
 
 @property (copy, nonatomic) MultySharingResultBlock multySharingResultBlock;
 @property (copy, nonatomic) ProgressLoadingBlock progressLoadingBlock;
@@ -30,15 +30,15 @@
 @end
 
 
-static MultySharingManager *model = nil;
+static MUSMultySharingManager *model = nil;
 
 
-@implementation MultySharingManager
+@implementation MUSMultySharingManager
 
-+ (MultySharingManager*) sharedManager {
++ (MUSMultySharingManager*) sharedManager {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        model = [[MultySharingManager alloc] init];
+        model = [[MUSMultySharingManager alloc] init];
     });
     return  model;
 }
@@ -93,7 +93,7 @@ static MultySharingManager *model = nil;
     __block MUSPost *postCopy = post;
     __block NSUInteger numberOfSocialNetworks = arrayWithNetworks.count;
     __block int counterOfSocialNetwork = 0;
-    __weak MultySharingManager *weakMultySharingManager = self;
+    __weak MUSMultySharingManager *weakMultySharingManager = self;
 
     __block NSMutableDictionary *multyResultDictionary = [[NSMutableDictionary alloc] init];
     

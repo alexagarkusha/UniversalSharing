@@ -14,9 +14,9 @@ typedef void (^StartLoadingBlock)(MUSPost *post);
 typedef void (^MultySharingResultBlock)(NSDictionary *multyResultDictionary, MUSPost *post);
 
 
-@interface MultySharingManager : NSObject
+@interface MUSMultySharingManager : NSObject
 
-+ (MultySharingManager*) sharedManager;
++ (MUSMultySharingManager*) sharedManager;
 
 - (void) sharePost : (MUSPost*) post toSocialNetworks : (NSArray*) networksTypesArray withMultySharingResultBlock : (MultySharingResultBlock) multySharingResultBlock startLoadingBlock : (StartLoadingBlock) startLoadingBlock progressLoadingBlock :(ProgressLoadingBlock) progressLoadingBlock;
 
