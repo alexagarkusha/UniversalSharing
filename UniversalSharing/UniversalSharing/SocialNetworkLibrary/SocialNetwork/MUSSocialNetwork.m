@@ -7,7 +7,7 @@
 //
 
 #import "MUSSocialNetwork.h"
-#import "SocialManager.h"
+#import "MUSSocialManager.h"
 #import "FacebookNetwork.h"
 #import "VKNetwork.h"
 #import "TwitterNetwork.h"

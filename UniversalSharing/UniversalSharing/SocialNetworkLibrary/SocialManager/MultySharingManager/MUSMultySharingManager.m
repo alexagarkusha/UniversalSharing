@@ -13,7 +13,7 @@
 #import "MUSPostImagesManager.h"
 #import "NSString+MUSReasonNameOfPost.h"
 #import "NSString+MUSSocialNetworkNameOfPost.h"
-#import "SocialManager.h"
+#import "MUSSocialManager.h"
 #import "MUSPostManager.h"
 #import "NSString+MUSCurrentDate.h"
 #import "MUSProgressBar.h"
@@ -57,7 +57,7 @@ static MUSMultySharingManager *model = nil;
 
 - (void) sharePost : (MUSPost*) post toSocialNetworks : (NSArray*) networksTypesArray withMultySharingResultBlock : (MultySharingResultBlock) multySharingResultBlock startLoadingBlock : (StartLoadingBlock) startLoadingBlock progressLoadingBlock :(ProgressLoadingBlock) progressLoadingBlock {
     
-    NSMutableArray *arrayWithNetworks = [[SocialManager sharedManager]networksForKeys:networksTypesArray];
+    NSMutableArray *arrayWithNetworks = [[MUSSocialManager sharedManager]networksForKeys:networksTypesArray];
     
     self.multySharingResultBlock = multySharingResultBlock;
     self.progressLoadingBlock = progressLoadingBlock;

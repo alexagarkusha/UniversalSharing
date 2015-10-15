@@ -9,7 +9,7 @@
 #import "MUSPopUpForSharing.h"
 #import "ConstantsApp.h"
 #import "MUSSocialNetworkLibraryHeader.h"
-#import "SocialManager.h"
+#import "MUSSocialManager.h"
 #import "MUSPopUpTableViewCell.h"
 
 @interface MUSPopUpForSharing ()<UITableViewDelegate, UITableViewDataSource, MUSPopUpTableViewCellDelegate>

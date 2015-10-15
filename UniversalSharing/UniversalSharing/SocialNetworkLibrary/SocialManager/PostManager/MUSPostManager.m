@@ -10,7 +10,7 @@
 #import "DataBaseManager.h"
 #import "MUSPostImagesManager.h"
 #import "MUSDatabaseRequestStringsHelper.h"
-#import "SocialManager.h"
+#import "MUSSocialManager.h"
 
 @interface MUSPostManager ()
 
@@ -55,7 +55,7 @@ static MUSPostManager *model = nil;
 - (void) updateNetworkPostsWithComplition : (Complition) block {
     //Need to add a check isLogin socialNetwork or not in each social network?
     
-    NSMutableArray *allSocialNetworksArray = [[SocialManager sharedManager] allNetworks];
+    NSMutableArray *allSocialNetworksArray = [[MUSSocialManager sharedManager] allNetworks];
     __block NSUInteger numberOfActiveSocialNetworks = allSocialNetworksArray.count;
     __block NSUInteger counterOfSocialNetworks = 0;
     __block NSMutableDictionary *resultDictionary = [[NSMutableDictionary alloc] init];

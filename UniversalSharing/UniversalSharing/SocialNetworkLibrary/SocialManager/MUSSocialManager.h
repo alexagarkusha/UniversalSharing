@@ -9,13 +9,13 @@
 #import <Foundation/Foundation.h>
 #import "MUSSocialNetwork.h"
 
-@interface SocialManager : NSObject
+@interface MUSSocialManager : NSObject
 
 /*!
  @abstract return an instance of the social network in a single copy. Singleton method.
 */
 
-+ (SocialManager*) sharedManager;
++ (MUSSocialManager*) sharedManager;
 
 /*!
  @abstract Returns a list of social networks in a user-defined order

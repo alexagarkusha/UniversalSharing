@@ -10,7 +10,7 @@
 #import "MUSDetailPostViewController.h"
 #import "MUSPostCell.h"
 #import "ConstantsApp.h"
-#import "SocialManager.h"
+#import "MUSSocialManager.h"
 #import "DataBaseManager.h"
 #import "MUSDetailPostViewController.h"
 #import "MUSDatabaseRequestStringsHelper.h"

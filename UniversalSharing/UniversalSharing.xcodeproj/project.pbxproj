@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		187FC4FD1B651D9500A3916C /* UniversalSharingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 187FC4FC1B651D9500A3916C /* UniversalSharingTests.m */; };
-		187FC5271B65222D00A3916C /* SocialManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 187FC5191B65222D00A3916C /* SocialManager.m */; };
+		187FC5271B65222D00A3916C /* MUSSocialManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 187FC5191B65222D00A3916C /* MUSSocialManager.m */; };
 		187FC5281B65222D00A3916C /* MUSSocialNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 187FC51C1B65222D00A3916C /* MUSSocialNetwork.m */; };
 		187FC52A1B65222D00A3916C /* MUSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 187FC5221B65222D00A3916C /* MUSUser.m */; };
 		18BB29AD1B67E3F000B498AC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BB29741B67E3F000B498AC /* AppDelegate.m */; };
@@ -146,8 +146,8 @@
 		187FC4F61B651D9500A3916C /* UniversalSharingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UniversalSharingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		187FC4FB1B651D9500A3916C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		187FC4FC1B651D9500A3916C /* UniversalSharingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UniversalSharingTests.m; sourceTree = "<group>"; };
-		187FC5181B65222D00A3916C /* SocialManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialManager.h; sourceTree = "<group>"; };
-		187FC5191B65222D00A3916C /* SocialManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocialManager.m; sourceTree = "<group>"; };
+		187FC5181B65222D00A3916C /* MUSSocialManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSSocialManager.h; sourceTree = "<group>"; };
+		187FC5191B65222D00A3916C /* MUSSocialManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSSocialManager.m; sourceTree = "<group>"; };
 		187FC51B1B65222D00A3916C /* MUSSocialNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSSocialNetwork.h; sourceTree = "<group>"; };
 		187FC51C1B65222D00A3916C /* MUSSocialNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUSSocialNetwork.m; sourceTree = "<group>"; };
 		187FC51D1B65222D00A3916C /* MUSSocialNetworkLibraryHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUSSocialNetworkLibraryHeader.h; sourceTree = "<group>"; };
@@ -430,8 +430,8 @@
 		187FC5171B65222D00A3916C /* SocialManager */ = {
 			isa = PBXGroup;
 			children = (
-				187FC5181B65222D00A3916C /* SocialManager.h */,
-				187FC5191B65222D00A3916C /* SocialManager.m */,
+				187FC5181B65222D00A3916C /* MUSSocialManager.h */,
+				187FC5191B65222D00A3916C /* MUSSocialManager.m */,
 			);
 			name = SocialManager;
 			sourceTree = "<group>";
@@ -1512,7 +1512,7 @@
 				18BF75C51BC1837300A05625 /* TwitterNetwork.m in Sources */,
 				30C9DDC11BB93E0500F3266A /* MUSPopUpForSharing.m in Sources */,
 				18BF75C61BC1837300A05625 /* VKNetwork.m in Sources */,
-				187FC5271B65222D00A3916C /* SocialManager.m in Sources */,
+				187FC5271B65222D00A3916C /* MUSSocialManager.m in Sources */,
 				30C9DDB21BABFA7300F3266A /* MUSToolBarForDetailCollectionView.m in Sources */,
 				97CCC9D81B749C2C00E0FAC6 /* ReachabilityManager.m in Sources */,
 				97C49E851B835B64005241CE /* MUSPostDescriptionCell.m in Sources */,
