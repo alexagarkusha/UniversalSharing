@@ -8,14 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "MUSSocialNetworkLibraryConstants.h"
-#import "MUSUser.h"
-#import "MUSPost.h"
 
+@class MUSUser;
+@class MUSPost;
+@class MUSNetworkPost;
 
-////use
-//@class User;
-//@class Post;
-//and remove they header file in .m file
 @interface MUSDatabaseRequestStringsHelper : NSObject
 
 + (NSString*) stringForAllPosts;

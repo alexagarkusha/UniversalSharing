@@ -29,6 +29,9 @@
 }
 
 - (void) insertIntoDataBase {
+    if (self.primaryKey > 0) {
+        return;
+    }
     [[MUSDataBaseManager sharedManager] insertObjectIntoTable: self];
 }
 

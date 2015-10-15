@@ -8,9 +8,6 @@
 
 #import "MUSSocialNetwork.h"
 #import "MUSSocialManager.h"
-#import "FacebookNetwork.h"
-#import "VKNetwork.h"
-#import "TwitterNetwork.h"
 #import "MUSDataBaseManager.h"
 #import "NSString+MUSPathToDocumentsdirectory.h"
 #import "NSError+MUSError.h"
@@ -24,30 +21,39 @@
     _networkType = networkType;
 }
 
-//- (User*) currentUser {
-//    if (!_isLogin) {
-//        return nil;
-//    } else {
-//        return [[[DataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType: _networkType]] firstObject];
-//    }
-//}
+- (MUSUser *)currentUser {
+    
+    if (!_currentUser)
+    {
+        _currentUser = [[[MUSDataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType: _networkType]] firstObject];
+    }
+    
+    return _currentUser;
+    
+}
 
 - (void) loginWithComplition :(Complition) block {
+    NSLog(@"This method must be overreaded in you class");
 }
 
 - (void) logout {
+    NSLog(@"This method must be overreaded in you class");
 }
 
 - (void) obtainUserInfoFromNetworkWithComplition :(Complition) block {
+    NSLog(@"This method must be overreaded in you class");
 }
 
-- (void) sharePost : (MUSPost*) post withComplition : (Complition) block progressLoadingBlock :(LoadingBlock) loading {
+- (void) sharePost : (MUSPost*) post withComplition:(Complition)block loadingBlock:(LoadingBlock)loadingBlock {
+    NSLog(@"This method must be overreaded in you class");
 }
 
 - (void) obtainPlacesArrayForLocation : (MUSLocation*) location withComplition : (Complition) block {
+    NSLog(@"This method must be overreaded in you class");
 }
 
 - (void) updateNetworkPostWithComplition : (UpdateNetworkPostsBlock) updateNetworkPostsBlock {
+    NSLog(@"This method must be overreaded in you class");
     
 }
 

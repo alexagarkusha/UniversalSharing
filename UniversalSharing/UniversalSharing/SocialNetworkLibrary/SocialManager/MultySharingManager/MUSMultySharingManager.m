@@ -137,6 +137,9 @@ static MUSMultySharingManager *model = nil;
 
 
 - (void) updateCurrentNetworkPost : (MUSNetworkPost*) newNetworkPost andArrayOfOldNetworkPosts : (NSMutableArray*) arrayOfOldPosts {
+    
+#warning "Mark to discuss"
+    
     for (MUSNetworkPost *currentNetworkPost in arrayOfOldPosts) {
         if (currentNetworkPost.networkType == newNetworkPost.networkType) {
             if (newNetworkPost.reason != MUSConnect) {

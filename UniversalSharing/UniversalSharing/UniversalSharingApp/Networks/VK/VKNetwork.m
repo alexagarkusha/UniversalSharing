@@ -37,6 +37,18 @@ static VKNetwork *model = nil;
 
 @implementation VKNetwork
 
+/*
+ Getters
+ */
+
+- (NSString *)icon {
+    return MUSVKIconName;
+}
+
+- (NSString *)title {
+    return self.isLogin ? [NSString stringWithFormat:@"%@ %@", self.currentUser.firstName, self.currentUser.lastName] : MUSVKTitle;
+}
+
 #pragma mark Singleton Method
 
 + (VKNetwork*) sharedManager {
@@ -82,8 +94,6 @@ static VKNetwork *model = nil;
  Initiation properties of VKNetwork without session
  */
 - (void) initiationPropertiesWithoutSession {
-    self.title = MUSVKTitle;
-    self.icon = MUSVKIconName;
     self.isLogin = NO;
 }
 
@@ -92,9 +102,8 @@ static VKNetwork *model = nil;
  */
 - (void) initiationPropertiesWithSession {
     self.isLogin = YES;
-    self.icon = MUSVKIconName;
-    self.currentUser = [[[MUSDataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType: self.networkType]]firstObject];
-    self.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
+    //self.currentUser = [[[MUSDataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType: self.networkType]]firstObject];
+//    self.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
 }
 
 
@@ -136,11 +145,13 @@ static VKNetwork *model = nil;
     [request executeWithResultBlock:^(VKResponse * response)
      {
          [weakSelf createUser: (NSDictionary*)[response.json firstObject]];
-         weakSelf.title = [NSString stringWithFormat:@"%@  %@", weakSelf.currentUser.firstName, weakSelf.currentUser.lastName];
-        
-         if (!weakSelf.isLogin) {
+         //weakSelf.title = [NSString stringWithFormat:@"%@  %@", weakSelf.currentUser.firstName, weakSelf.currentUser.lastName];
+  
+#warning "Check this if"
+         //if (!weakSelf.isLogin) {
              [weakSelf.currentUser insertIntoDataBase];
-         }
+         //}
+         
          dispatch_async(dispatch_get_main_queue(), ^{
              weakSelf.isLogin = YES;
              block(weakSelf,nil);
@@ -524,7 +535,12 @@ static VKNetwork *model = nil;
  @param dictionary takes dictionary from VK network.
  */
 - (void) createUser : (NSDictionary*) result {
-    self.currentUser = [MUSUser create];
+#warning "Mark to discuss"
+    
+    if (!self.currentUser) {
+        self.currentUser = [MUSUser create];
+    }
+    
     
     if ([result isKindOfClass: [NSDictionary class]]) {
         self.currentUser.firstName = [result objectForKey : MUSVKParseUser_First_Name];

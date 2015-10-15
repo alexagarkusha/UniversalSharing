@@ -1293,3 +1293,23 @@ UniversalSharing/Pods/Target Support Files/VK-ios-sdk/VK-ios-sdk-Private.xcconfi
 UniversalSharing/Pods/Target Support Files/VK-ios-sdk/VK-ios-sdk-dummy.m
 UniversalSharing/Pods/Target Support Files/VK-ios-sdk/VK-ios-sdk-prefix.pch
 UniversalSharing/Pods/Target Support Files/VK-ios-sdk/VK-ios-sdk.xcconfig
+UniversalSharing/Fabric.framework/Fabric
+UniversalSharing/Fabric.framework/Headers/FABAttributes.h
+UniversalSharing/Fabric.framework/Headers/Fabric.h
+UniversalSharing/Fabric.framework/Info.plist
+UniversalSharing/Fabric.framework/Modules/module.modulemap
+UniversalSharing/Fabric.framework/run
+UniversalSharing/Fabric.framework/uploadDSYM
+UniversalSharing/Pods/Bolts/Bolts/Common/BFDefines.h
+UniversalSharing/Pods/FBSDKCoreKit/FBSDKCoreKit/FBSDKCoreKit/Internal/FBSDKContainerViewController.h
+UniversalSharing/Pods/FBSDKCoreKit/FBSDKCoreKit/FBSDKCoreKit/Internal/FBSDKContainerViewController.m
+UniversalSharing/Pods/FBSDKCoreKit/FBSDKCoreKit/FBSDKCoreKit/Internal/FBSDKMonotonicTime.h
+UniversalSharing/Pods/FBSDKCoreKit/FBSDKCoreKit/FBSDKCoreKit/Internal/FBSDKMonotonicTime.m
+UniversalSharing/Pods/FBSDKCoreKit/FBSDKCoreKit/FBSDKCoreKit/Internal/ServerConfiguration/FBSDKServerConfiguration+Internal.h
+UniversalSharing/Pods/FBSDKLoginKit/FBSDKLoginKit/FBSDKLoginKit/Internal/FBSDKLoginManagerLoginResult+Internal.h
+UniversalSharing/Pods/Headers/Private/Bolts/BFDefines.h
+UniversalSharing/Pods/Headers/Private/FBSDKCoreKit/FBSDKCoreKit/FBSDKContainerViewController.h
+UniversalSharing/Pods/Headers/Private/FBSDKCoreKit/FBSDKCoreKit/FBSDKMonotonicTime.h
+UniversalSharing/Pods/Headers/Private/FBSDKCoreKit/FBSDKCoreKit/ServerConfiguration/FBSDKServerConfiguration+Internal.h
+UniversalSharing/Pods/Headers/Private/FBSDKLoginKit/FBSDKLoginKit/FBSDKLoginManagerLoginResult+Internal.h
+UniversalSharing/Pods/Headers/Public/Bolts/BFDefines.h

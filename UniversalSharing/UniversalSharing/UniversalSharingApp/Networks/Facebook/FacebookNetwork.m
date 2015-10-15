@@ -45,6 +45,18 @@ static FacebookNetwork *model = nil;
     return  model;
 }
 
+/*
+ Getters
+ */
+
+- (NSString *)icon {
+    return MUSFacebookIconName;
+}
+
+- (NSString *)title {
+    return self.isLogin ? [NSString stringWithFormat:@"%@ %@", self.currentUser.firstName, self.currentUser.lastName] : MUSFacebookTitle;
+}
+
 /*!
  Initiation FacebookNetwork.
  */
@@ -70,19 +82,17 @@ static FacebookNetwork *model = nil;
  */
 - (void) initiationPropertiesWithSession {
     self.isLogin = YES;
-    self.icon = MUSFacebookIconName;
-    self.currentUser = [[[MUSDataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType: self.networkType]]firstObject];
-    self.title = [NSString stringWithFormat:@"%@ %@", self.currentUser.firstName, self.currentUser.lastName];
+    //self.currentUser = [[[MUSDataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType: self.networkType]]firstObject];
+    //self.title = [NSString stringWithFormat:@"%@ %@", self.currentUser.firstName, self.currentUser.lastName];
 }
 
 /*!
  Initiation properties of FacebookNetwork without session
  */
 - (void) initiationPropertiesWithoutSession {
-    self.title = MUSFacebookTitle;
-    self.icon = MUSFacebookIconName;
+    //self.title = MUSFacebookTitle;
     self.isLogin = NO;
-    self.currentUser = nil;
+    //self.currentUser = nil;
 }
 
 #pragma mark - login

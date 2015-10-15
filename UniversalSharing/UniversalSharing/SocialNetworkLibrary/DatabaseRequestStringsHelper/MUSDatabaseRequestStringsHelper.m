@@ -8,6 +8,9 @@
 
 #import "MUSDatabaseRequestStringsHelper.h"
 
+#import "MUSUser.h"
+#import "MUSPost.h"
+
 @implementation MUSDatabaseRequestStringsHelper
 
 

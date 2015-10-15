@@ -58,6 +58,7 @@
     self.errorView.backgroundColor = BROWN_COLOR;
     self.updateNetworkConnectionButton.backgroundColor = DARK_BROWN_COLOR;
     self.useAnywayButton.backgroundColor = DARK_BROWN_COLOR;
+    self.tableView.backgroundColor = BROWN_COLOR_WITH_ALPHA_01;
 }
 
 /*!

@@ -36,6 +36,9 @@
 
 static TwitterNetwork *model = nil;
 
+
+#warning "Check getter in Facebook class and add the same logic"
+
 #pragma mark Singleton Method
 
 @implementation TwitterNetwork
@@ -73,7 +76,7 @@ static TwitterNetwork *model = nil;
     self.title = MUSTwitterTitle;
     self.icon = MUSTwitterIconName;
     self.isLogin = NO;
-    self.currentUser = nil;
+    //self.currentUser = nil;
 }
 
 /*!
@@ -82,7 +85,7 @@ static TwitterNetwork *model = nil;
 - (void) initiationPropertiesWithSession {
     self.isLogin = YES;
     self.icon = MUSTwitterIconName;
-    self.currentUser = [[[MUSDataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType: self.networkType]]firstObject];
+    //self.currentUser = [[[MUSDataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType: self.networkType]]firstObject];
     self.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
 }
 
