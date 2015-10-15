@@ -32,7 +32,7 @@
 
 #import "MUSUser.h"
 
-#import "PostImagesManager.h"
+#import "MUSPostImagesManager.h"
 
 #import "MUSMultySharingManager.h"
 

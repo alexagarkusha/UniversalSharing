@@ -8,7 +8,7 @@
 
 #import "MUSPostManager.h"
 #import "DataBaseManager.h"
-#import "PostImagesManager.h"
+#import "MUSPostImagesManager.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 #import "SocialManager.h"
 
@@ -91,7 +91,7 @@ static MUSPostManager *model = nil;
         
         if (!currentPost.networkPostIdsArray.count) {
             // Delete all images from documents
-            [[PostImagesManager manager] removeImagesFromPostByArrayOfImagesUrls : currentPost.imageUrlsArray];
+            [[MUSPostImagesManager manager] removeImagesFromPostByArrayOfImagesUrls : currentPost.imageUrlsArray];
             // Delete post from Data Base
             [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForDeletePostByPrimaryKey: currentPost.primaryKey]];
         } else {

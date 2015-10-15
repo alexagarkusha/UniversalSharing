@@ -12,7 +12,7 @@
 #import "MUSInternetConnectionManager.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 #import "DataBaseManager.h"
-#import "PostImagesManager.h"
+#import "MUSPostImagesManager.h"
 
 @implementation MUSUser
 
@@ -35,7 +35,7 @@
 
 
 - (void) removeUser {
-    [[PostImagesManager manager] removeImageFromFileManagerByImagePath: _photoURL];
+    [[MUSPostImagesManager manager] removeImageFromFileManagerByImagePath: _photoURL];
     [[DataBaseManager sharedManager] deleteObjectFromDataBaseWithRequestStrings:[MUSDatabaseRequestStringsHelper stringForDeleteUserByClientId: _clientID]];
 }
 

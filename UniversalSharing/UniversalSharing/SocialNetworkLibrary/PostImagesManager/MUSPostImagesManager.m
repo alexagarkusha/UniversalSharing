@@ -6,21 +6,21 @@
 //  Copyright (c) 2015 Mobindustry. All rights reserved.
 //
 
-#import "PostImagesManager.h"
+#import "MUSPostImagesManager.h"
 #import "NSString+MUSPathToDocumentsdirectory.h"
 #import "MUSImageToPost.h"
 #import "DataBaseManager.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 
 
-static PostImagesManager *model = nil;
+static MUSPostImagesManager *model = nil;
 
-@implementation PostImagesManager
+@implementation MUSPostImagesManager
 
-+ (PostImagesManager*) manager {
++ (MUSPostImagesManager*) manager {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        model = [[PostImagesManager alloc] init];
+        model = [[MUSPostImagesManager alloc] init];
     });
     return  model;
 }

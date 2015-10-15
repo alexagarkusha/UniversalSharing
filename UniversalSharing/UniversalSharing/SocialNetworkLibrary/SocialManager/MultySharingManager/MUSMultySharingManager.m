@@ -10,7 +10,7 @@
 #import "MUSSocialNetwork.h"
 #import "DataBaseManager.h"
 #import "MUSDatabaseRequestStringsHelper.h"
-#import "PostImagesManager.h"
+#import "MUSPostImagesManager.h"
 #import "NSString+MUSReasonNameOfPost.h"
 #import "NSString+MUSSocialNetworkNameOfPost.h"
 #import "SocialManager.h"

@@ -90,7 +90,7 @@
     } else {
         [_imageUrlsArray removeAllObjects];
     }
-    _imageUrlsArray = [[PostImagesManager manager] saveImagesToDocumentsFolderAndGetArrayWithImagesUrls: _imagesArray];
+    _imageUrlsArray = [[MUSPostImagesManager manager] saveImagesToDocumentsFolderAndGetArrayWithImagesUrls: _imagesArray];
 }
 
 

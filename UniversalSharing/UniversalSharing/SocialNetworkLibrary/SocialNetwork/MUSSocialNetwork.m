@@ -15,7 +15,7 @@
 #import "NSString+MUSPathToDocumentsdirectory.h"
 #import "NSError+MUSError.h"
 #import "MUSDatabaseRequestStringsHelper.h"
-#import "PostImagesManager.h"
+#import "MUSPostImagesManager.h"
 #import "MUSInternetConnectionManager.h"
 
 @implementation MUSSocialNetwork
@@ -57,7 +57,7 @@
         
         [self obtainUserInfoFromNetworkWithComplition:^(MUSSocialNetwork* result, NSError *error) {
             
-            [[PostImagesManager manager] removeImageFromFileManagerByImagePath: deleteImageFromFolder];
+            [[MUSPostImagesManager manager] removeImageFromFileManagerByImagePath: deleteImageFromFolder];
             [[DataBaseManager sharedManager] editObjectAtDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUpdateUser: result.currentUser]];
             
         }];
