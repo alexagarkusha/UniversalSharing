@@ -15,18 +15,7 @@
 
 @end
 
-
 @implementation MUSUserProfileCell
-
-
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-}
-
-- (NSString *)reuseIdentifier{
-    return [MUSUserProfileCell cellID];
-}
 
 + (NSString*) cellID {
     return NSStringFromClass([self class]);
@@ -45,19 +34,17 @@
     }
 }
 
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+}
+
+- (NSString *)reuseIdentifier{
+    return [MUSUserProfileCell cellID];
+}
 
 - (void) configurationGeneralUserInfoTableViewCellWithUser: (MUSUser*) currentUser andCurrentProperty : (NSString*) userProperty {
-    
-    //self.userPropertyLabel.text = [userProperty uppercaseString];
-   
     self.userPropertyLabel.text = [userProperty stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:[[userProperty substringToIndex:1] uppercaseString]];
-    
-    
     NSString *userPropertyInfoString = [currentUser valueForKey:userProperty];
-    
-    if ([userProperty isEqualToString:@"dateOfBirth"]) {
-        self.userPropertyLabel.text = @"Date of birthday";
-    }
     
     if (userPropertyInfoString.length > 0) {
         self.userPropertyInfoLabel.text = userPropertyInfoString;

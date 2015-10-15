@@ -19,7 +19,6 @@
 
 @implementation MUSAccountTableViewCell
 
-
 + (NSString*) cellID {
     return NSStringFromClass([self class]);
 }
@@ -38,9 +37,9 @@
 }
 
 - (void) configurateCellForNetwork:(MUSSocialNetwork *)socialNetwork {
-        self.networkIconImageView.image = [UIImage imageNamed:socialNetwork.icon];
-        self.loginLabel.text = socialNetwork.title;
-        self.loginLabel.textColor = [UIColor blackColor];
+    self.networkIconImageView.image = [UIImage imageNamed:socialNetwork.icon];
+    self.loginLabel.text = socialNetwork.title;
+    self.loginLabel.textColor = [UIColor blackColor];
 }
 
 @end
