@@ -47,7 +47,7 @@
                     </view>
                     <connections>
                         <segue destination="57R-w2-ySy" kind="show" identifier="Location" id="IAC-iQ-XMw"/>
-                        <segue destination="Mqx-YE-PKH" kind="show" identifier="goToDitailPostCollectionViewController" id="2bR-Rr-0pP"/>
+                        <segue destination="Mqx-YE-PKH" kind="show" identifier="goToMediaGalleryViewController" id="2bR-Rr-0pP"/>
                         <segue destination="xqB-o5-zWK" kind="show" identifier="goToInfo" id="95f-aa-OgA"/>
                     </connections>
                 </viewController>
@@ -506,12 +506,13 @@
                     <connections>
                         <outlet property="buttonLocation" destination="25b-FR-Yj7" id="ch9-nc-jya"/>
                         <outlet property="galeryView" destination="O2b-Bf-7wZ" id="alu-vP-TdG"/>
+                        <outlet property="heightGaleryViewLayoutConstraint" destination="LuJ-fo-3YT" id="i8D-Gu-BPU"/>
                         <outlet property="iconImageView" destination="4kG-OY-BXB" id="hvZ-1l-PJt"/>
                         <outlet property="mainGestureRecognizer" destination="Q3Z-Zc-VoA" id="hSm-6a-V0c"/>
                         <outlet property="shareButtonOutlet" destination="pvH-Dt-bbm" id="uqW-1D-Imf"/>
                         <outlet property="toolBarLayoutConstraint" destination="EYT-lS-seF" id="ZVx-Dh-kc3"/>
                         <segue destination="57R-w2-ySy" kind="show" identifier="Location" id="GpK-3N-ETI"/>
-                        <segue destination="Mqx-YE-PKH" kind="show" identifier="goToShowImages" id="ujR-wZ-DmO"/>
+                        <segue destination="Mqx-YE-PKH" kind="show" identifier="goToMediaGalleryViewController" id="ujR-wZ-DmO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
@@ -637,8 +638,8 @@
         <image name="upload_icon" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ujR-wZ-DmO"/>
-        <segue reference="GpK-3N-ETI"/>
+        <segue reference="2bR-Rr-0pP"/>
+        <segue reference="IAC-iQ-XMw"/>
         <segue reference="X1d-ia-zmN"/>
     </inferredMetricsTieBreakers>
 </document>

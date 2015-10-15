@@ -99,8 +99,7 @@
 }
 
 - (void)addPhotoToCollectionForFirstSection:(id)sender {
-    [[NSNotificationCenter defaultCenter] postNotificationName:notificationImagePickerForCollection object:nil];
-
+    [[NSNotificationCenter defaultCenter] postNotificationName:MUSShowImagePickerForAddImageInCollectionView object:nil];
 }
 
 

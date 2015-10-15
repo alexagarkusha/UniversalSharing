@@ -66,6 +66,26 @@
     return copyPost;
 }
 
+
+- (void) clear {
+    _postID = @"";
+    _postDescription = @"";
+    _imagesArray = [[NSMutableArray alloc] init];
+    _likesCount = 0;
+    _commentsCount = 0;
+    _placeID = @"";
+    _networkType = MUSAllNetworks;
+    _primaryKey = 0;
+    _imageUrlsArray = [[NSMutableArray alloc] init];
+    _dateCreate = @"";
+    _place = [MUSPlace create];
+    _networkPostsArray = [[NSMutableArray alloc] init];
+    _networkPostIdsArray = [[NSMutableArray alloc] init];
+    _longitude = @"";
+    _latitude = @"";
+}
+
+
 - (void) updateAllNetworkPostsFromDataBaseForCurrentPost {
     if (!_networkPostsArray) {
         _networkPostsArray = [[NSMutableArray alloc] init];

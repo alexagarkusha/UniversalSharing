@@ -15,7 +15,7 @@
 
 NSString *const MUSApp_SegueIdentifier_GoToUserDetailViewController = @"goToInfo";
 NSString *const MUSApp_SegueIdentifier_GoToDetailPostViewController = @"DetailPostViewController";
-NSString *const MUSApp_SegueIdentifier_GoToMediaGalleryViewController = @"goToDitailPostCollectionViewController";
+NSString *const MUSApp_SegueIdentifier_GoToMediaGalleryViewController = @"goToMediaGalleryViewController";
 
 #pragma mark TextView
 
@@ -66,10 +66,10 @@ NSString *const MUSApp_MUSPhotoManager_Error_NO_Camera = @"Device has no camera"
 NSInteger const MUSApp_MUSPhotoManager_Error_NO_Camera_Code = 1500;
 NSString *const MUSApp_MUSPhotoManager_Alert_Title_Share_Photo = @"Share photo";
 
-#warning NEED TO DELETE THIS NOTIFICATIONS AND NEED TO CHANGE LOGIC IN SHARESCREEN AND COLLECTIONVC
+NSString *const MUSShowImagePickerForAddImageInCollectionView = @"MUSShowImagePickerForAddImageInCollectionView";
+NSString *const MUSUpdateCollectionViewNotification = @"MUSUpdateCollectionViewNotification";
 
-NSString *const notificationImagePickerForCollection = @"notificationImagePickerForCollection";
-NSString *const notificationUpdateCollection = @"notificationUpdateCollection";
+
 
 #pragma mark - MUSGaleryView
 

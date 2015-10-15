@@ -150,7 +150,7 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 
 - (void) doBack:(id)sender {
-    [[NSNotificationCenter defaultCenter] postNotificationName:notificationUpdateCollection object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:MUSUpdateCollectionViewNotification object:nil];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -168,7 +168,7 @@ static NSString * const reuseIdentifier = @"Cell";
             [_topBar initializeCounterImages: [NSString stringWithFormat:@"%ld from %lu",(long)visibleIndexPath.row + 1,(unsigned long)[self.currentPost.imagesArray  count]]];
         } else {
             [_topBar initializeCounterImages: [NSString stringWithFormat:@"%ld from %lu",(long) 0, (unsigned long)[self.currentPost.imagesArray  count]]];
-            [[NSNotificationCenter defaultCenter] postNotificationName:notificationUpdateCollection object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:MUSUpdateCollectionViewNotification object:nil];
             [self.navigationController popViewControllerAnimated:YES];
         }
     }
