@@ -38,7 +38,6 @@
     
 }
 
-
 -(UIView*)loadViewFromNib {
     NSArray *nibObjects = [[NSBundle mainBundle]loadNibNamed:@"MUSToolBarForDetailCollectionView" owner:self options:nil];
     return [nibObjects firstObject];

@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MUSTopBarForDetailCollectionView">
             <connections>
                 <outlet property="buttonBack" destination="scf-Qr-vop" id="g8K-vB-jBd"/>
-                <outlet property="buttonConstrain" destination="AVw-1z-mVZ" id="zyS-Wa-3jg"/>
-                <outlet property="labelConstrain" destination="CG3-dQ-izO" id="pzV-fH-xCB"/>
-                <outlet property="lableCountImages" destination="WNj-F9-7A7" id="CaJ-iU-MON"/>
+                <outlet property="buttonTopConstraint" destination="AVw-1z-mVZ" id="syD-Sw-8K5"/>
+                <outlet property="counterImagesLabel" destination="WNj-F9-7A7" id="Aab-Ec-EIL"/>
+                <outlet property="labelTopConstraint" destination="CG3-dQ-izO" id="WfO-yi-MsV"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

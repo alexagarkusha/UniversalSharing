@@ -10,15 +10,11 @@
 #import "UIImage+LoadImageFromDataBase.h"
 #import "ConstantsApp.h"
 
-@interface MUSTopBarForDetailCollectionView()
+@interface MUSTopBarForDetailCollectionView()//change name
 
-@property (weak, nonatomic)     IBOutlet    NSLayoutConstraint* buttonConstrain;
-@property (weak, nonatomic)     IBOutlet    NSLayoutConstraint* labelConstrain;
-//@property (weak, nonatomic)     IBOutlet    NSLayoutConstraint* imageViewConstrain;
-//@property (weak, nonatomic)     IBOutlet    NSLayoutConstraint *showUserProfileButtonTopConstraint;
-
-@property (weak, nonatomic)     IBOutlet    UILabel *lableCountImages;
-//@property (weak, nonatomic)     IBOutlet    UIImageView *imageView;
+@property (weak, nonatomic)     IBOutlet    NSLayoutConstraint* buttonTopConstraint;
+@property (weak, nonatomic)     IBOutlet    NSLayoutConstraint* labelTopConstraint;
+@property (weak, nonatomic)     IBOutlet    UILabel *counterImagesLabel;
 //===
 @property (assign, nonatomic) BOOL hideProperties;
 @property (strong, nonatomic) UIView *view;
@@ -45,13 +41,10 @@
 
 - (void) xibSetup {
     _hideProperties = NO;
-
     self.view = [self loadViewFromNib];
     self.view.frame = self.bounds;
-    [self addSubview:self.view];
-    
+    [self addSubview:self.view];    
 }
-
 
 -(UIView*)loadViewFromNib {
     NSArray *nibObjects = [[NSBundle mainBundle]loadNibNamed:@"MUSTopBarForDetailCollectionView" owner:self options:nil];
@@ -65,59 +58,29 @@
 }
 
 - (void) initializeLableCountImages:(NSString *)stringLableCountImages {
-    self.lableCountImages.textColor = BROWN_COLOR;
-    self.lableCountImages.text = stringLableCountImages;
+    self.counterImagesLabel.textColor = BROWN_COLOR;
+    self.counterImagesLabel.text = stringLableCountImages;
 }
-
-//- (void) initializeImageView:(NSString *)stringPathImage {
-//    UIImage *profileImage = [[UIImage alloc] init];
-//    if (stringPathImage.length > 0) {
-//        profileImage = [profileImage loadImageFromDataBase: stringPathImage];
-//        [self.showUserProfileButton setImage: profileImage forState:UIControlStateNormal];
-//    } else {
-//        [self.showUserProfileButton setImage: [UIImage imageNamed:musAppButton_ImageName_UnknownUser]  forState:UIControlStateNormal];
-//    }
-//
-//    
-//    
-////    [self.imageView loadImageFromDataBase: stringPathImage];
-////    [self.imageView cornerRadius: CGRectGetHeight(self.imageView.frame) / 2 andBorderWidth: 1.5 withBorderColor: [UIColor whiteColor]];
-//}
 
 - (void) hidePropertiesWithAnimation {
     if (!_hideProperties) {
-    
-            _labelConstrain.constant -= _view.frame.size.height;
-            //_imageViewConstrain.constant -=  _view.frame.size.height;
-           // _showUserProfileButtonTopConstraint.constant -= _view.frame.size.height;
-            _buttonConstrain.constant -= _view.frame.size.height;
-        
+        [self.view layoutIfNeeded];
+            _labelTopConstraint.constant -= _view.frame.size.height;
+            _buttonTopConstraint.constant -= _view.frame.size.height;
         [UIView animateWithDuration: 0.4  animations:^{
             [self.view layoutIfNeeded];
-            [self.view setNeedsLayout];
         }];
         [UIView commitAnimations];
-       
     } else  {
-        _labelConstrain.constant += _view.frame.size.height;
-        //_imageViewConstrain.constant +=  _view.frame.size.height;
-        //_showUserProfileButtonTopConstraint.constant += _view.frame.size.height;
-        _buttonConstrain.constant += _view.frame.size.height;
-       
+        [self.view layoutIfNeeded];
+        _labelTopConstraint.constant += _view.frame.size.height;
+        _buttonTopConstraint.constant += _view.frame.size.height;
         [UIView animateWithDuration: 0.4  animations:^{
             [self.view layoutIfNeeded];
-            [self.view setNeedsLayout];
         }];
         [UIView commitAnimations];
-        
     }
-    
     _hideProperties = (_hideProperties)? NO : YES;
-
-    
-}
-- (IBAction)showUserProfileButtonTouch:(id)sender {
-
 }
 
 @end
