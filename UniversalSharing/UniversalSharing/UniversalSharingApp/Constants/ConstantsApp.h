@@ -174,6 +174,8 @@ FOUNDATION_EXPORT NSString *const MUSApp_MUSDeleteButton_Image_Name;
 
 FOUNDATION_EXPORT NSString *const MUSApp_ReachabilityManager_Host_Name;
 
+#pragma mark - MUSLocationManager
 
+FOUNDATION_EXPORT NSString *const MUSApp_MUSLocationManager_Address_Unknown;
 
 @end
