@@ -66,17 +66,11 @@ NSString *const MUSApp_MUSPhotoManager_Error_NO_Camera = @"Device has no camera"
 NSInteger const MUSApp_MUSPhotoManager_Error_NO_Camera_Code = 1500;
 NSString *const MUSApp_MUSPhotoManager_Alert_Title_Share_Photo = @"Share photo";
 
-//<<<<<<< HEAD
+
 #pragma mark - Notifications
-//
-//NSString *const notificationImagePickerForCollection = @"notificationImagePickerForCollection";
-//NSString *const MUSUpdateCollectionNotification = @"MUSUpdateCollectionNotification";
-//=======
+
 NSString *const MUSShowImagePickerForAddImageInCollectionView = @"MUSShowImagePickerForAddImageInCollectionView";
 NSString *const MUSUpdateCollectionViewNotification = @"MUSUpdateCollectionViewNotification";
-
-
-//>>>>>>> 45cecca7282086d89dc88b190980f2512a190ad6
 
 #pragma mark - MUSGaleryView
 
