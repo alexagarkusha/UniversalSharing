@@ -66,10 +66,10 @@ NSString *const MUSApp_MUSPhotoManager_Error_NO_Camera = @"Device has no camera"
 NSInteger const MUSApp_MUSPhotoManager_Error_NO_Camera_Code = 1500;
 NSString *const MUSApp_MUSPhotoManager_Alert_Title_Share_Photo = @"Share photo";
 
-#warning NEED TO DELETE THIS NOTIFICATIONS AND NEED TO CHANGE LOGIC IN SHARESCREEN AND COLLECTIONVC
+#pragma mark - Notifications
 
 NSString *const notificationImagePickerForCollection = @"notificationImagePickerForCollection";
-NSString *const notificationUpdateCollection = @"notificationUpdateCollection";
+NSString *const MUSUpdateCollectionNotification = @"MUSUpdateCollectionNotification";
 
 #pragma mark - MUSGaleryView
 
@@ -148,5 +148,10 @@ NSString *const MUSApp_ReachabilityManager_Host_Name = @"www.google.com";
 #pragma mark - MUSLocationManager
 
 NSString *const MUSApp_MUSLocationManager_Address_Unknown = @"Location is not defined";
+
+#pragma mark - AppDelegate
+
+NSString *const MUSApp_AppDelegate_Url_Facebook = @"fb";
+NSString *const MUSApp_AppDelegate_Url_Vk = @"vk";
 
 @end

@@ -61,7 +61,7 @@ static NSString *LSCollectionViewCellIdentifier = @"Cell";
 }
 
 - (void) awakeFromNib {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCollectionView) name:notificationUpdateCollection object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCollectionView) name:MUSUpdateCollectionNotification object:nil];
     NSString *cellIdentifier = [MUSCollectionViewCell customCellID];
     [self.collectionView registerNib:[UINib nibWithNibName: cellIdentifier bundle: nil] forCellWithReuseIdentifier: cellIdentifier];
     self.collectionView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);

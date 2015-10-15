@@ -8,12 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-//#warning "Check images in project. Move them to .xcassets or create new folder"
-
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-
 
 @end
 

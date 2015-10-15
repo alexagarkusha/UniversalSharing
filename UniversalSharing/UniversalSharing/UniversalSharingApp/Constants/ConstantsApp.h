@@ -93,11 +93,11 @@ FOUNDATION_EXPORT NSInteger const MUSApp_MUSPhotoManager_Error_NO_Camera_Code;
 
 FOUNDATION_EXPORT NSString *const MUSApp_MUSPhotoManager_Alert_Title_Share_Photo;
 
+#pragma mark - Notifications
 
+FOUNDATION_EXPORT NSString *const MUSUpdateCollectionNotification;
+#warning "change"
 
-#warning NEED TO DELETE THIS NOTIFICATIONS AND NEED TO CHANGE LOGIC IN SHARESCREEN AND COLLECTIONVC
-
-FOUNDATION_EXPORT NSString *const notificationUpdateCollection;
 FOUNDATION_EXPORT NSString *const notificationImagePickerForCollection;
 
 #pragma mark - MUSGaleryView
@@ -177,5 +177,10 @@ FOUNDATION_EXPORT NSString *const MUSApp_ReachabilityManager_Host_Name;
 #pragma mark - MUSLocationManager
 
 FOUNDATION_EXPORT NSString *const MUSApp_MUSLocationManager_Address_Unknown;
+
+#pragma mark - AppDelegate
+
+FOUNDATION_EXPORT NSString *const MUSApp_AppDelegate_Url_Facebook;
+FOUNDATION_EXPORT NSString *const MUSApp_AppDelegate_Url_Vk;
 
 @end
