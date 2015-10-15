@@ -135,6 +135,8 @@ FOUNDATION_EXPORT CGFloat const MUSApp_MUSDetailPostViewController_HeightOfHeade
 #pragma mark - MUSPostLocationCell
 
 FOUNDATION_EXPORT NSInteger const MUSApp_MUSPostLocationCell_HeightOfCell;
+FOUNDATION_EXPORT double const MUSApp_MUSPostLocationCell_CLLocationDistance;
+FOUNDATION_EXPORT NSString *const MUSApp_MUSPostLocationCell_StringNull;
 
 #pragma mark - MUSUserDetailViewController
 
@@ -161,5 +163,11 @@ FOUNDATION_EXPORT NSString *const MUSApp_MUSToolBarForMediaGalleryViewController
 #pragma mark - MUSTopBarForMediaGalleryViewController
 
 FOUNDATION_EXPORT NSString *const MUSApp_MUSTopBarForMediaGalleryViewController_NibName;
+
+
+
+
+
+
 
 @end
