@@ -12,6 +12,7 @@
 @interface NSString (MUSPathToDocumentsdirectory)
 
 - (NSString*) obtainPathToDocumentsFolder :(NSString*) pathFromDataBase;
+
 - (NSString*) saveImageOfUserToDocumentsFolder :(NSString*) photoURL;
 
 @end
