@@ -10,7 +10,7 @@
 #import "MUSCommentsAndLikesCell.h"
 #import "MUSPostDescriptionCell.h"
 #import "MUSPostLocationCell.h"
-#import "ConstantsApp.h"
+#import "MUSConstantsApp.h"
 #import "MUSMediaGalleryViewController.h"
 #import "MEExpandableHeaderView.h"
 #import "MUSPopUpForSharing.h"

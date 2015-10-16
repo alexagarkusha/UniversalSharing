@@ -7,7 +7,7 @@
 //
 
 #import "MUSAddPhotoButton.h"
-#import "ConstantsApp.h"
+#import "MUSConstantsApp.h"
 
 @implementation MUSAddPhotoButton
 

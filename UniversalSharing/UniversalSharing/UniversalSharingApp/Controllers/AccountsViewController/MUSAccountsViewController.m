@@ -10,7 +10,7 @@
 #import "MUSAccountTableViewCell.h"
 #import "MUSUserDetailViewController.h"
 #import "MUSSocialNetworkLibraryHeader.h"
-#import "ConstantsApp.h"
+#import "MUSConstantsApp.h"
 #import "ReachabilityManager.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 

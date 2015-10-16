@@ -7,7 +7,7 @@
 //
 
 #import "MUSReasonCommentsAndLikesCell.h"
-#import "ConstantsApp.h"
+#import "MUSConstantsApp.h"
 #import "UIImage+SocialNetworkIcons.h"
 #import <QuartzCore/QuartzCore.h>
 #import "NSString+DateStringFromUNIXTimestamp.h"

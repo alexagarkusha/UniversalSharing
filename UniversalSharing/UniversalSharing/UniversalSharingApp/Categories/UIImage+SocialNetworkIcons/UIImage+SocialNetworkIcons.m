@@ -7,7 +7,7 @@
 //
 
 #import "UIImage+SocialNetworkIcons.h"
-#import "ConstantsApp.h"
+#import "MUSConstantsApp.h"
 
 @implementation UIImage (SocialNetworkIcons)
 

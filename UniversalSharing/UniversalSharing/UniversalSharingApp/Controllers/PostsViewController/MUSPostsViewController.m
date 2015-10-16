@@ -9,7 +9,7 @@
 #import "MUSPostsViewController.h"
 #import "MUSDetailPostViewController.h"
 #import "MUSPostCell.h"
-#import "ConstantsApp.h"
+#import "MUSConstantsApp.h"
 #import "MUSSocialManager.h"
 #import "MUSDataBaseManager.h"
 #import "MUSDetailPostViewController.h"

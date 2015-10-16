@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
-#import "ConstantsApp.h"
+#import "MUSConstantsApp.h"
 
 @interface MUSLocationManager : NSObject
 

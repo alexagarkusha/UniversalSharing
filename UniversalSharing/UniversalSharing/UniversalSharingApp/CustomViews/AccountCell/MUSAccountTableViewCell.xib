@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -11,11 +11,12 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DuU-I4-qvM">
                         <rect key="frame" x="8" y="8" width="34" height="34"/>
+                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="34" id="Kp1-Y2-qWC"/>
                             <constraint firstAttribute="height" constant="34" id="dPG-WE-g9H"/>
@@ -23,6 +24,7 @@
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="urR-Or-s7K">
                         <rect key="frame" x="50" y="10" width="260" height="32"/>
+                        <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="32" id="rCz-tL-Bj4"/>
                         </constraints>
@@ -31,6 +33,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
+                <animations/>
                 <constraints>
                     <constraint firstItem="DuU-I4-qvM" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="WmH-QW-a6c"/>
                     <constraint firstItem="urR-Or-s7K" firstAttribute="leading" secondItem="DuU-I4-qvM" secondAttribute="trailing" constant="8" id="csh-RA-Fyg"/>
@@ -39,6 +42,7 @@
                     <constraint firstItem="urR-Or-s7K" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="zAy-7G-DKp"/>
                 </constraints>
             </tableViewCellContentView>
+            <animations/>
             <connections>
                 <outlet property="loginLabel" destination="urR-Or-s7K" id="4zx-3c-vXw"/>
                 <outlet property="networkIconImageView" destination="DuU-I4-qvM" id="Yyj-J2-avA"/>

@@ -22,7 +22,7 @@
 #import "MUSDataBaseManager.h"
 #import "MUSConstantsForParseSocialNetworkObjects.h"
 #import "MUSConstantsForSocialNetworks.h"
-#import "ConstantsApp.h"
+#import "MUSConstantsApp.h"
 
 @interface VKNetwork () <VKSdkDelegate>
 @property (strong, nonatomic) UINavigationController *navigationController;

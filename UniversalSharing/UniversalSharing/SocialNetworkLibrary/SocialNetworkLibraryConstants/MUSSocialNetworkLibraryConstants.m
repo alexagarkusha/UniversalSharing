@@ -28,4 +28,7 @@ NSInteger const MUSConnectionErrorCode = 1030;
 
 NSString *const MUSErrorWithDomainUniversalSharing = @"Universal Sharing library";
 
+#pragma mark - ReachabilityManager
+
+NSString *const MUSReachabilityManager_Host_Name = @"www.google.com";
 
