@@ -7,7 +7,7 @@
 //
 
 #import "MUSShareViewController.h"
-#import "ConstantsApp.h"
+#import "MUSConstantsApp.h"
 #import "MUSSocialNetworkLibraryHeader.h"
 #import "MUSPhotoManager.h"
 #import "MUSLocationManager.h"

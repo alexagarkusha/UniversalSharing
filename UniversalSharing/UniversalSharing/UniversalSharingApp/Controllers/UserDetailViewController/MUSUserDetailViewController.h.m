@@ -11,7 +11,7 @@
 #import "MUSUserProfileCell.h"
 #import "MUSSocialNetworkLibraryHeader.h"
 #import "MUSDataBaseManager.h"
-#import "ConstantsApp.h"
+#import "MUSConstantsApp.h"
 
 @interface MUSUserDetailViewController () <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
 /*!

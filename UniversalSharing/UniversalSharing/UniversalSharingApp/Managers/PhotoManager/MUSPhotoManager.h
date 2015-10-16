@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ConstantsApp.h"
+#import "MUSConstantsApp.h"
 #import <UIKit/UIKit.h>
 
 @interface MUSPhotoManager : NSObject

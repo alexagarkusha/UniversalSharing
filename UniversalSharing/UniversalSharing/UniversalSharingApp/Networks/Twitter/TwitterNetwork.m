@@ -17,7 +17,7 @@
 #import "MUSNetworkPost.h"
 #import "NSString+MUSCurrentDate.h"
 #import "MUSPostManager.h"
-#import "ConstantsApp.h"
+#import "MUSConstantsApp.h"
 #import "MUSConstantsForParseSocialNetworkObjects.h"
 #import "MUSDatabaseRequestStringsHelper.h"
 #import "MUSDataBaseManager.h"

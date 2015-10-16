@@ -9,7 +9,7 @@
 #import "MEExpandableHeaderView.h"
 //#import "UIImage+ImageEffects.h"
 #import <QuartzCore/QuartzCore.h>
-#import "ConstantsApp.h"
+#import "MUSConstantsApp.h"
 
 @interface MEExpandableHeaderView()<UIScrollViewDelegate>
 

@@ -9,7 +9,7 @@
 #import "MUSPostLocationCell.h"
 #import <MapKit/MapKit.h>
 #import "MUSAnnotation.h"
-#import "ConstantsApp.h"
+#import "MUSConstantsApp.h"
 
 @interface MUSPostLocationCell () <MKMapViewDelegate>
 

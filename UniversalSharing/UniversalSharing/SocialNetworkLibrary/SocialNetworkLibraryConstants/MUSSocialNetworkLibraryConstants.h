@@ -64,3 +64,9 @@ FOUNDATION_EXPORT NSInteger const MUSConnectionErrorCode;
 
 FOUNDATION_EXPORT NSString *const MUSErrorWithDomainUniversalSharing;
 
+#pragma mark - ReachabilityManager
+
+FOUNDATION_EXPORT NSString *const MUSReachabilityManager_Host_Name;
+
+
+

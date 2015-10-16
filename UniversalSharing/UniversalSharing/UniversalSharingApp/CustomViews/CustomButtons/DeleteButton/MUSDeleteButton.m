@@ -8,7 +8,7 @@
 
 #import "MUSDeleteButton.h"
 #import "UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.h"
-#import "ConstantsApp.h"
+#import "MUSConstantsApp.h"
 
 @implementation MUSDeleteButton
 

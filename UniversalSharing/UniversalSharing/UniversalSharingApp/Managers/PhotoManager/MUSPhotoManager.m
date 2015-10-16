@@ -10,7 +10,7 @@
 #import <CoreImage/CoreImage.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <MobileCoreServices/UTCoreTypes.h>
-#import "ConstantsApp.h"
+#import "MUSConstantsApp.h"
 #import "MUSImageToPost.h"
 #import "UIImage+Scale.h"
 

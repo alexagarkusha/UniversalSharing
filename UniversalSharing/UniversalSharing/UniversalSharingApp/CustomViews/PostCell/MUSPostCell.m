@@ -9,7 +9,7 @@
 //
 
 #import "MUSPostCell.h"
-#import "ConstantsApp.h"
+#import "MUSConstantsApp.h"
 #import "MUSImageToPost.h"
 #import "UIImageView+RoundImage.h"
 #import "UIImageView+CornerRadiusBorderWidthAndBorderColorImageView.h"

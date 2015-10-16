@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import "MUSSocialNetworkLibraryHeader.h"
 #import "ReachabilityManager.h"
-#import "ConstantsApp.h"
+#import "MUSConstantsApp.h"
 #import "FacebookNetwork.h"
 #import "TwitterNetwork.h"
 #import "VKNetwork.h"
