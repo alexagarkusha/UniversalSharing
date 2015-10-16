@@ -78,10 +78,7 @@ static TwitterNetwork *model = nil;
  Initiation properties of TwitterNetwork without session
  */
 - (void) initiationPropertiesWithoutSession {
-//    self.title = MUSTwitterTitle;
-//    self.icon = MUSTwitterIconName;
     self.isLogin = NO;
-    //self.currentUser = nil;
 }
 
 /*!
@@ -89,9 +86,6 @@ static TwitterNetwork *model = nil;
  */
 - (void) initiationPropertiesWithSession {
     self.isLogin = YES;
-//    self.icon = MUSTwitterIconName;
-//    //self.currentUser = [[[MUSDataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType: self.networkType]]firstObject];
-//    self.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
 }
 
 #pragma mark - login
@@ -151,8 +145,9 @@ static TwitterNetwork *model = nil;
          if (user) {
              [weakSelf createUser: user];
              weakSelf.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
-             if (!weakSelf.isLogin)
-                 [weakSelf.currentUser insertIntoDataBase];
+             
+             [weakSelf.currentUser insertIntoDataBase];
+             
              dispatch_async(dispatch_get_main_queue(), ^{
                  weakSelf.isLogin = YES;
                  block(weakSelf,nil);
@@ -518,7 +513,10 @@ static TwitterNetwork *model = nil;
  @param dictionary takes dictionary from twitter network.
  */
 - (void) createUser : (TWTRUser*) userDictionary {
-    self.currentUser = [MUSUser create];
+    if (!self.currentUser) {
+        self.currentUser = [MUSUser create];
+    }
+    
     self.currentUser.clientID = userDictionary.userID;
     self.currentUser.lastName = userDictionary.screenName;
     self.currentUser.firstName = userDictionary.name;

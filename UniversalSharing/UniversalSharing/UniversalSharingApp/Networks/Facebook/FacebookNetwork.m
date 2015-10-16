@@ -140,9 +140,9 @@ static FacebookNetwork *model = nil;
                                           NSError *error) {
         [weakSelf createUser: result];
         weakSelf.title = [NSString stringWithFormat:@"%@  %@", weakSelf.currentUser.firstName, weakSelf.currentUser.lastName];
-        if (!weakSelf.isLogin) {            
-            [weakSelf.currentUser insertIntoDataBase];
-        }
+        
+        [weakSelf.currentUser insertIntoDataBase];
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             weakSelf.isLogin = YES;
             block(weakSelf, nil);
@@ -518,7 +518,9 @@ static FacebookNetwork *model = nil;
  @param dictionary takes dictionary from facebook network.
  */
 - (void) createUser : (NSDictionary*) result {
-    self.currentUser = [MUSUser create];
+    if (!self.currentUser) {
+        self.currentUser = [MUSUser create];
+    }
     
     if ([result isKindOfClass: [NSDictionary class]]) {
         self.currentUser.clientID = [result objectForKey : MUSFacebookParseUser_ID];
