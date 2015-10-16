@@ -40,6 +40,7 @@
     self.networkIconImageView.image = [UIImage imageNamed:socialNetwork.icon];
     self.loginLabel.text = socialNetwork.title;
     self.loginLabel.textColor = [UIColor blackColor];
+    self.backgroundColor = [UIColor clearColor];
 }
 
 @end

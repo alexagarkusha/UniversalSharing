@@ -36,9 +36,6 @@
 
 static TwitterNetwork *model = nil;
 
-
-#warning "Check getter in Facebook class and add the same logic"
-
 #pragma mark Singleton Method
 
 @implementation TwitterNetwork
@@ -48,6 +45,14 @@ static TwitterNetwork *model = nil;
         model = [[TwitterNetwork alloc] init];
     });
     return  model;
+}
+
+- (NSString *)icon {
+    return MUSTwitterIconName;
+}
+
+- (NSString *)title {
+    return self.isLogin ? [NSString stringWithFormat:@"%@ %@", self.currentUser.firstName, self.currentUser.lastName] : MUSTwitterTitle;
 }
 
 - (instancetype) init {
@@ -73,8 +78,8 @@ static TwitterNetwork *model = nil;
  Initiation properties of TwitterNetwork without session
  */
 - (void) initiationPropertiesWithoutSession {
-    self.title = MUSTwitterTitle;
-    self.icon = MUSTwitterIconName;
+//    self.title = MUSTwitterTitle;
+//    self.icon = MUSTwitterIconName;
     self.isLogin = NO;
     //self.currentUser = nil;
 }
@@ -84,9 +89,9 @@ static TwitterNetwork *model = nil;
  */
 - (void) initiationPropertiesWithSession {
     self.isLogin = YES;
-    self.icon = MUSTwitterIconName;
-    //self.currentUser = [[[MUSDataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType: self.networkType]]firstObject];
-    self.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
+//    self.icon = MUSTwitterIconName;
+//    //self.currentUser = [[[MUSDataBaseManager sharedManager] obtainUsersFromDataBaseWithRequestString:[MUSDatabaseRequestStringsHelper stringForUserWithNetworkType: self.networkType]]firstObject];
+//    self.title = [NSString stringWithFormat:@"%@  %@", self.currentUser.firstName, self.currentUser.lastName];
 }
 
 #pragma mark - login
