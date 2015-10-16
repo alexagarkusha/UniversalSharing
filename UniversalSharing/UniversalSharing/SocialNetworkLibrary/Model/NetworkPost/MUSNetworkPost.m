@@ -9,6 +9,8 @@
 #import "MUSNetworkPost.h"
 #import "MUSDataBaseManager.h"
 #import "MUSDatabaseRequestStringsHelper.h"
+#import "NSString+MUSCurrentDate.h"
+
 
 @implementation MUSNetworkPost
 
@@ -49,6 +51,21 @@
 
 - (void) update {
     [[MUSDataBaseManager sharedManager] editObjectAtDataBaseWithRequestString: [MUSDatabaseRequestStringsHelper stringForUpdateNetworkPost : self]];
+}
+
+- (void) updateByNewNetworkPost: (MUSNetworkPost*) newNetworkPost {
+    if (_networkType == newNetworkPost.networkType) {
+        if (newNetworkPost.reason != MUSConnect) {
+            return;
+        } else {
+            _reason = newNetworkPost.reason;
+            _postID = newNetworkPost.postID;
+            _likesCount = newNetworkPost.likesCount;
+            _commentsCount = newNetworkPost.commentsCount;
+            _dateCreate = [NSString currentDate];
+            [self update];
+        }
+    }
 }
 
 

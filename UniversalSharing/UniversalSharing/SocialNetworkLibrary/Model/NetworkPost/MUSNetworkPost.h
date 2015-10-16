@@ -40,4 +40,6 @@
 
 - (void) update;
 
+- (void) updateByNewNetworkPost: (MUSNetworkPost*) newNetworkPost;
+
 @end

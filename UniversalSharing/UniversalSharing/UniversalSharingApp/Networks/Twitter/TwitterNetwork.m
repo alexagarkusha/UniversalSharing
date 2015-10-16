@@ -19,8 +19,6 @@
 #import "MUSPostManager.h"
 #import "MUSConstantsApp.h"
 #import "MUSConstantsForParseSocialNetworkObjects.h"
-#import "MUSDatabaseRequestStringsHelper.h"
-#import "MUSDataBaseManager.h"
 #import "MUSConstantsForSocialNetworks.h"
 
 

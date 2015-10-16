@@ -13,7 +13,6 @@
 #import "MUSPostImagesManager.h"
 #import "MUSSocialManager.h"
 #import "MUSPostManager.h"
-#import "NSString+MUSCurrentDate.h"
 #import "MUSProgressBar.h"
 #import "MUSProgressBarEndLoading.h"
 
@@ -138,22 +137,10 @@ static MUSMultySharingManager *model = nil;
 
 - (void) updateCurrentNetworkPost : (MUSNetworkPost*) newNetworkPost andArrayOfOldNetworkPosts : (NSMutableArray*) arrayOfOldPosts {
     
-#warning "Mark to discuss"
-    
     for (MUSNetworkPost *currentNetworkPost in arrayOfOldPosts) {
-        if (currentNetworkPost.networkType == newNetworkPost.networkType) {
-            if (newNetworkPost.reason != MUSConnect) {
-                return;
-            } else {
-                currentNetworkPost.reason = newNetworkPost.reason;
-                currentNetworkPost.postID = newNetworkPost.postID;
-                currentNetworkPost.likesCount = newNetworkPost.likesCount;
-                currentNetworkPost.commentsCount = newNetworkPost.commentsCount;
-                currentNetworkPost.dateCreate = [NSString currentDate];
-                [currentNetworkPost update];
-            }
-        }
+        [currentNetworkPost updateByNewNetworkPost: newNetworkPost];
     }
+    
 }
 
 - (void) checkPostsQueue {

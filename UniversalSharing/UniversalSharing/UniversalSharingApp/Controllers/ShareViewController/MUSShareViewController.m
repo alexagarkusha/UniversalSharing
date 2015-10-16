@@ -459,7 +459,6 @@
 
 
 #pragma mark - Keyboard Show/Hide
-#warning "order [self.view layoutIfNeeded];"
 
 - (void) keyboardWillShow: (NSNotification*) notification {
     CGRect initialFrame = [[[notification userInfo] objectForKey : UIKeyboardFrameEndUserInfoKey] CGRectValue];
@@ -483,7 +482,6 @@
     [UIView animateWithDuration: 0.3  animations:^{
         [self.view layoutIfNeeded];
         [self.galeryView reloadCollectionView];
-        //[self.view setNeedsLayout];
     }];
     [UIView commitAnimations];
 }
@@ -502,7 +500,6 @@
     [UIView animateWithDuration: 0.4 animations:^{
         [self.view layoutIfNeeded];
         [self.galeryView reloadCollectionView];
-        //[self.view setNeedsLayout];
     }];
     [UIView commitAnimations];
 }
