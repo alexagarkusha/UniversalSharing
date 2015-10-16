@@ -45,10 +45,8 @@ static MUSSocialManager *model = nil;
 
 - (void) p_configureAccounts {
     
-    if (self.networksDictinary.count == 0) {
-        NSAssert(NO, @"Setup networks first");
-    }
-    
+    NSAssert(self.networksDictinary.count == 0, @"Setup networks first");
+
     NSMutableArray *networksArray = [NSMutableArray array];
     
     NSArray *keys = [[self.networksDictinary allKeys]sortedArrayUsingSelector:@selector(compare:)];
