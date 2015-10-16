@@ -495,6 +495,12 @@ static FacebookNetwork *model = nil;
     }
 }
 
+- (void)requestConnection:(FBSDKGraphRequestConnection *)connection
+         didFailWithError:(NSError *)error {
+    self.updateNetworkPostsBlock (error);
+}
+
+
 #pragma mark - errorFacebook
 
 /*!

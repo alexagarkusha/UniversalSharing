@@ -10,6 +10,7 @@
 #import "MUSDataBaseManager.h"
 #import "MUSPostImagesManager.h"
 #import "MUSDatabaseRequestStringsHelper.h"
+#import "MUSInternetConnectionManager.h"
 #import "MUSSocialManager.h"
 
 @interface MUSPostManager ()
@@ -53,14 +54,15 @@ static MUSPostManager *model = nil;
 }
 
 - (void) updateNetworkPostsWithComplition : (Complition) block {
-    //Need to add a check isLogin socialNetwork or not in each social network?
+    if (![MUSInternetConnectionManager connectionManager].isInternetConnection) {
+        block (MUSConnectionError, nil);
+        return;
+    }
     
     NSMutableArray *allSocialNetworksArray = [[MUSSocialManager sharedManager] allNetworks];
     __block NSUInteger numberOfActiveSocialNetworks = allSocialNetworksArray.count;
     __block NSUInteger counterOfSocialNetworks = 0;
     __block NSMutableDictionary *resultDictionary = [[NSMutableDictionary alloc] init];
-
-    //__block NSString *blockResultString = @"Result: \n";
     
     for (int i = 0; i < allSocialNetworksArray.count; i++) {
         MUSSocialNetwork *currentSocialNetwork = [allSocialNetworksArray objectAtIndex: i];
@@ -68,7 +70,6 @@ static MUSPostManager *model = nil;
             counterOfSocialNetworks++;
             
             [resultDictionary setObject: result forKey: @(currentSocialNetwork.networkType)];
-            
             if (counterOfSocialNetworks == numberOfActiveSocialNetworks) {
                 block (resultDictionary, nil);
             }
