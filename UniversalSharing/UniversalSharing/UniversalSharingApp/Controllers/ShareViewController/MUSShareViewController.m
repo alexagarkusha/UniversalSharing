@@ -141,14 +141,12 @@
                                       initWithString: MUSApp_TextView_PlaceholderText
                                       attributes:attrs];
     
-    
     NSTextStorage* textStorage = [[NSTextStorage alloc] initWithAttributedString:attrString];
     NSLayoutManager *layoutManager = [NSLayoutManager new];
     [textStorage addLayoutManager:layoutManager];
     
     CGSize textSizeFrame = CGSizeMake([[UIScreen mainScreen] bounds].size.width,
                                       [[UIScreen mainScreen] bounds].size.height - [UIApplication sharedApplication].statusBarFrame.size.height - self.navigationController.navigationBar.frame.size.height - self.galeryView.frame.size.height - self.buttonLocation.frame.size.height - self.tabBarController.tabBar.frame.size.height);
-    
     
     NSTextContainer *textContainer = [[NSTextContainer alloc] initWithSize: CGSizeMake (textSizeFrame.width, textSizeFrame.height)];
     
@@ -242,7 +240,7 @@
     UIActionSheet* sheet = [UIActionSheet new];
     sheet.title = self.address;
     sheet.delegate = self;
-    [sheet addButtonWithTitle: @"Delete"];
+    [sheet addButtonWithTitle: MUSApp_Button_Title_Delete ];
     sheet.cancelButtonIndex = [sheet addButtonWithTitle:MUSApp_Button_Title_Cancel];
     [sheet showInView:self.view];
 }
@@ -253,12 +251,11 @@
     if ( buttonIndex == 0 ) {
         self.iconImageView.highlighted = NO;
         self.buttonLocation.selected = NO;
-        [self.buttonLocation setTitle:@"Select your location" forState:UIControlStateNormal];
+        [self.buttonLocation setTitle: MUSApp_Button_Title_Select_Your_Location forState:UIControlStateNormal];
         self.post.latitude = @"";
         self.post.longitude = @"";
     }
 }
-
 
 /*!
  @method
@@ -288,11 +285,11 @@
 #pragma mark - Error Alert
 
 - (void) showErrorAlert {
-    UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle : @"Your tweet exceeds the limit of text and will be cut"
-                                                     message : @"Continue sharing?"
+    UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle : MUSApp_MUSShareViewController_Alert_Title_Tweet_Text_Limit
+                                                     message : MUSApp_MUSShareViewController_Alert_Message_Tweet_Text_Limit
                                                     delegate : self
-                                           cancelButtonTitle : @"Cancel"
-                                           otherButtonTitles : @"Share", nil];
+                                           cancelButtonTitle : MUSApp_Button_Title_Cancel
+                                           otherButtonTitles : MUSApp_Button_Title_Share, nil];
     [errorAlert show];
 }
 
@@ -340,7 +337,7 @@
     [self initialParametersOfMessageTextView];
     [self.messageTextView setSelectedRange:NSMakeRange(0, 0)];
     self.buttonLocation.selected = NO;
-    [self.buttonLocation setTitle:@"Select your location" forState:UIControlStateNormal];
+    [self.buttonLocation setTitle: MUSApp_Button_Title_Select_Your_Location forState:UIControlStateNormal];
     self.shareButtonOutlet.enabled = NO;
     [self.post clear];
     [self.galeryView reloadCollectionView];
@@ -486,7 +483,7 @@
     [UIView animateWithDuration: 0.3  animations:^{
         [self.view layoutIfNeeded];
         [self.galeryView reloadCollectionView];
-        [self.view setNeedsLayout];
+        //[self.view setNeedsLayout];
     }];
     [UIView commitAnimations];
 }
@@ -505,7 +502,7 @@
     [UIView animateWithDuration: 0.4 animations:^{
         [self.view layoutIfNeeded];
         [self.galeryView reloadCollectionView];
-        [self.view setNeedsLayout];
+        //[self.view setNeedsLayout];
     }];
     [UIView commitAnimations];
 }

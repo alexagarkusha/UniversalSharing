@@ -64,6 +64,8 @@ FOUNDATION_EXPORT NSString *const MUSApp_Button_Title_Share;
 FOUNDATION_EXPORT NSString *const MUSApp_Button_Title_NO;
 FOUNDATION_EXPORT NSString *const MUSApp_Button_Title_YES;
 FOUNDATION_EXPORT NSString *const MUSApp_Button_Title_Logout;
+FOUNDATION_EXPORT NSString *const MUSApp_Button_Title_Select_Your_Location;
+FOUNDATION_EXPORT NSString *const MUSApp_Button_Title_Delete;
 
 #pragma mark - Errors
 
@@ -83,6 +85,10 @@ FOUNDATION_EXPORT NSString *const MUSApp_Error_With_Domain_Universal_Sharing;
 FOUNDATION_EXPORT NSString *const MUSApp_MUSShareViewController_Alert_Message_No_Pics_Anymore;
 FOUNDATION_EXPORT NSInteger const MUSApp_MUSShareViewController_NumberOfAllowedPics;
 FOUNDATION_EXPORT NSInteger const MUSApp_MUSShareViewController_NumberOfAllowedLettersInTextView;
+FOUNDATION_EXPORT NSString *const MUSApp_MUSShareViewController_Alert_Title_Tweet_Text_Limit;
+FOUNDATION_EXPORT NSString *const MUSApp_MUSShareViewController_Alert_Message_Tweet_Text_Limit;
+
+
 
 #pragma mark - MUSPhotoManager
 

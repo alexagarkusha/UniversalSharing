@@ -45,6 +45,8 @@ NSString *const MUSApp_Button_Title_Share = @"Share";
 NSString *const MUSApp_Button_Title_NO = @"NO";
 NSString *const MUSApp_Button_Title_YES = @"YES";
 NSString *const MUSApp_Button_Title_Logout = @"Logout";
+NSString *const MUSApp_Button_Title_Select_Your_Location = @"Select your location";
+NSString *const MUSApp_Button_Title_Delete = @"Delete";
 
 
 #pragma mark - Errors
@@ -56,6 +58,9 @@ NSString *const MUSApp_Error_With_Domain_Universal_Sharing = @"Universal Sharing
 NSString *const MUSApp_MUSShareViewController_Alert_Message_No_Pics_Anymore = @"You can not add pictures anymore!";
 NSInteger const MUSApp_MUSShareViewController_NumberOfAllowedPics = 4;
 NSInteger const MUSApp_MUSShareViewController_NumberOfAllowedLettersInTextView = 500;
+NSString *const MUSApp_MUSShareViewController_Alert_Title_Tweet_Text_Limit = @"Your tweet exceeds the limit of text and will be cut";
+NSString *const MUSApp_MUSShareViewController_Alert_Message_Tweet_Text_Limit = @"Continue sharing?";
+
 
 #pragma mark - MUSPhotoManager
 
