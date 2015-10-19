@@ -37,7 +37,7 @@
 ### ImageToPost
 	It contains information about post image. It has next property: image, quality and image type (JPEG or PNG).
 
-## Location
+### Location
 	It contains information about post location. It has next property: **latitude**, **longitude**, **distance**, **type** and **q** (string search).
 
 ### Place
