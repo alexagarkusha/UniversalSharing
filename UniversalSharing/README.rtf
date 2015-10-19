@@ -1,275 +1,143 @@
-{\rtf1\ansi\ansicpg1251\cocoartf1404\cocoasubrtf110
-{\fonttbl\f0\fnil\fcharset0 HelveticaNeue;\f1\fnil\fcharset0 Menlo-Regular;\f2\fnil\fcharset0 Menlo-Bold;
-}
-{\colortbl;\red255\green255\blue255;\red38\green38\blue38;\red19\green19\blue19;\red1\green20\blue70;
-\red170\green13\blue145;\red92\green38\blue153;\red63\green110\blue116;\red0\green116\blue0;\red46\green13\blue110;
-\red196\green26\blue22;\red38\green71\blue75;\red28\green0\blue207;}
-\paperw11900\paperh16840\margl1440\margr1440\vieww18500\viewh12340\viewkind0
-\deftab720
-\pard\pardeftab720\partightenfactor0
+## How To Get Started 
+	Download UniversalSharing and try out the included iPhone example apps\
 
-\f0\b\fs36 \cf2 \expnd0\expndtw0\kerning0
-How To Get Started\
-\pard\pardeftab720\partightenfactor0
+## Requirements
+	Minimum iOS Target - iOS 8;\
 
-\b0\fs28 \cf2 Download UniversalSharing and try out the included iPhone example apps\
+## Architecture
 
-\fs32 \
-\pard\pardeftab720\partightenfactor0
+### SocialNetwork
+- MUSSocialNetwork 
 
-\b\fs36 \cf2 Requirements\
-\pard\pardeftab720\partightenfactor0
+### Model 
+- MUSNetworkPost
+- MUSImageToPost
+- MUSLocation
+- MUSPlace
+- MUSPost
+- MUSUser
 
-\b0\fs28 \cf2 Minimum iOS Target - iOS 8;\
-\
-\pard\pardeftab720\partightenfactor0
+### Managers
+- MUSDataBaseManager
+- MUSInternetConnectionManager
+- MUSMultySharingManager
+- MUSPostManager
+- MUSPostImagesManager
+- MUSSocialManager
 
-\b\fs36 \cf2 Architecture
-\fs56 \
-\pard\pardeftab720\partightenfactor0
 
-\fs28 \cf2 SocialNetwork
-\fs56  \
-\pard\pardeftab720\partightenfactor0
+## USAGE
 
-\b0\fs28 \cf2 	MUSSocialNetwork\
-\pard\pardeftab720\partightenfactor0
+### MUSSocialNetwork
+	It contains information about SocialNetwork. This class should be the parent of any social network, which you want to add in your application.
 
-\b \cf2 Model\
-\pard\pardeftab720\partightenfactor0
+### NetworkPost
+	It contains information about number of likes and comments from each social network for POST object.
 
-\b0 \cf2 	MUSNetworkPost\
-	MUSImageToPost\
-	MUSLocation\
-	MUSPlace\
-	MUSPost\
-	MUSUser\
-\pard\pardeftab720\partightenfactor0
+### ImageToPost
+	It contains information about post image. It has next property: image, quality and image type (JPEG or PNG).
 
-\b \cf2 Managers\
-\pard\pardeftab720\partightenfactor0
+### Location
+	It contains information about post location. It has next property: **latitude**, **longitude**, **distance**, **type** and **q** (string search).
 
-\b0 \cf2 	MUSDataBaseManager\
-	MUSInternetConnectionManager\
-	MUSMultySharingManager\
-	MUSPostManager\
-	MUSPostImagesManager\
-	MUSSocialManager\
-\pard\pardeftab720\partightenfactor0
+### Place
+	It contains information about post place - we get as a result of the request to the social network. It has next property: **fullName**, **placeID**, **country**, **placeType**, **city**, **longitude**, **latitude**.
 
-\b \cf2 \
-\
-\pard\pardeftab720\partightenfactor0
+### Post
+	Object POST contains complete information about the post, which includes **a description**, **images array** and **geolocation** of the post. Also, this object contains information about the number of **likes** and **comments** received from the social network. **Note**: the property **Primary Key** given automatically by **database**.
 
-\fs36 \cf2 USAGE
-\fs28 \
-\
-MUSSocialNetwork\
-\
-\pard\pardeftab720\partightenfactor0
+### User
+	Object User contains complete information about user of active social network, which includes **an username**, **first name**, **last name**, **client ID**, **photo URL** and **network type**.
 
-\b0 \cf2 It contains information about SocialNetwork. \cf3 This class should be the parent of any social network, which you want to add in your application. \
-\pard\pardeftab720\partightenfactor0
+### MultySharingManager
+	MultiSharingManager allows you to send the post to multiple social networks. Also, this manager creates a queue of posts to be sent to the social network, if your Internet connection does not have a high speed or you want to send several different posts at the same time. It is enough to call the **sharePost** method and pass it an object type **Post** and an array of active social network types.
 
-\b \cf2 \
-NetworkPost\
-\
-\pard\pardeftab720\partightenfactor0
+```objective-c
+[[MultySharingManager sharedManager] sharePost: self.post toSocialNetworks: _arrayChosenNetworksForPost withMultySharingResultBlock:^(NSDictionary *multyResultDictionary, Post *post)  {
+    
+    // Result of loading Post into Social Networks
+    NSLog(@"result = %@", multyResultDictionary);
+    
+    // Loaded Post into Social Networks
+    NSLog(@"post = %@", post);
+    
+} startLoadingBlock:^(Post *post) {
+    
+    // Current post that started loaded into social networks current post that started loaded into social networks
+    NSLog(@"post = %@", post);
+    
+} progressLoadingBlock:^(float result) {
+    
+    // Progress of loading = (total progress of loading in all Chosen Social Networks / number of Chosen Social Networks). MAX value = 1.0
+    NSLog(@"result = %f", result);
+    
+}];
+```
 
-\b0 \cf2 It contains information about number of likes and comments from each social network for POST object\
-\pard\pardeftab720\partightenfactor0
+#### Check post - whether it is in loading queue posts or NOT
 
-\b \cf2 \
-ImageToPost\
-\
-\pard\pardeftab720\partightenfactor0
+```objective-c
+[[MultySharingManager sharedManager] isQueueContainsPost: post.primaryKey];
+```
 
-\b0 \cf2 It contains information about post image. It has next property: image, quality and image type (JPEG or PNG). \
-\pard\pardeftab720\partightenfactor0
+### PostManager
+	This manager is responsible for all posts made in the application. Manager can returns an array of all posts and updates them. It is also possible to obtain and update all likes and comments count for shared posts.
 
-\b \cf2 \
-Location\
-\
-\pard\pardeftab720\partightenfactor0
+#### Update Posts array from Data Base
 
-\b0 \cf2 It contains information about post location. It has next property:\cf0  \kerning1\expnd0\expndtw0 \CocoaLigature0 latitude, longitude, distance, type and q (string search)\expnd0\expndtw0\kerning0
-\CocoaLigature1  \cf2 \
-\pard\pardeftab720\partightenfactor0
+```objective-c
+[[MUSPostManager manager] updatePostsArray];
+```
 
-\b \cf2 \
-Place\
-\
-\pard\pardeftab720\partightenfactor0
+#### Returned Network posts array for chosen network type.
 
-\b0 \cf2 It contains information about post place - we get as a result of the request to the social network. It has next property: \cf0 \kerning1\expnd0\expndtw0 \CocoaLigature0 fullName, placeID, country, placeType, city, longitude, latitude
-\f1\fs22 .\
-\pard\pardeftab720\partightenfactor0
+```objective-c
+[[MUSPostManager manager] networkPostsArrayForNetworkType: MUSTwitters];
+```
 
-\f0\b\fs28 \cf2 \expnd0\expndtw0\kerning0
-\CocoaLigature1 \
-Post\
-\
-\pard\pardeftab720\partightenfactor0
+#### Updating all network Posts in all Active Social Networks.
 
-\b0 \cf2 Object POST contains complete information about the post, which includes a description, images array and geolocation of the post. Also, this object contains information about the number of likes and comments received from the social network. 
-\b Note
-\b0  : \cf4 the property Primary Key given automatically by database\cf0 .\cf2 \
-\pard\pardeftab720\partightenfactor0
+```objective-c
+[[MUSPostManager manager] updateNetworkPostsWithComplition:^(id result, NSError *error) {
+    
+    // Returned result of updating
+    NSLog(@"result = %@", result);
+    
+}];
+```
 
-\b \cf2 \
-User\
-\
-\pard\pardeftab720\li-20\ri-844\partightenfactor0
+#### Deleting all Network Post from Data Base for chosen Network Type.
 
-\b0 \cf2 Object User contains complete information about user of active social network, which includes an username, first name, last name, client ID, photo URL and network type\
-\pard\pardeftab720\partightenfactor0
+```objective-c
+[[MUSPostManager manager] deleteNetworkPostForNetworkType: MUSTwitters];
+```
 
-\b \cf2 \
-MultySharingManager\
-\pard\tx529\pardeftab529\pardirnatural\partightenfactor0
+### MUSSocialManager
+	This manager is responsible for all social networks in the application. Manager can returns an array of all networks.
 
-\f1\b0\fs22 \cf0 \kerning1\expnd0\expndtw0 \CocoaLigature0 \
+#### Example of settings types social networks.
 
-\f0\fs28 \cf3 MultiSharingManager allows you to send the post to multiple social networks. Also, this manager creates a queue of posts to be sent to the social network, if your Internet connection does not have a high speed or you want to send several different posts at the same time. It is enough to call the 
-\b sharePost
-\b0  method and pass it an object type 
-\b Post
-\b0  and an array of active social network types. \
+```objective-c
+typedef NS_ENUM (NSInteger, NetworkType) {
+    MUSAllNetworks,
+    MUSFacebook,
+    MUSTwitters,
+    MUSVKontakt
+};
+```
 
-\f1\fs22 \cf0 \
-\
+#### An example of how to configure social manager.
 
-\fs18 [[MultySharingManager sharedManager] sharePost: \cf5 self\cf0 .post toSocialNetworks: _arrayChosenNetworksForPost withMultySharingResultBlock:^(\cf6 NSDictionary\cf0  *multyResultDictionary, \cf7 Post\cf0  *post)  \{\
-    \
-    \cf8 // Result of loading Post into Social Networks\cf0 \
-    \
-    \cf9 NSLog\cf0 (\cf10 @"result = %@"\cf0 , multyResultDictionary);\
-    \
-    \cf8 // Loaded Post into Social Networks\cf0 \
-    \
-    \cf9 NSLog\cf0 (\cf10 @"post = %@"\cf0 , post);\
-    \
-\} startLoadingBlock:^(\cf7 Post\cf0  *post) \{\
-    \
-    \cf8 // Current post that started loaded into social networks current post that started loaded into social networks\cf0 \
-    \
-    \cf9 NSLog\cf0 (\cf10 @"post = %@"\cf0 , post);\
-    \
-\} progressLoadingBlock:^(\cf5 float\cf0  result) \{\
-    \
-    \cf8 // Progress of loading = (total progress of loading in all Chosen Social Networks / number of Chosen Social Networks). MAX value = 1.0\cf0 \
-    \
-    \cf9 NSLog\cf0 (\cf10 @"result = %f"\cf0 , result);\
-    \
-\}];\
-\
+```objective-c
+NSDictionary *networksDictionary = @{@(MUSFacebook) : [FacebookNetwork class],
+									 @(MUSTwitters) : [TwitterNetwork class],
+                                     @(MUSVKontakt) : [VKNetwork class]};
+    
+[[MUSSocialManager sharedManager] configurateWithNetworkClasses: networksDictionary];
+```
 
-\f2\b\fs22 \
-\uc0\u1057 heck post - whether it is in loading queue posts or NOT\
+#### Get All Social Networks array.
 
-\f1\b0\fs18 \cf8 \
-\cf0 [[MultySharingManager sharedManager] isQueueContainsPost: post.primaryKey]\
-\
-
-\fs22 \
-\
-\
-\pard\pardeftab720\partightenfactor0
-
-\f0\b\fs28 \cf2 \expnd0\expndtw0\kerning0
-\CocoaLigature1 PostManager\
-\
-\pard\pardeftab720\partightenfactor0
-
-\b0 \cf2 This manager is responsible for all posts made in the application. Manager can returns an array of all posts and updates them. It is also possible to obtain and update all likes and comments count for shared posts.\
-\pard\tx529\pardeftab529\pardirnatural\partightenfactor0
-
-\f1\fs22 \cf0 \kerning1\expnd0\expndtw0 \CocoaLigature0 \
-
-\f2\b  Update Posts array from Data Base\
-
-\f1\b0 \
-
-\fs18 [[MUSPostManager manager] updatePostsArray];\
-
-\fs22 \
-
-\f2\b  Returned Network posts array for chosen network type\
-
-\f1\b0 \
-
-\fs18 [[MUSPostManager manager] networkPostsArrayForNetworkType: \cf11 MUSTwitters\cf0 ]\
-
-\fs22 \
-
-\f2\b  Updating all network Posts in all Active Social Networks\
-
-\f1\b0 \
-
-\fs18 [[MUSPostManager manager] updateNetworkPostsWithComplition:^(\cf5 id\cf0  result, \cf6 NSError\cf0  *error) \{\
-    \
-    \cf8 // Returned result of updating\cf0 \
-				\
-    \cf9 NSLog\cf0 (\cf10 @"result = %@"\cf0 , result);\
-    \
-\}];\
-
-\fs22 \
-
-\f2\b  Deleting all Network Post from Data Base for chosen Network Type\
-
-\f1\b0 \
-
-\fs18 [[MUSPostManager manager] deleteNetworkPostForNetworkType: \cf11 MUSTwitters\cf0 ];\
-\pard\pardeftab720\partightenfactor0
-
-\f0\b\fs28 \cf2 \expnd0\expndtw0\kerning0
-\CocoaLigature1 \
-MUSSocialManager\
-\
-\pard\pardeftab720\partightenfactor0
-
-\b0 \cf2 This manager is responsible for all social networks in the application. Manager can returns an array of all networks.
-\b  \
-\
- 
-\f2\fs22 Example of settings types social networks\
-\
-\pard\tx529\pardeftab529\pardirnatural\partightenfactor0
-
-\f1\b0\fs18 \cf5 \kerning1\expnd0\expndtw0 \CocoaLigature0 typedef\cf0  \cf5 NS_ENUM\cf0  (NSInteger, NetworkType) \{\
-    MUSAllNetworks,\
-    MUSFacebook,\
-    MUSTwitters,\
-    MUSVKontakt\
-\};
-\f2\b\fs22 \cf2 \expnd0\expndtw0\kerning0
-\CocoaLigature1 \
-\pard\pardeftab720\partightenfactor0
-
-\f0\fs28 \cf2 \
-\pard\pardeftab720\partightenfactor0
-
-\f2\fs22 \cf2  An example of how to configure social manager.\
-\
-\pard\tx529\pardeftab529\pardirnatural\partightenfactor0
-
-\f1\b0\fs18 \cf6 \kerning1\expnd0\expndtw0 \CocoaLigature0 NSDictionary\cf0  *networksDictionary = \cf12 @\{@(\cf11 MUSFacebook\cf12 )\cf0  : [\cf7 FacebookNetwork\cf0  \cf9 class\cf0 ],\
-                                     \cf12 @(\cf11 MUSTwitters\cf12 )\cf0  : [\cf7 TwitterNetwork\cf0  \cf9 class\cf0 ],\
-                                     \cf12 @(\cf11 MUSVKontakt\cf12 )\cf0  : [\cf7 VKNetwork\cf0  \cf9 class\cf0 ]\cf12 \}\cf0 ;\
-    \
-[[\cf7 MUSSocialManager\cf0  \cf11 sharedManager\cf0 ] \cf11 configurateWithNetworkClasses\cf0 : networksDictionary];\
-\pard\pardeftab720\partightenfactor0
-
-\f0\b\fs28 \cf2 \expnd0\expndtw0\kerning0
-\CocoaLigature1 \
-\pard\tx529\pardeftab529\pardirnatural\partightenfactor0
-
-\f1\b0\fs22 \cf0 \kerning1\expnd0\expndtw0 \CocoaLigature0 \
-
-\f2\b Get All Social Networks array.\
-\
-
-\f1\b0 [[\cf7 MUSSocialManager\cf0  \cf11 sharedManager\cf0 ] \cf11 allNetworks\cf0 ]
-\f2\b \
-}
+```objective-c
+[[MUSSocialManager sharedManager] allNetworks];
+```
