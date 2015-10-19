@@ -1,8 +1,8 @@
 ## How To Get Started 
-	Download UniversalSharing and try out the included iPhone example apps\
+	Download UniversalSharing and try out the included iPhone example apps.
 
 ## Requirements
-	Minimum iOS Target - iOS 8;\
+	Minimum iOS Target - iOS 8.
 
 ## Architecture
 
