@@ -1,9 +1,15 @@
 # Universal Social Network Sharing
 
-This library allows you to send the post to multiple social networks. It creates a queue of posts to be sent to the social network, if your Internet connection does not have a high speed or you want to send several different posts at the same time. The library saves all posts were made in the application into database and updates all likes and comments count for them.
+
+Main features of this library are :
+
+1. Send the post to multiple social networks at the same time;
+2. Create a queue of posts to be sent to the social network, if your Internet connection does not have a high speed or you want to send several different posts at the same time;
+3. Save posts were made in the application into database;
+4. Update likes and comments count for posts were made in application.
 
 ## Requirements
-Minimum iOS Target - iOS 8.
+Minimum iOS Target - iOS 8.x
 
 ## Architecture
 
@@ -18,13 +24,13 @@ Minimum iOS Target - iOS 8.
 - MUSPostImagesManager
 - MUSSocialManager
 
-## USAGE
+## Usage
 
 In order to start working with the library:
 
 1. Import SocialNetworkLibrary folder into your project.
 2. Add `MUSSocialNetworkLibraryHeader.h` to your `AppDelegate` file.
-3. Add your social networks in the project, which will be inheritors of `MUSSocialNetwork` class
+3. Add your social networks in the project, which will be inheritors of `MUSSocialNetwork` class.
 4. Setup your Social Networks types in `MUSConstantsApp.h`. As shown below: 
 
  ```objective-c
