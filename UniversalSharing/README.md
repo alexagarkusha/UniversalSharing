@@ -1,5 +1,6 @@
-## How To Get Started 
-Download UniversalSharing and try out the included iPhone example apps.
+# Universal Social Network Sharing
+
+This library allows you to send the post to multiple social networks. It creates a queue of posts to be sent to the social network, if your Internet connection does not have a high speed or you want to send several different posts at the same time. The library saves all posts were made in the application into database and updates all likes and comments count for them.
 
 ## Requirements
 Minimum iOS Target - iOS 8.
@@ -9,55 +10,53 @@ Minimum iOS Target - iOS 8.
 ### SocialNetwork
 - MUSSocialNetwork 
 
-### Model 
-- MUSNetworkPost
-- MUSImageToPost
-- MUSLocation
-- MUSPlace
-- MUSPost
-- MUSUser
-
 ### Managers
 - MUSDataBaseManager
 - MUSInternetConnectionManager
-- MUSMultySharingManager
+- MUSMultiSharingManager
 - MUSPostManager
 - MUSPostImagesManager
 - MUSSocialManager
 
-
 ## USAGE
+
+In order to start working with the library:
+
+1. Import SocialNetworkLibrary folder into your project.
+2. Add `MUSSocialNetworkLibraryHeader.h` to your `AppDelegate` file.
+3. Add your social networks in the project, which will be inheritors of `MUSSocialNetwork` class
+4. Setup your Social Networks types in `MUSConstantsApp.h`. As shown below: 
+
+ ```objective-c
+ // Example of settings types social networks.
+ typedef NS_ENUM (NSInteger, NetworkType) {
+     MUSAllNetworks,
+     MUSFacebook,
+     MUSTwitters,
+     MUSVKontakt
+ };
+ ```
+5. Set up MUSSocialManager, as shown in the example below:
+
+ ```objective-c
+ NSDictionary *networksDictionary = @{@(MUSFacebook) : [FacebookNetwork class],
+ 									   @(MUSTwitters) : [TwitterNetwork class],
+ 									   @(MUSVKontakt) : [VKNetwork class]};
+     
+ [[MUSSocialManager sharedManager] configurateWithNetworkClasses: networksDictionary];
+ ```
 
 ### MUSSocialNetwork
 It contains information about SocialNetwork. This class should be the parent of any social network, which you want to add in your application.
 
-### NetworkPost
-It contains information about number of likes and comments from each social network for POST object.
-
-### ImageToPost
-It contains information about post image. It has next property: image, quality and image type (JPEG or PNG).
-
-### Location
-It contains information about post location. It has next property: **latitude**, **longitude**, **distance**, **type** and **q** (string search).
-
-### Place
-It contains information about post place - we get as a result of the request to the social network. 
-It has next property: **fullName**, **placeID**, **country**, **placeType**, **city**, **longitude**, **latitude**.
-
-### Post
-Object POST contains complete information about the post, which includes **a description**, **images array** and **geolocation** of the post. Also, this object contains information about the number of **likes** and **comments** received from the social network. **Note**: the property **primaryKey** given automatically by database.
-
-### User
-Object User contains complete information about user of active social network, which includes an **username**, **firstName**, **lastName**, **clientID**, **photoURL** and **networkType**.
-
-### MultySharingManager
+### MultiSharingManager
 MultiSharingManager allows you to send the post to multiple social networks. Also, this manager creates a queue of posts to be sent to the social network, if your Internet connection does not have a high speed or you want to send several different posts at the same time. It is enough to call the **sharePost** method and pass it an object type **Post** and an array of active social network types.
 
 ```objective-c
-[[MultySharingManager sharedManager] sharePost: self.post toSocialNetworks: _arrayChosenNetworksForPost withMultySharingResultBlock:^(NSDictionary *multyResultDictionary, Post *post)  {
+[[MultiSharingManager sharedManager] sharePost: self.post toSocialNetworks: _arrayChosenNetworksForPost withMultiSharingResultBlock:^(NSDictionary *multiResultDictionary, Post *post)  {
     
     // Result of loading Post into Social Networks
-    NSLog(@"result = %@", multyResultDictionary);
+    NSLog(@"result = %@", multiResultDictionary);
     
     // Loaded Post into Social Networks
     NSLog(@"post = %@", post);
@@ -78,7 +77,7 @@ MultiSharingManager allows you to send the post to multiple social networks. Als
 #### Check post - whether it is in loading queue posts or NOT
 
 ```objective-c
-[[MultySharingManager sharedManager] isQueueContainsPost: post.primaryKey];
+[[MultiSharingManager sharedManager] isQueueContainsPost: post.primaryKey];
 ```
 
 ### PostManager
@@ -116,29 +115,34 @@ This manager is responsible for all posts made in the application. Manager can r
 ### MUSSocialManager
 This manager is responsible for all social networks in the application. Manager can returns an array of all networks.
 
-#### Example of settings types social networks.
-
-```objective-c
-typedef NS_ENUM (NSInteger, NetworkType) {
-    MUSAllNetworks,
-    MUSFacebook,
-    MUSTwitters,
-    MUSVKontakt
-};
-```
-
-#### An example of how to configure social manager.
-
-```objective-c
-NSDictionary *networksDictionary = @{@(MUSFacebook) : [FacebookNetwork class],
-									 @(MUSTwitters) : [TwitterNetwork class],
-                                     @(MUSVKontakt) : [VKNetwork class]};
-    
-[[MUSSocialManager sharedManager] configurateWithNetworkClasses: networksDictionary];
-```
 
 #### Get All Social Networks array.
 
 ```objective-c
 [[MUSSocialManager sharedManager] allNetworks];
+```
+## License
+
+```objective-c
+The MIT License (MIT)
+
+Copyright © 2015 Mobindustry
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
 ```
