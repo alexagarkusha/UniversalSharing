@@ -1,28 +1,11 @@
 # Universal Social Network Sharing
 
-
-Main features of this library are :
-
-1. Send the post to multiple social networks at the same time;
-2. Create a queue of posts to be sent to the social network, if your Internet connection does not have a high speed or you want to send several different posts at the same time;
-3. Save posts were made in the application into database;
-4. Update likes and comments count for posts were made in application.
+Our library will provide your app with publishing to all social networks at the same time. Social networks are queued for publishing, so none of your posts will be lost.  Also all published posts are saved in local data base, and report about likes count, comments, adding to favourite (Twitter), you can add any social network for future publishing.
+Try it now, and enjoy!
 
 ## Requirements
-Minimum iOS Target - iOS 8.x
 
-## Architecture
-
-### SocialNetwork
-- MUSSocialNetwork 
-
-### Managers
-- MUSDataBaseManager
-- MUSInternetConnectionManager
-- MUSMultiSharingManager
-- MUSPostManager
-- MUSPostImagesManager
-- MUSSocialManager
+Instalation iOS Target - iOS 8.x
 
 ## Usage
 
